@@ -1,0 +1,22 @@
+name: Improvement to Feature
+description: If you are improving something that already exists then use this template!
+title: "<title>"
+labels: ["Improvement"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Describe the improvement, motivation behind it and write a mini-specification
+      placeholder: |
+        #### Description
+        This improves the feature by ...
+
+        #### Motivation
+        It allows ...
+
+        #### Specification
+        ...
+    validations:
+      required: true
+      
