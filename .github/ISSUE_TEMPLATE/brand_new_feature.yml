@@ -1,0 +1,21 @@
+name: Requesting New Feature
+description: If you are adding something completely new then use this template!
+title: "<title>"
+labels: ["New Feature"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Describe your feature, motivation behind it and write a mini-specification
+      placeholder: |
+        #### Description
+        This feature ...
+
+        #### Motivation
+        It allows ...
+
+        #### Specification
+        ...
+    validations:
+      required: true
