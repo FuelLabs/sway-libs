@@ -1,5 +1,5 @@
 
-f change
+## Type of change
 
 <!--Delete points that do not apply-->
 
@@ -25,4 +25,3 @@ The following changes have been made:
 <!--Delete everything after the "#" symbol and replace it with a number. No spaces between hash and number-->
 
 Closes #\<issue number\>
-
