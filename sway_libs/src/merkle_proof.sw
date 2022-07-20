@@ -1,8 +1,9 @@
-library merkleproof;
+library merkle_proof;
 
 use std::{
     hash::sha256,
     option::Option,
+    revert::revert,
     vec::Vec,
 };
 
