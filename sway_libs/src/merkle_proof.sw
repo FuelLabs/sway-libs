@@ -21,9 +21,9 @@ fn hash_pair(a: b256, b: b256) -> b256 {
 ///
 /// # Arguments
 ///
-/// * `merkle_leaf` - The hash of a leaf on the merkle tree.
-/// * `merkle_root` - The pre-computed merkle root that will be used to verify the lead and proof.
-/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root.
+/// * `merkle_leaf` - The hash of a leaf on the merkle tree
+/// * `merkle_root` - The pre-computed merkle root that will be used to verify the leaf and proof
+/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root
 ///
 /// # Reverts
 ///
@@ -50,6 +50,14 @@ pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: Vec<b256>) -> b
     computed_hash == merkle_root
 }
 
+/// This function will verify the merkle leaf and proof given against the root.
+///
+/// # Arguments
+///
+/// * `merkle_leaves` - The hashes of relevant leaves for the merkle proof
+/// * `merkle_root` - The pre-computed merkle root that will be used to verify the leaves and proof
+/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root
+/// * 'proof_flags' - The merkle proof flags used to compute the merkle root
 pub fn verify_multi_proof(merkle_leaves: Vec<b256>, merkle_root: b256, proof: Vec<b256>, proof_flags: Vec<bool>) -> bool {
     let mut hashes = ~Vec::new();
     let mut itterator = 0;
