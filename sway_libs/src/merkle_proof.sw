@@ -1,11 +1,6 @@
 library merkle_proof;
 
-use std::{
-    hash::sha256,
-    option::Option,
-    revert::revert,
-    vec::Vec,
-};
+use std::{hash::sha256, option::Option, revert::revert, vec::Vec};
 
 fn hash_pair(a: b256, b: b256) -> b256 {
     if a <= b {
@@ -67,24 +62,24 @@ pub fn verify_multi_proof(merkle_leaves: Vec<b256>, merkle_root: b256, proof: Ve
 
     while itterator < proof_flags.len() {
         let a = if leaf_pos < merkle_leaves.len() {
+            leaf_pos = leaf_pos + 1;
+            merkle_leaves.get(leaf_pos - 1).unwrap()
+        } else {
+            hash_pos = hash_pos + 1;
+            hashes.get(hash_pos - 1).unwrap()
+        };
+
+        let b = if proof_flags.get(itterator).unwrap() {
+            if leaf_pos < merkle_leaves.len() {
                 leaf_pos = leaf_pos + 1;
                 merkle_leaves.get(leaf_pos - 1).unwrap()
             } else {
                 hash_pos = hash_pos + 1;
                 hashes.get(hash_pos - 1).unwrap()
-        };
-
-        let b = if proof_flags.get(itterator).unwrap() {
-                if  leaf_pos < merkle_leaves.len() {
-                    leaf_pos = leaf_pos + 1;
-                    merkle_leaves.get(leaf_pos - 1).unwrap()
-                } else {
-                    hash_pos = hash_pos + 1;
-                    hashes.get(hash_pos - 1).unwrap()
-                }
-            } else {
-                proof_pos = proof_pos + 1;
-                proof.get(proof_pos - 1).unwrap()
+            }
+        } else {
+            proof_pos = proof_pos + 1;
+            proof.get(proof_pos - 1).unwrap()
         };
 
         hashes.push(hash_pair(a, b));
