@@ -1,6 +1,7 @@
 library string;
 
 use std::{
+    mem::read,
     vec::Vec,
 };
 
@@ -10,14 +11,9 @@ struct String<S> {
 
 impl<S> String<S> {
 
-    /// Appends an element to the back of the `String<S>`.
-    pub fn append(mut self, value: u8) {
-        bytes.push(value);
-    }
-
     /// Returns the bytes stored for the `String<S>`.
     pub fn as_bytes(self) -> Vec<u8> {
-        self.vec
+        self.bytes
     }
 
     // Not possible?
@@ -27,7 +23,7 @@ impl<S> String<S> {
 
     /// Gets the capacity of the allocation.
     pub fn capacity(self) -> u64 {
-        self.vec.capacity()
+        self.bytes.capacity()
     }
 
     /// Truncates this `String`, removing all contents.
@@ -35,24 +31,12 @@ impl<S> String<S> {
     /// While this means the `String` will have a length of zero, it does not
     /// touch its capacity.
     pub fn clear(mut self) {
-        self.vec.clear()
-    }
-
-    /// Attempts to convert a static `str` to a `String<S>`
-    pub fn from_str(mut self, value: S) {
-        let len = size_of::<value>();
-        let mut ptr = addr_of(value);
-        let mut iterator = 0;
-
-        while iterator < len {
-            self.bytes.push(read(ptr + iterator));
-            iterator += 1;
-        }
+        self.bytes.clear()
     }
 
     /// Returns `true` if the vector contains no elements.
     pub fn is_empty(self) -> bool {
-        self.vec.is_empty()
+        self.bytes.is_empty()
     }
 
     /// Returns the number of elements in the vector, also referred to
@@ -68,10 +52,27 @@ impl<S> String<S> {
         }
     }
 
+    /// Appends an element to the back of the `String<S>`.
+    pub fn push(mut self, value: u8) {
+        self.bytes.push(value);
+    }
+
+    /// Attempts to convert a static `str` to a `String<S>`
+    pub fn push_str(mut self, ptr: u64, len: u64) {
+        let mut ptr = ptr;
+        let mut iterator = 0;
+
+        // This will probably need to change
+        while iterator < len {
+            self.bytes.push(read(ptr + iterator));
+            iterator += 1;
+        }
+    }
+
     /// Constructs a new, empty `String<S>` with the specified capacity.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
-            bytes:: ~Vec::with_capacity(capacity)
+            bytes: ~Vec::with_capacity(capacity)
         }
     }
 }
