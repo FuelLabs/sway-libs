@@ -34,7 +34,24 @@ impl StringTest for Contract {
     fn test_is_empty() {
         let mut string = ~String::new();
 
-        assert(string.is_empty());        
+        assert(string.is_empty());      
+
+        string.push(0u8);
+        assert(!string.is_empty()); 
+
+        string.push(1u8);
+        assert(!string.is_empty()); 
+
+        string.clear();
+        assert(string.is_empty()); 
+
+        string.push(0u8);
+        assert(!string.is_empty()); 
+
+        string.push(1u8);
+        assert(!string.is_empty()); 
+
+        // TODO: Pop and check if empty
     }
 
     fn test_len() {

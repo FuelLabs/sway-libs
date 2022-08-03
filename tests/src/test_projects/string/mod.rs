@@ -47,6 +47,23 @@ async fn test_string_instance() -> TestStringLib {
 
 // }
 
+mod is_empty {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn returns_if_empty() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_is_empty().call().await.unwrap();
+        }
+    }
+}
+
 mod len {
 
     use super::*;
