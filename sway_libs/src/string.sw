@@ -5,7 +5,7 @@ use std::{
     vec::Vec,
 };
 
-struct String<S> {
+pub struct String<S> {
     bytes: Vec<u8>
 }
 
