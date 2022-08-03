@@ -5,7 +5,7 @@ abigen!(
     "test_projects/string/out/debug/string-abi.json"
 );
 
-async fn test_merkle_proof_instance() -> TestStringLib {
+async fn test_string_instance() -> TestStringLib {
     // Launch a local network and deploy the contract
     let wallet = launch_provider_and_get_wallet().await;
 
@@ -23,27 +23,26 @@ async fn test_merkle_proof_instance() -> TestStringLib {
     instance
 }
 
-// mod merkle_proof {
+mod as_bytes {
 
-//     use super::*;
+    use super::*;
 
-//     mod success {
+    mod success {
 
-//         use super::*;
+        use super::*;
 
-//         #[tokio::test]
-//         async fn verifies_merkle_proof() {
-//             let _instance = test_merkle_proof_instance().await;
+        #[tokio::test]
+        async fn gets_bytes() {
+            let _instance = test_string_instance().await;
 
-//             // Test here once https://github.com/FuelLabs/fuels-rs/issues/353 is closed
-//         }
+        }
 
-//     }
+    }
 
-//     mod reverts {
+    mod reverts {
 
-//         use super::*;
+        use super::*;
 
-//     }
+    }
 
-// }
+}
