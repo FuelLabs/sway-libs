@@ -1,4 +1,4 @@
-use fuels::{prelude::*, tx::ContractId};
+use fuels::{prelude::*};
 
 abigen!(
     TestStringLib,
@@ -10,7 +10,7 @@ async fn test_string_instance() -> TestStringLib {
     let wallet = launch_provider_and_get_wallet().await;
 
     let id = Contract::deploy(
-        "test_projects/merkle_proof/out/debug/string.bin",
+        "test_projects/string/out/debug/string.bin",
         &wallet,
         TxParameters::default(),
         StorageConfiguration::default(),
@@ -23,7 +23,31 @@ async fn test_string_instance() -> TestStringLib {
     instance
 }
 
-mod as_bytes {
+// mod as_bytes {
+
+//     use super::*;
+
+//     mod success {
+
+//         use super::*;
+
+//         #[tokio::test]
+//         async fn gets_bytes() {
+//             let _instance = test_string_instance().await;
+
+//         }
+
+//     }
+
+//     mod reverts {
+
+//         use super::*;
+
+//     }
+
+// }
+
+mod len {
 
     use super::*;
 
@@ -32,17 +56,10 @@ mod as_bytes {
         use super::*;
 
         #[tokio::test]
-        async fn gets_bytes() {
-            let _instance = test_string_instance().await;
+        async fn gets_length() {
+            let instance = test_string_instance().await;
 
+            let _result = instance.test_len().call().await.unwrap();
         }
-
     }
-
-    mod reverts {
-
-        use super::*;
-
-    }
-
 }

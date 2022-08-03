@@ -1,54 +1,98 @@
 contract;
 
-use std::vec::Vec;
+use std::{
+    assert::assert,
+    vec::Vec
+};
 use sway_libs::string::String;
 
 abi StringTest {
-    fn as_bytes();
-    fn capacity();
-    fn clear();
-    fn is_empty();
-    fn len();
-    fn new();
-    fn push();
-    fn push_str();
-    fn with_capacity();
+    fn test_as_bytes();
+    fn test_capacity();
+    fn test_clear();
+    fn test_is_empty();
+    fn test_len();
+    fn test_new();
+    fn test_push();
+    fn test_push_str();
+    fn test_with_capacity();
 }
 
 impl StringTest for Contract {
-    fn as_bytes() {
+    fn test_as_bytes() {
 
     }
 
-    fn capacity() {
+    fn test_capacity() {
 
     }
 
-    fn clear() {
+    fn test_clear() {
 
     }
 
-    fn is_empty() {
+    fn test_is_empty() {
+        let mut string = ~String::new();
+
+        assert(string.is_empty());        
+    }
+
+    fn test_len() {
+        let mut string = ~String::new();
+
+        assert(string.len() == 0);
+
+        let number0 = 0u8;
+        let number1 = 1u8;
+        let number2 = 2u8;
+        let number3 = 3u8;
+        let number4 = 4u8;
+        let number5 = 5u8;
+        let number6 = 6u8;
+        let number7 = 7u8;
+        let number8 = 8u8;
+
+        string.push(number0);
+        assert(string.len() == 1);
+
+        string.push(number1);
+        assert(string.len() == 2);
+
+        string.push(number2);
+        assert(string.len() == 3);
+
+        string.push(number3);
+        assert(string.len() == 4);
+
+        string.push(number4);
+        assert(string.len() == 5);
+
+        string.push(number5);
+        assert(string.len() == 6);
+
+        string.push(number6);
+        assert(string.len() == 7);
+
+        string.push(number7);
+        assert(string.len() == 8);
+
+        string.push(number8);
+        assert(string.len() == 9);
+    }
+
+    fn test_new() {
 
     }
 
-    fn len() {
+    fn test_push() {
 
     }
 
-    fn new() {
+    fn test_push_str() {
 
     }
 
-    fn push() {
-
-    }
-
-    fn push_str() {
-
-    }
-
-    fn with_capacity() {
+    fn test_with_capacity() {
 
     }
 }
