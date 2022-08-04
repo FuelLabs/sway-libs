@@ -47,6 +47,23 @@ async fn test_string_instance() -> TestStringLib {
 
 // }
 
+mod clear {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn clears_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_clear().call().await.unwrap();
+        }
+    }
+}
+
 mod is_empty {
 
     use super::*;

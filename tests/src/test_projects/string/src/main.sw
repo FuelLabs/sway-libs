@@ -24,11 +24,55 @@ impl StringTest for Contract {
     }
 
     fn test_capacity() {
-
+        
     }
 
     fn test_clear() {
+        let mut string = ~String::new();
 
+        let number0 = 0u8;
+        let number1 = 1u8;
+        let number2 = 2u8;
+        let number3 = 3u8;
+        let number4 = 4u8;
+        let number5 = 5u8;
+        let number6 = 6u8;
+        let number7 = 7u8;
+        let number8 = 8u8;
+
+        assert(string.is_empty());
+
+        string.clear();
+        assert(string.is_empty());
+
+        string.push(number0);
+        assert(!string.is_empty());
+
+        string.clear();
+        assert(string.is_empty());
+
+        string.push(number0);
+        string.push(number1);
+        string.push(number2);
+        string.push(number3);
+        string.push(number4);
+        string.push(number5);
+        string.push(number6);
+        string.push(number7);
+        string.push(number8);
+        assert(!string.is_empty());
+
+        string.clear();
+        assert(string.is_empty());
+
+        string.clear();
+        assert(string.is_empty());
+
+        string.push(number0);
+        assert(!string.is_empty());
+
+        string.clear();
+        assert(string.is_empty());
     }
 
     fn test_is_empty() {
