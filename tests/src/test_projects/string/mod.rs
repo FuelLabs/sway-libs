@@ -114,3 +114,20 @@ mod len {
         }
     }
 }
+
+mod new {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn creates_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_new().call().await.unwrap();
+        }
+    }
+}

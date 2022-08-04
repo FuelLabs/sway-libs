@@ -186,7 +186,11 @@ impl StringTest for Contract {
     }
 
     fn test_new() {
-
+        let mut string = ~String::new();
+        
+        assert(string.len() == 0);
+        assert(string.is_empty()); 
+        assert(string.capacity() == 0);
     }
 
     fn test_push() {
