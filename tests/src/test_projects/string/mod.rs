@@ -47,6 +47,23 @@ async fn test_string_instance() -> TestStringLib {
 
 // }
 
+mod capacity {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn returns_capacity() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_capacity().call().await.unwrap();
+        }
+    }
+}
+
 mod clear {
 
     use super::*;
