@@ -148,3 +148,20 @@ mod push {
         }
     }
 }
+
+mod with_capacity {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn creates_string_with_capacity() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_with_capacity().call().await.unwrap();
+        }
+    }
+}

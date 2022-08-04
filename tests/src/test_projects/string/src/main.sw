@@ -274,5 +274,45 @@ impl StringTest for Contract {
 
     fn test_with_capacity() {
 
+        let mut iterator = 0;
+
+        while iterator < 16 {
+            let mut string = ~String::with_capacity(iterator);
+            assert(string.capacity() == iterator);
+
+            iterator += 1;
+        }
+
+        let number0 = 0u8;
+        let number1 = 1u8;
+        let number2 = 2u8;
+        let number3 = 3u8;
+        let number4 = 4u8;
+
+        let mut string = ~String::with_capacity(0);
+        assert(string.capacity() == 0);
+
+        string.push(number0);
+        assert(string.capacity() == 1);
+        string.push(number1);
+        assert(string.capacity() == 2);
+        string.push(number2);
+        assert(string.capacity() == 4);
+        string.clear();
+        assert(string.capacity() == 4);
+    
+        let mut string = ~String::with_capacity(4);
+        assert(string.capacity() == 4);
+
+        string.push(number0);
+        assert(string.capacity() == 4);
+        string.push(number1);
+        assert(string.capacity() == 4);
+        string.push(number2);
+        assert(string.capacity() == 4);
+        string.push(number3);
+        assert(string.capacity() == 4);
+        string.push(number4);
+        assert(string.capacity() == 8);
     }
 }
