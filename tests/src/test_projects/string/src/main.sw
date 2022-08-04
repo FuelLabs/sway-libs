@@ -58,10 +58,9 @@ impl StringTest for Contract {
 
         string.push(number6);
         string.push(number7);
-        string.push(number8);
         assert(string.capacity() == 8);
 
-        string.push(number0);
+        string.push(number8);
         assert(string.capacity() == 16);
         
         string.clear();
