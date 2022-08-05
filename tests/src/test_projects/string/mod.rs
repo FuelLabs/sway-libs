@@ -1,4 +1,6 @@
 use fuels::{prelude::*};
+use std::io::stdout;
+use std::io::Write;
 
 abigen!(
     TestStringLib,
@@ -145,6 +147,23 @@ mod push {
             let instance = test_string_instance().await;
 
             let _result = instance.test_push().call().await.unwrap();
+        }
+    }
+}
+
+mod push_str {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn pushes_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_push_str().call().await.unwrap();
         }
     }
 }

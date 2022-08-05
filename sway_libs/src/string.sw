@@ -81,15 +81,16 @@ impl<S> String<S> {
         self.bytes.push(value);
     }
 
+    // TODO: This will probably need some compliler work
     /// Attempts to convert a static `str` to a `String<S>`
     pub fn push_str(mut self, ptr: u64, len: u64) {
-        // TODO: This will probably need some compliler work
         let mut ptr: u64 = ptr;
-        let mut iterator = 0;
+        let mut iterator: u64 = 0;
 
         // This will probably need to change
         while iterator < len {
-            self.bytes.push(read(ptr + iterator));
+            let byte: u8 = read(ptr + iterator);
+            self.bytes.push(byte);
             iterator += 1;
         }
     }
