@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  REGISTRY: ghcr.io
+  RUST_VERSION: 1.61.0
+
+jobs:
+  build-sway-lib:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions-rs/toolchain@v1
+          with:
+            profile: minimal
+            toolchain: stable
+        - uses: Swatinem/rust-cache@v1
+        - name: Install Forc
+          uses: actions-rs/cargo@v1
+          with:
+            command: install
+            args: --debug --path ./forc
+        - name: Check Sway formatting
+          run: forc fmt --path sway-lib --check
+        - name: Build sway-lib
+          run: forc build --path sway-lib
+
+  build-test-projects:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions-rs/toolchain@v1
+          with:
+            profile: minimal
+            toolchain: stable
+        - uses: Swatinem/rust-cache@v1
+        - name: Install Forc
+          uses: actions-rs/cargo@v1
+          with:
+            command: install
+            args: --debug --path ./forc
+        - name: Build All Tests
+          run: cd test/src/test_projects && bash build.sh --locked && cd ../../../
+          
+cargo-test-lib-std:
+    runs-on: ubuntu-latest
+    services:
+      fuel-core:
+        image: ghcr.io/fuellabs/fuel-core:v0.9.4
+        ports:
+          - 4000:4000
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v1
+      - name: Cargo Test sway-lib
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --manifest-path test/src/Cargo.toml -- --test-threads=1 --nocapture
