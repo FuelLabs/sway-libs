@@ -33,9 +33,9 @@ jobs:
             command: install
             args: --debug --path ./forc
         - name: Check Sway formatting
-          run: forc fmt --path sway-lib --check
-        - name: Build sway-lib
-          run: forc build --path ./sway-lib
+          run: forc fmt --path sway-libs --check
+        - name: Build sway-libs
+          run: forc build --path sway-libs
 
   build-test-projects:
       runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
             command: install
             args: --debug --path ./forc
         - name: Build All Tests
-          run: bash ./test/src/test_projects/build.sh --locked 
+          run: bash test/src/build.sh --locked 
           
   cargo-test-sway-lib:
     runs-on: ubuntu-latest
@@ -72,4 +72,4 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path ./test/src/Cargo.toml -- --test-threads=1 --nocapture
+          args: --manifest-path test/src/Cargo.toml -- --test-threads=1 --nocapture
