@@ -20,56 +20,48 @@ env:
 jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
+      
       steps:
-        - uses: actions/checkout@v2
-        - uses: actions-rs/toolchain@v1
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Install Rust toolchain
+          uses: actions-rs/toolchain@v1
           with:
             profile: minimal
-            toolchain: stable
-        - uses: Swatinem/rust-cache@v1
-        - name: Install Forc
-          uses: actions-rs/cargo@v1
-          with:
-            command: install
-            args: --debug --path ./forc
+            toolchain: ${{ env.RUST_VERSION }}
+            override: true
+
+        - name: Init cache
+          uses: Swatinem/rust-cache@v1
+
+        - name: Install a modern linker (mold)
+          uses: rui314/setup-mold@v1
+
+        - name: Force Rust to use mold globally for compilation
+          run: |
+            touch ~/.cargo/config.toml
+            echo "[target.x86_64-unknown-linux-gnu]" > ~/.cargo/config.toml
+            echo 'linker = "clang"' >> ~/.cargo/config.toml
+            echo 'rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/mold"]' >> ~/.cargo/config.toml
+
+        - name: Install rustfmt
+          run: rustup component add rustfmt
+
+        - name: Install Fuel toolchain
+          uses: FuelLabs/action-fuel-toolchain@v0.1.0
+
         - name: Check Sway formatting
           run: forc fmt --path sway-libs --check
+
         - name: Build sway-libs
           run: forc build --path sway-libs
 
-  build-test-projects:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: actions-rs/toolchain@v1
-          with:
-            profile: minimal
-            toolchain: stable
-        - uses: Swatinem/rust-cache@v1
-        - name: Install Forc
+        - name: Build All Tests
+          run: bash tests/src/build.sh --locked 
+          
+        - name: Cargo Test sway-lib
           uses: actions-rs/cargo@v1
           with:
-            command: install
-            args: --debug --path ./forc
-        - name: Build All Tests
-          run: bash test/src/build.sh --locked 
-          
-  cargo-test-sway-lib:
-    runs-on: ubuntu-latest
-    services:
-      fuel-core:
-        image: ghcr.io/fuellabs/fuel-core:v0.9.4
-        ports:
-          - 4000:4000
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-      - uses: Swatinem/rust-cache@v1
-      - name: Cargo Test sway-lib
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --manifest-path test/src/Cargo.toml -- --test-threads=1 --nocapture
+            command: test
+            args: --manifest-path tests/src/Cargo.toml -- --test-threads=1 --nocapture
