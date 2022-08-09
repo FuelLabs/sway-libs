@@ -1,0 +1,15 @@
+[project]
+name = "sway-libs-tests"
+version = "0.0.0"
+authors = ["Fuel Labs <contact@fuel.sh>"]
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+fuels = { version = "0.19" }
+tokio = { version = "1.12", features = ["rt", "macros"] }
+
+[[test]]
+harness = true
+name = "sway-libs-tests"
+path = "test_projects/harness.rs"
