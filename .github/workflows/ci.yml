@@ -52,10 +52,11 @@ jobs:
           uses: FuelLabs/action-fuel-toolchain@v0.1.0
 
         - name: Check Sway formatting
-          run: forc fmt --path sway-libs --check
+          run: forc fmt --path sway_libs --check
 
         - name: Build sway-libs
-          run: forc build --path sway-libs
+          run: forc build --path sway_libs
+
 
         - name: Build All Tests
           run: bash tests/src/build.sh --locked 
