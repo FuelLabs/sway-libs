@@ -1,11 +1,12 @@
 use fuels::{prelude::*, tx::ContractId};
+use merkle_tree::MerkleTree;
 
 abigen!(
     TestMerkleProofLib,
     "test_projects/merkle_proof/out/debug/merkle_proof-abi.json"
 );
 
-async fn test_merkle_proof_instance() -> (TestMerkleProofLib, ContractId) {
+async fn test_merkle_proof_instance() -> TestMerkleProofLib {
     // Launch a local network and deploy the contract
     let wallet = launch_provider_and_get_wallet().await;
 
@@ -18,32 +19,38 @@ async fn test_merkle_proof_instance() -> (TestMerkleProofLib, ContractId) {
     .await
     .unwrap();
 
-    let instance = MyContractBuilder::new(id.to_string(), wallet).build();
+    let instance = TestMerkleProofLibBuilder::new(id.to_string(), wallet).build();
 
-    (instance, id)
+    instance
 }
 
-// mod merkle_proof {
+mod merkle_proof {
 
-//     use super::*;
+    use super::*;
 
-//     mod success {
+    mod success {
 
-//         use super::*;
+        use super::*;
 
-//         #[tokio::test]
-//         async fn verifies_merkle_proof() {
-//             let _instance = test_merkle_proof_instance().await;
+        #[tokio::test]
+        async fn verifies_merkle_proof() {
+            let _instance = test_merkle_proof_instance().await;
+            
+        }
 
-//             // Test here once https://github.com/FuelLabs/fuels-rs/issues/353 is closed
-//         }
+        #[tokio::test]
+        async fn verifies_multi_merkle_proof() {
+            let _instance = test_merkle_proof_instance().await;
 
-//     }
+            
+        }
 
-//     mod reverts {
+    }
 
-//         use super::*;
+    mod reverts {
 
-//     }
+        use super::*;
 
-// }
+    }
+
+}
