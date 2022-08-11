@@ -88,5 +88,27 @@ mod merkle_proof {
 
             assert_eq!(instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value, true);
         }
+
+        #[tokio::test]
+        async fn fails_multi_merkle_proof() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof  = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let merkle_root = merkle_tree.root();
+            let proof_flags = vec![false, false];
+
+            assert_eq!(instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value, false);
+        }
     }
 }
