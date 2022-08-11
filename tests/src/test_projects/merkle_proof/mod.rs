@@ -1,3 +1,4 @@
+// TODO: More extensive testing should be added when https://github.com/FuelLabs/fuels-rs/issues/353 is revolved.
 use fuels::{prelude::*, tx::Bytes32};
 use rs_merkle::{algorithms::Sha256, Hasher, MerkleTree};
 
