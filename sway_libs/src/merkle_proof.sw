@@ -15,6 +15,10 @@ fn hash_pair(a: b256, b: b256) -> b256 {
     }
 }
 
+pub enum ProofError {
+    InvalidMultiproof: (),
+}
+
 /// This function will verify the merkle leaf and proof given against the root.
 ///
 /// # Arguments
@@ -69,7 +73,7 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: b2
     let total_hashes = 2;
     let merkle_leaves_len = 2;
     let proof_len = 1;
-    require(merkle_leaves_len + proof_len - 1 == total_hashes, "Error");
+    require(merkle_leaves_len + proof_len - 1 == total_hashes, ProofError::InvalidMultiproof);
 
     let mut hashes: Vec<b256> = ~Vec::new();
     let mut itterator = 0;
