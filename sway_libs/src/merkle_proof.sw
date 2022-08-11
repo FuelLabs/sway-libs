@@ -47,8 +47,7 @@ pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: [b256; 2]) -> b
         };
 
         computed_hash = hash_pair(computed_hash, proof_element);
-
-        index = index + 1;
+        index += 1;
     }
 
     // Check if the computed hash is equal to the provided root
@@ -88,28 +87,28 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: b2
     //      * False - A provided proof
     while itterator < total_hashes {
         let a = if leaf_pos < merkle_leaves_len {
-            leaf_pos = leaf_pos + 1;
+            leaf_pos += 1;
             merkle_leaves[leaf_pos - 1]
         } else {
-            hash_pos = hash_pos + 1;
+            hash_pos += 1;
             hashes.get(hash_pos - 1).unwrap()
         };
 
         let b = if proof_flags[itterator] {
             if leaf_pos < merkle_leaves_len {
-                leaf_pos = leaf_pos + 1;
+                leaf_pos += 1;
                 merkle_leaves[leaf_pos - 1]
             } else {
-                hash_pos = hash_pos + 1;
+                hash_pos += 1;
                 hashes.get(hash_pos - 1).unwrap()
             }
         } else {
-            proof_pos = proof_pos + 1;
+            proof_pos += 1;
             proof
         };
 
         hashes.push(hash_pair(a, b));
-        itterator = itterator + 1;
+        itterator += 1;
     }
 
     // Compare results with merkle root
