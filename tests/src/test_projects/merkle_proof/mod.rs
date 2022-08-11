@@ -67,6 +67,31 @@ mod merkle_proof {
             assert_eq!(instance.verify_proof(*zero_b256, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, false);
         }
     }
+
+    mod revert {
+
+        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        // use super::*;
+
+        // #[tokio::test]
+        // #[should_panic]
+        // async fn verifies_merkle_proof() {
+        //     let instance = test_merkle_proof_instance().await;
+
+        //     let leaf_values = ["A", "B", "C"];
+        //     let leaves: Vec<[u8; 32]> = leaf_values
+        //         .iter()
+        //         .map(|x| Sha256::hash(x.as_bytes()))
+        //         .collect();
+
+        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+        //     let merkle_root = merkle_tree.root();
+        //     // TODO: Cause function to panic when unwrapping the proof on `None`
+        //     let (merkle_leaf, proof) = leaves.split_first().unwrap();
+
+        //     assert_eq!(instance.verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, true);
+        // }
+    }
 }
 
 mod multi_merkle_proof {
