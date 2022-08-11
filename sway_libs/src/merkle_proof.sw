@@ -30,8 +30,8 @@ pub enum ProofError {
 /// # Reverts
 ///
 /// * When an element in the provided `proof` is `None`.
-pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: [b256; 2]) -> bool {
-
+pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: [b256;
+2]) -> bool {
     let mut computed_hash = merkle_leaf;
     let mut index = 0;
     // let proof_length = proof.len();
@@ -66,7 +66,9 @@ pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: [b256; 2]) -> b
 /// # Reverts
 ///
 /// * When an incorrect number of proof flags for the multi-proof is given.
-pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: b256, proof_flags: [bool; 2]) -> bool {
+pub fn verify_multi_proof(merkle_leaves: [b256;
+2], merkle_root: b256, proof: b256, proof_flags: [bool;
+2]) -> bool {
     // TODO: These should not be hard-coded. Only used as placeholders until
     // https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
     let total_hashes = 2;
@@ -81,7 +83,7 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: b2
     let mut proof_pos = 0;
 
     // For each step we find a suitable `a` and `b` to hash:
-    // `a` - A leaf if we have remaining leaves to hash or a computed hash 
+    // `a` - A leaf if we have remaining leaves to hash or a computed hash
     // `b` - Based on the provided proof flags:
     //      * True - A leaf if we have remaining leaves to hash or a computed hash
     //      * False - A provided proof

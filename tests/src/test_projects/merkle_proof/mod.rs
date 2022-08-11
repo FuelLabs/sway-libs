@@ -46,7 +46,15 @@ mod merkle_proof {
             let merkle_root = merkle_tree.root();
             let (merkle_leaf, proof) = leaves.split_first().unwrap();
 
-            assert_eq!(instance.verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, true);
+            assert_eq!(
+                instance
+                    .verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                true
+            );
         }
 
         #[tokio::test]
@@ -64,7 +72,15 @@ mod merkle_proof {
             let (_merkle_leaf, proof) = leaves.split_first().unwrap();
             let zero_b256 = Bytes32::zeroed();
 
-            assert_eq!(instance.verify_proof(*zero_b256, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, false);
+            assert_eq!(
+                instance
+                    .verify_proof(*zero_b256, merkle_root.unwrap(), proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                false
+            );
         }
     }
 
@@ -75,7 +91,7 @@ mod merkle_proof {
 
         // #[tokio::test]
         // #[should_panic]
-        // async fn verifies_merkle_proof() {
+        // async fn panics_when_unwrapping_proof_on_none() {
         //     let instance = test_merkle_proof_instance().await;
 
         //     let leaf_values = ["A", "B", "C"];
@@ -115,13 +131,26 @@ mod multi_merkle_proof {
             let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
             let indices_to_prove = vec![0, 1];
             let merkle_leaves = leaves.get(0..2);
-            let merkle_proof  = merkle_tree.proof(&indices_to_prove);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
             let proof_bytes = merkle_proof.to_bytes();
             let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
             let merkle_root = merkle_tree.root();
             let proof_flags = vec![true, false];
 
-            assert_eq!(instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value, true);
+            assert_eq!(
+                instance
+                    .verify_multi_proof(
+                        (*merkle_leaves.unwrap()).to_vec(),
+                        merkle_root.unwrap(),
+                        *proof,
+                        proof_flags
+                    )
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                true
+            );
         }
 
         #[tokio::test]
@@ -137,13 +166,26 @@ mod multi_merkle_proof {
             let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
             let indices_to_prove = vec![0, 1];
             let merkle_leaves = leaves.get(0..2);
-            let merkle_proof  = merkle_tree.proof(&indices_to_prove);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
             let proof_bytes = merkle_proof.to_bytes();
             let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
             let merkle_root = merkle_tree.root();
             let proof_flags = vec![false, false];
 
-            assert_eq!(instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value, false);
+            assert_eq!(
+                instance
+                    .verify_multi_proof(
+                        (*merkle_leaves.unwrap()).to_vec(),
+                        merkle_root.unwrap(),
+                        *proof,
+                        proof_flags
+                    )
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                false
+            );
         }
     }
 
