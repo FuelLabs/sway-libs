@@ -8,7 +8,7 @@ locked="$1"
 test_dirs="tests/src/test_projects/*"
 
 for test_dir in $test_dirs; do
-  if [[ -f "${test_dir}/Forc.toml" ]]; then
+  if [ -f "${test_dir}/Forc.toml" ]; then
     echo "Building test $test_dir..."
     forc build $locked -o temp -p "${test_dir}" && echo ✔
     if ! [[ -f temp ]]; then
