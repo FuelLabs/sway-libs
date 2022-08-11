@@ -59,7 +59,7 @@ jobs:
           run: forc build --path sway_libs
 
         - name: Build All Tests
-          run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh --locked 
+          run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh
           
         - name: Cargo Test sway-lib
           uses: actions-rs/cargo@v1
