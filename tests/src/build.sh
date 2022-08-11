@@ -11,6 +11,17 @@ abs_path() {
 
 # Grab the absolute path to this script.
 base_dir="$(abs_path $(dirname $0))"
+
+# Search for the parent Cargo manifest for Forc.
+parent_manifest_dir="${base_dir}"
+while true; do
+  parent_manifest_dir=$(abs_path "${parent_manifest_dir}")
+  if [[ -f "${parent_manifest_dir}/Cargo.toml" ]]; then
+    forc="cargo run $locked --manifest-path ${parent_manifest_dir}/Cargo.toml --package forc --"
+    break
+  fi
+done
+
 test_dirs="${base_dir}/test_projects/*"
 
 for test_dir in $test_dirs; do

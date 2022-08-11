@@ -9,6 +9,7 @@ license = "Apache-2.0"
 fuels = { version = "0.19" }
 tokio = { version = "1.12", features = ["rt", "macros"] }
 rs_merkle = { version = "1.2" }
+forc = { version = "0.19" }
 
 [[test]]
 harness = true
