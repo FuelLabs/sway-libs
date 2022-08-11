@@ -55,13 +55,14 @@ pub fn verify_proof(merkle_leaf: b256, merkle_root: b256, proof: [b256; 2]) -> b
 /// * `merkle_root` - The pre-computed merkle root that will be used to verify the leaves and proof
 /// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root
 /// * 'proof_flags' - The merkle proof flags used to compute the merkle root
-pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: [b256; 2], proof_flags: [bool; 2]) -> bool {
+pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: b256, proof_flags: [bool; 2]) -> bool {
     let mut hashes: Vec<b256> = ~Vec::new();
     let mut itterator = 0;
     let mut leaf_pos = 0;
     let mut hash_pos = 0;
     let mut proof_pos = 0;
 
+    // TODO: Support for Vec in SDK needed
     // while itterator < proof_flags.len() {
     //     let a = if leaf_pos < merkle_leaves.len() {
     //         leaf_pos = leaf_pos + 1;
@@ -89,10 +90,10 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: [b
     //     itterator = itterator + 1;
     // }
 
-    let proof_flags_len = 2;
+    let total_hashes = 2;
     let merkle_leaves_len = 2;
 
-    while itterator < proof_flags_len {
+    while itterator < total_hashes {
         let a = if leaf_pos < merkle_leaves_len {
             leaf_pos = leaf_pos + 1;
             merkle_leaves[leaf_pos - 1]
@@ -111,7 +112,7 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: [b
             }
         } else {
             proof_pos = proof_pos + 1;
-            proof[proof_pos - 1]
+            proof
         };
 
         hashes.push(hash_pair(a, b));
@@ -119,11 +120,11 @@ pub fn verify_multi_proof(merkle_leaves: [b256; 2], merkle_root: b256, proof: [b
         itterator = itterator + 1;
     }
 
-    if proof_flags_len > 0 {
-        hashes.get(proof_flags_len - 1).unwrap() == merkle_root
+    if total_hashes > 0 {
+        hashes.get(total_hashes - 1).unwrap() == merkle_root
     } else if merkle_leaves_len > 0 {
         merkle_leaves[0] == merkle_root
     } else {
-        proof[0] == merkle_root
+        proof == merkle_root
     }
 }
