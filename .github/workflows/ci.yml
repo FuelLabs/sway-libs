@@ -22,10 +22,11 @@ jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
 
-      fuel-core:
-        image: ghcr.io/fuellabs/fuel-core:v0.9.4
-        ports:
-          - 4000:4000
+      services:
+        fuel-core:
+          image: ghcr.io/fuellabs/fuel-core:v0.9.4
+          ports:
+            - 4000:4000
       
       steps:
         - name: Checkout repository
