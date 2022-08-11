@@ -7,7 +7,7 @@ for test_dir in $test_dirs; do
   if [ -f "${test_dir}/Forc.toml" ]; then
     echo "Building test $test_dir..."
     forc build -o temp -p "${test_dir}" && echo ✔
-    if ! [[ -f temp ]]; then
+    if ! [ -f temp ]; then
       echo  "❌  Failed to build $test_dir"
       exit 1
     fi
