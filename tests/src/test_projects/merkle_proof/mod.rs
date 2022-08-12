@@ -7,7 +7,7 @@ abigen!(
     "test_projects/merkle_proof/out/debug/merkle_proof-abi.json"
 );
 
-async fn test_merkle_proof_instance() -> TestMerkleProofLib {
+async fn merkle_proof_instance() -> TestMerkleProofLib {
     // Launch a local network and deploy the contract
     let wallet = launch_provider_and_get_wallet().await;
 
@@ -35,7 +35,7 @@ mod process_multi_merkle_proof {
 
         #[tokio::test]
         async fn fails_to_process_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C", "D"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -65,7 +65,7 @@ mod process_multi_merkle_proof {
 
         #[tokio::test]
         async fn processes_multi_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C", "D"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -96,31 +96,36 @@ mod process_multi_merkle_proof {
 
     mod revert {
 
-        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-        // use super::*;
+        use super::*;
 
-        // #[tokio::test]
-        // #[should_panic(expected = "Revert(42)")]
-        // async fn panics_with_invalid_proof_flags_length() {
-        //     let instance = test_merkle_proof_instance().await;
+        // TODO: Test when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        #[ignore]
+        #[tokio::test]
+        #[should_panic(expected = "Revert(42)")]
+        async fn panics_with_invalid_proof_flags_length() {
+            let instance = merkle_proof_instance().await;
 
-        //     let leaf_values = ["A", "B", "C", "D"];
-        //     let leaves: Vec<[u8; 32]> = leaf_values
-        //         .iter()
-        //         .map(|x| Sha256::hash(x.as_bytes()))
-        //         .collect();
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
 
-        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-        //     let indices_to_prove = vec![0, 1];
-        //     let merkle_leaves = leaves.get(0..2);
-        //     let merkle_proof  = merkle_tree.proof(&indices_to_prove);
-        //     let proof_bytes = merkle_proof.to_bytes();
-        //     let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
-        //     let merkle_root = merkle_tree.root();
-        //     let proof_flags = vec![false];
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let proof_flags = vec![false];
 
-        //     let _result = instance.process_multi_proof((*merkle_leaves.unwrap()).to_vec(), *proof, proof_flags).call().await.unwrap().value;
-        // }
+            let _result = instance
+                .process_multi_proof((*merkle_leaves.unwrap()).to_vec(), *proof, proof_flags)
+                .call()
+                .await
+                .unwrap()
+                .value;
+        }
     }
 }
 
@@ -134,7 +139,7 @@ mod process_merkle_proof {
 
         #[tokio::test]
         async fn fails_to_process_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -160,7 +165,7 @@ mod process_merkle_proof {
 
         #[tokio::test]
         async fn processes_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -186,27 +191,31 @@ mod process_merkle_proof {
 
     mod revert {
 
-        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-        // use super::*;
+        use super::*;
 
-        // #[tokio::test]
-        // #[should_panic]
-        // async fn panics_when_unwrapping_proof_on_none() {
-        //     let instance = test_merkle_proof_instance().await;
+        // TODO: Test when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        #[ignore]
+        #[tokio::test]
+        #[should_panic]
+        async fn panics_when_unwrapping_proof_on_none() {
+            let instance = merkle_proof_instance().await;
 
-        //     let leaf_values = ["A", "B", "C"];
-        //     let leaves: Vec<[u8; 32]> = leaf_values
-        //         .iter()
-        //         .map(|x| Sha256::hash(x.as_bytes()))
-        //         .collect();
+            let leaf_values = ["A", "B", "C"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
 
-        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-        //     let merkle_root = merkle_tree.root();
-        //     // TODO: Cause function to panic when unwrapping the proof on `None`
-        //     let (merkle_leaf, proof) = leaves.split_first().unwrap();
+            // TODO: Cause function to panic when unwrapping the proof on `None`
+            let (merkle_leaf, proof) = leaves.split_first().unwrap();
 
-        //     assert_eq!(instance.process_proof(*merkle_leaf, proof.to_vec()).call().await.unwrap().value, true);
-        // }
+            let _result = instance
+                .process_proof(*merkle_leaf, proof.to_vec())
+                .call()
+                .await
+                .unwrap()
+                .value;
+        }
     }
 }
 
@@ -220,7 +229,7 @@ mod verify_multi_merkle_proof {
 
         #[tokio::test]
         async fn fails_multi_merkle_proof_verification() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C", "D"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -255,7 +264,7 @@ mod verify_multi_merkle_proof {
 
         #[tokio::test]
         async fn verifies_multi_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C", "D"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -291,31 +300,42 @@ mod verify_multi_merkle_proof {
 
     mod revert {
 
-        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-        // use super::*;
+        // TODO: Test when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        use super::*;
 
-        // #[tokio::test]
-        // #[should_panic(expected = "Revert(42)")]
-        // async fn panics_with_invalid_proof_flags_length() {
-        //     let instance = test_merkle_proof_instance().await;
+        #[ignore]
+        #[tokio::test]
+        #[should_panic(expected = "Revert(42)")]
+        async fn panics_with_invalid_proof_flags_length() {
+            let instance = merkle_proof_instance().await;
 
-        //     let leaf_values = ["A", "B", "C", "D"];
-        //     let leaves: Vec<[u8; 32]> = leaf_values
-        //         .iter()
-        //         .map(|x| Sha256::hash(x.as_bytes()))
-        //         .collect();
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
 
-        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-        //     let indices_to_prove = vec![0, 1];
-        //     let merkle_leaves = leaves.get(0..2);
-        //     let merkle_proof  = merkle_tree.proof(&indices_to_prove);
-        //     let proof_bytes = merkle_proof.to_bytes();
-        //     let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
-        //     let merkle_root = merkle_tree.root();
-        //     let proof_flags = vec![false];
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let merkle_root = merkle_tree.root();
+            let proof_flags = vec![false];
 
-        //     let _result = instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value;
-        // }
+            let _result = instance
+                .verify_multi_proof(
+                    (*merkle_leaves.unwrap()).to_vec(),
+                    merkle_root.unwrap(),
+                    *proof,
+                    proof_flags,
+                )
+                .call()
+                .await
+                .unwrap()
+                .value;
+        }
     }
 }
 
@@ -329,7 +349,7 @@ mod verify_merkle_proof {
 
         #[tokio::test]
         async fn fails_merkle_proof_verification() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -355,7 +375,7 @@ mod verify_merkle_proof {
 
         #[tokio::test]
         async fn verifies_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
+            let instance = merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C"];
             let leaves: Vec<[u8; 32]> = leaf_values
@@ -381,26 +401,35 @@ mod verify_merkle_proof {
 
     mod revert {
 
-        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-        // use super::*;
+        use super::*;
 
-        // #[tokio::test]
-        // #[should_panic]
-        // async fn panics_when_unwrapping_proof_on_none() {
-        //     let instance = test_merkle_proof_instance().await;
+        // TODO: Test when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        #[ignore]
+        #[tokio::test]
+        #[should_panic]
+        async fn panics_when_unwrapping_proof_on_none() {
+            let instance = merkle_proof_instance().await;
 
-        //     let leaf_values = ["A", "B", "C"];
-        //     let leaves: Vec<[u8; 32]> = leaf_values
-        //         .iter()
-        //         .map(|x| Sha256::hash(x.as_bytes()))
-        //         .collect();
+            let leaf_values = ["A", "B", "C"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
 
-        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-        //     let merkle_root = merkle_tree.root();
-        //     // TODO: Cause function to panic when unwrapping the proof on `None`
-        //     let (merkle_leaf, proof) = leaves.split_first().unwrap();
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let merkle_root = merkle_tree.root();
+            // TODO: Cause function to panic when unwrapping the proof on `None`
+            let (merkle_leaf, proof) = leaves.split_first().unwrap();
 
-        //     assert_eq!(instance.verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, true);
-        // }
+            assert_eq!(
+                instance
+                    .verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                true
+            );
+        }
     }
 }

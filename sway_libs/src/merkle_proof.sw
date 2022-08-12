@@ -5,6 +5,10 @@ library merkle_proof;
 
 use std::{hash::sha256, option::Option, revert::{require, revert}, vec::Vec};
 
+pub enum ProofError {
+    InvalidMultiProof: (),
+}
+
 fn hash_pair(a: b256, b: b256) -> b256 {
     if a <= b {
         // Hash(a + b)
@@ -40,7 +44,7 @@ pub fn process_multi_proof(merkle_leaves: [b256;
     require(merkle_leaves_len + proof_len - 1 == total_hashes, ProofError::InvalidMultiProof);
 
     let mut hashes: Vec<b256> = ~Vec::new();
-    let mut itterator = 0;
+    let mut iterator = 0;
     let mut leaf_pos = 0;
     let mut hash_pos = 0;
     let mut proof_pos = 0;
@@ -50,7 +54,7 @@ pub fn process_multi_proof(merkle_leaves: [b256;
     // `b` - Based on the provided proof flags:
     //      * True - A leaf hash if there are unused leaves or a computed hash
     //      * False - A provided proof hash
-    while itterator < total_hashes {
+    while iterator < total_hashes {
         let a = if leaf_pos < merkle_leaves_len {
             leaf_pos += 1;
             merkle_leaves[leaf_pos - 1]
@@ -59,7 +63,7 @@ pub fn process_multi_proof(merkle_leaves: [b256;
             hashes.get(hash_pos - 1).unwrap()
         };
 
-        let b = if proof_flags[itterator] {
+        let b = if proof_flags[iterator] {
             if leaf_pos < merkle_leaves_len {
                 leaf_pos += 1;
                 merkle_leaves[leaf_pos - 1]
@@ -73,10 +77,9 @@ pub fn process_multi_proof(merkle_leaves: [b256;
         };
 
         hashes.push(hash_pair(a, b));
-        itterator += 1;
+        iterator += 1;
     }
 
-    // Compare results with merkle root
     if total_hashes > 0 {
         hashes.get(total_hashes - 1).unwrap()
     } else if merkle_leaves_len > 0 {
@@ -116,12 +119,7 @@ pub fn process_proof(merkle_leaf: b256, proof: [b256;
         index += 1;
     }
 
-    // Check if the computed hash is equal to the provided root
     computed_hash
-}
-
-pub enum ProofError {
-    InvalidMultiProof: (),
 }
 
 /// This function will take multiple merkle leaves, a proof, and proof flags and returns whether the
