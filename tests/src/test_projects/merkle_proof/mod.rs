@@ -25,7 +25,7 @@ async fn test_merkle_proof_instance() -> TestMerkleProofLib {
     instance
 }
 
-mod merkle_proof {
+mod process_multi_merkle_proof {
 
     use super::*;
 
@@ -34,7 +34,132 @@ mod merkle_proof {
         use super::*;
 
         #[tokio::test]
-        async fn verifies_merkle_proof() {
+        async fn fails_to_process_merkle_proof() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let merkle_root = merkle_tree.root();
+            let proof_flags = vec![false, false];
+
+            assert_ne!(
+                instance
+                    .process_multi_proof((*merkle_leaves.unwrap()).to_vec(), *proof, proof_flags)
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                merkle_root.unwrap()
+            );
+        }
+
+        #[tokio::test]
+        async fn processes_multi_merkle_proof() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let merkle_root = merkle_tree.root();
+            let proof_flags = vec![true, false];
+
+            assert_eq!(
+                instance
+                    .process_multi_proof((*merkle_leaves.unwrap()).to_vec(), *proof, proof_flags)
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                merkle_root.unwrap()
+            );
+        }
+    }
+
+    mod revert {
+
+        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        // use super::*;
+
+        // #[tokio::test]
+        // #[should_panic(expected = "Revert(42)")]
+        // async fn panics_with_invalid_proof_flags_length() {
+        //     let instance = test_merkle_proof_instance().await;
+
+        //     let leaf_values = ["A", "B", "C", "D"];
+        //     let leaves: Vec<[u8; 32]> = leaf_values
+        //         .iter()
+        //         .map(|x| Sha256::hash(x.as_bytes()))
+        //         .collect();
+
+        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+        //     let indices_to_prove = vec![0, 1];
+        //     let merkle_leaves = leaves.get(0..2);
+        //     let merkle_proof  = merkle_tree.proof(&indices_to_prove);
+        //     let proof_bytes = merkle_proof.to_bytes();
+        //     let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+        //     let merkle_root = merkle_tree.root();
+        //     let proof_flags = vec![false];
+
+        //     let _result = instance.process_multi_proof((*merkle_leaves.unwrap()).to_vec(), *proof, proof_flags).call().await.unwrap().value;
+        // }
+    }
+}
+
+mod process_merkle_proof {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn fails_to_process_merkle_proof() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let merkle_root = merkle_tree.root();
+            let (_merkle_leaf, proof) = leaves.split_first().unwrap();
+            let zero_b256 = Bytes32::zeroed();
+
+            assert_ne!(
+                instance
+                    .process_proof(*zero_b256, proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                merkle_root.unwrap()
+            );
+        }
+
+        #[tokio::test]
+        async fn processes_merkle_proof() {
             let instance = test_merkle_proof_instance().await;
 
             let leaf_values = ["A", "B", "C"];
@@ -49,38 +174,12 @@ mod merkle_proof {
 
             assert_eq!(
                 instance
-                    .verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec())
+                    .process_proof(*merkle_leaf, proof.to_vec())
                     .call()
                     .await
                     .unwrap()
                     .value,
-                true
-            );
-        }
-
-        #[tokio::test]
-        async fn fails_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
-
-            let leaf_values = ["A", "B", "C"];
-            let leaves: Vec<[u8; 32]> = leaf_values
-                .iter()
-                .map(|x| Sha256::hash(x.as_bytes()))
-                .collect();
-
-            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-            let merkle_root = merkle_tree.root();
-            let (_merkle_leaf, proof) = leaves.split_first().unwrap();
-            let zero_b256 = Bytes32::zeroed();
-
-            assert_eq!(
-                instance
-                    .verify_proof(*zero_b256, merkle_root.unwrap(), proof.to_vec())
-                    .call()
-                    .await
-                    .unwrap()
-                    .value,
-                false
+                merkle_root.unwrap()
             );
         }
     }
@@ -106,18 +205,53 @@ mod merkle_proof {
         //     // TODO: Cause function to panic when unwrapping the proof on `None`
         //     let (merkle_leaf, proof) = leaves.split_first().unwrap();
 
-        //     assert_eq!(instance.verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, true);
+        //     assert_eq!(instance.process_proof(*merkle_leaf, proof.to_vec()).call().await.unwrap().value, true);
         // }
     }
 }
 
-mod multi_merkle_proof {
+mod verify_multi_merkle_proof {
 
     use super::*;
 
     mod success {
 
         use super::*;
+
+        #[tokio::test]
+        async fn fails_multi_merkle_proof_verification() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C", "D"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let indices_to_prove = vec![0, 1];
+            let merkle_leaves = leaves.get(0..2);
+            let merkle_proof = merkle_tree.proof(&indices_to_prove);
+            let proof_bytes = merkle_proof.to_bytes();
+            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
+            let merkle_root = merkle_tree.root();
+            let proof_flags = vec![false, false];
+
+            assert_eq!(
+                instance
+                    .verify_multi_proof(
+                        (*merkle_leaves.unwrap()).to_vec(),
+                        merkle_root.unwrap(),
+                        *proof,
+                        proof_flags
+                    )
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                false
+            );
+        }
 
         #[tokio::test]
         async fn verifies_multi_merkle_proof() {
@@ -153,41 +287,6 @@ mod multi_merkle_proof {
                 true
             );
         }
-
-        #[tokio::test]
-        async fn fails_multi_merkle_proof() {
-            let instance = test_merkle_proof_instance().await;
-
-            let leaf_values = ["A", "B", "C", "D"];
-            let leaves: Vec<[u8; 32]> = leaf_values
-                .iter()
-                .map(|x| Sha256::hash(x.as_bytes()))
-                .collect();
-
-            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
-            let indices_to_prove = vec![0, 1];
-            let merkle_leaves = leaves.get(0..2);
-            let merkle_proof = merkle_tree.proof(&indices_to_prove);
-            let proof_bytes = merkle_proof.to_bytes();
-            let proof: &[u8; 32] = &(&proof_bytes[..]).try_into().unwrap();
-            let merkle_root = merkle_tree.root();
-            let proof_flags = vec![false, false];
-
-            assert_eq!(
-                instance
-                    .verify_multi_proof(
-                        (*merkle_leaves.unwrap()).to_vec(),
-                        merkle_root.unwrap(),
-                        *proof,
-                        proof_flags
-                    )
-                    .call()
-                    .await
-                    .unwrap()
-                    .value,
-                false
-            );
-        }
     }
 
     mod revert {
@@ -216,6 +315,92 @@ mod multi_merkle_proof {
         //     let proof_flags = vec![false];
 
         //     let _result = instance.verify_multi_proof((*merkle_leaves.unwrap()).to_vec(), merkle_root.unwrap(), *proof, proof_flags).call().await.unwrap().value;
+        // }
+    }
+}
+
+mod verify_merkle_proof {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn fails_merkle_proof_verification() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let merkle_root = merkle_tree.root();
+            let (_merkle_leaf, proof) = leaves.split_first().unwrap();
+            let zero_b256 = Bytes32::zeroed();
+
+            assert_eq!(
+                instance
+                    .verify_proof(*zero_b256, merkle_root.unwrap(), proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                false
+            );
+        }
+
+        #[tokio::test]
+        async fn verifies_merkle_proof() {
+            let instance = test_merkle_proof_instance().await;
+
+            let leaf_values = ["A", "B", "C"];
+            let leaves: Vec<[u8; 32]> = leaf_values
+                .iter()
+                .map(|x| Sha256::hash(x.as_bytes()))
+                .collect();
+
+            let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+            let merkle_root = merkle_tree.root();
+            let (merkle_leaf, proof) = leaves.split_first().unwrap();
+
+            assert_eq!(
+                instance
+                    .verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                true
+            );
+        }
+    }
+
+    mod revert {
+
+        // TODO: Uncomment when https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
+        // use super::*;
+
+        // #[tokio::test]
+        // #[should_panic]
+        // async fn panics_when_unwrapping_proof_on_none() {
+        //     let instance = test_merkle_proof_instance().await;
+
+        //     let leaf_values = ["A", "B", "C"];
+        //     let leaves: Vec<[u8; 32]> = leaf_values
+        //         .iter()
+        //         .map(|x| Sha256::hash(x.as_bytes()))
+        //         .collect();
+
+        //     let merkle_tree = MerkleTree::<Sha256>::from_leaves(&leaves);
+        //     let merkle_root = merkle_tree.root();
+        //     // TODO: Cause function to panic when unwrapping the proof on `None`
+        //     let (merkle_leaf, proof) = leaves.split_first().unwrap();
+
+        //     assert_eq!(instance.verify_proof(*merkle_leaf, merkle_root.unwrap(), proof.to_vec()).call().await.unwrap().value, true);
         // }
     }
 }

@@ -125,7 +125,7 @@ pub enum ProofError {
 }
 
 /// This function will take multiple merkle leaves, a proof, and proof flags and returns whether the
-/// corresponding root matches the root given. 
+/// corresponding root matches the root given.
 ///
 /// # Arguments
 ///
@@ -139,7 +139,7 @@ pub fn verify_multi_proof(merkle_leaves: [b256;
     process_multi_proof(merkle_leaves, proof, proof_flags) == merkle_root
 }
 
-/// This function will take a merkle leaf and proof and return whether the corresponding root 
+/// This function will take a merkle leaf and proof and return whether the corresponding root
 /// matches the root given.
 ///
 /// # Arguments
