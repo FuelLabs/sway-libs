@@ -16,6 +16,7 @@ env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
   RUST_VERSION: 1.61.0
+  PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
   build-sway-lib:
@@ -57,9 +58,8 @@ jobs:
         - name: Build sway-libs
           run: forc build --path sway_libs
 
-
         - name: Build All Tests
-          run: bash tests/src/build.sh --locked 
+          run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh
           
         - name: Cargo Test sway-lib
           uses: actions-rs/cargo@v1
