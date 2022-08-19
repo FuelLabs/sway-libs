@@ -44,6 +44,66 @@ async fn merkle_proof_instance() -> TestMerkleProofLib {
     instance
 }
 
+mod leaf_digest {
+
+    use super::*;
+
+    mod succes {
+
+        use super::*;
+
+        #[ignore]
+        #[tokio::test]
+        async fn computes_leaf() {
+            let instance = merkle_proof_instance().await;
+
+            let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
+            let key = 0;
+            let (_tree, _root, leaf, _proof) = build_tree(leaves, key).await;
+
+            assert_eq!(
+                instance
+                    .leaf_digest("A".as_bytes().try_into().unwrap())
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                leaf
+            );
+        }
+    }
+}
+
+mod node_digest {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[ignore]
+        #[tokio::test]
+        async fn computes_node() {
+            let instance = merkle_proof_instance().await;
+
+            let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
+            let key = 2;
+            let (_tree, root, leaf, proof) = build_tree(leaves, key).await;
+
+            assert_eq!(
+                instance
+                    .node_digest(proof[0], leaf)
+                    .call()
+                    .await
+                    .unwrap()
+                    .value,
+                root
+            );
+        }
+    }
+}
+
 mod process_merkle_proof {
 
     use super::*;
