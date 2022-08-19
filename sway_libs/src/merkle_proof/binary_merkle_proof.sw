@@ -54,7 +54,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     require((num_leaves > 1 && proof_length != 0) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
     require(key < num_leaves, ProofError::InvalidKey);
 
-    let mut digest = leaf_digest(merkle_leaf);
+    let mut digest = merkle_leaf;
     // If there is no proof then the leaf is the root
     if proof_length == 0 {
         return digest
@@ -89,14 +89,14 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     }
 
     // Determine if the next hash belongs to an orphan that was elevated.
-    if stable_end != num_leaves - 1 {
+    if stable_end != (num_leaves - 1) {
         require(proof_length > height - 1, ProofError::InvalidProofLength);
         digest = node_digest(digest, proof[height - 1]);
         height += 1;
     }
 
     // All remaining elements in the proof set will belong to the left sibling.
-    while height - 1 < proof_length {
+    while (height - 1) < proof_length {
         digest = node_digest(proof[height - 1], digest);
         height += 1;
     }
