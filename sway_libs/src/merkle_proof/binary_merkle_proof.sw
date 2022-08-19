@@ -18,7 +18,7 @@ pub const NODE = 1u8;
 /// # Arguments
 ///
 /// * 'data' - The hash of the leaf data.
-pub fn leaf_digest(data: b256) -> b256 {    
+pub fn leaf_digest(data: b256) -> b256 {
     sha256((LEAF, data))
 }
 
@@ -47,25 +47,25 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
         // The height of the left subtree is equal to the offset of the starting bit of the path
         let path_length = starting_bit(num_leaves);
         // Determine the number of leaves in the left subtree
-        let num_leaves_left_sub_tree = (1 << (path_length - 1));
+        let num_leaves_left_sub_tree = (1 <<(path_length - 1));
 
         if key <= (num_leaves_left_sub_tree - 1) {
             // If the leaf is in the left subtreee, path length is full height of the left subtree
-            total_length += path_length;
+            total_length = total_length + path_length;
             break;
         } else if num_leaves_left_sub_tree == 1 {
             // If the left sub tree has only one leaf, path has one additional step
-            total_length += 1;
+            total_length = total_length + 1;
             break;
         } else if (num_leaves - num_leaves_left_sub_tree) <= 1 {
             // If the right sub tree only has one leaf, path has one additonal step
-            total_length += 1;
+            total_length = total_length + 1;
             break;
         } else {
             // Otherwise add 1 to height and loop
-            total_length += 1;
-            key -= num_leaves_left_sub_tree;
-            num_leaves -= num_leaves_left_sub_tree;
+            total_length = total_length + 1;
+            key = key - num_leaves_left_sub_tree;
+            num_leaves = num_leaves - num_leaves_left_sub_tree;
         }
     }
 
@@ -119,26 +119,26 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
         require(proof_length > height - 1, ProofError::InvalidProofLength);
 
         // Determine if the key is in the first or the second half of the subtree.
-        if (key - sub_tree_start_index) < (1 << (height - 1)) {
+        if (key - sub_tree_start_index) <(1 <<(height - 1)) {
             digest = node_digest(digest, proof[height - 1]);
         } else {
             digest = node_digest(proof[height - 1], digest);
         }
 
-        height += 1;
+        height = height + 1;
     }
 
     // Determine if the next hash belongs to an orphan that was elevated.
     if stable_end != (num_leaves - 1) {
         require(proof_length > height - 1, ProofError::InvalidProofLength);
         digest = node_digest(digest, proof[height - 1]);
-        height += 1;
+        height = height + 1;
     }
 
     // All remaining elements in the proof set will belong to the left sibling.
-    while (height - 1) < proof_length {
+    while(height - 1) < proof_length {
         digest = node_digest(proof[height - 1], digest);
-        height += 1;
+        height = height + 1;
     }
 
     digest
@@ -152,8 +152,8 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
 fn starting_bit(num_leaves: u64) -> u64 {
     let mut starting_bit = 0;
 
-    while (1 << starting_bit) < num_leaves {
-        starting_bit += 1;
+    while(1 << starting_bit) < num_leaves {
+        starting_bit = starting_bit + 1;
     }
 
     starting_bit
