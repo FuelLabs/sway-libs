@@ -32,7 +32,47 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
     sha256((NODE, left, right))
 }
 
-/// This function will compute a merkle root given a leaf and corresponding proof.
+/// Calculates the length of the path to a leaf
+///
+/// # Arguments
+///
+/// * `key` - The key or index of the leaf.
+/// * `num_leaves` - The total number of leaves in the merkle tree.
+fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
+    let mut total_length = 0;
+    let mut num_leaves = num_leaves;
+    let mut key = key;
+
+    while true {
+        // The height of the left subtree is equal to the offset of the starting bit of the path
+        let path_length = starting_bit(num_leaves);
+        // Determine the number of leaves in the left subtree
+        let num_leaves_left_sub_tree = (1 << (path_length - 1));
+
+        if key <= (num_leaves_left_sub_tree - 1) {
+            // If the leaf is in the left subtreee, path length is full height of the left subtree
+            total_length += path_length;
+            break;
+        } else if num_leaves_left_sub_tree == 1 {
+            // If the left sub tree has only one leaf, path has one additional step
+            total_length += 1;
+            break;
+        } else if (num_leaves - num_leaves_left_sub_tree) <= 1 {
+            // If the right sub tree only has one leaf, path has one additonal step
+            total_length += 1;
+            break;
+        } else {
+            // Otherwise add 1 to height and loop
+            total_length += 1;
+            key -= num_leaves_left_sub_tree;
+            num_leaves -= num_leaves_left_sub_tree;
+        }
+    }
+
+    total_length
+}
+
+/// This function will compute and return a merkle root given a leaf and corresponding proof.
 ///
 /// # Arguments
 ///
@@ -43,7 +83,7 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 ///
 /// # Reverts
 ///
-/// * When there is more than 1 leaf and no proof is provided.
+/// * When an incorrect proof length is provided.
 /// * When there is one or no leaves and a proof is provided.
 /// * When the key is greater than or equal to the number of leaves.
 /// * When the computed height gets larger than the proof.
@@ -51,7 +91,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
 2]) -> b256 {
     // let proof_length = proof.len();
     let proof_length = 2;
-    require((num_leaves > 1 && proof_length != 0) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
+    require((num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
     require(key < num_leaves, ProofError::InvalidKey);
 
     let mut digest = merkle_leaf;
@@ -102,6 +142,21 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     }
 
     digest
+}
+
+/// Calculates the starting bit of the path to a leaf
+///
+/// # Arguments
+///
+/// * `num_leaves` - The number of leaves in the merkle tree.
+fn starting_bit(num_leaves: u64) -> u64 {
+    let mut starting_bit = 0;
+
+    while (1 << starting_bit) < num_leaves {
+        starting_bit += 1;
+    }
+
+    starting_bit
 }
 
 /// This function will take a merkle leaf and proof and return whether the corresponding root
