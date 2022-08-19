@@ -3,11 +3,10 @@
 
 library merkle_proof;
 
-use std::{hash::sha256, option::Option, revert::require, vec::Vec};
+use std::{hash::sha256, revert::require};
 
 pub enum ProofError {
     InvalidKey: (),
-    InvalidMultiProof: (),
     InvalidProofLength: (),
 }
 
@@ -18,88 +17,8 @@ pub fn leaf_digest(data: b256) -> b256 {
     sha256((LEAF, data))
 }
 
-fn hash_pair(a: b256, b: b256) -> b256 {
-    if a <= b {
-        // Hash(a + b)
-        sha256((a, b))
-    } else {
-        // Hash(b + a)
-        sha256((b, a))
-    }
-}
-
 pub fn node_digest(left: b256, right: b256) -> b256 {
     sha256((NODE, left, right))
-}
-
-/// This function will compute a merkle root using the multiple merkle leaves and proof given.
-///
-/// # Arguments
-///
-/// * `merkle_leaves` - The hashes of relevant leaves for the merkle proof.
-/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root.
-/// * 'proof_flags' - The flags used to determine which hashes to use in order to compute the merkle root.
-///
-/// # Reverts
-///
-/// * When an incorrect number of proof flags for the multi-proof is given.
-pub fn process_multi_proof(merkle_leaves: [b256;
-2], proof: b256, proof_flags: [bool;
-2]) -> b256 {
-    // TODO: These should not be hard-coded. They are only to be used as placeholders until
-    // https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-    let total_hashes = 2;
-    let merkle_leaves_len = 2;
-    let proof_len = 1;
-    // let total_hashes = proof_flags.len();
-    // let merkle_leaves_len = merkle_leaves.len();
-    // let proof_len = proof.len();
-    require(merkle_leaves_len + proof_len - 1 == total_hashes, ProofError::InvalidMultiProof);
-
-    let mut hashes: Vec<b256> = ~Vec::new();
-    let mut iterator = 0;
-    let mut leaf_pos = 0;
-    let mut hash_pos = 0;
-    let mut proof_pos = 0;
-
-    // For each step we find a suitable `a` and `b` to hash:
-    // `a` - A leaf hash if there are unused leaves or a computed hash
-    // `b` - Based on the provided proof flags:
-    //      * True - A leaf hash if there are unused leaves or a computed hash
-    //      * False - A provided proof hash
-    while iterator < total_hashes {
-        let a = if leaf_pos < merkle_leaves_len {
-            leaf_pos += 1;
-            merkle_leaves[leaf_pos - 1]
-        } else {
-            hash_pos += 1;
-            hashes.get(hash_pos - 1).unwrap()
-        };
-
-        let b = if proof_flags[iterator] {
-            if leaf_pos < merkle_leaves_len {
-                leaf_pos += 1;
-                merkle_leaves[leaf_pos - 1]
-            } else {
-                hash_pos += 1;
-                hashes.get(hash_pos - 1).unwrap()
-            }
-        } else {
-            proof_pos += 1;
-            proof
-        };
-
-        hashes.push(hash_pair(a, b));
-        iterator += 1;
-    }
-
-    if total_hashes > 0 {
-        hashes.get(total_hashes - 1).unwrap()
-    } else if merkle_leaves_len > 0 {
-        merkle_leaves[0]
-    } else {
-        proof
-    }
 }
 
 /// This function will compute a merkle root given a leaf and corresponding proof.
@@ -172,21 +91,6 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     }
 
     digest
-}
-
-/// This function will take multiple merkle leaves, a proof, and proof flags and returns whether the
-/// corresponding root matches the root given.
-///
-/// # Arguments
-///
-/// * `merkle_leaves` - The hashes of relevant leaves for the merkle proof.
-/// * `merkle_root` - The pre-computed merkle root that will be used to verify the leaves and proof.
-/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root.
-/// * 'proof_flags' - The flags used to determine which hashes to use in order to compute the merkle root.
-pub fn verify_multi_proof(merkle_leaves: [b256;
-2], merkle_root: b256, proof: b256, proof_flags: [bool;
-2]) -> bool {
-    process_multi_proof(merkle_leaves, proof, proof_flags) == merkle_root
 }
 
 /// This function will take a merkle leaf and proof and return whether the corresponding root
