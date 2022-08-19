@@ -1,7 +1,7 @@
 // TODO: Function definitions that use arrays should be updated to Vecs once
 // https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
 
-library merkle_proof;
+library binary_merkle_proof;
 
 use std::{hash::sha256, revert::require};
 
@@ -13,10 +13,21 @@ pub enum ProofError {
 pub const LEAF = 0u8;
 pub const NODE = 1u8;
 
+/// Returns the computed leaf hash of "MTH({d(0)}) = SHA-256(0x00 || d(0))".
+///
+/// # Arguments
+///
+/// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {    
     sha256((LEAF, data))
 }
 
+/// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
+///
+/// # Arguments
+///
+/// * 'left' - The hash of the left node.
+/// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
     sha256((NODE, left, right))
 }

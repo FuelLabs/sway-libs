@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::merkle_proof::{
+use sway_libs::binary_merkle_proof::{
     leaf_digest,
     node_digest, 
     process_proof, 
