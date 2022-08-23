@@ -31,11 +31,18 @@ These libraries contain helper functions, generalized standards, and other tools
 
 ### Libraries
 
-
+- [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
 
 ## Using a library
 
-If you wish to use any of the libraries then clone this repository and go through the general [installation](https://fuellabs.github.io/sway/latest/introduction/installation.html) steps required to use our tools, and import the library into your contract.
+To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]`:
+
+<!-- TODO: This should not point to the master branch but instead to a release -->
+`sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }`
+
+You may then import your dersired library in your Sway Smart Contract as so:
+
+`use sway_libs::binary_merkle_proof::verify_proof;`
 
 ## Contributing
 
