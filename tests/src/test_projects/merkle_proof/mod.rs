@@ -156,6 +156,10 @@ mod process_merkle_proof {
             );
         }
 
+        // NOTE: This test does not use the Fuel-Merkle library but replicates it's functionality. 
+        // Due to a `u8` being padded as a full word, the Fuel-Merkle repository hashes and the 
+        // Sway hashes do not produce the same result. This test uses a `u64` as passes as expected.
+        // The issue can be tracked here: https://github.com/FuelLabs/sway/issues/2594
         #[tokio::test]
         async fn processes_merkle_proof_manual() {
             let instance = merkle_proof_instance().await;
