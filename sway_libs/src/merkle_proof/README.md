@@ -4,7 +4,9 @@ Merkle trees allow for on-chain verification of off-chain data. With the merkle 
 
 More information can be found in the [specification](./SPECIFICATION.md).
 
-> **NOTE** Due to the Fuel VM padding of copy types smaller than one word, the current hashing of the leaf and node values will cause an incompatability with the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) repository. The issue regarding this can be tracked [here](https://github.com/FuelLabs/sway/issues/2594).
+## Known Issues
+
+Due to the Fuel VM padding of copy types smaller than one word, the current hashing of the leaf and node values do not match RFC-6962. The present implementation is the equavalent of hashing a `u64` as opposed to the standard `u8`. As a result, hashing of smaller sized copy types may result in unexpected behavior. For example, the `sha-256(0u8)` will result in the same hash as `sha-256(0u64)`. This will cause an incompatability with the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) repository. The issue regarding this can be tracked [here](https://github.com/FuelLabs/sway/issues/2594).
 
 # Using the Library
 
@@ -15,23 +17,26 @@ More information can be found in the [specification](./SPECIFICATION.md).
 To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]`:
 
 <!-- TODO: This should not point to the master branch but instead to a release -->
-`sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }`
+```
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }
+```
 
 ### Importing Into Your Contract
 
 The following can be added to your Sway Contract's imports to include the Merkle Proof library:
 
-`use sway_libs::binary_merkle_proof::verify_proof;`
+```
+use sway_libs::binary_merkle_proof::verify_proof;
+```
 
 ### Using the Merkle Proof Library In Sway
 
-Once imported, using the Merkle Proof library is as simple as calling the `verify_proof` function from your contract.
+Once imported, using the Merkle Proof library is as simple as calling the desired function. Here is a list of function definitions that you may use:
 
-```
-fn verify_proof_example(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: [b256; 2]) -> bool {
-    verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
-}
-```
+- `leaf_digest(data: b256) -> b256`
+- `node_digest(left: b256, right: b256) -> b256`
+- `process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256; 2]) -> b256`
+- `verify_proof(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: [b256; 2]) -> bool`
 
 > **NOTE** Fuel-RS currently does not support the Sway standard library's `vec` as a function argument. As a result, the current implementation uses an array. 
 
@@ -43,7 +48,9 @@ To generate a Merkle Tree and corresponding proof for your Sway Smart Contract t
 
 The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
-`fuel-merkle = { version = "0.3" }`
+```
+fuel-merkle = { version = "0.3" }
+```
 
 ### Importing Into Your Rust File
 
@@ -63,7 +70,7 @@ To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in
 let mut tree = MerkleTree::new();
 let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
 for datum in leaves.iter() {
-    let _ = tree.push(datum);
+    tree.push(datum);
 }
 ```
 
