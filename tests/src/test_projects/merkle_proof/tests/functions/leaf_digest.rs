@@ -7,7 +7,7 @@ mod leaf_digest {
 
     use super::*;
 
-    mod succes {
+    mod success {
 
         use super::*;
 

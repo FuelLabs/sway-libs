@@ -37,7 +37,7 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 /// # Arguments
 ///
 /// * `key` - The key or index of the leaf.
-/// * `num_leaves` - The total number of leaves in the merkle tree.
+/// * `num_leaves` - The total number of leaves in the Merkle Tree.
 fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
     let mut total_length = 0;
     let mut num_leaves = num_leaves;
@@ -72,14 +72,14 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
     total_length
 }
 
-/// This function will compute and return a merkle root given a leaf and corresponding proof.
+/// This function will compute and return a Merkle root given a leaf and corresponding proof.
 ///
 /// # Arguments
 ///
 /// * 'key' - The key or index of the leaf to prove.
-/// * `merkle_leaf` - The hash of a leaf on the merkle tree.
-/// * 'num_leaves' - The number of leaves in the merkle tree.
-/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root.
+/// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
+/// * 'num_leaves' - The number of leaves in the Merkle Tree.
+/// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
 ///
 /// # Reverts
 ///
@@ -95,7 +95,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     require(key < num_leaves, ProofError::InvalidKey);
 
     let mut digest = merkle_leaf;
-    // If there is no proof then the leaf is the root
+    // If proof length is zero then the leaf is the root
     if proof_length == 0 {
         return digest
     }
@@ -110,7 +110,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
         let sub_tree_start_index = (key / (1 << height)) * (1 << height);
         let sub_tree_end_index = sub_tree_start_index + (1 << height) - 1;
 
-        // If the Merkle tree does not have a leaf at the `sub_tree_end_index`, we deem that the
+        // If the Merkle Tree does not have a leaf at the `sub_tree_end_index`, we deem that the
         // subtree is not complete.
         if sub_tree_end_index >= num_leaves {
             break;
@@ -148,7 +148,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
 ///
 /// # Arguments
 ///
-/// * `num_leaves` - The number of leaves in the merkle tree.
+/// * `num_leaves` - The number of leaves in the Merkle Tree.
 fn starting_bit(num_leaves: u64) -> u64 {
     let mut starting_bit = 0;
 
@@ -159,16 +159,16 @@ fn starting_bit(num_leaves: u64) -> u64 {
     starting_bit
 }
 
-/// This function will take a merkle leaf and proof and return whether the corresponding root
+/// This function will take a Merkle leaf and proof and return whether the corresponding root
 /// matches the root given.
 ///
 /// # Arguments
 ///
 /// * 'key' - The key or index of the leaf to verify.
-/// * `merkle_leaf` - The hash of a leaf on the merkle tree.
-/// * `merkle_root` - The pre-computed merkle root that will be used to verify the leaf and proof.
-/// * 'num_leaves' - The number of leaves in the merkle tree.
-/// * `proof` - The merkle proof that will be used to traverse the merkle tree and compute a root.
+/// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
+/// * `merkle_root` - The pre-computed Merkle root that will be used to verify the leaf and proof.
+/// * 'num_leaves' - The number of leaves in the Merkle Tree.
+/// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
 pub fn verify_proof(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: [b256;
 2]) -> bool {
     process_proof(key, merkle_leaf, num_leaves, proof) == merkle_root

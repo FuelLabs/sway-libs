@@ -20,6 +20,8 @@ All hashing is done with SHA-2-256 (also known as SHA-256), defined in [FIPS 180
 
 Currently only one tree structure is support, the Binary Merkle Tree. Implementation for a Binary Merkle Sum Tree and Sparse Merkle Tree found in the [fuel-merkle](https://github.com/FuelLabs/fuel-merkle) repository will be added soon. 
 
+A Sparse Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/18) and Sum Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/17);
+
 ### Binary Merkle Tree
 
 Binary Merkle trees are constructed in the same fashion as described in [Certificate Transparency (RFC-6962)](https://tools.ietf.org/html/rfc6962). Leaves are hashed once to get leaf node values and internal node values are the hash of the concatenation of their children (either leaf nodes or other internal nodes).
