@@ -38,9 +38,9 @@ Once imported, using the Merkle Proof library is as simple as calling the desire
 - `process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256; 2]) -> b256`
 - `verify_proof(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: [b256; 2]) -> bool`
 
-> **NOTE** Fuel-RS currently does not support the Sway standard library's `vec` as a function argument. As a result, the current implementation uses an array. 
+> **Note** Fuels-rs does not currently does not support the Sway standard library's `vec` as a function argument. As a result, the current implementation uses an array. 
 
-## Using the Merkle Proof Libaray in Fuels-RS
+## Using the Merkle Proof Library in Fuels-rs
 
 To generate a Merkle Tree and corresponding proof for your Sway Smart Contract to use can be done with the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) crate. 
 
