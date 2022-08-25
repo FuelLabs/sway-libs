@@ -1,4 +1,4 @@
-// TODO: More extensive testing should be added when https://github.com/FuelLabs/fuels-rs/issues/353 is revolved.
+// TODO: More extensive testing using different proof lengths should be added when https://github.com/FuelLabs/fuels-rs/issues/353 is revolved.
 // TODO: Using the fuel-merkle repository will currently fail all tests due to https://github.com/FuelLabs/sway/issues/2594
 use crate::merkle_proof::tests::utils::{
     abi_calls::{node_digest, process_proof},
