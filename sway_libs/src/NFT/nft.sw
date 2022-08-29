@@ -3,9 +3,9 @@
 
 library nft;
 
-dep NFT/data_structures;
-dep NFT/errors;
-dep NFT/events;
+dep data_structures;
+dep errors;
+dep events;
 
 use data_structures::TokenMetaData;
 use errors::{AccessError, InitError, InputError};
