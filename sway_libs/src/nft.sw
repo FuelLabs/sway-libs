@@ -63,3 +63,19 @@ pub fn approve(approved: Identity, token_id: u64) {
     });
 }
 
+#[storage(read)]
+pub fn approved(token_id: u64) -> Identity {
+    // TODO: This should be removed and update function definition to include Option once
+    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
+    // storage.approved.get(token_id)
+    // let approved = storage.approved.get(token_id);
+    let approved = get::<Option>(sha256((APPROVED, token_id)));
+    require(approved.is_some(), InputError::ApprovedDoesNotExist);
+    approved.unwrap()
+}
+
+#[storage(read)]
+pub fn balance_of(owner: Identity) -> u64 {
+    // storage.balances.get(owner)
+    get::<u64>(sha256((BALANCES, owner)))
+}
