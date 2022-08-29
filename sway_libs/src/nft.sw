@@ -101,3 +101,21 @@ pub fn burn(token_id: u64) {
         owner: sender, token_id
     });
 }
+
+#[storage(read, write)]
+pub fn constructor(access_control: bool, admin: Identity, max_supply: u64) {
+    // This function can only be called once so if the token supply is already set it has
+    // already been called
+    let admin = Option::Some(admin);
+    // require(storage.max_supply == 0, InitError::CannotReinitialize);
+    require(get::<u64>(MAX_SUPPLY) == 0, InitError::CannotReinitialize);
+    require(max_supply != 0, InputError::TokenSupplyCannotBeZero);
+    require((access_control && admin.is_some()) || (!access_control && admin.is_none()), InitError::AdminIsNone);
+
+    // storage.access_control = access_control;
+    // storage.admin = admin;
+    // storage.max_supply = max_supply;
+    store(ACCESS_CONTROL, access_control);
+    store(ADMIN, admin);
+    store(MAX_SUPPLY, max_supply);
+}
