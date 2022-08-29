@@ -20,7 +20,7 @@ use std::{
     storage::{get, store}
 };
 
-// TODO: These are temporary storage keys for manual storage management. These should be updated once
+// TODO: These are temporary storage keys for manual storage management. These should be removed once
 // https://github.com/FuelLabs/sway/issues/2585 is resolved.
 const ACCESS_CONTROL: b256 = 0x1000000000000000000000000000000000000000000000000000000000000000;
 const ADMIN: b256 = 0x2000000000000000000000000000000000000000000000000000000000000000;
@@ -130,4 +130,45 @@ pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
 pub fn max_supply() -> u64 {
     // storage.max_supply
     get::<u64>(MAX_SUPPLY)
+}
+
+#[storage(read, write)]
+pub fn mint(amount: u64, to: Identity) {
+    // let tokens_minted = storage.tokens_minted;
+    let tokens_minted = get::<u64>(TOKENS_MINTED);
+    let total_mint = tokens_minted + amount;
+    // The current number of tokens minted plus the amount to be minted cannot be
+    // greater than the total supply
+    // require(storage.max_supply >= total_mint, InputError::NotEnoughTokensToMint);
+    require(get::<u64>(MAX_SUPPLY) >= total_mint, InputError::NotEnoughTokensToMint);
+
+    // Ensure that the sender is the admin if this is a controlled access mint
+    // let admin = storage.admin;
+    //require(!storage.access_control || (admin.is_some() && msg_sender().unwrap() == admin.unwrap()), AccessError::SenderNotAdmin);
+    let admin: Option<Identity> = get::<Option>(ADMIN);
+    require(!get::<bool>(ACCESS_CONTROL) || (admin.is_some() && msg_sender().unwrap() == admin.unwrap()), AccessError::SenderNotAdmin);
+
+    // Mint as many tokens as the sender has asked for
+    let mut index = tokens_minted;
+    while index < total_mint {
+        // Create the TokenMetaData for this new token
+        // storage.meta_data.insert(index, ~TokenMetaData::new());
+        // storage.owners.insert(index, Option::Some(to));
+        
+        store(sha256((OWNERS, index)), Option::Some(to));
+        index += 1;
+    }
+
+    // storage.balances.insert(to, storage.balances.get(to) + amount);
+    // storage.tokens_minted = total_mint;
+    // storage.total_supply += amount;
+    let balance = get::<u64>(sha256((BALANCES, to)));
+    store(sha256((BALANCES, to)), balance + amount);
+    store(TOKENS_MINTED, total_mint);
+    let total_supply = get::<u64>(TOTAL_SUPPLY);
+    store(TOTAL_SUPPLY, total_supply + amount);
+
+    log(MintEvent {
+        owner: to, token_id_start: tokens_minted, total_tokens: amount
+    });
 }
