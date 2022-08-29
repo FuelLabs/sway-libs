@@ -189,3 +189,30 @@ pub fn owner_of(token_id: u64) -> Identity {
     require(owner.is_some(), InputError::OwnerDoesNotExist);
     owner.unwrap()
 }
+
+#[storage(read, write)]
+pub fn set_admin(admin: Identity) {
+    // Ensure that the sender is the admin
+    let admin = Option::Some(admin);
+    // let current_admin = storage.admin;
+    let current_admin: Option<Identity> = get::<Option>(ADMIN);
+    require(current_admin.is_some() && msg_sender().unwrap() == current_admin.unwrap(), AccessError::SenderCannotSetAccessControl);
+    // storage.admin = admin;
+    store(ADMIN, admin);
+
+    log(AdminEvent {
+        admin
+    });
+}
+
+#[storage(read, write)]
+pub fn set_approval_for_all(approve: bool, operator: Identity) {
+    // Store `approve` with the (sender, operator) tuple
+    let sender = msg_sender().unwrap();
+    // storage.operator_approval.insert((sender, operator), approve);
+    store(sha256((OPERATOR_APPROVAL, sender, operator)), approve);
+
+    log(OperatorEvent {
+        approve, owner: sender, operator
+    });
+}
