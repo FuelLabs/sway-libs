@@ -216,3 +216,48 @@ pub fn set_approval_for_all(approve: bool, operator: Identity) {
         approve, owner: sender, operator
     });
 }
+
+#[storage(read)]
+pub fn total_supply() -> u64 {
+    // storage.total_supply
+    get::<u64>(TOTAL_SUPPLY)
+}
+
+#[storage(read, write)]
+pub fn transfer_from(from: Identity, to: Identity, token_id: u64) {
+    // Make sure the `token_id` maps to an existing token
+    // let token_owner = storage.owners.get(token_id);
+    let token_owner: Option<Identity> = get::<Option>(sha256((OWNERS, token_id)));
+    require(token_owner.is_some(), InputError::TokenDoesNotExist);
+    let token_owner = token_owner.unwrap();
+
+    // Ensure that the sender is either:
+    // 1. The owner of the token
+    // 2. Approved for transfer of this `token_id`
+    // 3. Has operator approval for the `from` identity and this token belongs to the `from` identity
+    let sender = msg_sender().unwrap();
+    // let approved = storage.approved.get(token_id);
+    // require(sender == token_owner || (approved.is_some() && sender == approved.unwrap()) || (from == token_owner && storage.operator_approval.get((from, sender))), AccessError::SenderNotOwnerOrApproved);
+    let approved: Option<Identity> = get::<Option>(sha256((APPROVED, token_id)));
+    let has_operator_approval = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender)));
+    require(sender == token_owner || (approved.is_some() && sender == approved.unwrap()) || (from == token_owner && has_operator_approval), AccessError::SenderNotOwnerOrApproved);
+    
+    // Set the new owner of the token and reset the approved Identity
+    // storage.owners.insert(token_id, Option::Some(to));
+    store(sha256((OWNERS, token_id)), Option::Some(to));
+    if approved.is_some() {
+        // storage.approved.insert(token_id, Option::None());
+        store(sha256((APPROVED, token_id)), Option::None());
+    }
+
+    // storage.balances.insert(from, storage.balances.get(from) - 1);
+    // storage.balances.insert(to, storage.balances.get(to) + 1);
+    let from_balance = get::<u64>(sha256((BALANCES, from)));
+    let to_balance = get::<u64>(sha256((BALANCES, to)));
+    store(sha256((BALANCES, from)), from_balance - 1);
+    store(sha256((BALANCES, to)), to_balance + 1);
+
+    log(TransferEvent {
+        from, sender, to, token_id
+    });
+}
