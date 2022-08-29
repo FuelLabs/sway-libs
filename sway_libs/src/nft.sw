@@ -7,6 +7,7 @@ dep NFT/data_structures;
 dep NFT/errors;
 dep NFT/events;
 
+use data_structures::TokenMetaData;
 use errors::{AccessError, InitError, InputError};
 use events::{AdminEvent, ApprovalEvent, BurnEvent, MintEvent, OperatorEvent, TransferEvent};
 use std::{
@@ -171,4 +172,20 @@ pub fn mint(amount: u64, to: Identity) {
     log(MintEvent {
         owner: to, token_id_start: tokens_minted, total_tokens: amount
     });
+}
+
+#[storage(read)]
+pub fn meta_data(token_id: u64) -> TokenMetaData {
+    // require(token_id < storage.tokens_minted, InputError::TokenDoesNotExist);
+    // storage.meta_data.get(token_id)
+    require(token_id < get::<u64>(TOKENS_MINTED), InputError::TokenDoesNotExist);
+    get::<TokenMetaData>(sha256((META_DATA, token_id)))
+}
+
+#[storage(read)]
+pub fn owner_of(token_id: u64) -> Identity {
+    // let owner = storage.owners.get(token_id);
+    let owner: Option<Identity> = get::<Option>(sha256((OWNERS, token_id)));
+    require(owner.is_some(), InputError::OwnerDoesNotExist);
+    owner.unwrap()
 }
