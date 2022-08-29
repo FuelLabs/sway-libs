@@ -1,3 +1,3 @@
 library sway_libs;
 
-mod nft;
+dep nft;
