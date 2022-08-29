@@ -30,3 +30,36 @@ const OWNERS: b256 = 0x800000000000000000000000000000000000000000000000000000000
 const TOKENS_MINTED: b256 = 0x9000000000000000000000000000000000000000000000000000000000000000;
 const TOTAL_SUPPLY: b256 = 0xa000000000000000000000000000000000000000000000000000000000000000;
 
+#[storage(read)]
+pub fn admin() -> Identity {
+    // TODO: Remove this and update function definition to include Option once
+    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
+    // let admin = storage.admin;
+    let admin = get::<Option>(ADMIN);
+    require(admin.is_some(), InputError::AdminDoesNotExist);
+    admin.unwrap()
+}
+
+#[storage(read, write)]
+pub fn approve(approved: Identity, token_id: u64) {
+    // Ensure this is a valid token
+    // TODO: Remove this and update function definition to include Option once
+    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
+    let approved = Option::Some(approved);
+    // let token_owner = storage.owners.get(token_id);
+    let token_owner: Option<Identity> = get::<Option>(sha256((OWNERS, token_id)));
+    require(token_owner.is_some(), InputError::TokenDoesNotExist);
+
+    // Ensure that the sender is the owner of the token to be approved
+    let sender = msg_sender().unwrap();
+    require(token_owner.unwrap() == sender, AccessError::SenderNotOwner);
+
+    // Set and store the `approved` `Identity`
+    // storage.approved.insert(token_id, approved);
+    store(sha256((APPROVED, token_id)), approved);
+
+    log(ApprovalEvent {
+        owner: sender, approved, token_id
+    });
+}
+
