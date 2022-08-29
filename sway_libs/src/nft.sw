@@ -1,3 +1,6 @@
+// TODO: Update function definitions to include `Option` once
+// https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
+
 library nft;
 
 dep NFT/data_structures;
@@ -32,8 +35,6 @@ const TOTAL_SUPPLY: b256 = 0xa00000000000000000000000000000000000000000000000000
 
 #[storage(read)]
 pub fn admin() -> Identity {
-    // TODO: Remove this and update function definition to include Option once
-    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
     // let admin = storage.admin;
     let admin = get::<Option>(ADMIN);
     require(admin.is_some(), InputError::AdminDoesNotExist);
@@ -43,8 +44,6 @@ pub fn admin() -> Identity {
 #[storage(read, write)]
 pub fn approve(approved: Identity, token_id: u64) {
     // Ensure this is a valid token
-    // TODO: Remove this and update function definition to include Option once
-    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
     let approved = Option::Some(approved);
     // let token_owner = storage.owners.get(token_id);
     let token_owner: Option<Identity> = get::<Option>(sha256((OWNERS, token_id)));
@@ -65,8 +64,6 @@ pub fn approve(approved: Identity, token_id: u64) {
 
 #[storage(read)]
 pub fn approved(token_id: u64) -> Identity {
-    // TODO: This should be removed and update function definition to include Option once
-    // https://github.com/FuelLabs/fuels-rs/issues/415 is revolved
     // storage.approved.get(token_id)
     // let approved = storage.approved.get(token_id);
     let approved = get::<Option>(sha256((APPROVED, token_id)));
@@ -78,4 +75,29 @@ pub fn approved(token_id: u64) -> Identity {
 pub fn balance_of(owner: Identity) -> u64 {
     // storage.balances.get(owner)
     get::<u64>(sha256((BALANCES, owner)))
+}
+
+#[storage(read, write)]
+pub fn burn(token_id: u64) {
+    // Ensure this is a valid token
+    // let token_owner = storage.owners.get(token_id);
+    let token_owner: Option<Identity> = get::<Option>(sha256((OWNERS, token_id)));
+    require(token_owner.is_some(), InputError::TokenDoesNotExist);
+
+    // Ensure the sender owns the token that is provided
+    let sender = msg_sender().unwrap();
+    require(token_owner.unwrap() == sender, AccessError::SenderNotOwner);
+
+    // storage.owners.insert(token_id, Option::None());
+    // storage.balances.insert(sender, storage.balances.get(sender) - 1);
+    // storage.total_supply -= 1;
+    store(sha256((OWNERS, token_id)), Option::None());
+    let balance = get::<u64>(sha256((BALANCES, sender)));
+    store(sha256((BALANCES, sender)), balance - 1);
+    let total_supply = get::<u64>(TOTAL_SUPPLY);
+    store(TOTAL_SUPPLY, total_supply);
+
+    log(BurnEvent {
+        owner: sender, token_id
+    });
 }
