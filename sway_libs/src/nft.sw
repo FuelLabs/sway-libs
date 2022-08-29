@@ -119,3 +119,15 @@ pub fn constructor(access_control: bool, admin: Identity, max_supply: u64) {
     store(ADMIN, admin);
     store(MAX_SUPPLY, max_supply);
 }
+
+#[storage(read)]
+pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
+    // storage.operator_approval.get((owner, operator))
+    get::<bool>(sha256((OPERATOR_APPROVAL, owner, operator)))
+}
+
+#[storage(read)]
+pub fn max_supply() -> u64 {
+    // storage.max_supply
+    get::<u64>(MAX_SUPPLY)
+}
