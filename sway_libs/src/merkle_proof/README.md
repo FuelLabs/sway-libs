@@ -12,25 +12,6 @@ Due to the Fuel VM padding of copy types smaller than one word, the current hash
 
 ## Using the Merkle Proof Library In Sway
 
-### Importing Into Your Project
-
-To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]`:
-
-<!-- TODO: This should not point to the master branch but instead to a release -->
-```
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }
-```
-
-### Importing Into Your Contract
-
-The following can be added to your Sway Contract's imports to include the Merkle Proof library:
-
-```
-use sway_libs::binary_merkle_proof::verify_proof;
-```
-
-### Using the Merkle Proof Library In Sway
-
 Once imported, using the Merkle Proof library is as simple as calling the desired function. Here is a list of function definitions that you may use:
 
 - `leaf_digest(data: b256) -> b256`
@@ -42,7 +23,7 @@ Once imported, using the Merkle Proof library is as simple as calling the desire
 
 ## Using the Merkle Proof Library in Fuels-rs
 
-To generate a Merkle Tree and corresponding proof for your Sway Smart Contract to use can be done with the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) crate. 
+To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, use the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) crate. 
 
 ### Importing Into Your Project
 
@@ -56,7 +37,7 @@ fuel-merkle = { version = "0.3" }
 
 The following should be added to your Rust file to use the Fuel-Merkle crate.
 
-```
+```rust
 use fuel_merkle::binary::in_memory::MerkleTree;
 ```
 
@@ -66,7 +47,7 @@ use fuel_merkle::binary::in_memory::MerkleTree;
 
 To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order. 
 
-```
+```rust
 let mut tree = MerkleTree::new();
 let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
 for datum in leaves.iter() {
@@ -78,13 +59,13 @@ for datum in leaves.iter() {
 
 To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:
 
-```
+```rust
 let mut proof = tree.prove(key).unwrap();
 ```
 
 Once the proof has been generated, you may call the Sway Smart Contract's `verify_proof` function:
 
-```
+```rust
 let merkle_root = proof.0;
 let merkle_leaf = proof.1[0];
 proof.1.remove(0);

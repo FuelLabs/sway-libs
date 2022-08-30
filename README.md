@@ -38,11 +38,21 @@ These libraries contain helper functions, generalized standards, and other tools
 To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]`:
 
 <!-- TODO: This should not point to the master branch but instead to a release -->
-`sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }`
+```rust
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }
+```
 
 You may then import your dersired library in your Sway Smart Contract as so:
 
-`use sway_libs::binary_merkle_proof::verify_proof;`
+```rust
+use sway_libs::<library_name>::<library_function>;
+```
+
+For example, to import the Merkle Proof library use the following statement:
+
+```rust
+sway_libs::binary_merkle_proof::verify_proof;
+```
 
 ## Contributing
 

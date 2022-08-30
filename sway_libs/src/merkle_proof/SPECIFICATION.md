@@ -18,9 +18,9 @@ All hashing is done with SHA-2-256 (also known as SHA-256), defined in [FIPS 180
 
 ## Merkle Trees
 
-Currently only one tree structure is support, the Binary Merkle Tree. Implementation for a Binary Merkle Sum Tree and Sparse Merkle Tree found in the [fuel-merkle](https://github.com/FuelLabs/fuel-merkle) repository will be added soon. 
+Currently only one tree structure is supported, the Binary Merkle Tree. Implementation for a Binary Merkle Sum Tree and Sparse Merkle Tree found in the [fuel-merkle](https://github.com/FuelLabs/fuel-merkle) repository will be added soon. 
 
-A Sparse Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/18) and Sum Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/17);
+A Sparse Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/18) and Sum Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/17).
 
 ### Binary Merkle Tree
 
