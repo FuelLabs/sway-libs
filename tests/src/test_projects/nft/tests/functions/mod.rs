@@ -8,3 +8,4 @@ mod is_approved_for_all;
 mod max_supply;
 mod meta_data;
 mod mint;
+mod owner_of;
