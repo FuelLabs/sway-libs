@@ -10,3 +10,4 @@ mod meta_data;
 mod mint;
 mod owner_of;
 mod set_admin;
+mod set_approval_for_all;
