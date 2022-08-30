@@ -12,7 +12,7 @@ Due to the Fuel VM padding of copy types smaller than one word, the current hash
 
 ## Using the Merkle Proof Library In Sway
 
-Once imported, using the Merkle Proof library is as simple as calling the desired function. Here is a list of function definitions that you may use:
+Once imported, using the Merkle Proof library is as simple as calling the desired function. Here is a list of function definitions that you may use. For more information please see the [specification](./SPECIFICATION.md).
 
 - `leaf_digest(data: b256) -> b256`
 - `node_digest(left: b256, right: b256) -> b256`

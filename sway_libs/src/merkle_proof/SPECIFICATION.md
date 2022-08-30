@@ -8,6 +8,24 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 A common use case for Merkle Tree verification is airdrops. An airdrop is a method of distribution a set amount of tokens to a specified number of users. These often include a list of addresses and amounts. By posting the root hash, users can provide a proof and claim their airdrop.
 
+## Public Functions
+
+### `leaf_digest`
+
+The `leaf_digest` function is used to compute leaf hash of a Merkle Tree. Given the data provided, it returns the leaf hash following [RFC-6962)](https://tools.ietf.org/html/rfc6962) as described by `MTH({d(0)}) = SHA-256(0x00 || d(0))`.
+
+### `node_digest`
+
+The `node_digest` function is used to complute a node within a Merkle Tree. Given a left and right node, it returns the node hash following [RFC-6962)](https://tools.ietf.org/html/rfc6962) as described by `MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))`.
+
+### `process_proof`
+
+The `process_proof` function will compute the Merkle root from a Merkle Proof. Given a leaf, the key for the leaf, the corresponding proof, and number of leaves in the Merkle Tree, the root of the Merkle Tree will be returned.
+
+### `verify_proof`
+
+The `verify_proof` function will verify a Merkle Proof against a Merkle root. Given a Merkle root, a leaf, the key for the leaf, the corresponding proof, and the number of leaves in the Merkle Tree, a `bool` will be returned as to whether the proof is valid.
+
 # Specification
 
 All cryptographic primitives follow the [Fuel Specs](https://github.com/FuelLabs/fuel-specs/blob/master/specs/protocol/cryptographic_primitives.md).
