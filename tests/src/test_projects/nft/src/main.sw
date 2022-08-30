@@ -10,17 +10,16 @@ use sway_libs::nft::{
     data_structures::TokenMetaData,
     is_approved_for_all,
     max_supply,
-    mint,
     meta_data,
+    mint,
     owner_of,
     set_admin,
     set_approval_for_all,
     total_supply,
     transfer_from,
 };
-use std::{
-    identity::Identity
-};
+
+use std::identity::Identity;
 
 abi NFT_Test {
     #[storage(read)]fn admin() -> Identity;
@@ -41,7 +40,6 @@ abi NFT_Test {
 }
 
 impl NFT_Test for Contract {
-
     #[storage(read)]fn admin() -> Identity {
         admin()
     }

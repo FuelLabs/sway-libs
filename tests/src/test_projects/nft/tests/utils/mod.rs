@@ -127,11 +127,7 @@ pub mod test_helpers {
         let coins_per_wallet = 1;
         let coin_amount = 1000000;
         let mut wallets = launch_custom_provider_and_get_wallets(
-            WalletsConfig::new(
-                Some(num_wallets),
-                Some(coins_per_wallet),
-                Some(coin_amount),
-            ),
+            WalletsConfig::new(Some(num_wallets), Some(coins_per_wallet), Some(coin_amount)),
             None,
         )
         .await;
