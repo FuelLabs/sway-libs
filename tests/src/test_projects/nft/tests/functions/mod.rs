@@ -9,3 +9,4 @@ mod max_supply;
 mod meta_data;
 mod mint;
 mod owner_of;
+mod set_admin;
