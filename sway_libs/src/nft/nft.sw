@@ -145,7 +145,7 @@ pub fn burn(token_id: u64) {
     let balance = get::<u64>(sha256((BALANCES, sender)));
     store(sha256((BALANCES, sender)), balance - 1);
     let total_supply = get::<u64>(TOTAL_SUPPLY);
-    store(TOTAL_SUPPLY, total_supply);
+    store(TOTAL_SUPPLY, total_supply - 1);
 
     log(BurnEvent {
         owner: sender, token_id
