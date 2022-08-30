@@ -6,9 +6,9 @@ edition = "2021"
 license = "Apache-2.0"
 
 [dependencies]
-forc = { version = "0.19" }
-fuels = { version = "0.20" }
-tokio = { version = "1.12", features = ["rt", "macros"] }
+forc = { version = "0.19.1" }
+fuel-core = { version = "0.9.6 "}
+fuels = { version = "0.19" }
 
 [[test]]
 harness = true
