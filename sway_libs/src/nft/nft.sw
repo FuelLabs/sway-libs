@@ -140,7 +140,8 @@ pub fn burn(token_id: u64) {
     // storage.owners.insert(token_id, Option::None());
     // storage.balances.insert(sender, storage.balances.get(sender) - 1);
     // storage.total_supply -= 1;
-    store(sha256((OWNERS, token_id)), Option::None());
+    let none_owner: Option<Identity> = Option::None();
+    store(sha256((OWNERS, token_id)), none_owner);
     let balance = get::<u64>(sha256((BALANCES, sender)));
     store(sha256((BALANCES, sender)), balance - 1);
     let total_supply = get::<u64>(TOTAL_SUPPLY);
@@ -390,7 +391,8 @@ pub fn transfer_from(from: Identity, to: Identity, token_id: u64) {
     store(sha256((OWNERS, token_id)), Option::Some(to));
     if approved.is_some() {
         // storage.approved.insert(token_id, Option::None());
-        store(sha256((APPROVED, token_id)), Option::None());
+        let none_approved: Option<Identity> = Option::None();
+        store(sha256((APPROVED, token_id)), none_approved);
     }
 
     // storage.balances.insert(from, storage.balances.get(from) - 1);
