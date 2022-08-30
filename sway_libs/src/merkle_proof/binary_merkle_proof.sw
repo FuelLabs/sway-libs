@@ -10,10 +10,10 @@ pub enum ProofError {
     InvalidProofLength: (),
 }
 
-/// Concatenated to leaf hash input as described by 
+/// Concatenated to leaf hash input as described by
 /// "MTH({d(0)}) = SHA-256(0x00 || d(0))"
 pub const LEAF = 0u8;
-/// Concatenated to node hash input as described by 
+/// Concatenated to node hash input as described by
 /// "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))"
 pub const NODE = 1u8;
 
