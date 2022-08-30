@@ -3,7 +3,7 @@ use crate::nft::tests::utils::{
     test_helpers::setup,
     Identity, TokenMetaData,
 };
-use fuels::{prelude::Bech32Address, signers::Signer};
+use fuels::signers::Signer;
 
 mod success {
 
