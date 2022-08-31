@@ -12,11 +12,11 @@ A common use case for Merkle Tree verification is airdrops. An airdrop is a meth
 
 ### `leaf_digest`
 
-The `leaf_digest` function is used to compute leaf hash of a Merkle Tree. Given the data provided, it returns the leaf hash following [RFC-6962)](https://tools.ietf.org/html/rfc6962) as described by `MTH({d(0)}) = SHA-256(0x00 || d(0))`.
+The `leaf_digest` function is used to compute leaf hash of a Merkle Tree. Given the data provided, it returns the leaf hash following [RFC-6962](https://tools.ietf.org/html/rfc6962) as described by `MTH({d(0)}) = SHA-256(0x00 || d(0))`.
 
 ### `node_digest`
 
-The `node_digest` function is used to complute a node within a Merkle Tree. Given a left and right node, it returns the node hash following [RFC-6962)](https://tools.ietf.org/html/rfc6962) as described by `MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))`.
+The `node_digest` function is used to complute a node within a Merkle Tree. Given a left and right node, it returns the node hash following [RFC-6962](https://tools.ietf.org/html/rfc6962) as described by `MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))`.
 
 ### `process_proof`
 

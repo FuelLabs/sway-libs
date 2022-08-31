@@ -42,7 +42,7 @@ To import the Merkle Proof library the following should be added to the project'
 sway_libs = { git = "https://github.com/FuelLabs/sway-libs", branch = "master" }
 ```
 
-You may then import your dersired library in your Sway Smart Contract as so:
+You may then import your desired library in your Sway Smart Contract as so:
 
 ```rust
 use sway_libs::<library_name>::<library_function>;
