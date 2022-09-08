@@ -1,8 +1,7 @@
-// TODO: Function definitions that use arrays should be updated to Vecs once
-// https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-
 library binary_merkle_proof;
 
+// TODO: Function definitions that use arrays should be updated to Vecs once
+// https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
 use std::{hash::sha256, revert::require};
 
 pub enum ProofError {
@@ -18,28 +17,32 @@ pub const LEAF = 0u8;
 pub const NODE = 1u8;
 
 /// Returns the computed leaf hash of "MTH({d(0)}) = SHA-256(0x00 || d(0))".
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {
     sha256((LEAF, data))
 }
 
 /// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    sha256((NODE, left, right))
+    sha256((
+        NODE,
+        left,
+        right,
+    ))
 }
 
 /// Calculates the length of the path to a leaf
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * `key` - The key or index of the leaf.
 /// * `num_leaves` - The total number of leaves in the Merkle Tree.
 fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
@@ -51,7 +54,7 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
         // The height of the left subtree is equal to the offset of the starting bit of the path
         let path_length = starting_bit(num_leaves);
         // Determine the number of leaves in the left subtree
-        let num_leaves_left_sub_tree = (1 <<(path_length - 1));
+        let num_leaves_left_sub_tree = (1 << (path_length - 1));
 
         if key <= (num_leaves_left_sub_tree - 1) {
             // If the leaf is in the left subtreee, path length is full height of the left subtree
@@ -77,22 +80,26 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
 }
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * 'key' - The key or index of the leaf to prove.
 /// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
 /// * 'num_leaves' - The number of leaves in the Merkle Tree.
 /// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
-///
+/// 
 /// # Reverts
-///
+/// 
 /// * When an incorrect proof length is provided.
 /// * When there is one or no leaves and a proof is provided.
 /// * When the key is greater than or equal to the number of leaves.
 /// * When the computed height gets larger than the proof.
-pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
-2]) -> b256 {
+pub fn process_proof(
+    key: u64,
+    merkle_leaf: b256,
+    num_leaves: u64,
+    proof: [b256; 2],
+) -> b256 {
     // let proof_length = proof.len();
     let proof_length = 2;
     require((num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
@@ -123,7 +130,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
         require(proof_length > height - 1, ProofError::InvalidProofLength);
 
         // Determine if the key is in the first or the second half of the subtree.
-        if (key - sub_tree_start_index) <(1 <<(height - 1)) {
+        if (key - sub_tree_start_index) < (1 << (height - 1)) {
             digest = node_digest(digest, proof[height - 1]);
         } else {
             digest = node_digest(proof[height - 1], digest);
@@ -140,7 +147,7 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
     }
 
     // All remaining elements in the proof set will belong to the left sibling.
-    while(height - 1) < proof_length {
+    while (height - 1) < proof_length {
         digest = node_digest(proof[height - 1], digest);
         height = height + 1;
     }
@@ -149,14 +156,14 @@ pub fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: [b256;
 }
 
 /// Calculates the starting bit of the path to a leaf
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * `num_leaves` - The number of leaves in the Merkle Tree.
 fn starting_bit(num_leaves: u64) -> u64 {
     let mut starting_bit = 0;
 
-    while(1 << starting_bit) < num_leaves {
+    while (1 << starting_bit) < num_leaves {
         starting_bit = starting_bit + 1;
     }
 
@@ -165,15 +172,20 @@ fn starting_bit(num_leaves: u64) -> u64 {
 
 /// This function will take a Merkle leaf and proof and return whether the corresponding root
 /// matches the root given.
-///
+/// 
 /// # Arguments
-///
+/// 
 /// * 'key' - The key or index of the leaf to verify.
 /// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
 /// * `merkle_root` - The pre-computed Merkle root that will be used to verify the leaf and proof.
 /// * 'num_leaves' - The number of leaves in the Merkle Tree.
 /// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
-pub fn verify_proof(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: [b256;
-2]) -> bool {
+pub fn verify_proof(
+    key: u64,
+    merkle_leaf: b256,
+    merkle_root: b256,
+    num_leaves: u64,
+    proof: [b256; 2],
+) -> bool {
     process_proof(key, merkle_leaf, num_leaves, proof) == merkle_root
 }
