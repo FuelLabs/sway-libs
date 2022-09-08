@@ -15,7 +15,7 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
-  RUST_VERSION: 1.61.0
+  RUST_VERSION: 1.63.0
   PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
@@ -49,8 +49,11 @@ jobs:
         - name: Install rustfmt
           run: rustup component add rustfmt
 
-        - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.1.0
+      - name: Install Fuel toolchain
+        uses: FuelLabs/action-fuel-toolchain@v0.2.0
+        with:
+          name: my-toolchain
+          components: forc@0.24.1, fuel-core@0.10.1
 
         - name: Check Sway formatting
           run: forc fmt --path sway_libs --check
