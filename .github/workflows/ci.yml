@@ -51,9 +51,6 @@ jobs:
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.2.0
-        with:
-          name: my-toolchain
-          components: forc@0.24.1, fuel-core@0.10.1
 
         - name: Check Sway formatting
           run: forc fmt --path sway_libs --check
