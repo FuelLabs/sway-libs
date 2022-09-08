@@ -50,7 +50,7 @@ jobs:
           run: rustup component add rustfmt
 
         - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.2.0
+          uses: FuelLabs/action-fuel-toolchain@v0.1.0
 
         - name: Check Sway formatting
           run: forc fmt --path sway_libs --check
