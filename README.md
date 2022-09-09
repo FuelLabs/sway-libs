@@ -35,9 +35,8 @@ These libraries contain helper functions, generalized standards, and other tools
 
 ## Using a library
 
-To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]`:
+To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]` with the most recent release:
 
-<!-- TODO: This should not point to the master branch but instead to a release -->
 ```rust
 sway_libs = { git = "https://github.com/FuelLabs/sway-libs", version = "0.1.0" }
 ```
