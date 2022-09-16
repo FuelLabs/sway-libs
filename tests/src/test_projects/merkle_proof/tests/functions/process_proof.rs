@@ -128,7 +128,7 @@ mod revert {
     #[ignore]
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_when_invalid_proof_length_given() {
+    async fn when_invalid_proof_length_given() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
@@ -145,7 +145,7 @@ mod revert {
 
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_when_invalid_num_leaves_given() {
+    async fn when_invalid_num_leaves_given() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
@@ -162,7 +162,7 @@ mod revert {
 
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_when_key_greater_or_equal_to_num_leaves() {
+    async fn when_key_greater_or_equal_to_num_leaves() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
@@ -177,7 +177,7 @@ mod revert {
 
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_with_key_equal_num_leaves_length() {
+    async fn when_key_equal_num_leaves_length() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
@@ -191,7 +191,7 @@ mod revert {
 
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_with_key_greater_than_num_leaves_length() {
+    async fn when_key_greater_than_num_leaves_length() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
@@ -206,7 +206,7 @@ mod revert {
 
     #[tokio::test]
     #[should_panic(expected = "Revert(42)")]
-    async fn panics_with_num_leaves_zero() {
+    async fn when_num_leaves_zero() {
         let instance = merkle_proof_instance().await;
 
         let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
