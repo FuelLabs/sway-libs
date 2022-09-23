@@ -1,6 +1,6 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{Bytes32, ProofSet},
+    common::{Bytes32, LEAF, ProofSet},
 };
 use fuels::prelude::*;
 
@@ -82,6 +82,19 @@ pub mod test_helpers {
         proof.1.remove(0);
 
         (tree, merkle_root, merkle_leaf, proof.1)
+    }
+
+    pub async fn leaves_with_depth(depth: u32) -> Vec<[u8; 1]> {
+        // Max elements in tree: (2 ^ (k + 1)) - 1
+        let num_elements_in_tree = (2_i32.pow(depth + 1)) - 1;
+        let mut return_vec: Vec<[u8; 1]> = Vec::new();
+
+        for n in 0..num_elements_in_tree {
+            let n_u8: u8 = (n % i32::from(u8::MAX)).try_into().unwrap();
+            return_vec.push([n_u8]);
+        }
+
+        return_vec
     }
 
     pub async fn merkle_proof_instance() -> TestMerkleProofLib {

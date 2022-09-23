@@ -2,7 +2,7 @@
 // TODO: Using the fuel-merkle repository will currently fail all tests due to https://github.com/FuelLabs/sway/issues/2594
 use crate::merkle_proof::tests::utils::{
     abi_calls::process_proof,
-    test_helpers::{build_tree, merkle_proof_instance},
+    test_helpers::{build_tree, leaves_with_depth, merkle_proof_instance},
 };
 use fuel_merkle::common::{Bytes32, LEAF};
 use sha2::{Digest, Sha256};
@@ -63,15 +63,26 @@ mod success {
         let instance = merkle_proof_instance().await;
 
         // Data as bytes
-        let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()];
+        let leaves = leaves_with_depth(8).await;
+        assert_eq!(leaves.len(), 511);
         let key = 0;
         let num_leaves = 3;
 
-        //            ABC
-        //           /   \
-        //          AB    C
-        //         /  \
-        //        A    B
+        // 8                ABC
+        //                /   \
+        // 7              AB    C
+        //              /   \
+        // 6            A    B
+        //                                           /
+        // 5                         ABCDEFGHIJKLMNOP
+        //                        /                     \
+        // 4              ABCDEFGH                       IJKLMNOP
+        //              /         \                    /          \
+        // 3       ABCD            EFGH            IJKL            MNOP
+        //        /    \          /    \         /      \        /      \
+        // 2    AB      CD      EF      GH      IJ      KL      MN      OP
+        //     /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \
+        // 1  A    B  C    D  E    F  G    H  I    J  K    L  M    N  O    P  A    B  C    D  E    F  G    H  I    J  K    L  M    N  O    P
 
         // Leaf A hash
         let mut merkle_leaf_a = Sha256::new();
