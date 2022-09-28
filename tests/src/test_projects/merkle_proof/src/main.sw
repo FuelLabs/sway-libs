@@ -9,14 +9,14 @@ abi MerkleProofTest {
         key: u64,
         merkle_leaf: b256,
         num_leaves: u64,
-        proof: [b256; 2],
+        proof: [b256; 8],
     ) -> b256;
     fn verify_proof(
         key: u64,
         merkle_leaf: b256,
         merkle_root: b256,
         num_leaves: u64,
-        proof: [b256; 2],
+        proof: [b256; 8],
     ) -> bool;
 }
 
@@ -33,7 +33,7 @@ impl MerkleProofTest for Contract {
         key: u64,
         merkle_leaf: b256,
         num_leaves: u64,
-        proof: [b256; 2],
+        proof: [b256; 8],
     ) -> b256 {
         process_proof(key, merkle_leaf, num_leaves, proof)
     }
@@ -43,7 +43,7 @@ impl MerkleProofTest for Contract {
         merkle_leaf: b256,
         merkle_root: b256,
         num_leaves: u64,
-        proof: [b256; 2],
+        proof: [b256; 8],
     ) -> bool {
         verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
     }

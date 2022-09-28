@@ -1,8 +1,9 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{Bytes32, LEAF, ProofSet},
+    common::{Bytes32, LEAF, empty_sum_sha256, ProofSet},
 };
 use fuels::prelude::*;
+use sha2::{Digest, Sha256};
 
 abigen!(
     TestMerkleProofLib,
@@ -66,6 +67,34 @@ pub mod test_helpers {
 
     use super::*;
 
+    #[derive(Clone)]
+    #[derive(PartialEq)]
+    struct Node {
+        hash: Bytes32,
+        left: Option<usize>,
+        right: Option<usize>,
+    }
+
+    impl Node {
+        pub fn new(hash: Bytes32) -> Self {
+            Node {
+                hash,
+                left: None,
+                right: None,
+            }
+        }
+
+        pub fn left(mut self, node: usize) -> Self {
+            self.left = Some(node);
+            self
+        }
+
+        pub fn right(mut self, node: usize) -> Self {
+            self.right = Some(node);
+            self
+        }
+    }
+
     pub async fn build_tree(
         leaves: Vec<&[u8]>,
         key: u64,
@@ -84,9 +113,88 @@ pub mod test_helpers {
         (tree, merkle_root, merkle_leaf, proof.1)
     }
 
+    pub async fn build_tree_manual(
+        leaves: Vec<[u8; 1]>, 
+        height: usize,
+        key: usize
+    ) -> (Bytes32, ProofSet, Bytes32) {
+        let num_leaves = leaves.len();
+        let mut nodes: Vec<Node> = Vec::new();
+        let mut leaf_hash: Bytes32 = *empty_sum_sha256();
+        let mut proof: ProofSet = Vec::new();
+
+        assert!(key <= num_leaves);
+
+        // Hash leaves and create leaf nodes
+        for n in 0..num_leaves {
+            let mut hasher = Sha256::new();
+            hasher.update(&[LEAF]);
+            hasher.update(&leaves[n]);
+            let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+
+            let new_node = Node::new(hash);
+            nodes.push(new_node);
+            if n == key {
+                leaf_hash = hash.clone();
+            }
+        }
+
+        let node_u64: u64 = 1;
+        let mut itterator = 0;
+        // Build tree
+        for i in 0..height {
+            let current_num_leaves = itterator + 2usize.pow((height - i).try_into().unwrap());
+
+            // Create new depth
+            while itterator < current_num_leaves {
+                let mut hasher = Sha256::new();
+                hasher.update(node_u64.to_be_bytes());
+                hasher.update(&nodes[itterator].hash);
+                hasher.update(&nodes[itterator + 1].hash);
+                let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+                
+                let new_node = Node::new(hash)
+                    .left(itterator)
+                    .right(itterator + 1);
+                nodes.push(new_node);
+                itterator += 2;
+            }
+        }
+
+        // Get proof
+        let mut key = key;
+        let mut index = nodes.len() - 1;
+        for i in 0..height {
+            let node = nodes[index].clone();
+
+            if node.left == None && node.right == None {             
+                break;
+            }
+
+            let number_subtree_elements = ((2usize.pow(((height - i) + 1).try_into().unwrap()))) / 2;
+        
+            if key <= number_subtree_elements {
+                // Go left
+                index = node.left.unwrap();
+                let proof_node = node.right.unwrap();
+                proof.push(nodes[proof_node].hash);
+            } else {
+                // Go right
+                index = node.right.unwrap();
+                let proof_node = node.left.unwrap();
+                proof.push(nodes[proof_node].hash);
+                
+                key = key - number_subtree_elements;
+            }
+        }
+
+        proof.reverse();
+
+        (leaf_hash, proof, nodes.last().unwrap().hash)
+    }
+
     pub async fn leaves_with_depth(depth: u32) -> Vec<[u8; 1]> {
-        // Max elements in tree: (2 ^ (k + 1)) - 1
-        let num_elements_in_tree = (2_i32.pow(depth + 1)) - 1;
+        let num_elements_in_tree = 2_i32.pow(depth);
         let mut return_vec: Vec<[u8; 1]> = Vec::new();
 
         for n in 0..num_elements_in_tree {

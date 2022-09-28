@@ -2,10 +2,8 @@
 // TODO: Using the fuel-merkle repository will currently fail all tests due to https://github.com/FuelLabs/sway/issues/2594
 use crate::merkle_proof::tests::utils::{
     abi_calls::process_proof,
-    test_helpers::{build_tree, leaves_with_depth, merkle_proof_instance},
+    test_helpers::{build_tree, build_tree_manual, leaves_with_depth, merkle_proof_instance},
 };
-use fuel_merkle::common::{Bytes32, LEAF};
-use sha2::{Digest, Sha256};
 
 mod success {
 
@@ -63,71 +61,22 @@ mod success {
         let instance = merkle_proof_instance().await;
 
         // Data as bytes
-        let leaves = leaves_with_depth(8).await;
-        assert_eq!(leaves.len(), 511);
+        let depth = 8;
+        let leaves = leaves_with_depth(depth).await;
         let key = 0;
-        let num_leaves = 3;
-
-        // 8                ABC
-        //                /   \
-        // 7              AB    C
-        //              /   \
-        // 6            A    B
-        //                                           /
-        // 5                         ABCDEFGHIJKLMNOP
-        //                        /                     \
-        // 4              ABCDEFGH                       IJKLMNOP
-        //              /         \                    /          \
-        // 3       ABCD            EFGH            IJKL            MNOP
-        //        /    \          /    \         /      \        /      \
-        // 2    AB      CD      EF      GH      IJ      KL      MN      OP
-        //     /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \    /  \
-        // 1  A    B  C    D  E    F  G    H  I    J  K    L  M    N  O    P  A    B  C    D  E    F  G    H  I    J  K    L  M    N  O    P
-
-        // Leaf A hash
-        let mut merkle_leaf_a = Sha256::new();
-        merkle_leaf_a.update(&[LEAF]);
-        merkle_leaf_a.update(&leaves[0]);
-        let leaf_a_hash: Bytes32 = merkle_leaf_a.finalize().try_into().unwrap();
-
-        // Leaf B hash
-        let mut merkle_leaf_b = Sha256::new();
-        merkle_leaf_b.update(&[LEAF]);
-        merkle_leaf_b.update(&leaves[1]);
-        let leaf_b_hash: Bytes32 = merkle_leaf_b.finalize().try_into().unwrap();
-
-        // leaf B hash
-        let mut merkle_leaf_c = Sha256::new();
-        merkle_leaf_c.update(&[LEAF]);
-        merkle_leaf_c.update(&leaves[2]);
-        let leaf_c_hash: Bytes32 = merkle_leaf_c.finalize().try_into().unwrap();
-
-        // Node AB hash
-        let node_u64: u64 = 1;
-        let mut node_ab = Sha256::new();
-        node_ab.update(node_u64.to_be_bytes());
-        node_ab.update(&leaf_a_hash);
-        node_ab.update(&leaf_b_hash);
-        let node_ab_hash: Bytes32 = node_ab.finalize().try_into().unwrap();
-
-        // Root hash
-        let mut node_abc = Sha256::new();
-        node_abc.update(node_u64.to_be_bytes());
-        node_abc.update(&node_ab_hash);
-        node_abc.update(&leaf_c_hash);
-        let node_abc_hash: Bytes32 = node_abc.finalize().try_into().unwrap();
+        let (leaf_hash, proof, root_hash) = build_tree_manual(leaves.clone(), depth.try_into().unwrap(), key).await;
 
         // This passes due to use of u64 for node concatenation
         assert_eq!(
             process_proof(
                 &instance,
-                key,
-                leaf_a_hash,
-                num_leaves,
-                [leaf_b_hash, leaf_c_hash].to_vec()
+                key.try_into().unwrap(),
+                leaf_hash,
+                leaves.len().try_into().unwrap(),
+                proof
             )
             .await,
-            node_abc_hash
+            root_hash
         );
     }
 }
