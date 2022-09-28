@@ -68,7 +68,6 @@ pub mod test_helpers {
     use super::*;
 
     #[derive(Clone)]
-    #[derive(PartialEq)]
     struct Node {
         hash: Bytes32,
         left: Option<usize>,
