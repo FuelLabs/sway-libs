@@ -1,6 +1,6 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{Bytes32, LEAF, empty_sum_sha256, ProofSet},
+    common::{empty_sum_sha256, Bytes32, ProofSet, LEAF},
 };
 use fuels::prelude::*;
 use sha2::{Digest, Sha256};
@@ -113,9 +113,9 @@ pub mod test_helpers {
     }
 
     pub async fn build_tree_manual(
-        leaves: Vec<[u8; 1]>, 
+        leaves: Vec<[u8; 1]>,
         height: usize,
-        key: usize
+        key: usize,
     ) -> (Bytes32, ProofSet, Bytes32) {
         let num_leaves = leaves.len();
         let mut nodes: Vec<Node> = Vec::new();
@@ -151,10 +151,8 @@ pub mod test_helpers {
                 hasher.update(&nodes[itterator].hash);
                 hasher.update(&nodes[itterator + 1].hash);
                 let hash: Bytes32 = hasher.finalize().try_into().unwrap();
-                
-                let new_node = Node::new(hash)
-                    .left(itterator)
-                    .right(itterator + 1);
+
+                let new_node = Node::new(hash).left(itterator).right(itterator + 1);
                 nodes.push(new_node);
                 itterator += 2;
             }
@@ -166,12 +164,12 @@ pub mod test_helpers {
         for i in 0..height {
             let node = nodes[index].clone();
 
-            if node.left == None && node.right == None {             
+            if node.left == None && node.right == None {
                 break;
             }
 
-            let number_subtree_elements = ((2usize.pow(((height - i) + 1).try_into().unwrap()))) / 2;
-        
+            let number_subtree_elements = (2usize.pow(((height - i) + 1).try_into().unwrap())) / 2;
+
             if key <= number_subtree_elements {
                 // Go left
                 index = node.left.unwrap();
@@ -182,7 +180,7 @@ pub mod test_helpers {
                 index = node.right.unwrap();
                 let proof_node = node.left.unwrap();
                 proof.push(nodes[proof_node].hash);
-                
+
                 key = key - number_subtree_elements;
             }
         }

@@ -64,7 +64,8 @@ mod success {
         let depth = 8;
         let leaves = leaves_with_depth(depth).await;
         let key = 0;
-        let (leaf_hash, proof, root_hash) = build_tree_manual(leaves.clone(), depth.try_into().unwrap(), key).await;
+        let (leaf_hash, proof, root_hash) =
+            build_tree_manual(leaves.clone(), depth.try_into().unwrap(), key).await;
 
         // This passes due to use of u64 for node concatenation
         assert_eq!(
