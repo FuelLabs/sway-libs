@@ -98,10 +98,10 @@ pub fn process_proof(
     key: u64,
     merkle_leaf: b256,
     num_leaves: u64,
-    proof: [b256; 2],
+    proof: [b256; 8],
 ) -> b256 {
     // let proof_length = proof.len();
-    let proof_length = 2;
+    let proof_length = 8;
     require((num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
     require(key < num_leaves, ProofError::InvalidKey);
 
@@ -185,7 +185,7 @@ pub fn verify_proof(
     merkle_leaf: b256,
     merkle_root: b256,
     num_leaves: u64,
-    proof: [b256; 2],
+    proof: [b256; 8],
 ) -> bool {
     process_proof(key, merkle_leaf, num_leaves, proof) == merkle_root
 }
