@@ -13,11 +13,15 @@ abi StringTest {
     fn test_as_bytes();
     fn test_capacity();
     fn test_clear();
+    fn test_from_utf8();
+    fn test_insert();
     fn test_is_empty();
     fn test_len();
     fn test_new();
+    fn test_nth();
+    fn test_pop();
     fn test_push();
-    fn test_push_str();
+    fn test_remove();
     fn test_with_capacity();
 }
 
@@ -121,6 +125,10 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
+    fn test_from_utf8() {
+
+    }
+
     fn test_is_empty() {
         let mut string = ~String::new();
 
@@ -193,6 +201,14 @@ impl StringTest for Contract {
         assert(string.len() == 0);
         assert(string.is_empty()); 
         assert(string.capacity() == 0);
+    }
+
+    fn test_nth() {
+
+    }
+
+    fn test_pop() {
+
     }
 
     fn test_push() {
@@ -271,44 +287,8 @@ impl StringTest for Contract {
         assert(string.len() == 3);
     }
 
-    fn test_push_str() {
-        let mut string = ~String::new();
-
-        let fuel_str: str[4] = "fuel";
-        let ptr: u64 = addr_of(fuel_str);
-
-        string.push_str(ptr, 4);
-
-        let byte1: u8 = read(ptr);
-        let byte2: u8 = read(ptr + 1);
-        let byte3: u8 = read(ptr + 2);
-        let byte4: u8 = read(ptr + 3);
-
-        assert(string.len() == 4);
-        assert(string.nth(0).unwrap() == byte1);
-        assert(string.nth(1).unwrap() == byte2);
-        assert(string.nth(2).unwrap() == byte3);
-        assert(string.nth(3).unwrap() == byte4);
-
-        // let f: str[1] = "f";
-        // let u: str[1] = "u";
-        // let e: str[1] = "e";
-        // let l: str[1] = "l";
-
-        // let ptr_f: u64 = addr_of(f);
-        // let ptr_u: u64 = addr_of(u);
-        // let ptr_e: u64 = addr_of(e);
-        // let ptr_l: u64 = addr_of(l);
-
-        // let byte_f: u8 = read(ptr_f);
-        // let byte_u: u8 = read(ptr_u);
-        // let byte_e: u8 = read(ptr_e);
-        // let byte_l: u8 = read(ptr_l);
-
-        // assert(string.nth(0).unwrap() == byte_f);
-        // assert(string.nth(1).unwrap() == byte_u);
-        // assert(string.nth(2).unwrap() == byte_e);
-        // assert(string.nth(3).unwrap() == byte_l);
+    fn test_remove() {
+        
     }
 
     fn test_with_capacity() {
