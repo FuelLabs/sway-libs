@@ -129,6 +129,10 @@ impl StringTest for Contract {
 
     }
 
+    fn test_insert() {
+
+    }
+
     fn test_is_empty() {
         let mut string = ~String::new();
 
@@ -149,7 +153,11 @@ impl StringTest for Contract {
         string.push(1u8);
         assert(!string.is_empty()); 
 
-        // TODO: Pop and check if empty
+        string.pop();
+        assert(!string.is_empty()); 
+
+        string.pop();
+        assert(string.is_empty()); 
     }
 
     fn test_len() {
@@ -288,7 +296,7 @@ impl StringTest for Contract {
     }
 
     fn test_remove() {
-        
+
     }
 
     fn test_with_capacity() {
