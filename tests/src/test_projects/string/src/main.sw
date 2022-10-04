@@ -201,6 +201,9 @@ impl StringTest for Contract {
 
         string.push(number8);
         assert(string.len() == 9);
+
+        string.pop();
+        assert(string.len() == 8);
     }
 
     fn test_new() {
