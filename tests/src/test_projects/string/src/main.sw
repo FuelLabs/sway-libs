@@ -9,6 +9,16 @@ use std::{
 };
 use sway_libs::string::String;
 
+const NUMBER0 = 0u8;
+const NUMBER1 = 1u8;
+const NUMBER2 = 2u8;
+const NUMBER3 = 3u8;
+const NUMBER4 = 4u8;
+const NUMBER5 = 5u8;
+const NUMBER6 = 6u8;
+const NUMBER7 = 7u8;
+const NUMBER8 = 8u8;
+
 abi StringTest {
     fn test_as_bytes();
     fn test_capacity();
@@ -33,83 +43,63 @@ impl StringTest for Contract {
     fn test_capacity() {
         let mut string = ~String::new();
 
-        let number0 = 0u8;
-        let number1 = 1u8;
-        let number2 = 2u8;
-        let number3 = 3u8;
-        let number4 = 4u8;
-        let number5 = 5u8;
-        let number6 = 6u8;
-        let number7 = 7u8;
-        let number8 = 8u8;
-
         assert(string.capacity() == 0);
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(string.capacity() == 1);
 
-        string.push(number1);
+        string.push(NUMBER1);
         assert(string.capacity() == 2);
 
-        string.push(number2);
+        string.push(NUMBER2);
         assert(string.capacity() == 4);
 
-        string.push(number3);
+        string.push(NUMBER3);
         assert(string.capacity() == 4);
 
-        string.push(number4);
+        string.push(NUMBER4);
         assert(string.capacity() == 8);
 
-        string.push(number5);
+        string.push(NUMBER5);
         assert(string.capacity() == 8);
 
-        string.push(number6);
-        string.push(number7);
+        string.push(NUMBER6);
+        string.push(NUMBER7);
         assert(string.capacity() == 8);
 
-        string.push(number8);
+        string.push(NUMBER8);
         assert(string.capacity() == 16);
         
         string.clear();
         assert(string.capacity() == 16);
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(string.capacity() == 16);
     }
 
     fn test_clear() {
         let mut string = ~String::new();
 
-        let number0 = 0u8;
-        let number1 = 1u8;
-        let number2 = 2u8;
-        let number3 = 3u8;
-        let number4 = 4u8;
-        let number5 = 5u8;
-        let number6 = 6u8;
-        let number7 = 7u8;
-        let number8 = 8u8;
-
         assert(string.is_empty());
 
         string.clear();
         assert(string.is_empty());
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(!string.is_empty());
 
         string.clear();
         assert(string.is_empty());
 
-        string.push(number0);
-        string.push(number1);
-        string.push(number2);
-        string.push(number3);
-        string.push(number4);
-        string.push(number5);
-        string.push(number6);
-        string.push(number7);
-        string.push(number8);
+        string.push(NUMBER0);
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+        string.push(NUMBER3);
+        string.push(NUMBER4);
+        string.push(NUMBER5);
+        string.push(NUMBER6);
+        string.push(NUMBER7);
+        string.push(NUMBER8);
         assert(!string.is_empty());
 
         string.clear();
@@ -118,7 +108,7 @@ impl StringTest for Contract {
         string.clear();
         assert(string.is_empty());
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(!string.is_empty());
 
         string.clear();
@@ -138,19 +128,19 @@ impl StringTest for Contract {
 
         assert(string.is_empty());      
 
-        string.push(0u8);
+        string.push(NUMBER0);
         assert(!string.is_empty()); 
 
-        string.push(1u8);
+        string.push(NUMBER1);
         assert(!string.is_empty()); 
 
         string.clear();
         assert(string.is_empty()); 
 
-        string.push(0u8);
+        string.push(NUMBER0);
         assert(!string.is_empty()); 
 
-        string.push(1u8);
+        string.push(NUMBER1);
         assert(!string.is_empty()); 
 
         string.pop();
@@ -165,41 +155,31 @@ impl StringTest for Contract {
 
         assert(string.len() == 0);
 
-        let number0 = 0u8;
-        let number1 = 1u8;
-        let number2 = 2u8;
-        let number3 = 3u8;
-        let number4 = 4u8;
-        let number5 = 5u8;
-        let number6 = 6u8;
-        let number7 = 7u8;
-        let number8 = 8u8;
-
-        string.push(number0);
+        string.push(NUMBER0);
         assert(string.len() == 1);
 
-        string.push(number1);
+        string.push(NUMBER1);
         assert(string.len() == 2);
 
-        string.push(number2);
+        string.push(NUMBER2);
         assert(string.len() == 3);
 
-        string.push(number3);
+        string.push(NUMBER3);
         assert(string.len() == 4);
 
-        string.push(number4);
+        string.push(NUMBER4);
         assert(string.len() == 5);
 
-        string.push(number5);
+        string.push(NUMBER5);
         assert(string.len() == 6);
 
-        string.push(number6);
+        string.push(NUMBER6);
         assert(string.len() == 7);
 
-        string.push(number7);
+        string.push(NUMBER7);
         assert(string.len() == 8);
 
-        string.push(number8);
+        string.push(NUMBER8);
         assert(string.len() == 9);
 
         string.pop();
@@ -232,70 +212,60 @@ impl StringTest for Contract {
         assert(string.is_empty()); 
         assert(string.capacity() == 0);
 
-        let number0 = 0u8;
-        let number1 = 1u8;
-        let number2 = 2u8;
-        let number3 = 3u8;
-        let number4 = 4u8;
-        let number5 = 5u8;
-        let number6 = 6u8;
-        let number7 = 7u8;
-        let number8 = 8u8;
-
-        string.push(number0);
-        assert(string.nth(0) == number0);
+        string.push(NUMBER0);
+        assert(string.nth(0).unwrap() == NUMBER0);
         assert(string.len() == 1);
 
-        string.push(number1);
-        assert(string.nth(1) == number1);
+        string.push(NUMBER1);
+        assert(string.nth(1).unwrap() == NUMBER1);
         assert(string.len() == 2);
 
-        string.push(number2);
-        assert(string.nth(2) == number2);
+        string.push(NUMBER2);
+        assert(string.nth(2).unwrap() == NUMBER2);
         assert(string.len() == 3);
 
-        string.push(number3);
-        assert(string.nth(3) == number3);
+        string.push(NUMBER3);
+        assert(string.nth(3).unwrap() == NUMBER3);
         assert(string.len() == 4);
 
-        string.push(number4);
-        assert(string.nth(4) == number4);
+        string.push(NUMBER4);
+        assert(string.nth(4).unwrap() == NUMBER4);
         assert(string.len() == 5);
 
-        string.push(number5);
-        assert(string.nth(5) == number5);
+        string.push(NUMBER5);
+        assert(string.nth(5).unwrap() == NUMBER5);
         assert(string.len() == 6);
 
-        string.push(number6);
-        assert(string.nth(6) == number6);
+        string.push(NUMBER6);
+        assert(string.nth(6).unwrap() == NUMBER6);
         assert(string.len() == 7);
 
-        string.push(number7);
-        assert(string.nth(7) == number7);
+        string.push(NUMBER7);
+        assert(string.nth(7).unwrap() == NUMBER7);
         assert(string.len() == 8);
 
-        string.push(number8);
-        assert(string.nth(8) == number8);
+        string.push(NUMBER8);
+        assert(string.nth(8).unwrap() == NUMBER8);
         assert(string.len() == 9);
 
-        string.push(number1);
-        assert(string.nth(9) == number1);
+        string.push(NUMBER1);
+        assert(string.nth(9).unwrap() == NUMBER1);
         assert(string.len() == 10);
 
         string.clear();
         assert(string.len() == 0);
         assert(string.is_empty()); 
 
-        string.push(number1);
-        assert(string.nth(0) == number1);
+        string.push(NUMBER1);
+        assert(string.nth(0).unwrap() == NUMBER1);
         assert(string.len() == 1);
 
-        string.push(number1);
-        assert(string.nth(1) == number1);
+        string.push(NUMBER1);
+        assert(string.nth(1).unwrap() == NUMBER1);
         assert(string.len() == 2);
 
-        string.push(number0);
-        assert(string.nth(2) == number0);
+        string.push(NUMBER0);
+        assert(string.nth(2).unwrap() == NUMBER0);
         assert(string.len() == 3);
     }
 
@@ -314,20 +284,14 @@ impl StringTest for Contract {
             iterator += 1;
         }
 
-        let number0 = 0u8;
-        let number1 = 1u8;
-        let number2 = 2u8;
-        let number3 = 3u8;
-        let number4 = 4u8;
-
         let mut string = ~String::with_capacity(0);
         assert(string.capacity() == 0);
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(string.capacity() == 1);
-        string.push(number1);
+        string.push(NUMBER1);
         assert(string.capacity() == 2);
-        string.push(number2);
+        string.push(NUMBER2);
         assert(string.capacity() == 4);
         string.clear();
         assert(string.capacity() == 4);
@@ -335,15 +299,15 @@ impl StringTest for Contract {
         let mut string = ~String::with_capacity(4);
         assert(string.capacity() == 4);
 
-        string.push(number0);
+        string.push(NUMBER0);
         assert(string.capacity() == 4);
-        string.push(number1);
+        string.push(NUMBER1);
         assert(string.capacity() == 4);
-        string.push(number2);
+        string.push(NUMBER2);
         assert(string.capacity() == 4);
-        string.push(number3);
+        string.push(NUMBER3);
         assert(string.capacity() == 4);
-        string.push(number4);
+        string.push(NUMBER4);
         assert(string.capacity() == 8);
     }
 }
