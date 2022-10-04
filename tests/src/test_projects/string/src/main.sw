@@ -138,7 +138,21 @@ impl StringTest for Contract {
     }
 
     fn test_from_utf8() {
+        let mut vec: Vec<u8> = ~Vec::new();
 
+        vec.push(NUMBER0);
+        vec.push(NUMBER1);
+        vec.push(NUMBER2);
+        vec.push(NUMBER3);
+        vec.push(NUMBER4);
+
+        let string_from_uft8 = ~String::from_utf8(vec);
+
+        assert(vec.len() == string_from_uft8.len());
+        assert(vec.capacity() == string_from_uft8.capacity());
+        assert(vec.get(0).unwrap() == string_from_uft8.nth(0).unwrap());
+        assert(vec.get(1).unwrap() == string_from_uft8.nth(1).unwrap());
+        assert(vec.get(2).unwrap() == string_from_uft8.nth(2).unwrap());
     }
 
     fn test_insert() {
