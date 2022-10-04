@@ -37,7 +37,29 @@ abi StringTest {
 
 impl StringTest for Contract {
     fn test_as_bytes() {
+        let mut string = ~String::new();
 
+        let bytes: Vec<u8> = string.as_bytes();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+
+        let _result = string.push(NUMBER0);
+        let bytes: Vec<u8> = string.as_bytes();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
+
+        let _result = string.push(NUMBER1);
+        let mut bytes: Vec<u8> = string.as_bytes();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
+
+        let _result = string.pop();
+        let _result = bytes.pop();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
     fn test_capacity() {
@@ -143,10 +165,10 @@ impl StringTest for Contract {
         string.push(NUMBER1);
         assert(!string.is_empty()); 
 
-        string.pop();
+        let _result = string.pop();
         assert(!string.is_empty()); 
 
-        string.pop();
+        let _result = string.pop();
         assert(string.is_empty()); 
     }
 
@@ -182,7 +204,7 @@ impl StringTest for Contract {
         string.push(NUMBER8);
         assert(string.len() == 9);
 
-        string.pop();
+        let _result = string.pop();
         assert(string.len() == 8);
 
         string.clear();
