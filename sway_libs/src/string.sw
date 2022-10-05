@@ -72,7 +72,7 @@ impl<S> String<S> {
     pub fn remove(self, index: u64) -> u8 {
         self.bytes.remove(index)
     }
-    
+
     /// Constructs a new, empty `String<S>` with the specified capacity.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
