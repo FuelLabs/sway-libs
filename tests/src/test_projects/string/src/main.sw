@@ -253,7 +253,32 @@ impl StringTest for Contract {
     }
 
     fn test_nth() {
+        let mut string = ~String::new();
 
+        string.push(NUMBER0);
+        assert(string.nth(0).unwrap() == NUMBER0);
+
+        string.push(NUMBER1);
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
+
+        string.push(NUMBER2);
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
+        assert(string.nth(2).unwrap() == NUMBER2);
+
+        string.push(NUMBER3);
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
+        assert(string.nth(2).unwrap() == NUMBER2);
+        assert(string.nth(3).unwrap() == NUMBER3);
+
+        string.push(NUMBER4);
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
+        assert(string.nth(2).unwrap() == NUMBER2);
+        assert(string.nth(3).unwrap() == NUMBER3);
+        assert(string.nth(4).unwrap() == NUMBER4);
     }
 
     fn test_pop() {
