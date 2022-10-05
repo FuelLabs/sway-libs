@@ -156,7 +156,26 @@ impl StringTest for Contract {
     }
 
     fn test_insert() {
+        let mut string = ~String::new();
 
+        assert(string.len() == 0);
+        
+        string.insert(0, NUMBER0);
+        assert(string.len() == 1);
+        assert(string.nth(0).unwrap() == NUMBER0);
+
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+
+        string.insert(0, NUMBER3);
+        assert(string.len() == 4);
+        assert(string.nth(0).unwrap() == NUMBER3);
+        
+        string.insert(1, NUMBER4);
+        assert(string.nth(1).unwrap() == NUMBER4);
+
+        string.insert(string.len() - 1, NUMBER5);
+        assert(string.nth(string.len() - 1).unwrap() == NUMBER5);
     }
 
     fn test_is_empty() {
