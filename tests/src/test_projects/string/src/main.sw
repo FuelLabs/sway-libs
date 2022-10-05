@@ -384,7 +384,38 @@ impl StringTest for Contract {
     }
 
     fn test_remove() {
+        let mut string = ~String::new();
 
+        string.push(NUMBER0);
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+        string.push(NUMBER3);
+        string.push(NUMBER4);
+        string.push(NUMBER5);
+
+        assert(string.len() == 6);
+
+        assert(string.remove(0) == NUMBER0);
+        assert(string.len() == 5);
+
+        assert(string.remove(0) == NUMBER1);
+        assert(string.len() == 4);
+
+        assert(string.remove(1) == NUMBER3);
+        assert(string.len() == 3);
+
+        assert(string.remove(string.len() - 1) == NUMBER5);
+        assert(string.len() == 2);
+
+        assert(string.remove(1) == NUMBER4);
+        assert(string.len() == 1);
+
+        assert(string.remove(0) == NUMBER2);
+        assert(string.len() == 0);
+
+        string.push(NUMBER6);
+        assert(string.remove(0) == NUMBER6);
+        assert(string.len() == 0);
     }
 
     fn test_with_capacity() {
