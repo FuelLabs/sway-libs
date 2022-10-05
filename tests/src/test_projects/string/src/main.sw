@@ -279,10 +279,44 @@ impl StringTest for Contract {
         assert(string.nth(2).unwrap() == NUMBER2);
         assert(string.nth(3).unwrap() == NUMBER3);
         assert(string.nth(4).unwrap() == NUMBER4);
+
+        string.clear();
+        string.push(NUMBER5);
+        string.push(NUMBER6);
+        assert(string.nth(0).unwrap() == NUMBER5);
+        assert(string.nth(1).unwrap() == NUMBER6);
     }
 
     fn test_pop() {
+        let mut string = ~String::new();
 
+        string.push(NUMBER0);
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+        string.push(NUMBER3);
+        string.push(NUMBER4);
+
+        assert(string.len() == 5);
+
+        assert(string.pop().unwrap() == NUMBER4);
+        assert(string.len() == 4);
+
+        assert(string.pop().unwrap() == NUMBER3);
+        assert(string.len() == 3);
+
+        assert(string.pop().unwrap() == NUMBER2);
+        assert(string.len() == 2);
+
+        assert(string.pop().unwrap() == NUMBER1);
+        assert(string.len() == 1);
+
+        assert(string.pop().unwrap() == NUMBER0);
+        assert(string.len() == 0);
+
+        assert(string.pop().is_none());
+
+        string.push(NUMBER5);
+        assert(string.pop().unwrap() == NUMBER5);
     }
 
     fn test_push() {
