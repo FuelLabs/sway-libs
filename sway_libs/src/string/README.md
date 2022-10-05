@@ -12,6 +12,12 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Using the String Library in Sway
 
+Import `String` by adding the Sway-Libs to your Forc.toml and appending the following to your Sway file.
+
+```rust
+use sway_libs::string::String;
+```
+
 Once imported, using the String library is as simple as defining a new variable and calling the `new` function.
 
 ```rust
