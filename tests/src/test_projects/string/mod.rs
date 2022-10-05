@@ -1,7 +1,6 @@
-use fuels::{prelude::*};
-use std::io::stdout;
-use std::io::Write;
+use fuels::{prelude::*, tx::ContractId};
 
+// Load abi from json
 abigen!(
     TestStringLib,
     "test_projects/string/out/debug/string-abi.json"
@@ -9,7 +8,16 @@ abigen!(
 
 async fn test_string_instance() -> TestStringLib {
     // Launch a local network and deploy the contract
-    let wallet = launch_provider_and_get_wallet().await;
+    let mut wallets = launch_custom_provider_and_get_wallets(
+        WalletsConfig::new(
+            Some(1),             /* Single wallet */
+            Some(1),             /* Single coin (UTXO) */
+            Some(1_000_000_000), /* Amount per coin */
+        ),
+        None,
+    )
+    .await;
+    let wallet = wallets.pop().unwrap();
 
     let id = Contract::deploy(
         "test_projects/string/out/debug/string.bin",
@@ -25,29 +33,22 @@ async fn test_string_instance() -> TestStringLib {
     instance
 }
 
-// mod as_bytes {
+mod as_bytes {
 
-//     use super::*;
+    use super::*;
 
-//     mod success {
+    mod success {
 
-//         use super::*;
+        use super::*;
 
-//         #[tokio::test]
-//         async fn gets_bytes() {
-//             let _instance = test_string_instance().await;
+        #[tokio::test]
+        async fn returns_bytes() {
+            let instance = test_string_instance().await;
 
-//         }
-
-//     }
-
-//     mod reverts {
-
-//         use super::*;
-
-//     }
-
-// }
+            let _result = instance.test_as_bytes().call().await.unwrap();
+        }
+    }
+}
 
 mod capacity {
 
@@ -83,6 +84,40 @@ mod clear {
     }
 }
 
+mod from_utf8 {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn converts_to_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_from_utf8().call().await.unwrap();
+        }
+    }
+}
+
+mod insert {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn inserts_into_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_insert().call().await.unwrap();
+        }
+    }
+}
+
 mod is_empty {
 
     use super::*;
@@ -109,7 +144,7 @@ mod len {
         use super::*;
 
         #[tokio::test]
-        async fn gets_length() {
+        async fn returns_string_length() {
             let instance = test_string_instance().await;
 
             let _result = instance.test_len().call().await.unwrap();
@@ -126,10 +161,44 @@ mod new {
         use super::*;
 
         #[tokio::test]
-        async fn creates_string() {
+        async fn creates_empty_string() {
             let instance = test_string_instance().await;
 
             let _result = instance.test_new().call().await.unwrap();
+        }
+    }
+}
+
+mod nth {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn returns_nth_element_in_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_nth().call().await.unwrap();
+        }
+    }
+}
+
+mod pop {
+
+    use super::*;
+
+    mod success {
+
+        use super::*;
+
+        #[tokio::test]
+        async fn pops_last_element_in_string() {
+            let instance = test_string_instance().await;
+
+            let _result = instance.test_pop().call().await.unwrap();
         }
     }
 }
@@ -151,7 +220,7 @@ mod push {
     }
 }
 
-mod push_str {
+mod remove {
 
     use super::*;
 
@@ -160,10 +229,10 @@ mod push_str {
         use super::*;
 
         #[tokio::test]
-        async fn pushes_string() {
+        async fn removes_element_in_string() {
             let instance = test_string_instance().await;
 
-            let _result = instance.test_push_str().call().await.unwrap();
+            let _result = instance.test_remove().call().await.unwrap();
         }
     }
 }

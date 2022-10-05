@@ -175,7 +175,7 @@ impl StringTest for Contract {
         assert(string.nth(1).unwrap() == NUMBER4);
 
         string.insert(string.len() - 1, NUMBER5);
-        assert(string.nth(string.len() - 1).unwrap() == NUMBER5);
+        assert(string.nth(string.len() - 2).unwrap() == NUMBER5);
     }
 
     fn test_is_empty() {
