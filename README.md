@@ -53,6 +53,9 @@ For example, to import the Merkle Proof library use the following statement:
 sway_libs::binary_merkle_proof::verify_proof;
 ```
 
+> **Note**
+> All projects currently use `forc 0.24.1` and `fuel-core 0.10.1`.
+
 ## Contributing
 
 Check [CONTRIBUTING.md](./CONTRIBUTING.md) for more info!
