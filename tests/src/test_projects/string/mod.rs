@@ -2,11 +2,11 @@ use fuels::{prelude::*, tx::ContractId};
 
 // Load abi from json
 abigen!(
-    TestStringLib,
+    StringTestLib,
     "test_projects/string/out/debug/string-abi.json"
 );
 
-async fn test_string_instance() -> TestStringLib {
+async fn string_test_instance() -> StringTestLib {
     // Launch a local network and deploy the contract
     let mut wallets = launch_custom_provider_and_get_wallets(
         WalletsConfig::new(
@@ -28,7 +28,7 @@ async fn test_string_instance() -> TestStringLib {
     .await
     .unwrap();
 
-    let instance = TestStringLibBuilder::new(id.to_string(), wallet).build();
+    let instance = StringTestLibBuilder::new(id.to_string(), wallet).build();
 
     instance
 }
