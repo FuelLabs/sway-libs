@@ -1,25 +1,24 @@
 library ufp128;
 //! A wrapper around U128 type for a library for Sway for mathematical functions operating with signed 64.64-bit fixed point numbers. 
-
 use std::u128::U128;
 use std::u256::U256;
 use std::assert::assert;
-use std::math::{Root,Exponent,Exponentiate};
+use std::math::{Exponent, Exponentiate, Root};
 use std::revert::revert;
 
 pub struct UFP128 {
-    value: U128 
+    value: U128,
 }
 
 pub trait From {
-    fn from(int_part: u64, fract_part: u64) -> UFP128; 
+    fn from(int_part: u64, fract_part: u64) -> UFP128;
 }
 
 impl From for UFP128 {
     fn from(int_part: u64, fract_part: u64) -> Self {
-        Self{
-            value: ~U128::from(int_part, fract_part)
-        } 
+        Self {
+            value: ~U128::from(int_part, fract_part),
+        }
     }
 }
 
@@ -70,7 +69,7 @@ impl core::ops::Add for UFP128 {
     /// Add a UFP128 to a UFP128. Panics on overflow.
     fn add(self, other: Self) -> Self {
         UFP128 {
-            value: self.value + other.value
+            value: self.value + other.value,
         }
     }
 }
@@ -82,7 +81,7 @@ impl core::ops::Subtract for UFP128 {
         assert(!(self.value < other.value));
 
         UFP128 {
-            value: self.value - other.value
+            value: self.value - other.value,
         }
     }
 }
@@ -90,7 +89,6 @@ impl core::ops::Subtract for UFP128 {
 impl core::ops::Multiply for UFP128 {
     /// Multiply a UFP128 with a UFP128. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-
         let self_u256 = ~U256::from(0, 0, self.value.upper, self.value.lower);
         let other_u256 = ~U256::from(0, 0, other.value.upper, other.value.lower);
 
@@ -132,12 +130,11 @@ impl core::ops::Divide for UFP128 {
 }
 
 impl UFP128 {
-
     pub fn recip(number: UFP128) -> Self {
-        let one = ~U128::from(0,1);
-        
+        let one = ~U128::from(0, 1);
+
         Self {
-            value: one / number.value
+            value: one / number.value,
         }
     }
 
@@ -174,7 +171,7 @@ impl UFP128 {
 
     pub fn fract(self) -> Self {
         ~Self::from(0, self.value.lower)
-    }    
+    }
 }
 
 impl Root for UFP128 {
@@ -191,11 +188,12 @@ impl Exponentiate for UFP128 {
         let u128_1 = ~U128::from(0, 1);
         let u128_2 = ~U128::from(0, 2);
         let u128_64 = ~U128::from(0, 64);
-        let two_pow_64_n_minus_1 = u128_2.pow(u128_64*(exponent.value - u128_1));
+        let two_pow_64_n_minus_1 = u128_2.pow(u128_64 * (exponent.value - u128_1));
         let nominator = nominator_pow / two_pow_64_n_minus_1;
         ~Self::from(nominator.upper, nominator.lower)
     }
 }
+
 
 // TODO: uncomment and change accordingly, when signed integers will be added
 // impl Logarithm for UFP128 {
@@ -207,7 +205,6 @@ impl Exponentiate for UFP128 {
 //         }
 //     }
 // }
-
 trait Exponent {
     fn exp(exponent: Self) -> Self;
 }
