@@ -1,8 +1,8 @@
 # Overview
 
-The String library allows for developers to use valid UTF-8 encoded strings in Sway. This is differs from Sway's `str` as the size must not be known at compile time. `String` is heap allocated, growable, and not null terminated.
+The String library allows for developers to use valid UTF-8 encoded strings of dynamic length in Sway. The `String` is heap allocated, growable, and not null terminated.
 
-The `String` is stored as vector of bytes.
+The `String` is stored as vector of bytes. This differs from Sway's built in `str` as the size must not be known at compile time and is not static.
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -10,19 +10,21 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 # Using the Library
 
-## Using the String Library in Sway
+## Getting Started
 
-Import `String` by adding the Sway-Libs to your Forc.toml and appending the following to your Sway file.
+In order to use the `String` library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [source README.md](./README.md).
 
 ```rust
 use sway_libs::string::String;
 ```
 
-Once imported, using the String library is as simple as defining a new variable and calling the `new` function.
+Once imported, a `String` can be instantiated defining a new variable and calling the `new` function.
 
 ```rust
 let mut string = ~String::new();
 ```
+
+## Basic Functionality
 
 Appending or adding to the `String` can be done by calling the `push` and `insert` functions.
 
