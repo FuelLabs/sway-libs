@@ -16,6 +16,8 @@ env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
   RUST_VERSION: 1.63.0
+  FORC_VERSION: 0.24.1
+  CORE_VERSION: 0.10.1
   PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
@@ -51,6 +53,9 @@ jobs:
 
         - name: Install Fuel toolchain
           uses: FuelLabs/action-fuel-toolchain@v0.1.0
+          with:
+            name: my-toolchain
+            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
         - name: Check Sway formatting
           run: forc fmt --path sway_libs --check
