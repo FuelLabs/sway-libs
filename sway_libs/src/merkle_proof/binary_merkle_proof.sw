@@ -17,32 +17,28 @@ pub const LEAF = 0u8;
 pub const NODE = 1u8;
 
 /// Returns the computed leaf hash of "MTH({d(0)}) = SHA-256(0x00 || d(0))".
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {
     sha256((LEAF, data))
 }
 
 /// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    sha256((
-        NODE,
-        left,
-        right,
-    ))
+    sha256((NODE, left, right, ))
 }
 
 /// Calculates the length of the path to a leaf
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `key` - The key or index of the leaf.
 /// * `num_leaves` - The total number of leaves in the Merkle Tree.
 fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
@@ -80,16 +76,16 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
 }
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * 'key' - The key or index of the leaf to prove.
 /// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
 /// * 'num_leaves' - The number of leaves in the Merkle Tree.
 /// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
-/// 
+///
 /// # Reverts
-/// 
+///
 /// * When an incorrect proof length is provided.
 /// * When there is one or no leaves and a proof is provided.
 /// * When the key is greater than or equal to the number of leaves.
@@ -156,9 +152,9 @@ pub fn process_proof(
 }
 
 /// Calculates the starting bit of the path to a leaf
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * `num_leaves` - The number of leaves in the Merkle Tree.
 fn starting_bit(num_leaves: u64) -> u64 {
     let mut starting_bit = 0;
@@ -172,9 +168,9 @@ fn starting_bit(num_leaves: u64) -> u64 {
 
 /// This function will take a Merkle leaf and proof and return whether the corresponding root
 /// matches the root given.
-/// 
+///
 /// # Arguments
-/// 
+///
 /// * 'key' - The key or index of the leaf to verify.
 /// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
 /// * `merkle_root` - The pre-computed Merkle root that will be used to verify the leaf and proof.
