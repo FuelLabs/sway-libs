@@ -1,4 +1,4 @@
-use fuels::{prelude::*, tx::ContractId};
+use fuels::{prelude::*};
 
 // Load abi from json
 abigen!(
@@ -43,7 +43,7 @@ mod as_bytes {
 
         #[tokio::test]
         async fn returns_bytes() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_as_bytes().call().await.unwrap();
         }
@@ -60,7 +60,7 @@ mod capacity {
 
         #[tokio::test]
         async fn returns_capacity() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_capacity().call().await.unwrap();
         }
@@ -77,7 +77,7 @@ mod clear {
 
         #[tokio::test]
         async fn clears_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_clear().call().await.unwrap();
         }
@@ -94,7 +94,7 @@ mod from_utf8 {
 
         #[tokio::test]
         async fn converts_to_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_from_utf8().call().await.unwrap();
         }
@@ -111,7 +111,7 @@ mod insert {
 
         #[tokio::test]
         async fn inserts_into_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_insert().call().await.unwrap();
         }
@@ -128,7 +128,7 @@ mod is_empty {
 
         #[tokio::test]
         async fn returns_if_empty() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_is_empty().call().await.unwrap();
         }
@@ -145,7 +145,7 @@ mod len {
 
         #[tokio::test]
         async fn returns_string_length() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_len().call().await.unwrap();
         }
@@ -162,7 +162,7 @@ mod new {
 
         #[tokio::test]
         async fn creates_empty_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_new().call().await.unwrap();
         }
@@ -179,7 +179,7 @@ mod nth {
 
         #[tokio::test]
         async fn returns_nth_element_in_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_nth().call().await.unwrap();
         }
@@ -196,7 +196,7 @@ mod pop {
 
         #[tokio::test]
         async fn pops_last_element_in_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_pop().call().await.unwrap();
         }
@@ -213,7 +213,7 @@ mod push {
 
         #[tokio::test]
         async fn pushes_to_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_push().call().await.unwrap();
         }
@@ -230,7 +230,7 @@ mod remove {
 
         #[tokio::test]
         async fn removes_element_in_string() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_remove().call().await.unwrap();
         }
@@ -247,7 +247,7 @@ mod with_capacity {
 
         #[tokio::test]
         async fn creates_string_with_capacity() {
-            let instance = test_string_instance().await;
+            let instance = string_test_instance().await;
 
             let _result = instance.test_with_capacity().call().await.unwrap();
         }
