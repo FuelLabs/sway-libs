@@ -1,6 +1,5 @@
 library ufp64;
 //! A wrapper around u64 type for a library for Sway for mathematical functions operating with signed 32.32-bit fixed point numbers.
-
 use core::num::*;
 use std::assert::assert;
 use std::math::*;
@@ -19,16 +18,12 @@ impl UFP64 {
     }
 
     pub fn zero() -> Self {
-        Self {
-            value: 0,
-        }
+        Self { value: 0 }
     }
 
     /// Creates UFP64 from u64. Note that ~UFP64::from(1) is 1 / 2^32 and not 1.
     pub fn from(value: u64) -> Self {
-        Self {
-            value, 
-        }
+        Self { value }
     }
 
     /// The smallest value that can be represented by this type.
@@ -263,7 +258,6 @@ impl Exponent for UFP64 {
         let p5 = ~UFP64::from(35791394); // p5 == 1 / 5!
         let p6 = ~UFP64::from(5965232); // p6 == 1 / 6!
         let p7 = ~UFP64::from(852176); // p7 == 1 / 7!
-
         // common technique to counter loosing sugnifucant numbers in usual approximation
         // Taylor series approximation of exponantiation function minus 1. The subtraction is done to deal with accuracy issues
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
