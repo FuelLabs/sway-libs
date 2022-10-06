@@ -19,9 +19,7 @@ pub trait From {
 impl From for I16 {
     /// Helper function to get a signed number from with an underlying
     fn from(underlying: u16) -> Self {
-        Self {
-            underlying
-        }
+        Self { underlying }
     }
 }
 
@@ -85,10 +83,8 @@ impl I16 {
     /// Helper function to get a positive value from unsigned number
     fn from_uint(value: u16) -> Self {
         // as the minimal value of I16 is -~I16::indent() (1 << 15) we should add ~I16::indent() (1 << 15)
-        let underlying: u16 = value + ~Self::indent(); 
-        Self {
-            underlying
-        }
+        let underlying: u16 = value + ~Self::indent();
+        Self { underlying }
     }
 }
 
@@ -119,13 +115,21 @@ impl core::ops::Multiply for I16 {
     /// Multiply a I16 with a I16. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = ~Self::new();
-        if self.underlying >= ~Self::indent() && other.underlying >= ~Self::indent() {
-            res = ~Self::from((self.underlying - ~Self::indent()) * (other.underlying -~Self::indent()) + ~Self::indent());
-        } else if self.underlying < ~Self::indent() && other.underlying < ~Self::indent() {
+        if self.underlying >= ~Self::indent()
+            && other.underlying >= ~Self::indent()
+        {
+            res = ~Self::from((self.underlying - ~Self::indent()) * (other.underlying - ~Self::indent()) + ~Self::indent());
+        } else if self.underlying < ~Self::indent()
+            && other.underlying < ~Self::indent()
+        {
             res = ~Self::from((~Self::indent() - self.underlying) * (~Self::indent() - other.underlying) + ~Self::indent());
-        } else if self.underlying >= ~Self::indent() && other.underlying < ~Self::indent() {
+        } else if self.underlying >= ~Self::indent()
+            && other.underlying < ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) * (~Self::indent() - other.underlying));
-        } else if self.underlying < ~Self::indent() && other.underlying >= ~Self::indent() {
+        } else if self.underlying < ~Self::indent()
+            && other.underlying >= ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (other.underlying - ~Self::indent()) * (~Self::indent() - self.underlying));
         }
         res
@@ -137,13 +141,21 @@ impl core::ops::Divide for I16 {
     fn divide(self, divisor: Self) -> Self {
         assert(divisor != ~Self::new());
         let mut res = ~Self::new();
-        if self.underlying >= ~Self::indent() && divisor.underlying > ~Self::indent() {
-            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying -~Self::indent()) + ~Self::indent());
-        } else if self.underlying < ~Self::indent() && divisor.underlying < ~Self::indent() {
+        if self.underlying >= ~Self::indent()
+            && divisor.underlying > ~Self::indent()
+        {
+            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying - ~Self::indent()) + ~Self::indent());
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying < ~Self::indent()
+        {
             res = ~Self::from((~Self::indent() - self.underlying) / (~Self::indent() - divisor.underlying) + ~Self::indent());
-        } else if self.underlying >= ~Self::indent() && divisor.underlying < ~Self::indent() {
+        } else if self.underlying >= ~Self::indent()
+            && divisor.underlying < ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) / (~Self::indent() - divisor.underlying));
-        } else if self.underlying < ~Self::indent() && divisor.underlying > ~Self::indent() {
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying > ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (~Self::indent() - self.underlying) / (divisor.underlying - ~Self::indent()));
         }
         res

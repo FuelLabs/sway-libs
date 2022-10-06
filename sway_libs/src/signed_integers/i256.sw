@@ -20,9 +20,7 @@ pub trait From {
 impl From for I256 {
     /// Helper function to get a signed number from with an underlying
     fn from(underlying: U256) -> Self {
-        Self {
-            underlying,
-        }
+        Self { underlying }
     }
 }
 
@@ -92,9 +90,7 @@ impl I256 {
     fn from_uint(value: U256) -> Self {
         // as the minimal value of I256 is -~I256::indent() (1 << 63) we should add ~I256::indent() (1 << 63) 
         let underlying: U256 = value + ~Self::indent();
-        Self {
-            underlying
-        }
+        Self { underlying }
     }
 }
 
@@ -125,13 +121,25 @@ impl core::ops::Multiply for I256 {
     /// Multiply a I256 with a I256. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = ~Self::new();
-        if (self.underlying > ~Self::indent() || self.underlying == ~Self::indent()) && (other.underlying > ~Self::indent() || other.underlying == ~Self::indent()) {
-            res = ~Self::from((self.underlying - ~Self::indent()) * (other.underlying -~Self::indent()) + ~Self::indent());
-        } else if self.underlying < ~Self::indent() && other.underlying < ~Self::indent() {
+        if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && (other.underlying > ~Self::indent()
+            || other.underlying == ~Self::indent())
+        {
+            res = ~Self::from((self.underlying - ~Self::indent()) * (other.underlying - ~Self::indent()) + ~Self::indent());
+        } else if self.underlying < ~Self::indent()
+            && other.underlying < ~Self::indent()
+        {
             res = ~Self::from((~Self::indent() - self.underlying) * (~Self::indent() - other.underlying) + ~Self::indent());
-        } else if (self.underlying > ~Self::indent() || self.underlying == ~Self::indent()) && other.underlying < ~Self::indent() {
+        } else if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && other.underlying < ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) * (~Self::indent() - other.underlying));
-        } else if self.underlying < ~Self::indent() && (other.underlying > ~Self::indent() || other.underlying == ~Self::indent()) {
+        } else if self.underlying < ~Self::indent()
+            && (other.underlying > ~Self::indent()
+            || other.underlying == ~Self::indent())
+        {
             res = ~Self::from(~Self::indent() - (other.underlying - ~Self::indent()) * (~Self::indent() - self.underlying));
         }
         res
@@ -143,13 +151,23 @@ impl core::ops::Divide for I256 {
     fn divide(self, divisor: Self) -> Self {
         assert(divisor != ~Self::new());
         let mut res = ~Self::new();
-        if (self.underlying > ~Self::indent() || self.underlying == ~Self::indent()) && divisor.underlying > ~Self::indent() {
-            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying -~Self::indent()) + ~Self::indent());
-        } else if self.underlying < ~Self::indent() && divisor.underlying < ~Self::indent() {
+        if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && divisor.underlying > ~Self::indent()
+        {
+            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying - ~Self::indent()) + ~Self::indent());
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying < ~Self::indent()
+        {
             res = ~Self::from((~Self::indent() - self.underlying) / (~Self::indent() - divisor.underlying) + ~Self::indent());
-        } else if (self.underlying > ~Self::indent() || self.underlying == ~Self::indent()) && divisor.underlying < ~Self::indent() {
+        } else if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && divisor.underlying < ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) / (~Self::indent() - divisor.underlying));
-        } else if self.underlying < ~Self::indent() && divisor.underlying > ~Self::indent() {
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying > ~Self::indent()
+        {
             res = ~Self::from(~Self::indent() - (~Self::indent() - self.underlying) / (divisor.underlying - ~Self::indent()));
         }
         res
