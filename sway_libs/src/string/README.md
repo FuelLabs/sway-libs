@@ -16,7 +16,7 @@ It is important to note that unlike Rust's `String`, this `String` library does 
 
 ## Getting Started
 
-In order to use the `String` library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [source README.md](./README.md).
+In order to use the `String` library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [source README.md](../../../README.md).
 
 ```rust
 use sway_libs::string::String;
