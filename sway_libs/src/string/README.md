@@ -1,12 +1,16 @@
 # Overview
 
-The String library allows for developers to use valid UTF-8 encoded strings of dynamic length in Sway. The `String` is heap allocated, growable, and not null terminated.
+The String library provides an interface to use UTF-8 encoded strings of dynamic length in Sway. The `String` is heap allocated, growable, and not null terminated.
 
-The `String` is stored as vector of bytes. This differs from Sway's built in `str` as the size must not be known at compile time and is not static.
+The `String` is stored as vector of bytes. This differs from Sway's built in `str` as the size must not be known at compile time and is not static. 
 
 For more information please see the [specification](./SPECIFICATION.md).
 
 > **Note** There is currently no way to convert a `str` to a `String`.
+
+## Known Issues
+
+It is important to note that unlike Rust's `String`, this `String` library does **not** guarantee a valid UTF-8 string. The `String` currently behaves only as a `vec` and does not perform any validation. This intended to be supported in the future with the introduction of [`char`](https://github.com/FuelLabs/sway/issues/2937) to the Sway language.
 
 # Using the Library
 
@@ -26,24 +30,24 @@ let mut string = ~String::new();
 
 ## Basic Functionality
 
-Appending or adding to the `String` can be done by calling the `push` and `insert` functions.
+Appending or adding bytes to the `String` can be done by calling the `push` and `insert` functions.
 
 ```rust
 string.push(0u8);
 string.insert(0u8, 0);
 ```
 
-Removing from the `String` can be done with either the `pop` or `remove` functions.
+Removing bytes from the `String` can be done with either the `pop` or `remove` functions.
 
 ```rust
-let last_element = string.pop().unwrap();
-let nth_element = string.remove(0);
+let last_byte = string.pop().unwrap();
+let nth_byte = string.remove(0);
 ```
 
-To retrieve an element in the `String`, use the `nth` function.
+To retrieve a byte in the `String`, use the `nth` function.
 
 ```rust
-let nth_element = string.nth(0);
+let nth_byte = string.nth(0);
 ```
 
 For more information please see the [specification](./SPECIFICATION.md).

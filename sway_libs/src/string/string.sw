@@ -36,17 +36,17 @@ impl String {
     /// # Arguments
     /// 
     /// * `byte` - The element which will be added to the `String`.
-    /// * `index` - The position in the `String` where the element will be inserted.
+    /// * `index` - The position in the `String` where the byte will be inserted.
     pub fn insert(self, byte: u8, index: u64) {
         self.bytes.insert(index, byte);
     }
 
-    /// Returns `true` if the vector contains no elements.
+    /// Returns `true` if the vector contains no bytes.
     pub fn is_empty(self) -> bool {
         self.bytes.is_empty()
     }
 
-    /// Returns the number of elements in the `String`, also referred to
+    /// Returns the number of bytes in the `String`, also referred to
     /// as its 'length'.
     pub fn len(self) -> u64 {
         self.bytes.len()
@@ -59,21 +59,21 @@ impl String {
         }
     }
 
-    /// Returns the element at the specified index.
+    /// Returns the byte at the specified index.
     /// 
     /// # Arguments
     /// 
-    /// * `index` - The position of the element that will be returned.
+    /// * `index` - The position of the byte that will be returned.
     pub fn nth(self, index: u64) -> Option<u8> {
         self.bytes.get(index)
     }
 
-    /// Removes the last character from the `String` buffer and returns it.
+    /// Removes the last byte from the `String` buffer and returns it.
     pub fn pop(self) -> Option<u8> {
         self.bytes.pop()
     }
 
-    /// Appends an element to the end of the `String`.
+    /// Appends a byte to the end of the `String`.
     /// 
     /// # Arguments
     /// 
@@ -82,11 +82,11 @@ impl String {
         self.bytes.push(byte);
     }
 
-    /// Removes and returns the element at the specified index.
+    /// Removes and returns the byte at the specified index.
     /// 
     /// # Arguments
     /// 
-    /// * `index` - The position of the element that will be removed.
+    /// * `index` - The position of the byte that will be removed.
     pub fn remove(self, index: u64) -> u8 {
         self.bytes.remove(index)
     }
