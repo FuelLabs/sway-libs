@@ -1,7 +1,5 @@
 library string;
 
-use std::{option::Option, vec::Vec};
-
 pub struct String {
     bytes: Vec<u8>,
 }
@@ -23,18 +21,18 @@ impl String {
     }
 
     /// Converts a vector of bytes to a `String`.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
     pub fn from_utf8(bytes: Vec<u8>) -> String {
         String { bytes }
     }
 
     /// Inserts a byte at the index within the `String`.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `byte` - The element which will be added to the `String`.
     /// * `index` - The position in the `String` where the byte will be inserted.
     pub fn insert(self, byte: u8, index: u64) {
@@ -60,9 +58,9 @@ impl String {
     }
 
     /// Returns the byte at the specified index.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `index` - The position of the byte that will be returned.
     pub fn nth(self, index: u64) -> Option<u8> {
         self.bytes.get(index)
@@ -74,27 +72,27 @@ impl String {
     }
 
     /// Appends a byte to the end of the `String`.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `byte` - The element to be appended to the end of the `String`.
     pub fn push(self, byte: u8) {
         self.bytes.push(byte);
     }
 
     /// Removes and returns the byte at the specified index.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `index` - The position of the byte that will be removed.
     pub fn remove(self, index: u64) -> u8 {
         self.bytes.remove(index)
     }
 
     /// Constructs a new instance of the `String` type with the specified capacity.
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `capacity` - The specified amount of memory on the heap to be allocated for the `String`.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
