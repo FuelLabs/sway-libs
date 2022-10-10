@@ -6,7 +6,7 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 ## Use Cases
 
-The String library can be used anytime a string's length is unknown at compile time and as such lives on the heap. Further methods can then be implemented to provide additional features building off of the `String` struct.
+The String library can be used anytime a string's length is unknown at compile time. Further methods can then be implemented to provide additional features building off of the `String` struct.
 
 > **Note** There is no guarantee in the validity of the UTF-8 encoded `String` and should be used with caution. For more information, please see the [known issues](./README.md#known-issues).
 
@@ -14,13 +14,13 @@ The String library can be used anytime a string's length is unknown at compile t
 
 ### `as_bytes()`
 
-Used to convert the `String` struct to a `Vec` of `u8` bytes. 
+Convert the `String` struct to a `Vec` of `u8` bytes. 
 
 ### `capacity()`
 
 Returns the total amount of memory on the heap allocated to the `String` which can be filled with bytes. 
 
-> **Note** Capacity and length are not the same. A `String` may have a length of 0 but any arbitrary capacity.
+> **Note** Capacity and length are not the same. A `String` may have a length of 0 but any positive capacity.
 
 ### `clear()`
 
@@ -28,7 +28,7 @@ Truncates the `String` to a length of 0 and will appear empty. This does not cle
 
 ### `from_utf8()`
 
-Given a vector of `u8`'s a new `String` instance will be returned.
+A new instance of a `String` will be created from a vector of `u8`'s
 
 ### `insert()`
 
@@ -56,7 +56,7 @@ Removes the last byte in the `String` and returns it. If the `String` does not h
 
 ### `remove()`
 
-Will both remove and return the specified byte in the `String`. 
+Remove and return the specified byte in the `String`. 
 
 ### `with_capacity()`
 
