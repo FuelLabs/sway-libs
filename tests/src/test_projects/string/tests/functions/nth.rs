@@ -1,7 +1,4 @@
-use crate::string::tests::utils::{
-    abi_calls::nth,
-    test_helpers::setup,
-};
+use crate::string::tests::utils::{abi_calls::nth, test_helpers::setup};
 
 mod success {
 

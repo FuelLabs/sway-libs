@@ -15,7 +15,13 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
-        contract.methods().leaf_digest(data).call().await.unwrap().value
+        contract
+            .methods()
+            .leaf_digest(data)
+            .call()
+            .await
+            .unwrap()
+            .value
     }
 
     pub async fn node_digest(
@@ -118,7 +124,12 @@ pub mod test_helpers {
             final_proof.push(Bits256(itterator.clone()));
         }
 
-        (tree, Bits256(merkle_root), Bits256(merkle_leaf), final_proof)
+        (
+            tree,
+            Bits256(merkle_root),
+            Bits256(merkle_leaf),
+            final_proof,
+        )
     }
 
     pub async fn build_tree_manual(
@@ -196,7 +207,11 @@ pub mod test_helpers {
 
         proof.reverse();
 
-        (Bits256(leaf_hash), proof, Bits256(nodes.last().unwrap().hash))
+        (
+            Bits256(leaf_hash),
+            proof,
+            Bits256(nodes.last().unwrap().hash),
+        )
     }
 
     pub async fn leaves_with_depth(depth: u32) -> Vec<[u8; 1]> {
@@ -223,8 +238,7 @@ pub mod test_helpers {
         .await
         .unwrap();
 
-        let instance =
-            TestMerkleProofLib::new(contract_id.to_string(), wallet.clone());
+        let instance = TestMerkleProofLib::new(contract_id.to_string(), wallet.clone());
 
         instance
     }

@@ -59,7 +59,12 @@ pub mod abi_calls {
     }
 
     pub async fn with_capacity(contract: &StringTestLib) -> CallResponse<()> {
-        contract.methods().test_with_capacity().call().await.unwrap()
+        contract
+            .methods()
+            .test_with_capacity()
+            .call()
+            .await
+            .unwrap()
     }
 }
 
