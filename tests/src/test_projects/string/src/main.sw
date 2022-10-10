@@ -1,12 +1,6 @@
 contract;
 
-use std::{
-    assert::assert, 
-    intrinsics::size_of, 
-    mem::{addr_of, read}, 
-    option::Option, 
-    vec::Vec
-};
+use std::{intrinsics::size_of, mem::{addr_of, read}};
 use sway_libs::string::String;
 
 const NUMBER0 = 0u8;
@@ -203,7 +197,7 @@ impl StringTest for Contract {
 
     fn test_len() {
         let mut string = ~String::new();
-        
+
         assert(string.len() == 0);
 
         string.push(NUMBER0);
@@ -311,7 +305,6 @@ impl StringTest for Contract {
 
         assert(string.len() == 0);
         assert(string.pop().is_none());
-
         string.push(NUMBER5);
         assert(string.pop().unwrap() == NUMBER5);
     }
@@ -423,7 +416,7 @@ impl StringTest for Contract {
             assert(string.capacity() == iterator);
             iterator += 1;
         }
-        
+
         let mut string = ~String::with_capacity(0);
         assert(string.capacity() == 0);
 
@@ -440,12 +433,11 @@ impl StringTest for Contract {
         assert(string.capacity() == 4);
 
         let mut string = ~String::with_capacity(4);
-        
+
         assert(string.capacity() == 4);
 
         string.push(NUMBER0);
         assert(string.capacity() == 4);
-
         string.push(NUMBER1);
         assert(string.capacity() == 4);
 

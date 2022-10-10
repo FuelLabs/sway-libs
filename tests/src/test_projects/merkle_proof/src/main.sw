@@ -5,19 +5,8 @@ use sway_libs::binary_merkle_proof::{leaf_digest, node_digest, process_proof, ve
 abi MerkleProofTest {
     fn leaf_digest(data: b256) -> b256;
     fn node_digest(left: b256, right: b256) -> b256;
-    fn process_proof(
-        key: u64,
-        merkle_leaf: b256,
-        num_leaves: u64,
-        proof: [b256; 8],
-    ) -> b256;
-    fn verify_proof(
-        key: u64,
-        merkle_leaf: b256,
-        merkle_root: b256,
-        num_leaves: u64,
-        proof: [b256; 8],
-    ) -> bool;
+    fn process_proof(key: u64, merkle_leaf: b256, num_leaves: u64, proof: Vec<b256>, ) -> b256;
+    fn verify_proof(key: u64, merkle_leaf: b256, merkle_root: b256, num_leaves: u64, proof: Vec<b256>, ) -> bool;
 }
 
 impl MerkleProofTest for Contract {
@@ -33,7 +22,7 @@ impl MerkleProofTest for Contract {
         key: u64,
         merkle_leaf: b256,
         num_leaves: u64,
-        proof: [b256; 8],
+        proof: Vec<b256>,
     ) -> b256 {
         process_proof(key, merkle_leaf, num_leaves, proof)
     }
@@ -43,7 +32,7 @@ impl MerkleProofTest for Contract {
         merkle_leaf: b256,
         merkle_root: b256,
         num_leaves: u64,
-        proof: [b256; 8],
+        proof: Vec<b256>,
     ) -> bool {
         verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
     }
