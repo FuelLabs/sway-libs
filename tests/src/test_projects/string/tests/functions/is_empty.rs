@@ -1,5 +1,5 @@
 use crate::string::tests::utils::{
-    abi_calls::{is_empty},
+    abi_calls::is_empty,
     test_helpers::setup,
 };
 
