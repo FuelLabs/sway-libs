@@ -32,6 +32,7 @@ These libraries contain helper functions, generalized standards, and other tools
 ### Libraries
 
 - [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 
 ## Using a library
 
