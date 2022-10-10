@@ -281,6 +281,8 @@ impl StringTest for Contract {
         string.push(NUMBER6);
         assert(string.nth(0).unwrap() == NUMBER5);
         assert(string.nth(1).unwrap() == NUMBER6);
+
+        assert(string.nth(2).is_none());
     }
 
     fn test_pop() {
