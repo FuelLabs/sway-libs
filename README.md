@@ -55,7 +55,7 @@ sway_libs::binary_merkle_proof::verify_proof;
 ```
 
 > **Note**
-> All projects currently use `forc 0.24.1` and `fuel-core 0.10.1`.
+> All projects currently use `forc v0.25.2`, `fuels-rs v0.25.1` and `fuel-core 0.10.1`.
 
 ## Contributing
 

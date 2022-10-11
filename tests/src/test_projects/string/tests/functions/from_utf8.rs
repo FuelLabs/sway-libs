@@ -1,7 +1,4 @@
-use crate::string::tests::utils::{
-    abi_calls::from_utf8,
-    test_helpers::setup,
-};
+use crate::string::tests::utils::{abi_calls::from_utf8, test_helpers::setup};
 
 mod success {
 
