@@ -1,6 +1,7 @@
 library sway_libs;
 
 dep merkle_proof/binary_merkle_proof;
+dep string/string;
 
 dep signed_integers/i8;
 dep signed_integers/i16;

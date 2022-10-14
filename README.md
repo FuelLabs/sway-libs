@@ -32,13 +32,14 @@ These libraries contain helper functions, generalized standards, and other tools
 ### Libraries
 
 - [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 
 ## Using a library
 
 To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]` with the most recent release:
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", version = "0.1.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 You may then import your desired library in your Sway Smart Contract as so:
@@ -52,6 +53,9 @@ For example, to import the Merkle Proof library use the following statement:
 ```rust
 sway_libs::binary_merkle_proof::verify_proof;
 ```
+
+> **Note**
+> All projects currently use `forc v0.25.2`, `fuels-rs v0.25.1` and `fuel-core 0.10.1`.
 
 ## Contributing
 
