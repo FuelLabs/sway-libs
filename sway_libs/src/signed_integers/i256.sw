@@ -51,10 +51,22 @@ impl I256 {
 }
 
 impl I256 {
-    /// Initializes a new, zeroed I256.
-    pub fn new() -> Self {
+    /// The size of this type in bits.
+    pub fn bits() -> u32 {
+        128
+    }
+
+    /// Helper function to get a positive value from unsigned number
+    fn from_uint(value: U256) -> Self {
+        // as the minimal value of I256 is -~I256::indent() (1 << 63) we should add ~I256::indent() (1 << 63) 
+        let underlying: U256 = value + ~Self::indent();
+        Self { underlying }
+    }
+
+    /// The largest value that can be represented by this type,
+    pub fn max() -> Self {
         Self {
-            underlying: ~Self::indent(),
+            underlying: ~U256::max(),
         }
     }
 
@@ -65,18 +77,6 @@ impl I256 {
         }
     }
 
-    /// The largest value that can be represented by this type,
-    pub fn max() -> Self {
-        Self {
-            underlying: ~U256::max(),
-        }
-    }
-
-    /// The size of this type in bits.
-    pub fn bits() -> u32 {
-        128
-    }
-
     /// Helper function to get a negative value of unsigned number
     pub fn neg_from(value: U256) -> Self {
         Self {
@@ -84,11 +84,11 @@ impl I256 {
         }
     }
 
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: U256) -> Self {
-        // as the minimal value of I256 is -~I256::indent() (1 << 63) we should add ~I256::indent() (1 << 63) 
-        let underlying: U256 = value + ~Self::indent();
-        Self { underlying }
+    /// Initializes a new, zeroed I256.
+    pub fn new() -> Self {
+        Self {
+            underlying: ~Self::indent(),
+        }
     }
 }
 
@@ -100,16 +100,29 @@ impl core::ops::Add for I256 {
     }
 }
 
-impl core::ops::Subtract for I256 {
-    /// Subtract a I256 from a I256. Panics of overflow.
-    fn subtract(self, other: Self) -> Self {
+impl core::ops::Divide for I256 {
+    /// Divide a I256 by a I256. Panics if divisor is zero.
+    fn divide(self, divisor: Self) -> Self {
+        assert(divisor != ~Self::new());
         let mut res = ~Self::new();
-        if self > other {
-            // add 1 << 63 to avoid loosing the move
-            res = ~Self::from(self.underlying - other.underlying + ~Self::indent());
-        } else {
-            // subtract from 1 << 63 as we are getting a negative value
-            res = ~Self::from(~Self::indent() - (other.underlying - self.underlying));
+        if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && divisor.underlying > ~Self::indent()
+        {
+            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying - ~Self::indent()) + ~Self::indent());
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying < ~Self::indent()
+        {
+            res = ~Self::from((~Self::indent() - self.underlying) / (~Self::indent() - divisor.underlying) + ~Self::indent());
+        } else if (self.underlying > ~Self::indent()
+            || self.underlying == ~Self::indent())
+            && divisor.underlying < ~Self::indent()
+        {
+            res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) / (~Self::indent() - divisor.underlying));
+        } else if self.underlying < ~Self::indent()
+            && divisor.underlying > ~Self::indent()
+        {
+            res = ~Self::from(~Self::indent() - (~Self::indent() - self.underlying) / (divisor.underlying - ~Self::indent()));
         }
         res
     }
@@ -144,29 +157,16 @@ impl core::ops::Multiply for I256 {
     }
 }
 
-impl core::ops::Divide for I256 {
-    /// Divide a I256 by a I256. Panics if divisor is zero.
-    fn divide(self, divisor: Self) -> Self {
-        assert(divisor != ~Self::new());
+impl core::ops::Subtract for I256 {
+    /// Subtract a I256 from a I256. Panics of overflow.
+    fn subtract(self, other: Self) -> Self {
         let mut res = ~Self::new();
-        if (self.underlying > ~Self::indent()
-            || self.underlying == ~Self::indent())
-            && divisor.underlying > ~Self::indent()
-        {
-            res = ~Self::from((self.underlying - ~Self::indent()) / (divisor.underlying - ~Self::indent()) + ~Self::indent());
-        } else if self.underlying < ~Self::indent()
-            && divisor.underlying < ~Self::indent()
-        {
-            res = ~Self::from((~Self::indent() - self.underlying) / (~Self::indent() - divisor.underlying) + ~Self::indent());
-        } else if (self.underlying > ~Self::indent()
-            || self.underlying == ~Self::indent())
-            && divisor.underlying < ~Self::indent()
-        {
-            res = ~Self::from(~Self::indent() - (self.underlying - ~Self::indent()) / (~Self::indent() - divisor.underlying));
-        } else if self.underlying < ~Self::indent()
-            && divisor.underlying > ~Self::indent()
-        {
-            res = ~Self::from(~Self::indent() - (~Self::indent() - self.underlying) / (divisor.underlying - ~Self::indent()));
+        if self > other {
+            // add 1 << 63 to avoid loosing the move
+            res = ~Self::from(self.underlying - other.underlying + ~Self::indent());
+        } else {
+            // subtract from 1 << 63 as we are getting a negative value
+            res = ~Self::from(~Self::indent() - (other.underlying - self.underlying));
         }
         res
     }

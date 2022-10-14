@@ -46,10 +46,22 @@ impl I64 {
 }
 
 impl I64 {
-    /// Initializes a new, zeroed I64.
-    pub fn new() -> Self {
+    /// The size of this type in bits.
+    pub fn bits() -> u32 {
+        64
+    }
+
+    /// Helper function to get a positive value from unsigned number
+    fn from_uint(value: u64) -> Self {
+        // as the minimal value of I64 is -~I64::indent() (1 << 63) we should add ~I64::indent() (1 << 63) 
+        let underlying: u64 = value + ~Self::indent();
+        Self { underlying }
+    }
+
+    /// The largest value that can be represented by this type,
+    pub fn max() -> Self {
         Self {
-            underlying: ~Self::indent(),
+            underlying: ~u64::max(),
         }
     }
 
@@ -60,18 +72,6 @@ impl I64 {
         }
     }
 
-    /// The largest value that can be represented by this type,
-    pub fn max() -> Self {
-        Self {
-            underlying: ~u64::max(),
-        }
-    }
-
-    /// The size of this type in bits.
-    pub fn bits() -> u32 {
-        64
-    }
-
     /// Helper function to get a negative value of unsigned number
     pub fn neg_from(value: u64) -> Self {
         Self {
@@ -79,11 +79,11 @@ impl I64 {
         }
     }
 
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: u64) -> Self {
-        // as the minimal value of I64 is -~I64::indent() (1 << 63) we should add ~I64::indent() (1 << 63) 
-        let underlying: u64 = value + ~Self::indent();
-        Self { underlying }
+    /// Initializes a new, zeroed I64.
+    pub fn new() -> Self {
+        Self {
+            underlying: ~Self::indent(),
+        }
     }
 }
 

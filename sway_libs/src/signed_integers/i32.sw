@@ -46,10 +46,22 @@ impl I32 {
 }
 
 impl I32 {
-    /// Initializes a new, zeroed I32.
-    pub fn new() -> Self {
+    /// The size of this type in bits.
+    pub fn bits() -> u32 {
+        32
+    }
+
+    /// Helper function to get a positive value from unsigned number
+    fn from_uint(value: u32) -> Self {
+        // as the minimal value of I32 is 2147483648 (1 << 31) we should add ~I32::indent() (1 << 31) 
+        let underlying: u32 = value + ~Self::indent();
+        Self { underlying }
+    }
+
+    /// The largest value that can be represented by this type,
+    pub fn max() -> Self {
         Self {
-            underlying: ~Self::indent(),
+            underlying: ~u32::max(),
         }
     }
 
@@ -60,30 +72,18 @@ impl I32 {
         }
     }
 
-    /// The largest value that can be represented by this type,
-    pub fn max() -> Self {
-        Self {
-            underlying: ~u32::max(),
-        }
-    }
-
-    /// The size of this type in bits.
-    pub fn bits() -> u32 {
-        32
-    }
-
     /// Helper function to get a negative value of unsigned numbers
     pub fn neg_from(value: u32) -> Self {
         Self {
             underlying: ~Self::indent() - value,
         }
     }
-
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: u32) -> Self {
-        // as the minimal value of I32 is 2147483648 (1 << 31) we should add ~I32::indent() (1 << 31) 
-        let underlying: u32 = value + ~Self::indent();
-        Self { underlying }
+    
+    /// Initializes a new, zeroed I32.
+    pub fn new() -> Self {
+        Self {
+            underlying: ~Self::indent(),
+        }
     }
 }
 
