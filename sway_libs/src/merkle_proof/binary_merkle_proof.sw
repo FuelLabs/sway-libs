@@ -1,8 +1,6 @@
 library binary_merkle_proof;
 
-// TODO: Function definitions that use arrays should be updated to Vecs once
-// https://github.com/FuelLabs/fuels-rs/issues/353 is resolved
-use std::{hash::sha256, revert::require};
+use std::hash::sha256;
 
 pub enum ProofError {
     InvalidKey: (),
@@ -94,10 +92,9 @@ pub fn process_proof(
     key: u64,
     merkle_leaf: b256,
     num_leaves: u64,
-    proof: [b256; 8],
+    proof: Vec<b256>,
 ) -> b256 {
-    // let proof_length = proof.len();
-    let proof_length = 8;
+    let proof_length = proof.len();
     require((num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
     require(key < num_leaves, ProofError::InvalidKey);
 
@@ -127,9 +124,9 @@ pub fn process_proof(
 
         // Determine if the key is in the first or the second half of the subtree.
         if (key - sub_tree_start_index) < (1 << (height - 1)) {
-            digest = node_digest(digest, proof[height - 1]);
+            digest = node_digest(digest, proof.get(height - 1).unwrap());
         } else {
-            digest = node_digest(proof[height - 1], digest);
+            digest = node_digest(proof.get(height - 1).unwrap(), digest);
         }
 
         height = height + 1;
@@ -138,13 +135,13 @@ pub fn process_proof(
     // Determine if the next hash belongs to an orphan that was elevated.
     if stable_end != (num_leaves - 1) {
         require(proof_length > height - 1, ProofError::InvalidProofLength);
-        digest = node_digest(digest, proof[height - 1]);
+        digest = node_digest(digest, proof.get(height - 1).unwrap());
         height = height + 1;
     }
 
     // All remaining elements in the proof set will belong to the left sibling.
     while (height - 1) < proof_length {
-        digest = node_digest(proof[height - 1], digest);
+        digest = node_digest(proof.get(height - 1).unwrap(), digest);
         height = height + 1;
     }
 
@@ -181,7 +178,7 @@ pub fn verify_proof(
     merkle_leaf: b256,
     merkle_root: b256,
     num_leaves: u64,
-    proof: [b256; 8],
+    proof: Vec<b256>,
 ) -> bool {
     process_proof(key, merkle_leaf, num_leaves, proof) == merkle_root
 }

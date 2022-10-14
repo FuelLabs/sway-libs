@@ -32,6 +32,7 @@ These libraries contain helper functions, generalized standards, and other tools
 ### Libraries
 
 - [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 
 ## Using a library
 
@@ -52,6 +53,9 @@ For example, to import the Merkle Proof library use the following statement:
 ```rust
 sway_libs::binary_merkle_proof::verify_proof;
 ```
+
+> **Note**
+> All projects currently use `forc v0.25.2`, `fuels-rs v0.25.1` and `fuel-core 0.10.1`.
 
 ## Contributing
 

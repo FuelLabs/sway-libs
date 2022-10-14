@@ -2,6 +2,7 @@ use crate::merkle_proof::tests::utils::{
     abi_calls::leaf_digest,
     test_helpers::{build_tree, merkle_proof_instance},
 };
+use fuels::prelude::Bits256;
 
 mod success {
 
@@ -17,7 +18,7 @@ mod success {
         let (_tree, _root, leaf, _proof) = build_tree(leaves, key).await;
 
         assert_eq!(
-            leaf_digest(&instance, "A".as_bytes().try_into().unwrap()).await,
+            leaf_digest(&instance, Bits256("A".as_bytes().try_into().unwrap())).await,
             leaf
         );
     }
