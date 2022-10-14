@@ -78,7 +78,7 @@ impl I32 {
             underlying: ~Self::indent() - value,
         }
     }
-    
+
     /// Initializes a new, zeroed I32.
     pub fn new() -> Self {
         Self {
