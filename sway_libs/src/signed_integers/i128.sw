@@ -1,7 +1,5 @@
 library i128;
 
-use core::num::*;
-use std::assert::assert;
 use std::u128::U128;
 
 /// The 128-bit signed integer type.
