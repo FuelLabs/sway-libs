@@ -1,7 +1,5 @@
 library i256;
 
-use core::num::*;
-use std::assert::assert;
 use std::u256::U256;
 
 /// The 128-bit signed integer type.

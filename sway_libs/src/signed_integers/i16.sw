@@ -1,8 +1,5 @@
 library i16;
 
-use core::num::*;
-use std::assert::assert;
-
 /// The 16-bit signed integer type.
 /// Represented as an underlying u16 value.
 /// Actual value is underlying value minus 2 ^ 15

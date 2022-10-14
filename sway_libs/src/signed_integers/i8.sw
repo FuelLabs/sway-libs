@@ -1,8 +1,5 @@
 library i8;
 
-use core::num::*;
-use std::assert::assert;
-
 /// The 8-bit signed integer type.
 /// Represented as an underlying u8 value.
 /// Actual value is underlying value minus 2 ^ 7
