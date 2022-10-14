@@ -1,5 +1,7 @@
 library i64;
 
+use core::num::*;
+
 /// The 64-bit signed integer type.
 /// Represented as an underlying u64 value.
 /// Actual value is underlying value minus 2 ^ 63

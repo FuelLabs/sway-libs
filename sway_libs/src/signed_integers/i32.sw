@@ -1,5 +1,7 @@
 library i32;
 
+use core::num::*;
+
 /// The 32-bit signed integer type.
 /// Represented as an underlying u32 value.
 /// Actual value is underlying value minus 2 ^ 31
