@@ -10,6 +10,10 @@ pub struct I256 {
     underlying: U256,
 }
 
+pub enum Error {
+    ZeroDivisor: (),
+}
+
 pub trait From {
     /// Function for creating I256 from U256
     fn from(underlying: U256) -> Self;
@@ -103,7 +107,7 @@ impl core::ops::Add for I256 {
 impl core::ops::Divide for I256 {
     /// Divide a I256 by a I256. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        assert(divisor != ~Self::new());
+        require(divisor != ~Self::new(), Error::ZeroDivisor);
         let mut res = ~Self::new();
         if (self.underlying > ~Self::indent()
             || self.underlying == ~Self::indent())

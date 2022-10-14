@@ -10,6 +10,10 @@ pub struct I16 {
     underlying: u16,
 }
 
+pub enum Error {
+    ZeroDivisor: (),
+}
+
 pub trait From {
     /// Function for creating I16 from u16
     fn from(underlying: u16) -> Self;
@@ -98,7 +102,7 @@ impl core::ops::Add for I16 {
 impl core::ops::Divide for I16 {
     /// Divide a I16 by a I16. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        assert(divisor != ~Self::new());
+        require(divisor != ~Self::new(), Error::ZeroDivisor);
         let mut res = ~Self::new();
         if self.underlying >= ~Self::indent()
             && divisor.underlying > ~Self::indent()

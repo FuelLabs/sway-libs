@@ -10,6 +10,10 @@ pub struct I8 {
     underlying: u8,
 }
 
+pub enum Error {
+    ZeroDivisor: (),
+}
+
 pub trait From {
     /// Function for creating I8 from u8
     fn from(underlying: u8) -> Self;
@@ -96,7 +100,7 @@ impl core::ops::Add for I8 {
 impl core::ops::Divide for I8 {
     /// Divide a I8 by a I8. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        assert(divisor != ~Self::new());
+        require(divisor != ~Self::new(), Error::ZeroDivisor);
         let mut res = ~Self::new();
         if self.underlying >= ~Self::indent()
             && divisor.underlying > ~Self::indent()
