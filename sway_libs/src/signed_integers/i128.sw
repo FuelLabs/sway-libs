@@ -1,6 +1,8 @@
 library i128;
 
 use std::u128::U128;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 128-bit signed integer type.
 /// Represented as an underlying U128 value.
@@ -8,10 +10,6 @@ use std::u128::U128;
 /// Max value is 2 ^ 127 - 1, min value is - 2 ^ 127
 pub struct I128 {
     underlying: U128,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -172,4 +170,16 @@ impl core::ops::Subtract for I128 {
         }
         res
     }
+}
+
+impl TwosComplement for I128 {
+    fn twos_complement(self) -> Self {
+        let u128_one = U128 {
+            upper: 0,
+            lower: 1,
+        };
+        let one = ~I128::from_uint(u128_one);
+        let res = self.not() - one;
+        res
+    } 
 }

@@ -1,6 +1,8 @@
 library i16;
 
 use core::num::*;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 16-bit signed integer type.
 /// Represented as an underlying u16 value.
@@ -8,10 +10,6 @@ use core::num::*;
 /// Max value is 2 ^ 15 - 1, min value is - 2 ^ 15
 pub struct I16 {
     underlying: u16,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -163,4 +161,12 @@ impl core::ops::Subtract for I16 {
         }
         res
     }
+}
+
+impl TwosComplement for I16 {
+    fn twos_complement(self) -> Self {
+        let one = ~I16::from_uint(1u16);
+        let res = self.not() - one;
+        res
+    } 
 }

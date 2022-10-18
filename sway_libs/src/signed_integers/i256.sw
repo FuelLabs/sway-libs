@@ -1,6 +1,8 @@
 library i256;
 
 use std::u256::U256;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 128-bit signed integer type.
 /// Represented as an underlying U256 value.
@@ -8,10 +10,6 @@ use std::u256::U256;
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
 pub struct I256 {
     underlying: U256,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -174,4 +172,18 @@ impl core::ops::Subtract for I256 {
         }
         res
     }
+}
+
+impl TwosComplement for I256 {
+    fn twos_complement(self) -> Self {
+        let u128_one = U256 {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 1,
+        };
+        let one = ~I256::from_uint(u128_one);
+        let res = self.not() - one;
+        res
+    } 
 }

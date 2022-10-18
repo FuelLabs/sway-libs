@@ -1,6 +1,8 @@
 library i8;
 
 use core::num::*;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 8-bit signed integer type.
 /// Represented as an underlying u8 value.
@@ -8,10 +10,6 @@ use core::num::*;
 /// Max value is 2 ^ 7 - 1, min value is - 2 ^ 7
 pub struct I8 {
     underlying: u8,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -159,4 +157,12 @@ impl core::ops::Subtract for I8 {
         }
         res
     }
+}
+
+impl TwosComplement for I8 {
+    fn twos_complement(self) -> Self {
+        let one = ~I8::from_uint(1u8);
+        let res = self.not() - one;
+        res
+    } 
 }

@@ -1,6 +1,8 @@
 library i64;
 
 use core::num::*;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 64-bit signed integer type.
 /// Represented as an underlying u64 value.
@@ -8,10 +10,6 @@ use core::num::*;
 /// Max value is 2 ^ 63 - 1, min value is - 2 ^ 63
 pub struct I64 {
     underlying: u64,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -163,4 +161,12 @@ impl core::ops::Divide for I64 {
         }
         res
     }
+}
+
+impl TwosComplement for I64 {
+    fn twos_complement(self) -> Self {
+        let one = ~I64::from_uint(1u64);
+        let res = self.not() - one;
+        res
+    } 
 }

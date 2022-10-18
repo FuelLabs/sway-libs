@@ -1,6 +1,8 @@
 library i32;
 
 use core::num::*;
+use ::signed_integers::common::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 32-bit signed integer type.
 /// Represented as an underlying u32 value.
@@ -8,10 +10,6 @@ use core::num::*;
 /// Max value is 2 ^ 31 - 1, min value is - 2 ^ 31
 pub struct I32 {
     underlying: u32,
-}
-
-pub enum Error {
-    ZeroDivisor: (),
 }
 
 pub trait From {
@@ -163,4 +161,12 @@ impl core::ops::Divide for I32 {
         }
         res
     }
+}
+
+impl TwosComplement for I32 {
+    fn twos_complement(self) -> Self {
+        let one = ~I32::from_uint(1u32);
+        let res = self.not() - one;
+        res
+    } 
 }
