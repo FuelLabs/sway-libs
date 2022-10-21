@@ -166,7 +166,7 @@ impl core::ops::Divide for I32 {
 impl TwosComplement for I32 {
     fn twos_complement(self) -> Self {
         let one = ~I32::from_uint(1u32);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }

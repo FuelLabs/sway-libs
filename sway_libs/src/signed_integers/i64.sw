@@ -166,7 +166,7 @@ impl core::ops::Divide for I64 {
 impl TwosComplement for I64 {
     fn twos_complement(self) -> Self {
         let one = ~I64::from_uint(1u64);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }

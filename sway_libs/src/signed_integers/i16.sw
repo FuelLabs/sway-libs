@@ -166,7 +166,7 @@ impl core::ops::Subtract for I16 {
 impl TwosComplement for I16 {
     fn twos_complement(self) -> Self {
         let one = ~I16::from_uint(1u16);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }

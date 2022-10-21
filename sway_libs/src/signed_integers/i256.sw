@@ -183,7 +183,7 @@ impl TwosComplement for I256 {
             d: 1,
         };
         let one = ~I256::from_uint(u128_one);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }

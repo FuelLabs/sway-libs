@@ -162,7 +162,7 @@ impl core::ops::Subtract for I8 {
 impl TwosComplement for I8 {
     fn twos_complement(self) -> Self {
         let one = ~I8::from_uint(1u8);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }

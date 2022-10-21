@@ -179,7 +179,7 @@ impl TwosComplement for I128 {
             lower: 1,
         };
         let one = ~I128::from_uint(u128_one);
-        let res = self.not() - one;
+        let res = !self - one;
         res
     } 
 }
