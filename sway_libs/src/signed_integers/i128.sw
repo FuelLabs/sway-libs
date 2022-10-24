@@ -1,6 +1,7 @@
 library i128;
 
 use std::u128::U128;
+use ::signed_integers::errors::Error;
 
 /// The 128-bit signed integer type.
 /// Represented as an underlying U128 value.

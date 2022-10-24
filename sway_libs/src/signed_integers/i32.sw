@@ -1,6 +1,7 @@
 library i32;
 
 use core::num::*;
+use ::signed_integers::errors::Error;
 
 /// The 32-bit signed integer type.
 /// Represented as an underlying u32 value.

@@ -1,6 +1,7 @@
 library i256;
 
 use std::u256::U256;
+use ::signed_integers::errors::Error;
 
 /// The 128-bit signed integer type.
 /// Represented as an underlying U256 value.
