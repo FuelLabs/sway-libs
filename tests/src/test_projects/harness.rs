@@ -2,4 +2,4 @@
 
 mod merkle_proof;
 mod string;
-mod signed integers;
+mod signed_integers;
