@@ -10,10 +10,6 @@ pub struct I32 {
     underlying: u32,
 }
 
-pub enum Error {
-    ZeroDivisor: (),
-}
-
 pub trait From {
     /// Function for creating I32 from u32
     fn from(underlying: u32) -> Self;
