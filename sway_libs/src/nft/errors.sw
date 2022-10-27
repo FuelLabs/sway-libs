@@ -1,22 +1,12 @@
 library errors;
 
 pub enum AccessError {
-    SenderCannotSetAccessControl: (),
-    SenderNotAdmin: (),
+    OwnerDoesNotExist: (),
     SenderNotOwner: (),
     SenderNotOwnerOrApproved: (),
 }
 
-pub enum InitError {
-    AdminIsNone: (),
-    CannotReinitialize: (),
-}
-
 pub enum InputError {
-    AdminDoesNotExist: (),
-    ApprovedDoesNotExist: (),
-    NotEnoughTokensToMint: (),
-    OwnerDoesNotExist: (),
+    TokenAlreadyExists: (),
     TokenDoesNotExist: (),
-    TokenSupplyCannotBeZero: (),
 }
