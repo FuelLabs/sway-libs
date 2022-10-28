@@ -1,3 +1,3 @@
 // Add test modules here:
 
-mod nft;
+mod nft_core;
