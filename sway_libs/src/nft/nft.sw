@@ -148,8 +148,8 @@ pub fn tokens_minted() -> u64 {
 ///
 /// * When the `token_id` does not map to an existing token.
 #[storage(read, write)]
-pub fn transfer_to(to: Identity, token_id: u64) {
+pub fn transfer(to: Identity, token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().transfer_to(to);
+    nft.unwrap().transfer(to);
 }

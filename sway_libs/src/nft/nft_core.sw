@@ -151,7 +151,7 @@ impl NFTCore {
     /// * When the sender is not approved to transfer the token on the owner's behalf.
     /// * When the sender is not approved to transfer all tokens on the owner's behalf.
     #[storage(read, write)]
-    pub fn transfer_to(self, to: Identity) -> Self {
+    pub fn transfer(self, to: Identity) -> Self {
         require(self.owner.is_some(), AccessError::OwnerDoesNotExist);
 
         let mut nft = self;
