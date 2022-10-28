@@ -37,7 +37,7 @@ impl NFTCore {
 
         // Set and store the `approved` `Identity`
         nft.approved = approved;
-        store(sha256((TOKENS, self.token_id)), nft);
+        store(sha256((TOKENS, self.token_id)), Option::Some(nft));
 
         log(ApprovalEvent {
             owner: nft.owner.unwrap(),
@@ -90,8 +90,9 @@ impl NFTCore {
             token_id,
         };
 
-        store(sha256((TOKENS, token_id)), nft);
+        store(sha256((TOKENS, token_id)), Option::Some(nft));
         store(TOKENS_MINTED, get::<u64>(TOKENS_MINTED) + 1);
+        store(sha256((BALANCES, to)), get::<u64>(sha256((BALANCES, to))) + 1);
 
         log(MintEvent {
             owner: to,
@@ -171,7 +172,7 @@ impl NFTCore {
             nft.approved = Option::None();
         }
 
-        store(sha256((TOKENS, self.token_id)), nft);
+        store(sha256((TOKENS, self.token_id)), Option::Some(nft));
 
         let from_balance = get::<u64>(sha256((BALANCES, from)));
         let to_balance = get::<u64>(sha256((BALANCES, to)));
