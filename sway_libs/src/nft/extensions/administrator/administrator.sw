@@ -11,7 +11,7 @@ use std::{chain::auth::msg_sender, logging::log, storage::{get, store}};
 /// Returns the current admin for the contract.
 #[storage(read)]
 pub fn admin() -> Option<Identity> {
-    get::<Option>(ADMIN)
+    get::<Option<Identity>>(ADMIN)
 }
 
 /// Changes the contract's admin.
@@ -25,7 +25,7 @@ pub fn admin() -> Option<Identity> {
 /// * When the admin is storage is not `None` or when the sender is not the `admin` in storage
 #[storage(read, write)]
 pub fn set_admin(new_admin: Option<Identity>) {
-    let admin: Option<Identity> = get::<Option>(ADMIN);
+    let admin = get::<Option<Identity>>(ADMIN);
     require(admin.is_none() || (admin.is_some() && admin.unwrap() == msg_sender().unwrap()), AdminError::SenderNotAdmin);
 
     store(ADMIN, new_admin);

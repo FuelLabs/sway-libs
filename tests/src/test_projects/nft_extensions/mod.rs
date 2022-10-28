@@ -1,8 +1,1 @@
-[project]
-authors = ["Fuel Labs <contact@fuel.sh>"]
-entry = "main.sw"
-license = "Apache-2.0"
-name = "nft_extensions_test"
-
-[dependencies]
-sway_libs = { path = "../../../../sway_libs" }
+mod tests;

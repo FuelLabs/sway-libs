@@ -118,7 +118,7 @@ pub mod test_helpers {
         let wallet3 = wallets.pop().unwrap();
 
         let nft_id = Contract::deploy(
-            "./test_projects/nft_/out/debug/nft_extensions_test.bin",
+            "./test_projects/nft_extensions/out/debug/nft_extensions_test.bin",
             &wallet1,
             TxParameters::default(),
             StorageConfiguration::default(),
