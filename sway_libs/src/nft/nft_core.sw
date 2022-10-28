@@ -11,7 +11,7 @@ use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 
 pub struct NFTCore {
     approved: Option<Identity>,
-    owner: Option<Identity>,
+    owner: Identity,
     token_id: u64,
 }
 
@@ -33,14 +33,14 @@ impl NFTCore {
         // Ensure this is a valid token
         let mut nft = self;
         let sender = msg_sender().unwrap();
-        require(nft.owner.is_some() && nft.owner.unwrap() == sender, AccessError::SenderNotOwner);
+        require(nft.owner == sender, AccessError::SenderNotOwner);
 
         // Set and store the `approved` `Identity`
         nft.approved = approved;
         store(sha256((TOKENS, self.token_id)), Option::Some(nft));
 
         log(ApprovalEvent {
-            owner: nft.owner.unwrap(),
+            owner: nft.owner,
             approved,
             token_id: nft.token_id,
         });
@@ -63,9 +63,7 @@ impl NFTCore {
     /// * When the token has no owner.
     #[storage(read)]
     pub fn is_approved_for_all(self, operator: Identity) -> bool {
-        require(self.owner.is_some(), AccessError::OwnerDoesNotExist);
-
-        get::<bool>(sha256((OPERATOR_APPROVAL, self.owner.unwrap(), operator)))
+        get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator)))
     }
 
     /// Mints the token to the `to` `Identity`.
@@ -86,7 +84,7 @@ impl NFTCore {
 
         let nft = NFTCore {
             approved: Option::None(),
-            owner: Option::Some(to),
+            owner: to,
             token_id,
         };
 
@@ -103,7 +101,7 @@ impl NFTCore {
     }
 
     /// Returns the user which owns the specified token.
-    pub fn owner(self) -> Option<Identity> {
+    pub fn owner(self) -> Identity {
         self.owner
     }
 
@@ -123,13 +121,13 @@ impl NFTCore {
     #[storage(write)]
     pub fn set_approval_for_all(self, approve: bool, operator: Identity) {
         let sender = msg_sender().unwrap();
-        require(self.owner.is_some() && self.owner.unwrap() == sender, AccessError::SenderNotOwner);
+        require(self.owner == sender, AccessError::SenderNotOwner);
 
-        store(sha256((OPERATOR_APPROVAL, self.owner.unwrap(), operator)), approve);
+        store(sha256((OPERATOR_APPROVAL, self.owner, operator)), approve);
 
         log(OperatorEvent {
             approved: approve,
-            owner: self.owner.unwrap(),
+            owner: self.owner,
             operator,
         });
     }
@@ -147,16 +145,13 @@ impl NFTCore {
     ///
     /// # Reverts
     ///
-    /// * When the token has no owner.
     /// * When the sender is not the owner of the token.
     /// * When the sender is not approved to transfer the token on the owner's behalf.
     /// * When the sender is not approved to transfer all tokens on the owner's behalf.
     #[storage(read, write)]
     pub fn transfer(self, to: Identity) -> Self {
-        require(self.owner.is_some(), AccessError::OwnerDoesNotExist);
-
         let mut nft = self;
-        let from = nft.owner.unwrap();
+        let from = nft.owner;
         let sender = msg_sender().unwrap();
         let operator_approved = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender)));
 
@@ -167,7 +162,7 @@ impl NFTCore {
         require(sender == from || (self.approved.is_some() && sender == self.approved.unwrap()) || operator_approved, AccessError::SenderNotOwnerOrApproved);
 
         // Set the new owner of the token and reset the approved Identity
-        nft.owner = Option::Some(to);
+        nft.owner = to;
         if self.approved.is_some() {
             nft.approved = Option::None();
         }

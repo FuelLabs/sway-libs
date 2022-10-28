@@ -105,7 +105,7 @@ pub fn owner_of(token_id: u64) -> Option<Identity> {
 
     match nft {
         Option::Some(nft) => {
-            nft.owner()
+            Option::Some(nft.owner())
         },
         Option::None(nft) => {
             Option::None()
