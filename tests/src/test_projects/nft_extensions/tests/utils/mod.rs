@@ -74,10 +74,10 @@ pub mod abi_calls {
         contract.methods().set_admin(admin).call().await.unwrap()
     }
 
-    pub async fn set_meta_data(metadata: NFTMetaData, contract: &NftExtensions, token_id: u64) -> CallResponse<()> {
-        contract.methods().set_meta_data(metadata, token_id).call().await.unwrap()
+    pub async fn set_meta_data(contract: &NftExtensions, token_id: u64, value: u64) -> CallResponse<()> {
+        contract.methods().set_meta_data(token_id, value).call().await.unwrap()
     }
-
+ 
     pub async fn tokens_minted(contract: &NftExtensions) -> u64 {
         contract
             .methods()

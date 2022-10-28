@@ -27,7 +27,7 @@ abi NFT_Extensions_Test {
     #[storage(read, write)]
     fn set_admin(new_admin: Option<Identity>);
     #[storage(read, write)]
-    fn set_meta_data(metadata: NFTMetaData, token_id: u64);
+    fn set_meta_data(value: u64, token_id: u64);
     #[storage(read)]
     fn tokens_minted() -> u64;
     #[storage(read, write)]
@@ -71,8 +71,8 @@ impl NFT_Extensions_Test for Contract {
     }
 
     #[storage(read, write)]
-    fn set_meta_data(metadata: NFTMetaData, token_id: u64) {
-        set_meta_data(metadata, token_id);
+    fn set_meta_data(token_id: u64, value: u64) {
+        set_meta_data(token_id, value);
     }
 
     #[storage(read)]

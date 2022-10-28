@@ -10,7 +10,7 @@ pub trait MetaData {
     #[storage(read)]
     fn meta_data(self) -> NFTMetaData;
     #[storage(write)]
-    fn set_meta_data(self, meta_data: NFTMetaData);
+    fn set_meta_data(self, value: u64);
 }
 
 impl MetaData for NFTCore {
@@ -20,8 +20,8 @@ impl MetaData for NFTCore {
     }
 
     #[storage(write)]
-    fn set_meta_data(self, meta_data: NFTMetaData) {
-        store(sha256((META_DATA, self.token_id)), meta_data);
+    fn set_meta_data(self, value: u64) {
+        store(sha256((META_DATA, self.token_id)), ~NFTMetaData::new(value));
     }
 }
 
@@ -33,8 +33,8 @@ pub fn meta_data(token_id: u64) -> NFTMetaData {
 }
 
 #[storage(read, write)]
-pub fn set_meta_data(meta_data: NFTMetaData, token_id: u64) {
+pub fn set_meta_data(token_id: u64, value: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().set_meta_data(meta_data);
+    nft.unwrap().set_meta_data(value);
 }

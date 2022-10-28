@@ -20,7 +20,7 @@ mod success {
 
     #[tokio::test]
     async fn gets_admin_after_change() {
-        let (deploy_wallet, owner1, owner2) = setup().await;
+        let (_deploy_wallet, owner1, owner2) = setup().await;
 
         let new_admin = Identity::Address(owner1.wallet.address().into());
         set_admin(Option::Some(new_admin.clone()), &owner1.contract).await;
