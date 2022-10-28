@@ -6,4 +6,4 @@ mod mint;
 mod owner_of;
 mod set_approval_for_all;
 mod tokens_minted;
-mod transfer_from;
+mod transfer;

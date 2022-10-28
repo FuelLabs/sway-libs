@@ -2,7 +2,7 @@ use crate::nft_core::tests::utils::{
     abi_calls::{balance_of, mint},
     test_helpers::setup,
 };
-use fuels::{prelude::Identity, signers::Signer};
+use fuels::prelude::Identity;
 
 mod success {
 
@@ -26,7 +26,7 @@ mod success {
 
         let minter = Identity::Address(owner1.wallet.address().into());
         assert_eq!(balance_of(&owner1.contract, minter.clone()).await, 0);
-        
+
         mint(4, &owner1.contract, minter.clone()).await;
 
         assert_eq!(balance_of(&owner1.contract, minter.clone()).await, 4);
