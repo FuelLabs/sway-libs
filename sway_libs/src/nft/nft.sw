@@ -99,15 +99,18 @@ pub fn mint(amount: u64, to: Identity) {
 /// # Arguments
 ///
 /// * `token_id` - The unique identifier of the token.
-///
-/// # Reverts
-///
-/// * When `token_id` does not map to an existing token.
 #[storage(read)]
 pub fn owner_of(token_id: u64) -> Option<Identity> {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
-    require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().owner()
+
+    match nft {
+        Option::Some(nft) => {
+            nft.owner()
+        },
+        Option::None(nft) => {
+            Option::None()
+        }
+    }
 }
 
 /// Gives the `operator` user approval to transfer ALL tokens owned by the `owner` user.
