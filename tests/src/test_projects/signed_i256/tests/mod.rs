@@ -4,8 +4,6 @@ mod success {
 
     use super::*;
 
-    // TODO: This should not be ignored once the i256 library will compile
-    #[ignore]
     #[tokio::test]
     async fn runs_i256_test_script() {
         let path_to_bin = "../out/debug/i256_test.bin";
