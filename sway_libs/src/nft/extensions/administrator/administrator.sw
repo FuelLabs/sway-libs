@@ -8,13 +8,13 @@ use administrator_events::AdminEvent;
 use ::nft::nft_storage::ADMIN;
 use std::{chain::auth::msg_sender, logging::log, storage::{get, store}};
 
-/// Returns the current admin for the contract.
+/// Returns the administrator for the library.
 #[storage(read)]
 pub fn admin() -> Option<Identity> {
     get::<Option<Identity>>(ADMIN)
 }
 
-/// Changes the contract's admin.
+/// Changes the library's administrator.
 ///
 /// # Arguments
 ///
@@ -22,7 +22,8 @@ pub fn admin() -> Option<Identity> {
 ///
 /// # Reverts
 ///
-/// * When the admin is storage is not `None` or when the sender is not the `admin` in storage
+/// * When the admin is storage is not `None`.
+/// * When the sender is not the `admin` in storage.
 #[storage(read, write)]
 pub fn set_admin(new_admin: Option<Identity>) {
     let admin = get::<Option<Identity>>(ADMIN);

@@ -13,12 +13,12 @@ pub struct ApprovalEvent {
 pub struct MintEvent {
     /// The owner of the newly minted tokens.
     owner: Identity,
-    /// The token id that has been minted in this transaction.
+    /// The token id that has been minted.
     token_id: u64,
 }
 
 pub struct OperatorEvent {
-    /// The boolean that signifis whether the `operator` has approved
+    /// The boolean that signifies whether the `operator` has been approved
     approved: bool,
     /// The user which may or may not transfer all tokens on the owner's behalf.
     operator: Identity,

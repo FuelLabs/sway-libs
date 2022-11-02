@@ -7,22 +7,19 @@ use ::nft::{errors::{AccessError, InputError}, nft_core::NFTCore, nft_storage::{
 use std::{chain::auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 pub trait Burnable {
-    #[storage(read, write)]
-    fn burn(self);
-}
-
-impl Burnable for NFTCore {
-    /// Burns this token.
+    /// Deletes this token from storage and decrements the balance of the owner.
     ///
     /// * Reverts
     ///
     /// * When sender is not the owner of the token.
     #[storage(read, write)]
+    fn burn(self);
+}
+
+impl Burnable for NFTCore {
+    #[storage(read, write)]
     fn burn(self) {
-        // Ensure this is a valid token
-        let sender = msg_sender().unwrap();
-        
-        require(self.owner == sender, AccessError::SenderNotOwner);
+        require(self.owner == msg_sender().unwrap(), AccessError::SenderNotOwner);
 
         let owner = self.owner;
         let token_id = self.token_id;
@@ -36,6 +33,15 @@ impl Burnable for NFTCore {
     }
 }
 
+/// Burns the specified token.
+///
+/// # Arguments
+///
+/// * `token_id` - The id of the token which is to be burned.
+///
+/// # Reverts
+/// 
+/// * When the `token_id` specified does not map to an existing token.
 #[storage(read, write)]
 pub fn burn(token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));

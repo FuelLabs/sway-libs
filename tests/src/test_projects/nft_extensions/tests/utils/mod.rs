@@ -37,7 +37,7 @@ pub mod abi_calls {
         contract.methods().max_supply().call().await.unwrap().value
     }
 
-    pub async fn meta_data(contract: &NftExtensions, token_id: u64) -> NFTMetaData {
+    pub async fn meta_data(contract: &NftExtensions, token_id: u64) -> Option<NFTMetaData> {
         contract
             .methods()
             .meta_data(token_id)

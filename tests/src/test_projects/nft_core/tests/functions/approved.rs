@@ -47,17 +47,11 @@ mod success {
 
         assert_eq!(approved(&owner1.contract, 0).await, Option::None);
     }
-}
-
-mod reverts {
-
-    use super::*;
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
-    async fn when_token_does_not_exist() {
+    async fn gets_approval_when_token_does_not_exist() {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
-        approved(&owner1.contract, 0).await;
+        assert_eq!(approved(&owner1.contract, 0).await, Option::None);
     }
 }

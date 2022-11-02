@@ -26,11 +26,9 @@ impl NFTCore {
     ///
     /// # Reverts
     ///
-    /// * When the token has no owner.
     /// * When the sender is not the token's owner.
     #[storage(write)]
     fn approve(self, approved: Option<Identity>) {
-        // Ensure this is a valid token
         let mut nft = self;
         let sender = msg_sender().unwrap();
         require(nft.owner == sender, AccessError::SenderNotOwner);
@@ -51,28 +49,21 @@ impl NFTCore {
         self.approved
     }
 
-    /// Returns whether the `operator` user is approved to transfer all tokens on the `owner`
-    /// user's behalf.
+    /// Returns whether the `operator` user is approved to transfer all tokens on this owner's behalf.
     ///
     /// # Arguments
     ///
-    /// * `operator` - The user which has recieved approval to transfer all tokens on the `owner`s behalf.
-    ///
-    /// # Reverts
-    ///
-    /// * When the token has no owner.
+    /// * `operator` - The user which may or may not transfer all tokens on the owner`s behalf.
     #[storage(read)]
     pub fn is_approved_for_all(self, operator: Identity) -> bool {
         get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator)))
     }
 
-    /// Mints the token to the `to` `Identity`.
-    ///
-    /// Once a token has been minted, it can be transfered.
+    /// Mints a token to the `to` Identity with a id.
     ///
     /// # Arguments
     ///
-    /// * `to` - The user which will own the minted tokens.
+    /// * `to` - The user which will own the minted token.
     /// * `token_id` - The id the new token will have.
     ///
     /// # Reverts
@@ -100,12 +91,12 @@ impl NFTCore {
         nft
     }
 
-    /// Returns the user which owns the specified token.
+    /// Returns the user which owns this token.
     pub fn owner(self) -> Identity {
         self.owner
     }
 
-    /// Gives the `operator` approval to transfer ALL tokens owned.
+    /// Gives the `operator` approval to transfer ALL tokens owned by this owner.
     ///
     /// This can be dangerous. If a malicous user is set as an operator to another user, they could
     /// drain their wallet.
@@ -113,7 +104,7 @@ impl NFTCore {
     /// # Arguments
     ///
     /// * `approve` - Represents whether the user is giving or revoking operator status.
-    /// * `operator` - The user which may transfer all tokens on the owner's behalf.
+    /// * `operator` - The user which may or may not transfer all tokens on this owner's behalf.
     ///
     /// # Reverts
     ///
@@ -132,21 +123,21 @@ impl NFTCore {
         });
     }
 
-    /// Transfers ownership of the specified token from one user to another.
+    /// Transfers ownership of this token from one user to another.
     ///
     /// Transfers can occur under one of three conditions:
-    /// 1. The token's owner is transfering the token.
-    /// 2. The token's approved user is transfering the token.
-    /// 3. The token's owner has a user set as an operator and is transfering the token.
+    /// 1. This token's owner is transfering the token.
+    /// 2. This token's approved user is transfering the token.
+    /// 3. This token's owner has a user set as an operator and is transfering the token.
     ///
     /// # Arguments
     ///
-    /// * `to` - The user which the ownership of the token should be set to.
+    /// * `to` - The user which the ownership of this token should be set to.
     ///
     /// # Reverts
     ///
-    /// * When the sender is not the owner of the token.
-    /// * When the sender is not approved to transfer the token on the owner's behalf.
+    /// * When the sender is not the owner of this token.
+    /// * When the sender is not approved to transfer this token on the owner's behalf.
     /// * When the sender is not approved to transfer all tokens on the owner's behalf.
     #[storage(read, write)]
     pub fn transfer(self, to: Identity) -> Self {
@@ -156,12 +147,12 @@ impl NFTCore {
         let operator_approved = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender)));
 
         // Ensure that the sender is either:
-        // 1. The owner of the token
-        // 2. Approved for transfer of this `token_id`
-        // 3. Has operator approval for the `from` identity and this token belongs to the `from` identity
+        // 1. The owner of this token
+        // 2. Approved for transfer of this token
+        // 3. Has operator approval from the owner and this token belongs to the sender identity
         require(sender == from || (self.approved.is_some() && sender == self.approved.unwrap()) || operator_approved, AccessError::SenderNotOwnerOrApproved);
 
-        // Set the new owner of the token and reset the approved Identity
+        // Set the new owner of this token and reset the approved Identity
         nft.owner = to;
         if self.approved.is_some() {
             nft.approved = Option::None();

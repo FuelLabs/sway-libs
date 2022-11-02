@@ -16,7 +16,7 @@ use nft_core::NFTCore;
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 use std::{chain::auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
-/// Gives approval to the `approved` user to transfer a specific token on another user's behalf.
+/// Sets the approved identity for a specific token.
 ///
 /// To revoke approval the approved user should be `None`.
 ///
@@ -35,23 +35,26 @@ pub fn approve(approved: Option<Identity>, token_id: u64) {
     nft.unwrap().approve(approved);
 }
 
-/// Returns the user which is approved to transfer the given token.
+/// Returns the user which is approved to transfer the specified token.
 ///
 /// # Arguments
 ///
 /// * `token_id` - The unique identifier of the token which the approved user should be returned.
-///
-/// # Reverts
-///
-/// * When `token_id` does not map to an existing token.
 #[storage(read)]
 pub fn approved(token_id: u64) -> Option<Identity> {
-    let mut nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
-    require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().approved()
+    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+
+    match nft {
+        Option::Some(nft) => {
+            nft.approved()
+        },
+        Option::None(nft) => {
+            Option::None()
+        }
+    }
 }
 
-/// Returns the balance of the user.
+/// Returns the balance of an user.
 ///
 /// # Arguments
 ///
@@ -61,21 +64,18 @@ pub fn balance_of(owner: Identity) -> u64 {
     get::<u64>(sha256((BALANCES, owner)))
 }
 
-/// Returns whether the `operator` user is approved to transfer all tokens on the `owner`
-/// user's behalf.
+/// Returns whether the `operator` user is approved to transfer all tokens on behalf of the `owner`.
 ///
 /// # Arguments
 ///
-/// * `operator` - The user which has recieved approval to transfer all tokens on the `owner`s behalf.
-/// * `owner` - The user which has given approval to transfer all tokens to the `operator`.
+/// * `operator` - The user which may or may not transfer all tokens on the `owner`s behalf.
+/// * `owner` - The user which may or may not have given approval to transfer all tokens.
 #[storage(read)]
 pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
     get::<bool>(sha256((OPERATOR_APPROVAL, owner, operator)))
 }
 
-/// Mints `amount` number of tokens to the `to` `Identity`.
-///
-/// Once a token has been minted, it can be transfered and burned.
+/// Mints `amount` number of tokens to the specified user.
 ///
 /// # Arguments
 ///
@@ -121,7 +121,7 @@ pub fn owner_of(token_id: u64) -> Option<Identity> {
 /// # Arguments
 ///
 /// * `approve` - Represents whether the user is giving or revoking operator status.
-/// * `operator` - The user which may transfer all tokens on the owner's behalf.
+/// * `operator` - The user which may or may not transfer all tokens on the sender's behalf.
 #[storage(read, write)]
 pub fn set_approval_for_all(approve: bool, operator: Identity) {
     let sender = msg_sender().unwrap();
@@ -134,7 +134,7 @@ pub fn set_approval_for_all(approve: bool, operator: Identity) {
     });
 }
 
-/// Returns the current number of tokens are in existence.
+/// Returns the total number of tokens that have been minted.
 #[storage(read)]
 pub fn tokens_minted() -> u64 {
     get::<u64>(TOKENS_MINTED)
