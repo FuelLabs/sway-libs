@@ -10,7 +10,7 @@ mod success {
     use super::*;
 
     #[tokio::test]
-    async fn gets_meta_data() {
+    async fn sets_meta_data() {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
         let minter = Identity::Address(owner1.wallet.address().into());
@@ -36,6 +36,7 @@ mod revert {
     async fn when_token_does_not_exist() {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
-        meta_data(&owner1.contract, 0).await;
+        let value = 1;
+        set_meta_data(&owner1.contract, 0, value).await;
     }
 }
