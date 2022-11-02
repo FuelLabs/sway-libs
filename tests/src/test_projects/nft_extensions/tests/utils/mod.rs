@@ -15,16 +15,8 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn admin(
-        contract: &NftExtensions,
-    ) -> Option<Identity> {
-        contract
-            .methods()
-            .admin()
-            .call()
-            .await
-            .unwrap()
-            .value
+    pub async fn admin(contract: &NftExtensions) -> Option<Identity> {
+        contract.methods().admin().call().await.unwrap().value
     }
 
     pub async fn balance_of(contract: &NftExtensions, owner: Identity) -> u64 {
@@ -38,22 +30,11 @@ pub mod abi_calls {
     }
 
     pub async fn burn(contract: &NftExtensions, token_id: u64) -> CallResponse<()> {
-        contract
-            .methods()
-            .burn(token_id)
-            .call()
-            .await
-            .unwrap()
+        contract.methods().burn(token_id).call().await.unwrap()
     }
 
     pub async fn max_supply(contract: &NftExtensions) -> Option<u64> {
-        contract
-            .methods()
-            .max_supply()
-            .call()
-            .await
-            .unwrap()
-            .value
+        contract.methods().max_supply().call().await.unwrap().value
     }
 
     pub async fn meta_data(contract: &NftExtensions, token_id: u64) -> NFTMetaData {
@@ -85,13 +66,27 @@ pub mod abi_calls {
     }
 
     pub async fn set_max_supply(contract: &NftExtensions, supply: Option<u64>) -> CallResponse<()> {
-        contract.methods().set_max_supply(supply).call().await.unwrap()
+        contract
+            .methods()
+            .set_max_supply(supply)
+            .call()
+            .await
+            .unwrap()
     }
 
-    pub async fn set_meta_data(contract: &NftExtensions, token_id: u64, value: u64) -> CallResponse<()> {
-        contract.methods().set_meta_data(token_id, value).call().await.unwrap()
+    pub async fn set_meta_data(
+        contract: &NftExtensions,
+        token_id: u64,
+        value: u64,
+    ) -> CallResponse<()> {
+        contract
+            .methods()
+            .set_meta_data(token_id, value)
+            .call()
+            .await
+            .unwrap()
     }
- 
+
     pub async fn tokens_minted(contract: &NftExtensions) -> u64 {
         contract
             .methods()
@@ -100,15 +95,6 @@ pub mod abi_calls {
             .await
             .unwrap()
             .value
-    }
-
-    pub async fn transfer(contract: &NftExtensions, to: Identity, token_id: u64) -> CallResponse<()> {
-        contract
-            .methods()
-            .transfer(to, token_id)
-            .call()
-            .await
-            .unwrap()
     }
 }
 

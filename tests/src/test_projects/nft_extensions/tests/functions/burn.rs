@@ -25,10 +25,7 @@ mod success {
         burn(&owner1.contract, 0).await;
 
         assert_eq!(balance_of(&owner1.contract, minter.clone()).await, 0);
-        assert_eq!(
-            owner_of(&owner1.contract, 0).await,
-            Option::None
-        );
+        assert_eq!(owner_of(&owner1.contract, 0).await, Option::None);
         assert_eq!(tokens_minted(&owner1.contract).await, 1);
     }
 }

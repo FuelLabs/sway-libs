@@ -1,7 +1,7 @@
 use crate::nft_extensions::tests::utils::{
     abi_calls::{meta_data, mint, set_meta_data},
-    NFTMetaData,
     test_helpers::setup,
+    NFTMetaData,
 };
 use fuels::prelude::Identity;
 
@@ -19,16 +19,14 @@ mod success {
         let value = 1;
         set_meta_data(&owner1.contract, 0, value).await;
 
-        let nft_meta_data = NFTMetaData {
-            value
-        };
+        let nft_meta_data = NFTMetaData { value };
 
         assert_eq!(meta_data(&owner1.contract, 0).await, nft_meta_data.clone());
     }
 }
 
 mod revert {
-    
+
     use super::*;
 
     #[tokio::test]
