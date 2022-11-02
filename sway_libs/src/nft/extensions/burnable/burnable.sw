@@ -40,7 +40,7 @@ impl Burnable for NFTCore {
 /// * `token_id` - The id of the token which is to be burned.
 ///
 /// # Reverts
-/// 
+///
 /// * When the `token_id` specified does not map to an existing token.
 #[storage(read, write)]
 pub fn burn(token_id: u64) {
