@@ -1,8 +1,10 @@
 ## Overview
 
-A non-fungible token (NFT) is a unique token that has an identifier which distinguishes itself from other tokens within the same token contract. Unlike Fuel's Native Assets, these tokens are not fungible with one another and may contain metadata giving them distinctive characteristics.
+A non-fungible token (NFT) is a unique token that has an identifier which distinguishes itself from other tokens within the same token contract. Unlike Fuel's Native Assets, these tokens are not fungible with one another and may contain metadata or other traits giving them distinctive characteristics.
 
-While it is commonly associated with artwork / collectibles, there are many greater utilities beyond that which have yet to be written for the Fuel Network.
+While NFTs are commonly associated with artwork / collectibles, there are many greater utilities beyond that which have yet to be written for the Fuel Network.
+
+For more information please see the [specification](./SPECIFICATION.md).
 
 # Using the Library
 
@@ -19,16 +21,22 @@ use sway_libs::nft::*;
 Once imported, a `NFT` can be minted by calling the `mint` function.
 
 ```rust
+// The user which shall own the newly minted NFT
 let new_owner: Identity = msg_sender().unwrap();
+// The id of the newly minted token
 let token_id: u64 = 1;
+
 ~NFTCore::mint(new_owner, token_id);
 ```
 
 Tokens may be transfered by calling the `transfer` function.
 
 ```rust
+// The user which the token shall be transfered to
 let new_owner: Identity = msg_sender().unwrap();
+// The id of the token which will be transfered
 let token_id: u64 = 1;
+
 transfer(new_owner, token_id);
 ```
 
@@ -42,8 +50,11 @@ let owner: Option<Identity> = owner_of(token_id);
 Other users may be approved to transfer a token on another's behalf by calling the `approve` function.
 
 ```rust
+// The user which may transfer the token
 let approved_user: Identity = msg_sender().unwrap();
+// The id of the token which they may transfer
 let token_id: u64 = 1;
+
 approve(approved_user, token_id);
 ```
 
@@ -52,9 +63,9 @@ approve(approved_user, token_id);
 There are a number of different extensions which you may use to further enchance your non-fungible tokens. 
 
 These include:
-1. Metadata
-2. Burning functionality
-3. Administrative capabilities
-4. Supply limits
+1. [Metadata](./extensions/meta_data/meta_data.sw)
+2. [Burning functionality](./extensions/burnable/burnable.sw)
+3. [Administrative capabilities](./extensions/administrator/administrator.sw)
+4. [Supply limits](./extensions/supply.sw)
 
 For more information please see the [specification](./SPECIFICATION.md).

@@ -6,7 +6,9 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 ## Use Cases
 
-The NFT library can be used anytime individual tokens with distictive characteritics are needed. Further traits can then be implemented to provide additional features `NFTCore` struct.
+The NFT library can be used anytime individual tokens with distictive characteritics are needed. 
+
+Traits can be implemented to provide additional features to the `NFTCore` struct. Some traits are already provided in the extensions portion of this NFT library.
 
 ## Core Public Functions
 
@@ -49,6 +51,8 @@ The total number of tokens that have been minted.
 Transfers ownership from one user to another.
 
 ## Extension Public Functions
+
+These extensions are optional and not all NFTs will have these implemented. Whether they should be used is a case-by-case basis.
 
 ### Administrator
 
