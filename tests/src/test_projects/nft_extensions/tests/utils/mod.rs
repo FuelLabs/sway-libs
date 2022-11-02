@@ -46,6 +46,16 @@ pub mod abi_calls {
             .unwrap()
     }
 
+    pub async fn max_supply(contract: &NftExtensions) -> Option<u64> {
+        contract
+            .methods()
+            .max_supply()
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
+
     pub async fn meta_data(contract: &NftExtensions, token_id: u64) -> NFTMetaData {
         contract
             .methods()
@@ -72,6 +82,10 @@ pub mod abi_calls {
 
     pub async fn set_admin(admin: Option<Identity>, contract: &NftExtensions) -> CallResponse<()> {
         contract.methods().set_admin(admin).call().await.unwrap()
+    }
+
+    pub async fn set_max_supply(contract: &NftExtensions, supply: Option<u64>) -> CallResponse<()> {
+        contract.methods().set_max_supply(supply).call().await.unwrap()
     }
 
     pub async fn set_meta_data(contract: &NftExtensions, token_id: u64, value: u64) -> CallResponse<()> {

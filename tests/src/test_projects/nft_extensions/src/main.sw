@@ -7,6 +7,7 @@ use sway_libs::nft::{
     meta_data::{meta_data, meta_data_structures::NFTMetaData, set_meta_data},
     mint,
     owner_of,
+    supply::{max_supply, set_max_supply},
     tokens_minted,
     transfer,
 };
@@ -19,6 +20,8 @@ abi NFT_Extensions_Test {
     #[storage(read, write)]
     fn burn(token_id: u64);
     #[storage(read)]
+    fn max_supply() -> Option<u64>;
+    #[storage(read)]
     fn meta_data(token_id: u64) -> NFTMetaData;
     #[storage(read, write)]
     fn mint(amount: u64, to: Identity);
@@ -26,6 +29,8 @@ abi NFT_Extensions_Test {
     fn owner_of(token_id: u64) -> Option<Identity>;
     #[storage(read, write)]
     fn set_admin(new_admin: Option<Identity>);
+    #[storage(read, write)]
+    fn set_max_supply(supply: Option<u64>);
     #[storage(read, write)]
     fn set_meta_data(value: u64, token_id: u64);
     #[storage(read)]
@@ -51,6 +56,11 @@ impl NFT_Extensions_Test for Contract {
     }
 
     #[storage(read)]
+    fn max_supply() -> Option<u64> {
+        max_supply()
+    }
+
+    #[storage(read)]
     fn meta_data(token_id: u64) -> NFTMetaData {
         meta_data(token_id)
     }
@@ -68,6 +78,11 @@ impl NFT_Extensions_Test for Contract {
     #[storage(read, write)]
     fn set_admin(new_admin: Option<Identity>) {
         set_admin(new_admin);
+    }
+
+    #[storage(read, write)]
+    fn set_max_supply(supply: Option<u64>) {
+        set_max_supply(supply)
     }
 
     #[storage(read, write)]
