@@ -238,7 +238,7 @@ pub mod test_helpers {
         .await
         .unwrap();
 
-        let instance = TestMerkleProofLib::new(contract_id.to_string(), wallet.clone());
+        let instance = TestMerkleProofLib::new(contract_id.clone(), wallet.clone());
 
         instance
     }
