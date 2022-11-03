@@ -25,7 +25,7 @@ use sway_libs::string::String;
 Once imported, a `String` can be instantiated defining a new variable and calling the `new` function.
 
 ```rust
-let mut string = ~String::new();
+let mut string = String::new();
 ```
 
 ## Basic Functionality
