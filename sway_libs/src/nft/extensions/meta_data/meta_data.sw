@@ -6,30 +6,28 @@ use meta_data_structures::NFTMetaData;
 use ::nft::{errors::InputError, nft_core::NFTCore, nft_storage::{META_DATA, TOKENS}};
 use std::{hash::sha256, storage::{get, store}};
 
-// TODO: Use trait constraints here to allow for any struct once 
-// https://github.com/FuelLabs/sway/issues/970 is resovled
-pub trait MetaData {
+pub trait MetaData<T> {
     /// Returns the metadata for this token
     #[storage(read)]
-    fn meta_data(self) -> Option<NFTMetaData>;
+    fn meta_data(self) -> Option<T>;
     /// Creates new metadata for this token.
     ///
     /// # Arguments
     ///
-    /// * `value` - The metadata value to be included in the new metadata.
+    /// * `metadata` - The metadata value to be included in the new metadata.
     #[storage(write)]
-    fn set_meta_data(self, value: u64);
+    fn set_meta_data(self, metadata: Option<T>);
 }
 
-impl MetaData for NFTCore {
+impl<T> MetaData<T> for NFTCore {
     #[storage(read)]
-    fn meta_data(self) -> Option<NFTMetaData> {
-        get::<Option<NFTMetaData>>(sha256((META_DATA, self.token_id)))
+    fn meta_data(self) -> Option<T> {
+        get::<Option<T>>(sha256((META_DATA, self.token_id)))
     }
 
     #[storage(write)]
-    fn set_meta_data(self, value: u64) {
-        store(sha256((META_DATA, self.token_id)), Option::Some(~NFTMetaData::new(value)));
+    fn set_meta_data(self, metadata: Option<T>) {
+        store(sha256((META_DATA, self.token_id)), metadata);
     }
 }
 
@@ -62,8 +60,9 @@ pub fn meta_data(token_id: u64) -> Option<NFTMetaData> {
 ///
 /// * When the `token_id` does not map to an existing token
 #[storage(read, write)]
-pub fn set_meta_data(token_id: u64, value: u64) {
+pub fn set_meta_data(metadata: Option<NFTMetaData>, token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().set_meta_data(value);
+
+    nft.unwrap().set_meta_data(metadata);
 }

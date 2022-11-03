@@ -26,7 +26,7 @@ let new_owner: Identity = msg_sender().unwrap();
 // The id of the newly minted token
 let token_id: u64 = 1;
 
-~NFTCore::mint(new_owner, token_id);
+NFTCore::mint(new_owner, token_id);
 ```
 
 Tokens may be transfered by calling the `transfer` function.

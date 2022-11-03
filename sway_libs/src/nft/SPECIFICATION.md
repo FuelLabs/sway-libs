@@ -4,7 +4,7 @@ This document provides an overview of the NFT library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
-## Use Cases
+# Use Cases
 
 The NFT library can be used anytime individual tokens with distictive characteritics are needed. 
 

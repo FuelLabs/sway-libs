@@ -4,7 +4,7 @@ dep burnable_events;
 
 use burnable_events::BurnEvent;
 use ::nft::{errors::{AccessError, InputError}, nft_core::NFTCore, nft_storage::{BALANCES, TOKENS}};
-use std::{chain::auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 pub trait Burnable {
     /// Deletes this token from storage and decrements the balance of the owner.

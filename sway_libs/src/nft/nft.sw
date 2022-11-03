@@ -14,7 +14,7 @@ use errors::InputError;
 use events::OperatorEvent;
 use nft_core::NFTCore;
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
-use std::{chain::auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 /// Sets the approved identity for a specific token.
 ///
@@ -89,7 +89,7 @@ pub fn mint(amount: u64, to: Identity) {
     // Mint as many tokens as the sender has asked for
     let mut index = tokens_minted;
     while index < total_mint {
-        ~NFTCore::mint(to, index);
+        NFTCore::mint(to, index);
         index += 1;
     }
 }

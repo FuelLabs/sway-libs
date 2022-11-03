@@ -6,7 +6,7 @@ dep administrator_events;
 use administrator_errors::AdminError;
 use administrator_events::AdminEvent;
 use ::nft::nft_storage::ADMIN;
-use std::{chain::auth::msg_sender, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, logging::log, storage::{get, store}};
 
 /// Returns the administrator for the library.
 #[storage(read)]
