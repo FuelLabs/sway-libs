@@ -6,7 +6,7 @@ use meta_data_structures::NFTMetaData;
 use ::nft::{errors::InputError, nft_core::NFTCore, nft_storage::{META_DATA, TOKENS}};
 use std::{hash::sha256, storage::{get, store}};
 
-pub trait MetaData<T> {
+pub trait MetaData {
     /// Returns the metadata for this token
     #[storage(read)]
     fn meta_data(self) -> Option<T>;

@@ -15,10 +15,7 @@ mod success {
         let new_admin = Identity::Address(owner1.wallet.address().into());
         set_admin(Some(new_admin.clone()), &owner1.contract).await;
 
-        assert_eq!(
-            admin(&owner1.contract).await,
-            Some(new_admin.clone())
-        );
+        assert_eq!(admin(&owner1.contract).await, Some(new_admin.clone()));
     }
 
     #[tokio::test]
@@ -28,18 +25,12 @@ mod success {
         let new_admin = Identity::Address(owner1.wallet.address().into());
         set_admin(Some(new_admin.clone()), &owner1.contract).await;
 
-        assert_eq!(
-            admin(&owner1.contract).await,
-            Some(new_admin.clone())
-        );
+        assert_eq!(admin(&owner1.contract).await, Some(new_admin.clone()));
 
         let new_admin2 = Identity::Address(owner2.wallet.address().into());
         set_admin(Some(new_admin2.clone()), &owner1.contract).await;
 
-        assert_eq!(
-            admin(&owner1.contract).await,
-            Some(new_admin2.clone())
-        );
+        assert_eq!(admin(&owner1.contract).await, Some(new_admin2.clone()));
     }
 }
 
