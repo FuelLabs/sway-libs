@@ -94,7 +94,7 @@ pub mod test_helpers {
         .await
         .unwrap();
 
-        let instance = StringTestLib::new(id.to_string(), wallet);
+        let instance = StringTestLib::new(id.clone(), wallet);
 
         instance
     }
