@@ -88,7 +88,7 @@ mod revert {
 
     #[ignore]
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_invalid_proof_length_given() {
         let instance = merkle_proof_instance().await;
 
@@ -105,7 +105,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_invalid_num_leaves_given() {
         let instance = merkle_proof_instance().await;
 
@@ -122,7 +122,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_key_greater_or_equal_to_num_leaves() {
         let instance = merkle_proof_instance().await;
 
@@ -137,7 +137,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_key_equal_num_leaves_length() {
         let instance = merkle_proof_instance().await;
 
@@ -151,7 +151,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_key_greater_than_num_leaves_length() {
         let instance = merkle_proof_instance().await;
 
@@ -166,7 +166,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(42)")]
+    #[should_panic(expected = "Revert(18446744073709486080)")]
     async fn when_num_leaves_zero() {
         let instance = merkle_proof_instance().await;
 

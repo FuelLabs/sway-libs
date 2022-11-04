@@ -30,7 +30,7 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    sha256((NODE, left, right, ))
+    sha256((NODE, left, right))
 }
 
 /// Calculates the length of the path to a leaf
