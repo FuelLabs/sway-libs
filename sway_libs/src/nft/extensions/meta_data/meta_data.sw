@@ -53,8 +53,8 @@ pub fn meta_data(token_id: u64) -> Option<NFTMetaData> {
 ///
 /// # Arguments
 ///
+/// * `metadata` - The metadata which should be set.
 /// * `token_id` - The token which the metadata should be set for.
-/// * `value` - The meatadata value which should be set
 ///
 /// # Reverts
 ///
