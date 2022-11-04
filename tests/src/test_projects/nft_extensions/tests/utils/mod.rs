@@ -76,12 +76,12 @@ pub mod abi_calls {
 
     pub async fn set_meta_data(
         contract: &NftExtensions,
+        metadata: Option<NFTMetaData>,
         token_id: u64,
-        value: u64,
     ) -> CallResponse<()> {
         contract
             .methods()
-            .set_meta_data(token_id, value)
+            .set_meta_data(metadata, token_id)
             .call()
             .await
             .unwrap()
@@ -127,17 +127,17 @@ pub mod test_helpers {
         .unwrap();
 
         let deploy_wallet = Metadata {
-            contract: NftExtensions::new(nft_id.to_string(), wallet1.clone()),
+            contract: NftExtensions::new(nft_id.clone(), wallet1.clone()),
             wallet: wallet1.clone(),
         };
 
         let owner1 = Metadata {
-            contract: NftExtensions::new(nft_id.to_string(), wallet2.clone()),
+            contract: NftExtensions::new(nft_id.clone(), wallet2.clone()),
             wallet: wallet2.clone(),
         };
 
         let owner2 = Metadata {
-            contract: NftExtensions::new(nft_id.to_string(), wallet3.clone()),
+            contract: NftExtensions::new(nft_id.clone(), wallet3.clone()),
             wallet: wallet3.clone(),
         };
 

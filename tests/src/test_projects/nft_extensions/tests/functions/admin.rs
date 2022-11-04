@@ -13,11 +13,11 @@ mod success {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
         let new_admin = Identity::Address(owner1.wallet.address().into());
-        set_admin(Option::Some(new_admin.clone()), &owner1.contract).await;
+        set_admin(Some(new_admin.clone()), &owner1.contract).await;
 
         assert_eq!(
             admin(&owner1.contract).await,
-            Option::Some(new_admin.clone())
+            Some(new_admin.clone())
         );
     }
 
@@ -26,19 +26,19 @@ mod success {
         let (_deploy_wallet, owner1, owner2) = setup().await;
 
         let new_admin = Identity::Address(owner1.wallet.address().into());
-        set_admin(Option::Some(new_admin.clone()), &owner1.contract).await;
+        set_admin(Some(new_admin.clone()), &owner1.contract).await;
 
         assert_eq!(
             admin(&owner1.contract).await,
-            Option::Some(new_admin.clone())
+            Some(new_admin.clone())
         );
 
         let new_admin2 = Identity::Address(owner2.wallet.address().into());
-        set_admin(Option::Some(new_admin2.clone()), &owner1.contract).await;
+        set_admin(Some(new_admin2.clone()), &owner1.contract).await;
 
         assert_eq!(
             admin(&owner1.contract).await,
-            Option::Some(new_admin2.clone())
+            Some(new_admin2.clone())
         );
     }
 }

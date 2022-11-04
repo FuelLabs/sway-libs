@@ -122,7 +122,7 @@ pub fn owner_of(token_id: u64) -> Option<Identity> {
 ///
 /// * `approve` - Represents whether the user is giving or revoking operator status.
 /// * `operator` - The user which may or may not transfer all tokens on the sender's behalf.
-#[storage(read, write)]
+#[storage(write)]
 pub fn set_approval_for_all(approve: bool, operator: Identity) {
     let sender = msg_sender().unwrap();
     store(sha256((OPERATOR_APPROVAL, sender, operator)), approve);

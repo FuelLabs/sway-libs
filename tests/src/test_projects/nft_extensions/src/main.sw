@@ -39,7 +39,7 @@ abi NFT_Extensions_Test {
     #[storage(read, write)]
     fn set_max_supply(supply: Option<u64>);
     #[storage(read, write)]
-    fn set_meta_data(value: u64, token_id: u64);
+    fn set_meta_data(metadata: Option<NFTMetaData>, token_id: u64);
     #[storage(read)]
     fn tokens_minted() -> u64;
 }
@@ -81,8 +81,8 @@ impl NFT_Extensions_Test for Contract {
         set_max_supply(supply)
     }
     #[storage(read, write)]
-    fn set_meta_data(token_id: u64, value: u64) {
-        set_meta_data(token_id, value);
+    fn set_meta_data(metadata: Option<NFTMetaData>, token_id: u64) {
+        set_meta_data(metadata, token_id);
     }
     #[storage(read)]
     fn tokens_minted() -> u64 {

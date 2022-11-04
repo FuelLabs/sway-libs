@@ -138,17 +138,17 @@ pub mod test_helpers {
         .unwrap();
 
         let deploy_wallet = Metadata {
-            contract: NftCore::new(nft_id.to_string(), wallet1.clone()),
+            contract: NftCore::new(nft_id.clone(), wallet1.clone()),
             wallet: wallet1.clone(),
         };
 
         let owner1 = Metadata {
-            contract: NftCore::new(nft_id.to_string(), wallet2.clone()),
+            contract: NftCore::new(nft_id.clone(), wallet2.clone()),
             wallet: wallet2.clone(),
         };
 
         let owner2 = Metadata {
-            contract: NftCore::new(nft_id.to_string(), wallet3.clone()),
+            contract: NftCore::new(nft_id.clone(), wallet3.clone()),
             wallet: wallet3.clone(),
         };
 

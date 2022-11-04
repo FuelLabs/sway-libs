@@ -25,7 +25,7 @@ abi NFT_Core_Test {
     fn mint(amount: u64, to: Identity);
     #[storage(read)]
     fn owner_of(token_id: u64) -> Option<Identity>;
-    #[storage(read, write)]
+    #[storage(write)]
     fn set_approval_for_all(approve: bool, operator: Identity);
     #[storage(read)]
     fn tokens_minted() -> u64;
@@ -64,7 +64,7 @@ impl NFT_Core_Test for Contract {
         owner_of(token_id)
     }
 
-    #[storage(read, write)]
+    #[storage(write)]
     fn set_approval_for_all(approval: bool, operator: Identity) {
         set_approval_for_all(approval, operator);
     }
