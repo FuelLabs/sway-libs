@@ -46,8 +46,6 @@ impl core::ops::Ord for I64 {
     }
 }
 
-
-
 impl I64 {
     /// The size of this type in bits.
     pub fn bits() -> u32 {

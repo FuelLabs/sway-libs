@@ -21,7 +21,7 @@ impl I32 {
 impl From<u32> for I32 {
     fn from(value: u32) -> Self {
         // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
-        let underlying  = value + Self::indent();
+        let underlying = value + Self::indent();
         Self { underlying }
     }
 
