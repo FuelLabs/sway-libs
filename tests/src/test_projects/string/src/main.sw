@@ -31,7 +31,7 @@ abi StringTest {
 
 impl StringTest for Contract {
     fn test_as_bytes() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         let bytes: Vec<u8> = string.as_bytes();
         assert(bytes.len() == string.len());
@@ -58,7 +58,7 @@ impl StringTest for Contract {
     }
 
     fn test_capacity() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.capacity() == 0);
 
@@ -92,7 +92,7 @@ impl StringTest for Contract {
     }
 
     fn test_clear() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.is_empty());
 
@@ -130,7 +130,7 @@ impl StringTest for Contract {
     }
 
     fn test_from_utf8() {
-        let mut vec: Vec<u8> = ~Vec::new();
+        let mut vec: Vec<u8> = Vec::new();
 
         vec.push(NUMBER0);
         vec.push(NUMBER1);
@@ -138,7 +138,7 @@ impl StringTest for Contract {
         vec.push(NUMBER3);
         vec.push(NUMBER4);
 
-        let string_from_uft8 = ~String::from_utf8(vec);
+        let string_from_uft8 = String::from_utf8(vec);
         assert(vec.len() == string_from_uft8.len());
         assert(vec.capacity() == string_from_uft8.capacity());
         assert(vec.get(0).unwrap() == string_from_uft8.nth(0).unwrap());
@@ -147,7 +147,7 @@ impl StringTest for Contract {
     }
 
     fn test_insert() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.len() == 0);
 
@@ -169,7 +169,7 @@ impl StringTest for Contract {
     }
 
     fn test_is_empty() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.is_empty());
 
@@ -196,7 +196,7 @@ impl StringTest for Contract {
     }
 
     fn test_len() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.len() == 0);
 
@@ -235,7 +235,7 @@ impl StringTest for Contract {
     }
 
     fn test_new() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.len() == 0);
         assert(string.is_empty());
@@ -243,7 +243,7 @@ impl StringTest for Contract {
     }
 
     fn test_nth() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         string.push(NUMBER0);
         assert(string.nth(0).unwrap() == NUMBER0);
@@ -280,7 +280,7 @@ impl StringTest for Contract {
     }
 
     fn test_pop() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         string.push(NUMBER0);
         string.push(NUMBER1);
@@ -310,7 +310,7 @@ impl StringTest for Contract {
     }
 
     fn test_push() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         assert(string.len() == 0);
         assert(string.is_empty());
@@ -374,7 +374,7 @@ impl StringTest for Contract {
     }
 
     fn test_remove() {
-        let mut string = ~String::new();
+        let mut string = String::new();
 
         string.push(NUMBER0);
         string.push(NUMBER1);
@@ -412,12 +412,12 @@ impl StringTest for Contract {
         let mut iterator = 0;
 
         while iterator < 16 {
-            let mut string = ~String::with_capacity(iterator);
+            let mut string = String::with_capacity(iterator);
             assert(string.capacity() == iterator);
             iterator += 1;
         }
 
-        let mut string = ~String::with_capacity(0);
+        let mut string = String::with_capacity(0);
         assert(string.capacity() == 0);
 
         string.push(NUMBER0);
@@ -432,7 +432,7 @@ impl StringTest for Contract {
         string.clear();
         assert(string.capacity() == 4);
 
-        let mut string = ~String::with_capacity(4);
+        let mut string = String::with_capacity(4);
 
         assert(string.capacity() == 4);
 

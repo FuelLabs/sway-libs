@@ -53,7 +53,7 @@ impl String {
     /// Constructs a new instance of the `String` type.
     pub fn new() -> Self {
         Self {
-            bytes: ~Vec::new(),
+            bytes: Vec::new(),
         }
     }
 
@@ -96,7 +96,7 @@ impl String {
     /// * `capacity` - The specified amount of memory on the heap to be allocated for the `String`.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
-            bytes: ~Vec::with_capacity(capacity),
+            bytes: Vec::with_capacity(capacity),
         }
     }
 }
