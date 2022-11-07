@@ -44,4 +44,9 @@ let neg_value = ~I8::neg_from();
 let max_i8_value = ~I8::max();
 ```
 
+Note about size (by @bitzoic):
+
+i256 is complied with a size of 911,092 bytes.
+The reason seems to be the size of `U128` and `U256` types.
+
 For more information please see the [specification](./SPECIFICATION.md).
