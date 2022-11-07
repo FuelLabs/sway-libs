@@ -1,6 +1,5 @@
 contract;
 
-use std::{intrinsics::size_of, mem::{addr_of, read}};
 use sway_libs::string::String;
 
 const NUMBER0 = 0u8;

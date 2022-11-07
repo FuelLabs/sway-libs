@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc" alt="forc">
-        <img src="https://img.shields.io/crates/v/forc?color=orange&label=forc" />
+    <a href="https://crates.io/crates/forc/0.30.0" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.30.0-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -56,7 +56,7 @@ sway_libs::binary_merkle_proof::verify_proof;
 ```
 
 > **Note**
-> All projects currently use `forc v0.25.2`, `fuels-rs v0.25.1` and `fuel-core 0.10.1`.
+> All projects currently use `forc v0.30.0`, `fuels-rs v0.28.0` and `fuel-core 0.13.2`.
 
 ## Contributing
 
