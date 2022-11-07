@@ -17,9 +17,9 @@ fn main() -> bool {
         c: 0,
         d: 2,
     };
-    let one = I256::from_uint(u128_one);
-    let mut res = one + I256::from_uint(u128_one);
-    assert(res == I256::from_uint(u128_two));
+    let one = I256::from(u128_one);
+    let mut res = one + I256::from(u128_one);
+    assert(res == I256::from(u128_two));
 
     let u128_10 = U256 {
         a: 0,
@@ -33,21 +33,21 @@ fn main() -> bool {
         c: 0,
         d: 11,
     };
-    res = I256::from_uint(u128_10) - I256::from_uint(u128_11);
+    res = I256::from(u128_10) - I256::from(u128_11);
     assert(res.underlying.c == u64::max());
     assert(res.underlying.d == u64::max());
 
-    res = I256::from_uint(u128_10) * I256::neg_from(u128_one);
+    res = I256::from(u128_10) * I256::neg_from(u128_one);
     assert(res == I256::neg_from(u128_10));
 
-    res = I256::from_uint(u128_10) * I256::from_uint(u128_10);
+    res = I256::from(u128_10) * I256::from(u128_10);
     let u128_100 = U256 {
         a: 0,
         b: 0,
         c: 0,
         d: 100,
     };
-    assert(res == I256::from_uint(u128_100));
+    assert(res == I256::from(u128_100));
 
     let u128_lower_max_u64 = U256 {
         a: 0,
@@ -56,7 +56,7 @@ fn main() -> bool {
         d: u64::max(),
     };
 
-    res = I256::from_uint(u128_10) / I256::from(u128_lower_max_u64);
+    res = I256::from(u128_10) / I256::from_uint(u128_lower_max_u64);
     assert(res == I256::neg_from(u128_10));
 
     let u128_5 = U256 {
@@ -73,8 +73,8 @@ fn main() -> bool {
         d: 2,
     };
 
-    res = I256::from_uint(u128_10) / I256::from_uint(u128_5);
-    assert(res == I256::from_uint(u128_2));
+    res = I256::from(u128_10) / I256::from(u128_5);
+    assert(res == I256::from(u128_2));
 
     true
 }

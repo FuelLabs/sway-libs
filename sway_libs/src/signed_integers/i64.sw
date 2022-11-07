@@ -11,15 +11,22 @@ pub struct I64 {
     underlying: u64,
 }
 
-pub trait From {
-    /// Function for creating I64 from u64
-    fn from(underlying: u64) -> Self;
+impl I64 {
+    /// The underlying value that corresponds to zero signed value
+    pub fn indent() -> u64 {
+        9223372036854775808u64
+    }
 }
 
-impl From for I64 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(underlying: u64) -> Self {
+impl From<u64> for I64 {
+    fn from(value: u64) -> Self {
+        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
+        let underlying = value + Self::indent();
         Self { underlying }
+    }
+
+    fn into(self) -> u64 {
+        self.underlying - Self::indent()
     }
 }
 
@@ -39,12 +46,7 @@ impl core::ops::Ord for I64 {
     }
 }
 
-impl I64 {
-    /// The underlying value that corresponds to zero signed value
-    pub fn indent() -> u64 {
-        9223372036854775808u64
-    }
-}
+
 
 impl I64 {
     /// The size of this type in bits.
@@ -52,10 +54,8 @@ impl I64 {
         64
     }
 
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: u64) -> Self {
-        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
-        let underlying: u64 = value + Self::indent();
+    /// Helper function to get a signed number from with an underlying
+    fn from_uint(underlying: u64) -> Self {
         Self { underlying }
     }
 

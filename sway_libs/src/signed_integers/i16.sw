@@ -11,15 +11,23 @@ pub struct I16 {
     underlying: u16,
 }
 
-pub trait From {
-    /// Function for creating I16 from u16
-    fn from(underlying: u16) -> Self;
+impl I16 {
+    /// The underlying value that corresponds to zero signed value
+    pub fn indent() -> u16 {
+        32768u16
+    }
 }
 
-impl From for I16 {
+impl From<u16> for I16 {
     /// Helper function to get a signed number from with an underlying
-    fn from(underlying: u16) -> Self {
+    fn from(value: u16) -> Self {
+        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
+        let underlying: u16 = value + Self::indent();
         Self { underlying }
+    }
+
+    fn into(self) -> u16 {
+        self.underlying - Self::indent()
     }
 }
 
@@ -40,22 +48,13 @@ impl core::ops::Ord for I16 {
 }
 
 impl I16 {
-    /// The underlying value that corresponds to zero signed value
-    pub fn indent() -> u16 {
-        32768u16
-    }
-}
-
-impl I16 {
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         16
     }
 
     /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: u16) -> Self {
-        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
-        let underlying: u16 = value + Self::indent();
+    fn from_uint(underlying: u16) -> Self {
         Self { underlying }
     }
 

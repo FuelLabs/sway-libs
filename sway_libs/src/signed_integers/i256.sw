@@ -11,15 +11,27 @@ pub struct I256 {
     underlying: U256,
 }
 
-pub trait From {
-    /// Function for creating I256 from U256
-    fn from(underlying: U256) -> Self;
+impl I256 {
+    /// The underlying value that corresponds to zero signed value
+    pub fn indent() -> U256 {
+        U256 {
+            a: 0,
+            b: 1,
+            c: 0,
+            d: 0,
+        }
+    }
 }
 
-impl From for I256 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(underlying: U256) -> Self {
+impl From<U256> for I256 {
+    fn from(value: U256) -> Self {
+        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
+        let underlying = value + Self::indent();
         Self { underlying }
+    }
+
+    fn into(self) -> U256 {
+        self.underlying - Self::indent()
     }
 }
 
@@ -40,27 +52,13 @@ impl core::ops::Ord for I256 {
 }
 
 impl I256 {
-    /// The underlying value that corresponds to zero signed value
-    pub fn indent() -> U256 {
-        U256 {
-            a: 0,
-            b: 1,
-            c: 0,
-            d: 0,
-        }
-    }
-}
-
-impl I256 {
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         128
     }
 
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: U256) -> Self {
-        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
-        let underlying: U256 = value + Self::indent();
+    /// Helper function to get a signed number from with an underlying
+    fn from_uint(underlying: U256) -> Self {
         Self { underlying }
     }
 

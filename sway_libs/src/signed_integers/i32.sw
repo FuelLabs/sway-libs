@@ -11,15 +11,22 @@ pub struct I32 {
     underlying: u32,
 }
 
-pub trait From {
-    /// Function for creating I32 from u32
-    fn from(underlying: u32) -> Self;
+impl I32 {
+    /// The underlying value that corresponds to zero signed value
+    pub fn indent() -> u32 {
+        2147483648u32
+    }
 }
 
-impl From for I32 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(underlying: u32) -> Self {
+impl From<u32> for I32 {
+    fn from(value: u32) -> Self {
+        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
+        let underlying  = value + Self::indent();
         Self { underlying }
+    }
+
+    fn into(self) -> u32 {
+        self.underlying - Self::indent()
     }
 }
 
@@ -40,22 +47,13 @@ impl core::ops::Ord for I32 {
 }
 
 impl I32 {
-    /// The underlying value that corresponds to zero signed value
-    pub fn indent() -> u32 {
-        2147483648u32
-    }
-}
-
-impl I32 {
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         32
     }
 
-    /// Helper function to get a positive value from unsigned number
-    fn from_uint(value: u32) -> Self {
-        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
-        let underlying: u32 = value + Self::indent();
+    /// Helper function to get a signed number from with an underlying
+    fn from_uint(underlying: u32) -> Self {
         Self { underlying }
     }
 
