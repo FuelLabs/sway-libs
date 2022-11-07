@@ -8,6 +8,6 @@ mod success {
     async fn runs_i16_test_script() {
         let path_to_bin = "../out/debug/i16_test.bin";
 
-        let _result = run_compiled_script(path_to_bin, TxParameters::default()).await;
+        let _result = run_compiled_script(path_to_bin, TxParameters::default(), None).await;
     }
 }
