@@ -3,6 +3,7 @@ use crate::merkle_proof::tests::utils::{
     test_helpers::{build_tree, merkle_proof_instance},
 };
 use fuel_merkle::common::{Bytes32, LEAF};
+use fuels::prelude::Bits256;
 use sha2::{Digest, Sha256};
 
 mod success {
@@ -75,13 +76,13 @@ mod success {
 
         // This passes due to use of u64 for node concatenation
         assert_eq!(
-            node_digest(&instance, leaf_a_hash, leaf_b_hash).await,
-            node_ab_hash
+            node_digest(&instance, Bits256(leaf_a_hash), Bits256(leaf_b_hash)).await,
+            Bits256(node_ab_hash)
         );
 
         assert_eq!(
-            node_digest(&instance, node_ab_hash, leaf_c_hash).await,
-            node_abc_hash
+            node_digest(&instance, Bits256(node_ab_hash), Bits256(leaf_c_hash)).await,
+            Bits256(node_abc_hash)
         );
     }
 }

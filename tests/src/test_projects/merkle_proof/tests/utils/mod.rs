@@ -1,6 +1,6 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{empty_sum_sha256, Bytes32, ProofSet, LEAF},
+    common::{empty_sum_sha256, Bytes32, LEAF},
 };
 use fuels::prelude::*;
 use sha2::{Digest, Sha256};
@@ -14,16 +14,23 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn leaf_digest(contract: &TestMerkleProofLib, data: [u8; 32]) -> [u8; 32] {
-        contract.leaf_digest(data).call().await.unwrap().value
+    pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
+        contract
+            .methods()
+            .leaf_digest(data)
+            .call()
+            .await
+            .unwrap()
+            .value
     }
 
     pub async fn node_digest(
         contract: &TestMerkleProofLib,
-        left: [u8; 32],
-        right: [u8; 32],
-    ) -> [u8; 32] {
+        left: Bits256,
+        right: Bits256,
+    ) -> Bits256 {
         contract
+            .methods()
             .node_digest(left, right)
             .call()
             .await
@@ -34,11 +41,12 @@ pub mod abi_calls {
     pub async fn process_proof(
         contract: &TestMerkleProofLib,
         key: u64,
-        leaf: [u8; 32],
+        leaf: Bits256,
         num_leaves: u64,
-        proof: Vec<[u8; 32]>,
-    ) -> [u8; 32] {
+        proof: Vec<Bits256>,
+    ) -> Bits256 {
         contract
+            .methods()
             .process_proof(key, leaf, num_leaves, proof)
             .call()
             .await
@@ -49,12 +57,13 @@ pub mod abi_calls {
     pub async fn verify_proof(
         contract: &TestMerkleProofLib,
         key: u64,
-        leaf: [u8; 32],
-        root: [u8; 32],
+        leaf: Bits256,
+        root: Bits256,
         num_leaves: u64,
-        proof: Vec<[u8; 32]>,
+        proof: Vec<Bits256>,
     ) -> bool {
         contract
+            .methods()
             .verify_proof(key, root, leaf, num_leaves, proof)
             .call()
             .await
@@ -97,7 +106,7 @@ pub mod test_helpers {
     pub async fn build_tree(
         leaves: Vec<&[u8]>,
         key: u64,
-    ) -> (MerkleTree, Bytes32, Bytes32, ProofSet) {
+    ) -> (MerkleTree, Bits256, Bits256, Vec<Bits256>) {
         let mut tree = MerkleTree::new();
 
         for datum in leaves.iter() {
@@ -109,18 +118,29 @@ pub mod test_helpers {
         let merkle_leaf = proof.1[0];
         proof.1.remove(0);
 
-        (tree, merkle_root, merkle_leaf, proof.1)
+        let mut final_proof: Vec<Bits256> = Vec::new();
+
+        for itterator in proof.1 {
+            final_proof.push(Bits256(itterator.clone()));
+        }
+
+        (
+            tree,
+            Bits256(merkle_root),
+            Bits256(merkle_leaf),
+            final_proof,
+        )
     }
 
     pub async fn build_tree_manual(
         leaves: Vec<[u8; 1]>,
         height: usize,
         key: usize,
-    ) -> (Bytes32, ProofSet, Bytes32) {
+    ) -> (Bits256, Vec<Bits256>, Bits256) {
         let num_leaves = leaves.len();
         let mut nodes: Vec<Node> = Vec::new();
         let mut leaf_hash: Bytes32 = *empty_sum_sha256();
-        let mut proof: ProofSet = Vec::new();
+        let mut proof: Vec<Bits256> = Vec::new();
 
         assert!(key <= num_leaves);
 
@@ -174,12 +194,12 @@ pub mod test_helpers {
                 // Go left
                 index = node.left.unwrap();
                 let proof_node = node.right.unwrap();
-                proof.push(nodes[proof_node].hash);
+                proof.push(Bits256(nodes[proof_node].hash));
             } else {
                 // Go right
                 index = node.right.unwrap();
                 let proof_node = node.left.unwrap();
-                proof.push(nodes[proof_node].hash);
+                proof.push(Bits256(nodes[proof_node].hash));
 
                 key = key - number_subtree_elements;
             }
@@ -187,7 +207,11 @@ pub mod test_helpers {
 
         proof.reverse();
 
-        (leaf_hash, proof, nodes.last().unwrap().hash)
+        (
+            Bits256(leaf_hash),
+            proof,
+            Bits256(nodes.last().unwrap().hash),
+        )
     }
 
     pub async fn leaves_with_depth(depth: u32) -> Vec<[u8; 1]> {
@@ -214,8 +238,7 @@ pub mod test_helpers {
         .await
         .unwrap();
 
-        let instance =
-            TestMerkleProofLibBuilder::new(contract_id.to_string(), wallet.clone()).build();
+        let instance = TestMerkleProofLib::new(contract_id.clone(), wallet.clone());
 
         instance
     }
