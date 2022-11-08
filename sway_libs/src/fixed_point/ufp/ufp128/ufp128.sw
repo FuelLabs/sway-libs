@@ -14,32 +14,36 @@ pub trait From {
     fn from(int_part: u64, fract_part: u64) -> UFP128;
 }
 
-impl From for UFP128 {
-    fn from(int_part: u64, fract_part: u64) -> Self {
+impl From<(u64, u64)> for UFP128 {
+    fn from(int_fract_tuple: (u64, u64)) -> Self {
         Self {
-            value: ~U128::from(int_part, fract_part),
+            value: U128::from(int_fract_tuple),
         }
+    }
+
+    fn into(self) -> (u64, u64) {
+        self.value.into()
     }
 }
 
 impl UFP128 {
     pub fn zero() -> Self {
         Self {
-            value: ~U128::from(0, 0),
+            value: U128::from((0, 0)),
         }
     }
 
     /// The smallest value that can be represented by this type.
     pub fn min() -> Self {
         Self {
-            value: ~U128::min(),
+            value: U128::min(),
         }
     }
 
     /// The largest value that can be represented by this type,
     pub fn max() -> Self {
         Self {
-            value: ~U128::max(),
+            value: U128::max(),
         }
     }
 
@@ -89,8 +93,8 @@ impl core::ops::Subtract for UFP128 {
 impl core::ops::Multiply for UFP128 {
     /// Multiply a UFP128 with a UFP128. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-        let self_u256 = ~U256::from(0, 0, self.value.upper, self.value.lower);
-        let other_u256 = ~U256::from(0, 0, other.value.upper, other.value.lower);
+        let self_u256 = U256::from((0, 0, self.value.upper, self.value.lower));
+        let other_u256 = U256::from((0, 0, other.value.upper, other.value.lower));
 
         let self_multiply_other = self_u256 * other_u256;
         let res_u256 = self_multiply_other >> 64;
@@ -98,7 +102,7 @@ impl core::ops::Multiply for UFP128 {
             // panic on overflow
             revert(0);
         }
-        ~Self::from(res_u256.c, res_u256.d)
+        Self::from((res_u256.c, res_u256.d))
     }
 }
 
@@ -106,8 +110,8 @@ impl core::ops::Divide for UFP128 {
     /// Divide a UFP128 by a UFP128. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         let mut s = self;
-        let zero = ~UFP128::zero();
-        let u128_max = ~U128::max();
+        let zero = UFP128::zero();
+        let u128_max = U128::max();
 
         assert(divisor != zero);
 
@@ -115,8 +119,8 @@ impl core::ops::Divide for UFP128 {
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
-        let self_u256 = ~U256::from(0, 0, self.value.upper, self.value.lower);
-        let divisor_u256 = ~U256::from(0, 0, divisor.value.upper, divisor.value.lower);
+        let self_u256 = U256::from((0, 0, self.value.upper, self.value.lower));
+        let divisor_u256 = U256::from((0, 0, divisor.value.upper, divisor.value.lower));
 
         // Multiply by denominator to ensure accuracy 
         let res_u256 = (self_u256 << 64) / divisor_u256;
@@ -125,13 +129,13 @@ impl core::ops::Divide for UFP128 {
             // panic on overflow
             revert(0);
         }
-        ~Self::from(res_u256.c, res_u256.d)
+        Self::from((res_u256.c, res_u256.d))
     }
 }
 
 impl UFP128 {
     pub fn recip(number: UFP128) -> Self {
-        let one = ~U128::from(0, 1);
+        let one = U128::from((0, 1));
 
         Self {
             value: one / number.value,
@@ -139,15 +143,15 @@ impl UFP128 {
     }
 
     pub fn floor(self) -> Self {
-        ~Self::from(self.value.upper, 0)
+        Self::from((self.value.upper, 0))
     }
 
     pub fn ceil(self) -> Self {
         let val = self.value;
         if val.lower == 0 {
-            return ~Self::from(val.upper, 0);
+            return Self::from((val.upper, 0));
         } else {
-            return ~Self::from(val.upper + 1, 0);
+            return Self::from((val.upper + 1, 0));
         }
     }
 }
@@ -166,31 +170,31 @@ impl UFP128 {
     }
 
     pub fn trunc(self) -> Self {
-        ~Self::from(self.value.upper, 0)
+        Self::from((self.value.upper, 0))
     }
 
     pub fn fract(self) -> Self {
-        ~Self::from(0, self.value.lower)
+        Self::from((0, self.value.lower))
     }
 }
 
 impl Root for UFP128 {
     fn sqrt(self) -> Self {
         let nominator_root = self.value.sqrt();
-        let nominator = nominator_root * ~U128::from(0, 2 << 32);
-        ~Self::from(nominator.upper, nominator.lower)
+        let nominator = nominator_root * U128::from((0, 2 << 32));
+        Self::from((nominator.upper, nominator.lower))
     }
 }
 
 impl Exponentiate for UFP128 {
     fn pow(self, exponent: Self) -> Self {
         let nominator_pow = self.value.pow(exponent.value);
-        let u128_1 = ~U128::from(0, 1);
-        let u128_2 = ~U128::from(0, 2);
-        let u128_64 = ~U128::from(0, 64);
+        let u128_1 = U128::from((0, 1));
+        let u128_2 = U128::from((0, 2));
+        let u128_64 = U128::from((0, 64));
         let two_pow_64_n_minus_1 = u128_2.pow(u128_64 * (exponent.value - u128_1));
         let nominator = nominator_pow / two_pow_64_n_minus_1;
-        ~Self::from(nominator.upper, nominator.lower)
+        Self::from((nominator.upper, nominator.lower))
     }
 }
 
@@ -198,7 +202,7 @@ impl Exponentiate for UFP128 {
 // impl Logarithm for UFP128 {
 //     fn log(self, base: Self) -> Self {
 //         let nominator_log = self.value.log(base);
-//         let res = (nominator_log - ~U128::from(0, 64 * 2.log(base))) * ~U128::from(1, 0);
+//         let res = (nominator_log - U128::from(0, 64 * 2.log(base))) * U128::from(1, 0);
 //         UFP128 {
 //             value: res
 //         }
@@ -210,13 +214,13 @@ trait Exponent {
 
 impl Exponent for UFP128 {
     fn exp(exponent: Self) -> Self {
-        let one = ~UFP128::from(1, 0);
-        let p2 = one / ~UFP128::from(2, 0);
-        let p3 = one / ~UFP128::from(6, 0);
-        let p4 = one / ~UFP128::from(24, 0);
-        let p5 = one / ~UFP128::from(120, 0);
-        let p6 = one / ~UFP128::from(720, 0);
-        let p7 = one / ~UFP128::from(5040, 0);
+        let one = UFP128::from((1, 0));
+        let p2 = one / UFP128::from((2, 0));
+        let p3 = one / UFP128::from((6, 0));
+        let p4 = one / UFP128::from((24, 0));
+        let p5 = one / UFP128::from((120, 0));
+        let p6 = one / UFP128::from((720, 0));
+        let p7 = one / UFP128::from((5040, 0));
 
         // common technique to counter loosing sugnifucant numbers in usual approximation
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
