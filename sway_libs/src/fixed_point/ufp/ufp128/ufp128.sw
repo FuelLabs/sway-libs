@@ -10,10 +10,6 @@ pub struct UFP128 {
     value: U128,
 }
 
-pub trait From {
-    fn from(int_part: u64, fract_part: u64) -> UFP128;
-}
-
 impl From<(u64, u64)> for UFP128 {
     fn from(int_fract_tuple: (u64, u64)) -> Self {
         Self {
