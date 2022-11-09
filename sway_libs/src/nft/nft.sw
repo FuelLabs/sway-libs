@@ -8,7 +8,7 @@ dep events;
 dep extensions/administrator/administrator;
 dep extensions/burnable/burnable;
 dep extensions/meta_data/meta_data;
-dep extensions/supply;
+dep extensions/supply/supply;
 
 use errors::InputError;
 use events::OperatorEvent;

@@ -10,11 +10,12 @@ pub trait MetaData<T> {
     /// Returns the metadata for this token
     #[storage(read)]
     fn meta_data(self) -> Option<T>;
+
     /// Creates new metadata for this token.
     ///
     /// # Arguments
     ///
-    /// * `metadata` - The metadata value to be included in the new metadata.
+    /// * `metadata` - The new metadata to overwrite the existing metadata.
     #[storage(write)]
     fn set_meta_data(self, metadata: Option<T>);
 }

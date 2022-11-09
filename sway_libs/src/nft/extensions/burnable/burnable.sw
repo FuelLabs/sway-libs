@@ -21,14 +21,12 @@ impl Burnable for NFTCore {
     fn burn(self) {
         require(self.owner == msg_sender().unwrap(), AccessError::SenderNotOwner);
 
-        let owner = self.owner;
-        let token_id = self.token_id;
         store(sha256((BALANCES, self.owner)), get::<u64>(sha256((BALANCES, self.owner))) - 1);
         store(sha256((TOKENS, self.token_id)), Option::None::<NFTCore>());
 
         log(BurnEvent {
-            owner,
-            token_id,
+            owner: self.owner,
+            token_id: self.token_id,
         });
     }
 }
@@ -37,7 +35,7 @@ impl Burnable for NFTCore {
 ///
 /// # Arguments
 ///
-/// * `token_id` - The id of the token which is to be burned.
+/// * `token_id` - The id of the token to burn.
 ///
 /// # Reverts
 ///
