@@ -1,3 +1,29 @@
+Table of Contents
+- [Overview](#overview)
+- [Use Cases](#use-cases)
+    - [Core Public Functions](#core-public-functions)
+        - [`approve()`](#approve)
+        - [`approved()`](#approved)
+        - [`balance_of()`](#balance_of)
+        - [`is_approved_for_all()`](#is-approved-for-all)
+        - [`mint()`](#mint)
+        - [`owner_of()`](#owner-of)
+        - [`set_approval_for_all()`](#set_approval-for-all)
+        - [`tokens_minted()`](#tokens-minted)
+        - [`transfer()`](#transfer)
+    - [Extension Public Functions](#extension-public-functions)
+        - [Administrator](#administrator)
+            - [`admin()`](#admin)
+            - [`set_admin()`](#set-admin)
+        - [Burnable](#burnable)
+            - [`burn()`](#burn)
+        - [Metadata](#metadata)
+            - [`meta_data()`](#meta-data)
+            - [`set_meta_data()`](#set-meta-data)
+        - [Supply](#supply)
+            - [`max_supply()`](#max-supply)
+            - [`set_max_supply()`](#set-max-supply)
+
 # Overview
 
 This document provides an overview of the NFT library.
@@ -16,7 +42,7 @@ These core functions are basic functionality that should be added to all NFTs, r
 
 ### `approve()`
 
-Gives permission to another user to transfer a single, specific token on an owner's behalf. 
+Gives permission to another user to transfer a single, specific token on the owner's behalf. 
 
 ### `approved()`
 
@@ -28,11 +54,11 @@ Returns the number of tokens owned by a user.
 
 ### `is_approved_for_all()`
 
-Returns whether or not a user is approved to transfer **all** tokens on another user's behalf.
+Returns whether a user is approved to transfer **all** tokens on another user's behalf.
 
 ### `mint()`
 
-Creates a new token with an `Identity` and an id.
+Creates a new token with an owner and an id.
 
 ### `owner_of()`
 
@@ -48,7 +74,7 @@ The total number of tokens that have been minted.
 
 ### `transfer()`
 
-Transfers ownership from one user to another.
+Transfers ownership of the token from one user to another.
 
 ## Extension Public Functions
 
