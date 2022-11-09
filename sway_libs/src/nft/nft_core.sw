@@ -74,7 +74,7 @@ impl NFTCore {
         require(get::<Option<NFTCore>>(sha256((TOKENS, token_id))).is_none(), InputError::TokenAlreadyExists);
 
         let nft = NFTCore {
-            approved: Option::None(),
+            approved: Option::None,
             owner: to,
             token_id,
         };
@@ -155,7 +155,7 @@ impl NFTCore {
         // Set the new owner of this token and reset the approved Identity
         nft.owner = to;
         if self.approved.is_some() {
-            nft.approved = Option::None();
+            nft.approved = Option::None;
         }
 
         store(sha256((TOKENS, self.token_id)), Option::Some(nft));

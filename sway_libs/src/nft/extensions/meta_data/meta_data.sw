@@ -44,8 +44,8 @@ pub fn meta_data(token_id: u64) -> Option<NFTMetaData> {
         Option::Some(nft) => {
             nft.meta_data()
         },
-        Option::None(nft) => {
-            Option::None()
+        Option::None => {
+            Option::None
         }
     }
 }

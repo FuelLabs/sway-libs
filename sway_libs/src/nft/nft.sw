@@ -48,8 +48,8 @@ pub fn approved(token_id: u64) -> Option<Identity> {
         Option::Some(nft) => {
             nft.approved()
         },
-        Option::None(nft) => {
-            Option::None()
+        Option::None => {
+            Option::None
         }
     }
 }
@@ -107,8 +107,8 @@ pub fn owner_of(token_id: u64) -> Option<Identity> {
         Option::Some(nft) => {
             Option::Some(nft.owner())
         },
-        Option::None(nft) => {
-            Option::None()
+        Option::None => {
+            Option::None
         }
     }
 }
