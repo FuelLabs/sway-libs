@@ -3,7 +3,7 @@ library i256;
 use std::u256::U256;
 use ::signed_integers::errors::Error;
 
-/// The 128-bit signed integer type.
+/// The 256-bit signed integer type.
 /// Represented as an underlying U256 value.
 /// Actual value is underlying value minus 2 ^ 255
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
