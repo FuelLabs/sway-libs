@@ -100,11 +100,11 @@ Deletes the specified token.
 
 #### `meta_data()`
 
-Returns the metadata associated with the specified token.
+Returns the stored data associated with the specified token.
 
 #### `set_meta_data()`
 
-Creates new or overwrites the existing metadata for the specified token.
+Stores a struct containing information / data particular to an individual token.
 
 ### Supply
 

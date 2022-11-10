@@ -2,7 +2,7 @@
 
 A non-fungible token (NFT) is a unique token that has an identifier which distinguishes itself from other tokens within the same token contract. Unlike Fuel's Native Assets, these tokens are not fungible with one another and may contain metadata or other traits giving them distinctive characteristics.
 
-The current widlely used case for NFTs is artwork / collectibles such as 10k minted token collections. However, there are other utilities which have yet to be written for the Fuel Network which include DeFi protocol short positions, deeds, and more. 
+Some common applications of an NFT include artwork / collectibles, DeFi short positions, deeds, and more.
 
 For more information please see the [specification](./SPECIFICATION.md).
 
