@@ -14,13 +14,9 @@ The Signed Integers library can be used anytime a one needs negative numbers.
 
 The size of this type in bits.
 
-### `from_uint()`
-
-Helper function to get a positive value from unsigned number
-
 ### `max()`
 
-The largest value that can be represented by this type.
+The largest value that can be represented by this integer type.
 
 ### `min()`
 
@@ -28,7 +24,7 @@ The smallest value that can be represented by this integer type.
     
 ### `neg_from`
 
-Helper function to get a negative value of unsigned number
+Helper function to get a negative value of an unsigned number
 
 ### Basic arithmetic operations
 

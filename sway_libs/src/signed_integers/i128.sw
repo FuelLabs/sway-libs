@@ -21,11 +21,6 @@ impl I128 {
     }
 }
 
-pub trait From {
-    /// Function for creating I128 from U128
-    fn from(underlying: U128) -> Self;
-}
-
 impl From<U128> for I128 {
     /// Helper function to get a signed number from with an underlying
     fn from(value: U128) -> Self {
@@ -61,12 +56,12 @@ impl I128 {
         128
     }
 
-    /// Helper function to get a positive value from unsigned number
+    /// Helper function to get a positive value from an unsigned number
     fn from_uint(underlying: U128) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this type,
+    /// The largest value that can be represented by this integer type,
     pub fn max() -> Self {
         Self {
             underlying: U128::max(),
@@ -80,7 +75,7 @@ impl I128 {
         }
     }
 
-    /// Helper function to get a negative value of unsigned number
+    /// Helper function to get a negative value of an unsigned number
     pub fn neg_from(value: U128) -> Self {
         Self {
             underlying: Self::indent() - value,

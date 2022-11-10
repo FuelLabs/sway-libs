@@ -57,7 +57,7 @@ impl I8 {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this type,
+    /// The largest value that can be represented by this integer type,
     pub fn max() -> Self {
         Self {
             underlying: u8::max(),
@@ -71,7 +71,7 @@ impl I8 {
         }
     }
 
-    /// Helper function to get a negative value of unsigned number
+    /// Helper function to get a negative value of an unsigned number
     pub fn neg_from(value: u8) -> Self {
         Self {
             underlying: Self::indent() - value,

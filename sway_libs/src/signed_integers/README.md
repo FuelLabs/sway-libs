@@ -19,7 +19,7 @@ use sway_libs::i8::I8;
 Once imported, a `Signed Integer` type can be instantiated defining a new variable and calling the `new` function.
 
 ```rust
-let mut i8_value = ~I8::new();
+let mut i8_value = I8::new();
 ```
 
 ## Basic Functionality
@@ -38,15 +38,11 @@ Helper functions
 
 ```rust
 // To get a negative value from an unsigned value 
-let neg_value = ~I8::neg_from();
+let neg_value = I8::neg_from();
 
 // Maximum value
-let max_i8_value = ~I8::max();
+let max_i8_value = I8::max();
 ```
 
-Note about size (by @bitzoic):
-
-i256 is complied with a size of 911,092 bytes.
-The reason seems to be the size of `U128` and `U256` types.
-
-For more information please see the [specification](./SPECIFICATION.md).
+## Known Issues
+The current implementation of `U128` and `U256` will compile large bytecode sizes when performing mathematical computations. As a result, `I128` and `I256` inherit the same issue and could cause high transaction costs. This should be resolved with future optimizations of the Sway compiler.

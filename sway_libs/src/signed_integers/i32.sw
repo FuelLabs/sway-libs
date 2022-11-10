@@ -57,7 +57,7 @@ impl I32 {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this type,
+    /// The largest value that can be represented by this integer type,
     pub fn max() -> Self {
         Self {
             underlying: u32::max(),
@@ -71,7 +71,7 @@ impl I32 {
         }
     }
 
-    /// Helper function to get a negative value of unsigned numbers
+    /// Helper function to get a negative value of an unsigned numbers
     pub fn neg_from(value: u32) -> Self {
         Self {
             underlying: Self::indent() - value,
