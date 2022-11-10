@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.30.0" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.30.0-orange" />
+    <a href="https://crates.io/crates/forc/0.30.1" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.30.1-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -32,6 +32,7 @@ These libraries contain helper functions, generalized standards, and other tools
 ### Libraries
 
 - [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [Non-Fungible Token(NFT)](./sway_libs/src/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
 - [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 
 ## Using a library
@@ -55,7 +56,7 @@ sway_libs::binary_merkle_proof::verify_proof;
 ```
 
 > **Note**
-> All projects currently use `forc v0.30.0`, `fuels-rs v0.28.0` and `fuel-core 0.13.2`.
+> All projects currently use `forc v0.30.1`, `fuels-rs v0.28.0` and `fuel-core 0.13.2`.
 
 ## Contributing
 
