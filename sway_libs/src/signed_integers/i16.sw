@@ -1,6 +1,5 @@
 library i16;
 
-use core::num::*;
 use ::signed_integers::errors::Error;
 
 /// The 16-bit signed integer type.

@@ -2,7 +2,6 @@ script;
 
 use sway_libs::i256::I256;
 use std::u256::U256;
-use core::num::*;
 
 fn main() -> bool {
     let u128_one = U256 {

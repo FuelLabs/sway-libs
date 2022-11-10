@@ -2,7 +2,6 @@ script;
 
 use sway_libs::i128::I128;
 use std::u128::U128;
-use core::num::*;
 
 fn main() -> bool {
     let u128_one = U128 {

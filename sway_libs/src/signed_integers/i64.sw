@@ -1,6 +1,5 @@
 library i64;
 
-use core::num::*;
 use ::signed_integers::errors::Error;
 
 /// The 64-bit signed integer type.
