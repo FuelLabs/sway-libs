@@ -38,7 +38,7 @@ impl<T> MetaData<T> for NFTCore {
 ///
 /// * `token_id` - The id of the token which the metadata should be returned
 #[storage(read)]
-pub fn meta_data(token_id: u64) -> Option<NFTMetaData> {
+pub fn meta_data<T>(token_id: u64) -> Option<T> {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     match nft {
         Option::Some(nft) => {
@@ -61,7 +61,7 @@ pub fn meta_data(token_id: u64) -> Option<NFTMetaData> {
 ///
 /// * When the `token_id` does not map to an existing token
 #[storage(read, write)]
-pub fn set_meta_data(metadata: Option<NFTMetaData>, token_id: u64) {
+pub fn set_meta_data<T>(metadata: Option<T>, token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
 
