@@ -71,6 +71,6 @@ These include:
 1. [Metadata](./extensions/meta_data/meta_data.sw)
 2. [Burning functionality](./extensions/burnable/burnable.sw)
 3. [Administrative capabilities](./extensions/administrator/administrator.sw)
-4. [Supply limits](./extensions/supply.sw)
+4. [Supply limits](./extensions/supply/supply.sw)
 
 For more information please see the [specification](./SPECIFICATION.md).
