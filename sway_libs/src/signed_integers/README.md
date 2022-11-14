@@ -1,6 +1,6 @@
 # Overview
 
-The Signed Integers library provides an interface to use signed numbers in Sway. It has 6 distinct types: `I8`, `I16`, `I32`, `I64`, `I128`, `I256`. These types are stack allocated.
+The Signed Integers library provides a library to use signed numbers in Sway. It has 6 distinct types: `I8`, `I16`, `I32`, `I64`, `I128`, `I256`. These types are stack allocated.
 
 These types are stored as unsigned integers, therefore either `u64` or a number of them. Therefore the size can be known at compile time and the length is static. 
 
