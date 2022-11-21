@@ -1,5 +1,5 @@
 use crate::nft_extensions::tests::utils::{
-    abi_calls::{token_metadata, mint, set_token_metadata},
+    abi_calls::{mint, set_token_metadata, token_metadata},
     test_helpers::setup,
     NFTMetadata,
 };

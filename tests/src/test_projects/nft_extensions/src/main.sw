@@ -7,11 +7,9 @@ use sway_libs::nft::{
         set_admin,
     },
     balance_of,
-    burnable::{burn, Burn},
-    token_metadata::{
-        token_metadata,
-        token_metadata_structures::NFTMetadata,
-        set_token_metadata,
+    burnable::{
+        burn,
+        Burn,
     },
     mint,
     owner_of,
@@ -19,6 +17,11 @@ use sway_libs::nft::{
         max_supply,
         set_max_supply,
         Supply,
+    },
+    token_metadata::{
+        set_token_metadata,
+        token_metadata,
+        token_metadata_structures::NFTMetadata,
     },
     tokens_minted,
 };
@@ -43,7 +46,7 @@ impl Administrator for Contract {
     fn admin() -> Option<Identity> {
         admin()
     }
-    
+
     #[storage(read, write)]
     fn set_admin(new_admin: Option<Identity>) {
         set_admin(new_admin);
