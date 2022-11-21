@@ -8,6 +8,13 @@ use std::{logging::log, storage::{get, store}};
 use supply_errors::SupplyError;
 use supply_events::SupplyEvent;
 
+abi Supply {
+    #[storage(read)]
+    fn max_supply() -> Option<u64>;
+    #[storage(read, write)]
+    fn set_max_supply(supply: Option<u64>);
+}
+
 /// Returns the maximum supply that has been set for the NFT library.
 #[storage(read)]
 pub fn max_supply() -> Option<u64> {
