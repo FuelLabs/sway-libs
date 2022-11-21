@@ -17,7 +17,7 @@ Table of Contents
             - [`set_admin()`](#set-admin)
         - [Burnable](#burnable)
             - [`burn()`](#burn)
-        - [Metadata](#metadata)
+        - [Token Metadata](#metadata)
             - [`meta_data()`](#meta-data)
             - [`set_meta_data()`](#set-meta-data)
         - [Supply](#supply)
@@ -96,13 +96,13 @@ Sets the administrator of the `NFT` library.
 
 Deletes the specified token.
 
-### Metadata
+### Token Metadata
 
-#### `meta_data()`
+#### `token_metadata()`
 
 Returns the stored data associated with the specified token.
 
-#### `set_meta_data()`
+#### `set_token_metadata()`
 
 Stores a struct containing information / data particular to an individual token.
 
