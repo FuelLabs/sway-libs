@@ -1,13 +1,13 @@
-library meta_data_structures;
+library token_metadata_structures;
 
-pub struct NFTMetaData {
+pub struct NFTMetadata {
     // This is left as an example. Support for StorageVec in struct is needed here.
     // Developers may also implement their own metadata structs with properties they may need
     // and use the MetaData trait.
     value: u64,
 }
 
-impl NFTMetaData {
+impl NFTMetadata {
     fn new(value: u64) -> Self {
         Self { value }
     }
