@@ -15,9 +15,9 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
-  RUST_VERSION: 1.63.0
-  FORC_VERSION: 0.25.2
-  CORE_VERSION: 0.10.1
+  RUST_VERSION: 1.64.0
+  FORC_VERSION: 0.30.1
+  CORE_VERSION: 0.13.2
   PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
@@ -67,7 +67,5 @@ jobs:
           run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh
           
         - name: Cargo Test sway-lib
-          uses: actions-rs/cargo@v1
-          with:
-            command: test
-            args: --manifest-path tests/src/Cargo.toml -- --test-threads=1 --nocapture
+          run: |
+            cargo test --manifest-path tests/src/Cargo.toml
