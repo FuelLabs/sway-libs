@@ -3,7 +3,7 @@ library token_metadata;
 dep token_metadata_structures;
 
 use token_metadata_structures::NFTMetadata;
-use ::nft::{errors::InputError, nft_core::NFTCore, nft_storage::{METADATA, TOKENS}};
+use ::nft::{errors::InputError, nft_core::NFTCore, nft_storage::{TOKEN_METADATA, TOKENS}};
 use std::{hash::sha256, storage::{get, store}};
 
 pub trait TokenMetadata<T> {
@@ -23,12 +23,12 @@ pub trait TokenMetadata<T> {
 impl<T> TokenMetadata<T> for NFTCore {
     #[storage(read)]
     fn token_metadata(self) -> Option<T> {
-        get::<Option<T>>(sha256((METADATA, self.token_id)))
+        get::<Option<T>>(sha256((TOKEN_METADATA, self.token_id)))
     }
 
     #[storage(write)]
     fn set_token_metadata(self, token_metadata: Option<T>) {
-        store(sha256((METADATA, self.token_id)), token_metadata);
+        store(sha256((TOKEN_METADATA, self.token_id)), token_metadata);
     }
 }
 
