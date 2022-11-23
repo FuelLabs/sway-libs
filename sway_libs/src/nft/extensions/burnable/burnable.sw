@@ -6,6 +6,11 @@ use burnable_events::BurnEvent;
 use ::nft::{errors::{AccessError, InputError}, nft_core::NFTCore, nft_storage::{BALANCES, TOKENS}};
 use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
+abi Burn {
+    #[storage(read, write)]
+    fn burn(token_id: u64);
+}
+
 pub trait Burnable {
     /// Deletes this token from storage and decrements the balance of the owner.
     ///

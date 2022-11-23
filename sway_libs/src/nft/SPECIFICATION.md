@@ -5,24 +5,24 @@ Table of Contents
         - [`approve()`](#approve)
         - [`approved()`](#approved)
         - [`balance_of()`](#balance_of)
-        - [`is_approved_for_all()`](#is-approved-for-all)
+        - [`is_approved_for_all()`](#is_approved_for_all)
         - [`mint()`](#mint)
-        - [`owner_of()`](#owner-of)
-        - [`set_approval_for_all()`](#set_approval-for-all)
-        - [`tokens_minted()`](#tokens-minted)
+        - [`owner_of()`](#owner_of)
+        - [`set_approval_for_all()`](#set_approval_for_all)
+        - [`tokens_minted()`](#tokens_minted)
         - [`transfer()`](#transfer)
     - [Extension Public Functions](#extension-public-functions)
         - [Administrator](#administrator)
             - [`admin()`](#admin)
-            - [`set_admin()`](#set-admin)
+            - [`set_admin()`](#set_admin)
         - [Burnable](#burnable)
             - [`burn()`](#burn)
-        - [Metadata](#metadata)
-            - [`meta_data()`](#meta-data)
-            - [`set_meta_data()`](#set-meta-data)
+        - [Token Metadata](#token-metadata)
+            - [`token_metadata()`](#token_metadata)
+            - [`set_token_metadata()`](#set_token_metadata)
         - [Supply](#supply)
-            - [`max_supply()`](#max-supply)
-            - [`set_max_supply()`](#set-max-supply)
+            - [`max_supply()`](#max_supply)
+            - [`set_max_supply()`](#set_max_supply)
 
 # Overview
 
@@ -96,13 +96,13 @@ Sets the administrator of the `NFT` library.
 
 Deletes the specified token.
 
-### Metadata
+### Token Metadata
 
-#### `meta_data()`
+#### `token_metadata()`
 
 Returns the stored data associated with the specified token.
 
-#### `set_meta_data()`
+#### `set_token_metadata()`
 
 Stores a struct containing information / data particular to an individual token.
 
