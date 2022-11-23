@@ -28,7 +28,7 @@ impl NFTCore {
     ///
     /// * When the sender is not the token's owner.
     #[storage(write)]
-    fn approve(self, approved: Option<Identity>) {
+    pub fn approve(self, approved: Option<Identity>) {
         let mut nft = self;
         let sender = msg_sender().unwrap();
         require(nft.owner == sender, AccessError::SenderNotOwner);
