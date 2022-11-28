@@ -7,6 +7,17 @@ pub struct UFP64 {
     value: u64,
 }
 
+impl From<u64> for UFP64 {
+    /// Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.
+    fn from(value: u64) -> Self {
+        Self { value }
+    }
+
+    fn into(self) -> u64 {
+        self.value
+    }
+}
+
 impl UFP64 {
     /// Convinience function to know the denominator
     pub fn denominator() -> u64 {
@@ -15,11 +26,6 @@ impl UFP64 {
 
     pub fn zero() -> Self {
         Self { value: 0 }
-    }
-
-    /// Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.
-    pub fn from(value: u64) -> Self {
-        Self { value }
     }
 
     /// The smallest value that can be represented by this type.
