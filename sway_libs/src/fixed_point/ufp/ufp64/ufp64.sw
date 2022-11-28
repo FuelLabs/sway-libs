@@ -33,7 +33,7 @@ impl UFP64 {
         }
     }
 
-    /// The largest value that can be represented by this type,
+    /// The largest value that can be represented by this type.
     pub fn max() -> Self {
         Self {
             value:u64::max(),
