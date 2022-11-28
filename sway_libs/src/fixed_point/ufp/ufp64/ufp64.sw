@@ -1,11 +1,7 @@
 library ufp64;
 //! A wrapper around u64 type for a library for Sway for mathematical functions operating with signed 32.32-bit fixed point numbers.
-use core::num::*;
-use std::assert::assert;
-use std::math::*;
-use std::revert::revert;
+use std::math::{Exponentiate, Root};
 use std::u128::U128;
-use std::math::Exponentiate;
 
 pub struct UFP64 {
     value: u64,
