@@ -1,6 +1,6 @@
 library ufp64;
 //! A wrapper around u64 type for a library for Sway for mathematical functions operating with signed 32.32-bit fixed point numbers.
-use std::math::{Exponentiate, Root};
+use std::math::{Exponentiate, Root, Exponent};
 use std::u128::U128;
 
 pub struct UFP64 {
@@ -241,11 +241,6 @@ impl Exponentiate for UFP64 {
             value: nominator.lower,
         }
     }
-}
-
-trait Exponent {
-    /// Exponent function. e ^ x
-    fn exp(exponent: Self) -> Self;
 }
 
 impl Exponent for UFP64 {
