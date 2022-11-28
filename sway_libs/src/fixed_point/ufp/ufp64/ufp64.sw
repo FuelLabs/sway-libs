@@ -29,14 +29,14 @@ impl UFP64 {
     /// The smallest value that can be represented by this type.
     pub fn min() -> Self {
         Self {
-            value:u64::min(),
+            value: u64::min(),
         }
     }
 
     /// The largest value that can be represented by this type.
     pub fn max() -> Self {
         Self {
-            value:u64::max(),
+            value: u64::max(),
         }
     }
 
@@ -108,7 +108,7 @@ impl core::ops::Divide for UFP64 {
         let zero = UFP64::zero();
         assert(divisor != zero);
 
-        let denominator = U128::from((0,Self::denominator()));
+        let denominator = U128::from((0, Self::denominator()));
         // Conversion to U128 done to ensure no overflow happen
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
@@ -133,7 +133,7 @@ impl UFP64 {
     /// Creates UFP64 that correponds to a unsigned integer
     pub fn from_uint(uint: u64) -> Self {
         Self {
-            value:Self::denominator() * uint,
+            value: Self::denominator() * uint,
         }
     }
 }
