@@ -3,7 +3,6 @@ script;
 use std::assert::assert;
 use sway_libs::ufp64::UFP64;
 
-
 fn main() -> bool {
     let one = UFP64::from_uint(1);
     let mut res = UFP64::exp(one);
@@ -24,6 +23,6 @@ fn main() -> bool {
     let ten = UFP64::from_uint(10);
     res = UFP64::exp(ten);
     assert(res.value == 20833521987056);
-    
+
     true
 }
