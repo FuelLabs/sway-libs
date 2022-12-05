@@ -8,6 +8,13 @@ use administrator_events::AdminEvent;
 use ::nft::nft_storage::ADMIN;
 use std::{auth::msg_sender, logging::log, storage::{get, store}};
 
+abi Administrator {
+    #[storage(read)]
+    fn admin() -> Option<Identity>;
+    #[storage(read, write)]
+    fn set_admin(new_admin: Option<Identity>);
+}
+
 /// Returns the administrator for the library.
 #[storage(read)]
 pub fn admin() -> Option<Identity> {

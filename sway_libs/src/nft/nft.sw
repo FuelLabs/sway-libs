@@ -7,7 +7,7 @@ dep errors;
 dep events;
 dep extensions/administrator/administrator;
 dep extensions/burnable/burnable;
-dep extensions/meta_data/meta_data;
+dep extensions/token_metadata/token_metadata;
 dep extensions/supply/supply;
 
 use errors::InputError;
@@ -15,6 +15,27 @@ use events::OperatorEvent;
 use nft_core::NFTCore;
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+
+abi NFT {
+    #[storage(read, write)]
+    fn approve(approved: Option<Identity>, token_id: u64);
+    #[storage(read)]
+    fn approved(token_id: u64) -> Option<Identity>;
+    #[storage(read)]
+    fn balance_of(owner: Identity) -> u64;
+    #[storage(read)]
+    fn is_approved_for_all(operator: Identity, owner: Identity) -> bool;
+    #[storage(read, write)]
+    fn mint(amount: u64, to: Identity);
+    #[storage(read)]
+    fn owner_of(token_id: u64) -> Option<Identity>;
+    #[storage(write)]
+    fn set_approval_for_all(approve: bool, operator: Identity);
+    #[storage(read)]
+    fn tokens_minted() -> u64;
+    #[storage(read, write)]
+    fn transfer(to: Identity, token_id: u64);
+}
 
 /// Sets the approved identity for a specific token.
 ///

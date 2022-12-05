@@ -6,34 +6,14 @@ use sway_libs::nft::{
     balance_of,
     is_approved_for_all,
     mint,
+    NFT,
     owner_of,
     set_approval_for_all,
     tokens_minted,
     transfer,
 };
 
-abi NFT_Core_Test {
-    #[storage(read, write)]
-    fn approve(approved: Option<Identity>, token_id: u64);
-    #[storage(read)]
-    fn approved(token_id: u64) -> Option<Identity>;
-    #[storage(read)]
-    fn balance_of(owner: Identity) -> u64;
-    #[storage(read)]
-    fn is_approved_for_all(operator: Identity, owner: Identity) -> bool;
-    #[storage(read, write)]
-    fn mint(amount: u64, to: Identity);
-    #[storage(read)]
-    fn owner_of(token_id: u64) -> Option<Identity>;
-    #[storage(write)]
-    fn set_approval_for_all(approve: bool, operator: Identity);
-    #[storage(read)]
-    fn tokens_minted() -> u64;
-    #[storage(read, write)]
-    fn transfer(to: Identity, token_id: u64);
-}
-
-impl NFT_Core_Test for Contract {
+impl NFT for Contract {
     #[storage(read, write)]
     fn approve(approved_identity: Option<Identity>, token_id: u64) {
         approve(approved_identity, token_id);
