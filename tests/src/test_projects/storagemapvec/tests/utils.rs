@@ -9,7 +9,9 @@ abigen!(
 pub mod abi_calls {
     use super::*;
 
-    
+    pub fn push(instance: TestContract, key: u64, value: u64) {
+        instance.methods().push()
+    }
 }
 
 pub mod test_helpers {
