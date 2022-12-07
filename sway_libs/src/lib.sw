@@ -10,3 +10,4 @@ dep signed_integers/i128;
 dep signed_integers/i256;
 dep nft/nft;
 dep string/string;
+dep storagemapvec/storagemapvec;

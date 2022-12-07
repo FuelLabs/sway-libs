@@ -10,3 +10,4 @@ mod signed_i32;
 mod signed_i64;
 mod signed_i8;
 mod string;
+mod storagemapvec;
