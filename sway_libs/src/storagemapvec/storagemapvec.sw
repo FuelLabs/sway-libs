@@ -40,7 +40,7 @@ impl<K, V> StorageMapVec<K, V> {
 
         // Storing the value at the current length index (if this is the first item, starts off at 0)
         let key = sha256((key, len, __get_storage_key()));
-        store::<V>(k, value);
+        store::<V>(key, value);
 
         // Incrementing the length
         store(k, len + 1);

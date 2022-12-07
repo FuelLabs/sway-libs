@@ -25,8 +25,8 @@ abi TestContract {
     #[storage(write)]
     fn clear(key: u64);
 
-    #[storage(read)]
-    fn to_vec(key: u64) -> Vec<u64>;
+    // #[storage(read)]
+    // fn to_vec(key: u64) -> Vec<u64>;
 }
 
 impl TestContract for Contract {
@@ -60,8 +60,8 @@ impl TestContract for Contract {
         storage.mapvec.clear(key)
     }
 
-    #[storage(read)]
-    fn to_vec(key: u64) -> Vec<u64> {
-        storage.mapvec.to_vec(key)
-    }
+    // #[storage(read)]
+    // fn to_vec(key: u64) -> Vec<u64> {
+        // storage.mapvec.to_vec(key)
+    // }
 }

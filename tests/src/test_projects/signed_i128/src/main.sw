@@ -42,7 +42,7 @@ fn main() -> bool {
         lower: u64::max(),
     };
 
-    res = I128::from(u128_10) / I128::from_uint(u128_lower_max_u64);
+    res = I128::from(u128_10) / I128 { underlying: u128_lower_max_u64 };
     assert(res == I128::neg_from(u128_10));
 
     let u128_5 = U128 {
