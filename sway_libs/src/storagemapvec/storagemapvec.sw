@@ -1,9 +1,6 @@
 library storagemapvec;
 
-use std::{
-    hash::sha256,
-    storage::{get, store},
-};
+use std::{hash::sha256, storage::{get, store}};
 
 /// A persistant mapping of K -> Vec<V>
 pub struct StorageMapVec<K, V> {}
