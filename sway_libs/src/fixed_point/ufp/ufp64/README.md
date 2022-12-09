@@ -1,6 +1,6 @@
 # Overview
 
-The Unsigned Fixed Point 64 bit library provides a library to use signed numbers in Sway. It has 1 distinct type: `UFP64`. This type is stack allocated.
+The Unsigned Fixed Point 64-bit library provides a library to use signed numbers in Sway. It has 1 distinct type: `UFP64`. This type is stack allocated.
 
 This type is stored as a `u64` under the hood. Therefore the size can be known at compile time and the length is static. 
 
@@ -16,7 +16,7 @@ In order to use the `UFP64` type it must be added to the Forc.toml file and then
 use sway_libs::ufp64::UFP64;
 ```
 
-Once imported, a `UFP64` type can be instantiated defining a new variable and calling the `from` function.
+Once imported, a `UFP64` type can be instantiated by defining a new variable and calling the `from` function.
 
 ```rust
 let mut ufp64_value = UFP64::from(0);
@@ -37,20 +37,20 @@ let ufp64_value_3 = ufp64_value_1 - ufp64_value_2;
 Mathematical functions
 
 Exponential Function
-```
+```rust
 let ten = UFP64::from_uint(10);
-res = UFP64::exp(ten);
+let res = UFP64::exp(ten);
 ```
 
 Square Root function
-```
+```rust
 let ufp64_169 = UFP64::from_uint(169);
-res = UFP64::sqrt(ufp64_169);
+let res = UFP64::sqrt(ufp64_169);
 ```
 
 Power Function
-```
+```rust
 let three = UFP64::from_uint(3);
 let five = UFP64::from_uint(5);
-res = five.pow(three);
+let res = five.pow(three);
 ```

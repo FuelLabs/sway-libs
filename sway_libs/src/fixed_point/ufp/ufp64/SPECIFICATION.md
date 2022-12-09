@@ -1,12 +1,12 @@
 # Overview
 
-This document provides an overview of the Unsigned Fixed Point 64 bit library.
+This document provides an overview of the Unsigned Fixed Point 64-bit library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
 ## Use Cases
 
-The Unsigned Fixed Point 64 bit can be used anytime a one needs fixed-point numbers.
+The Unsigned Fixed Point 64-bit can be used anytime a developer needs fixed-point numbers.
 
 ## Public Functions
 
