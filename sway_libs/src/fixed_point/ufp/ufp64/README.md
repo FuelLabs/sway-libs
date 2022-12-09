@@ -1,6 +1,6 @@
 # Overview
 
-The Unsigned Fixed Point 64 bit  library provides a library to use signed numbers in Sway. It has 1 distinct type: `UFP64`. This type is stack allocated.
+The Unsigned Fixed Point 64 bit library provides a library to use signed numbers in Sway. It has 1 distinct type: `UFP64`. This type is stack allocated.
 
 This type is stored as a `u64` under the hood. Therefore the size can be known at compile time and the length is static. 
 
