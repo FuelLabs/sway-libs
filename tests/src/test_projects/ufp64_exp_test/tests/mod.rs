@@ -5,7 +5,7 @@ mod success {
     use super::*;
 
     #[tokio::test]
-    async fn runs_i8_test_script() {
+    async fn runs_ufp64_exp_test_script() {
         let path_to_bin = "../out/debug/ufp64_exp_test.bin";
 
         let _result = run_compiled_script(path_to_bin, TxParameters::default(), None).await;
