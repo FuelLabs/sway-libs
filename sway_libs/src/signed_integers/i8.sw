@@ -1,6 +1,7 @@
 library i8;
 
 use ::signed_integers::errors::Error;
+use ::signed_integers::common::TwosComplement;
 
 /// The 8-bit signed integer type.
 /// Represented as an underlying u8 value.
@@ -52,7 +53,7 @@ impl I8 {
     }
 
     /// Helper function to get a signed number from with an underlying
-    fn from_uint(underlying: u8) -> Self {
+    pub fn from_uint(underlying: u8) -> Self {
         Self { underlying }
     }
 
@@ -88,7 +89,20 @@ impl I8 {
 impl core::ops::Add for I8 {
     /// Add a I8 to a I8. Panics on overflow.
     fn add(self, other: Self) -> Self {
-        Self::from(self.underlying - Self::indent() + other.underlying) // subtract 1 << 7 to avoid double move
+        let mut res = Self::new();
+        if self.underlying >= Self::indent()
+        {
+            res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 7 to avoid double move
+        } else if self.underlying < Self::indent()
+            && other.underlying < Self::indent()
+        {
+            res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+        } else if self.underlying < Self::indent()
+            && other.underlying >= Self::indent()
+        {
+            res = Self::from_uint(other.underlying - Self::indent() + self.underlying);
+        }
+        res
     }
 }
 
@@ -100,19 +114,19 @@ impl core::ops::Divide for I8 {
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
         {
-            res = Self::from((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && divisor.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
         } else if self.underlying >= Self::indent()
             && divisor.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
         } else if self.underlying < Self::indent()
             && divisor.underlying > Self::indent()
         {
-            res = Self::from(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
+            res = Self::from_uint(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
         res
     }
@@ -125,19 +139,19 @@ impl core::ops::Multiply for I8 {
         if self.underlying >= Self::indent()
             && other.underlying >= Self::indent()
         {
-            res = Self::from((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
         } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
         } else if self.underlying < Self::indent()
             && other.underlying >= Self::indent()
         {
-            res = Self::from(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
+            res = Self::from_uint(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
         }
         res
     }
@@ -147,11 +161,35 @@ impl core::ops::Subtract for I8 {
     /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self > other {
-            res = Self::from(self.underlying - other.underlying + Self::indent()); // add 1 << 7 to avoid loosing the move
-        } else {
-            res = Self::from(Self::indent() - (other.underlying - self.underlying)); // subtract from 1 << 7 as we are getting a negative value
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent()
+        {
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+            } else {
+                res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
+            }            
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() {
+            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() {
+            res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() {
+            if self.underlying < other.underlying { 
+                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+            } else {
+                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+            }  
         }
         res
     }
+}
+
+impl TwosComplement for I8 {
+    fn twos_complement(self) -> Self {
+        if self.underlying >= Self::indent() {
+            return self;
+        }
+        let one = I8::from(1u8);
+        let res = I8::from(!self.underlying) - one;
+        res
+    } 
 }

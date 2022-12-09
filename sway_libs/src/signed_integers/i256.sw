@@ -58,7 +58,7 @@ impl I256 {
     }
 
     /// Helper function to get a signed number from with an underlying
-    fn from_uint(underlying: U256) -> Self {
+    pub fn from_uint(underlying: U256) -> Self {
         Self { underlying }
     }
 
@@ -95,7 +95,20 @@ impl core::ops::Add for I256 {
     /// Add a I256 to a I256. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
-        Self::from(self.underlying - Self::indent() + other.underlying)
+        let mut res = Self::new();
+        if (self.underlying > Self::indent() || self.underlying == Self::indent())
+        {
+            res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 31 to avoid double move
+        } else if self.underlying < Self::indent()
+            && other.underlying < Self::indent()
+        {
+            res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+        } else if self.underlying < Self::indent()
+            && (other.underlying > Self::indent() || other.underlying == Self::indent())
+        {
+            res = Self::from_uint(other.underlying - Self::indent() + self.underlying);
+        }
+        res
     }
 }
 
@@ -108,20 +121,20 @@ impl core::ops::Divide for I256 {
             || self.underlying == Self::indent())
             && divisor.underlying > Self::indent()
         {
-            res = Self::from((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && divisor.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
         } else if (self.underlying > Self::indent()
             || self.underlying == Self::indent())
             && divisor.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
         } else if self.underlying < Self::indent()
             && divisor.underlying > Self::indent()
         {
-            res = Self::from(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
+            res = Self::from_uint(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
         res
     }
@@ -136,21 +149,21 @@ impl core::ops::Multiply for I256 {
             && (other.underlying > Self::indent()
             || other.underlying == Self::indent())
         {
-            res = Self::from((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
         } else if (self.underlying > Self::indent()
             || self.underlying == Self::indent())
             && other.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
         } else if self.underlying < Self::indent()
             && (other.underlying > Self::indent()
             || other.underlying == Self::indent())
         {
-            res = Self::from(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
+            res = Self::from_uint(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
         }
         res
     }
@@ -159,13 +172,44 @@ impl core::ops::Multiply for I256 {
 impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
+        // std::logging::log(self.underlying.a);
+        // std::logging::log(self.underlying.b);
+        // std::logging::log(self.underlying.c);
+        // std::logging::log(self.underlying.d);
+
+        // std::logging::log(other.underlying.a);
+        // std::logging::log(other.underlying.b);
+        // std::logging::log(other.underlying.c);
+        // std::logging::log(other.underlying.d);
+
+
         let mut res = Self::new();
-        if self > other {
-            // add 1 << 63 to avoid loosing the move
-            res = Self::from(self.underlying - other.underlying + Self::indent());
-        } else {
-            // subtract from 1 << 63 as we are getting a negative value
-            res = Self::from(Self::indent() - (other.underlying - self.underlying));
+        if (self.underlying > Self::indent() || self.underlying == Self::indent()) && (other.underlying > Self::indent() || other.underlying == Self::indent())
+        {
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+            } else {
+
+                let q = other.underlying - Self::indent();
+
+                std::logging::log(self.underlying.a);
+                std::logging::log(self.underlying.b);
+                std::logging::log(self.underlying.c);
+                std::logging::log(self.underlying.d);
+
+
+                res = Self::from_uint(self.underlying - q);
+            }            
+        } else if (self.underlying > Self::indent() || self.underlying == Self::indent()) && other.underlying < Self::indent() {
+            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
+        } else if self.underlying < Self::indent() && (other.underlying > Self::indent() || other.underlying == Self::indent()) {
+            res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() {
+            if self.underlying < other.underlying { 
+                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+            } else {
+                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+            }  
         }
         res
     }
