@@ -16,7 +16,7 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -52,7 +52,7 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -94,7 +94,7 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -125,10 +125,14 @@ impl<K, V> StorageMapVec<K, V> {
 
     /// Returns the length of the vector
     ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    ///
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -151,10 +155,14 @@ impl<K, V> StorageMapVec<K, V> {
 
     /// Checks whether the len is 0 or not
     ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    ///
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -182,10 +190,14 @@ impl<K, V> StorageMapVec<K, V> {
 
     /// Sets the len to 0
     ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    ///
     /// ### Examples
     ///
     /// ```sway
-    /// use std::storage::StorageMapVec;
+    /// use sway_libs::storagemapvec::StorageMapVec;
     ///
     /// storage {
     ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
@@ -206,6 +218,31 @@ impl<K, V> StorageMapVec<K, V> {
         store(k, 0);
     }
 
+    /// Returns a Vec of all the items in the StorageVec
+    ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    ///
+    /// ### Examples
+    ///
+    /// ```sway
+    /// use sway_libs::storagemapvec::StorageMapVec;
+    ///
+    /// storage {
+    ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
+    /// }
+    ///
+    /// fn foo() {
+    ///     let five = 5_u64;
+    ///     storage.map_vec.push(five, true);
+    ///     storage.map_vec.push(five, false);
+    ///     let converted_vec = storage.map_vec.to_vec(five);
+    ///     assert(2 == converted_vec.len);
+    ///     assert(true == converted_vec.get(0));
+    ///     assert(false == converted_vec.get(1));
+    /// }
+    /// ```
     #[storage(read)]
     pub fn to_vec(self, key: K) -> Vec<V> {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
