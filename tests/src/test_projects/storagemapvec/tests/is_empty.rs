@@ -1,13 +1,6 @@
 use super::utils::{
-    abi_calls::{
-        push,
-        clear,
-        len,
-        is_empty,
-    }, 
-    test_helpers::{
-      setup,  
-    },    
+    abi_calls::{clear, is_empty, len, push},
+    test_helpers::setup,
 };
 
 #[tokio::test]
@@ -18,9 +11,9 @@ pub async fn can_get_is_empty() {
     push(&instance, 1, 100).await;
     push(&instance, 1, 150).await;
 
-    push(&instance, 2, 50).await;
-    push(&instance, 2, 100).await;
-    push(&instance, 2, 150).await;
+    push(&instance, 2, 200).await;
+    push(&instance, 2, 250).await;
+    push(&instance, 2, 300).await;
 
     assert_eq!(3, len(&instance, 1).await);
     assert_eq!(false, is_empty(&instance, 1).await);

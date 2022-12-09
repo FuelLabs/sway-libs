@@ -18,7 +18,13 @@ pub mod abi_calls {
     }
 
     pub async fn get(instance: &TestContract, key: u64, index: u64) -> Option<u64> {
-        instance.methods().get(key, index).call().await.unwrap().value
+        instance
+            .methods()
+            .get(key, index)
+            .call()
+            .await
+            .unwrap()
+            .value
     }
 
     pub async fn len(instance: &TestContract, key: u64) -> u64 {
@@ -28,7 +34,7 @@ pub mod abi_calls {
     pub async fn is_empty(instance: &TestContract, key: u64) -> bool {
         instance.methods().is_empty(key).call().await.unwrap().value
     }
-    
+
     pub async fn clear(instance: &TestContract, key: u64) {
         instance.methods().clear(key).call().await.unwrap();
     }

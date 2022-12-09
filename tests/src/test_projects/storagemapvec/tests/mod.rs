@@ -1,8 +1,8 @@
 mod utils;
 
-mod push;
-mod pop;
-mod get;
-mod len;
-mod is_empty;
 mod clear;
+mod get;
+mod is_empty;
+mod len;
+mod pop;
+mod push;
