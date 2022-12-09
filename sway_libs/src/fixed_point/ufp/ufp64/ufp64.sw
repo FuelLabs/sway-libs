@@ -1,7 +1,9 @@
 library ufp64;
-//! A wrapper around u64 type for a library for Sway for mathematical functions operating with signed 32.32-bit fixed point numbers.
-use std::math::{Exponent, Exponentiate, Root};
-use std::u128::U128;
+// A wrapper library around the u64 type for mathematical functions operating with signed 64-bit fixed point numbers.
+use std::{
+    math::{Exponent, Exponentiate, Root},
+    u128::U128
+};
 
 pub struct UFP64 {
     value: u64,
@@ -24,7 +26,7 @@ impl UFP64 {
         64
     }
 
-    /// Convinience function to know the denominator
+    /// Convenience function to know the denominator.
     pub fn denominator() -> u64 {
         1 << 32
     }
@@ -199,7 +201,7 @@ impl UFP64 {
         let diff_self_floor = self - floor;
         let diff_ceil_self = ceil - self;
 
-        // check if we are nearer to the floor or to the ceiling
+        // Check if we are closer to the floor or to the ceiling
         if diff_self_floor < diff_ceil_self {
             return floor;
         } else {
@@ -212,7 +214,7 @@ impl Root for UFP64 {
     /// Sqaure root for UFP64
     fn sqrt(self) -> Self {
         let nominator_root = self.value.sqrt();
-        // Need to multiple over 2 ^ 16, as the sqare root of the denominator 
+         // Need to multiply over 2 ^ 16, as the square root of the denominator 
         // is also taken and we need to ensure that the denominator is constant
         let nominator = nominator_root << 16;
         Self {
@@ -226,15 +228,15 @@ impl Exponent for UFP64 {
     fn exp(exponent: Self) -> Self {
         let one = UFP64::from_uint(1);
 
-        //coefficients in the Taylor series up to the seventh power
+        // Coefficients in the Taylor series up to the seventh power
         let p2 = UFP64::from(2147483648); // p2 == 1 / 2!
         let p3 = UFP64::from(715827882); // p3 == 1 / 3!
         let p4 = UFP64::from(178956970); // p4 == 1 / 4!
         let p5 = UFP64::from(35791394); // p5 == 1 / 5!
         let p6 = UFP64::from(5965232); // p6 == 1 / 6!
         let p7 = UFP64::from(852176); // p7 == 1 / 7!
-        // common technique to counter loosing sugnifucant numbers in usual approximation
-        // Taylor series approximation of exponantiation function minus 1. The subtraction is done to deal with accuracy issues
+        // Common technique to counter losing significant numbers in usual approximation
+        // Taylor series approximation of exponentiation function minus 1. The subtraction is done to deal with accuracy issues
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
         let res = res_minus_1 + one;
         res
