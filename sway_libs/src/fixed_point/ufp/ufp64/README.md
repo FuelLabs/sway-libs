@@ -10,7 +10,7 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the `UFP64` type it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [README.md](../../../README.md).
+In order to use the `UFP64` type it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [README.md](../../../../../README.md).
 
 ```rust
 use sway_libs::ufp64::UFP64;
