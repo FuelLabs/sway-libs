@@ -29,3 +29,15 @@ pub async fn can_get() {
     ];
     assert_eq!([200, 250, 300], second_vec);
 }
+
+#[tokio::test]
+#[should_panic]
+pub async fn cannot_get_out_of_bounds() {
+    let instance = setup().await;
+
+    push(&instance, 1, 50).await;
+    push(&instance, 1, 100).await;
+    push(&instance, 1, 150).await;
+
+    get(&instance, 1, 3).await.unwrap();
+}

@@ -29,3 +29,11 @@ pub async fn can_pop() {
     ];
     assert_eq!([300, 250, 200], second_vec);
 }
+
+#[tokio::test]
+#[should_panic]
+pub async fn cannot_pop_empty() {
+    let instance = setup().await;
+
+    pop(&instance, 1).await.unwrap();
+}

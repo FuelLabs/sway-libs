@@ -27,3 +27,4 @@ pub async fn can_get_is_empty() {
     assert_eq!(0, len(&instance, 2).await);
     assert_eq!(true, is_empty(&instance, 2).await);
 }
+
