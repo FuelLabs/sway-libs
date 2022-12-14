@@ -110,7 +110,7 @@ pub fn mint(amount: u64, to: Identity) {
     // Mint as many tokens as the sender has asked for
     let mut index = tokens_minted;
     while index < total_mint {
-        NFTCore::mint(to, index);
+        let _ = NFTCore::mint(to, index);
         index += 1;
     }
 }
