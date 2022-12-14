@@ -175,5 +175,5 @@ pub fn tokens_minted() -> u64 {
 pub fn transfer(to: Identity, token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().transfer(to);
+    let _ = nft.unwrap().transfer(to);
 }
