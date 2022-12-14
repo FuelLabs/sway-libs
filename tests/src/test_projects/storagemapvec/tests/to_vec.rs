@@ -5,7 +5,7 @@ use super::utils::{
 
 // TODO: 
 // This test uses a function called "to_vec_as_tup" which returns the first 3 elements of the vector as a tuple. 
-// This is a temporary solution until we can return a vector from a contract call.
+// This is a temporary solution until we can return a vector from a contract call. (see https://github.com/FuelLabs/sway/issues/2900)
 #[tokio::test]
 pub async fn can_convert_to_vec() {
     let instance = setup().await;
