@@ -38,6 +38,16 @@ pub mod abi_calls {
     pub async fn clear(instance: &TestContract, key: u64) {
         instance.methods().clear(key).call().await.unwrap();
     }
+
+    pub async fn to_vec_as_tup(instance: &TestContract, key: u64) -> (u64, u64, u64) {
+        instance
+            .methods()
+            .to_vec_as_tup(key)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
 }
 
 pub mod test_helpers {
