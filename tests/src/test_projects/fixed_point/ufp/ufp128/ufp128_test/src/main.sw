@@ -1,6 +1,6 @@
 script;
 
-use std::assert::assert;
+use std::u128::U128;
 use sway_libs::ufp128::UFP128;
 
 fn main() -> bool {
@@ -21,42 +21,40 @@ fn main() -> bool {
 
     let ufp_128_169 = UFP128::from((169, 0));
     let ufp_128_13 = UFP128::from((13, 0));
-    res = ufp_128_169 - ufp_128_13; 
+    res = ufp_128_169 - ufp_128_13;
     assert(UFP128::from((156, 0)) == res);
 
     // recip
     let mut value = UFP128 {
-        value: 1 << 64 + 3,
+        value: U128::from((1, 3)),
     };
     res = UFP128::recip(value);
     assert(UFP128 {
-        value: 536870912, 
-    }
-    == res);
+        value: U128::from((0, 18446744073709551613)),
+    } == res);
 
     // trunc
-    value = UFP128 {
-        value: (1 << 64) + 3, 
+    let mut value = UFP128 {
+        value: U128::from((1, 3)),
     };
     res = value.trunc();
     assert(UFP128::from_uint(1) == res);
 
     // floor
     value = UFP128 {
-        value: (1 << 64) + 3, 
+        value: U128::from((1, 3)),
     };
     res = value.floor();
     assert(UFP128::from_uint(1) == res);
 
     // fract
     value = UFP128 {
-        value: (1 << 64) + 3, 
+        value: U128::from((1, 3)),
     };
     res = value.fract();
     assert(UFP128 {
-        value: 3, 
-    }
-    == res);
+        value: U128::from((0, 3)),
+    } == res);
 
     value = UFP128::from_uint(1);
     res = value.fract();
@@ -64,8 +62,8 @@ fn main() -> bool {
 
     // ceil
     value = UFP128 {
-            value: (1 << 64) + 3,
-        };
+        value: U128::from((1, 3)),
+    };
     res = value.ceil();
     assert(UFP128::from_uint(2) == res);
 
@@ -75,14 +73,14 @@ fn main() -> bool {
 
     // round
     value = UFP128 {
-            value: (1 << 64) + 3,
-        };
+        value: U128::from((1, 3)),
+    };
     res = value.round();
     assert(UFP128::from_uint(1) == res);
 
     value = UFP128 {
-            value: (1 << 64) + (1 << 63) + 1,
-        };
+        value: U128::from((1, (1 << 63) + 1)),
+    };
     res = value.round();
     assert(UFP128::from_uint(2) == res);
 

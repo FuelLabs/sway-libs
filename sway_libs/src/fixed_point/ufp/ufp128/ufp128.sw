@@ -49,6 +49,15 @@ impl UFP128 {
     }
 }
 
+impl UFP128 {
+    /// Creates UFP64 that correponds to a unsigned integer
+    pub fn from_uint(uint: u64) -> Self {
+        Self {
+            value: U128::from((uint, 0)),
+        }
+    }
+}
+
 impl core::ops::Eq for UFP128 {
     fn eq(self, other: Self) -> bool {
         self.value == other.value
@@ -131,11 +140,9 @@ impl core::ops::Divide for UFP128 {
 
 impl UFP128 {
     pub fn recip(number: UFP128) -> Self {
-        let one = U128::from((0, 1));
+        let one = UFP128::from((1, 0));
 
-        Self {
-            value: one / number.value,
-        }
+        one / number
     }
 
     pub fn floor(self) -> Self {
