@@ -32,7 +32,7 @@ mod revert {
     use super::*;
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(18446744073709486080)")]
+    #[should_panic(expected = "TokenDoesNotExist")]
     async fn when_token_does_not_exist() {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
@@ -40,7 +40,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(18446744073709486080)")]
+    #[should_panic(expected = "SenderNotOwner")]
     async fn when_sender_not_owner() {
         let (_deploy_wallet, owner1, owner2) = setup().await;
 
