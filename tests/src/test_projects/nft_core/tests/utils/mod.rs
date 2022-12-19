@@ -1,4 +1,4 @@
-use fuels::{contract::contract::CallResponse, prelude::*};
+use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
 abigen!(
@@ -19,7 +19,7 @@ pub mod abi_calls {
         approved: Option<Identity>,
         contract: &NftCore,
         token_id: u64,
-    ) -> CallResponse<()> {
+    ) -> FuelCallResponse<()> {
         contract
             .methods()
             .approve(approved, token_id)
@@ -62,7 +62,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn mint(amount: u64, contract: &NftCore, owner: Identity) -> CallResponse<()> {
+    pub async fn mint(amount: u64, contract: &NftCore, owner: Identity) -> FuelCallResponse<()> {
         contract.methods().mint(amount, owner).call().await.unwrap()
     }
 
@@ -80,7 +80,7 @@ pub mod abi_calls {
         approve: bool,
         contract: &NftCore,
         operator: Identity,
-    ) -> CallResponse<()> {
+    ) -> FuelCallResponse<()> {
         contract
             .methods()
             .set_approval_for_all(approve, operator)
@@ -99,7 +99,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn transfer(contract: &NftCore, to: Identity, token_id: u64) -> CallResponse<()> {
+    pub async fn transfer(contract: &NftCore, to: Identity, token_id: u64) -> FuelCallResponse<()> {
         contract
             .methods()
             .transfer(to, token_id)
@@ -119,6 +119,7 @@ pub mod test_helpers {
         let coin_amount = 1000000;
         let mut wallets = launch_custom_provider_and_get_wallets(
             WalletsConfig::new(Some(num_wallets), Some(coins_per_wallet), Some(coin_amount)),
+            None,
             None,
         )
         .await;

@@ -52,7 +52,7 @@ impl I8 {
     }
 
     /// Helper function to get a signed number from with an underlying
-    fn from_uint(underlying: u8) -> Self {
+    pub fn from_uint(underlying: u8) -> Self {
         Self { underlying }
     }
 
