@@ -53,7 +53,7 @@ impl I16 {
     }
 
     /// Helper function to get a positive value from an unsigned number
-    fn from_uint(underlying: u16) -> Self {
+    pub fn from_uint(underlying: u16) -> Self {
         Self { underlying }
     }
 
