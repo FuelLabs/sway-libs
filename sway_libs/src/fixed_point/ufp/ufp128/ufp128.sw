@@ -87,7 +87,7 @@ impl core::ops::Subtract for UFP128 {
     /// Subtract a UFP128 from a UFP128. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         // If trying to subtract a larger number, panic.
-        assert((self.value >= other.value));
+        assert(!(self.value < other.value));
 
         UFP128 {
             value: self.value - other.value,
