@@ -87,7 +87,7 @@ impl core::ops::Subtract for UFP128 {
     /// Subtract a UFP128 from a UFP128. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         // If trying to subtract a larger number, panic.
-        assert(!(self.value < other.value));
+        assert((self.value >= other.value));
 
         UFP128 {
             value: self.value - other.value,
@@ -96,7 +96,7 @@ impl core::ops::Subtract for UFP128 {
 }
 
 impl core::ops::Multiply for UFP128 {
-    /// Multiply a UFP128 with a UFP128. Panics of overflow.
+    /// Multiply a UFP128 with a UFP128. Panics on overflow.
     fn multiply(self, other: Self) -> Self {
         let self_u256 = U256::from((0, 0, self.value.upper, self.value.lower));
         let other_u256 = U256::from((0, 0, other.value.upper, other.value.lower));
@@ -183,9 +183,9 @@ impl UFP128 {
 
 impl Root for UFP128 {
     fn sqrt(self) -> Self {
-        let nominator_root = self.value.sqrt();
-        let nominator = nominator_root * U128::from((0, 2 << 32));
-        Self::from((nominator.upper, nominator.lower))
+        let numerator_root = self.value.sqrt();
+        let numerator = numerator_root * U128::from((0, 2 << 32));
+        Self::from((numerator.upper, numerator.lower))
     }
 }
 
@@ -225,7 +225,7 @@ impl Exponent for UFP128 {
         let p6 = one / UFP128::from((720, 0));
         let p7 = one / UFP128::from((5040, 0));
 
-        // common technique to counter loosing sugnifucant numbers in usual approximation
+        // common technique to counter losing sugnifucant numbers in usual approximation
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
         let res = res_minus_1 + one;
         let res = one;
