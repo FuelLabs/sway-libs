@@ -5,6 +5,12 @@
 
 Sway Playground enables developers to build simple sway contracts in the browser with no installation of tools. This tool is inspired by the Ethereum remix tool or the Rust Playground.
 
+## How it Works
+
+Sway Playground has a simple multi-threaded Hyper backend server which creates a temp project per compile request, builds the project, removes the temp files and returns the output.
+
+The frontend is a simple static frontend using the Ace editor and ASCI_UP console logging.
+
 ## Sway Documentation
 
 For user documentation, including installing release builds, see the Sway Book: <https://fuellabs.github.io/sway/latest/>.
@@ -45,11 +51,15 @@ cargo run --bin sway-playground
 
 ### Running the Sway Compiler Server
 
+The server is a simple Hyper server for now.
+
 ```sh
 cargo run
 ```
 
 ### Running the Frontend
+
+The frontend is just a simple static frontend and can be hosted anywhere.
 
 ```sh
 cd frontend
@@ -66,9 +76,10 @@ Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/ref
 
 ## Todo
 
-- Server side SSL support
+- Server side SSL support.
+- Ace Editor support for Sway.
 - Consider using a server which builds on Hyper (which may be too low level).
-- React based UI for easier maintenance and feature expansion
+- React based UI for easier maintenance and feature expansion.
 - Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
 - Better CI to always make available the latest stable version of Sway.
 - Hosting the frontend at a domain (can be done once SSL support is done). 
