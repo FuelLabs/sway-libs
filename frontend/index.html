@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <title>Sway Playground</title>
+    <link rel="icon" href="images/icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5b70d5">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+
+    <style type="text/css" media="screen">
+        body a,
+        span,
+        tr,
+        td {
+            white-space: pre;
+        }
+
+        body {
+            padding: 15px;
+            margin: 0px;
+            background: #F1F1F1;
+        }
+
+        #editor {
+            height: 75%;
+            border: 4px solid lightgrey;
+            border-radius: 5px;
+        }
+
+        #result {
+            font-size: 14px;
+            white-space: pre;
+            overflow: hidden;
+            tab-size: 4;
+            background: #f9ffff;
+            border: 4px solid lightgrey;
+            min-height: 50px;
+            padding: 15px;
+        }
+
+        #compile {
+            display: flex;
+            align-items: center;
+            background: rgb(156, 53, 53);
+            padding: 15px;
+            color: #FFF;
+            font-weight: bold;
+            border: none;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #compile svg {
+            margin-left: 8px;
+            margin-bottom: 1px;
+        }
+    </style>
+
+    <script src="ansi_up.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js" type="text/javascript"
+        charset="utf-8"></script>
+
+    <script type="text/javascript">
+
+        window.addEventListener('load', function () {
+
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/chrome");
+            editor.session.setMode("ace/mode/rust");
+
+            document.getElementById('editor').style.fontSize = '14px';
+
+            function compile() {
+                let code = editor.getValue();
+
+                const server_uri = 'https://api.sway-playground.org';
+                const request = new Request(server_uri, { method: 'POST', body: code });
+
+                fetch(request)
+                    .then((response) => {
+                        if (response.status === 200) {
+                            return response.json();
+                        } else {
+                            result = 'Something went wrong on API server!';
+                        }
+                    })
+                    .then((response) => {
+                        const error = response.error;
+                        let result = '';
+
+                        if (error.length) {
+                            var ansi_up = new AnsiUp;
+                            var html = ansi_up.ansi_to_html(error);
+                            result = html;
+                        } else {
+                            result = `
+<b>Bytecode</b>:
+0x${response.bytecode}
+
+<b>ABI</b>
+${response.abi}`;
+                        }
+
+                        document.getElementById('result').innerHTML = result;
+                    }).catch((error) => {
+                        result = error;
+                    });
+            }
+
+            document.getElementById('compile').addEventListener('click', compile);
+        });
+
+    </script>
+
+    <div>
+        <button id="compile">
+            COMPILE <svg style="fill: white;" height="14" viewBox="8 4 10 16" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+    </div>
+
+    <div id="editor">contract;
+
+abi TestContract {
+    #[storage(write)]
+    fn initialize_counter(value: u64) -> u64;
+
+    #[storage(read, write)]
+    fn increment_counter(amount: u64) -> u64;
+}
+
+storage {
+    counter: u64 = 0,
+}
+
+impl TestContract for Contract {
+    #[storage(write)]
+    fn initialize_counter(value: u64) -> u64 {
+        storage.counter = value;
+        value
+    }
+
+    #[storage(read, write)]
+    fn increment_counter(amount: u64) -> u64 {
+        let incremented = storage.counter + amount;
+        storage.counter = incremented;
+        incremented
+    }
+}</div>
+
+    <pre id="result"></pre>
+
+</body>
+
+</html>
