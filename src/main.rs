@@ -10,6 +10,7 @@ use std::io::prelude::*;
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::{convert::Infallible, net::SocketAddr};
+use regex::Regex;
 
 // Copy the template project to a new project.
 fn create_project() -> Result<std::string::String, fs_extra::error::Error> {
@@ -77,17 +78,19 @@ fn read_file_contents(file_name: String) -> Vec<u8> {
 }
 
 // This is a hack and should be made reletive or removed.
-fn clean_error_content(project_name: String, content: String) -> std::string::String {
-    let str_to_remove = format!(
-        "/Users/nick/github2/sway-test/projects/{}/src/",
-        project_name
-    );
+fn clean_error_content(content: String) -> std::string::String {
+    let path_pattern = Regex::new(r"(/).*(/main.sw)").unwrap();
 
-    content.replace(&str_to_remove, "")
+    path_pattern.replace_all(&content, "/main.sw").to_string()
 }
 
 // Build and destroy a project.
 fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
+    // Check if any contract has been submitted.
+    if contract.len() == 0 {
+        return ("".to_string(), "".to_string(), "No contract.".to_string());
+    }
+
     // Create a new project.
     let project_name = create_project().unwrap();
 
@@ -131,8 +134,8 @@ fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
 
         // Return the abi, bin and empty error message.
         return (
-            clean_error_content(project_name.to_owned(), String::from(abi)),
-            clean_error_content(project_name.to_owned(), encode(k)),
+            clean_error_content(String::from(abi)),
+            clean_error_content(encode(k)),
             String::from(""),
         );
     } else {
@@ -152,31 +155,48 @@ fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
         return (
             String::from(""),
             String::from(""),
-            clean_error_content(project_name.to_owned(), String::from(trunc)),
+            clean_error_content(String::from(trunc)),
         );
     }
 }
 
 // Create the Hyper handler for the compile request.
 async fn handle(_req: Request<Body>) -> Result<Response<Body>, Infallible> {
-    // Get the body data as a vector.
-    let my_vector: Vec<u8> = _req.into_body().data().await.unwrap().unwrap().to_vec();
-
-    // Convert the body data to a string.
-    let my_string = String::from_utf8(my_vector).unwrap();
-
-    // Build and destroy a project, return the relevant abi, bytecode and error.
-    let (abi, bytecode, error) = build_and_destroy_project(String::from(my_string).as_bytes());
-
     // Build a response body message.
-    let body = Body::from(
+    let mut body = Body::from(
         json!({
-            "abi": abi,
-            "bytecode": bytecode,
-            "error": error
+            "abi": "",
+            "bytecode": "",
+            "error": "No contract."
         })
         .to_string(),
     );
+
+    // Get the body data as a vector.
+    match _req.into_body().data().await {
+        None => {},
+        Some(result) => {
+            match result {
+                Err(hyper::Error { .. }) => {},
+                Ok(value) => {
+                    // Convert the body data to a string.
+                    let my_string = String::from_utf8(value.to_vec()).unwrap();
+        
+                    // Build and destroy a project, return the relevant abi, bytecode and error.
+                    let (abi, bytecode, error) = build_and_destroy_project(String::from(my_string).as_bytes());
+        
+                    body = Body::from(
+                        json!({
+                            "abi": abi,
+                            "bytecode": bytecode,
+                            "error": error
+                        })
+                        .to_string(),
+                    );
+                }
+            }
+        } 
+    }
 
     // Return the response built with CORS headers set.
     let response = Response::builder()

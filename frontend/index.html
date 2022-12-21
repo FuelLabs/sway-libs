@@ -81,7 +81,8 @@
             function compile() {
                 let code = editor.getValue();
 
-                const server_uri = 'https://api.sway-playground.org';
+                // const server_uri = 'https://api.sway-playground.org';
+                const server_uri = 'http://localhost:80';
                 const request = new Request(server_uri, { method: 'POST', body: code });
 
                 fetch(request)
