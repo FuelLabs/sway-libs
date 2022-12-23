@@ -1,4 +1,6 @@
-use fuels::prelude::{script::run_compiled_script, TxParameters};
+use fuels::prelude::*;
+
+script_abigen!(Testi8, "test_projects/signed_i8/out/debug/i8_test-abi.json");
 
 mod success {
 
@@ -6,8 +8,11 @@ mod success {
 
     #[tokio::test]
     async fn runs_i8_test_script() {
-        let path_to_bin = "../out/debug/i8_test.bin";
+        let path_to_bin = "test_projects/signed_i8/out/debug/i8_test.bin";
+        let wallet = launch_provider_and_get_wallet().await;
 
-        let _result = run_compiled_script(path_to_bin, TxParameters::default(), None).await;
+        let instance = Testi8::new(wallet, path_to_bin);
+
+        let _result = instance.main().call().await;
     }
 }
