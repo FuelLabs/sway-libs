@@ -1,4 +1,9 @@
-use fuels::prelude::{script::run_compiled_script, TxParameters};
+use fuels::prelude::*;
+
+script_abigen!(
+    TestUfp64Exp,
+    "test_projects/ufp64_exp_test/out/debug/ufp64_exp_test-abi.json"
+);
 
 mod success {
 
@@ -6,8 +11,11 @@ mod success {
 
     #[tokio::test]
     async fn runs_ufp64_exp_test_script() {
-        let path_to_bin = "../out/debug/ufp64_exp_test.bin";
+        let path_to_bin = "test_projects/ufp64_exp_test/out/debug/ufp64_exp_test.bin";
+        let wallet = launch_provider_and_get_wallet().await;
 
-        let _result = run_compiled_script(path_to_bin, TxParameters::default(), None).await;
+        let instance = TestUfp64Exp::new(wallet, path_to_bin);
+
+        let _result = instance.main().call().await;
     }
 }

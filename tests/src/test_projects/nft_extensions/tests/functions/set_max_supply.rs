@@ -25,7 +25,7 @@ mod revert {
     use super::*;
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(18446744073709486080)")]
+    #[should_panic(expected = "CannotReinitializeSupply")]
     async fn when_max_supply_already_set() {
         let (_deploy_wallet, owner1, _owner2) = setup().await;
 
