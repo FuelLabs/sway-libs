@@ -45,7 +45,7 @@
             padding: 15px;
         }
 
-        #compile {
+        .nav_button {
             display: flex;
             align-items: center;
             background: rgb(156, 53, 53);
@@ -58,9 +58,29 @@
             cursor: pointer;
         }
 
-        #compile svg {
+        .nav_button svg {
             margin-left: 8px;
             margin-bottom: 1px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .nav_right {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .nav_right button {
+            font-weight: normal;
+            margin-left: 10px;
+            background-color: #FFF;
+            color: black;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
         }
     </style>
 
@@ -70,13 +90,59 @@
 
     <script type="text/javascript">
 
+        function save_contract(contract) {
+            localStorage.setItem('playground_contract', contract);
+        }
+
+        function load_contract() {
+            return localStorage.getItem('playground_contract') || "";
+        }
+
         window.addEventListener('load', function () {
 
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/chrome");
             editor.session.setMode("ace/mode/rust");
-
             document.getElementById('editor').style.fontSize = '14px';
+
+            const default_contract = `contract;
+
+abi TestContract {
+    #[storage(write)]
+    fn initialize_counter(value: u64) -> u64;
+
+    #[storage(read, write)]
+    fn increment_counter(amount: u64) -> u64;
+}
+
+storage {
+    counter: u64 = 0,
+}
+
+impl TestContract for Contract {
+    #[storage(write)]
+    fn initialize_counter(value: u64) -> u64 {
+        storage.counter = value;
+        value
+    }
+
+    #[storage(read, write)]
+    fn increment_counter(amount: u64) -> u64 {
+        let incremented = storage.counter + amount;
+        storage.counter = incremented;
+        incremented
+    }
+}`;
+
+            const loaded_contract = load_contract().length == 0
+                ? default_contract
+                : load_contract();
+
+            editor.getSession().on('change', function() {
+                save_contract(editor.getValue());
+            });
+
+            editor.setValue(loaded_contract, 1);
 
             function compile() {
                 let code = editor.getValue();
@@ -117,44 +183,32 @@ ${response.abi}`;
             }
 
             document.getElementById('compile').addEventListener('click', compile);
+
+            document.getElementById('reset').addEventListener('click', () => {
+                editor.setValue(default_contract, 1);
+            });
         });
 
     </script>
 
-    <div>
-        <button id="compile">
+    <div class="nav">
+        <button id="compile" class="nav_button">
             COMPILE <svg style="fill: white;" height="14" viewBox="8 4 10 16" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"></path></svg>
         </button>
+
+        <div class="nav_right">
+            <!--
+                <button id="share" class="nav_button">
+                    SHARE
+                </button>
+            -->
+            <button id="reset" class="nav_button">
+                RESET
+            </button>
+        </div>
     </div>
 
-    <div id="editor">contract;
-
-abi TestContract {
-    #[storage(write)]
-    fn initialize_counter(value: u64) -> u64;
-
-    #[storage(read, write)]
-    fn increment_counter(amount: u64) -> u64;
-}
-
-storage {
-    counter: u64 = 0,
-}
-
-impl TestContract for Contract {
-    #[storage(write)]
-    fn initialize_counter(value: u64) -> u64 {
-        storage.counter = value;
-        value
-    }
-
-    #[storage(read, write)]
-    fn increment_counter(amount: u64) -> u64 {
-        let incremented = storage.counter + amount;
-        storage.counter = incremented;
-        incremented
-    }
-}</div>
+    <div id="editor"></div>
 
     <pre id="result"></pre>
 
