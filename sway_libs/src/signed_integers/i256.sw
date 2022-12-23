@@ -58,7 +58,7 @@ impl I256 {
     }
 
     /// Helper function to get a signed number from with an underlying
-    fn from_uint(underlying: U256) -> Self {
+    pub fn from_uint(underlying: U256) -> Self {
         Self { underlying }
     }
 

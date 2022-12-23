@@ -1,4 +1,4 @@
-use fuels::{contract::contract::CallResponse, prelude::*};
+use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
 abigen!(
@@ -29,7 +29,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn burn(contract: &NftExtensions, token_id: u64) -> CallResponse<()> {
+    pub async fn burn(contract: &NftExtensions, token_id: u64) -> FuelCallResponse<()> {
         contract.methods().burn(token_id).call().await.unwrap()
     }
 
@@ -47,7 +47,11 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn mint(amount: u64, contract: &NftExtensions, owner: Identity) -> CallResponse<()> {
+    pub async fn mint(
+        amount: u64,
+        contract: &NftExtensions,
+        owner: Identity,
+    ) -> FuelCallResponse<()> {
         contract.methods().mint(amount, owner).call().await.unwrap()
     }
 
@@ -61,11 +65,17 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn set_admin(admin: Option<Identity>, contract: &NftExtensions) -> CallResponse<()> {
+    pub async fn set_admin(
+        admin: Option<Identity>,
+        contract: &NftExtensions,
+    ) -> FuelCallResponse<()> {
         contract.methods().set_admin(admin).call().await.unwrap()
     }
 
-    pub async fn set_max_supply(contract: &NftExtensions, supply: Option<u64>) -> CallResponse<()> {
+    pub async fn set_max_supply(
+        contract: &NftExtensions,
+        supply: Option<u64>,
+    ) -> FuelCallResponse<()> {
         contract
             .methods()
             .set_max_supply(supply)
@@ -78,7 +88,7 @@ pub mod abi_calls {
         contract: &NftExtensions,
         metadata: Option<NFTMetadata>,
         token_id: u64,
-    ) -> CallResponse<()> {
+    ) -> FuelCallResponse<()> {
         contract
             .methods()
             .set_token_metadata(metadata, token_id)
@@ -108,6 +118,7 @@ pub mod test_helpers {
         let coin_amount = 1000000;
         let mut wallets = launch_custom_provider_and_get_wallets(
             WalletsConfig::new(Some(num_wallets), Some(coins_per_wallet), Some(coin_amount)),
+            None,
             None,
         )
         .await;
