@@ -174,16 +174,6 @@ impl core::ops::Multiply for I256 {
 impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
-
-
-        // std::logging::log(self.underlying.a);
-        // std::logging::log(self.underlying.b);
-        // std::logging::log(self.underlying.c);
-        // std::logging::log(self.underlying.d);
-        // std::logging::log(other.underlying.a);
-        // std::logging::log(other.underlying.b);
-        // std::logging::log(other.underlying.c);
-        // std::logging::log(other.underlying.d);
         let mut res = Self::new();
         if (self.underlying > Self::indent()
             || self.underlying == Self::indent())
