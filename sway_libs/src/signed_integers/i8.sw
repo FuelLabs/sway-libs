@@ -90,8 +90,7 @@ impl core::ops::Add for I8 {
     /// Add a I8 to a I8. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 7 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
@@ -161,23 +160,30 @@ impl core::ops::Subtract for I8 {
     /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent() && other.underlying >= Self::indent()
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-            }            
-        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() {
+            }
+        } else if self.underlying >= Self::indent()
+            && other.underlying < Self::indent()
+        {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() {
+        } else if self.underlying < Self::indent()
+            && other.underlying >= Self::indent()
+        {
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent() && other.underlying < Self::indent() {
-            if self.underlying < other.underlying { 
+        } else if self.underlying < Self::indent()
+            && other.underlying < Self::indent()
+        {
+            if self.underlying < other.underlying {
                 res = Self::from_uint(other.underlying - self.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying + other.underlying - Self::indent());
-            }  
+            }
         }
         res
     }
@@ -191,5 +197,5 @@ impl TwosComplement for I8 {
         let one = I8::from(1u8);
         let res = I8::from(!self.underlying) - one;
         res
-    } 
+    }
 }

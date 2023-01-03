@@ -90,8 +90,7 @@ impl core::ops::Add for I16 {
     /// Add a I16 to a I16. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 15 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
@@ -161,23 +160,30 @@ impl core::ops::Subtract for I16 {
     /// Subtract a I16 from a I16. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent() && other.underlying >= Self::indent()
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-            }            
-        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() {
+            }
+        } else if self.underlying >= Self::indent()
+            && other.underlying < Self::indent()
+        {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() {
+        } else if self.underlying < Self::indent()
+            && other.underlying >= Self::indent()
+        {
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent() && other.underlying < Self::indent() {
-            if self.underlying < other.underlying { 
+        } else if self.underlying < Self::indent()
+            && other.underlying < Self::indent()
+        {
+            if self.underlying < other.underlying {
                 res = Self::from_uint(other.underlying - self.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying + other.underlying - Self::indent());
-            }  
+            }
         }
         res
     }
