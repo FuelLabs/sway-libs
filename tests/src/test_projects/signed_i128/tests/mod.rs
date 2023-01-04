@@ -18,8 +18,6 @@ mod success {
 
         let params = TxParameters::new(Some(1), Some(10000000), None);
         let _result = instance.main().tx_params(params).call().await;
-        let logs = _result.as_ref().unwrap().get_logs().unwrap();
-        println!("{:#?}", logs);
         assert_eq!(_result.is_err(), false);
     }
 }
