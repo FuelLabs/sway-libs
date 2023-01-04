@@ -16,8 +16,8 @@ mod success {
 
         let instance = Testi128::new(wallet, path_to_bin);
 
-        let params = TxParameters::new(Some(1), Some(10000000), None);
-        let _result = instance.main().tx_params(params).call().await;
-        assert_eq!(_result.is_err(), false);
+        let params = TxParameters::new(Some(1), Some(10_000_000), None);
+        let result = instance.main().tx_params(params).call().await;
+        assert_eq!(result.is_err(), false);
     }
 }

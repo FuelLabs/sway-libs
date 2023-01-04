@@ -58,5 +58,24 @@ fn main() -> bool {
     res = I128::from(u128_10) / I128::from(u128_5);
     assert(res == I128::from(u128_2));
 
+    //from_u64 test
+    assert(one == I128::from_u64(1));
+    //as_u64 test
+    assert(1 == one.as_u64());
+    //flip test
+    assert(one.flip() == I128::neg_from(u128_one));
+    //ge test
+    assert(one >= one);
+    assert(I128::from_u64(2) >= one);
+    assert(one >= one.flip());
+    assert(one.flip() >= I128::from_u64(2).flip());
+    //le test
+    assert(one <= one);
+    assert(one <= I128::from_u64(2));
+    assert(one.flip() <= one);
+    assert(I128::from_u64(2).flip() <= one.flip());
+    //zero test
+    assert(I128::zero() == I128::from_u64(0));
+    
     true
 }
