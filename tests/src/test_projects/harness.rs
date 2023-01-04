@@ -3,6 +3,7 @@
 mod merkle_proof;
 mod nft_core;
 mod nft_extensions;
+mod reentrancy;
 mod signed_i128;
 mod signed_i16;
 mod signed_i256;

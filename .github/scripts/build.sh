@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Grab the absolute path to this script.
-test_dirs="tests/src/test_projects/*"
+test_dirs="tests/src/test_projects/* tests/src/test_artifacts/*/*"
 
 for test_dir in $test_dirs; do
   if [ -f "${test_dir}/Forc.toml" ]; then
