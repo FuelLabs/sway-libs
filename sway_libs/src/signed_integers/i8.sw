@@ -46,6 +46,14 @@ impl core::ops::Ord for I8 {
 }
 
 impl I8 {
+    pub fn ge(self, other: Self) -> bool {
+        self > other || self == other
+    }
+
+    pub fn le(self, other: Self) -> bool {
+        self < other || self == other
+    }
+
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         8
@@ -153,5 +161,11 @@ impl core::ops::Subtract for I8 {
             res = Self::from(Self::indent() - (other.underlying - self.underlying)); // subtract from 1 << 7 as we are getting a negative value
         }
         res
+    }
+}
+
+impl I8{
+    pub fn flip(self) -> Self {
+        self * Self::neg_from(1)
     }
 }

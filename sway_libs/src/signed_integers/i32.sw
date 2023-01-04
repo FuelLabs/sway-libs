@@ -46,6 +46,14 @@ impl core::ops::Ord for I32 {
 }
 
 impl I32 {
+    pub fn ge(self, other: Self) -> bool {
+        self > other || self == other
+    }
+
+    pub fn le(self, other: Self) -> bool {
+        self < other || self == other
+    }
+
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         32
@@ -156,5 +164,11 @@ impl core::ops::Divide for I32 {
             res = Self::from(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
         res
+    }
+}
+
+impl I32{
+    pub fn flip(self) -> Self {
+        self * Self::neg_from(1)
     }
 }

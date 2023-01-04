@@ -199,9 +199,7 @@ impl core::ops::Subtract for I128 {
 }
 
 impl I128 {
-     pub fn flip(self) -> Self {
-        self * Self {
-            underlying: Self::indent() - self.underlying,
-        }
+    pub fn flip(self) -> Self {
+        self * Self::neg_from(U128::from((0, 1)))
     }
 }
