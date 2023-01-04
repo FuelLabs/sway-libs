@@ -34,4 +34,3 @@ pub fn is_reentrant() -> bool {
     // The current contract ID wasn't found in any contract calls prior to here.
     false
 }
-
