@@ -16,6 +16,8 @@ mod success {
 
         let instance = Testi256::new(wallet, path_to_bin);
 
-        let _result = instance.main().call().await;
+        let params = TxParameters::new(Some(1), Some(10000000), None);
+        let _result = instance.main().tx_params(params).call().await;
+        assert_eq!(_result.is_err(), false);
     }
 }
