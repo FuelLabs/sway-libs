@@ -110,7 +110,7 @@ pub fn mint(amount: u64, to: Identity) {
     // Mint as many tokens as the sender has asked for
     let mut index = tokens_minted;
     while index < total_mint {
-        NFTCore::mint(to, index);
+        let _nft_core = NFTCore::mint(to, index);
         index += 1;
     }
 }
@@ -175,5 +175,5 @@ pub fn tokens_minted() -> u64 {
 pub fn transfer(to: Identity, token_id: u64) {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
     require(nft.is_some(), InputError::TokenDoesNotExist);
-    nft.unwrap().transfer(to);
+    let _nft_core = nft.unwrap().transfer(to);
 }
