@@ -21,6 +21,12 @@ impl I256 {
             d: 0,
         }
     }
+
+    pub fn zero() -> Self {
+        Self {
+            underlying: U256::from((0, 0, 0, 0)),
+        }
+    }
 }
 
 impl From<U256> for I256 {
@@ -52,6 +58,28 @@ impl core::ops::Ord for I256 {
 }
 
 impl I256 {
+    pub fn ge(self, other: Self) -> bool {
+        self > other || self == other
+    }
+
+    pub fn le(self, other: Self) -> bool {
+        self < other || self == other
+    }
+
+    pub fn from_u64(value: u64) -> I256 {
+        Self {
+            underlying: U256::from((0, 0, 0, value)),
+        }
+    }
+
+    pub fn as_u64(self) -> u64 {
+        if self.underlying < Self::indent() {
+            revert(0)
+        } else {
+            self.underlying.as_u64().unwrap()
+        }
+    }
+
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         128
@@ -168,5 +196,11 @@ impl core::ops::Subtract for I256 {
             res = Self::from(Self::indent() - (other.underlying - self.underlying));
         }
         res
+    }
+}
+
+impl I256 {
+    pub fn flip(self) -> Self {
+        self * Self::neg_from(U256::from((0, 0, 0, 1)))
     }
 }

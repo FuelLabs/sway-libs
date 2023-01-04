@@ -22,5 +22,18 @@ fn main() -> bool {
     res = I32 { underlying: 10u32 } / I32 { underlying: 5u32 };
     assert(res == I32 { underlying: 2u32 });
 
+    //flip test
+    assert(one.flip() == I32::neg_from(1));
+    //ge test
+    assert(one >= one);
+    assert(I32::from(2) >= one);
+    assert(one >= one.flip());
+    assert(one.flip() >= I32::from(2).flip());
+    //le test
+    assert(one <= one);
+    assert(one <= I32::from(2));
+    assert(one.flip() <= one);
+    assert(I32::from(2).flip() <= one.flip());
+
     true
 }

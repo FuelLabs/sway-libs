@@ -21,5 +21,18 @@ fn main() -> bool {
     res = I64::from(10u64) / I64::from(5u64);
     assert(res == I64::from(2u64));
 
+    //flip test
+    assert(one.flip() == I64::neg_from(1));
+    //ge test
+    assert(one >= one);
+    assert(I64::from(2) >= one);
+    assert(one >= one.flip());
+    assert(one.flip() >= I64::from(2).flip());
+    //le test
+    assert(one <= one);
+    assert(one <= I64::from(2));
+    assert(one.flip() <= one);
+    assert(I64::from(2).flip() <= one.flip());
+
     true
 }

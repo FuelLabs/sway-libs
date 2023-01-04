@@ -75,5 +75,24 @@ fn main() -> bool {
     res = I256::from(u128_10) / I256::from(u128_5);
     assert(res == I256::from(u128_2));
 
+    //from_u64 test
+    assert(one == I256::from_u64(1));
+    //as_u64 test
+    assert(1 == one.as_u64());
+    //flip test
+    assert(one.flip() == I256::neg_from(u128_one));
+    //ge test
+    assert(one >= one);
+    assert(I256::from_u64(2) >= one);
+    assert(one >= one.flip());
+    assert(one.flip() >= I256::from_u64(2).flip());
+    //le test
+    assert(one <= one);
+    assert(one <= I256::from_u64(2));
+    assert(one.flip() <= one);
+    assert(I256::from_u64(2).flip() <= one.flip());
+    //zero test
+    assert(I256::zero() == I256::from_u64(0));
+
     true
 }

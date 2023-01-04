@@ -22,5 +22,18 @@ fn main() -> bool {
     res = I8::from(10u8) / I8::from(5u8);
     assert(res == I8::from(2u8));
 
+    //flip test
+    assert(one.flip() == I8::neg_from(1));
+    //ge test
+    assert(one >= one);
+    assert(I8::from(2) >= one);
+    assert(one >= one.flip());
+    assert(one.flip() >= I8::from(2).flip());
+    //le test
+    assert(one <= one);
+    assert(one <= I8::from(2));
+    assert(one.flip() <= one);
+    assert(I8::from(2).flip() <= one.flip());
+
     true
 }

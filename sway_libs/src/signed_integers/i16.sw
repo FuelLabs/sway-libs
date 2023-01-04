@@ -47,6 +47,14 @@ impl core::ops::Ord for I16 {
 }
 
 impl I16 {
+    pub fn ge(self, other: Self) -> bool {
+        self > other || self == other
+    }
+
+    pub fn le(self, other: Self) -> bool {
+        self < other || self == other
+    }
+
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         16
@@ -157,5 +165,11 @@ impl core::ops::Subtract for I16 {
             res = Self::from(Self::indent() - (other.underlying - self.underlying));
         }
         res
+    }
+}
+
+impl I16{
+    pub fn flip(self) -> Self {
+        self * Self::neg_from(1)
     }
 }
