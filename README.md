@@ -5,9 +5,13 @@
 
 Sway Playground enables developers to build simple sway contracts in the browser with no installation of tools. This tool is inspired by the Ethereum remix tool or the Rust Playground.
 
+## Try it Now!
+
+[sway-playground.org](https://sway-playground.org/frontend)
+
 ## How it Works
 
-Sway Playground has a simple multi-threaded Hyper backend server which creates a temp project per compile request, builds the project, removes the temp files and returns the output.
+Sway Playground has a simple multi-threaded Rocket backend server which creates a temp project per compile request, builds the project, removes the temp files and returns the output.
 
 The frontend is a simple static frontend using the Ace editor and ASCI_UP console logging.
 
