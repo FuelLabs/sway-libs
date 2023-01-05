@@ -1,16 +1,16 @@
+#[macro_use] extern crate rocket;
+use rocket::serde::{Serialize, Deserialize, json::Json};
 use fs_extra::dir::{copy, CopyOptions};
 use hex::encode;
-use hyper::body::HttpBody;
-use hyper::service::{make_service_fn, service_fn};
-use hyper::{Body, Request, Response, Server, StatusCode};
 use nanoid::nanoid;
-use serde_json::json;
 use std::fs::{create_dir, read_to_string, remove_dir_all, File};
 use std::io::prelude::*;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::{convert::Infallible, net::SocketAddr};
 use regex::Regex;
+use rocket::fairing::{Fairing, Info, Kind};
+use rocket::http::Header;
+use rocket::{Request, Response};
 
 // Copy the template project to a new project.
 fn create_project() -> Result<std::string::String, fs_extra::error::Error> {
@@ -85,7 +85,7 @@ fn clean_error_content(content: String) -> std::string::String {
 }
 
 // Build and destroy a project.
-fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
+fn build_and_destroy_project(contract: String) -> (String, String, String) {
     // Check if any contract has been submitted.
     if contract.len() == 0 {
         return ("".to_string(), "".to_string(), "No contract.".to_string());
@@ -95,7 +95,7 @@ fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
     let project_name = create_project().unwrap();
 
     // Write the main file based upon the contract content above and project id.
-    write_main_file(project_name.to_owned(), contract).unwrap();
+    write_main_file(project_name.to_owned(), contract.as_bytes()).unwrap();
 
     // Use forc build to build the project.
     let child = Command::new("forc")
@@ -160,77 +160,74 @@ fn build_and_destroy_project(contract: &[u8]) -> (String, String, String) {
     }
 }
 
-// Create the Hyper handler for the compile request.
-async fn handle(_req: Request<Body>) -> Result<Response<Body>, Infallible> {
-    // Build a response body message.
-    let mut body = Body::from(
-        json!({
-            "abi": "",
-            "bytecode": "",
-            "error": "No contract."
-        })
-        .to_string(),
-    );
-
-    // Get the body data as a vector.
-    match _req.into_body().data().await {
-        None => {},
-        Some(result) => {
-            match result {
-                Err(hyper::Error { .. }) => {},
-                Ok(value) => {
-                    // Convert the body data to a string.
-                    let my_string = String::from_utf8(value.to_vec()).unwrap();
-        
-                    // Build and destroy a project, return the relevant abi, bytecode and error.
-                    let (abi, bytecode, error) = build_and_destroy_project(String::from(my_string).as_bytes());
-        
-                    body = Body::from(
-                        json!({
-                            "abi": abi,
-                            "bytecode": bytecode,
-                            "error": error
-                        })
-                        .to_string(),
-                    );
-                }
-            }
-        } 
-    }
-
-    // Return the response built with CORS headers set.
-    let response = Response::builder()
-        .status(StatusCode::OK)
-        .header("Access-Control-Allow-Origin", "*")
-        .header("Access-Control-Allow-Headers", "*")
-        .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-        .body(body);
-    Ok(response.unwrap())
+// The receiving request message for compiling.
+#[derive(Deserialize)]
+struct Message {
+   contents: String,
 }
 
-/*
-This will be for saving to a Gist file.
+// The return response message for compiling.
+#[derive(Serialize)]
+struct CompileReturn {
+    abi: String,
+    bytecode: String,
+    error: String
+}
 
-curl \
-  -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer <YOUR-TOKEN>"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/gists \
-  -d '{"description":"Example of a gist","public":false,"files":{"README.md":{"content":"Hello World"}}}'
-  */
+// The compile endpoint.
+#[post("/compile", data = "<message>")]
+fn compile(message: Json<Message>) -> Json<CompileReturn> {
+    let (abi, bytecode, error) = build_and_destroy_project(message.contents.to_string());
 
-#[tokio::main]
-async fn main() {
-    // Bond the server at port 80.
-    let addr = SocketAddr::from(([0, 0, 0, 0], 80));
+    Json(CompileReturn{
+        abi: abi,
+        bytecode: bytecode,
+        error: error
+    })
+}
 
-    // Make the Hyper service.
-    let make_svc = make_service_fn(|_conn| async { Ok::<_, Infallible>(service_fn(handle)) });
-    let server = Server::bind(&addr).serve(make_svc);
+// Catches all OPTION requests in order to get the CORS related Fairing triggered.
+#[options("/<_..>")]
+fn all_options() {
+    // Intentionally left empty
+}
 
-    // Return error if there is an issue.
-    if let Err(e) = server.await {
-        eprintln!("server error: {}", e);
+// Catch 404 not founds.
+#[catch(404)]
+fn not_found() -> String {
+    "Not found".to_string()
+}
+
+// Launch the rocket server.
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
+        .attach(Cors)
+        .mount("/", routes![compile, all_options])
+        .register("/", catchers![not_found])
+}
+
+// Build an open cors module so this server can be used accross many locations on the web.
+pub struct Cors;
+
+// Build Cors Fairing.
+#[rocket::async_trait]
+impl Fairing for Cors {
+    fn info(&self) -> Info {
+        Info {
+            name: "Cross-Origin-Resource-Sharing Fairing",
+            kind: Kind::Response,
+        }
+    }
+
+    // Build an Access-Control-Allow-Origin * policy Response header.
+    async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
+        response.set_header(Header::new("Access-Control-Allow-Origin", "*"));
+        response.set_header(Header::new(
+            "Access-Control-Allow-Methods",
+            "POST, PATCH, PUT, DELETE, HEAD, OPTIONS, GET",
+        ));
+        response.set_header(Header::new("Access-Control-Allow-Headers", "*"));
+        response.set_header(Header::new("Access-Control-Allow-Credentials", "true"));
     }
 }

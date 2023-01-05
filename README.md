@@ -35,6 +35,18 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 
 ### Building Sway Playground
 
+Creating a local SSL Certificate:
+1. Install the [MkCert tool](https://github.com/FiloSottile/mkcert#installation)
+2. Run the installation command: 
+```sh
+mkcert -install
+```
+3. Create the SSL certificates:
+```sh
+cd certs
+mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+```
+
 Clone the repository and build the Sway toolchain:
 
 ```sh
@@ -62,8 +74,9 @@ cargo run
 The frontend is just a simple static frontend and can be hosted anywhere.
 
 ```sh
+npm install http-server --global
 cd frontend
-python -m SimpleHTTPServer 9000
+http-server -S -C ../certs/example.com+5.pem -K ../certs/example.com+5-key.pem --cors
 ```
 
 Then open http://localhost:9000 on your browser.
