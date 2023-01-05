@@ -93,10 +93,7 @@ Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/ref
 
 ## Todo
 
-- Server side SSL support.
 - Ace Editor support for Sway.
-- Consider using a server which builds on Hyper (which may be too low level).
 - React based UI for easier maintenance and feature expansion.
 - Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
 - Better CI to always make available the latest stable version of Sway.
-- Hosting the frontend at a domain (can be done once SSL support is done). 
