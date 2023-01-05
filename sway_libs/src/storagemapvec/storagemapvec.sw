@@ -258,4 +258,84 @@ impl<K, V> StorageMapVec<K, V> {
         }
         vec
     }
+
+    /// Swaps the position of two items in the vector
+    ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    /// * `index_a` - The index of the first item
+    /// * `index_b` - The index of the second item
+    ///
+    /// ### Examples
+    ///
+    /// ```sway
+    /// use sway_libs::storagemapvec::StorageMapVec;
+    ///
+    /// storage {
+    ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
+    /// }
+    ///
+    /// fn foo() {
+    ///     let five = 5_u64;
+    ///     storage.map_vec.push(five, true);
+    ///     storage.map_vec.push(five, false);
+    ///     storage.map_vec.swap(five, 0, 1);
+    ///     assert(2 == storage.map_vec.len(five));
+    ///     assert(false == storage.map_vec.get(five, 0));
+    ///     assert(true == storage.map_vec.get(five, 1));
+    /// }
+    /// ```
+    #[storage(read, write)]
+    pub fn swap(self, key: K, index_a: u64, index_b: u64) {
+        let len_key = sha256((key, __get_storage_key()));
+        let len = get::<u64>(len_key);
+        assert(len > index_a);
+        assert(len > index_b);
+        let item_a_key = sha256((key, index_a, __get_storage_key()));
+        let item_b_key = sha256((key, index_b, __get_storage_key()));
+        let item_a = get::<V>(item_a_key);
+        let item_b = get::<V>(item_b_key);
+        store(item_a_key, item_b);
+        store(item_b_key, item_a);
+    }
+
+    /// Swaps the position of the given item with the last item in the vector and then pops the last item
+    ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    /// * `index` - The index of the item to remove
+    ///
+    /// ### Examples
+    ///
+    /// ```sway
+    /// use sway_libs::storagemapvec::StorageMapVec;
+    ///
+    /// storage {
+    ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
+    /// }
+    ///
+    /// fn foo() {
+    ///     let five = 5_u64;
+    ///     storage.map_vec.push(five, true);
+    ///     storage.map_vec.push(five, false);
+    ///     storage.map_vec.swap_remove(five, 0);
+    ///     assert(1 == storage.map_vec.len(five));
+    ///     assert(false == storage.map_vec.get(five, 0));
+    /// }
+    /// ```
+    #[storage(read, write)]
+    pub fn swap_remove(self, key: K, index: u64) -> V {
+        let len_key = sha256((key, __get_storage_key()));
+        let len = get::<u64>(len_key);
+        assert(len > index);
+        let item_key = sha256((key, index, __get_storage_key()));
+        let item = get::<V>(item_key);
+        let last_item_key = sha256((key, len - 1, __get_storage_key()));
+        let last_item = get::<V>(last_item_key);
+        store(item_key, last_item);
+        store(len_key, len - 1);
+        item
+    }
 }
