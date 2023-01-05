@@ -4,7 +4,7 @@ use super::utils::{
 };
 
 #[tokio::test]
-pub fn can_remove() {
+pub async fn can_remove() {
     let instance = setup().await;
 
     push(&instance, 1, 50).await;
@@ -42,7 +42,7 @@ pub fn can_remove() {
 
 #[tokio::test]
 #[should_panic]
-pub fn cannot_remove_out_of_bounds() {
+pub async fn cannot_remove_out_of_bounds() {
     let instance = setup().await;
 
     push(&instance, 1, 50).await;
