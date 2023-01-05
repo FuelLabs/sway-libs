@@ -379,7 +379,7 @@ impl<K, V> StorageMapVec<K, V> {
         // get the key to the item at the given index
         let removed_item_key = sha256((key, index, __get_storage_key()));
         // get the item at the given index
-        let removed_item = get::<V>(item_key);
+        let removed_item = get::<V>(removed_item_key);
 
         // create a counter to iterate through the vector, starting from the next item from the given index
         let mut count = index + 1;
