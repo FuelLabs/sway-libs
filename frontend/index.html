@@ -147,8 +147,8 @@ impl TestContract for Contract {
             function compile() {
                 let code = editor.getValue();
 
-                const server_uri = 'https://api.sway-playground.org:80/compile';
-                // const server_uri = 'https://127.0.0.1:80/compile';
+                const server_uri = 'https://api.sway-playground.org/compile';
+                // const server_uri = 'https://127.0.0.1/compile';
                 const request = new Request(server_uri, {
                     method: 'POST',
                     body: JSON.stringify({
