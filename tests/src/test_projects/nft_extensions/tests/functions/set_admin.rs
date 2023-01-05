@@ -39,7 +39,7 @@ mod revert {
     use super::*;
 
     #[tokio::test]
-    #[should_panic(expected = "Revert(18446744073709486080)")]
+    #[should_panic(expected = "SenderNotAdmin")]
     async fn when_sender_is_not_admin() {
         let (_deploy_wallet, owner1, owner2) = setup().await;
 

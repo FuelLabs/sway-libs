@@ -57,7 +57,7 @@ impl I128 {
     }
 
     /// Helper function to get a positive value from an unsigned number
-    fn from_uint(underlying: U128) -> Self {
+    pub fn from_uint(underlying: U128) -> Self {
         Self { underlying }
     }
 
