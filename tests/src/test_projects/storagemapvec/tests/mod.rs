@@ -9,3 +9,5 @@ mod push;
 mod to_vec;
 mod swap;
 mod swap_remove;
+mod remove;
+mod insert;

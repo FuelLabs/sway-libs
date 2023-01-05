@@ -34,3 +34,15 @@ pub async fn can_swap_remove() {
     assert_eq!([300, 250], second_vec);
     assert_eq!(len(&instance, 2).await, 2);
 }   
+
+#[tokio::test]
+#[should_panic]
+pub async fn cannot_swap_remove_out_of_bounds() {
+    let instance = setup().await;
+
+    push(&instance, 1, 50).await;
+    push(&instance, 1, 100).await;
+    push(&instance, 1, 150).await;
+
+    swap_remove(&instance, 1, 3).await;
+}

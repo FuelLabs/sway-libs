@@ -33,6 +33,12 @@ abi TestContract {
 
     #[storage(read, write)]
     fn swap_remove(key: u64, index: u64) -> u64;
+
+    #[storage(read, write)]
+    fn insert(key: u64, index: u64, value: u64);
+
+    #[storage(read, write)]
+    fn remove(key: u64, index: u64) -> u64;
 }
 
 impl TestContract for Contract {
@@ -80,5 +86,15 @@ impl TestContract for Contract {
     #[storage(read, write)]
     fn swap_remove(key: u64, index: u64) -> u64 {
         storage.mapvec.swap_remove(key, index)
+    }
+
+    #[storage(read, write)]
+    fn insert(key: u64, index: u64, value: u64) {
+        storage.mapvec.insert(key, index, value)
+    }
+
+    #[storage(read, write)]
+    fn remove(key: u64, index: u64) -> u64 {
+        storage.mapvec.remove(key, index)
     }
 }

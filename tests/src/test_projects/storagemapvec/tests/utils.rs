@@ -67,6 +67,25 @@ pub mod abi_calls {
             .unwrap()
             .value
     }
+
+    pub async fn remove(instance: &TestContract, key: u64, index: u64) -> u64 {
+        instance
+            .methods()
+            .remove(key, index)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
+
+    pub async fn insert(instance: &TestContract, key: u64, index: u64, value: u64) {
+        instance
+            .methods()
+            .insert(key, index, value)
+            .call()
+            .await
+            .unwrap();
+    }
 }
 
 pub mod test_helpers {
