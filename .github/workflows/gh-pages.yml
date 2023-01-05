@@ -16,9 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: npm ci and build
+        env:
+          CI: false
+        run: |
+          cp frontend build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend
-          destination_dir: ./frontend
+          publish_dir: ./build
