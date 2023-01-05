@@ -338,4 +338,67 @@ impl<K, V> StorageMapVec<K, V> {
         store(len_key, len - 1);
         item
     }
+
+    /// Removes the item at a specified index and returns it
+    ///
+    /// ### Arguments
+    ///
+    /// * `key` - The key to the vector
+    /// * `index` - The index of the item to remove
+    ///
+    /// ### Examples
+    ///
+    /// ```sway
+    /// use sway_libs::storagemapvec::StorageMapVec;
+    ///
+    /// storage {
+    ///     map_vec: StorageMapVec<u64, bool> = StorageMapVec {}
+    /// }
+    ///
+    /// fn foo() {
+    ///     let five = 5_u64;
+    ///     storage.map_vec.push(five, true);
+    ///     storage.map_vec.push(five, false);
+    ///     storage.map_vec.push(five, true);
+    ///     storage.map_vec.remove(five, 1);
+    ///     assert(2 == storage.map_vec.len(five));
+    ///     assert(true == storage.map_vec.get(five, 0));
+    ///     assert(true == storage.map_vec.get(five, 1));
+    /// }
+    /// ```
+    #[storage(read, write)]
+    pub fn remove(self, key: K, index: u64) -> V {
+        // get the key to the length of the vector
+        let len_key = sha256((key, __get_storage_key())); 
+        // get the length of the vector
+        let len = get::<u64>(len_key);
+
+        // assert that the index is less than the length of the vector to prevent out of bounds errors
+        assert(len > index);
+
+        // get the key to the item at the given index
+        let removed_item_key = sha256((key, index, __get_storage_key()));
+        // get the item at the given index
+        let removed_item = get::<V>(item_key);
+
+        // create a counter to iterate through the vector, starting from the next item from the given index
+        let mut count = index + 1;
+
+        // while the counter is less than the length of the vector
+        // this will move all items after the given index to the left by one
+        while count < len {
+            // get the key to the item at the current counter
+            let item_key = sha256((key, count - 1, __get_storage_key()));
+            // store the item at the current counter in the key to the item at the current counter - 1
+            store::<V>(item_key, get::<V>(sha256((key, count, __get_storage_key()))));
+            // increment the counter
+            count += 1;
+        }
+
+        // store the length of the vector - 1 in the key to the length of the vector
+        store(len_key, len - 1);
+
+        // return the removed item
+        removed_item
+    }
 }
