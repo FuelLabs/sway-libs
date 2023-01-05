@@ -27,6 +27,12 @@ abi TestContract {
 
     #[storage(read)]
     fn to_vec_as_tup(key: u64) -> (u64, u64, u64);
+
+    #[storage(read, write)]
+    fn swap(key: u64, index_a: u64, index_b: u64);
+
+    #[storage(read, write)]
+    fn swap_remove(key: u64, index: u64) -> u64;
 }
 
 impl TestContract for Contract {
@@ -64,5 +70,15 @@ impl TestContract for Contract {
     fn to_vec_as_tup(key: u64) -> (u64, u64, u64) {
         let vec = storage.mapvec.to_vec(key);
         (vec.get(0).unwrap(), vec.get(1).unwrap(), vec.get(2).unwrap())
+    }
+
+    #[storage(read, write)]
+    fn swap(key: u64, index_a: u64, index_b: u64) {
+        storage.mapvec.swap(key, index_a, index_b)
+    }
+
+    #[storage(read, write)]
+    fn swap_remove(key: u64, index: u64) -> u64 {
+        storage.mapvec.swap_remove(key, index)
     }
 }

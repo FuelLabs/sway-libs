@@ -7,3 +7,5 @@ mod len;
 mod pop;
 mod push;
 mod to_vec;
+mod swap;
+mod swap_remove;

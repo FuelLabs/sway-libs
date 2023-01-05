@@ -48,6 +48,25 @@ pub mod abi_calls {
             .unwrap()
             .value
     }
+
+    pub async fn swap(instance: &TestContract, key: u64, index1: u64, index2: u64) {
+        instance
+            .methods()
+            .swap(key, index1, index2)
+            .call()
+            .await
+            .unwrap();
+    }
+
+    pub async fn swap_remove(instance: &TestContract, key: u64, index: u64) -> u64 {
+        instance
+            .methods()
+            .swap_remove(key, index)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
 }
 
 pub mod test_helpers {
