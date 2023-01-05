@@ -1,5 +1,5 @@
 use super::utils::{
-    abi_calls::{get, push, swap_remove, len},
+    abi_calls::{get, len, push, swap_remove},
     test_helpers::setup,
 };
 
@@ -33,7 +33,7 @@ pub async fn can_swap_remove() {
 
     assert_eq!([300, 250], second_vec);
     assert_eq!(len(&instance, 2).await, 2);
-}   
+}
 
 #[tokio::test]
 #[should_panic]

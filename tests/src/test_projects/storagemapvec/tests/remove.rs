@@ -1,5 +1,5 @@
 use super::utils::{
-    abi_calls::{get, remove, push, len},
+    abi_calls::{get, len, push, remove},
     test_helpers::setup,
 };
 
@@ -27,7 +27,6 @@ pub fn can_remove() {
     assert_eq!([50, 150], first_vec);
     assert_eq!(2, len(&instance, 1).await);
 
-
     assert_eq!(3, len(&instance, 2).await);
 
     remove(&instance, 2, 1).await;
@@ -39,7 +38,7 @@ pub fn can_remove() {
 
     assert_eq!([200, 300], second_vec);
     assert_eq!(2, len(&instance, 2).await);
-} 
+}
 
 #[tokio::test]
 #[should_panic]

@@ -2,12 +2,12 @@ mod utils;
 
 mod clear;
 mod get;
+mod insert;
 mod is_empty;
 mod len;
 mod pop;
 mod push;
-mod to_vec;
+mod remove;
 mod swap;
 mod swap_remove;
-mod remove;
-mod insert;
+mod to_vec;

@@ -99,7 +99,9 @@ pub mod test_helpers {
             "./test_projects/storagemapvec/out/debug/storagemapvec.bin",
             &wallet,
             TxParameters::default(),
-            StorageConfiguration::with_storage_path(Some(String::from("./test_projects/storagemapvec/out/debug/storagemapvec-storage_slots.json"))),
+            StorageConfiguration::with_storage_path(Some(String::from(
+                "./test_projects/storagemapvec/out/debug/storagemapvec-storage_slots.json",
+            ))),
         )
         .await
         .unwrap();
