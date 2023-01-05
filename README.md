@@ -93,6 +93,7 @@ Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/ref
 
 ## Todo
 
+- Fuel focused UI design
 - Ace Editor support for Sway.
 - React based UI for easier maintenance and feature expansion.
 - Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.

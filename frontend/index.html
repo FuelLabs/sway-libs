@@ -144,6 +144,25 @@ impl TestContract for Contract {
 
             editor.setValue(loaded_contract, 1);
 
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const gist = urlParams.get('gist');
+
+            if (gist) {
+                let url = `https://api.github.com/gists/${gist}`;
+                    fetch(url)
+                    .then(res => res.json())
+                    .then(out =>{
+                        const keys = Object.keys(out.files);
+                        const first_key = keys[0];
+                        const contents = out.files[first_key].content;
+
+                        save_contract(contents);
+                        editor.setValue(contents, 1);
+                    })
+                    .catch(err => { throw err });
+            }
+
             function compile() {
                 let code = editor.getValue();
 
