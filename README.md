@@ -7,7 +7,7 @@ Sway Playground enables developers to build simple sway contracts in the browser
 
 ## Try it Now!
 
-[sway-playground.org/frontend](https://sway-playground.org/frontend)
+[sway-playground.org](https://sway-playground.org)
 
 ## How it Works
 
