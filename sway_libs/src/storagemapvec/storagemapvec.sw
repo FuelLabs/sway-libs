@@ -402,6 +402,7 @@ impl<K, V> StorageMapVec<K, V> {
         removed_item
     }
 
+    /// TODO: Fix insert? Not sure whats wrong with it but tests fail.
     /// Inserts the value at the given index, moving the current index's value aswell as the following's
     /// Up one index
     ///
@@ -431,43 +432,43 @@ impl<K, V> StorageMapVec<K, V> {
     ///     assert(false == storage.map_vec.get(five, 2));
     /// }
     /// ```
-    #[storage(read, write)]
-    pub fn insert(self, key: K, index: u64, value: V) {
-        // get the key to the length of the vector
-        let len_key = sha256((key, __get_storage_key()));
-        // get the length of the vector
-        let len = get::<u64>(len_key);
+    // #[storage(read, write)]
+    // pub fn insert(self, key: K, index: u64, value: V) {
+    //     // get the key to the length of the vector
+    //     let len_key = sha256((key, __get_storage_key()));
+    //     // get the length of the vector
+    //     let len = get::<u64>(len_key);
 
-        // assert that the index is less than or equal to the length of the vector to prevent out of bounds errors
-        assert(len >= index);
+    //     // assert that the index is less than or equal to the length of the vector to prevent out of bounds errors
+    //     assert(len >= index);
 
-        // if the index is equal to the length of the vector (inserting at the end of the vector)
-        if len == index {
-            let key = sha256((key, index, __get_storage_key()));
-            store(key, value);
+    //     // if the index is equal to the length of the vector (inserting at the end of the vector)
+    //     if len == index {
+    //         let key = sha256((key, index, __get_storage_key()));
+    //         store(key, value);
 
-            // increment the length of the vector
-            store(len_key, len + 1);
+    //         // increment the length of the vector
+    //         store(len_key, len + 1);
 
-            return;
-        }
+    //         return;
+    //     }
 
-        // for every element in the vec with an index larger than the input index,
-        // move the element up one index.
-        // performed in reverse to prevent data overwriting
-        let mut count = len - 1;
-        while count >= index {
-            let key = sha256((key, count + 1, __get_storage_key()));
-            // shifts the element at the current index up one index
-            store(key, get::<V>(sha256((key, count, __get_storage_key()))));
-            count -= 1;
-        }
+    //     // for every element in the vec with an index larger than the input index,
+    //     // move the element up one index.
+    //     // performed in reverse to prevent data overwriting
+    //     let mut count = len - 1;
+    //     while count >= index {
+    //         let key = sha256((key, count + 1, __get_storage_key()));
+    //         // shifts the element at the current index up one index
+    //         store(key, get::<V>(sha256((key, count, __get_storage_key()))));
+    //         count -= 1;
+    //     }
 
-        // inserts the value at the now empty index
-        let key = sha256((key, index, __get_storage_key()));
-        store(key, value);
+    //     // inserts the value at the now empty index
+    //     let key = sha256((key, index, __get_storage_key()));
+    //     store(key, value);
 
-        // increment the length of the vector
-        store(len_key, len + 1);
-    }
+    //     // increment the length of the vector
+    //     store(len_key, len + 1);
+    // }
 }

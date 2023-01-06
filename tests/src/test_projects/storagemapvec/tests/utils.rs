@@ -78,14 +78,14 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn insert(instance: &TestContract, key: u64, index: u64, value: u64) {
-        instance
-            .methods()
-            .insert(key, index, value)
-            .call()
-            .await
-            .unwrap();
-    }
+    // pub async fn insert(instance: &TestContract, key: u64, index: u64, value: u64) {
+    //     instance
+    //         .methods()
+    //         .insert(key, index, value)
+    //         .call()
+    //         .await
+    //         .unwrap();
+    // }
 }
 
 pub mod test_helpers {
