@@ -68,7 +68,7 @@ forc build
 ```
 
 > **Note**
-> This may take a while depending on your hardware, future improvements to Sway will decrease build times. Once this has been run once, indiviual test projects may be built on their own to save time.
+> This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, indiviual test projects may be built on their own to save time.
 
 Run the tests:
 
