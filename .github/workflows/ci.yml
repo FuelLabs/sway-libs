@@ -64,7 +64,7 @@ jobs:
           run: forc build --path sway_libs
 
         - name: Build All Tests
-          run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh
+          run: forc build --path tests/src
           
         - name: Cargo Test sway-lib
           run: |
