@@ -68,4 +68,4 @@ jobs:
           
         - name: Cargo Test sway-lib
           run: |
-            cargo test --manifest-path tests/src/Cargo.toml
+            cargo test --manifest-path tests/Cargo.toml
