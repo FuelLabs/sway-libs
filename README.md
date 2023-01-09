@@ -36,6 +36,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./sway_libs/src/signed_integers/) is an interface to implement signed integers.
 - [Unsigned Fixed Point 64 bit](./sway_libs/src/fixed_point/ufp/ufp64) is an interface to implement fixed-point 64 bit numbers.
+- [StorageMapVec](./sway_libs/src/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type
 
 ## Using a library
 
