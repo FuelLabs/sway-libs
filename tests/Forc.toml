@@ -17,4 +17,6 @@ members = [
   "./src/unsigned_integers/ufp64_pow_test",
   "./src/unsigned_integers/ufp64_root_test",
   "./src/unsigned_integers/ufp64_test",
+  "./src/unsigned_integers/ufp128_div_test",
+  "./src/unsigned_integers/ufp128_test",
 ]

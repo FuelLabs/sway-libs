@@ -4,3 +4,5 @@ mod ufp64_mul_test;
 mod ufp64_pow_test;
 mod ufp64_root_test;
 mod ufp64_test;
+mod ufp128_div_test;
+mod ufp128_test;
