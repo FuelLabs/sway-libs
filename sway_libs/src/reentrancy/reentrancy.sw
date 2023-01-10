@@ -6,8 +6,12 @@ library reentrancy;
 use std::call_frames::*;
 use std::registers::frame_ptr;
 
+pub enum ReentrancyError {
+    NonReentrant: (),
+}
+
 pub fn reentrancy_guard() {
-    assert(!is_reentrant());
+    require(!is_reentrant(), ReentrancyError::NonReentrant);
 }
 
 /// Returns `true` if the reentrancy pattern is detected, and `false` otherwise.
