@@ -1,6 +1,6 @@
 # Overview
 
-This document provides an overview of the Unsigned Fixed Point library.
+This document provides an overview of the Unsigned Fixed Number Point library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 

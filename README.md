@@ -35,7 +35,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Non-Fungible Token (NFT)](./sway_libs/src/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
 - [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./sway_libs/src/signed_integers/) is an interface to implement signed integers.
-- [Unsigned Fixed Point 64 bit](./sway_libs/src/fixed_point/ufp/) is an interface to implement fixed-point numbers.
+- [Unsigned Fixed Point Number](./sway_libs/src/fixed_point/ufp/) is an interface to implement fixed-point numbers.
 
 ## Using a library
 
