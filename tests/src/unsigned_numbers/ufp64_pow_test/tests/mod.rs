@@ -2,7 +2,7 @@ use fuels::prelude::*;
 
 script_abigen!(
     TestUfp64Pow,
-    "src/unsigned_integers/ufp64_pow_test/out/debug/ufp64_pow_test-abi.json"
+    "src/unsigned_numbers/ufp64_pow_test/out/debug/ufp64_pow_test-abi.json"
 );
 
 mod success {
@@ -11,7 +11,7 @@ mod success {
 
     #[tokio::test]
     async fn runs_ufp64_pow_test_script() {
-        let path_to_bin = "src/unsigned_integers/ufp64_pow_test/out/debug/ufp64_pow_test.bin";
+        let path_to_bin = "src/unsigned_numbers/ufp64_pow_test/out/debug/ufp64_pow_test.bin";
         let wallet = launch_provider_and_get_wallet().await;
 
         let instance = TestUfp64Pow::new(wallet, path_to_bin);

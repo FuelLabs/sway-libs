@@ -4,4 +4,4 @@ mod merkle_proof;
 mod nft;
 mod signed_integers;
 mod string;
-mod unsigned_integers;
+mod unsigned_numbers;
