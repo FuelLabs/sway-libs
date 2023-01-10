@@ -16,7 +16,7 @@ const REENTRANCY_ATTACKER_STORAGE: &str = "test_artifacts/reentrancy_attacker_co
 const REENTRANCY_TARGET_BIN: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
 const REENTRANCY_TARGET_STORAGE: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
 
-async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
+pub async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
     let id = Contract::deploy(
         REENTRANCY_ATTACKER_BIN,
         &wallet,
@@ -31,7 +31,7 @@ async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, Con
     (instance, id.into())
 }
 
-async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
+pub async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
     let id = Contract::deploy(
         REENTRANCY_TARGET_BIN,
         &wallet,
