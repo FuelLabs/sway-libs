@@ -1,6 +1,7 @@
 library sway_libs;
 
-dep fixed_point/ufp/ufp64/ufp64;
+dep fixed_point/ufp/ufp64;
+dep fixed_point/ufp/ufp128;
 dep merkle_proof/binary_merkle_proof;
 dep reentrancy/reentrancy;
 dep signed_integers/signed_integers;
