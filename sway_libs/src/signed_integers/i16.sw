@@ -113,19 +113,19 @@ impl core::ops::Divide for I16 {
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
         {
-            res = Self::from((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && divisor.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) / (Self::indent() - divisor.underlying) + Self::indent());
         } else if self.underlying >= Self::indent()
             && divisor.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor.underlying));
         } else if self.underlying < Self::indent()
             && divisor.underlying > Self::indent()
         {
-            res = Self::from(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
+            res = Self::from_uint(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
         res
     }
@@ -138,19 +138,19 @@ impl core::ops::Multiply for I16 {
         if self.underlying >= Self::indent()
             && other.underlying >= Self::indent()
         {
-            res = Self::from((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
+            res = Self::from_uint((self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
         {
-            res = Self::from((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
+            res = Self::from_uint((Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent());
         } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
-            res = Self::from(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
+            res = Self::from_uint(Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying));
         } else if self.underlying < Self::indent()
             && other.underlying >= Self::indent()
         {
-            res = Self::from(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
+            res = Self::from_uint(Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying));
         }
         res
     }
