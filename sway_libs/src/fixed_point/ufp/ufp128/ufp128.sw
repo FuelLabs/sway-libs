@@ -1,10 +1,6 @@
 library ufp128;
-//! A wrapper around U128 type for a library for Sway for mathematical functions operating with signed 64.64-bit fixed point numbers. 
-use std::u128::U128;
-use std::u256::U256;
-use std::assert::assert;
-use std::math::{Exponent, Exponentiate, Root};
-use std::revert::revert;
+// A wrapper around U128 type for a library for Sway for mathematical functions operating with signed 64.64-bit fixed point numbers.
+use std::{math::{Exponent, Exponentiate, Root}, u128::U128, u256::U256};
 
 pub struct UFP128 {
     value: U128,
@@ -50,7 +46,7 @@ impl UFP128 {
 }
 
 impl UFP128 {
-    /// Creates UFP64 that correponds to a unsigned integer
+    /// Creates UFP128 that correponds to a unsigned integer
     pub fn from_uint(uint: u64) -> Self {
         Self {
             value: U128::from((uint, 0)),
@@ -200,6 +196,7 @@ impl Exponentiate for UFP128 {
         Self::from((nominator.upper, nominator.lower))
     }
 }
+
 
 // TODO: uncomment and change accordingly, when signed integers will be added
 // impl Logarithm for UFP128 {
