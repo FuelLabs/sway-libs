@@ -16,6 +16,36 @@ const REENTRANCY_ATTACKER_STORAGE: &str = "test_artifacts/reentrancy_attacker_co
 const REENTRANCY_TARGET_BIN: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
 const REENTRANCY_TARGET_STORAGE: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
 
+async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
+    let id = Contract::deploy(
+        REENTRANCY_ATTACKER_BIN,
+        &wallet,
+        TxParameters::default(),
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string()))
+    )
+    .await
+    .unwrap();
+
+    let instance = AttackerContract::new(id.clone(), wallet);
+
+    (instance, id.into())
+}
+
+async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
+    let id = Contract::deploy(
+        REENTRANCY_TARGET_BIN,
+        &wallet,
+        TxParameters::default(),
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string()))
+    )
+    .await
+    .unwrap();
+
+    let instance = TargetContract::new(id.clone(), wallet);
+
+    (instance, id.into())
+}
+
 mod success {
     use super::*;
 
@@ -49,36 +79,6 @@ mod success {
             .call()
             .await
             .unwrap();
-    }
-
-    async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
-        let id = Contract::deploy(
-            REENTRANCY_ATTACKER_BIN,
-            &wallet,
-            TxParameters::default(),
-            StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string()))
-        )
-        .await
-        .unwrap();
-
-        let instance = AttackerContract::new(id.clone(), wallet);
-
-        (instance, id.into())
-    }
-
-    async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
-        let id = Contract::deploy(
-            REENTRANCY_TARGET_BIN,
-            &wallet,
-            TxParameters::default(),
-            StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string()))
-        )
-        .await
-        .unwrap();
-
-        let instance = TargetContract::new(id.clone(), wallet);
-
-        (instance, id.into())
     }
 }
 
