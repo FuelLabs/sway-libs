@@ -119,10 +119,9 @@ impl core::ops::Divide for I256 {
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-            && divisor.underlying > Self::indent()
-        {
+        let self_ge_indent = self.underlying > Self::indent() || self.underlying == Self::indent();
+        let divisor_gt_indent = divisor.underlying > Self::indent();
+        if self_ge_indent && divisor_gt_indent {
             res = Self::from_uint((self.underlying - Self::indent()) / (divisor.underlying - Self::indent()) + Self::indent());
         } else if self.underlying < Self::indent()
             && divisor.underlying < Self::indent()
@@ -185,11 +184,11 @@ impl core::ops::Subtract for I256 {
             } else {
                 let q = other.underlying - Self::indent();
 
-                std::logging::log(self.underlying.a);
-                std::logging::log(self.underlying.b);
-                std::logging::log(self.underlying.c);
-                std::logging::log(self.underlying.d);
 
+                // std::logging::log(self.underlying.a);
+                // std::logging::log(self.underlying.b);
+                // std::logging::log(self.underlying.c);
+                // std::logging::log(self.underlying.d);
                 res = Self::from_uint(self.underlying - q);
             }
         } else if (self.underlying > Self::indent()

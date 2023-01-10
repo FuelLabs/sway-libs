@@ -48,32 +48,26 @@ fn main() -> bool {
     };
     assert(res == I256::from(u128_100));
 
-    // let u128_lower_max_u64 = U256 {
-    //     a: 0,
-    //     b: 0,
-    //     c: 0,
-    //     d: u64::max(),
-    // };
+    let u128_5 = U256 {
+        a: 0,
+        b: 0,
+        c: 0,
+        d: 5,
+    };
 
-    // res = I256::from(u128_10) / I256::from_uint(u128_lower_max_u64);
-    // assert(res == I256::neg_from(u128_10));
+    let u128_2 = U256 {
+        a: 0,
+        b: 0,
+        c: 0,
+        d: 2,
+    };
+    
+    let i256_10 = I256::from(u128_10);
+    let i256_5 = I256::from(u128_5);
+    let i256_2 = I256::from(u128_2);
 
-    // let u128_5 = U256 {
-    //     a: 0,
-    //     b: 0,
-    //     c: 0,
-    //     d: 5,
-    // };
-
-    // let u128_2 = U256 {
-    //     a: 0,
-    //     b: 0,
-    //     c: 0,
-    //     d: 2,
-    // };
-
-    // res = I256::from(u128_10) / I256::from(u128_5);
-    // assert(res == I256::from(u128_2));
+    res = i256_10 / i256_5;
+    assert(res == i256_2);
 
     true
 }
