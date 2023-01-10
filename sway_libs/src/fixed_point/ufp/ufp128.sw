@@ -197,7 +197,6 @@ impl Exponentiate for UFP128 {
     }
 }
 
-
 // TODO: uncomment and change accordingly, when signed integers will be added
 // impl Logarithm for UFP128 {
 //     fn log(self, base: Self) -> Self {
