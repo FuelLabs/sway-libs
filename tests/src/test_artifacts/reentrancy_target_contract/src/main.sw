@@ -7,8 +7,8 @@ use reentrancy_attacker_abi::Attacker;
 use reentrancy_target_abi::Target;
 
 // Return the sender as a ContractId or panic:
-fn get_msg_sender_id_or_panic(result: Result<Identity, AuthError>) -> ContractId {
-    match result {
+fn get_msg_sender_id_or_panic() -> ContractId {
+    match msg_sender() {
         Result::Ok(s) => {
             match s {
                 Identity::ContractId(v) => v,
@@ -26,13 +26,8 @@ impl Target for Contract {
         if is_reentrant() {
             true
         } else {
-            let result: Result<Identity, AuthError> = msg_sender();
-            let id = get_msg_sender_id_or_panic(result);
-            let id = id.value;
-            let caller = abi(Attacker, id);
-
             // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-            let return_value = caller.evil_callback_1();
+            let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_1();
             false
         }
     }
@@ -41,36 +36,24 @@ impl Target for Contract {
         // panic if reentrancy detected
         reentrancy_guard();
 
-        let result: Result<Identity, AuthError> = msg_sender();
-        let id = get_msg_sender_id_or_panic(result);
-        let id = id.value;
-        let caller = abi(Attacker, id);
-
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        let return_value = caller.evil_callback_2();
+        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_2();
     }
 
     fn cross_function_reentrance_denied() {
         // panic if reentrancy detected
         reentrancy_guard();
 
-        let result: Result<Identity, AuthError> = msg_sender();
-        let id = get_msg_sender_id_or_panic(result);
-        let id = id.value;
-        let caller = abi(Attacker, id);
-
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        let return_value = caller.evil_callback_3();
+        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_3();
     }
 
     fn intra_contract_call() {
-        let this = abi(Target, ContractId::into(contract_id()));
-        this.cross_function_reentrance_denied();
+        abi(Target, contract_id().value).cross_function_reentrance_denied();
     }
 
-    fn guarded_function_is_callable() -> bool {
+    fn guarded_function_is_callable() {
         // panic if reentrancy detected
         reentrancy_guard();
-        true
     }
 }

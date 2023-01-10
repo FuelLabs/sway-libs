@@ -3,7 +3,6 @@
 //! to prevent reentrancy: `assert(!is_reentrant());`
 library reentrancy;
 
-use std::assert::assert;
 use std::call_frames::*;
 use std::registers::frame_ptr;
 

@@ -10,6 +10,12 @@ abigen!(
     "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract-abi.json",
 );
 
+const REENTRANCY_ATTACKER_BIN: &str = "test_artifacts/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract.bin";
+const REENTRANCY_ATTACKER_STORAGE: &str = "test_artifacts/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-storage_slots.json";
+
+const REENTRANCY_TARGET_BIN: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
+const REENTRANCY_TARGET_STORAGE: &str = "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
+
 #[tokio::test]
 async fn can_detect_reentrancy() {
     let wallet = launch_provider_and_get_wallet().await;
@@ -65,27 +71,21 @@ async fn can_call_guarded_function() {
     let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
     let (_, target_id) = get_target_instance(wallet).await;
 
-    let result = attacker_instance
+    attacker_instance
         .methods()
         .innocent_call(target_id)
         .set_contracts(&[target_id.into()])
         .call()
         .await
         .unwrap();
-
-    assert_eq!(result.value, true)
 }
 
 async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
     let id = Contract::deploy(
-        "test_artifacts/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract.bin",
+        REENTRANCY_ATTACKER_BIN,
         &wallet,
         TxParameters::default(),
-        StorageConfiguration::with_storage_path(
-            Some(
-                "test_artifacts/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-storage_slots.json".to_string(),
-                )
-        )
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string()))
     )
     .await
     .unwrap();
@@ -97,14 +97,10 @@ async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, Con
 
 async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
     let id = Contract::deploy(
-        "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin",
+        REENTRANCY_TARGET_BIN,
         &wallet,
         TxParameters::default(),
-        StorageConfiguration::with_storage_path(
-            Some(
-                "test_artifacts/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json".to_string(),
-                )
-        )
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string()))
     )
     .await
     .unwrap();
