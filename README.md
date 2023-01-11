@@ -57,6 +57,25 @@ For example, to import the Merkle Proof library use the following statement:
 sway_libs::binary_merkle_proof::verify_proof;
 ```
 
+## Running Tests
+
+In order to run the tests make sure you are in the tests folder of this repository `sway-libs/tests/<you are here>`.
+
+Build the test projects:
+
+```rust
+forc build
+```
+
+> **Note**
+> This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, indiviual test projects may be built on their own to save time.
+
+Run the tests:
+
+```
+cargo test
+```
+
 > **Note**
 > All projects currently use `forc v0.32.2`, `fuels-rs v0.33.0` and `fuel-core 0.15.1`.
 
