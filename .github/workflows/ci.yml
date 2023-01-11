@@ -60,6 +60,9 @@ jobs:
         - name: Check Sway formatting
           run: forc fmt --path sway_libs --check
 
+        - name: Check Rust formatting
+          run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
+
         - name: Build sway-libs
           run: forc build --path sway_libs
 
