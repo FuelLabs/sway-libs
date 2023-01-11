@@ -1,10 +1,7 @@
 use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
-abigen!(
-    NftCore,
-    "src/nft/nft_core/out/debug/nft_core_test-abi.json"
-);
+abigen!(NftCore, "src/nft/nft_core/out/debug/nft_core_test-abi.json");
 
 pub struct Metadata {
     pub contract: NftCore,

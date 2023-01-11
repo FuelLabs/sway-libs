@@ -1,10 +1,7 @@
 use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
-abigen!(
-    StringTestLib,
-    "src/string/out/debug/string-abi.json"
-);
+abigen!(StringTestLib, "src/string/out/debug/string-abi.json");
 
 pub mod abi_calls {
 
