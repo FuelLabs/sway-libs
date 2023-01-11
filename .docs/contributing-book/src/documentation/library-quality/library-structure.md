@@ -30,9 +30,17 @@ Contains data structures written for your project.
 Contains enums that are used in `require(..., MyError::SomeError)` statements.
 The enums are split into individual errors e.g. `DepositError`, `OwnerError` etc.
 
+```sway
+{{#include ../../code/connect_four/src/errors.sw:error}}
+```
+
 ## events.sw
 
 Contains structs definitions which are used inside `log()` statements.
+
+```sway
+{{#include ../../code/connect_four/src/events.sw:event}}
+```
 
 ## my_library.sw
 
