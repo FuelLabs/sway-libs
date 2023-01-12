@@ -77,9 +77,11 @@ Run the tests:
 cargo test
 ```
 
+Any instructions related to using a specific library should be found within the README.md of that library.
+
 > **Note**
 > All projects currently use `forc v0.32.2`, `fuels-rs v0.33.0` and `fuel-core 0.15.1`.
 
 ## Contributing
 
-Check [CONTRIBUTING.md](./CONTRIBUTING.md) for more info!
+Check out the [book](https://fuellabs.github.io/sway-libs/book/index.html) for more info!
