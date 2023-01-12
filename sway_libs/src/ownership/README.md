@@ -4,6 +4,9 @@ The Ownership library provides a way to block users other than a single "owner" 
 
 It is important to note that unlike Solidity, Sway does not use constructors. When a contract is deployed there is no owner until one is set. It is important to implement a constructor where the owner is initalized.
 
+> **Note**
+> Storage in libraries is not offically supported by Sway. Current storage uses a hash key for manual storage management and will be updated when https://github.com/FuelLabs/sway/issues/2585 is resolved.
+
 For more information please see the [specification](./SPECIFICATION.md).
 
 # Using the Library
