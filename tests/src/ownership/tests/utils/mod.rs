@@ -21,15 +21,36 @@ pub mod abi_calls {
     }
 
     pub async fn renounce_ownership(contract: &OwnershipLib) -> FuelCallResponse<()> {
-        contract.methods().renounce_ownership().call().await.unwrap()
+        contract
+            .methods()
+            .renounce_ownership()
+            .call()
+            .await
+            .unwrap()
     }
 
-    pub async fn set_ownership(contract: &OwnershipLib, new_owner: Identity) -> FuelCallResponse<()> {
-        contract.methods().set_ownership(new_owner).call().await.unwrap()
+    pub async fn set_ownership(
+        contract: &OwnershipLib,
+        new_owner: Identity,
+    ) -> FuelCallResponse<()> {
+        contract
+            .methods()
+            .set_ownership(new_owner)
+            .call()
+            .await
+            .unwrap()
     }
 
-    pub async fn transfer_ownership(contract: &OwnershipLib, new_owner: Identity) -> FuelCallResponse<()> {
-        contract.methods().transfer_ownership(new_owner).call().await.unwrap()
+    pub async fn transfer_ownership(
+        contract: &OwnershipLib,
+        new_owner: Identity,
+    ) -> FuelCallResponse<()> {
+        contract
+            .methods()
+            .transfer_ownership(new_owner)
+            .call()
+            .await
+            .unwrap()
     }
 }
 

@@ -1,4 +1,7 @@
-use crate::ownership::tests::utils::{abi_calls::{owner, renounce_ownership, set_ownership}, test_helpers::setup};
+use crate::ownership::tests::utils::{
+    abi_calls::{owner, renounce_ownership, set_ownership},
+    test_helpers::setup,
+};
 use fuels::prelude::Identity;
 
 mod success {
