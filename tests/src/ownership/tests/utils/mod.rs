@@ -41,6 +41,10 @@ pub mod abi_calls {
             .unwrap()
     }
 
+    pub async fn state(contract: &OwnershipLib) -> State {
+        contract.methods().state().call().await.unwrap().value
+    }
+
     pub async fn transfer_ownership(
         contract: &OwnershipLib,
         new_owner: Identity,
