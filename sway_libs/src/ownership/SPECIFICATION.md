@@ -26,6 +26,10 @@ Only callable by the current owner, this function will remove the owner.
 
 This function will store a new owner upon initalization.
 
+### `state()`
+
+This function will return the current state of ownership, whether it be initialized, uninitialized, or revoked.
+
 ### `transfer_ownership()`
 
 Only callable by the current owner, this function will transfer ownership to another user.
