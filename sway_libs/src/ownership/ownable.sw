@@ -26,7 +26,7 @@ pub fn renounce_ownership() {
     store(OWNER, Option::None::<Identity>());
 
     log(OwnershipRenounced {
-        previous_owner:  msg_sender().unwrap(),
+        previous_owner: msg_sender().unwrap(),
     });
 }
 
@@ -45,6 +45,6 @@ pub fn transfer_ownership(new_owner: Identity) {
 
     log(OwnershipTransferred {
         new_owner,
-        previous_owner:  msg_sender().unwrap(),
+        previous_owner: msg_sender().unwrap(),
     });
 }
