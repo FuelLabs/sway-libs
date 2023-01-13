@@ -22,12 +22,11 @@ pub fn owner() -> Option<Identity> {
 
 #[storage(read, write)]
 pub fn renounce_ownership() {
-    let previous_owner = get::<Option<Identity>>(OWNER);
     only_owner();
     store(OWNER, Option::None::<Identity>());
 
     log(OwnershipRenounced {
-        previous_owner: previous_owner.unwrap(),
+        previous_owner:  msg_sender().unwrap(),
     });
 }
 
@@ -41,12 +40,11 @@ pub fn set_ownership(new_owner: Identity) {
 
 #[storage(read, write)]
 pub fn transfer_ownership(new_owner: Identity) {
-    let previous_owner = get::<Option<Identity>>(OWNER);
     only_owner();
     store(OWNER, Option::Some(new_owner));
 
     log(OwnershipTransferred {
         new_owner,
-        previous_owner: previous_owner.unwrap(),
+        previous_owner:  msg_sender().unwrap(),
     });
 }
