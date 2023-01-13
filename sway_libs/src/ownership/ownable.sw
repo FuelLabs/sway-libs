@@ -36,7 +36,7 @@ pub fn renounce_ownership() {
 
 #[storage(read, write)]
 pub fn set_ownership(new_owner: Identity) {
-    require(get::<State>(STATE) == State::Uninitialized, AccessError::OwnerExists);
+    require(get::<State>(STATE) == State::Uninitialized, AccessError::AlreadyInitialized);
 
     store(OWNER, Option::Some(new_owner));
     store(STATE, State::Initialized);

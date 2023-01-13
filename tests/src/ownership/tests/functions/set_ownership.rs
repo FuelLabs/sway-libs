@@ -35,7 +35,7 @@ mod reverts {
     use super::*;
 
     #[tokio::test]
-    #[should_panic(expected = "OwnerExists")]
+    #[should_panic(expected = "AlreadyInitialized")]
     async fn when_ownership_already_set() {
         let (_deployer, owner1, owner2) = setup().await;
 
@@ -46,7 +46,7 @@ mod reverts {
     }
 
     #[tokio::test]
-    #[should_panic(expected = "OwnerExists")]
+    #[should_panic(expected = "AlreadyInitialized")]
     async fn when_ownership_revoked() {
         let (_deployer, owner1, owner2) = setup().await;
 
