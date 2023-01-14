@@ -96,11 +96,11 @@ pub mod test_helpers {
         let wallet = launch_provider_and_get_wallet().await;
 
         let contract_id = Contract::deploy(
-            "./test_projects/storagemapvec/out/debug/storagemapvec.bin",
+            "src/storagemapvec/out/debug/storagemapvec.bin",
             &wallet,
             TxParameters::default(),
             StorageConfiguration::with_storage_path(Some(String::from(
-                "./test_projects/storagemapvec/out/debug/storagemapvec-storage_slots.json",
+                "src/storagemapvec/out/debug/storagemapvec-storage_slots.json",
             ))),
         )
         .await
