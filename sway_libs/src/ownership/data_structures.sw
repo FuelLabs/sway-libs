@@ -2,14 +2,16 @@ library data_structures;
 
 pub enum State {
     Uninitialized: (),
-    Initialized: (),
+    Initialized: Identity,
     Revoked: (),
 }
 
 impl core::ops::Eq for State {
     fn eq(self, other: Self) -> bool {
         match (self, other) {
-            (State::Initialized, State::Initialized) => true,
+            (State::Initialized(owner1), State::Initialized(owner2)) => {
+                owner1 == owner2
+            },
             (State::Uninitialized, State::Uninitialized) => true,
             (State::Revoked, State::Revoked) => true,
             _ => false,

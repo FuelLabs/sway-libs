@@ -1,5 +1,5 @@
 use crate::ownership::tests::utils::{
-    abi_calls::{owner, renounce_ownership, set_ownership, state},
+    abi_calls::{owner, renounce_ownership, set_ownership},
     ownership_lib_mod::State,
     test_helpers::setup,
 };
@@ -16,16 +16,16 @@ mod success {
         let owner1_identity = Identity::Address(owner1.wallet.address().into());
         set_ownership(&owner1.contract, owner1_identity.clone()).await;
 
-        assert_eq!(owner(&owner1.contract).await, Some(owner1_identity));
-        assert!(matches!(
-            state(&owner1.contract).await,
-            State::Initialized()
-        ));
+        let owner_enum = match owner(&owner1.contract).await {
+            State::Initialized(owner) => Some(owner),
+            _ => None,
+        };
+        assert!(owner_enum.is_some());
+        assert_eq!(owner_enum.unwrap(), owner1_identity);
 
         renounce_ownership(&owner1.contract).await;
 
-        assert_eq!(owner(&owner1.contract).await, None);
-        assert!(matches!(state(&owner1.contract).await, State::Revoked()));
+        assert!(matches!(owner(&owner1.contract).await, State::Revoked()));
     }
 }
 

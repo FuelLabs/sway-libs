@@ -1,18 +1,23 @@
 contract;
 
-use sway_libs::ownable::{data_structures::State, only_owner, owner, renounce_ownership, set_ownership, state, transfer_ownership};
+use sway_libs::ownable::{
+    data_structures::State,
+    only_owner,
+    owner,
+    renounce_ownership,
+    set_ownership,
+    transfer_ownership,
+};
 
 abi OwnableTest {
     #[storage(read)]
     fn only_owner();
     #[storage(read)]
-    fn owner() -> Option<Identity>;
+    fn owner() -> State;
     #[storage(read, write)]
     fn renounce_ownership();
     #[storage(read, write)]
     fn set_ownership(new_owner: Identity);
-    #[storage(read)]
-    fn state() -> State;
     #[storage(read, write)]
     fn transfer_ownership(new_owner: Identity);
 }
@@ -24,7 +29,7 @@ impl OwnableTest for Contract {
     }
 
     #[storage(read)]
-    fn owner() -> Option<Identity> {
+    fn owner() -> State {
         owner()
     }
 
@@ -36,11 +41,6 @@ impl OwnableTest for Contract {
     #[storage(read, write)]
     fn set_ownership(new_owner: Identity) {
         set_ownership(new_owner);
-    }
-
-    #[storage(read)]
-    fn state() -> State {
-        state()
     }
 
     #[storage(read, write)]

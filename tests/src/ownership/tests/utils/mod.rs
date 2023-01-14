@@ -16,7 +16,7 @@ pub mod abi_calls {
         contract.methods().only_owner().call().await.unwrap()
     }
 
-    pub async fn owner(contract: &OwnershipLib) -> Option<Identity> {
+    pub async fn owner(contract: &OwnershipLib) -> State {
         contract.methods().owner().call().await.unwrap().value
     }
 
@@ -39,10 +39,6 @@ pub mod abi_calls {
             .call()
             .await
             .unwrap()
-    }
-
-    pub async fn state(contract: &OwnershipLib) -> State {
-        contract.methods().state().call().await.unwrap().value
     }
 
     pub async fn transfer_ownership(

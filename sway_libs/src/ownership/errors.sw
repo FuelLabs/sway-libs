@@ -1,6 +1,6 @@
 library errors;
 
 pub enum AccessError {
-    AlreadyInitialized: (),
+    CannotReinitialized: (),
     NotOwner: (),
 }
