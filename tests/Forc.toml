@@ -9,6 +9,7 @@ members = [
   "./src/signed_integers/signed_i64",
   "./src/signed_integers/signed_i128",
   "./src/signed_integers/signed_i256",
+  "./src/storagemapvec",
   "./src/string",
   "./src/unsigned_numbers/ufp64_div_test",
   "./src/unsigned_numbers/ufp64_exp_test",
