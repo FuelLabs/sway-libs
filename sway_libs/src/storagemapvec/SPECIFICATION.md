@@ -1,47 +1,39 @@
 # Overview
 
-This document provides an overview of the Merkle Proof library.
+This document provides an overview of the StorageMapVec library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
 # Use Cases
 
-A common use case for Merkle Tree verification is airdrops. An airdrop is a method of distribution a set amount of tokens to a specified number of users. These often include a list of addresses and amounts. By posting the root hash, users can provide a proof and claim their airdrop.
+Any situation where you would want to create a mapping of vectors in storage would be a good place to use StorageMapVec, eg usecase would be storing a list of orders for every Identity, which would require a StorageMap<Identity, StorageVec<Order>>. However as using StorageVecs inside StorageMaps is not possible yet due to an implementation detail, you must use StorageMapVec to do the same.
 
 ## Public Functions
 
-### `leaf_digest`
+### `push`
+The `push` function is used to push an item to the end of the vector. It takes two arguments, the key to the vector and the item to push. 
 
-The `leaf_digest` function is used to compute leaf hash of a Merkle Tree. Given the data provided, it returns the leaf hash following [RFC-6962](https://tools.ietf.org/html/rfc6962) as described by `MTH({d(0)}) = SHA-256(0x00 || d(0))`.
+### `pop`
+The `pop` function is used to pop the last item from the vector. It takes one argument, the key to the vector.
 
-### `node_digest`
+### `get`
+The `get` function is used to get an item from the vector. It takes two arguments, the key to the vector and the index of the item to get.
 
-The `node_digest` function is used to complute a node within a Merkle Tree. Given a left and right node, it returns the node hash following [RFC-6962](https://tools.ietf.org/html/rfc6962) as described by `MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))`.
+### `set`
+The `set` function is used to set an item in the vector. It takes three arguments, the key to the vector, the index of the item to set and the item to set.
 
-### `process_proof`
+### `len`
+The `len` function is used to get the length of the vector. It takes one argument, the key to the vector.
 
-The `process_proof` function will compute the Merkle root from a Merkle Proof. Given a leaf, the key for the leaf, the corresponding proof, and number of leaves in the Merkle Tree, the root of the Merkle Tree will be returned.
+### `swap`
+The `swap` function is used to swap the position of two items in the vector. It takes three arguments, the key to the vector, the index of the first item and the index of the second item.
 
-### `verify_proof`
+### `swap_remove`
+The `swap_remove` function is used to swap the position of the given item with the last item in the vector and then pop the last item. It takes two arguments, the key to the vector and the index of the item to remove.
 
-The `verify_proof` function will verify a Merkle Proof against a Merkle root. Given a Merkle root, a leaf, the key for the leaf, the corresponding proof, and the number of leaves in the Merkle Tree, a `bool` will be returned as to whether the proof is valid.
+### `remove`
 
-# Specification
+WARNING: This function is very expensive with large vectors. It is recommended to use `swap_remove` instead.
 
-All cryptographic primitives follow the [Fuel Specs](https://github.com/FuelLabs/fuel-specs/blob/master/specs/protocol/cryptographic_primitives.md).
+The `remove` function is used to remove the item at the given index and then move all items after the given index to the left by one. It takes two arguments, the key to the vector and the index of the item to remove.
 
-## Hashing 
-
-All hashing is done with SHA-2-256 (also known as SHA-256), defined in [FIPS 180-4](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf).
-
-## Merkle Trees
-
-Currently only one tree structure is supported, the Binary Merkle Tree. Implementation for a Binary Merkle Sum Tree and Sparse Merkle Tree found in the [fuel-merkle](https://github.com/FuelLabs/fuel-merkle) repository will be added soon. 
-
-A Sparse Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/18) and Sum Merkle Tree proof can be tracked [here](https://github.com/FuelLabs/sway-libs/issues/17).
-
-### Binary Merkle Tree
-
-Binary Merkle trees are constructed in the same fashion as described in [Certificate Transparency (RFC-6962)](https://tools.ietf.org/html/rfc6962). Leaves are hashed once to get leaf node values and internal node values are the hash of the concatenation of their children (either leaf nodes or other internal nodes).
-
-For more information please check out the offical [Fuel Specs](https://github.com/FuelLabs/fuel-specs/blob/master/specs/protocol/cryptographic_primitives.md#binary-merkle-tree).
