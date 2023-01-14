@@ -3,7 +3,7 @@ use fuels::prelude::*;
 // Load abi from json
 abigen!(
     TestContract,
-    "test_projects/storagemapvec/out/debug/storagemapvec-abi.json"
+    "src/storagemapvec/out/debug/storagemapvec-abi.json"
 );
 
 pub mod abi_calls {
