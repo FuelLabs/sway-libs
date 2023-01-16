@@ -36,7 +36,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
 - [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
-- [Unsigned Fixed Point Number](./libs/fixed_point/ufp/) is an interface to implement fixed-point numbers.
+- [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 - [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type
 
 ## Using a library
