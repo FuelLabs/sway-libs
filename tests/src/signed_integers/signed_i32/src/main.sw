@@ -1,6 +1,6 @@
 script;
 
-use sway_libs::i32::I32;
+use signed_integers::i32::I32;
 
 fn main() -> bool {
     let one = I32 { underlying: 1u32 };

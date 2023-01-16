@@ -1,0 +1,10 @@
+[workspace]
+members = [
+  "fixed_point",
+  "merkle_proof",
+  "nft",
+  "ownership",
+  "signed_integers",
+  "storagemapvec",
+  "string",
+]

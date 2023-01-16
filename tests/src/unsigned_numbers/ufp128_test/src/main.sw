@@ -1,7 +1,7 @@
 script;
 
+use fixed_point::ufp128::UFP128;
 use std::u128::U128;
-use sway_libs::ufp128::UFP128;
 
 fn main() -> bool {
     // arithmetic

@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::storagemapvec::StorageMapVec;
+use storagemapvec::StorageMapVec;
 
 storage {
     mapvec: StorageMapVec<u64, u64> = StorageMapVec {},
