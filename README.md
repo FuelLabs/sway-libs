@@ -55,7 +55,7 @@ use sway_libs::<library_name>::<library_function>;
 For example, to import the Merkle Proof library use the following statement:
 
 ```rust
-sway_libs::binary_merkle_proof::verify_proof;
+use sway_libs::binary_merkle_proof::verify_proof;
 ```
 
 ## Running Tests
