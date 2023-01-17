@@ -10,7 +10,13 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the `UFP64` or `UFP128` type it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [README.md](../../../../../README.md).
+First, add the `fixed_point` library as a dependency in your Forc.toml like so:
+
+```toml
+fixed_point = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
+```
+
+In order to use the `UFP64` or `UFP128` types, import them into your Sway project like so.
 
 ```rust
 use fixed_point::ufp64::UFP64;

@@ -68,9 +68,9 @@ approve(approved_user, token_id);
 There are a number of different extensions which you may use to further enchance your non-fungible tokens. 
 
 These include:
-1. [Metadata](./extensions/meta_data/meta_data.sw)
-2. [Burning functionality](./extensions/burnable/burnable.sw)
-3. [Administrative capabilities](./extensions/administrator/administrator.sw)
-4. [Supply limits](./extensions/supply/supply.sw)
+1. [Metadata](./src/extensions/meta_data/meta_data.sw)
+2. [Burning functionality](./src/extensions/burnable/burnable.sw)
+3. [Administrative capabilities](./src/extensions/administrator/administrator.sw)
+4. [Supply limits](./src/extensions/supply/supply.sw)
 
 For more information please see the [specification](./SPECIFICATION.md).

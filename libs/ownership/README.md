@@ -13,10 +13,16 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the `Ownership` library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml in your project, please see the [README.md](../../../README.md).
+In order to use the `ownership` library it must be added to the Forc.toml file and then imported into your Sway project.
+
+```toml
+ownership = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
+```
+
+You may import items like so:
 
 ```rust
-use sway_libs::ownable::{only_owner, owner, set_ownership};
+use ownership::ownable::{only_owner, owner, set_ownership};
 ```
 
 Once imported, an owner can be set by calling the `set_ownership` function. 
