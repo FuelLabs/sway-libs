@@ -4,10 +4,6 @@ Merkle trees allow for on-chain verification of off-chain data. With the merkle 
 
 More information can be found in the [specification](./SPECIFICATION.md).
 
-## Known Issues
-
-Due to the Fuel VM padding of copy types smaller than one word, the current hashing of the leaf and node values do not match RFC-6962. The present implementation is the equavalent of hashing a `u64` as opposed to the standard `u8`. As a result, hashing of smaller sized copy types may result in unexpected behavior. For example, the `sha-256(0u8)` will result in the same hash as `sha-256(0u64)`. This will cause an incompatability with the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) repository. The issue regarding this can be tracked [here](https://github.com/FuelLabs/sway/issues/2594).
-
 # Using the Library
 
 ## Using the Merkle Proof Library In Sway
@@ -49,7 +45,10 @@ To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in
 let mut tree = MerkleTree::new();
 let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
 for datum in leaves.iter() {
-    tree.push(datum);
+    let mut hasher = Sha256::new();
+    hasher.update(&datum);
+    let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+    tree.push(hash);
 }
 ```
 
