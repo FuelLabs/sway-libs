@@ -1,6 +1,6 @@
 library binary_merkle_proof;
 
-use std::{bytes::Bytes, hash::sha256, intrinsics::{size_of,size_of_val,is_reference_type}};
+use std::{bytes::Bytes, hash::sha256};
 
 pub enum ProofError {
     InvalidKey: (),
@@ -30,11 +30,12 @@ pub fn leaf_digest(data: b256) -> b256 {
     __addr_of(data).copy_bytes_to(b256_as_bytes.buf.ptr, 32);
 
     let bytes = bytes_u8.join(b256_as_bytes);
+
     
     // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
     asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
-        s256 hash ptr bytes; 
-        hash: b256 
+        s256 hash ptr bytes;
+        hash: b256
     }
 }
 
@@ -59,11 +60,12 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 
     let left_right_as_bytes = left_as_bytes.join(right_as_bytes);
     let bytes = bytes_u8.join(left_right_as_bytes);
+
     
     // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
     asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
-        s256 hash ptr bytes; 
-        hash: b256 
+        s256 hash ptr bytes;
+        hash: b256
     }
 }
 

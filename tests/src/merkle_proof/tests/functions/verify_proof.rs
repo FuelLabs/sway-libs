@@ -18,15 +18,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            verify_proof(
-                &instance,
-                key + 1,
-                leaf,
-                root,
-                leaves.len() as u64,
-                proof
-            )
-            .await,
+            verify_proof(&instance, key + 1, leaf, root, leaves.len() as u64, proof).await,
             false
         );
     }
