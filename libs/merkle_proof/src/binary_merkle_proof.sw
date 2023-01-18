@@ -20,8 +20,6 @@ pub const NODE = 1u8;
 ///
 /// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {
-    let mut result_buffer: b256 = b256::min();
-
     // TODO: Update to use From<T> once https://github.com/FuelLabs/sway/issues/3810 is implemented
     let mut bytes_u8 = Bytes::with_capacity(1);
     let mut b256_as_bytes = Bytes::with_capacity(32);
@@ -31,7 +29,8 @@ pub fn leaf_digest(data: b256) -> b256 {
 
     let bytes = bytes_u8.join(b256_as_bytes);
 
-        // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
+    // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
+    let mut result_buffer: b256 = b256::min();
     asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
         s256 hash ptr bytes;
         hash: b256
@@ -45,8 +44,6 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    let mut result_buffer: b256 = b256::min();
-
     // TODO: Update to use From<T> once https://github.com/FuelLabs/sway/issues/3810 is implemented
     let mut bytes_u8 = Bytes::with_capacity(1);
     let mut left_as_bytes = Bytes::with_capacity(32);
@@ -60,7 +57,8 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
     let left_right_as_bytes = left_as_bytes.join(right_as_bytes);
     let bytes = bytes_u8.join(left_right_as_bytes);
 
-        // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
+    // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
+    let mut result_buffer: b256 = b256::min();
     asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
         s256 hash ptr bytes;
         hash: b256
