@@ -7,7 +7,7 @@ use sha2::{Digest, Sha256};
 
 abigen!(
     TestMerkleProofLib,
-    "src/merkle_proof/out/debug/merkle_proof-abi.json"
+    "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
 );
 
 pub mod abi_calls {
@@ -230,7 +230,7 @@ pub mod test_helpers {
         let wallet = launch_provider_and_get_wallet().await;
 
         let contract_id = Contract::deploy(
-            "./src/merkle_proof/out/debug/merkle_proof.bin",
+            "./src/merkle_proof/out/debug/merkle_proof_test.bin",
             &wallet,
             TxParameters::default(),
             StorageConfiguration::default(),

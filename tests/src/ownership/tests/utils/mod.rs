@@ -1,7 +1,10 @@
 use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
-abigen!(OwnershipLib, "src/ownership/out/debug/ownership-abi.json");
+abigen!(
+    OwnershipLib,
+    "src/ownership/out/debug/ownership_test-abi.json"
+);
 
 pub struct Metadata {
     pub contract: OwnershipLib,
@@ -75,7 +78,7 @@ pub mod test_helpers {
         let wallet3 = wallets.pop().unwrap();
 
         let id = Contract::deploy(
-            "src/ownership/out/debug/ownership.bin",
+            "src/ownership/out/debug/ownership_test.bin",
             &wallet1,
             TxParameters::default(),
             StorageConfiguration::default(),

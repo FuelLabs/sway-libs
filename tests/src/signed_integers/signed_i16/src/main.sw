@@ -1,6 +1,6 @@
 script;
 
-use sway_libs::i16::I16;
+use signed_integers::i16::I16;
 
 fn main() -> bool {
     let one = I16::from(1u16);
