@@ -1,6 +1,6 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{empty_sum_sha256, Bytes32, LEAF},
+    common::{empty_sum_sha256, Bytes32, LEAF, NODE},
 };
 use fuels::prelude::*;
 use sha2::{Digest, Sha256};
@@ -15,9 +15,11 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
+        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .leaf_digest(data)
+            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -29,9 +31,11 @@ pub mod abi_calls {
         left: Bits256,
         right: Bits256,
     ) -> Bits256 {
+        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .node_digest(left, right)
+            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -45,9 +49,11 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> Bits256 {
+        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .process_proof(key, leaf, num_leaves, proof)
+            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -62,9 +68,11 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> bool {
+        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
-            .verify_proof(key, root, leaf, num_leaves, proof)
+            .verify_proof(key, leaf, root, num_leaves, proof)
+            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -104,13 +112,18 @@ pub mod test_helpers {
     }
 
     pub async fn build_tree(
-        leaves: Vec<&[u8]>,
+        leaves: Vec<[u8; 1]>,
         key: u64,
     ) -> (MerkleTree, Bits256, Bits256, Vec<Bits256>) {
         let mut tree = MerkleTree::new();
+        let num_leaves = leaves.len();
 
-        for datum in leaves.iter() {
-            let _ = tree.push(datum);
+        for n in 0..num_leaves {
+            let mut hasher = Sha256::new();
+            hasher.update(&leaves[n]);
+            let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+
+            let _ = tree.push(&hash);
         }
 
         let merkle_root = tree.root();
@@ -158,7 +171,6 @@ pub mod test_helpers {
             }
         }
 
-        let node_u64: u64 = 1;
         let mut itterator = 0;
         // Build tree
         for i in 0..height {
@@ -167,7 +179,7 @@ pub mod test_helpers {
             // Create new depth
             while itterator < current_num_leaves {
                 let mut hasher = Sha256::new();
-                hasher.update(node_u64.to_be_bytes());
+                hasher.update(&[NODE]);
                 hasher.update(&nodes[itterator].hash);
                 hasher.update(&nodes[itterator + 1].hash);
                 let hash: Bytes32 = hasher.finalize().try_into().unwrap();
@@ -229,10 +241,14 @@ pub mod test_helpers {
     pub async fn merkle_proof_instance() -> TestMerkleProofLib {
         let wallet = launch_provider_and_get_wallet().await;
 
+        let gas_price = 0;
+        let gas_limit = 10_000_000;
+        let maturity = 0;
+
         let contract_id = Contract::deploy(
             "./src/merkle_proof/out/debug/merkle_proof.bin",
             &wallet,
-            TxParameters::default(),
+            TxParameters::new(Some(gas_price), Some(gas_limit), Some(maturity)),
             StorageConfiguration::default(),
         )
         .await
