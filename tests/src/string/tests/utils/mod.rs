@@ -1,7 +1,7 @@
 use fuels::{contract::call_response::FuelCallResponse, prelude::*};
 
 // Load abi from json
-abigen!(StringTestLib, "src/string/out/debug/string-abi.json");
+abigen!(StringTestLib, "src/string/out/debug/string_test-abi.json");
 
 pub mod abi_calls {
 
@@ -84,7 +84,7 @@ pub mod test_helpers {
         let wallet = wallets.pop().unwrap();
 
         let id = Contract::deploy(
-            "src/string/out/debug/string.bin",
+            "src/string/out/debug/string_test.bin",
             &wallet,
             TxParameters::default(),
             StorageConfiguration::default(),

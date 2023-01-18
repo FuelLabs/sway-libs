@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::ownable::{
+use ownership::ownable::{
     data_structures::State,
     only_owner,
     owner,

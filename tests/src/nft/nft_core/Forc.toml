@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "nft_core_test"
 
 [dependencies]
-sway_libs = { path = "../../../../sway_libs" }
+nft = { path = "../../../../libs/nft" }

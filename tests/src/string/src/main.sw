@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::string::String;
+use string::String;
 
 const NUMBER0 = 0u8;
 const NUMBER1 = 1u8;

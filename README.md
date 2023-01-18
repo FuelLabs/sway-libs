@@ -31,32 +31,32 @@ These libraries contain helper functions, generalized standards, and other tools
 
 ### Libraries
 
-- [Binary Merkle Proof](./sway_libs/src/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
-- [Non-Fungible Token (NFT)](./sway_libs/src/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
-- [Ownership](./sway_libs/src/ownership/) is used to apply restrictions on functions such that only a single user may call them.
-- [String](./sway_libs/src/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
-- [Signed Integers](./sway_libs/src/signed_integers/) is an interface to implement signed integers.
-- [Unsigned Fixed Point Number](./sway_libs/src/fixed_point/ufp/) is an interface to implement fixed-point numbers.
-- [StorageMapVec](./sway_libs/src/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type
+- [Binary Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [Non-Fungible Token (NFT)](./libs/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
+- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
+- [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
+- [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
+- [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
+- [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type
 
 ## Using a library
 
 To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]` with the most recent release:
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
+merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 You may then import your desired library in your Sway Smart Contract as so:
 
 ```rust
-use sway_libs::<library_name>::<library_function>;
+use merkle_proof::<library_function>;
 ```
 
 For example, to import the Merkle Proof library use the following statement:
 
 ```rust
-use sway_libs::binary_merkle_proof::verify_proof;
+merkle_proof::binary_merkle_proof::verify_proof;
 ```
 
 ## Running Tests

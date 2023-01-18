@@ -1,7 +1,7 @@
 script;
 
+use fixed_point::ufp64::UFP64;
 use std::assert::assert;
-use sway_libs::ufp64::UFP64;
 
 fn main() -> bool {
     let one = UFP64::from_uint(1);

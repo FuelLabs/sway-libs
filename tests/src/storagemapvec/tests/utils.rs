@@ -3,7 +3,7 @@ use fuels::prelude::*;
 // Load abi from json
 abigen!(
     TestContract,
-    "src/storagemapvec/out/debug/storagemapvec-abi.json"
+    "src/storagemapvec/out/debug/storagemapvec_test-abi.json"
 );
 
 pub mod abi_calls {
@@ -96,11 +96,11 @@ pub mod test_helpers {
         let wallet = launch_provider_and_get_wallet().await;
 
         let contract_id = Contract::deploy(
-            "src/storagemapvec/out/debug/storagemapvec.bin",
+            "src/storagemapvec/out/debug/storagemapvec_test.bin",
             &wallet,
             TxParameters::default(),
             StorageConfiguration::with_storage_path(Some(String::from(
-                "src/storagemapvec/out/debug/storagemapvec-storage_slots.json",
+                "src/storagemapvec/out/debug/storagemapvec_test-storage_slots.json",
             ))),
         )
         .await

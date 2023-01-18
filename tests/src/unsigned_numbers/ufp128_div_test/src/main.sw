@@ -1,6 +1,6 @@
 script;
 
-use sway_libs::ufp128::UFP128;
+use fixed_point::ufp128::UFP128;
 
 fn main() -> bool {
     let zero = UFP128::from((0, 0));

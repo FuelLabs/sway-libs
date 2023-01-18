@@ -58,13 +58,13 @@ jobs:
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
         - name: Check Sway formatting
-          run: forc fmt --path sway_libs --check
+          run: forc fmt --path libs --check
 
         - name: Check Rust formatting
           run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
 
-        - name: Build sway-libs
-          run: forc build --path sway_libs
+        - name: Build All Libs
+          run: forc build --path libs
 
         - name: Build All Tests
           run: forc build --path tests

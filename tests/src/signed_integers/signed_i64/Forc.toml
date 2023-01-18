@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "i64_test"
 
 [dependencies]
-sway_libs = { path = "../../../../sway_libs" }
+signed_integers = { path = "../../../../libs/signed_integers" }

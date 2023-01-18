@@ -2,7 +2,7 @@
 authors = ["Fuel"]
 entry = "main.sw"
 license = "Apache-2.0"
-name = "storagemapvec"
+name = "storagemapvec_test"
 
 [dependencies]
-sway_libs = { path = "../../../sway_libs" }
+storagemapvec = { path = "../../../libs/storagemapvec" }
