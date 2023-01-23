@@ -7,4 +7,4 @@ name = "reentrancy_target_contract"
 [dependencies]
 reentrancy_attacker_abi = { path = "../reentrancy_attacker_abi" }
 reentrancy_target_abi = { path = "../reentrancy_target_abi" }
-sway_libs = { path = "../../../../libs" }
+reentrancy = { path = "../../../../libs/reentrancy" }
