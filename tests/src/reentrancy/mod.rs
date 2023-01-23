@@ -10,10 +10,12 @@ abigen!(
     "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract-abi.json",
 );
 
-const REENTRANCY_ATTACKER_BIN: &str = "src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract.bin";
+const REENTRANCY_ATTACKER_BIN: &str =
+    "src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract.bin";
 const REENTRANCY_ATTACKER_STORAGE: &str = "src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-storage_slots.json";
 
-const REENTRANCY_TARGET_BIN: &str = "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
+const REENTRANCY_TARGET_BIN: &str =
+    "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
 const REENTRANCY_TARGET_STORAGE: &str = "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
 
 pub async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
@@ -21,7 +23,7 @@ pub async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract,
         REENTRANCY_ATTACKER_BIN,
         &wallet,
         TxParameters::default(),
-        StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string()))
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string())),
     )
     .await
     .unwrap();
@@ -36,7 +38,7 @@ pub async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, Con
         REENTRANCY_TARGET_BIN,
         &wallet,
         TxParameters::default(),
-        StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string()))
+        StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string())),
     )
     .await
     .unwrap();
@@ -62,7 +64,7 @@ mod success {
             .call()
             .await
             .unwrap();
-    
+
         assert_eq!(result.value, true);
     }
 
