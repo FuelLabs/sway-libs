@@ -14,6 +14,10 @@ The String library can be used anytime a string's length is unknown at compile t
 
 ### `as_bytes()`
 
+Convert the `String` struct to the `Bytes` type. 
+
+### `as_vec()`
+
 Convert the `String` struct to a `Vec` of `u8` bytes. 
 
 ### `capacity()`
