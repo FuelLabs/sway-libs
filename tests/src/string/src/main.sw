@@ -451,6 +451,10 @@ impl StringTest for Contract {
         string.push(NUMBER1);
         string.push(NUMBER2);
 
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
+        assert(string.nth(2).unwrap() == NUMBER2);
+
         string.set(0, NUMBER3);
         string.set(1, NUMBER4);
         string.set(2, NUMBER5);
@@ -488,14 +492,20 @@ impl StringTest for Contract {
         string.push(NUMBER1);
         string.push(NUMBER2);
 
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(1).unwrap() == NUMBER1);
         string.swap(0, 1);
         assert(string.nth(0).unwrap() == NUMBER1);
         assert(string.nth(1).unwrap() == NUMBER0);
 
+        assert(string.nth(1).unwrap() == NUMBER0);
+        assert(string.nth(2).unwrap() == NUMBER2);
         string.swap(1, 2);
         assert(string.nth(1).unwrap() == NUMBER2);
         assert(string.nth(2).unwrap() == NUMBER0);
 
+        assert(string.nth(0).unwrap() == NUMBER1);
+        assert(string.nth(2).unwrap() == NUMBER0);
         string.swap(0, 2);
         assert(string.nth(0).unwrap() == NUMBER0);
         assert(string.nth(2).unwrap() == NUMBER1);
@@ -559,7 +569,6 @@ impl StringTest for Contract {
 
         string.clear();
         assert(string.capacity() == 4);
-
         let mut string = String::with_capacity(4);
 
         assert(string.capacity() == 4);

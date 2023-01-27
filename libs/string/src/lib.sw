@@ -33,7 +33,7 @@ impl String {
     ///
     /// * `bytes` - The bytes which will be converted into a `String`.
     pub fn from_bytes(bytes: Bytes) -> String {
-        String { bytes }
+        Self { bytes }
     }
 
     /// Converts a vector of bytes to a `String`.
@@ -42,7 +42,7 @@ impl String {
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
     pub fn from_utf8(mut bytes: Vec<u8>) -> String {
-        String {
+        Self {
             bytes: Bytes::from_vec_u8(bytes),
         }
     }
@@ -147,7 +147,7 @@ impl String {
     ///
     /// * `other` - The String to join to self.
     pub fn join(ref mut self, other: self) -> Self {
-        String::from_bytes(self.bytes.join(other.as_bytes()))
+        Self::from_bytes(self.bytes.join(other.as_bytes()))
     }
 
     /// Splits a `String` at the given index, modifying the original and returning the right-hand side `String`.
@@ -156,6 +156,6 @@ impl String {
     ///
     /// * `index` - The index to split the original String at.
     pub fn split(ref mut self, index: u64) -> String {
-        String::from_bytes(self.bytes.split(index))
+        Self::from_bytes(self.bytes.split(index))
     }
 }
