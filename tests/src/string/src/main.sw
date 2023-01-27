@@ -15,6 +15,7 @@ const NUMBER8 = 8u8;
 
 abi StringTest {
     fn test_as_bytes();
+    fn test_as_vec();
     fn test_capacity();
     fn test_clear();
     fn test_from_bytes();
@@ -50,6 +51,33 @@ impl StringTest for Contract {
 
         string.push(NUMBER1);
         let mut bytes = string.as_bytes();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
+
+        let result_string = string.pop().unwrap();
+        let result_bytes = bytes.pop().unwrap();
+        assert(result_bytes == result_string);
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
+    }
+
+    fn test_as_vec() {
+        let mut string = String::new();
+
+        let bytes = string.as_vec();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+
+        string.push(NUMBER0);
+        let bytes = string.as_vec();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
+
+        string.push(NUMBER1);
+        let mut bytes = string.as_vec();
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
         assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
@@ -262,7 +290,6 @@ impl StringTest for Contract {
 
         string.push(NUMBER5);
         assert(string.len() == 6);
-
         string.push(NUMBER6);
         assert(string.len() == 7);
 
@@ -278,6 +305,7 @@ impl StringTest for Contract {
         string.clear();
         assert(string.len() == 0);
     }
+
     fn test_new() {
         let mut string = String::new();
 
@@ -343,7 +371,6 @@ impl StringTest for Contract {
 
         assert(string.len() == 2);
         assert(string.pop().unwrap() == NUMBER1);
-
         assert(string.len() == 1);
         assert(string.pop().unwrap() == NUMBER0);
 

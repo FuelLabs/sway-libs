@@ -1,4 +1,5 @@
 mod as_bytes;
+mod as_vec;
 mod capacity;
 mod clear;
 mod from_bytes;

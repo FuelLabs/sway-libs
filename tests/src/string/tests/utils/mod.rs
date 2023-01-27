@@ -11,6 +11,10 @@ pub mod abi_calls {
         contract.methods().test_as_bytes().call().await.unwrap()
     }
 
+    pub async fn as_vec(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_as_vec().call().await.unwrap()
+    }
+
     pub async fn capacity(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_capacity().call().await.unwrap()
     }
