@@ -1,17 +1,12 @@
 library string;
 
-use std::bytes::Bytes;
+use std::{bytes::Bytes, convert::From};
 
 pub struct String {
     bytes: Bytes,
 }
 
 impl String {
-    /// Returns the bytes stored for the `String`.
-    pub fn as_bytes(self) -> Bytes {
-        self.bytes
-    }
-
     /// Returns a `Vec<u8>` of the bytes stored for the `String`.
     pub fn as_vec(self) -> Vec<u8> {
         self.bytes.into_vec_u8()
@@ -25,15 +20,6 @@ impl String {
     /// Truncates this `String` to a length of zero, removing all contents.
     pub fn clear(self) {
         self.bytes.clear()
-    }
-
-    /// Converts bytes to a `String`.
-    ///
-    /// # Arguments
-    ///
-    /// * `bytes` - The bytes which will be converted into a `String`.
-    pub fn from_bytes(bytes: Bytes) -> String {
-        Self { bytes }
     }
 
     /// Converts a vector of bytes to a `String`.
@@ -139,6 +125,18 @@ impl String {
     }
 }
 
+impl From<Bytes> for String {
+    fn from(b: Bytes) -> String {
+        let mut string = Self::new();
+        string.bytes = b;
+        string
+    }
+
+    fn into(self) -> Bytes {
+        self.bytes
+    }
+}
+
 // Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
 impl String {
     /// Joins two `String`s into a single larger `String`.
@@ -147,7 +145,7 @@ impl String {
     ///
     /// * `other` - The String to join to self.
     pub fn join(ref mut self, other: self) -> Self {
-        Self::from_bytes(self.bytes.join(other.as_bytes()))
+        Self::from(self.bytes.join(other.into()))
     }
 
     /// Splits a `String` at the given index, modifying the original and returning the right-hand side `String`.
@@ -156,6 +154,6 @@ impl String {
     ///
     /// * `index` - The index to split the original String at.
     pub fn split(ref mut self, index: u64) -> String {
-        Self::from_bytes(self.bytes.split(index))
+        Self::from(self.bytes.split(index))
     }
 }

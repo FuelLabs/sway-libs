@@ -12,10 +12,6 @@ The String library can be used anytime a string's length is unknown at compile t
 
 ## Public Functions
 
-### `as_bytes()`
-
-Convert the `String` struct to the `Bytes` type. 
-
 ### `as_vec()`
 
 Convert the `String` struct to a `Vec` of `u8` bytes. 
@@ -30,7 +26,7 @@ Returns the total amount of memory on the heap allocated to the `String` which c
 
 Truncates the `String` to a length of 0 and will appear empty. This does not clear the capacity of the `String`.
 
-### `from_bytes()`
+### `from()`
 
 A new instance of a `String` will be created from the `Bytes` type.
 
@@ -41,6 +37,10 @@ A new instance of a `String` will be created from a vector of `u8`'s.
 ### `insert()`
 
 Inserts a new byte at the specified index in the `String`. 
+
+### `into()`
+
+Convert the `String` struct to the `Bytes` type. 
 
 ### `is_empty()`
 

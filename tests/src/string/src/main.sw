@@ -14,13 +14,13 @@ const NUMBER7 = 7u8;
 const NUMBER8 = 8u8;
 
 abi StringTest {
-    fn test_as_bytes();
     fn test_as_vec();
     fn test_capacity();
     fn test_clear();
-    fn test_from_bytes();
+    fn test_from();
     fn test_from_utf8();
     fn test_insert();
+    fn test_into();
     fn test_is_empty();
     fn test_join();
     fn test_len();
@@ -36,33 +36,6 @@ abi StringTest {
 }
 
 impl StringTest for Contract {
-    fn test_as_bytes() {
-        let mut string = String::new();
-
-        let bytes = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-
-        string.push(NUMBER0);
-        let bytes = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
-
-        string.push(NUMBER1);
-        let mut bytes = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
-
-        let result_string = string.pop().unwrap();
-        let result_bytes = bytes.pop().unwrap();
-        assert(result_bytes == result_string);
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
-    }
-
     fn test_as_vec() {
         let mut string = String::new();
 
@@ -162,7 +135,7 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
-    fn test_from_bytes() {
+    fn test_from() {
         let mut bytes = Bytes::new();
 
         bytes.push(NUMBER0);
@@ -171,7 +144,7 @@ impl StringTest for Contract {
         bytes.push(NUMBER3);
         bytes.push(NUMBER4);
 
-        let string_from_bytes = String::from_bytes(bytes);
+        let string_from_bytes = String::from(bytes);
         assert(bytes.len() == string_from_bytes.len());
         assert(bytes.capacity() == string_from_bytes.capacity());
         assert(bytes.get(0).unwrap() == string_from_bytes.nth(0).unwrap());
@@ -216,6 +189,33 @@ impl StringTest for Contract {
 
         string.insert(NUMBER5, string.len() - 1);
         assert(string.nth(string.len() - 2).unwrap() == NUMBER5);
+    }
+
+    fn test_into() {
+        let mut string = String::new();
+
+        let bytes = string.into();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+
+        string.push(NUMBER0);
+        let bytes = string.into();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
+
+        string.push(NUMBER1);
+        let mut bytes = string.into();
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
+
+        let result_string = string.pop().unwrap();
+        let result_bytes = bytes.pop().unwrap();
+        assert(result_bytes == result_string);
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
+        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
     fn test_is_empty() {

@@ -1,10 +1,10 @@
-mod as_bytes;
 mod as_vec;
 mod capacity;
 mod clear;
-mod from_bytes;
+mod from;
 mod from_utf8;
 mod insert;
+mod into;
 mod is_empty;
 mod join;
 mod len;

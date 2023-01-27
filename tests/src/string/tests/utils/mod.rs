@@ -7,10 +7,6 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn as_bytes(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_as_bytes().call().await.unwrap()
-    }
-
     pub async fn as_vec(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_as_vec().call().await.unwrap()
     }
@@ -23,8 +19,8 @@ pub mod abi_calls {
         contract.methods().test_clear().call().await.unwrap()
     }
 
-    pub async fn from_bytes(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_from_bytes().call().await.unwrap()
+    pub async fn from(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_from().call().await.unwrap()
     }
 
     pub async fn from_utf8(contract: &StringTestLib) -> FuelCallResponse<()> {
@@ -33,6 +29,10 @@ pub mod abi_calls {
 
     pub async fn insert(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_insert().call().await.unwrap()
+    }
+
+    pub async fn into(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_into().call().await.unwrap()
     }
 
     pub async fn is_empty(contract: &StringTestLib) -> FuelCallResponse<()> {
