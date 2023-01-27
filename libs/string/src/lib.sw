@@ -12,6 +12,11 @@ impl String {
         self.bytes
     }
 
+    /// Returns a `Vec<u8>` of the bytes stored for the `String`.
+    pub fn as_vec(self) -> Vec<u8> {
+        self.bytes.into_vec_u8()
+    }
+
     /// Gets the amount of memory on the heap allocated to the `String`.
     pub fn capacity(self) -> u64 {
         self.bytes.capacity()
@@ -22,12 +27,21 @@ impl String {
         self.bytes.clear()
     }
 
+    /// Converts bytes to a `String`.
+    ///
+    /// # Arguments
+    ///
+    /// * `bytes` - The bytes which will be converted into a `String`.
+    pub fn from_bytes(bytes: Bytes) -> String {
+        String { bytes }
+    }
+
     /// Converts a vector of bytes to a `String`.
     ///
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(ref mut bytes: Vec<u8>) -> String {
+    pub fn from_utf8(mut bytes: Vec<u8>) -> String {
         String { bytes: Bytes::from_vec_u8(bytes) }
     }
 
@@ -49,7 +63,7 @@ impl String {
     /// Returns the number of bytes in the `String`, also referred to
     /// as its 'length'.
     pub fn len(self) -> u64 {
-        self.bytes.len
+        self.bytes.len()
     }
 
     /// Constructs a new instance of the `String` type.
@@ -91,6 +105,26 @@ impl String {
         self.bytes.remove(index)
     }
 
+    /// Updates a byte at position `index` with a new byte `value`.
+    ///
+    /// # Arguments
+    ///
+    /// * `index` - The index of the byte to be set.
+    /// * `byte` - The value of the byte to be set.
+    pub fn set(self, index: u64, byte: u8) {
+        self.bytes.set(index, value);
+    }
+
+    /// Swaps two bytes.
+    ///
+    /// # Arguments
+    ///
+    /// * `byte1_index` - The index of the first byte.
+    /// * `byte2_index` - The index of the second byte.
+    pub fn swap(ref mut self, byte1_index: u64, byte2_index: u64) {
+        self.bytes.swap(byte1_index, byte2_index);
+    }
+
     /// Constructs a new instance of the `String` type with the specified capacity.
     ///
     /// # Arguments
@@ -100,5 +134,26 @@ impl String {
         Self {
             bytes: Bytes::with_capacity(capacity),
         }
+    }
+}
+
+// Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
+impl String {
+    /// Joins two `Bytes` into a single larger `Bytes`.
+    ///
+    /// # Arguments
+    ///
+    /// * `other` - The String to join to self.
+    pub fn join(ref mut self, other: self) -> Self {
+        String::from_bytes(self.bytes.join(other.as_bytes()))
+    }
+
+    /// Splits a `String` at the given index, modifying the original and returning the right-hand side `String`.
+    ///
+    /// # Arguments
+    ///
+    /// * `index` - The index to split the original String at.
+    pub fn split(ref mut self, index: u64) -> String {
+        String::from_bytes(self.bytes.split(index))
     }
 }
