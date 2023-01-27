@@ -17,14 +17,19 @@ abi StringTest {
     fn test_as_bytes();
     fn test_capacity();
     fn test_clear();
+    fn test_from_bytes();
     fn test_from_utf8();
     fn test_insert();
     fn test_is_empty();
+    fn test_join();
     fn test_len();
     fn test_new();
     fn test_nth();
     fn test_pop();
     fn test_push();
+    fn test_set();
+    fn test_split();
+    fn test_swap();
     fn test_remove();
     fn test_with_capacity();
 }
@@ -34,26 +39,26 @@ impl StringTest for Contract {
         let mut string = String::new();
 
         let bytes = string.as_bytes();
-        assert(bytes.len == string.len());
-        assert(bytes.buf.cap == string.capacity());
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
 
         string.push(NUMBER0);
         let bytes = string.as_bytes();
-        assert(bytes.len == string.len());
-        assert(bytes.buf.cap == string.capacity());
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
         assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
 
         string.push(NUMBER1);
         let mut bytes = string.as_bytes();
-        assert(bytes.len == string.len());
-        assert(bytes.buf.cap == string.capacity());
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
         assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
 
         let result_string = string.pop().unwrap();
         let result_bytes = bytes.pop().unwrap();
         assert(result_bytes == result_string);
-        assert(bytes.len == string.len());
-        assert(bytes.buf.cap == string.capacity());
+        assert(bytes.len() == string.len());
+        assert(bytes.capacity() == string.capacity());
         assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
@@ -129,6 +134,23 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
+    fn test_from_bytes() {
+        let mut bytes = Bytes::new();
+
+        bytes.push(NUMBER0);
+        bytes.push(NUMBER1);
+        bytes.push(NUMBER2);
+        bytes.push(NUMBER3);
+        bytes.push(NUMBER4);
+
+        let string_from_bytes = String::from_bytes(bytes);
+        assert(bytes.len() == string_from_bytes.len());
+        assert(bytes.capacity() == string_from_bytes.capacity());
+        assert(bytes.get(0).unwrap() == string_from_bytes.nth(0).unwrap());
+        assert(bytes.get(1).unwrap() == string_from_bytes.nth(1).unwrap());
+        assert(bytes.get(2).unwrap() == string_from_bytes.nth(2).unwrap());
+    }
+
     fn test_from_utf8() {
         let mut vec: Vec<u8> = Vec::new();
 
@@ -195,6 +217,29 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
+    fn test_join() {
+        let mut string1 = String::new();
+        let mut string2 = String::new();
+
+        string1.push(NUMBER0);
+        string1.push(NUMBER1);
+        string1.push(NUMBER2);
+
+        string2.push(NUMBER3);
+        string2.push(NUMBER4);
+        string2.push(NUMBER5);
+
+        let string3 = string1.join(string2);
+
+        assert(string3.len() == 6);
+        assert(string3.nth(0).unwrap() == NUMBER0);
+        assert(string3.nth(1).unwrap() == NUMBER1);
+        assert(string3.nth(2).unwrap() == NUMBER2);
+        assert(string3.nth(3).unwrap() == NUMBER3);
+        assert(string3.nth(4).unwrap() == NUMBER4);
+        assert(string3.nth(5).unwrap() == NUMBER5);
+    }
+
     fn test_len() {
         let mut string = String::new();
 
@@ -233,7 +278,6 @@ impl StringTest for Contract {
         string.clear();
         assert(string.len() == 0);
     }
-
     fn test_new() {
         let mut string = String::new();
 
@@ -371,6 +415,63 @@ impl StringTest for Contract {
         string.push(NUMBER0);
         assert(string.nth(2).unwrap() == NUMBER0);
         assert(string.len() == 3);
+    }
+
+    fn test_set() {
+        let mut string = String::new();
+
+        string.push(NUMBER0);
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+
+        string.set(0, NUMBER3);
+        string.set(1, NUMBER4);
+        string.set(2, NUMBER5);
+
+        assert(string.len() == 3);
+        assert(string.nth(0).unwrap() == NUMBER3);
+        assert(string.nth(1).unwrap() == NUMBER4);
+        assert(string.nth(2).unwrap() == NUMBER5);
+    }
+
+    fn test_split() {
+        let mut string1 = String::new();
+
+        string1.push(NUMBER0);
+        string1.push(NUMBER1);
+        string1.push(NUMBER2);
+        string1.push(NUMBER3);
+
+        let string2 = string1.split(2);
+
+        assert(string1.len() == 2);
+        assert(string2.len() == 2);
+
+        assert(string1.nth(0).unwrap() == NUMBER0);
+        assert(string1.nth(1).unwrap() == NUMBER1);
+
+        assert(string2.nth(0).unwrap() == NUMBER2);
+        assert(string2.nth(1).unwrap() == NUMBER3);
+    }
+
+    fn test_swap() {
+        let mut string = String::new();
+
+        string.push(NUMBER0);
+        string.push(NUMBER1);
+        string.push(NUMBER2);
+
+        string.swap(0, 1);
+        assert(string.nth(0).unwrap() == NUMBER1);
+        assert(string.nth(1).unwrap() == NUMBER0);
+
+        string.swap(1, 2);
+        assert(string.nth(1).unwrap() == NUMBER2);
+        assert(string.nth(2).unwrap() == NUMBER0);
+
+        string.swap(0, 2);
+        assert(string.nth(0).unwrap() == NUMBER0);
+        assert(string.nth(2).unwrap() == NUMBER1);
     }
 
     fn test_remove() {
