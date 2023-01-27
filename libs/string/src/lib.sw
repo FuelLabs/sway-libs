@@ -139,7 +139,7 @@ impl String {
 
 // Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
 impl String {
-    /// Joins two `Bytes` into a single larger `Bytes`.
+    /// Joins two `String`s into a single larger `String`.
     ///
     /// # Arguments
     ///
