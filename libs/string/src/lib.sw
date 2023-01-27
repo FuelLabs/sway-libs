@@ -42,7 +42,9 @@ impl String {
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
     pub fn from_utf8(mut bytes: Vec<u8>) -> String {
-        String { bytes: Bytes::from_vec_u8(bytes) }
+        String {
+            bytes: Bytes::from_vec_u8(bytes),
+        }
     }
 
     /// Inserts a byte at the index within the `String`.
@@ -112,7 +114,7 @@ impl String {
     /// * `index` - The index of the byte to be set.
     /// * `byte` - The value of the byte to be set.
     pub fn set(self, index: u64, byte: u8) {
-        self.bytes.set(index, value);
+        self.bytes.set(index, byte);
     }
 
     /// Swaps two bytes.
