@@ -1,12 +1,14 @@
 library string;
 
+use std::bytes::Bytes;
+
 pub struct String {
-    bytes: Vec<u8>,
+    bytes: Bytes,
 }
 
 impl String {
     /// Returns the bytes stored for the `String`.
-    pub fn as_bytes(self) -> Vec<u8> {
+    pub fn as_bytes(self) -> Bytes {
         self.bytes
     }
 
@@ -25,8 +27,8 @@ impl String {
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(bytes: Vec<u8>) -> String {
-        String { bytes }
+    pub fn from_utf8(ref mut bytes: Vec<u8>) -> String {
+        String { bytes: Bytes::from_vec_u8(bytes) }
     }
 
     /// Inserts a byte at the index within the `String`.
@@ -47,13 +49,13 @@ impl String {
     /// Returns the number of bytes in the `String`, also referred to
     /// as its 'length'.
     pub fn len(self) -> u64 {
-        self.bytes.len()
+        self.bytes.len
     }
 
     /// Constructs a new instance of the `String` type.
     pub fn new() -> Self {
         Self {
-            bytes: Vec::new(),
+            bytes: Bytes::new(),
         }
     }
 
@@ -96,7 +98,7 @@ impl String {
     /// * `capacity` - The specified amount of memory on the heap to be allocated for the `String`.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
-            bytes: Vec::with_capacity(capacity),
+            bytes: Bytes::with_capacity(capacity),
         }
     }
 }

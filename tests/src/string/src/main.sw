@@ -1,5 +1,6 @@
 contract;
 
+use std::bytes::Bytes;
 use string::String;
 
 const NUMBER0 = 0u8;
@@ -32,27 +33,27 @@ impl StringTest for Contract {
     fn test_as_bytes() {
         let mut string = String::new();
 
-        let bytes: Vec<u8> = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
+        let bytes = string.as_bytes();
+        assert(bytes.len == string.len());
+        assert(bytes.buf.cap == string.capacity());
 
         string.push(NUMBER0);
-        let bytes: Vec<u8> = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
+        let bytes = string.as_bytes();
+        assert(bytes.len == string.len());
+        assert(bytes.buf.cap == string.capacity());
         assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
 
         string.push(NUMBER1);
-        let mut bytes: Vec<u8> = string.as_bytes();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
+        let mut bytes = string.as_bytes();
+        assert(bytes.len == string.len());
+        assert(bytes.buf.cap == string.capacity());
         assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
 
         let result_string = string.pop().unwrap();
         let result_bytes = bytes.pop().unwrap();
         assert(result_bytes == result_string);
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
+        assert(bytes.len == string.len());
+        assert(bytes.buf.cap == string.capacity());
         assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
