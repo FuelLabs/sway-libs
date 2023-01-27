@@ -27,7 +27,7 @@ impl String {
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(mut bytes: Vec<u8>) -> String {
+    pub fn from_utf8(mut bytes: Vec<u8>) -> Self {
         Self {
             bytes: Bytes::from_vec_u8(bytes),
         }
@@ -126,7 +126,7 @@ impl String {
 }
 
 impl From<Bytes> for String {
-    fn from(b: Bytes) -> String {
+    fn from(b: Bytes) -> Self {
         let mut string = Self::new();
         string.bytes = b;
         string
@@ -153,7 +153,7 @@ impl String {
     /// # Arguments
     ///
     /// * `index` - The index to split the original String at.
-    pub fn split(ref mut self, index: u64) -> String {
+    pub fn split(ref mut self, index: u64) -> Self {
         Self::from(self.bytes.split(index))
     }
 }
