@@ -1,13 +1,15 @@
 library string;
 
+use std::{bytes::Bytes, convert::From};
+
 pub struct String {
-    bytes: Vec<u8>,
+    bytes: Bytes,
 }
 
 impl String {
-    /// Returns the bytes stored for the `String`.
-    pub fn as_bytes(self) -> Vec<u8> {
-        self.bytes
+    /// Returns a `Vec<u8>` of the bytes stored for the `String`.
+    pub fn as_vec(self) -> Vec<u8> {
+        self.bytes.into_vec_u8()
     }
 
     /// Gets the amount of memory on the heap allocated to the `String`.
@@ -25,8 +27,10 @@ impl String {
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(bytes: Vec<u8>) -> String {
-        String { bytes }
+    pub fn from_utf8(mut bytes: Vec<u8>) -> Self {
+        Self {
+            bytes: Bytes::from_vec_u8(bytes),
+        }
     }
 
     /// Inserts a byte at the index within the `String`.
@@ -53,7 +57,7 @@ impl String {
     /// Constructs a new instance of the `String` type.
     pub fn new() -> Self {
         Self {
-            bytes: Vec::new(),
+            bytes: Bytes::new(),
         }
     }
 
@@ -89,6 +93,26 @@ impl String {
         self.bytes.remove(index)
     }
 
+    /// Updates a byte at position `index` with a new byte `value`.
+    ///
+    /// # Arguments
+    ///
+    /// * `index` - The index of the byte to be set.
+    /// * `byte` - The value of the byte to be set.
+    pub fn set(self, index: u64, byte: u8) {
+        self.bytes.set(index, byte);
+    }
+
+    /// Swaps two bytes.
+    ///
+    /// # Arguments
+    ///
+    /// * `byte1_index` - The index of the first byte.
+    /// * `byte2_index` - The index of the second byte.
+    pub fn swap(ref mut self, byte1_index: u64, byte2_index: u64) {
+        self.bytes.swap(byte1_index, byte2_index);
+    }
+
     /// Constructs a new instance of the `String` type with the specified capacity.
     ///
     /// # Arguments
@@ -96,7 +120,40 @@ impl String {
     /// * `capacity` - The specified amount of memory on the heap to be allocated for the `String`.
     pub fn with_capacity(capacity: u64) -> Self {
         Self {
-            bytes: Vec::with_capacity(capacity),
+            bytes: Bytes::with_capacity(capacity),
         }
+    }
+}
+
+impl From<Bytes> for String {
+    fn from(b: Bytes) -> Self {
+        let mut string = Self::new();
+        string.bytes = b;
+        string
+    }
+
+    fn into(self) -> Bytes {
+        self.bytes
+    }
+}
+
+// Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
+impl String {
+    /// Joins two `String`s into a single larger `String`.
+    ///
+    /// # Arguments
+    ///
+    /// * `other` - The String to join to self.
+    pub fn join(ref mut self, other: self) -> Self {
+        Self::from(self.bytes.join(other.into()))
+    }
+
+    /// Splits a `String` at the given index, modifying the original and returning the right-hand side `String`.
+    ///
+    /// # Arguments
+    ///
+    /// * `index` - The index to split the original String at.
+    pub fn split(ref mut self, index: u64) -> Self {
+        Self::from(self.bytes.split(index))
     }
 }
