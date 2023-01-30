@@ -1,4 +1,4 @@
-library UFP32;
+library ufp32;
 // A wrapper library around the u32 type for mathematical functions operating with signed 64-bit fixed point numbers.
 use std::{math::*, u128::U128};
 
