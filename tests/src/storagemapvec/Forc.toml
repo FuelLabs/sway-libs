@@ -1,0 +1,8 @@
+[project]
+authors = ["Fuel"]
+entry = "main.sw"
+license = "Apache-2.0"
+name = "storagemapvec_test"
+
+[dependencies]
+storagemapvec = { path = "../../../libs/storagemapvec" }

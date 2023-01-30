@@ -15,9 +15,9 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
-  RUST_VERSION: 1.64.0
-  FORC_VERSION: 0.30.1
-  CORE_VERSION: 0.13.2
+  RUST_VERSION: 1.66.0
+  FORC_VERSION: 0.32.2
+  CORE_VERSION: 0.15.1
   PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
@@ -58,14 +58,53 @@ jobs:
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
         - name: Check Sway formatting
-          run: forc fmt --path sway_libs --check
+          run: forc fmt --path libs --check
 
-        - name: Build sway-libs
-          run: forc build --path sway_libs
+        - name: Check Rust formatting
+          run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
+
+        - name: Build All Libs
+          run: forc build --path libs
 
         - name: Build All Tests
-          run: sh ${{ env.PATH_TO_SCRIPTS }}/build.sh
+          run: forc build --path tests
           
         - name: Cargo Test sway-lib
           run: |
-            cargo test --manifest-path tests/src/Cargo.toml
+            cargo test --manifest-path tests/Cargo.toml
+
+  contributing-book:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [".docs/contributing-book/src/code"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ env.RUST_VERSION }}
+          override: true
+
+      - name: Init cache
+        uses: Swatinem/rust-cache@v1
+
+      - name: Install rustfmt
+        run: rustup component add rustfmt
+
+      - name: Install Fuel toolchain
+        uses: FuelLabs/action-fuel-toolchain@v0.2.0
+        with:
+          name: my-toolchain
+          components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
+      - name: Check Sway formatting
+        run: forc fmt --path ${{ matrix.project }} --check
+
+      - name: Build Sway
+        run: forc build --path ${{ matrix.project }}
