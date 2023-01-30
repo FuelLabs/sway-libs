@@ -1,6 +1,6 @@
 library UFP32;
 // A wrapper library around the u32 type for mathematical functions operating with signed 64-bit fixed point numbers.
-use std::{math::{Exponent, Exponentiate, Root}, u128::U128};
+use std::{math::*, u128::U128};
 
 pub struct UFP32 {
     value: u32,
@@ -245,7 +245,7 @@ impl Exponentiate for UFP32 {
     fn pow(self, exponent: Self) -> Self {
         let demoninator_power = UFP32::denominator();
         let exponent_int = exponent.value >> 32;
-        let nominator_pow = u64::from(self.value).pow(exponent_int);
+        let nominator_pow = self.value.pow(exponent_int);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 16
         // we need to delete the nominator by 2 ^ (16 * exponent - 1)
