@@ -7,7 +7,7 @@ It outlines the use cases and specification.
 ## Use Cases
 
 The reentrancy check is used to check if a contract ID has been called more than
-once.
+once in the current call stack.
 
 A reentrancy, or "recursive call" attack
 ([example here](https://swcregistry.io/docs/SWC-107) can cause some functions to
