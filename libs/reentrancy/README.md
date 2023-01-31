@@ -20,3 +20,21 @@ more information, see the [specification](./SPECIFICATION.md).
 - `reentrancy_guard()`
 
 The `reentrancy_guard` function asserts `is_reentrant()` returns false.
+
+## Example
+
+```rust
+use reentrancy::reentrancy_guard;
+
+abi MyContract {
+    fn my_non_reentrant_function();
+}
+
+impl MyContract for Contract {
+    fn my_non_reentrant_function() {
+        reentrancy_guard();
+
+        // my code here
+    }
+}
+```
