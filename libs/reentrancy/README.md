@@ -4,7 +4,6 @@ The Reentrancy library provides an API to check for and disallow reentrancy on a
 
 More information can be found in the [specification](./SPECIFICATION.md).
 
-## Known Issues
 
 ## Using the Library
 
