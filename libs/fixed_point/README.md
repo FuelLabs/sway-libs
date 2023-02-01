@@ -1,8 +1,8 @@
 # Overview
 
-The Unsigned Fixed Point Number library provides a library to use fixed-point numbers in Sway. It has 2 distinct types: `UFP64` and `UFP128`. This type is stack allocated.
+The Unsigned Fixed Point Number library provides a library to use fixed-point numbers in Sway. It has 3 distinct types: `UFP32`, `UFP64` and `UFP128`. This type is stack allocated.
 
-This type is stored as a `u64` or `U128` under the hood. Therefore the size can be known at compile time and the length is static. 
+This type is stored as a `u32`, `u64` or `U128` under the hood. Therefore the size can be known at compile time and the length is static. 
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -16,9 +16,10 @@ First, add the `fixed_point` library as a dependency in your Forc.toml like so:
 fixed_point = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
 ```
 
-In order to use the `UFP64` or `UFP128` types, import them into your Sway project like so.
+In order to use the `UFP32`, `UFP64` or `UFP128` types, import them into your Sway project like so.
 
 ```rust
+use fixed_point::ufp32::UFP32;
 use fixed_point::ufp64::UFP64;
 use fixed_point::ufp128::UFP128;
 ```
@@ -26,6 +27,7 @@ use fixed_point::ufp128::UFP128;
 Once imported, a `UFP64` or `UFP128` type can be instantiated by defining a new variable and calling the `from` function.
 
 ```rust
+let mut ufp32_value = UFP32::from(0);
 let mut ufp64_value = UFP64::from(0);
 let mut ufp128_value = UFP128::from(0);
 ```
