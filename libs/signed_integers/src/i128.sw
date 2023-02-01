@@ -207,15 +207,3 @@ impl core::ops::Subtract for I128 {
         res
     }
 }
-
-// impl TwosComplement for I128 {
-//     fn twos_complement(self) -> Self {
-//         let u128_one = U128 {
-//             upper: 0,
-//             lower: 1,
-//         };
-//         let one = I128::from(u128_one);
-//         let res = I128::from(!self.underlying) - one;
-//         res
-//     } 
-// }
