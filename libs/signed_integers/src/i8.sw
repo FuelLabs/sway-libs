@@ -1,7 +1,6 @@
 library i8;
 
 use ::errors::Error;
-use ::common::TwosComplement;
 
 /// The 8-bit signed integer type.
 /// Represented as an underlying u8 value.
