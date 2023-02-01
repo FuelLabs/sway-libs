@@ -34,6 +34,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Binary Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
 - [Non-Fungible Token (NFT)](./libs/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
 - [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
+- [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
 - [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
 - [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
