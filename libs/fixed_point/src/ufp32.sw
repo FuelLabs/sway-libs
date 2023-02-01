@@ -1,6 +1,6 @@
 library ufp32;
-// A wrapper library around the u32 type for mathematical functions operating with signed 64-bit fixed point numbers.
-use std::{math::*, u128::U128};
+// A wrapper library around the u32 type for mathematical functions operating with signed 32-bit fixed point numbers.
+use std::math::*;
 
 pub struct UFP32 {
     value: u32,
@@ -110,7 +110,7 @@ impl core::ops::Divide for UFP32 {
         assert(divisor != zero);
 
         let denominator: u64 = Self::denominator();
-        // Conversion to U128 done to ensure no overflow happen
+        // Conversion to U64 done to ensure no overflow happen
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
