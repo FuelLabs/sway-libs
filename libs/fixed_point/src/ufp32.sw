@@ -25,7 +25,7 @@ impl UFP32 {
 
     /// Convenience function to know the denominator.
     pub fn denominator() -> u32 {
-        1 << 16
+        1u32 << 16
     }
 
     /// The largest value that can be represented by this type.
@@ -43,7 +43,7 @@ impl UFP32 {
     }
 
     pub fn zero() -> Self {
-        Self { value: 0 }
+        Self { value: 0u32 }
     }
 }
 
@@ -142,7 +142,7 @@ impl UFP32 {
 impl UFP32 {
     /// Takes the reciprocal (inverse) of a number, `1/x`.
     pub fn recip(number: UFP32) -> Self {
-        let one = UFP32::from_uint(1);
+        let one = UFP32::from_uint(1u32);
 
         let res = one / number;
         res
@@ -182,8 +182,8 @@ impl UFP32 {
 impl UFP32 {
     /// Returns the smallest integer greater than or equal to `self`.
     pub fn ceil(self) -> Self {
-        if self.fract().value != 0 {
-            let res = self.trunc() + UFP32::from_uint(1);
+        if self.fract().value != 0u32 {
+            let res = self.trunc() + UFP32::from_uint(1u32);
             return res;
         }
         return self;
@@ -223,15 +223,15 @@ impl Root for UFP32 {
 impl Exponent for UFP32 {
     /// Exponent function. e ^ x
     fn exp(exponent: Self) -> Self {
-        let one = UFP32::from_uint(1);
+        let one = UFP32::from_uint(1u32);
 
         // Coefficients in the Taylor series up to the seventh power
-        let p2 = UFP32::from(2147483648); // p2 == 1 / 2!
-        let p3 = UFP32::from(715827882); // p3 == 1 / 3!
-        let p4 = UFP32::from(178956970); // p4 == 1 / 4!
-        let p5 = UFP32::from(35791394); // p5 == 1 / 5!
-        let p6 = UFP32::from(5965232); // p6 == 1 / 6!
-        let p7 = UFP32::from(852176); // p7 == 1 / 7!
+        let p2 = UFP32::from(2147483648u32); // p2 == 1 / 2!
+        let p3 = UFP32::from(715827882u32); // p3 == 1 / 3!
+        let p4 = UFP32::from(178956970u32); // p4 == 1 / 4!
+        let p5 = UFP32::from(35791394u32); // p5 == 1 / 5!
+        let p6 = UFP32::from(5965232u32); // p6 == 1 / 6!
+        let p7 = UFP32::from(852176u32); // p7 == 1 / 7!
         // Common technique to counter losing significant numbers in usual approximation
         // Taylor series approximation of exponentiation function minus 1. The subtraction is done to deal with accuracy issues
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
