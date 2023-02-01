@@ -7,8 +7,8 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn as_bytes(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_as_bytes().call().await.unwrap()
+    pub async fn as_vec(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_as_vec().call().await.unwrap()
     }
 
     pub async fn capacity(contract: &StringTestLib) -> FuelCallResponse<()> {
@@ -19,6 +19,10 @@ pub mod abi_calls {
         contract.methods().test_clear().call().await.unwrap()
     }
 
+    pub async fn from(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_from().call().await.unwrap()
+    }
+
     pub async fn from_utf8(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_from_utf8().call().await.unwrap()
     }
@@ -27,8 +31,16 @@ pub mod abi_calls {
         contract.methods().test_insert().call().await.unwrap()
     }
 
+    pub async fn into(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_into().call().await.unwrap()
+    }
+
     pub async fn is_empty(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_is_empty().call().await.unwrap()
+    }
+
+    pub async fn join(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_join().call().await.unwrap()
     }
 
     pub async fn len(contract: &StringTestLib) -> FuelCallResponse<()> {
@@ -49,6 +61,18 @@ pub mod abi_calls {
 
     pub async fn push(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_push().call().await.unwrap()
+    }
+
+    pub async fn set(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_set().call().await.unwrap()
+    }
+
+    pub async fn split(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_split().call().await.unwrap()
+    }
+
+    pub async fn swap(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_swap().call().await.unwrap()
     }
 
     pub async fn remove(contract: &StringTestLib) -> FuelCallResponse<()> {

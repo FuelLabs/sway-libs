@@ -12,7 +12,7 @@ The String library can be used anytime a string's length is unknown at compile t
 
 ## Public Functions
 
-### `as_bytes()`
+### `as_vec()`
 
 Convert the `String` struct to a `Vec` of `u8` bytes. 
 
@@ -26,17 +26,29 @@ Returns the total amount of memory on the heap allocated to the `String` which c
 
 Truncates the `String` to a length of 0 and will appear empty. This does not clear the capacity of the `String`.
 
+### `from()`
+
+A new instance of a `String` will be created from the `Bytes` type.
+
 ### `from_utf8()`
 
-A new instance of a `String` will be created from a vector of `u8`'s
+A new instance of a `String` will be created from a vector of `u8`'s.
 
 ### `insert()`
 
 Inserts a new byte at the specified index in the `String`. 
 
+### `into()`
+
+Convert the `String` struct to the `Bytes` type. 
+
 ### `is_empty()`
 
 Returns a boolean indicating whether the length of the `String` is zero.
+
+### `join()`
+
+Joins two `String` instances into a single larger `String`.
 
 ### `len()`
 
@@ -53,6 +65,22 @@ Returns the byte at the specified index in the `String`. If the index is out of 
 ### `pop()`
 
 Removes the last byte in the `String` and returns it. If the `String` does not have any bytes, `None` is returned. 
+
+### `push()`
+
+Appends a byte to the end of the `String`.
+
+### `set()`
+
+Replaces a byte for another byte within the `String`.
+
+### `split()`
+
+Splits a single `String` into two `String`s at a given index.
+
+### `swap()`
+
+Swaps a byte at one index for a byte at another index within the existing `String`.
 
 ### `remove()`
 
