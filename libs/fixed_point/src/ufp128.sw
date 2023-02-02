@@ -116,7 +116,7 @@ impl core::ops::Divide for UFP128 {
 
         assert(divisor != zero);
 
-        // Conversion to U128 done to ensure no overflow happen
+        // Conversion to U256 done to ensure no overflow happen
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
