@@ -1,7 +1,6 @@
 library signed_integers;
 
 dep errors;
-dep common;
 
 dep i8;
 dep i16;
