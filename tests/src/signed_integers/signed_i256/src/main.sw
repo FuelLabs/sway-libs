@@ -71,9 +71,13 @@ fn main() -> bool {
         c: 0,
         d: 2,
     };
+    
+    let i256_10 = I256::from(u128_10);
+    let i256_5 = I256::from(u128_5);
+    let i256_2 = I256::from(u128_2);
 
-    res = I256::from(u128_10) / I256::from(u128_5);
-    assert(res == I256::from(u128_2));
+    res = i256_10 / i256_5;
+    assert(res == i256_2);
 
     true
 }
