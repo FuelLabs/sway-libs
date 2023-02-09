@@ -1,0 +1,2 @@
+library storage_string;
+
