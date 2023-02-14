@@ -1,6 +1,7 @@
 library i8;
 
 use ::errors::Error;
+use ::common::TwosComplement;
 
 /// The 8-bit signed integer type.
 /// Represented as an underlying u8 value.
@@ -184,6 +185,17 @@ impl core::ops::Subtract for I8 {
                 res = Self::from_uint(self.underlying + other.underlying - Self::indent());
             }
         }
+        res
+    }
+}
+
+impl TwosComplement for I8 {
+    fn twos_complement(self) -> Self {
+        if self.underlying >= Self::indent() {
+            return self;
+        }
+        let one = I8::from(1u8);
+        let res = I8::from(!self.underlying) - one;
         res
     }
 }

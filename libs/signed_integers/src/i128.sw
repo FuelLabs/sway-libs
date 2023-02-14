@@ -1,6 +1,7 @@
 library i128;
 
 use std::u128::U128;
+use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 128-bit signed integer type.
@@ -206,3 +207,17 @@ impl core::ops::Subtract for I128 {
         res
     }
 }
+
+// impl TwosComplement for I128 {
+//     fn twos_complement(self) -> Self {
+//         if self.underlying == Self::indent() || self.underlying > Self::indent() {
+//             return self;
+//         }
+//         let one = I128::from(U128 {
+//             upper: 0,
+//             lower: 1,
+//         });
+//         let res = I128::from(!self.underlying) - one;
+//         res
+//     }
+// }
