@@ -195,8 +195,7 @@ impl TwosComplement for I64 {
         if self.underlying >= Self::indent() {
             return self;
         }
-        let one = I64::from(1u64);
-        let res = I64::from(!self.underlying) - one;
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }

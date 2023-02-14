@@ -195,8 +195,7 @@ impl TwosComplement for I16 {
         if self.underlying >= Self::indent() {
             return self;
         }
-        let one = I16::from(1u16);
-        let res = I16::from(!self.underlying) - one;
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }

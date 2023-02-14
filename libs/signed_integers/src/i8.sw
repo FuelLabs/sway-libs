@@ -194,8 +194,7 @@ impl TwosComplement for I8 {
         if self.underlying >= Self::indent() {
             return self;
         }
-        let one = I8::from(1u8);
-        let res = I8::from(!self.underlying) - one;
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }

@@ -194,8 +194,7 @@ impl TwosComplement for I32 {
         if self.underlying >= Self::indent() {
             return self;
         }
-        let one = I32::from(1u32);
-        let res = I32::from(!self.underlying) - one;
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }
