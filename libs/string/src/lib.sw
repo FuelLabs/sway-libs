@@ -139,21 +139,22 @@ impl From<Bytes> for String {
 
 // Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
 impl String {
-    /// Joins two `String`s into a single larger `String`.
+    /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    pub fn join(ref mut self, other: self) -> Self {
-        Self::from(self.bytes.join(other.into()))
+    pub fn append(ref mut self, other: self) {
+        self.bytes.append(other.into())
     }
 
-    /// Splits a `String` at the given index, modifying the original and returning the right-hand side `String`.
+    /// Divides one Bytes into two at an index.
     ///
     /// # Arguments
     ///
     /// * `index` - The index to split the original String at.
-    pub fn split(ref mut self, index: u64) -> Self {
-        Self::from(self.bytes.split(index))
+    pub fn split_at(ref mut self, index: u64) -> (Self, Self) {
+        let (bytes1, bytes2) = self.bytes.split_at(index);
+        (Self::from(bytes1), Self::from(bytes2))
     }
 }

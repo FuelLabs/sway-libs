@@ -240,7 +240,7 @@ impl Exponent for UFP32 {
     }
 }
 
-impl Exponentiate for UFP32 {
+impl Power for UFP32 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let demoninator_power = UFP32::denominator();

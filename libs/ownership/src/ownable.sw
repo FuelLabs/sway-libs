@@ -13,13 +13,13 @@ use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 #[storage(read)]
 pub fn only_owner() {
-    let owner = get::<State>(OWNER);
+    let owner = get::<State>(OWNER).unwrap_or(State::Uninitialized);
     require(State::Initialized(msg_sender().unwrap()) == owner, AccessError::NotOwner);
 }
 
 #[storage(read)]
 pub fn owner() -> State {
-    get::<State>(OWNER)
+    get::<State>(OWNER).unwrap_or(State::Uninitialized)
 }
 
 #[storage(read, write)]
@@ -35,7 +35,7 @@ pub fn renounce_ownership() {
 
 #[storage(read, write)]
 pub fn set_ownership(new_owner: Identity) {
-    require(get::<State>(OWNER) == State::Uninitialized, AccessError::CannotReinitialized);
+    require(get::<State>(OWNER).unwrap_or(State::Uninitialized) == State::Uninitialized, AccessError::CannotReinitialized);
 
     store(OWNER, State::Initialized(new_owner));
 

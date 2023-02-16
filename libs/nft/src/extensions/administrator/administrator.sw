@@ -18,7 +18,7 @@ abi Administrator {
 /// Returns the administrator for the library.
 #[storage(read)]
 pub fn admin() -> Option<Identity> {
-    get::<Option<Identity>>(ADMIN)
+    get::<Option<Identity>>(ADMIN).unwrap_or(Option::None)
 }
 
 /// Changes the library's administrator.
@@ -33,7 +33,7 @@ pub fn admin() -> Option<Identity> {
 /// * When the sender is not the `admin` in storage.
 #[storage(read, write)]
 pub fn set_admin(new_admin: Option<Identity>) {
-    let admin = get::<Option<Identity>>(ADMIN);
+    let admin = get::<Option<Identity>>(ADMIN).unwrap_or(Option::None);
     require(admin.is_none() || (admin.is_some() && admin.unwrap() == msg_sender().unwrap()), AdminError::SenderNotAdmin);
 
     store(ADMIN, new_admin);
