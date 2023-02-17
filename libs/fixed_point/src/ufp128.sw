@@ -207,7 +207,6 @@ impl Power for UFP128 {
 //         }
 //     }
 // }
-
 impl Exponent for UFP128 {
     fn exp(exponent: Self) -> Self {
         let one = UFP128::from((1, 0));

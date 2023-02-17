@@ -95,9 +95,7 @@ impl core::ops::Add for I128 {
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-        {
+        if (self.underlying > Self::indent() || self.underlying == Self::indent()) {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 31 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
