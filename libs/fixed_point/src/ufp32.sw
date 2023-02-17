@@ -98,7 +98,7 @@ impl core::ops::Multiply for UFP32 {
         }
 
         Self {
-            value: res_u64,
+            value: asm(ptr: res_u64) { ptr: u32 },
         }
     }
 }
@@ -125,7 +125,7 @@ impl core::ops::Divide for UFP32 {
             revert(0);
         }
         Self {
-            value: res_u64,
+            value: asm(ptr: res_u64) { ptr: u32 },
         }
     }
 }
@@ -250,7 +250,7 @@ impl Power for UFP32 {
         // which means that the denominator is always 2 ^ 16
         // we need to delete the nominator by 2 ^ (16 * exponent - 1)
         // - 1 is the formula is due to denominator need to stay 2 ^ 16
-        let nominator = nominator_pow >> demoninator_power * (exponent_int - 1);
+        let nominator = nominator_pow >> demoninator_power * (exponent_int - 1_u32);
 
         if nominator > u32::max() {
             // panic on overflow
