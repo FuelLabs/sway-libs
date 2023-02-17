@@ -3,7 +3,7 @@ use crate::nft::nft_extensions::tests::utils::{
     test_helpers::setup,
     NFTMetadata,
 };
-use fuels::prelude::Identity;
+use fuels::types::Identity;
 
 mod success {
 

@@ -1,9 +1,9 @@
 use fuels::prelude::*;
 
-script_abigen!(
-    Testi16,
-    "src/signed_integers/signed_i16/out/debug/i16_test-abi.json"
-);
+abigen!(Script(
+    name = "Testi16",
+    abi = "src/signed_integers/signed_i16/out/debug/i16_test-abi.json"
+),);
 
 mod success {
 

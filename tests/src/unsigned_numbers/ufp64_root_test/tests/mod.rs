@@ -1,9 +1,9 @@
 use fuels::prelude::*;
 
-script_abigen!(
-    TestUfp64Root,
-    "src/unsigned_numbers/ufp64_root_test/out/debug/ufp64_root_test-abi.json"
-);
+abigen!(Script(
+    name = "TestUfp64Root",
+    abi = "src/unsigned_numbers/ufp64_root_test/out/debug/ufp64_root_test-abi.json"
+),);
 
 mod success {
 

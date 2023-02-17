@@ -1,9 +1,9 @@
 use fuels::prelude::*;
 
-script_abigen!(
-    TestUfp64Div,
-    "src/unsigned_numbers/ufp64_div_test/out/debug/ufp64_div_test-abi.json"
-);
+abigen!(Script(
+    name = "TestUfp64Div",
+    abi = "src/unsigned_numbers/ufp64_div_test/out/debug/ufp64_div_test-abi.json"
+),);
 
 mod success {
 

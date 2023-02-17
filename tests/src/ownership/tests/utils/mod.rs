@@ -1,10 +1,10 @@
-use fuels::{contract::call_response::FuelCallResponse, prelude::*};
+use fuels::{prelude::*, programs::call_response::FuelCallResponse, types::Identity};
 
 // Load abi from json
-abigen!(
-    OwnershipLib,
-    "src/ownership/out/debug/ownership_test-abi.json"
-);
+abigen!(Contract(
+    name = "OwnershipLib",
+    abi = "src/ownership/out/debug/ownership_test-abi.json"
+));
 
 pub struct Metadata {
     pub contract: OwnershipLib,

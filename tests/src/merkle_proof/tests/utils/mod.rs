@@ -2,13 +2,13 @@ use fuel_merkle::{
     binary::in_memory::MerkleTree,
     common::{empty_sum_sha256, Bytes32, LEAF, NODE},
 };
-use fuels::prelude::*;
+use fuels::{prelude::*, types::Bits256};
 use sha2::{Digest, Sha256};
 
-abigen!(
-    TestMerkleProofLib,
-    "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
-);
+abigen!(Contract(
+    name = "TestMerkleProofLib",
+    abi = "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
+));
 
 pub mod abi_calls {
 

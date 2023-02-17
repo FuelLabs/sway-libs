@@ -2,7 +2,7 @@ use crate::nft::nft_extensions::tests::utils::{
     abi_calls::{admin, set_admin},
     test_helpers::setup,
 };
-use fuels::prelude::Identity;
+use fuels::types::Identity;
 
 mod success {
 

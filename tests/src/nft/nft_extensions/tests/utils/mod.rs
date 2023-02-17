@@ -1,10 +1,10 @@
-use fuels::{contract::call_response::FuelCallResponse, prelude::*};
+use fuels::{prelude::*, programs::call_response::FuelCallResponse, types::Identity};
 
 // Load abi from json
-abigen!(
-    NftExtensions,
-    "src/nft/nft_extensions/out/debug/nft_extensions_test-abi.json"
-);
+abigen!(Contract(
+    name = "NftExtensions",
+    abi = "src/nft/nft_extensions/out/debug/nft_extensions_test-abi.json"
+));
 
 pub struct Metadata {
     pub contract: NftExtensions,
