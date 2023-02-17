@@ -91,10 +91,10 @@ impl StringTest for Contract {
         assert(string.capacity() == 16);
 
         string.clear();
-        assert(string.capacity() == 16);
+        assert(string.capacity() == 0);
 
         string.push(NUMBER0);
-        assert(string.capacity() == 16);
+        assert(string.capacity() == 1);
     }
 
     fn test_clear() {
@@ -474,9 +474,9 @@ impl StringTest for Contract {
         assert(string3.len() == 2);
 
         assert(string2.nth(0).unwrap() == NUMBER0);
-        assert(string3.nth(1).unwrap() == NUMBER1);
+        assert(string2.nth(1).unwrap() == NUMBER1);
 
-        assert(string2.nth(0).unwrap() == NUMBER2);
+        assert(string3.nth(0).unwrap() == NUMBER2);
         assert(string3.nth(1).unwrap() == NUMBER3);
     }
 
@@ -562,7 +562,7 @@ impl StringTest for Contract {
         assert(string.capacity() == 4);
 
         string.clear();
-        assert(string.capacity() == 4);
+        assert(string.capacity() == 0);
         let mut string = String::with_capacity(4);
 
         assert(string.capacity() == 4);

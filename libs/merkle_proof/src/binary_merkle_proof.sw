@@ -20,11 +20,11 @@ pub const NODE = 1u8;
 ///
 /// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {
-    let mut bytes = Bytes::with_capacity(33);
+    let mut bytes = Bytes::new();
+    let mut b256_as_bytes = Bytes::from(data);
+
     bytes.push(LEAF);
-    let new_ptr = bytes.buf.ptr().add_uint_offset(1);
-    __addr_of(data).copy_bytes_to(new_ptr, 32);
-    bytes.len = 33;
+    bytes.append(b256_as_bytes);
 
     bytes.sha256()
 }
@@ -36,12 +36,13 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    let mut bytes = Bytes::with_capacity(65);
+    let mut bytes = Bytes::new();
+    let mut left_as_bytes = Bytes::from(left);
+    let mut right_as_bytes = Bytes::from(right);
+
     bytes.push(NODE);
-    let new_ptr_left = bytes.buf.ptr().add_uint_offset(1);
-    let new_ptr_right = bytes.buf.ptr().add_uint_offset(33);
-    __addr_of(left).copy_bytes_to(new_ptr_left, 32);
-    __addr_of(right).copy_bytes_to(new_ptr_right, 32);
+    bytes.append(left_as_bytes);
+    bytes.append(right_as_bytes);
 
     bytes.sha256()
 }
