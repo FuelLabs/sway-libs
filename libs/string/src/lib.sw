@@ -137,17 +137,16 @@ impl From<Bytes> for String {
     }
 }
 
-// Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
 impl String {
+    // Uncomment when https://github.com/FuelLabs/sway/issues/4108 is resolved
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    pub fn append(ref mut self, other: self) {
-        self.bytes.append(other.into())
-    }
-
+    // pub fn append(ref mut self, mut other: self) {
+    //     self.bytes.append(other.into())
+    // }
     /// Divides one Bytes into two at an index.
     ///
     /// # Arguments

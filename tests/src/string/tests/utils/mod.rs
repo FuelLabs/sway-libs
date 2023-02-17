@@ -10,6 +10,10 @@ pub mod abi_calls {
 
     use super::*;
 
+    pub async fn append(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_append().call().await.unwrap()
+    }
+
     pub async fn as_vec(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_as_vec().call().await.unwrap()
     }
@@ -42,10 +46,6 @@ pub mod abi_calls {
         contract.methods().test_is_empty().call().await.unwrap()
     }
 
-    pub async fn join(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_join().call().await.unwrap()
-    }
-
     pub async fn len(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_len().call().await.unwrap()
     }
@@ -70,8 +70,8 @@ pub mod abi_calls {
         contract.methods().test_set().call().await.unwrap()
     }
 
-    pub async fn split(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_split().call().await.unwrap()
+    pub async fn split_at(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_split_at().call().await.unwrap()
     }
 
     pub async fn swap(contract: &StringTestLib) -> FuelCallResponse<()> {
