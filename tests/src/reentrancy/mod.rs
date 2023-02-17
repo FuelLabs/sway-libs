@@ -1,4 +1,10 @@
-use fuels::{prelude::*, tx::ContractId};
+use fuels::{
+    prelude::{
+        abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+        WalletUnlocked,
+    },
+    tx::ContractId,
+};
 
 abigen!(
     Contract(name="AttackerContract", abi="src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-abi.json"),

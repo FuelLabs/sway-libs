@@ -1,4 +1,10 @@
-use fuels::{prelude::*, programs::call_response::FuelCallResponse};
+use fuels::{
+    prelude::{
+        abigen, launch_custom_provider_and_get_wallets, Contract, StorageConfiguration,
+        TxParameters, WalletsConfig,
+    },
+    programs::call_response::FuelCallResponse,
+};
 
 // Load abi from json
 abigen!(Contract(

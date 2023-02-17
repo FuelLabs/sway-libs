@@ -1,4 +1,4 @@
-use fuels::prelude::*;
+use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
 abigen!(Script(
     name = "TestUfp64Div",

@@ -1,4 +1,6 @@
-use fuels::prelude::*;
+use fuels::prelude::{
+    abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+};
 
 // Load abi from json
 abigen!(Contract(

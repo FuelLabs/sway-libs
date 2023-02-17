@@ -2,7 +2,12 @@ use fuel_merkle::{
     binary::in_memory::MerkleTree,
     common::{empty_sum_sha256, Bytes32, LEAF, NODE},
 };
-use fuels::{prelude::*, types::Bits256};
+use fuels::{
+    prelude::{
+        abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+    },
+    types::Bits256,
+};
 use sha2::{Digest, Sha256};
 
 abigen!(Contract(

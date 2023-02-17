@@ -81,14 +81,7 @@ impl<K, V> StorageMapVec<K, V> {
         store(len_key, len - 1);
 
         let key = sha256((key, len - 1, __get_storage_key()));
-        match get::<V>(key) {
-            Option::Some(value) => {
-                Option::Some(value)
-            },
-            Option::None => {
-                Option::None
-            }
-        }
+        get::<V>(key)
     }
 
     /// Gets the value in the given index, None if index is out of bounds
@@ -127,14 +120,7 @@ impl<K, V> StorageMapVec<K, V> {
         }
 
         let key = sha256((key, index, __get_storage_key()));
-        match get::<V>(key) {
-            Option::Some(value) => {
-                Option::Some(value)
-            },
-            Option::None => {
-                Option::None
-            }
-        }
+        get::<V>(key)
     }
 
     /// Returns the length of the vector
