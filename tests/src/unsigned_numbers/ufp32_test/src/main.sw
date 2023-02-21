@@ -30,33 +30,29 @@ fn main() -> bool {
     };
     res = UFP32::recip(value);
     assert(UFP32 {
-        value: 536870912, 
-    }
-    == res);
+        value: 536870912,
+    } == res);
 
     // trunc
     value = UFP32 {
-        value: (1 << 32) + 3, 
+        value: (1 << 32) + 3,
     };
     res = value.trunc();
     assert(UFP32::from_uint(1) == res);
 
     // floor
     value = UFP32 {
-        value: (1 << 32) + 3, 
+        value: (1 << 32) + 3,
     };
     res = value.floor();
     assert(UFP32::from_uint(1) == res);
 
     // fract
     value = UFP32 {
-        value: (1 << 32) + 3, 
+        value: (1 << 32) + 3,
     };
     res = value.fract();
-    assert(UFP32 {
-        value: 3, 
-    }
-    == res);
+    assert(UFP32 { value: 3 } == res);
 
     value = UFP32::from_uint(1);
     res = value.fract();
@@ -64,7 +60,7 @@ fn main() -> bool {
 
     // ceil
     value = UFP32 {
-        value: (1 << 32) + 3, 
+        value: (1 << 32) + 3,
     };
     res = value.ceil();
     assert(UFP32::from_uint(2) == res);
@@ -75,13 +71,13 @@ fn main() -> bool {
 
     // round
     value = UFP32 {
-        value: (1 << 32) + 3, 
+        value: (1 << 32) + 3,
     };
     res = value.round();
     assert(UFP32::from_uint(1) == res);
 
     value = UFP32 {
-        value: (1 << 32) + (1 << 31) + 1, 
+        value: (1 << 32) + (1 << 31) + 1,
     };
     res = value.round();
     assert(UFP32::from_uint(2) == res);
