@@ -11,7 +11,10 @@ pub struct IFP64 {
 impl From<UFP32> for IFP64 {
     /// Creates IFP64 from UFP32. Note that IFP64::from(1) is 1 / 2^32 and not 1.
     fn from(value: UFP32) -> Self {
-        Self { underlying: value, non_negative: true }
+        Self {
+            underlying: value,
+            non_negative: true,
+        }
     }
 
     fn into(self) -> UFP32 {
@@ -122,7 +125,11 @@ impl core::ops::Subtract for IFP64 {
 impl core::ops::Multiply for IFP64 {
     /// Multiply a IFP64 with a IFP64. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-        let non_negative = if (self.non_negative && !self.non_negative) || (!self.non_negative && self.non_negative) {
+        let non_negative = if (self.non_negative
+            && !self.non_negative)
+            || (!self.non_negative
+            && self.non_negative)
+        {
             false
         } else {
             true
@@ -137,7 +144,11 @@ impl core::ops::Multiply for IFP64 {
 impl core::ops::Divide for IFP64 {
     /// Divide a IFP64 by a IFP64. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        let non_negative = if (self.non_negative && !self.non_negative) || (!self.non_negative && self.non_negative) {
+        let non_negative = if (self.non_negative
+            && !self.non_negative)
+            || (!self.non_negative
+            && self.non_negative)
+        {
             false
         } else {
             true
