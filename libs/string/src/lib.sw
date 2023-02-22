@@ -138,7 +138,7 @@ impl From<Bytes> for String {
 }
 
 impl String {
-    // Uncomment when https://github.com/FuelLabs/sway/issues/4108 is resolved
+    // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
@@ -147,6 +147,7 @@ impl String {
     // pub fn append(ref mut self, mut other: self) {
     //     self.bytes.append(other.into())
     // }
+
     /// Divides one Bytes into two at an index.
     ///
     /// # Arguments

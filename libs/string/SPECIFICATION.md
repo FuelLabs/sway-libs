@@ -16,7 +16,7 @@ The String library can be used anytime a string's length is unknown at compile t
 
 Joins two `String` instances into a single larger `String`. 
 
-**NOTE** This function is temporarily unavailable until https://github.com/FuelLabs/sway/issues/4108 is resolved.
+**NOTE** This function is temporarily unavailable until https://github.com/FuelLabs/sway/issues/4158 is resolved.
 
 ### `as_vec()`
 

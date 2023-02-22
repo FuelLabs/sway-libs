@@ -36,9 +36,8 @@ abi StringTest {
 }
 
 impl StringTest for Contract {
-    // Uncomment when https://github.com/FuelLabs/sway/issues/4108 is resolved
-    fn test_append() {}
-
+    fn test_append() {
+        // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved.
         // let mut string1 = String::new();
         // let mut string2 = String::new();
         // string1.push(NUMBER0);
@@ -56,6 +55,8 @@ impl StringTest for Contract {
         // assert(string1.nth(3).unwrap() == NUMBER3);
         // assert(string1.nth(4).unwrap() == NUMBER4);
         // assert(string1.nth(5).unwrap() == NUMBER5);
+    }
+
     fn test_as_vec() {
         let mut string = String::new();
 
