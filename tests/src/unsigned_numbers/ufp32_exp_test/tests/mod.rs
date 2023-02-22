@@ -1,9 +1,9 @@
-use fuels::prelude::*;
+use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
-script_abigen!(
-    TestUfp32Exp,
-    "src/unsigned_numbers/ufp32_exp_test/out/debug/ufp32_exp_test-abi.json"
-);
+abigen!(Script(
+    name = "TestUfp32Exp",
+    abi = "src/unsigned_numbers/ufp32_exp_test/out/debug/ufp32_exp_test-abi.json"
+),);
 
 mod success {
 

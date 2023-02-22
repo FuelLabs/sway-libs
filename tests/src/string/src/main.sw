@@ -14,6 +14,7 @@ const NUMBER7 = 7u8;
 const NUMBER8 = 8u8;
 
 abi StringTest {
+    fn test_append();
     fn test_as_vec();
     fn test_capacity();
     fn test_clear();
@@ -22,20 +23,40 @@ abi StringTest {
     fn test_insert();
     fn test_into();
     fn test_is_empty();
-    fn test_join();
     fn test_len();
     fn test_new();
     fn test_nth();
     fn test_pop();
     fn test_push();
     fn test_set();
-    fn test_split();
+    fn test_split_at();
     fn test_swap();
     fn test_remove();
     fn test_with_capacity();
 }
 
 impl StringTest for Contract {
+    fn test_append() {
+        // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved.
+        // let mut string1 = String::new();
+        // let mut string2 = String::new();
+        // string1.push(NUMBER0);
+        // string1.push(NUMBER1);
+        // string1.push(NUMBER2);
+        // string2.push(NUMBER3);
+        // string2.push(NUMBER4);
+        // string2.push(NUMBER5);
+        // string1.append(string2);
+        // assert(string2.len() == 0);
+        // assert(string1.len() == 6);
+        // assert(string1.nth(0).unwrap() == NUMBER0);
+        // assert(string1.nth(1).unwrap() == NUMBER1);
+        // assert(string1.nth(2).unwrap() == NUMBER2);
+        // assert(string1.nth(3).unwrap() == NUMBER3);
+        // assert(string1.nth(4).unwrap() == NUMBER4);
+        // assert(string1.nth(5).unwrap() == NUMBER5);
+    }
+
     fn test_as_vec() {
         let mut string = String::new();
 
@@ -91,10 +112,10 @@ impl StringTest for Contract {
         assert(string.capacity() == 16);
 
         string.clear();
-        assert(string.capacity() == 16);
+        assert(string.capacity() == 0);
 
         string.push(NUMBER0);
-        assert(string.capacity() == 16);
+        assert(string.capacity() == 1);
     }
 
     fn test_clear() {
@@ -173,7 +194,6 @@ impl StringTest for Contract {
         let mut string = String::new();
 
         assert(string.len() == 0);
-
         string.insert(NUMBER0, 0);
         assert(string.len() == 1);
         assert(string.nth(0).unwrap() == NUMBER0);
@@ -245,29 +265,6 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
-    fn test_join() {
-        let mut string1 = String::new();
-        let mut string2 = String::new();
-
-        string1.push(NUMBER0);
-        string1.push(NUMBER1);
-        string1.push(NUMBER2);
-
-        string2.push(NUMBER3);
-        string2.push(NUMBER4);
-        string2.push(NUMBER5);
-
-        let string3 = string1.join(string2);
-
-        assert(string3.len() == 6);
-        assert(string3.nth(0).unwrap() == NUMBER0);
-        assert(string3.nth(1).unwrap() == NUMBER1);
-        assert(string3.nth(2).unwrap() == NUMBER2);
-        assert(string3.nth(3).unwrap() == NUMBER3);
-        assert(string3.nth(4).unwrap() == NUMBER4);
-        assert(string3.nth(5).unwrap() == NUMBER5);
-    }
-
     fn test_len() {
         let mut string = String::new();
 
@@ -298,14 +295,12 @@ impl StringTest for Contract {
 
         string.push(NUMBER8);
         assert(string.len() == 9);
-
         let _result = string.pop();
         assert(string.len() == 8);
 
         string.clear();
         assert(string.len() == 0);
     }
-
     fn test_new() {
         let mut string = String::new();
 
@@ -430,7 +425,6 @@ impl StringTest for Contract {
         string.clear();
         assert(string.len() == 0);
         assert(string.is_empty());
-
         string.push(NUMBER1);
         assert(string.nth(0).unwrap() == NUMBER1);
         assert(string.len() == 1);
@@ -465,7 +459,7 @@ impl StringTest for Contract {
         assert(string.nth(2).unwrap() == NUMBER5);
     }
 
-    fn test_split() {
+    fn test_split_at() {
         let mut string1 = String::new();
 
         string1.push(NUMBER0);
@@ -473,16 +467,15 @@ impl StringTest for Contract {
         string1.push(NUMBER2);
         string1.push(NUMBER3);
 
-        let string2 = string1.split(2);
+        let (string2, string3) = string1.split_at(2);
 
-        assert(string1.len() == 2);
         assert(string2.len() == 2);
+        assert(string3.len() == 2);
 
-        assert(string1.nth(0).unwrap() == NUMBER0);
-        assert(string1.nth(1).unwrap() == NUMBER1);
-
-        assert(string2.nth(0).unwrap() == NUMBER2);
-        assert(string2.nth(1).unwrap() == NUMBER3);
+        assert(string2.nth(0).unwrap() == NUMBER0);
+        assert(string2.nth(1).unwrap() == NUMBER1);
+        assert(string3.nth(0).unwrap() == NUMBER2);
+        assert(string3.nth(1).unwrap() == NUMBER3);
     }
 
     fn test_swap() {
@@ -525,7 +518,6 @@ impl StringTest for Contract {
 
         assert(string.remove(0) == NUMBER0);
         assert(string.len() == 5);
-
         assert(string.remove(0) == NUMBER1);
         assert(string.len() == 4);
 
@@ -568,7 +560,7 @@ impl StringTest for Contract {
         assert(string.capacity() == 4);
 
         string.clear();
-        assert(string.capacity() == 4);
+        assert(string.capacity() == 0);
         let mut string = String::with_capacity(4);
 
         assert(string.capacity() == 4);

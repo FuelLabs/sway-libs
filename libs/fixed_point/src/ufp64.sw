@@ -1,6 +1,6 @@
 library ufp64;
 // A wrapper library around the u64 type for mathematical functions operating with signed 64-bit fixed point numbers.
-use std::{math::{Exponent, Exponentiate, Root}, u128::U128};
+use std::{math::{Exponent, Power, Root}, u128::U128};
 
 pub struct UFP64 {
     value: u64,
@@ -240,7 +240,7 @@ impl Exponent for UFP64 {
     }
 }
 
-impl Exponentiate for UFP64 {
+impl Power for UFP64 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let demoninator_power = UFP64::denominator();

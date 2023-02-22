@@ -20,21 +20,13 @@ pub const NODE = 1u8;
 ///
 /// * 'data' - The hash of the leaf data.
 pub fn leaf_digest(data: b256) -> b256 {
-    // TODO: Update to use From<T> once https://github.com/FuelLabs/sway/issues/3810 is implemented
-    let mut bytes_u8 = Bytes::with_capacity(1);
-    let mut b256_as_bytes = Bytes::with_capacity(32);
-    bytes_u8.push(LEAF);
-    b256_as_bytes.len = 32;
-    __addr_of(data).copy_bytes_to(b256_as_bytes.buf.ptr, 32);
+    let mut bytes = Bytes::new();
+    let mut b256_as_bytes = Bytes::from(data);
 
-    let bytes = bytes_u8.join(b256_as_bytes);
+    bytes.push(LEAF);
+    bytes.append(b256_as_bytes);
 
-    // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
-    let mut result_buffer: b256 = b256::min();
-    asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
-        s256 hash ptr bytes;
-        hash: b256
-    }
+    bytes.sha256()
 }
 
 /// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
@@ -44,25 +36,15 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// * 'left' - The hash of the left node.
 /// * 'right' - The hash of the right node.
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    // TODO: Update to use From<T> once https://github.com/FuelLabs/sway/issues/3810 is implemented
-    let mut bytes_u8 = Bytes::with_capacity(1);
-    let mut left_as_bytes = Bytes::with_capacity(32);
-    let mut right_as_bytes = Bytes::with_capacity(32);
-    bytes_u8.push(NODE);
-    left_as_bytes.len = 32;
-    right_as_bytes.len = 32;
-    __addr_of(left).copy_bytes_to(left_as_bytes.buf.ptr, 32);
-    __addr_of(right).copy_bytes_to(right_as_bytes.buf.ptr, 32);
+    let mut bytes = Bytes::new();
+    let mut left_as_bytes = Bytes::from(left);
+    let mut right_as_bytes = Bytes::from(right);
 
-    let left_right_as_bytes = left_as_bytes.join(right_as_bytes);
-    let bytes = bytes_u8.join(left_right_as_bytes);
+    bytes.push(NODE);
+    bytes.append(left_as_bytes);
+    bytes.append(right_as_bytes);
 
-    // TODO: Update to use bytes.sha256() when https://github.com/FuelLabs/sway/issues/3809 is implemented
-    let mut result_buffer: b256 = b256::min();
-    asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
-        s256 hash ptr bytes;
-        hash: b256
-    }
+    bytes.sha256()
 }
 
 /// Calculates the length of the path to a leaf
