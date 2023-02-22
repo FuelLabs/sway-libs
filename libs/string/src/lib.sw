@@ -144,11 +144,12 @@ impl String {
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    // pub fn append(ref mut self, mut other: self) {
+
+        // pub fn append(ref mut self, mut other: self) {
     //     self.bytes.append(other.into())
     // }
 
-    /// Divides one Bytes into two at an index.
+/// Divides one Bytes into two at an index.
     ///
     /// # Arguments
     ///
