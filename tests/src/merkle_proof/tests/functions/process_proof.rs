@@ -1,5 +1,3 @@
-// TODO: More extensive testing using different proof lengths should be added when https://github.com/FuelLabs/fuels-rs/issues/353 is revolved.
-// TODO: Using the fuel-merkle repository will currently fail all tests due to https://github.com/FuelLabs/sway/issues/2594
 use crate::merkle_proof::tests::utils::{
     abi_calls::process_proof,
     test_helpers::{build_tree, build_tree_manual, leaves_with_depth, merkle_proof_instance},
@@ -29,7 +27,7 @@ mod success {
     async fn processes_merkle_proof() {
         let instance = merkle_proof_instance().await;
 
-        let depth = 8;
+        let depth = 16;
         let leaves = leaves_with_depth(depth).await;
         let key = 0;
 
