@@ -40,7 +40,7 @@ mod success {
     }
 
     #[tokio::test]
-    async fn processes_merkle_proof_not_full_tree() {
+    async fn processes_merkle_proof_complete_tree() {
         let instance = merkle_proof_instance().await;
 
         let depth = 16;
