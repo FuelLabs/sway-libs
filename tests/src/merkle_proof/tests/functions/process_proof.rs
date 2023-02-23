@@ -40,6 +40,25 @@ mod success {
     }
 
     #[tokio::test]
+    async fn processes_merkle_proof_not_full_tree() {
+        let instance = merkle_proof_instance().await;
+
+        let depth = 16;
+        let mut leaves = leaves_with_depth(depth).await;
+        let key = 0;
+        let length = leaves.len() / 3;
+
+        leaves.truncate(length);
+
+        let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
+
+        assert_eq!(
+            process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
+            root
+        );
+    }
+
+    #[tokio::test]
     async fn processes_merkle_proof_key_is_num_leaves() {
         let instance = merkle_proof_instance().await;
 
