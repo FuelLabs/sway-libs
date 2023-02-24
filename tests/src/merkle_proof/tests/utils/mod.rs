@@ -20,11 +20,9 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .leaf_digest(data)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -36,11 +34,9 @@ pub mod abi_calls {
         left: Bits256,
         right: Bits256,
     ) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .node_digest(left, right)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -54,11 +50,9 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .process_proof(key, leaf, num_leaves, proof)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -73,11 +67,9 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> bool {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .verify_proof(key, leaf, root, num_leaves, proof)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
