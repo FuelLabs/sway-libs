@@ -1,9 +1,10 @@
-use fuels::prelude::*;
+use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
-script_abigen!(
-    Testi8TwosComplement,
-    "src/signed_integers/signed_i8_twos_complement/out/debug/i8_twos_complement_test-abi.json"
-);
+abigen!(Script(
+    name = "Testi8TwosComplement",
+    abi =
+        "src/signed_integers/signed_i8_twos_complement/out/debug/i8_twos_complement_test-abi.json"
+),);
 
 mod success {
 
