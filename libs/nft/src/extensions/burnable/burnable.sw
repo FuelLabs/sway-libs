@@ -26,8 +26,8 @@ impl Burnable for NFTCore {
     fn burn(self) {
         require(self.owner == msg_sender().unwrap(), AccessError::SenderNotOwner);
 
-        store(sha256((BALANCES, self.owner)), get::<u64>(sha256((BALANCES, self.owner))) - 1);
-        store(sha256((TOKENS, self.token_id)), Option::None::<NFTCore>());
+        store(sha256((BALANCES, self.owner)), get::<u64>(sha256((BALANCES, self.owner))).unwrap() - 1);
+        store(sha256((TOKENS, self.token_id)), Option::None::<NFTCore>);
 
         log(BurnEvent {
             owner: self.owner,
@@ -47,7 +47,7 @@ impl Burnable for NFTCore {
 /// * When the `token_id` specified does not map to an existing token.
 #[storage(read, write)]
 pub fn burn(token_id: u64) {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
     require(nft.is_some(), InputError::TokenDoesNotExist);
     nft.unwrap().burn();
 }

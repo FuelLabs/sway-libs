@@ -1,11 +1,24 @@
-use fuels::{contract::call_response::FuelCallResponse, prelude::*};
+use fuels::{
+    prelude::{
+        abigen, launch_custom_provider_and_get_wallets, Contract, StorageConfiguration,
+        TxParameters, WalletsConfig,
+    },
+    programs::call_response::FuelCallResponse,
+};
 
 // Load abi from json
-abigen!(StringTestLib, "src/string/out/debug/string_test-abi.json");
+abigen!(Contract(
+    name = "StringTestLib",
+    abi = "src/string/out/debug/string_test-abi.json"
+));
 
 pub mod abi_calls {
 
     use super::*;
+
+    pub async fn append(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_append().call().await.unwrap()
+    }
 
     pub async fn as_vec(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_as_vec().call().await.unwrap()
@@ -39,10 +52,6 @@ pub mod abi_calls {
         contract.methods().test_is_empty().call().await.unwrap()
     }
 
-    pub async fn join(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_join().call().await.unwrap()
-    }
-
     pub async fn len(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_len().call().await.unwrap()
     }
@@ -67,8 +76,8 @@ pub mod abi_calls {
         contract.methods().test_set().call().await.unwrap()
     }
 
-    pub async fn split(contract: &StringTestLib) -> FuelCallResponse<()> {
-        contract.methods().test_split().call().await.unwrap()
+    pub async fn split_at(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract.methods().test_split_at().call().await.unwrap()
     }
 
     pub async fn swap(contract: &StringTestLib) -> FuelCallResponse<()> {

@@ -7,7 +7,7 @@ use reentrancy_attacker_abi::Attacker;
 use reentrancy_target_abi::Target;
 
 // Return the sender as a ContractId or panic:
-fn get_msg_sender_id_or_panic() -> ContractId {
+pub fn get_msg_sender_id_or_panic() -> ContractId {
     match msg_sender().unwrap() {
         Identity::ContractId(v) => v,
         _ => revert(0),

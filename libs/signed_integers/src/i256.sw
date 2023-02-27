@@ -97,9 +97,7 @@ impl core::ops::Add for I256 {
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-        {
+        if (self.underlying > Self::indent() || self.underlying == Self::indent()) {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 31 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
@@ -175,11 +173,7 @@ impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-            && (other.underlying > Self::indent()
-            || other.underlying == Self::indent())
-        {
+        if (self.underlying > Self::indent() || self.underlying == Self::indent()) && (other.underlying > Self::indent() || other.underlying == Self::indent()) {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {

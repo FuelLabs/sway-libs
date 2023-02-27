@@ -1,9 +1,9 @@
-use fuels::prelude::*;
+use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
-script_abigen!(
-    Testi8,
-    "src/signed_integers/signed_i8/out/debug/i8_test-abi.json"
-);
+abigen!(Script(
+    name = "Testi8",
+    abi = "src/signed_integers/signed_i8/out/debug/i8_test-abi.json"
+),);
 
 mod success {
 

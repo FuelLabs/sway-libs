@@ -1,9 +1,9 @@
 use crate::ownership::tests::utils::{
     abi_calls::{owner, renounce_ownership, set_ownership},
-    ownership_lib_mod::State,
+    abigen_bindings::ownership_lib_mod::State,
     test_helpers::setup,
 };
-use fuels::prelude::Identity;
+use fuels::types::Identity;
 
 mod success {
 
@@ -25,7 +25,7 @@ mod success {
 
         renounce_ownership(&owner1.contract).await;
 
-        assert!(matches!(owner(&owner1.contract).await, State::Revoked()));
+        assert!(matches!(owner(&owner1.contract).await, State::Revoked));
     }
 }
 
