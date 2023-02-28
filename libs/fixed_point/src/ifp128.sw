@@ -1,6 +1,6 @@
 library ifp128;
 // A wrapper library around the  type for mathematical functions operating with signed 32-bit fixed point numbers.
-use std::math::{Exponent, Exponentiate, Power, Root};
+use std::math::{Exponent, Power, Root};
 use ::ufp64::UFP64;
 
 pub struct IFP128 {
@@ -282,7 +282,7 @@ impl Exponent for IFP128 {
     }
 }
 
-impl Exponentiate for IFP128 {
+impl Power for IFP128 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let non_negative = if !self.non_negative {
