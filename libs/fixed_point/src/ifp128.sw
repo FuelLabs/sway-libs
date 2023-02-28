@@ -1,6 +1,7 @@
 library ifp128;
 // A wrapper library around the  type for mathematical functions operating with signed 32-bit fixed point numbers.
-use std::{math::{Exponent, Power, Root}, u64::U64};
+use std::math::{Exponent, Power, Root};
+use ::ufp64::UFP64;
 
 pub struct IFP128 {
     underlying: UFP64,
