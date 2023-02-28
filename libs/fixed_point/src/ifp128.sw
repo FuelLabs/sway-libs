@@ -24,7 +24,7 @@ impl From<UFP64> for IFP128 {
 
 impl IFP128 {
     /// The size of this type in bits.
-    pub fn bits() ->  {
+    pub fn bits() -> u32 {
         72
     }
 
