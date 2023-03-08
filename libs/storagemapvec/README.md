@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/storagemapvec-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/storagemapvec-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 StorageMapVec is a temporary workaround for implementing a StorageMap<K, StorageVec<V>>. See why you cannot use StorageMap<K, StorageVec<V>> directly in [this issue](https://github.com/FuelLabs/sway/issues/2639). This library will be deprecated when that issue is resolved.

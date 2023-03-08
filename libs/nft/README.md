@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/NFT-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/NFT-logo-light-theme.png">
+    </picture>
+</p>
+
 ## Overview
 
 A non-fungible token (NFT) is a unique token that has an identifier which distinguishes itself from other tokens within the same token contract. Unlike Fuel's Native Assets, these tokens are not fungible with one another and may contain metadata or other traits giving them distinctive characteristics.
