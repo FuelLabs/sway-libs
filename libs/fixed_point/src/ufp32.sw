@@ -244,13 +244,13 @@ impl Power for UFP32 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let demoninator_power = UFP32::denominator();
-        let exponent_int = exponent.value >> 32;
+        let exponent_int = exponent.value >> 16;
         let nominator_pow = self.value.pow(exponent_int);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 16
-        // we need to delete the nominator by 2 ^ (16 * exponent - 1)
+        // we need to divide the nominator by 2 ^ (16 * exponent - 1)
         // - 1 is the formula is due to denominator need to stay 2 ^ 16
-        let nominator = nominator_pow >> demoninator_power * (exponent_int - 1_u32);
+        let nominator = nominator_pow >> 16 * (exponent_int - 1u32);
 
         if nominator > u32::max() {
             // panic on overflow

@@ -270,12 +270,12 @@ impl Exponent for IFP64 {
         let one = IFP64::from_uint(1u32);
 
         // Coefficients in the Taylor series up to the seventh power
-        let p2 = IFP64::from(UFP32::from(2147483648u32)); // p2 == 1 / 2!
-        let p3 = IFP64::from(UFP32::from(715827882u32)); // p3 == 1 / 3!
-        let p4 = IFP64::from(UFP32::from(178956970u32)); // p4 == 1 / 4!
-        let p5 = IFP64::from(UFP32::from(35791394u32)); // p5 == 1 / 5!
-        let p6 = IFP64::from(UFP32::from(5965232u32)); // p6 == 1 / 6!
-        let p7 = IFP64::from(UFP32::from(852176u32)); // p7 == 1 / 7!
+        let p2 = IFP64::from(UFP32::from(32768u32)); // p2 == 1 / 2!
+        let p3 = IFP64::from(UFP32::from(10922u32)); // p3 == 1 / 3!
+        let p4 = IFP64::from(UFP32::from(2730u32)); // p4 == 1 / 4!
+        let p5 = IFP64::from(UFP32::from(546u32)); // p5 == 1 / 5!
+        let p6 = IFP64::from(UFP32::from(91u32)); // p6 == 1 / 6!
+        let p7 = IFP64::from(UFP32::from(13u32)); // p7 == 1 / 7!
         // Common technique to counter losing significant numbers in usual approximation
         // Taylor series approximation of exponentiation function minus 1. The subtraction is done to deal with accuracy issues
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
