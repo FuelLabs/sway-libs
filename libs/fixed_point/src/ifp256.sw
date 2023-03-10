@@ -3,13 +3,13 @@ library ifp256;
 use std::math::{Exponent, Power, Root};
 use ::ufp128::UFP128;
 
-pub struct IFP128 {
+pub struct IFP256 {
     underlying: UFP128,
     non_negative: bool,
 }
 
-impl From<UFP128> for IFP128 {
-    /// Creates IFP128 from UFP128. Note that IFP128::from(1) is 1 / 2^32 and not 1.
+impl From<UFP128> for IFP256 {
+    /// Creates IFP256 from UFP128. Note that IFP256::from(1) is 1 / 2^32 and not 1.
     fn from(value: UFP128) -> Self {
         Self {
             underlying: value,
@@ -22,7 +22,7 @@ impl From<UFP128> for IFP128 {
     }
 }
 
-impl IFP128 {
+impl IFP256 {
     /// The size of this type in bits.
     pub fn bits() -> u32 {
         136
@@ -53,13 +53,13 @@ impl IFP128 {
     }
 }
 
-impl core::ops::Eq for IFP128 {
+impl core::ops::Eq for IFP256 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying && (self.underlying == Self::zero().underlying || self.non_negative == other.non_negative)
     }
 }
 
-impl core::ops::Ord for IFP128 {
+impl core::ops::Ord for IFP256 {
     fn gt(self, other: Self) -> bool {
         if self.non_negative && !self.non_negative {
             true
@@ -85,8 +85,8 @@ impl core::ops::Ord for IFP128 {
     }
 }
 
-impl core::ops::Add for IFP128 {
-    /// Add a IFP128 to a IFP128. Panics on overflow.
+impl core::ops::Add for IFP256 {
+    /// Add a IFP256 to a IFP256. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
@@ -115,15 +115,15 @@ impl core::ops::Add for IFP128 {
     }
 }
 
-impl core::ops::Subtract for IFP128 {
-    /// Subtract a IFP128 from a IFP128. Panics of overflow.
+impl core::ops::Subtract for IFP256 {
+    /// Subtract a IFP256 from a IFP256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         self + other.sign_reverse()
     }
 }
 
-impl core::ops::Multiply for IFP128 {
-    /// Multiply a IFP128 with a IFP128. Panics of overflow.
+impl core::ops::Multiply for IFP256 {
+    /// Multiply a IFP256 with a IFP256. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let non_negative = if (self.non_negative
             && !self.non_negative)
@@ -141,8 +141,8 @@ impl core::ops::Multiply for IFP128 {
     }
 }
 
-impl core::ops::Divide for IFP128 {
-    /// Divide a IFP128 by a IFP128. Panics if divisor is zero.
+impl core::ops::Divide for IFP256 {
+    /// Divide a IFP256 by a IFP256. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         let non_negative = if (self.non_negative
             && !self.non_negative)
@@ -160,16 +160,16 @@ impl core::ops::Divide for IFP128 {
     }
 }
 
-impl IFP128 {
-    /// Creates IFP128 that correponds to a unsigned integer
+impl IFP256 {
+    /// Creates IFP256 that correponds to a unsigned integer
     pub fn from_uint(uint: u64) -> Self {
         Self::from(UFP128::from_uint(uint))
     }
 }
 
-impl IFP128 {
+impl IFP256 {
     /// Takes the reciprocal (inverse) of a number, `1/x`.
-    pub fn recip(number: IFP128) -> Self {
+    pub fn recip(number: IFP256) -> Self {
         Self {
             underlying: UFP128::recip(number.underlying),
             non_negative: number.non_negative,
@@ -186,7 +186,7 @@ impl IFP128 {
     }
 }
 
-impl IFP128 {
+impl IFP256 {
     /// Returns the largest integer less than or equal to `self`.
     pub fn floor(self) -> Self {
         if self.non_negative {
@@ -210,7 +210,7 @@ impl IFP128 {
     }
 }
 
-impl IFP128 {
+impl IFP256 {
     /// Returns the smallest integer greater than or equal to `self`.
     pub fn ceil(self) -> Self {
         let mut underlying = self.underlying;
@@ -236,7 +236,7 @@ impl IFP128 {
     }
 }
 
-impl IFP128 {
+impl IFP256 {
     /// Returns the nearest integer to `self`. Round half-way cases away from
     pub fn round(self) -> Self {
         let mut underlying = self.underlying;
@@ -262,18 +262,18 @@ impl IFP128 {
     }
 }
 
-impl Exponent for IFP128 {
+impl Exponent for IFP256 {
     /// Exponent function. e ^ x
     fn exp(exponent: Self) -> Self {
-        let one = IFP128::from_uint(1);
+        let one = IFP256::from_uint(1);
 
         // Coefficients in the Taylor series up to the seventh power
-        let p2 = IFP128::from(UFP128::from((0, 2147483648))); // p2 == 1 / 2!
-        let p3 = IFP128::from(UFP128::from((0, 715827882))); // p3 == 1 / 3!
-        let p4 = IFP128::from(UFP128::from((0, 178956970))); // p4 == 1 / 4!
-        let p5 = IFP128::from(UFP128::from((0, 35791394))); // p5 == 1 / 5!
-        let p6 = IFP128::from(UFP128::from((0, 5965232))); // p6 == 1 / 6!
-        let p7 = IFP128::from(UFP128::from((0, 852176))); // p7 == 1 / 7!
+        let p2 = IFP256::from(UFP128::from((0, 2147483648))); // p2 == 1 / 2!
+        let p3 = IFP256::from(UFP128::from((0, 715827882))); // p3 == 1 / 3!
+        let p4 = IFP256::from(UFP128::from((0, 178956970))); // p4 == 1 / 4!
+        let p5 = IFP256::from(UFP128::from((0, 35791394))); // p5 == 1 / 5!
+        let p6 = IFP256::from(UFP128::from((0, 5965232))); // p6 == 1 / 6!
+        let p7 = IFP256::from(UFP128::from((0, 852176))); // p7 == 1 / 7!
         // Common technique to counter losing significant numbers in usual approximation
         // Taylor series approximation of exponentiation function minus 1. The subtraction is done to deal with accuracy issues
         let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
@@ -282,7 +282,7 @@ impl Exponent for IFP128 {
     }
 }
 
-impl Power for IFP128 {
+impl Power for IFP256 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let non_negative = if !self.non_negative {
