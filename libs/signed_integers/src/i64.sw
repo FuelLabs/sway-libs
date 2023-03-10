@@ -1,5 +1,6 @@
 library i64;
 
+use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 64-bit signed integer type.
@@ -185,6 +186,16 @@ impl core::ops::Divide for I64 {
         {
             res = Self::from_uint(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
+        res
+    }
+}
+
+impl TwosComplement for I64 {
+    fn twos_complement(self) -> Self {
+        if self.underlying >= Self::indent() {
+            return self;
+        }
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }

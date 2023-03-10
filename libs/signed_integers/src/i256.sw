@@ -1,6 +1,7 @@
 library i256;
 
 use std::u256::U256;
+use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 256-bit signed integer type.
@@ -206,3 +207,19 @@ impl core::ops::Subtract for I256 {
         res
     }
 }
+
+// impl TwosComplement for I256 {
+//     fn twos_complement(self) -> Self {
+//         if self.underlying == Self::indent() || self.underlying > Self::indent() {
+//             return self;
+//         }
+//         let one = I256::from(U256 {
+//             a: 0,
+//             b: 0,
+//             c: 0,
+//             d: 1,
+//         });
+//         let res = I256::from(!self.underlying) - one;
+//         res
+//     }
+// }

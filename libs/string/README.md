@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/string-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/string-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The String library provides an interface to use UTF-8 encoded strings of dynamic length in Sway. The `String` is heap allocated, growable, and not null terminated.

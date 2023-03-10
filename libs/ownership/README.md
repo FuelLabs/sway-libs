@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/ownership-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/ownership-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The Ownership library provides a way to block users other than a single "owner" or "admin" from calling functions. Ownership is often used when needing administrative calls on a contract.

@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/fixedpoint-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/fixedpoint-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The Unsigned Fixed Point Number library provides a library to use fixed-point numbers in Sway. It has 3 distinct types: `UFP32`, `UFP64` and `UFP128`. This type is stack allocated.
