@@ -282,7 +282,7 @@ impl Exponent for IFP64 {
     }
 }
 
-impl Exponentiate for IFP64 {
+impl Power for IFP64 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let non_negative = if !self.non_negative {
