@@ -208,7 +208,9 @@ impl core::ops::Subtract for I128 {
 
 impl TwosComplement for I128 {
     fn twos_complement(self) -> Self {
-        if self.underlying == Self::indent() || self.underlying > Self::indent() {
+        if self.underlying == Self::indent()
+            || self.underlying > Self::indent()
+        {
             return self;
         }
         let u_one = U128 {
