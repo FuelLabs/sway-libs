@@ -90,14 +90,14 @@ impl core::ops::Add for IFP64 {
     fn add(self, other: Self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
-        if self.non_negative && !self.non_negative {
+        if self.non_negative && !other.non_negative {
             if self.underlying > other.underlying {
                 underlying = self.underlying - other.underlying;
             } else {
                 underlying = other.underlying - self.underlying;
                 non_negative = false;
             }
-        } else if !self.non_negative && self.non_negative {
+        } else if !self.non_negative && other.non_negative {
             if self.underlying > other.underlying {
                 underlying = self.underlying - other.underlying;
             } else {
@@ -203,6 +203,8 @@ impl IFP64 {
 
     /// Returns the fractional part of `self`.
     pub fn fract(self) -> Self {
+        // std::logging::log(self.underlying.value);
+        // std::logging::log(self.underlying.fract().value);
         Self {
             underlying: self.underlying.fract(),
             non_negative: self.non_negative,

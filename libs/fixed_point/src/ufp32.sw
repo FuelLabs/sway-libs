@@ -174,7 +174,7 @@ impl UFP32 {
             // to get rid of integer part, than move to the
             // right (divide by the denominator), to ensure 
             // fixed-point structure
-            value: (self.value << 16) >> 16,
+            value: ((self.value << 16) - u32::max() - 1u32) >> 16,
         }
     }
 }
