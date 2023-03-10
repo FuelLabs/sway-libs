@@ -1,10 +1,12 @@
-use fuels::prelude::*;
+use fuels::prelude::{
+    abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+};
 
 // Load abi from json
-abigen!(
-    TestContract,
-    "src/storagemapvec/out/debug/storagemapvec_test-abi.json"
-);
+abigen!(Contract(
+    name = "TestContract",
+    abi = "src/storagemapvec/out/debug/storagemapvec_test-abi.json"
+));
 
 pub mod abi_calls {
     use super::*;

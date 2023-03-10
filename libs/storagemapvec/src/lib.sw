@@ -33,7 +33,7 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn push(self, key: K, value: V) {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
 
         // Storing the value at the current length index (if this is the first item, starts off at 0)
         let key = sha256((key, len, __get_storage_key()));
@@ -71,7 +71,7 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn pop(self, key: K) -> Option<V> {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         // if the length is 0, there is no item to pop from the vec
         if len == 0 {
             return Option::None;
@@ -81,7 +81,7 @@ impl<K, V> StorageMapVec<K, V> {
         store(len_key, len - 1);
 
         let key = sha256((key, len - 1, __get_storage_key()));
-        Option::Some::<V>(get::<V>(key))
+        get::<V>(key)
     }
 
     /// Gets the value in the given index, None if index is out of bounds
@@ -113,14 +113,14 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn get(self, key: K, index: u64) -> Option<V> {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         // if the index is larger or equal to len, there is no item to return
         if len <= index {
             return Option::None;
         }
 
         let key = sha256((key, index, __get_storage_key()));
-        Option::Some::<V>(get::<V>(key))
+        get::<V>(key)
     }
 
     /// Returns the length of the vector
@@ -150,7 +150,7 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn len(self, key: K) -> u64 {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        get::<u64>(len_key)
+        get::<u64>(len_key).unwrap_or(0)
     }
 
     /// Checks whether the len is 0 or not
@@ -184,7 +184,7 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn is_empty(self, key: K) -> bool {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         len == 0
     }
 
@@ -247,12 +247,12 @@ impl<K, V> StorageMapVec<K, V> {
     pub fn to_vec(self, key: K) -> Vec<V> {
         // The length of the vec is stored in the sha256((key, __get_storage_key())) slot
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         let mut i = 0;
         let mut vec = Vec::new();
         while len > i {
             let len_key = sha256((key, i, __get_storage_key()));
-            let item = get::<V>(len_key);
+            let item = get::<V>(len_key).unwrap();
             vec.push(item);
             i += 1;
         }
@@ -289,13 +289,13 @@ impl<K, V> StorageMapVec<K, V> {
     #[storage(read, write)]
     pub fn swap(self, key: K, index_a: u64, index_b: u64) {
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         assert(len > index_a);
         assert(len > index_b);
         let item_a_key = sha256((key, index_a, __get_storage_key()));
         let item_b_key = sha256((key, index_b, __get_storage_key()));
-        let item_a = get::<V>(item_a_key);
-        let item_b = get::<V>(item_b_key);
+        let item_a = get::<V>(item_a_key).unwrap();
+        let item_b = get::<V>(item_b_key).unwrap();
         store(item_a_key, item_b);
         store(item_b_key, item_a);
     }
@@ -328,12 +328,12 @@ impl<K, V> StorageMapVec<K, V> {
     #[storage(read, write)]
     pub fn swap_remove(self, key: K, index: u64) -> V {
         let len_key = sha256((key, __get_storage_key()));
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
         assert(len > index);
         let item_key = sha256((key, index, __get_storage_key()));
-        let item = get::<V>(item_key);
+        let item = get::<V>(item_key).unwrap();
         let last_item_key = sha256((key, len - 1, __get_storage_key()));
-        let last_item = get::<V>(last_item_key);
+        let last_item = get::<V>(last_item_key).unwrap();
         store(item_key, last_item);
         store(len_key, len - 1);
         item
@@ -371,7 +371,7 @@ impl<K, V> StorageMapVec<K, V> {
         // get the key to the length of the vector
         let len_key = sha256((key, __get_storage_key())); 
         // get the length of the vector
-        let len = get::<u64>(len_key);
+        let len = get::<u64>(len_key).unwrap_or(0);
 
         // assert that the index is less than the length of the vector to prevent out of bounds errors
         assert(len > index);
@@ -379,7 +379,7 @@ impl<K, V> StorageMapVec<K, V> {
         // get the key to the item at the given index
         let removed_item_key = sha256((key, index, __get_storage_key()));
         // get the item at the given index
-        let removed_item = get::<V>(removed_item_key);
+        let removed_item = get::<V>(removed_item_key).unwrap();
 
         // create a counter to iterate through the vector, starting from the next item from the given index
         let mut count = index + 1;
@@ -390,7 +390,7 @@ impl<K, V> StorageMapVec<K, V> {
             // get the key to the item at the current counter
             let item_key = sha256((key, count - 1, __get_storage_key()));
             // store the item at the current counter in the key to the item at the current counter - 1
-            store::<V>(item_key, get::<V>(sha256((key, count, __get_storage_key()))));
+            store::<V>(item_key, get::<V>(sha256((key, count, __get_storage_key()))).unwrap());
             // increment the counter
             count += 1;
         }

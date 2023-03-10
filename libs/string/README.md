@@ -1,14 +1,23 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/string-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/string-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The String library provides an interface to use UTF-8 encoded strings of dynamic length in Sway. The `String` is heap allocated, growable, and not null terminated.
 
-The `String` is stored as vector of bytes. This differs from Sway's built in `str` because the size cannot be known at compile time and the length is dynamic. 
+The `String` is stored as a collection of tightly packed bytes. This differs from Sway's built in `str` because the size cannot be known at compile time and the length is dynamic. 
 
 For more information please see the [specification](./SPECIFICATION.md).
 
 > **Note** There is no way to convert a `str` to a `String`.
 
 ## Known Issues
+
+The `append()` function currently causes an internal compiler error when used. It has been commented out until https://github.com/FuelLabs/sway/issues/4158 is resolved.
 
 It is important to note that unlike Rust's `String`, this `String` library does **not** guarantee a valid UTF-8 string. The `String` currently behaves only as a `vec` and does not perform any validation. This intended to be supported in the future with the introduction of [`char`](https://github.com/FuelLabs/sway/issues/2937) to the Sway language.
 

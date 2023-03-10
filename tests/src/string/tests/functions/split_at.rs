@@ -1,4 +1,4 @@
-use crate::string::tests::utils::{abi_calls::split, test_helpers::setup};
+use crate::string::tests::utils::{abi_calls::split_at, test_helpers::setup};
 
 mod success {
 
@@ -8,6 +8,6 @@ mod success {
     async fn splits() {
         let instance = setup().await;
 
-        split(&instance).await;
+        split_at(&instance).await;
     }
 }

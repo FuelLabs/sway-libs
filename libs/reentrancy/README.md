@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/reentrancy-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/reentrancy-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The Reentrancy library provides an API to check for and disallow reentrancy on a contract.

@@ -1,6 +1,7 @@
 library i16;
 
 use ::errors::Error;
+use ::common::TwosComplement;
 
 /// The 16-bit signed integer type.
 /// Represented as an underlying u16 value.
@@ -185,6 +186,16 @@ impl core::ops::Subtract for I16 {
                 res = Self::from_uint(self.underlying + other.underlying - Self::indent());
             }
         }
+        res
+    }
+}
+
+impl TwosComplement for I16 {
+    fn twos_complement(self) -> Self {
+        if self.underlying >= Self::indent() {
+            return self;
+        }
+        let res = Self::from_uint(!self.underlying + 1);
         res
     }
 }

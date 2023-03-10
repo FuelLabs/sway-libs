@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/signedints-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/signedints-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 The Signed Integers library provides a library to use signed numbers in Sway. It has 6 distinct types: `I8`, `I16`, `I32`, `I64`, `I128`, `I256`. These types are stack allocated.
