@@ -12,7 +12,6 @@ fn main() -> bool {
     let two = IFP64::from_uint(2u32);
     let three = IFP64::from_uint(3u32);
     res = two.pow(three);
-    // std::logging::log(res.underlying.value);
     assert(IFP64::from_uint(8u32) == res);
 
     let ufp_64_11 = IFP64::from_uint(11u32);

@@ -203,8 +203,6 @@ impl IFP64 {
 
     /// Returns the fractional part of `self`.
     pub fn fract(self) -> Self {
-        // std::logging::log(self.underlying.value);
-        // std::logging::log(self.underlying.fract().value);
         Self {
             underlying: self.underlying.fract(),
             non_negative: self.non_negative,

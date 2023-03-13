@@ -178,11 +178,6 @@ impl core::ops::Subtract for I256 {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 let q = other.underlying - Self::indent();
-
-                // std::logging::log(self.underlying.a);
-                // std::logging::log(self.underlying.b);
-                // std::logging::log(self.underlying.c);
-                // std::logging::log(self.underlying.d);
                 res = Self::from_uint(self.underlying - q);
             }
         } else if (self.underlying > Self::indent()
