@@ -173,7 +173,11 @@ impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent() || self.underlying == Self::indent()) && (other.underlying > Self::indent() || other.underlying == Self::indent()) {
+        if (self.underlying > Self::indent()
+            || self.underlying == Self::indent())
+            && (other.underlying > Self::indent()
+            || other.underlying == Self::indent())
+        {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
