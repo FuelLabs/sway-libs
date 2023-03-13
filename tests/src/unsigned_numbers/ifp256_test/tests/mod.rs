@@ -1,7 +1,7 @@
 use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
 abigen!(Script(
-    name = "TestUfp256",
+    name = "TestIfp256",
     abi = "src/unsigned_numbers/ifp256_test/out/debug/ifp256_test-abi.json"
 ),);
 
@@ -15,7 +15,7 @@ mod success {
 
         let wallet = launch_provider_and_get_wallet().await;
 
-        let instance = TestUfp256::new(wallet, path_to_bin);
+        let instance = TestIfp256::new(wallet, path_to_bin);
 
         let _result = instance.main().call().await;
     }
