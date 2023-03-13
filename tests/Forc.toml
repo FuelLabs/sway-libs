@@ -30,6 +30,8 @@ members = [
   "./src/unsigned_numbers/ufp64_test",
   "./src/unsigned_numbers/ufp128_div_test",
   "./src/unsigned_numbers/ufp128_test",
+  "./src/unsigned_numbers/ifp256_div_test",
+  "./src/unsigned_numbers/ifp256_test",
   "./src/reentrancy/reentrancy_attacker_abi",
   "./src/reentrancy/reentrancy_attacker_contract",
   "./src/reentrancy/reentrancy_target_abi",
