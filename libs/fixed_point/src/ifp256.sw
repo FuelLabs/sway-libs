@@ -9,7 +9,7 @@ pub struct IFP256 {
 }
 
 impl From<UFP128> for IFP256 {
-    /// Creates IFP256 from UFP128. Note that IFP256::from(1) is 1 / 2^32 and not 1.
+    /// Creates IFP256 from UFP128. Note that IFP256::from(1) is 1 / 2^128 and not 1.
     fn from(value: UFP128) -> Self {
         Self {
             underlying: value,
