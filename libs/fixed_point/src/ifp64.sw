@@ -1,5 +1,5 @@
 library ifp64;
-// A wrapper library around the u32 type for mathematical functions operating with signed 32-bit fixed point numbers.
+// A wrapper library around the u32 type for mathematical functions operating with signed 64-bit fixed point numbers.
 use std::math::*;
 use ::ufp32::UFP32;
 
