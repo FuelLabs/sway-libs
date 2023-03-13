@@ -1,3 +1,5 @@
+mod ifp128_div_test;
+mod ifp128_test;
 mod ufp128_div_test;
 mod ufp128_test;
 mod ufp32_div_test;
