@@ -2,11 +2,11 @@ library frc20_abi;
 
 use std::u256::U256;
 
-abi Token {
+abi FRC20 {
     #[storage(read)]
     /// Get the total supply of the token.
     /// MUST track all mint and burn operations.
-    /// MAY store the amount as another type (i.e: 'u64') internally.
+    /// /// /// MAY store the amount as another type (i.e: 'u64') internally.
     fn total_supply() -> U256;
 
     /// Get the name of the token
