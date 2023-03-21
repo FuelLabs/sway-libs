@@ -34,7 +34,7 @@ pub struct TransferEvent {
     token_id: u64,
 }
 
-abi NFT {
+abi FuelNFT {
     /// Transfer ownership of an NFT.
     ///
     /// -- THE CALLER IS RESPONSIBLE
