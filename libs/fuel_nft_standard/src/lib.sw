@@ -12,7 +12,6 @@ pub struct ApprovalEvent {
     approved: Option<Identity>,
     owner: Identity,
     token_id: u64,
-
 }
 /// This is logged when an operator is enabled or disabled for an owner.
 /// The operator can manage all NFTs of the owner.
@@ -47,7 +46,6 @@ abi NFT {
     /// * When `msg_sender()` is not approved to transfer this token on the owner's behalf.
     /// * When `msg_sender()` is not approved to transfer all tokens on the owner's behalf.
     fn transfer(to: Identity, token_id: u64);
-
     /// Set or reafirm the approved Identity for an NFT.
     ///
     /// # Arguments
@@ -59,7 +57,6 @@ abi NFT {
     ///
     /// * When `msg_sender()` is not the owner of (or an approved Operator for) this NFT.
     fn approve(approved: Option<Identity>, token_id: u64);
-
     /// Enable or disable approval for a third party "Operator" to manages all
     /// of `msg_sender()`'s NFTs.
     ///
@@ -74,7 +71,6 @@ abi NFT {
     ///
     /// * Emits the ApprovalForAll event.
     fn set_approval_for_all(approve: bool, operator: Identity);
-   
     /// Get the approved Identity for a single NFT
     ///
     /// # Arguments
@@ -85,14 +81,12 @@ abi NFT {
     ///
     /// * When `token_id` is not a valid NFT
     fn approved(token_id: u64) -> Option<Identity>;
-   
     /// The number of NFTs owner by an Identity.
     ///
     /// # Arguments
     ///
     /// * `owner` - The Identity fo which to query the balance.
     fn balance_of(owner: Identity) -> u64;
-
     /// Query if an Identity is an authorized operator for another Identity.
     ///
     /// # Arguments
@@ -100,7 +94,6 @@ abi NFT {
     /// * `operator` - The Identity that acts on behalf of the owner.
     /// * `owner` - The Identity that owns the NFT/NFTs.
     fn is_approved_for_all(operator: Identity, owner: Identity) -> bool;
-   
     /// Query the owner of an NFT.
     ///
     /// # Arguments
