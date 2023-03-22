@@ -12,6 +12,12 @@ The String library can be used anytime a string's length is unknown at compile t
 
 ## Public Functions
 
+### `append()`
+
+Joins two `String` instances into a single larger `String`. 
+
+**NOTE** This function is temporarily unavailable until https://github.com/FuelLabs/sway/issues/4158 is resolved.
+
 ### `as_vec()`
 
 Convert the `String` struct to a `Vec` of `u8` bytes. 
@@ -46,10 +52,6 @@ Convert the `String` struct to the `Bytes` type.
 
 Returns a boolean indicating whether the length of the `String` is zero.
 
-### `join()`
-
-Joins two `String` instances into a single larger `String`.
-
 ### `len()`
 
 Returns the total number of bytes in the `String`. 
@@ -74,7 +76,7 @@ Appends a byte to the end of the `String`.
 
 Replaces a byte for another byte within the `String`.
 
-### `split()`
+### `split_at()`
 
 Splits a single `String` into two `String`s at a given index.
 

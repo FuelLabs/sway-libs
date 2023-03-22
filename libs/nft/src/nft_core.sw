@@ -56,7 +56,7 @@ impl NFTCore {
     /// * `operator` - The user which may or may not transfer all tokens on the owner`s behalf.
     #[storage(read)]
     pub fn is_approved_for_all(self, operator: Identity) -> bool {
-        get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator)))
+        get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator))).unwrap_or(false)
     }
 
     /// Mints a token to the `to` Identity with a id.
@@ -71,7 +71,7 @@ impl NFTCore {
     /// * When the `token_id` is used by another token
     #[storage(read, write)]
     pub fn mint(to: Identity, token_id: u64) -> Self {
-        require(get::<Option<NFTCore>>(sha256((TOKENS, token_id))).is_none(), InputError::TokenAlreadyExists);
+        require(get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None).is_none(), InputError::TokenAlreadyExists);
 
         let nft = NFTCore {
             approved: Option::None,
@@ -80,8 +80,8 @@ impl NFTCore {
         };
 
         store(sha256((TOKENS, token_id)), Option::Some(nft));
-        store(TOKENS_MINTED, get::<u64>(TOKENS_MINTED) + 1);
-        store(sha256((BALANCES, to)), get::<u64>(sha256((BALANCES, to))) + 1);
+        store(TOKENS_MINTED, get::<u64>(TOKENS_MINTED).unwrap_or(0) + 1);
+        store(sha256((BALANCES, to)), get::<u64>(sha256((BALANCES, to))).unwrap_or(0) + 1);
 
         log(MintEvent {
             owner: to,
@@ -144,7 +144,7 @@ impl NFTCore {
         let mut nft = self;
         let from = nft.owner;
         let sender = msg_sender().unwrap();
-        let operator_approved = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender)));
+        let operator_approved = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender))).unwrap_or(false);
 
         // Ensure that the sender is either:
         // 1. The owner of this token
@@ -160,8 +160,8 @@ impl NFTCore {
 
         store(sha256((TOKENS, self.token_id)), Option::Some(nft));
 
-        let from_balance = get::<u64>(sha256((BALANCES, from)));
-        let to_balance = get::<u64>(sha256((BALANCES, to)));
+        let from_balance = get::<u64>(sha256((BALANCES, from))).unwrap_or(0);
+        let to_balance = get::<u64>(sha256((BALANCES, to))).unwrap_or(0);
         store(sha256((BALANCES, from)), from_balance - 1);
         store(sha256((BALANCES, to)), to_balance + 1);
 

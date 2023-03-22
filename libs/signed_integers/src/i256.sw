@@ -1,6 +1,7 @@
 library i256;
 
 use std::u256::U256;
+use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 256-bit signed integer type.
@@ -96,9 +97,7 @@ impl core::ops::Add for I256 {
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-        {
+        if (self.underlying > Self::indent() || self.underlying == Self::indent()) {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 31 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
@@ -183,11 +182,6 @@ impl core::ops::Subtract for I256 {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 let q = other.underlying - Self::indent();
-
-                // std::logging::log(self.underlying.a);
-                // std::logging::log(self.underlying.b);
-                // std::logging::log(self.underlying.c);
-                // std::logging::log(self.underlying.d);
                 res = Self::from_uint(self.underlying - q);
             }
         } else if (self.underlying > Self::indent()
@@ -209,6 +203,24 @@ impl core::ops::Subtract for I256 {
                 res = Self::from_uint(self.underlying + other.underlying - Self::indent());
             }
         }
+        res
+    }
+}
+
+impl TwosComplement for I256 {
+    fn twos_complement(self) -> Self {
+        if self.underlying == Self::indent()
+            || self.underlying > Self::indent()
+        {
+            return self;
+        }
+        let u_one = U256 {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 1,
+        };
+        let res = I256::from_uint(!self.underlying + u_one);
         res
     }
 }

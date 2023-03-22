@@ -1,9 +1,9 @@
-use fuels::prelude::*;
+use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
-script_abigen!(
-    TestUfp128Div,
-    "src/unsigned_numbers/ufp128_div_test/out/debug/ufp128_div_test-abi.json"
-);
+abigen!(Script(
+    name = "TestUfp128Div",
+    abi = "src/unsigned_numbers/ufp128_div_test/out/debug/ufp128_div_test-abi.json"
+),);
 
 mod success {
 

@@ -98,7 +98,7 @@ impl core::ops::Multiply for UFP32 {
         }
 
         Self {
-            value: res_u64,
+            value: asm(ptr: res_u64) { ptr: u32 },
         }
     }
 }
@@ -125,7 +125,7 @@ impl core::ops::Divide for UFP32 {
             revert(0);
         }
         Self {
-            value: res_u64,
+            value: asm(ptr: res_u64) { ptr: u32 },
         }
     }
 }
@@ -174,7 +174,7 @@ impl UFP32 {
             // to get rid of integer part, than move to the
             // right (divide by the denominator), to ensure 
             // fixed-point structure
-            value: (self.value << 16) >> 16,
+            value: ((self.value << 16) - u32::max() - 1u32) >> 16,
         }
     }
 }
@@ -240,17 +240,17 @@ impl Exponent for UFP32 {
     }
 }
 
-impl Exponentiate for UFP32 {
+impl Power for UFP32 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: Self) -> Self {
         let demoninator_power = UFP32::denominator();
-        let exponent_int = exponent.value >> 32;
+        let exponent_int = exponent.value >> 16;
         let nominator_pow = self.value.pow(exponent_int);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 16
-        // we need to delete the nominator by 2 ^ (16 * exponent - 1)
+        // we need to divide the nominator by 2 ^ (16 * exponent - 1)
         // - 1 is the formula is due to denominator need to stay 2 ^ 16
-        let nominator = nominator_pow >> demoninator_power * (exponent_int - 1);
+        let nominator = nominator_pow >> 16 * (exponent_int - 1u32);
 
         if nominator > u32::max() {
             // panic on overflow

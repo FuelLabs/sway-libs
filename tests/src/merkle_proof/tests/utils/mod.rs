@@ -2,24 +2,27 @@ use fuel_merkle::{
     binary::in_memory::MerkleTree,
     common::{empty_sum_sha256, Bytes32, LEAF, NODE},
 };
-use fuels::prelude::*;
+use fuels::{
+    prelude::{
+        abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+    },
+    types::Bits256,
+};
 use sha2::{Digest, Sha256};
 
-abigen!(
-    TestMerkleProofLib,
-    "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
-);
+abigen!(Contract(
+    name = "TestMerkleProofLib",
+    abi = "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
+));
 
 pub mod abi_calls {
 
     use super::*;
 
     pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .leaf_digest(data)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -31,11 +34,9 @@ pub mod abi_calls {
         left: Bits256,
         right: Bits256,
     ) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .node_digest(left, right)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -49,11 +50,9 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> Bits256 {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .process_proof(key, leaf, num_leaves, proof)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()
@@ -68,11 +67,9 @@ pub mod abi_calls {
         num_leaves: u64,
         proof: Vec<Bits256>,
     ) -> bool {
-        let tx_params = TxParameters::new(None, Some(10_000_000), None);
         contract
             .methods()
             .verify_proof(key, leaf, root, num_leaves, proof)
-            .tx_params(tx_params)
             .call()
             .await
             .unwrap()

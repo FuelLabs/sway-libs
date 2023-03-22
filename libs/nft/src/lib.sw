@@ -51,7 +51,7 @@ abi NFT {
 /// * When `token_id` does not map to an existing token.
 #[storage(read, write)]
 pub fn approve(approved: Option<Identity>, token_id: u64) {
-    let mut nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+    let mut nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
     require(nft.is_some(), InputError::TokenDoesNotExist);
     nft.unwrap().approve(approved);
 }
@@ -63,7 +63,7 @@ pub fn approve(approved: Option<Identity>, token_id: u64) {
 /// * `token_id` - The unique identifier of the token which the approved user should be returned.
 #[storage(read)]
 pub fn approved(token_id: u64) -> Option<Identity> {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
 
     match nft {
         Option::Some(nft) => {
@@ -82,7 +82,7 @@ pub fn approved(token_id: u64) -> Option<Identity> {
 /// * `owner` - The user of which the balance should be returned.
 #[storage(read)]
 pub fn balance_of(owner: Identity) -> u64 {
-    get::<u64>(sha256((BALANCES, owner)))
+    get::<u64>(sha256((BALANCES, owner))).unwrap_or(0)
 }
 
 /// Returns whether the `operator` user is approved to transfer all tokens on behalf of the `owner`.
@@ -93,7 +93,7 @@ pub fn balance_of(owner: Identity) -> u64 {
 /// * `owner` - The user which may or may not have given approval to transfer all tokens.
 #[storage(read)]
 pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
-    get::<bool>(sha256((OPERATOR_APPROVAL, owner, operator)))
+    get::<bool>(sha256((OPERATOR_APPROVAL, owner, operator))).unwrap_or(false)
 }
 
 /// Mints `amount` number of tokens to the specified user.
@@ -104,7 +104,7 @@ pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
 /// * `to` - The user which will own the minted tokens.
 #[storage(read, write)]
 pub fn mint(amount: u64, to: Identity) {
-    let tokens_minted = get::<u64>(TOKENS_MINTED);
+    let tokens_minted = get::<u64>(TOKENS_MINTED).unwrap_or(0);
     let total_mint = tokens_minted + amount;
 
     // Mint as many tokens as the sender has asked for
@@ -122,7 +122,7 @@ pub fn mint(amount: u64, to: Identity) {
 /// * `token_id` - The unique identifier of the token.
 #[storage(read)]
 pub fn owner_of(token_id: u64) -> Option<Identity> {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
 
     match nft {
         Option::Some(nft) => {
@@ -158,7 +158,7 @@ pub fn set_approval_for_all(approve: bool, operator: Identity) {
 /// Returns the total number of tokens that have been minted.
 #[storage(read)]
 pub fn tokens_minted() -> u64 {
-    get::<u64>(TOKENS_MINTED)
+    get::<u64>(TOKENS_MINTED).unwrap_or(0)
 }
 
 /// Transfers ownership of the specified token to another user.
@@ -173,7 +173,7 @@ pub fn tokens_minted() -> u64 {
 /// * When the `token_id` does not map to an existing token.
 #[storage(read, write)]
 pub fn transfer(to: Identity, token_id: u64) {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id)));
+    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
     require(nft.is_some(), InputError::TokenDoesNotExist);
     let _ = nft.unwrap().transfer(to);
 }

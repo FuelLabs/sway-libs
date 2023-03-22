@@ -1,5 +1,6 @@
 library i32;
 
+use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 32-bit signed integer type.
@@ -184,6 +185,16 @@ impl core::ops::Divide for I32 {
         {
             res = Self::from_uint(Self::indent() - (Self::indent() - self.underlying) / (divisor.underlying - Self::indent()));
         }
+        res
+    }
+}
+
+impl TwosComplement for I32 {
+    fn twos_complement(self) -> Self {
+        if self.underlying >= Self::indent() {
+            return self;
+        }
+        let res = Self::from_uint(!self.underlying + 1u32);
         res
     }
 }

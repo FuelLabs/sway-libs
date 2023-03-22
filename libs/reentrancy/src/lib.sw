@@ -1,14 +1,15 @@
+library reentrancy;
+// This has been moved due to https://github.com/FuelLabs/sway/issues/4160
 //! A reentrancy check for use in Sway contracts.
 //! Note that this only works in internal contexts.
 //! to prevent reentrancy: `assert(!is_reentrant());`
-library reentrancy;
-
 use std::call_frames::*;
 use std::registers::frame_ptr;
 
 pub enum ReentrancyError {
     NonReentrant: (),
 }
+
 /// Reverts if the reentrancy pattern is detected in the contract in which this is called.
 /// Not needed if the Checks-Effects-Interactions (CEI) pattern is followed (as prompted by the
 /// compiler).

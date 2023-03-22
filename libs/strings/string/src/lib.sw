@@ -137,24 +137,25 @@ impl From<Bytes> for String {
     }
 }
 
-// Need to use seperate impl blocks for now: https://github.com/FuelLabs/sway/issues/1548
 impl String {
-    /// Appends a second `String` into a single larger `String` and leaves the second `String` empty.
+    // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved
+    /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
     ///
-    /// * `other` - The String to append to self.
-    pub fn append(ref mut self, other: self) {
-        self.bytes.append(other.into())
-    }
+    /// * `other` - The String to join to self.
 
-    /// Splits a `String` at the given index, returning the left and right-hand side `String`.
+        // pub fn append(ref mut self, mut other: self) {
+    //     self.bytes.append(other.into())
+    // }
+
+/// Divides one Bytes into two at an index.
     ///
     /// # Arguments
     ///
     /// * `index` - The index to split the original String at.
     pub fn split_at(ref mut self, index: u64) -> (Self, Self) {
-        let bytes = self.bytes.split_at(index);
-        (Self::from(bytes.0), Self::from(bytes.1))
+        let (bytes1, bytes2) = self.bytes.split_at(index);
+        (Self::from(bytes1), Self::from(bytes2))
     }
 }

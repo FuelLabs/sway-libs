@@ -1,9 +1,9 @@
 use crate::ownership::tests::utils::{
     abi_calls::{owner, set_ownership, transfer_ownership},
-    ownership_lib_mod::State,
+    abigen_bindings::ownership_lib_mod::State,
     test_helpers::setup,
 };
-use fuels::prelude::Identity;
+use fuels::types::Identity;
 
 mod success {
 

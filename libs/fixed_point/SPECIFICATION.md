@@ -1,12 +1,12 @@
 # Overview
 
-This document provides an overview of the Unsigned Fixed Number Point library.
+This document provides an overview of the Fixed Number Point library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
 ## Use Cases
 
-The Unsigned Fixed Point type can be used anytime a developer needs fixed-point numbers.
+The Fixed Point type can be used anytime a developer needs fixed-point numbers.
 
 ## Public Functions
 

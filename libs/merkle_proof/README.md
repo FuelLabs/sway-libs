@@ -1,3 +1,10 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/merkle-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/merkle-logo-light-theme.png">
+    </picture>
+</p>
+
 # Overview
 
 Merkle trees allow for on-chain verification of off-chain data. With the merkle root posted on-chain, the generation of proofs off-chain can provide verifibly true data. 

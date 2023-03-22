@@ -3,7 +3,7 @@ use crate::merkle_proof::tests::utils::{
     test_helpers::{build_tree, merkle_proof_instance},
 };
 use fuel_merkle::common::{Bytes32, LEAF, NODE};
-use fuels::prelude::Bits256;
+use fuels::types::Bits256;
 use sha2::{Digest, Sha256};
 
 mod success {

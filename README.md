@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset=".docs/sway_libraries_white.png">
-        <img alt="SwayApps logo" width="400px" src=".docs/sway_libraries_black.png">
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/sway-libs-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/sway-libs-logo-light-theme.png">
     </picture>
 </p>
 
@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.32.2" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.32.2-orange" />
+    <a href="https://crates.io/crates/forc/0.35.3" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.35.3-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -38,7 +38,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
 - [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-- [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type
+- [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type.
 
 ## Using a library
 
@@ -82,7 +82,7 @@ cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **Note**
-> All projects currently use `forc v0.32.2`, `fuels-rs v0.33.0` and `fuel-core 0.15.1`.
+> All projects currently use `forc v0.35.3`, `fuels-rs v0.36.1` and `fuel-core 0.17.3`.
 
 ## Contributing
 

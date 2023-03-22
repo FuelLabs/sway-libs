@@ -2,7 +2,7 @@ use crate::ownership::tests::utils::{
     abi_calls::{only_owner, set_ownership},
     test_helpers::setup,
 };
-use fuels::prelude::Identity;
+use fuels::types::Identity;
 
 mod success {
 
