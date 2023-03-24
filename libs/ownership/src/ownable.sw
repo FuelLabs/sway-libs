@@ -14,9 +14,9 @@ use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 /// Ensures that the sender is the owner.
 ///
 /// # Number of Storage Accesses
-/// 
+///
 /// * Reads: `1`
-/// 
+///
 /// # Reverts
 ///
 /// * When the sender is not the owner.
@@ -25,7 +25,7 @@ use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 ///
 /// ```sway
 /// use ownable::only_owner;
-/// 
+///
 /// fn foo() {
 ///     only_owner();
 ///     // Do stuff here
@@ -38,11 +38,11 @@ pub fn only_owner() {
 }
 
 /// Returns the owner.
-/// 
+///
 /// # Number of Storage Accesses
 ///
 /// * Reads: `1`
-/// 
+///
 /// # Examples
 ///
 /// ```sway
