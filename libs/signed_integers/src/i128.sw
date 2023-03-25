@@ -206,16 +206,18 @@ impl core::ops::Subtract for I128 {
     }
 }
 
-// impl TwosComplement for I128 {
-//     fn twos_complement(self) -> Self {
-//         if self.underlying == Self::indent() || self.underlying > Self::indent() {
-//             return self;
-//         }
-//         let one = I128::from(U128 {
-//             upper: 0,
-//             lower: 1,
-//         });
-//         let res = I128::from(!self.underlying) - one;
-//         res
-//     }
-// }
+impl TwosComplement for I128 {
+    fn twos_complement(self) -> Self {
+        if self.underlying == Self::indent()
+            || self.underlying > Self::indent()
+        {
+            return self;
+        }
+        let u_one = U128 {
+            upper: 0,
+            lower: 1,
+        };
+        let res = I128::from_uint(!self.underlying + u_one);
+        res
+    }
+}

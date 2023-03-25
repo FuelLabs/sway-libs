@@ -173,16 +173,15 @@ impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent() || self.underlying == Self::indent()) && (other.underlying > Self::indent() || other.underlying == Self::indent()) {
+        if (self.underlying > Self::indent()
+            || self.underlying == Self::indent())
+            && (other.underlying > Self::indent()
+            || other.underlying == Self::indent())
+        {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 let q = other.underlying - Self::indent();
-
-                // std::logging::log(self.underlying.a);
-                // std::logging::log(self.underlying.b);
-                // std::logging::log(self.underlying.c);
-                // std::logging::log(self.underlying.d);
                 res = Self::from_uint(self.underlying - q);
             }
         } else if (self.underlying > Self::indent()
@@ -208,18 +207,20 @@ impl core::ops::Subtract for I256 {
     }
 }
 
-// impl TwosComplement for I256 {
-//     fn twos_complement(self) -> Self {
-//         if self.underlying == Self::indent() || self.underlying > Self::indent() {
-//             return self;
-//         }
-//         let one = I256::from(U256 {
-//             a: 0,
-//             b: 0,
-//             c: 0,
-//             d: 1,
-//         });
-//         let res = I256::from(!self.underlying) - one;
-//         res
-//     }
-// }
+impl TwosComplement for I256 {
+    fn twos_complement(self) -> Self {
+        if self.underlying == Self::indent()
+            || self.underlying > Self::indent()
+        {
+            return self;
+        }
+        let u_one = U256 {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 1,
+        };
+        let res = I256::from_uint(!self.underlying + u_one);
+        res
+    }
+}
