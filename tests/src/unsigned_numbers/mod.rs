@@ -1,5 +1,10 @@
 mod ifp256_div_test;
 mod ifp256_test;
+mod ifp64_div_test;
+mod ifp64_exp_test;
+mod ifp64_mul_test;
+mod ifp64_pow_test;
+mod ifp64_test;
 mod ufp128_div_test;
 mod ufp128_test;
 mod ufp32_div_test;
