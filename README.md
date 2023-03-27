@@ -40,6 +40,11 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 - [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type.
 
+### Standards
+
+- [Token Standard](./libs/standards/frc20_abi/src/lib.sw) is a standard ABI used to implement native assets on Fuel.
+- [Non-Fungible Token(NFT) Standard](./libs/standards/frc721_abi/src/lib.sw) is a standard ABI used to implement NFTs on Fuel.
+
 ## Using a library
 
 To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]` with the most recent release:
