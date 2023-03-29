@@ -12,9 +12,7 @@ pub struct ApprovalEvent {
     approved: Option<Identity>,
     owner: Identity,
     token_id: u64,
-
 }
-
 /// This event MUST be logged when an operator is enabled or disabled for an owner.
 /// The operator can manage all NFTs of the owner.
 pub struct OperatorEvent {
@@ -22,7 +20,6 @@ pub struct OperatorEvent {
     operator: Identity,
     owner: Identity,
 }
-
 /// This event MUST be logged when ownership of any NFT changes between two Identities.
 /// Exception: Cases where there is no new or previous owner, formally known as minting and burning,
 /// the event SHALL NOT be logged.
@@ -56,7 +53,6 @@ abi FRC721 {
     ///
     /// * The TransferEvent event MUST be emitted when the function is not reverted.
     fn transfer(to: Identity, token_id: u64);
-
     /// Set or reafirm the approved Identity for an NFT.
     /// The approved Identity for the specified NFT MAY transfer the token to a new owner.
     ///
@@ -73,7 +69,6 @@ abi FRC721 {
     ///
     /// * The ApprovalEvent event MUST be emitted when the function is not reverted.
     fn approve(approved: Option<Identity>, token_id: u64);
-    
     /// Enable or disable approval for a third party "Operator" to manages all
     /// of `msg_sender()`'s NFTs.
     /// An operator for an Identity MAY transfer and MAY set approved Identities for all tokens
@@ -90,7 +85,6 @@ abi FRC721 {
     ///
     /// * The OperatorEvent event MUST be emitted.
     fn set_approval_for_all(approve: bool, operator: Identity);
-   
     /// Get the approved Identity for a single NFT.
     /// Option::None indicates there is no approved Identity.
     ///
@@ -102,14 +96,12 @@ abi FRC721 {
     ///
     /// * It is REQUIRED that `token_id` is valid NFT.
     fn approved(token_id: u64) -> Option<Identity>;
-   
     /// The number of NFTs owner by an Identity.
     ///
     /// # Arguments
     ///
     /// * `owner` - The Identity of which to query the balance.
     fn balance_of(owner: Identity) -> u64;
-
     /// Query if an Identity is an authorized operator for another Identity.
     ///
     /// # Arguments
@@ -117,7 +109,6 @@ abi FRC721 {
     /// * `operator` - The Identity that acts on behalf of the owner.
     /// * `owner` - The Identity that owns the NFT/NFTs.
     fn is_approved_for_all(operator: Identity, owner: Identity) -> bool;
-   
     /// Query the owner of an NFT.
     /// Option::None indicates there is no owner Identity.
     ///
