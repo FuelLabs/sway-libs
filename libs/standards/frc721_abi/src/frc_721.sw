@@ -23,7 +23,7 @@ pub struct OperatorEvent {
     owner: Identity,
 }
 
-/// This event MUST be logged when ownership of any NFT changes.
+/// This event MUST be logged when ownership of any NFT changes between two Identities.
 /// Exception: Cases where there is no new or previous owner, formally known as minting and burning,
 /// the event SHALL NOT be logged.
 pub struct TransferEvent {
