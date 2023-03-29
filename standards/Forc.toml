@@ -1,5 +1,2 @@
 [workspace]
-members = [
-  "frc20",
-  "frc721",
-]
+members = ["frc20", "frc721"]
