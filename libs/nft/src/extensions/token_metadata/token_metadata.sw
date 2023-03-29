@@ -37,6 +37,10 @@ impl<T> TokenMetadata<T> for NFTCore {
 /// # Arguments
 ///
 /// * `token_id` - The id of the token which the metadata should be returned
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `2`
 #[storage(read)]
 pub fn token_metadata<T>(token_id: u64) -> Option<T> {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
@@ -56,6 +60,11 @@ pub fn token_metadata<T>(token_id: u64) -> Option<T> {
 ///
 /// * `token_metadata` - The metadata which should be set.
 /// * `token_id` - The token which the metadata should be set for.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
+/// * Writes: `1`
 ///
 /// # Reverts
 ///
