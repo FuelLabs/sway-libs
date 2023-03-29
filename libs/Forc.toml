@@ -6,8 +6,6 @@ members = [
   "ownership",
   "reentrancy",
   "signed_integers",
-  "standards/frc20",
-  "standards/frc721",
   "storagemapvec",
   "string",
 ]

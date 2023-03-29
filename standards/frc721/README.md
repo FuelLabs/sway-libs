@@ -11,7 +11,7 @@ The FRC-721 standard defines and outlines NFTs on the Fuel Network.
 
 The official specification can be found in the [frc_721.sw](./src/frc_721.sw) file.
 
-To jumpstart the deployment of your own NFTs, the [NFT Library](../../nft/) provides an easy to use outline following the FRC-721 standard and uses structs and traits for it's implementation.
+To jumpstart the deployment of your own NFTs, the [NFT Library](../../libs/nft/) provides an easy to use outline following the FRC-721 standard and uses structs and traits for it's implementation.
 
 ## Functions
 
