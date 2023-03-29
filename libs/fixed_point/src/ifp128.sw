@@ -237,7 +237,7 @@ impl IFP128 {
 }
 
 impl IFP128 {
-    /// Returns the nearest integer to `self`. Round half-way cases away from
+    /// Returns the nearest integer to `self`. Round half-way cases away from zero
     pub fn round(self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
