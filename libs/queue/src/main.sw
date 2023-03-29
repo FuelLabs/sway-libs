@@ -8,7 +8,9 @@ pub struct Queue<T> {
 
 impl<T> Queue<T> {
     pub fn new() -> Self {
-        Self { vec: Vec::new() }
+        Self {
+            vec: Vec::new(),
+        }
     }
 
     pub fn is_empty(self) -> bool {
