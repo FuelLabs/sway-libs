@@ -1,5 +1,5 @@
 library ifp256;
-// A wrapper library around the  type for mathematical functions operating with signed 256-bit fixed point numbers.
+// A wrapper library around the type for mathematical functions operating with signed 256-bit fixed point numbers.
 use std::math::{Exponent, Power, Root};
 use ::ufp128::UFP128;
 
