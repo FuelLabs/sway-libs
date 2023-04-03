@@ -42,7 +42,7 @@ These libraries contain helper functions, generalized standards, and other tools
 
 ### Standards
 
-- [Token Standard](./standards/frc20/) is a standard ABI used to implement native assets on Fuel.
+- [Token Standard](./standards/frc20/) is used to add metadata to native assets on Fuel.
 - [Non-Fungible Token(NFT) Standard](./standards/frc721/) is a standard ABI used to implement NFTs on Fuel.
 
 ## Using a library
