@@ -17,7 +17,7 @@ To jumpstart the deployment of your own NFTs, the [NFT Library](../../libs/nft/)
 
 ### `transfer()`
 
-Transfers ownership of an NFT from on Identity to another.
+Transfers ownership of an NFT from one Identity to another.
 
 > **NOTE:** At the time of a transfer, the approved Identity for that NFT (if any) **MUST** be reset to Option::None.
 
