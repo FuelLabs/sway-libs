@@ -45,7 +45,7 @@ impl IFP256 {
         Self::from(UFP128::zero())
     }
 
-    fn sign_reverse(self) -> Self {
+    pub fn sign_reverse(self) -> Self {
         Self {
             underlying: self.underlying,
             non_negative: !self.non_negative,
