@@ -29,7 +29,7 @@ Sets or reafirms the approved Identity for an NFT.
 
 ### `set_approval_for_all()`
 
-Enables or disables approval for a third party "Operator" to manages all of `msg_sender()`'s NFTs.
+Enables or disables approval for a third party "Operator" to manage all of `msg_sender()`'s NFTs.
 
 > **NOTE:** An operator for an Identity **MAY** transfer and MAY set approved Identities for all tokens owned by the `msg_sender()`.
 
@@ -41,7 +41,7 @@ Gets the approved Identity for a single NFT.
 
 ### `balance_of()`
 
-Returns he number of NFTs owner by an Identity.
+Returns the number of NFTs owned by an Identity.
 
 ### `is_approved_for_all()`
 

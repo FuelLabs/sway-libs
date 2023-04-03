@@ -31,7 +31,7 @@ pub struct TransferEvent {
 }
 
 abi FRC721 {
-    /// Transfer ownership of an NFT from on Identity to another.
+    /// Transfer ownership of an NFT from one Identity to another.
     /// At the time of a transfer, the approved Identity for that NFT (if any) MUST be reset to Option::None.
     ///
     /// -- THE CALLER IS RESPONSIBLE
@@ -69,7 +69,7 @@ abi FRC721 {
     ///
     /// * The ApprovalEvent event MUST be emitted when the function is not reverted.
     fn approve(approved: Option<Identity>, token_id: u64);
-    /// Enable or disable approval for a third party "Operator" to manages all
+    /// Enable or disable approval for a third party "Operator" to manage all
     /// of `msg_sender()`'s NFTs.
     /// An operator for an Identity MAY transfer and MAY set approved Identities for all tokens
     /// owned by the `msg_sender()`.
@@ -96,7 +96,7 @@ abi FRC721 {
     ///
     /// * It is REQUIRED that `token_id` is valid NFT.
     fn approved(token_id: u64) -> Option<Identity>;
-    /// The number of NFTs owner by an Identity.
+    /// The number of NFTs owned by an Identity.
     ///
     /// # Arguments
     ///
