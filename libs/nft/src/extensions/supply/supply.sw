@@ -16,6 +16,10 @@ abi Supply {
 }
 
 /// Returns the maximum supply that has been set for the NFT library.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn max_supply() -> Option<u64> {
     get::<Option<u64>>(MAX_SUPPLY).unwrap_or(Option::None)
@@ -26,6 +30,11 @@ pub fn max_supply() -> Option<u64> {
 /// # Arguments
 ///
 /// * `supply` - The maximum number fo tokens which may be minted
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
+/// * Writes: `1`
 ///
 /// # Reverts
 ///
