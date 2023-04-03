@@ -16,6 +16,10 @@ abi Administrator {
 }
 
 /// Returns the administrator for the library.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn admin() -> Option<Identity> {
     get::<Option<Identity>>(ADMIN).unwrap_or(Option::None)
@@ -26,6 +30,11 @@ pub fn admin() -> Option<Identity> {
 /// # Arguments
 ///
 /// * `admin` - The user which is to be set as the new admin.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
+/// * Writes: `1`
 ///
 /// # Reverts
 ///
