@@ -1,4 +1,4 @@
-library i32;
+library;
 
 use ::common::TwosComplement;
 use ::errors::Error;

@@ -1,4 +1,4 @@
-library supply_events;
+library;
 
 pub struct SupplyEvent {
     /// The new supply amount that has been set.

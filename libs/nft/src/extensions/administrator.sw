@@ -1,11 +1,11 @@
-library administrator;
+library;
 
-dep administrator_errors;
-dep administrator_events;
+mod administrator_errors;
+mod administrator_events;
 
 use administrator_errors::AdminError;
 use administrator_events::AdminEvent;
-use ::nft_storage::ADMIN;
+use ::nft_core::nft_storage::ADMIN;
 use std::{auth::msg_sender, logging::log, storage::{get, store}};
 
 abi Administrator {

@@ -1,9 +1,9 @@
-library ownable;
+library;
 
-dep data_structures;
-dep errors;
-dep events;
-dep ownable_storage;
+mod data_structures;
+mod errors;
+mod events;
+mod ownable_storage;
 
 use data_structures::State;
 use errors::AccessError;

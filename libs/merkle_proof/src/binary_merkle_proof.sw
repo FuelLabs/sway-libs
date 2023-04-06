@@ -1,4 +1,4 @@
-library binary_merkle_proof;
+library;
 
 use std::{bytes::Bytes, hash::sha256};
 

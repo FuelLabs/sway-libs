@@ -1,4 +1,4 @@
-library events;
+library;
 
 pub struct OwnershipRenounced {
     previous_owner: Identity,

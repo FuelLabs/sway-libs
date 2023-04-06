@@ -1,19 +1,10 @@
-library nft;
+library;
 
 // TODO: Move these into alphabetical order once https://github.com/FuelLabs/sway/issues/409 is resolved
-dep nft_storage;
-dep nft_core;
-dep errors;
-dep events;
-dep extensions/administrator/administrator;
-dep extensions/burnable/burnable;
-dep extensions/token_metadata/token_metadata;
-dep extensions/supply/supply;
+mod nft_core;
+mod extensions;
 
-use errors::InputError;
-use events::OperatorEvent;
-use nft_core::NFTCore;
-use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
+use nft_core::{errors::InputError, events::OperatorEvent, NFTCore, nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED}};
 use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 abi NFT {

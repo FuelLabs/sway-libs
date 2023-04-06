@@ -1,8 +1,8 @@
-library nft_core;
+library;
 
-dep errors;
-dep events;
-dep nft_storage;
+mod errors;
+mod events;
+mod nft_storage;
 
 use errors::{AccessError, InputError};
 use events::{ApprovalEvent, MintEvent, OperatorEvent, TransferEvent};

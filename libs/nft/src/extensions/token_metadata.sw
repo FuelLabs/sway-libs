@@ -1,9 +1,9 @@
-library token_metadata;
+library;
 
-dep token_metadata_structures;
+mod token_metadata_structures;
 
 use token_metadata_structures::NFTMetadata;
-use ::{errors::InputError, nft_core::NFTCore, nft_storage::{TOKEN_METADATA, TOKENS}};
+use ::nft_core::{errors::InputError, NFTCore, nft_storage::{TOKEN_METADATA, TOKENS}};
 use std::{hash::sha256, storage::{get, store}};
 
 pub trait TokenMetadata<T> {

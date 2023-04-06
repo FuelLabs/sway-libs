@@ -1,4 +1,4 @@
-library storagemapvec;
+library;
 
 use std::{hash::sha256, storage::{get, store}};
 
