@@ -414,7 +414,7 @@ impl<K, V> StorageMapVec<K, V> {
     #[storage(read, write)]
     pub fn remove(self, key: K, index: u64) -> V {
         // get the key to the length of the vector
-        let len_key = sha256((key, __get_storage_key())); 
+        let len_key = sha256((key, __get_storage_key()));
         // get the length of the vector
         let len = get::<u64>(len_key).unwrap_or(0);
 

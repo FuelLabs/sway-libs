@@ -4,7 +4,17 @@ library;
 mod nft_core;
 mod extensions;
 
-use nft_core::{errors::InputError, events::OperatorEvent, NFTCore, nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED}};
+use nft_core::{
+    errors::InputError,
+    events::OperatorEvent,
+    nft_storage::{
+        BALANCES,
+        OPERATOR_APPROVAL,
+        TOKENS,
+        TOKENS_MINTED,
+    },
+    NFTCore,
+};
 use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
 
 abi NFT {
