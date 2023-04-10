@@ -2,9 +2,6 @@ contract;
 
 use nft::{
     balance_of,
-    mint,
-    owner_of,
-    tokens_minted,
     extensions::{
         administrator::{
             admin,
@@ -25,7 +22,10 @@ use nft::{
             token_metadata,
             token_metadata_structures::NFTMetadata,
         },
-    }
+    },
+    mint,
+    owner_of,
+    tokens_minted,
 };
 
 abi NFT_Extensions_Test {
