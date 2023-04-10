@@ -4,7 +4,7 @@ mod burnable_events;
 
 use burnable_events::BurnEvent;
 use ::nft_core::{errors::{AccessError, InputError}, nft_storage::{BALANCES, TOKENS}, NFTCore};
-use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
 
 abi Burn {
     #[storage(read, write)]

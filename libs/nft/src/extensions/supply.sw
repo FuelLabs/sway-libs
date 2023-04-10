@@ -4,7 +4,7 @@ mod supply_errors;
 mod supply_events;
 
 use ::nft_core::nft_storage::MAX_SUPPLY;
-use std::{logging::log, storage::{get, store}};
+use std::storage::{get, store};
 use supply_errors::SupplyError;
 use supply_events::SupplyEvent;
 

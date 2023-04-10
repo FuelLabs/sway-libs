@@ -6,7 +6,7 @@ mod administrator_events;
 use administrator_errors::AdminError;
 use administrator_events::AdminEvent;
 use ::nft_core::nft_storage::ADMIN;
-use std::{auth::msg_sender, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, storage::{get, store}};
 
 abi Administrator {
     #[storage(read)]

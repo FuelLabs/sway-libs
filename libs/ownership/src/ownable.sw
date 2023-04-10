@@ -9,7 +9,7 @@ use data_structures::State;
 use errors::AccessError;
 use events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use ownable_storage::OWNER;
-use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
 
 /// Ensures that the sender is the owner.
 ///
