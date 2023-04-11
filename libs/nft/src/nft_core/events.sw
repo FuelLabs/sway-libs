@@ -1,4 +1,4 @@
-library events;
+library;
 
 pub struct ApprovalEvent {
     /// The user that has gotten approval to transfer the specified token.

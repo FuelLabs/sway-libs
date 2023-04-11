@@ -1,4 +1,4 @@
-library reentrancy_target_abi;
+library;
 
 abi Target {
     fn reentrancy_detected() -> bool;

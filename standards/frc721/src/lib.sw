@@ -1,4 +1,4 @@
-library frc721;
+library;
 
-dep frc_721;
-dep extensions/frc721_metadata;
+mod frc_721;
+mod extensions;

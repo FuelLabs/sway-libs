@@ -1,6 +1,6 @@
 contract;
 
-use ownership::ownable::{
+use ownership::{
     data_structures::State,
     only_owner,
     owner,

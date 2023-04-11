@@ -1,4 +1,4 @@
-library frc20_abi;
+library;
 
 use std::u256::U256;
 

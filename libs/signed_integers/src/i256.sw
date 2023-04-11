@@ -1,4 +1,4 @@
-library i256;
+library;
 
 use std::u256::U256;
 use ::common::TwosComplement;

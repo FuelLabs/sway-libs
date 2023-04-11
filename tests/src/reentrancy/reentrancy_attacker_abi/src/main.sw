@@ -1,4 +1,4 @@
-library reentrancy_attacker_abi;
+library;
 
 abi Attacker {
     fn launch_attack(target: ContractId) -> bool;
