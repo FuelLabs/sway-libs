@@ -7,4 +7,4 @@ mod reentrancy;
 mod signed_integers;
 mod storagemapvec;
 mod string;
-mod unsigned_numbers;
+mod fixed_point;
