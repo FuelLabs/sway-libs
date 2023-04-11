@@ -1,7 +1,7 @@
 contract;
 
-dep data_structures;
-dep interface;
+mod data_structures;
+mod interface;
 
 use data_structures::{Game, Player};
 use interface::ConnectFour;

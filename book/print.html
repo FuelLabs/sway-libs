@@ -327,11 +327,9 @@ The enums are split into individual errors e.g. <code>DepositError</code>, <code
 <p>ABI documentation refers to documenting the interface that another developer may be interested in using. </p>
 <p>The form of documentation we focus on uses the <code>///</code> syntax as we are interested in documenting the <code>ABI</code> functions.</p>
 <p>In the following snippet, we provide a short description about the functions, the arguments they take, and when the calls will revert. Additional data may be added such as the structure of the return type, how to call the function, etc.</p>
-<pre><code class="language-sway">library interface;
+<pre><code class="language-sway">library;
 
-dep data_structures;
-
-use data_structures::{Game, Player};
+use ::data_structures::{Game, Player};
 
 abi ConnectFour {
     /// Creates a new game
@@ -454,7 +452,7 @@ enum DepositError {
 <h2 id="snake_case"><a class="header" href="#snake_case">snake_case</a></h2>
 <p>Modules, variables, and functions are <code>snake_case</code> which means that each word is lowercase and separated by an underscore.</p>
 <p>Module name:</p>
-<pre><code class="language-sway">library style_guide;
+<pre><code class="language-sway">library;
 </code></pre>
 <p>Function and variable:</p>
 <pre><code class="language-sway">fn authorize_user(user: Identity) {
