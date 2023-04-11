@@ -1,4 +1,4 @@
-library nft_storage;
+library;
 
 // TODO: These are temporary storage keys for manual storage management. These should be removed once
 // https://github.com/FuelLabs/sway/issues/2585 is resolved.

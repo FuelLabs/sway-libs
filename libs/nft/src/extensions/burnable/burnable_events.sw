@@ -1,4 +1,4 @@
-library burnable_events;
+library;
 
 pub struct BurnEvent {
     /// The user that has burned their token.

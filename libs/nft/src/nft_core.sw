@@ -1,12 +1,12 @@
-library nft_core;
+library;
 
-dep errors;
-dep events;
-dep nft_storage;
+mod errors;
+mod events;
+mod nft_storage;
 
 use errors::{AccessError, InputError};
 use events::{ApprovalEvent, MintEvent, OperatorEvent, TransferEvent};
-use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 
 pub struct NFTCore {

@@ -30,7 +30,7 @@ fn main() -> bool {
         value: 1u32 << 16 + 3,
     };
     let mut value = IFP64::from(u_value);
-    
+
     res = IFP64::recip(value);
     assert(IFP64::from(UFP32 {
         value: 8192u32,
