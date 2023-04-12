@@ -37,7 +37,7 @@ abi StringTest {
 
 impl StringTest for Contract {
     fn test_append() {
-        // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved.
+        // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved.
         // let mut string1 = String::new();
         // let mut string2 = String::new();
         // string1.push(NUMBER0);
