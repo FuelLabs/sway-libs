@@ -73,6 +73,25 @@ jobs:
           run: |
             cargo test --manifest-path tests/Cargo.toml
 
+  forc-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install Fuel toolchain
+          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          with:
+            name: my-toolchain
+            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
+      - name: Run Unit Tests
+        run: forc build --path libs && forc test --path libs
+
   build-standards:
       runs-on: ubuntu-latest
       
