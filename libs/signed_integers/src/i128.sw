@@ -1,4 +1,4 @@
-library i128;
+library;
 
 use std::u128::U128;
 use ::common::TwosComplement;

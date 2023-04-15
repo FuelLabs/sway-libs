@@ -1,4 +1,4 @@
-library ifp128;
+library;
 // A wrapper library around the type for mathematical functions operating with signed 128-bit fixed point numbers.
 use std::math::{Exponent, Power, Root};
 use ::ufp64::UFP64;

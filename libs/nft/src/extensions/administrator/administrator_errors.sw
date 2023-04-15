@@ -1,4 +1,4 @@
-library administrator_errors;
+library;
 
 pub enum AdminError {
     SenderNotAdmin: (),

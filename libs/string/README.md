@@ -19,6 +19,9 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 The `append()` function currently causes an internal compiler error when used. It has been commented out until https://github.com/FuelLabs/sway/issues/4158 is resolved.
 
+
+Until https://github.com/FuelLabs/sway/issues/4158 is resolved, developers must directly access the underlying `Bytes` type to make modifications to the `String` type.
+
 It is important to note that unlike Rust's `String`, this `String` library does **not** guarantee a valid UTF-8 string. The `String` currently behaves only as a `vec` and does not perform any validation. This intended to be supported in the future with the introduction of [`char`](https://github.com/FuelLabs/sway/issues/2937) to the Sway language.
 
 # Using the Library

@@ -1,4 +1,4 @@
-library token_metadata_structures;
+library;
 
 pub struct NFTMetadata {
     // This is left as an example. Support for StorageVec in struct is needed here.
