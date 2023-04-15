@@ -76,22 +76,24 @@ jobs:
   forc-unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Rust toolchain
-          uses: actions-rs/toolchain@v1
-          with:
-            profile: minimal
-            toolchain: ${{ env.RUST_VERSION }}
-            override: true
+      - name: Checkout repository
+        uses: actions/checkout@v2v
 
-        - name: Init cache
-          uses: Swatinem/rust-cache@v1
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ env.RUST_VERSION }}
+          override: true
+
+      - name: Init cache
+        uses: Swatinem/rust-cache@v1
 
       - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.6.0
-          with:
-            name: my-toolchain
-            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        with:
+          name: my-toolchain
+          components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
       - name: Run Unit Tests
         run: forc build --path libs && forc test --path libs
