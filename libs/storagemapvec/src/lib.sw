@@ -1,4 +1,4 @@
-library storagemapvec;
+library;
 
 use std::{hash::sha256, storage::{get, store}};
 
@@ -12,6 +12,11 @@ impl<K, V> StorageMapVec<K, V> {
     ///
     /// * `key` - The key to the vector
     /// * `value` - The item being added to the end of the vector
+    ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `1`
+    /// * Writes: `2`
     ///
     /// ### Examples
     ///
@@ -48,6 +53,11 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Arguments
     ///
     /// * `key` - The key to the vector
+    ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `2`
+    /// * Writes: `1`
     ///
     /// ### Examples
     ///
@@ -91,6 +101,10 @@ impl<K, V> StorageMapVec<K, V> {
     /// * `key` - The key to the vector
     /// * `index` - The index of the vec to retrieve the item from
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `2`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -129,6 +143,10 @@ impl<K, V> StorageMapVec<K, V> {
     ///
     /// * `key` - The key to the vector
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `1`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -158,6 +176,10 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Arguments
     ///
     /// * `key` - The key to the vector
+    ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `1`
     ///
     /// ### Examples
     ///
@@ -194,6 +216,10 @@ impl<K, V> StorageMapVec<K, V> {
     ///
     /// * `key` - The key to the vector
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Writes: `1`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -223,6 +249,10 @@ impl<K, V> StorageMapVec<K, V> {
     /// ### Arguments
     ///
     /// * `key` - The key to the vector
+    ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `n + 1`
     ///
     /// ### Examples
     ///
@@ -267,6 +297,11 @@ impl<K, V> StorageMapVec<K, V> {
     /// * `index_a` - The index of the first item
     /// * `index_b` - The index of the second item
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `3`
+    /// * Writes: `2`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -307,6 +342,11 @@ impl<K, V> StorageMapVec<K, V> {
     /// * `key` - The key to the vector
     /// * `index` - The index of the item to remove
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `3`
+    /// * Writes: `2`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -346,6 +386,11 @@ impl<K, V> StorageMapVec<K, V> {
     /// * `key` - The key to the vector
     /// * `index` - The index of the item to remove
     ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `n + 2`
+    /// * Writes: `n + 1`
+    ///
     /// ### Examples
     ///
     /// ```sway
@@ -369,7 +414,7 @@ impl<K, V> StorageMapVec<K, V> {
     #[storage(read, write)]
     pub fn remove(self, key: K, index: u64) -> V {
         // get the key to the length of the vector
-        let len_key = sha256((key, __get_storage_key())); 
+        let len_key = sha256((key, __get_storage_key()));
         // get the length of the vector
         let len = get::<u64>(len_key).unwrap_or(0);
 

@@ -1,20 +1,21 @@
-library nft;
+library;
 
 // TODO: Move these into alphabetical order once https://github.com/FuelLabs/sway/issues/409 is resolved
-dep nft_storage;
-dep nft_core;
-dep errors;
-dep events;
-dep extensions/administrator/administrator;
-dep extensions/burnable/burnable;
-dep extensions/token_metadata/token_metadata;
-dep extensions/supply/supply;
+mod nft_core;
+mod extensions;
 
-use errors::InputError;
-use events::OperatorEvent;
-use nft_core::NFTCore;
-use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
-use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use nft_core::{
+    errors::InputError,
+    events::OperatorEvent,
+    nft_storage::{
+        BALANCES,
+        OPERATOR_APPROVAL,
+        TOKENS,
+        TOKENS_MINTED,
+    },
+    NFTCore,
+};
+use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
 
 abi NFT {
     #[storage(read, write)]
@@ -46,6 +47,11 @@ abi NFT {
 /// * `approved` - The user which will be allowed to transfer the token on the owner's behalf.
 /// * `token_id` - The unique identifier of the token which the owner is giving approval for.
 ///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
+/// * Writes: `1`
+///
 /// # Reverts
 ///
 /// * When `token_id` does not map to an existing token.
@@ -61,6 +67,10 @@ pub fn approve(approved: Option<Identity>, token_id: u64) {
 /// # Arguments
 ///
 /// * `token_id` - The unique identifier of the token which the approved user should be returned.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn approved(token_id: u64) -> Option<Identity> {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
@@ -80,6 +90,10 @@ pub fn approved(token_id: u64) -> Option<Identity> {
 /// # Arguments
 ///
 /// * `owner` - The user of which the balance should be returned.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn balance_of(owner: Identity) -> u64 {
     get::<u64>(sha256((BALANCES, owner))).unwrap_or(0)
@@ -91,6 +105,10 @@ pub fn balance_of(owner: Identity) -> u64 {
 ///
 /// * `operator` - The user which may or may not transfer all tokens on the `owner`s behalf.
 /// * `owner` - The user which may or may not have given approval to transfer all tokens.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
     get::<bool>(sha256((OPERATOR_APPROVAL, owner, operator))).unwrap_or(false)
@@ -102,6 +120,11 @@ pub fn is_approved_for_all(operator: Identity, owner: Identity) -> bool {
 ///
 /// * `amount` - The number of tokens to be minted in this transaction.
 /// * `to` - The user which will own the minted tokens.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `n + 1`
+/// * Writes: `3n`
 #[storage(read, write)]
 pub fn mint(amount: u64, to: Identity) {
     let tokens_minted = get::<u64>(TOKENS_MINTED).unwrap_or(0);
@@ -120,6 +143,10 @@ pub fn mint(amount: u64, to: Identity) {
 /// # Arguments
 ///
 /// * `token_id` - The unique identifier of the token.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn owner_of(token_id: u64) -> Option<Identity> {
     let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
@@ -143,6 +170,10 @@ pub fn owner_of(token_id: u64) -> Option<Identity> {
 ///
 /// * `approve` - Represents whether the user is giving or revoking operator status.
 /// * `operator` - The user which may or may not transfer all tokens on the sender's behalf.
+///
+/// # Number of Storage Accesses
+///
+/// * Writes: `1`
 #[storage(write)]
 pub fn set_approval_for_all(approve: bool, operator: Identity) {
     let sender = msg_sender().unwrap();
@@ -156,6 +187,10 @@ pub fn set_approval_for_all(approve: bool, operator: Identity) {
 }
 
 /// Returns the total number of tokens that have been minted.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 #[storage(read)]
 pub fn tokens_minted() -> u64 {
     get::<u64>(TOKENS_MINTED).unwrap_or(0)
@@ -167,6 +202,11 @@ pub fn tokens_minted() -> u64 {
 ///
 /// * `to` - The user which the ownership of the token should be set to.
 /// * `token_id` - The unique identifier of the token which should be transfered.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `4`
+/// * Writes: `3`
 ///
 /// # Reverts
 ///

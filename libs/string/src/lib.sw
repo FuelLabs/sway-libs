@@ -1,4 +1,4 @@
-library string;
+library;
 
 use std::{bytes::Bytes, convert::From};
 
@@ -138,18 +138,16 @@ impl From<Bytes> for String {
 }
 
 impl String {
-    // Uncomment when https://github.com/FuelLabs/sway/issues/4158 is resolved
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
+    pub fn append(ref mut self, mut other: self) {
+        self.bytes.append(other.into())
+    }
 
-        // pub fn append(ref mut self, mut other: self) {
-    //     self.bytes.append(other.into())
-    // }
-
-/// Divides one Bytes into two at an index.
+    /// Divides one Bytes into two at an index.
     ///
     /// # Arguments
     ///
