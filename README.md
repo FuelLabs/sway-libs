@@ -87,7 +87,7 @@ cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **Note**
-> All projects currently use `forc v0.37.0`, `fuels-rs v0.36.1` and `fuel-core 0.17.8`.
+> All projects currently use `forc v0.37.0`, `fuels-rs v0.41.0` and `fuel-core 0.17.8`.
 
 ## Contributing
 
