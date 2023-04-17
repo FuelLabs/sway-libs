@@ -1,28 +1,30 @@
 contract;
 
 use nft::{
-    administrator::{
-        admin,
-        Administrator,
-        set_admin,
-    },
     balance_of,
-    burnable::{
-        burn,
-        Burn,
+    extensions::{
+        administrator::{
+            admin,
+            Administrator,
+            set_admin,
+        },
+        burnable::{
+            burn,
+            Burn,
+        },
+        supply::{
+            max_supply,
+            set_max_supply,
+            Supply,
+        },
+        token_metadata::{
+            set_token_metadata,
+            token_metadata,
+            token_metadata_structures::NFTMetadata,
+        },
     },
     mint,
     owner_of,
-    supply::{
-        max_supply,
-        set_max_supply,
-        Supply,
-    },
-    token_metadata::{
-        set_token_metadata,
-        token_metadata,
-        token_metadata_structures::NFTMetadata,
-    },
     tokens_minted,
 };
 

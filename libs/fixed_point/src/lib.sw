@@ -1,7 +1,9 @@
-library fixed_point;
+library;
 
-dep ufp32;
-dep ufp64;
-dep ufp128;
+mod ufp32;
+mod ufp64;
+mod ufp128;
 
-dep ifp64;
+mod ifp64;
+mod ifp128;
+mod ifp256;

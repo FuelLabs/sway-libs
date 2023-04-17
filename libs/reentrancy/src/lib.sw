@@ -1,4 +1,4 @@
-library reentrancy;
+library;
 // This has been moved due to https://github.com/FuelLabs/sway/issues/4160
 //! A reentrancy check for use in Sway contracts.
 //! Note that this only works in internal contexts.

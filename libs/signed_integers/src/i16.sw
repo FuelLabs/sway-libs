@@ -1,4 +1,4 @@
-library i16;
+library;
 
 use ::errors::Error;
 use ::common::TwosComplement;

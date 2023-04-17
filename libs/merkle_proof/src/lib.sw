@@ -1,3 +1,3 @@
-library merkle_proof;
+library;
 
-dep binary_merkle_proof;
+mod binary_merkle_proof;
