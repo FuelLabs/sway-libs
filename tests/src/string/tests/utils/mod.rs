@@ -36,6 +36,15 @@ pub mod abi_calls {
         contract.methods().test_from().call().await.unwrap()
     }
 
+    pub async fn from_raw_slice(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract
+            .methods()
+            .test_from_raw_slice()
+            .call()
+            .await
+            .unwrap()
+    }
+
     pub async fn from_utf8(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_from_utf8().call().await.unwrap()
     }
@@ -46,6 +55,15 @@ pub mod abi_calls {
 
     pub async fn into(contract: &StringTestLib) -> FuelCallResponse<()> {
         contract.methods().test_into().call().await.unwrap()
+    }
+
+    pub async fn into_raw_slice(contract: &StringTestLib) -> FuelCallResponse<()> {
+        contract
+            .methods()
+            .test_into_raw_slice()
+            .call()
+            .await
+            .unwrap()
     }
 
     pub async fn is_empty(contract: &StringTestLib) -> FuelCallResponse<()> {
