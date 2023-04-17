@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
-        abigen, launch_custom_provider_and_get_wallets, Contract, StorageConfiguration,
-        TxParameters, WalletsConfig,
+        abigen, launch_custom_provider_and_get_wallets, Bytes, Contract, LoadConfiguration,
+        StorageConfiguration, TxParameters, WalletUnlocked, WalletsConfig,
     },
     programs::call_response::FuelCallResponse,
 };
@@ -16,19 +16,33 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn clear_string(contract: &StorageStringTest) -> bool {
-        contract.methods().clear_string().call().await.unwrap().value
+    pub async fn clear_string(contract: &StorageStringTest<WalletUnlocked>) -> bool {
+        contract
+            .methods()
+            .clear_string()
+            .call()
+            .await
+            .unwrap()
+            .value
     }
 
-    pub async fn get_string(contract: &StorageStringTest) -> String {
+    pub async fn get_string(contract: &StorageStringTest<WalletUnlocked>) -> Bytes {
         contract.methods().get_string().call().await.unwrap().value
     }
 
-    pub async fn store_string(string: String, contract: &StorageStringTest) -> FuelCallResponse<()> {
-        contract.methods().store_string(string).call().await.unwrap()
+    pub async fn store_string(
+        string: String,
+        contract: &StorageStringTest<WalletUnlocked>,
+    ) -> FuelCallResponse<()> {
+        contract
+            .methods()
+            .store_string(string)
+            .call()
+            .await
+            .unwrap()
     }
 
-    pub async fn stored_len(contract: &StorageStringTest) -> bool {
+    pub async fn stored_len(contract: &StorageStringTest<WalletUnlocked>) -> u64 {
         contract.methods().stored_len().call().await.unwrap().value
     }
 }
@@ -37,7 +51,7 @@ pub mod test_helpers {
 
     use super::*;
 
-    pub async fn setup() -> StorageStringTest {
+    pub async fn setup() -> StorageStringTest<WalletUnlocked> {
         // Launch a local network and deploy the contract
         let mut wallets = launch_custom_provider_and_get_wallets(
             WalletsConfig::new(
@@ -51,16 +65,19 @@ pub mod test_helpers {
         .await;
         let wallet = wallets.pop().unwrap();
 
-        let id = Contract::deploy(
+        let storage_configuration = StorageConfiguration::load_from(
+            "src/storage_string/out/debug/storage_string_test-storage_slots.json",
+        );
+        let contract_id = Contract::load_from(
             "src/storage_string/out/debug/storage_string_test.bin",
-            &wallet,
-            TxParameters::default(),
-            StorageConfiguration::with_storage_path(Some("src/storage_string/out/debug/storage_string_test-storage_slots.json".to_string())),
+            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
         )
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
         .await
         .unwrap();
 
-        let instance = StorageStringTest::new(id.clone(), wallet);
+        let instance = StorageStringTest::new(contract_id.clone(), wallet);
 
         instance
     }

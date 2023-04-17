@@ -68,7 +68,9 @@ impl StorableSlice<String> for StorageString {
         let key = __get_storage_key();
         match get_slice(key) {
             Option::Some(slice) => {
-                Option::Some(String::from_raw_slice(slice))
+                // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
+                // Option::Some(String::from_raw_slice(slice))
+                Option::Some(String { bytes: Bytes::from_raw_slice(slice) })
             },
             Option::None => Option::None,
         }

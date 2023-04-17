@@ -12,9 +12,9 @@ abi MyContract {
     #[storage(read, write)]
     fn clear_string() -> bool;
     #[storage(read)]
-    fn get_string() -> Option<Vec<u8>>;
+    fn get_string() -> Bytes;
     #[storage(write)]
-    fn store_string(string: Vec<u8>);
+    fn store_string(string: String);
     #[storage(read)]
     fn stored_len() -> u64;
 }
@@ -26,13 +26,18 @@ impl MyContract for Contract {
     }
 
     #[storage(read)]
-    fn get_string() -> Option<Vec<u8>> {
-        Option::Some(storage.stored_string.load().unwrap().as_vec())
+    fn get_string() -> Bytes {
+        match storage.stored_string.load() {
+            Option::Some(string) => {
+                string.bytes
+            },
+            Option::None => Bytes::new(),
+        }
     }
 
     #[storage(write)]
-    fn store_string(string: Vec<u8>) {
-        storage.stored_string.store(String::from_utf8(string));
+    fn store_string(string: String) {
+        storage.stored_string.store(string);
     }
 
     #[storage(read)]
