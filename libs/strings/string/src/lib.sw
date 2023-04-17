@@ -137,6 +137,27 @@ impl From<Bytes> for String {
     }
 }
 
+impl AsRawSlice for String {
+    /// Returns a raw slice to all of the elements in the string.
+    fn as_raw_slice(self) -> raw_slice {
+        asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+    }
+}
+
+impl From<raw_slice> for String {
+    fn from(slice: raw_slice) -> String {
+        let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
+        bytes.buf.ptr = slice.ptr();
+        Self {
+            bytes
+        }
+    }
+
+    fn into(self) -> raw_slice {
+        asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+    }
+}
+
 impl String {
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
