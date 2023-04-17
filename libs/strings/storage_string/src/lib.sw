@@ -68,7 +68,7 @@ impl StorableSlice<String> for StorageString {
         let key = __get_storage_key();
         match get_slice(key) {
             Option::Some(slice) => {
-                Option::Some(String::from(slice))
+                Option::Some(String::from_raw_slice(slice))
             },
             Option::None => Option::None,
         }

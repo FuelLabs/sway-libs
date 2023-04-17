@@ -27,7 +27,8 @@ impl String {
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(mut bytes: Vec<u8>) -> Self {
+    pub fn from_utf8(bytes: Vec<u8>) -> Self {
+        let mut bytes = bytes;
         Self {
             bytes: Bytes::from_vec_u8(bytes),
         }
