@@ -38,7 +38,7 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
 - [String](./libs/strings/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type.
-- [StorageString](./libs/strings/storage_string/) is used to store implement dynamic length strings that are UTF-8 encoded in storage.
+- [StorageString](./libs/strings/storage_string/) is used to store dynamic length strings that are UTF-8 encoded in storage.
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 
 ### Standards
