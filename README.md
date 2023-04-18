@@ -35,10 +35,11 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Non-Fungible Token (NFT)](./libs/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
 - [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
 - [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
-- [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
-- [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
+- [String](./libs/strings/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type.
+- [StorageString](./libs/strings/storage_string/) is used to store implement dynamic length strings that are UTF-8 encoded in storage.
+- [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 
 ### Standards
 
