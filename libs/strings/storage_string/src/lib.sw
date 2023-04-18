@@ -1,6 +1,6 @@
 library;
 
-use std::storage::{clear_slice, get, get_slice, StorableSlice, store_slice};
+use std::{bytes::Bytes, storage::{clear_slice, get, get_slice, StorableSlice, store_slice}};
 use string::String;
 
 pub struct StorageString {}
