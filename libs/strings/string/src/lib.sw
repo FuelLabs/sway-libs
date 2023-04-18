@@ -129,9 +129,7 @@ impl String {
     pub fn from_raw_slice(slice: raw_slice) -> Self {
         let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
         bytes.buf.ptr = slice.ptr();
-        Self {
-            bytes
-        }
+        Self { bytes }
     }
 }
 
@@ -153,6 +151,8 @@ impl AsRawSlice for String {
         asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
     }
 }
+
+
 
 // Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
 // impl From<raw_slice> for String {

@@ -70,7 +70,9 @@ impl StorableSlice<String> for StorageString {
             Option::Some(slice) => {
                 // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
                 // Option::Some(String::from_raw_slice(slice))
-                Option::Some(String { bytes: Bytes::from_raw_slice(slice) })
+                Option::Some(String {
+                    bytes: Bytes::from_raw_slice(slice),
+                })
             },
             Option::None => Option::None,
         }
