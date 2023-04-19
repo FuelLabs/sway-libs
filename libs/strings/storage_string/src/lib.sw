@@ -6,7 +6,7 @@ use string::String;
 pub struct StorageString {}
 
 impl StorableSlice<String> for StorageString {
-    /// Takes a `String` type and saves the type in storage.
+    /// Takes a `String` type and saves the underlying data in storage.
     ///
     /// ### Arguments
     ///
@@ -78,7 +78,7 @@ impl StorableSlice<String> for StorageString {
         }
     }
 
-    /// Clears a stored string in storage.
+    /// Clears a stored `String` in storage.
     ///
     /// ### Number of Storage Accesses
     ///
@@ -112,7 +112,7 @@ impl StorableSlice<String> for StorageString {
         clear_slice(key)
     }
 
-    /// Returns the length of string in storage.
+    /// Returns the length of `String` in storage.
     ///
     /// ### Number of Storage Accesses
     ///

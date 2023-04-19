@@ -36,6 +36,7 @@ async fn stores_long_string() {
     };
 
     assert_eq!(stored_len(&instance).await, 0);
+    assert_eq!(get_string(&instance).await, Bytes(vec![]));
 
     store_string(input.clone(), &instance).await;
 
@@ -55,6 +56,9 @@ async fn stores_string_twice() {
     let input2 = String {
         bytes: Bytes(string2.as_bytes().to_vec()),
     };
+
+    assert_eq!(get_string(&instance).await, Bytes(vec![]));
+    assert_eq!(stored_len(&instance).await, 0);
 
     store_string(input1.clone(), &instance).await;
 

@@ -6,7 +6,7 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 ## Use Cases
 
-The StorageString library can be used anytime a string's length is unknown at compile time and must be saved in storage. Further methods can then be implemented to provide additional features building off of the `StorageString` struct.
+The StorageString library can be used anytime a string's length is unknown at compile time and must be saved in storage. 
 
 > **Note** To returned the `StorageString` from a contract you should use the `Bytes` type. For more information, please see the [known issues](./README.md#known-issues).
 
@@ -14,7 +14,7 @@ The StorageString library can be used anytime a string's length is unknown at co
 
 ### `store()`
 
-Stores a `String` into storage. 
+Stores a `String` in storage. 
 
 ### `load()`
 
@@ -22,8 +22,8 @@ Retrieves a `String` from storage.
 
 ### `len()`
 
-Returns the length of the string stored in storage.
+Returns the length of the `String` stored in storage.
 
 ### `clear()`
 
-Clears a stored string in storage.
+Clears a stored `String` in storage.

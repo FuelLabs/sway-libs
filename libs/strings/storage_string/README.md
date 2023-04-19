@@ -7,7 +7,7 @@
 
 # Overview
 
-The StorageString library provides an interface to store UTF-8 encoded strings of dynamic length in Sway. The `StorageString` can be in combination with the `String` type.
+The StorageString library provides an interface to store UTF-8 encoded strings of dynamic length in Sway. The `StorageString` can be used in combination with the `String` type.
 
 The `StorageString` is stored as a collection of tightly packed bytes. This differs from Sway's built in `str` because the size cannot be known at compile time and the length is dynamic. 
 

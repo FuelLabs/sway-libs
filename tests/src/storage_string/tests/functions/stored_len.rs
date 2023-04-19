@@ -6,7 +6,7 @@ use crate::storage_string::tests::utils::{
 use fuels::prelude::Bytes;
 
 #[tokio::test]
-async fn clears_string() {
+async fn get_string_length() {
     let instance = setup().await;
 
     let string = "Fuel is blazingly fast!";

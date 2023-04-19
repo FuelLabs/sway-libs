@@ -16,7 +16,7 @@ async fn clears_string() {
 
     assert!(clear_string(&instance).await);
 
-    store_string(input.clone(), &instance).await;
+    store_string(input, &instance).await;
 
     assert_eq!(stored_len(&instance).await, string.as_bytes().len() as u64);
 
