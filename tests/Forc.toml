@@ -41,6 +41,7 @@ members = [
   "./src/signed_integers/signed_i16_twos_complement",
   "./src/signed_integers/signed_i32_twos_complement",
   "./src/signed_integers/signed_i64_twos_complement",
+  "./src/storage_string",
   "./src/storagemapvec",
   "./src/string",
 ]

@@ -1,8 +1,8 @@
 [project]
 authors = ["Fuel Labs <contact@fuel.sh>"]
-entry = "main.sw"
+entry = "lib.sw"
 license = "Apache-2.0"
-name = "string_test"
+name = "storage_string"
 
 [dependencies]
-string = { path = "../../../libs/strings/string" }
+string = { path = "../string" }
