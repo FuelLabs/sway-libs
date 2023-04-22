@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
-        abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
-        WalletUnlocked,
+        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, StorageConfiguration,
+        TxParameters, WalletUnlocked,
     },
     tx::ContractId,
 };
@@ -19,13 +19,16 @@ const REENTRANCY_TARGET_BIN: &str =
     "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
 const REENTRANCY_TARGET_STORAGE: &str = "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
 
-pub async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract, ContractId) {
-    let id = Contract::deploy(
+pub async fn get_attacker_instance(
+    wallet: WalletUnlocked,
+) -> (AttackerContract<WalletUnlocked>, ContractId) {
+    let storage_configuration = StorageConfiguration::load_from(REENTRANCY_ATTACKER_STORAGE);
+    let id = Contract::load_from(
         REENTRANCY_ATTACKER_BIN,
-        &wallet,
-        TxParameters::default(),
-        StorageConfiguration::with_storage_path(Some(REENTRANCY_ATTACKER_STORAGE.to_string())),
+        LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
     )
+    .unwrap()
+    .deploy(&wallet, TxParameters::default())
     .await
     .unwrap();
 
@@ -34,13 +37,16 @@ pub async fn get_attacker_instance(wallet: WalletUnlocked) -> (AttackerContract,
     (instance, id.into())
 }
 
-pub async fn get_target_instance(wallet: WalletUnlocked) -> (TargetContract, ContractId) {
-    let id = Contract::deploy(
+pub async fn get_target_instance(
+    wallet: WalletUnlocked,
+) -> (TargetContract<WalletUnlocked>, ContractId) {
+    let storage_configuration = StorageConfiguration::load_from(REENTRANCY_TARGET_STORAGE);
+    let id = Contract::load_from(
         REENTRANCY_TARGET_BIN,
-        &wallet,
-        TxParameters::default(),
-        StorageConfiguration::with_storage_path(Some(REENTRANCY_TARGET_STORAGE.to_string())),
+        LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
     )
+    .unwrap()
+    .deploy(&wallet, TxParameters::default())
     .await
     .unwrap();
 

@@ -1,5 +1,6 @@
 use fuels::prelude::{
-    abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+    abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, StorageConfiguration,
+    TxParameters, WalletUnlocked,
 };
 
 // Load abi from json
@@ -11,15 +12,15 @@ abigen!(Contract(
 pub mod abi_calls {
     use super::*;
 
-    pub async fn push(instance: &TestContract, key: u64, value: u64) {
+    pub async fn push(instance: &TestContract<WalletUnlocked>, key: u64, value: u64) {
         instance.methods().push(key, value).call().await.unwrap();
     }
 
-    pub async fn pop(instance: &TestContract, key: u64) -> Option<u64> {
+    pub async fn pop(instance: &TestContract<WalletUnlocked>, key: u64) -> Option<u64> {
         instance.methods().pop(key).call().await.unwrap().value
     }
 
-    pub async fn get(instance: &TestContract, key: u64, index: u64) -> Option<u64> {
+    pub async fn get(instance: &TestContract<WalletUnlocked>, key: u64, index: u64) -> Option<u64> {
         instance
             .methods()
             .get(key, index)
@@ -29,19 +30,22 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn len(instance: &TestContract, key: u64) -> u64 {
+    pub async fn len(instance: &TestContract<WalletUnlocked>, key: u64) -> u64 {
         instance.methods().len(key).call().await.unwrap().value
     }
 
-    pub async fn is_empty(instance: &TestContract, key: u64) -> bool {
+    pub async fn is_empty(instance: &TestContract<WalletUnlocked>, key: u64) -> bool {
         instance.methods().is_empty(key).call().await.unwrap().value
     }
 
-    pub async fn clear(instance: &TestContract, key: u64) {
+    pub async fn clear(instance: &TestContract<WalletUnlocked>, key: u64) {
         instance.methods().clear(key).call().await.unwrap();
     }
 
-    pub async fn to_vec_as_tup(instance: &TestContract, key: u64) -> (u64, u64, u64) {
+    pub async fn to_vec_as_tup(
+        instance: &TestContract<WalletUnlocked>,
+        key: u64,
+    ) -> (u64, u64, u64) {
         instance
             .methods()
             .to_vec_as_tup(key)
@@ -51,7 +55,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn swap(instance: &TestContract, key: u64, index1: u64, index2: u64) {
+    pub async fn swap(instance: &TestContract<WalletUnlocked>, key: u64, index1: u64, index2: u64) {
         instance
             .methods()
             .swap(key, index1, index2)
@@ -60,7 +64,7 @@ pub mod abi_calls {
             .unwrap();
     }
 
-    pub async fn swap_remove(instance: &TestContract, key: u64, index: u64) -> u64 {
+    pub async fn swap_remove(instance: &TestContract<WalletUnlocked>, key: u64, index: u64) -> u64 {
         instance
             .methods()
             .swap_remove(key, index)
@@ -70,7 +74,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn remove(instance: &TestContract, key: u64, index: u64) -> u64 {
+    pub async fn remove(instance: &TestContract<WalletUnlocked>, key: u64, index: u64) -> u64 {
         instance
             .methods()
             .remove(key, index)
@@ -94,17 +98,18 @@ pub mod test_helpers {
 
     use super::*;
 
-    pub async fn setup() -> TestContract {
+    pub async fn setup() -> TestContract<WalletUnlocked> {
         let wallet = launch_provider_and_get_wallet().await;
 
-        let contract_id = Contract::deploy(
+        let storage_configuration = StorageConfiguration::load_from(
+            "src/storagemapvec/out/debug/storagemapvec_test-storage_slots.json",
+        );
+        let contract_id = Contract::load_from(
             "src/storagemapvec/out/debug/storagemapvec_test.bin",
-            &wallet,
-            TxParameters::default(),
-            StorageConfiguration::with_storage_path(Some(String::from(
-                "src/storagemapvec/out/debug/storagemapvec_test-storage_slots.json",
-            ))),
+            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
         )
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
         .await
         .unwrap();
 
