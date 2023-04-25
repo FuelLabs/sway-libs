@@ -4,6 +4,7 @@ use std::{auth::*, call_frames::contract_id};
 
 use reentrancy_target_abi::Target;
 use reentrancy_attacker_abi::Attacker;
+use reentrancy_attack_helper_abi::AttackHelper;
 
 // Return the sender as a ContractId or panic:
 fn get_msg_sender_id_or_panic() -> ContractId {
@@ -26,6 +27,10 @@ impl Attacker for Contract {
         abi(Target, target.value).cross_function_reentrance_denied();
     }
 
+    fn launch_thwarted_attack_3(target: ContractId) {
+        abi(AttackHelper, attack_helper_id).attempt_cross_contract_reentrancy());
+    }
+
     fn innocent_call(target: ContractId) {
         abi(Target, target.value).guarded_function_is_callable();
     }
@@ -39,7 +44,11 @@ impl Attacker for Contract {
     }
 
     fn evil_callback_3() {
-        abi(Attacker, contract_id().value).launch_thwarted_attack_1(get_msg_sender_id_or_panic());
+        abi(Attacker, contract_id().value).launch_thwarted_attack_2(get_msg_sender_id_or_panic());
+    }
+
+    fn evil_callback_4() {
+        abi(Attacker, contract_id().value).launch_thwarted_attack_3(get_msg_sender_id_or_panic());
     }
 
     fn innocent_callback() {}

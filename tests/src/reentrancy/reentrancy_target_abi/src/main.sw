@@ -1,4 +1,4 @@
-library reentrancy_target_abi;
+library;
 
 abi Target {
     fn reentrancy_detected() -> bool;
@@ -6,4 +6,5 @@ abi Target {
     fn cross_function_reentrance_denied();
     fn intra_contract_call();
     fn guarded_function_is_callable();
+    fn cross_contract_reentrancy_denied();
 }

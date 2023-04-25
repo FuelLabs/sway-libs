@@ -49,4 +49,12 @@ impl Target for Contract {
         // panic if reentrancy detected
         reentrancy_guard();
     }
+
+    fn cross_contract_reentrancy_denied() {
+        // panic if reentrancy detected
+        reentrancy_guard();
+
+        // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
+        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_4();
+    }
 }

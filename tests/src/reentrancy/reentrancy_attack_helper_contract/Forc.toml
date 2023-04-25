@@ -1,0 +1,9 @@
+[project]
+authors = ["   Nicholas Furfaro"]
+entry = "main.sw"
+license = "Apache-2.0"
+name = "reentrancy_attack_helper_contract"
+
+[dependencies]
+reentrancy_attack_helper_abi = { path = "../reentrancy_attack_helper_abi"}
+reentrancy_target_abi = { path = "../reentrancy_target_abi" }

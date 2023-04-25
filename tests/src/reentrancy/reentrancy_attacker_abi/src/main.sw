@@ -1,4 +1,4 @@
-library reentrancy_attacker_abi;
+library;
 
 abi Attacker {
     fn launch_attack(target: ContractId) -> bool;
@@ -8,5 +8,6 @@ abi Attacker {
     fn evil_callback_1();
     fn evil_callback_2();
     fn evil_callback_3();
+    fn evil_callback_4();
     fn innocent_callback();
 }
