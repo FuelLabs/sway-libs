@@ -152,8 +152,6 @@ impl AsRawSlice for String {
     }
 }
 
-
-
 // Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
 // impl From<raw_slice> for String {
 //     fn from(slice: raw_slice) -> String {

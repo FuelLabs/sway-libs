@@ -10,14 +10,14 @@ use events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
 
 pub struct Ownership {
-    owner: State
+    owner: State,
 }
 
 impl Ownership {
     /// Returns the `Ownership` struct in the `Uninitalized` state.
     pub fn uninitialized() -> Self {
         Self {
-            owner: State::Uninitialized
+            owner: State::Uninitialized,
         }
     }
 
@@ -28,14 +28,14 @@ impl Ownership {
     /// * `identity` - The `Identity` which ownership is set to.
     pub fn initialized(identity: Identity) -> Self {
         Self {
-            owner: State::Initialized(identity)
+            owner: State::Initialized(identity),
         }
     }
 
     /// Returns the `Ownership` struct in the `Revoked` state.
     pub fn revoked() -> Self {
         Self {
-            owner: State::Revoked
+            owner: State::Revoked,
         }
     }
 }
@@ -55,7 +55,7 @@ impl StorageKey<Ownership> {
     /// storage {
     ///     owner: Ownership = Ownership::initalized(Identity::Address(Address::from(ZERO_B256))),
     /// }
-    /// 
+    ///
     /// fn foo() {
     ///     let stored_owner = storage.owner.owner();
     /// }
@@ -81,7 +81,7 @@ impl StorageKey<Ownership> {
     ///
     /// ```sway
     /// use ownable::Ownership;
-    /// 
+    ///
     /// storage {
     ///     owner: Ownership = Ownership::initalized(Identity::Address(Address::from(ZERO_B256))),
     /// }
@@ -113,7 +113,7 @@ impl StorageKey<Ownership> {
     ///
     /// ```sway
     /// use ownable::Ownership;
-    /// 
+    ///
     /// storage {
     ///     owner: Ownership = Ownership::initalized(Identity::Address(Address::from(ZERO_B256))),
     /// }
@@ -154,7 +154,7 @@ impl StorageKey<Ownership> {
     /// storage {
     ///     owner: Ownership = Ownership::uninitialized(),
     /// }
-    /// 
+    ///
     /// fn foo(owner: Identity) {
     ///     assert(storage.owner.owner() == State::Uninitialized);
     ///     storage.owner.set_ownership(owner);
@@ -185,7 +185,7 @@ impl StorageKey<Ownership> {
     ///
     /// ```sway
     /// use ownable::Ownership;
-    /// 
+    ///
     /// storage {
     ///     owner: Ownership = OwnershipOwnership::initalized(Identity::Address(Address::from(ZERO_B256))),
     /// }

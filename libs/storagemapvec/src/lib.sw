@@ -1,6 +1,5 @@
 library;
 /// ** This library has been deprecated. Use of nested storage types is now legal in Sway. **
-
 use std::{hash::sha256, storage::storage_api::{read, write}};
 
 /// A persistant mapping of K -> Vec<V>

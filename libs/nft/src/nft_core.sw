@@ -93,7 +93,7 @@ impl NFTCore {
         };
 
         write(sha256((TOKENS, token_id)), 0, Option::Some(nft));
-        write(TOKENS_MINTED, 0, read::<u64>(TOKENS_MINTED, 0).unwrap_or(0) + 1,);
+        write(TOKENS_MINTED, 0, read::<u64>(TOKENS_MINTED, 0).unwrap_or(0) + 1);
         write(sha256((BALANCES, to)), 0, read::<u64>(sha256((BALANCES, to)), 0).unwrap_or(0) + 1);
 
         log(MintEvent {
