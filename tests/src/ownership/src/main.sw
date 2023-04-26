@@ -4,7 +4,7 @@ use ownership::*;
 use ownership::data_structures::State;
 
 storage {
-    owner: Ownership = Ownership {},
+    owner: Ownership = Ownership::uninitialized(),
 }
 
 abi OwnableTest {
