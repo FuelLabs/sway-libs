@@ -6,7 +6,7 @@ mod nft_storage;
 
 use errors::{AccessError, InputError};
 use events::{ApprovalEvent, MintEvent, OperatorEvent, TransferEvent};
-use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::{storage_api::{read, write}}};
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 
 pub struct NFTCore {
@@ -39,7 +39,7 @@ impl NFTCore {
 
         // Set and store the `approved` `Identity`
         nft.approved = approved;
-        store(sha256((TOKENS, self.token_id)), Option::Some(nft));
+        write::<Option<NFTCore>>(sha256((TOKENS, self.token_id)), 0, Option::Some(nft));
 
         log(ApprovalEvent {
             owner: nft.owner,
@@ -64,7 +64,7 @@ impl NFTCore {
     /// * Reads: `1`
     #[storage(read)]
     pub fn is_approved_for_all(self, operator: Identity) -> bool {
-        get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator))).unwrap_or(false)
+        read::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator)), 0).unwrap_or(false)
     }
 
     /// Mints a token to the `to` Identity with a id.
@@ -84,7 +84,7 @@ impl NFTCore {
     /// * When the `token_id` is used by another token
     #[storage(read, write)]
     pub fn mint(to: Identity, token_id: u64) -> Self {
-        require(get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None).is_none(), InputError::TokenAlreadyExists);
+        require(read::<Option<NFTCore>>(sha256((TOKENS, token_id)), 0).unwrap_or(Option::None).is_none(), InputError::TokenAlreadyExists);
 
         let nft = NFTCore {
             approved: Option::None,
@@ -92,9 +92,9 @@ impl NFTCore {
             token_id,
         };
 
-        store(sha256((TOKENS, token_id)), Option::Some(nft));
-        store(TOKENS_MINTED, get::<u64>(TOKENS_MINTED).unwrap_or(0) + 1);
-        store(sha256((BALANCES, to)), get::<u64>(sha256((BALANCES, to))).unwrap_or(0) + 1);
+        write(sha256((TOKENS, token_id)), 0, Option::Some(nft));
+        write(TOKENS_MINTED, 0, read::<u64>(TOKENS_MINTED, 0).unwrap_or(0) + 1,);
+        write(sha256((BALANCES, to)), 0, read::<u64>(sha256((BALANCES, to)), 0).unwrap_or(0) + 1);
 
         log(MintEvent {
             owner: to,
@@ -131,7 +131,7 @@ impl NFTCore {
         let sender = msg_sender().unwrap();
         require(self.owner == sender, AccessError::SenderNotOwner);
 
-        store(sha256((OPERATOR_APPROVAL, self.owner, operator)), approve);
+        write(sha256((OPERATOR_APPROVAL, self.owner, operator)), 0, approve);
 
         log(OperatorEvent {
             approved: approve,
@@ -166,7 +166,7 @@ impl NFTCore {
         let mut nft = self;
         let from = nft.owner;
         let sender = msg_sender().unwrap();
-        let operator_approved = get::<bool>(sha256((OPERATOR_APPROVAL, from, sender))).unwrap_or(false);
+        let operator_approved = read::<bool>(sha256((OPERATOR_APPROVAL, from, sender)), 0).unwrap_or(false);
 
         // Ensure that the sender is either:
         // 1. The owner of this token
@@ -180,12 +180,12 @@ impl NFTCore {
             nft.approved = Option::None;
         }
 
-        store(sha256((TOKENS, self.token_id)), Option::Some(nft));
+        write(sha256((TOKENS, self.token_id)), 0, Option::Some(nft));
 
-        let from_balance = get::<u64>(sha256((BALANCES, from))).unwrap_or(0);
-        let to_balance = get::<u64>(sha256((BALANCES, to))).unwrap_or(0);
-        store(sha256((BALANCES, from)), from_balance - 1);
-        store(sha256((BALANCES, to)), to_balance + 1);
+        let from_balance = read::<u64>(sha256((BALANCES, from)), 0).unwrap_or(0);
+        let to_balance = read::<u64>(sha256((BALANCES, to)), 0).unwrap_or(0);
+        write(sha256((BALANCES, from)), 0, from_balance - 1);
+        write(sha256((BALANCES, to)), 0, to_balance + 1);
 
         log(TransferEvent {
             from,
