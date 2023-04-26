@@ -2,7 +2,7 @@ contract;
 
 use std::bytes::Bytes;
 use string::String;
-use storage_string::StorageString;
+use storage_string::*;
 
 storage {
     stored_string: StorageString = StorageString {},

@@ -175,7 +175,7 @@ impl String {
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    pub fn append(ref mut self, mut other: self) {
+    pub fn append(ref mut self, ref mut other: self) {
         self.bytes.append(other.into())
     }
 
