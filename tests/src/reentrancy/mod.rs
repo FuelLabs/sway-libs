@@ -58,23 +58,19 @@ pub async fn get_target_instance(
     (instance, id.into())
 }
 
-pub async fn get_attack_helper_instance(wallet: WalletUnlocked)
- -> ContractId {
-    let id = Contract::load_from(
-        REENTRANCY_ATTACK_HELPER_BIN,
-        LoadConfiguration::default()
-    )
-    .unwrap()
-    .deploy(&wallet, TxParameters::default())
-    .await
-    .unwrap();
+pub async fn get_attack_helper_id(
+    wallet: WalletUnlocked,
+) -> (AttackHelperContract<WalletUnlocked>, ContractId) {
+    let id = Contract::load_from(REENTRANCY_ATTACK_HELPER_BIN, LoadConfiguration::default())
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
+        .await
+        .unwrap();
 
     let instance = AttackHelperContract::new(id.clone(), wallet);
 
     (instance, id.into())
 }
-
-
 
 mod success {
     use super::*;
@@ -148,17 +144,17 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic]
+    #[should_panic(expected = "NonReentrant")]
     async fn can_block_cross_contract_reentrancy() {
         let wallet = launch_provider_and_get_wallet().await;
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
-        let helper_id = get_attack_helper_instance(wallet.clone()).await;
-        let (instance, target_id) = get_target_instance(wallet).await;
+        let (helper_instance, helper_id) = get_attack_helper_id(wallet.clone()).await;
+        let (target_instance, target_id) = get_target_instance(wallet).await;
 
         attacker_instance
             .methods()
             .launch_thwarted_attack_3(target_id, helper_id)
-            .set_contract_ids(&[target_id.clone(), helper_id.clone()])
+            .set_contracts(&[&target_instance, &helper_instance])
             .call()
             .await
             .unwrap();

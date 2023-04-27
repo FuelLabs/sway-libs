@@ -19,7 +19,6 @@ storage {
     helper: ContractId = ContractId::from(ZERO_B256),
 }
 
-
 impl Attacker for Contract {
     fn launch_attack(target: ContractId) -> bool {
         abi(Target, target.value).reentrancy_detected()
@@ -33,13 +32,6 @@ impl Attacker for Contract {
         abi(Target, target.value).cross_function_reentrance_denied();
     }
 
-    // call this from sdk test
-    // this calls target
-    // target calls evil callback 4
-    // eveil callback 4 calls helper
-    // helper calls target
-
-    // save target to storage
     #[storage(write)]
     fn launch_thwarted_attack_3(target: ContractId, helper: ContractId) {
         storage.target_id.write(target);
@@ -65,7 +57,8 @@ impl Attacker for Contract {
 
     #[storage(read)]
     fn evil_callback_4() {
-        abi(AttackHelper, storage.helper.read().value).attempt_cross_contract_reentrancy(storage.target_id);
+        let helper = storage.helper.read();
+        abi(AttackHelper, helper.value).attempt_cross_contract_reentrancy(storage.target_id.read());
     }
 
     fn innocent_callback() {}

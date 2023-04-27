@@ -20,7 +20,7 @@ impl Target for Contract {
             true
         } else {
             // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-            let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_1();
+            abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_1();
             false
         }
     }
@@ -30,7 +30,7 @@ impl Target for Contract {
         reentrancy_guard();
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_2();
+        abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_2();
     }
 
     fn cross_function_reentrance_denied() {
@@ -38,7 +38,7 @@ impl Target for Contract {
         reentrancy_guard();
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_3();
+        abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_3();
     }
 
     fn intra_contract_call() {
@@ -53,8 +53,7 @@ impl Target for Contract {
     fn cross_contract_reentrancy_denied() {
         // panic if reentrancy detected
         reentrancy_guard();
-
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        let return_value = abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_4();
+        abi(Attacker, get_msg_sender_id_or_panic().value).evil_callback_4();
     }
 }
