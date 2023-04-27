@@ -1,6 +1,6 @@
 contract;
 
-use std::{auth::*, call_frames::contract_id};
+use std::{auth::*, call_frames::contract_id, constants::ZERO_B256};
 
 use reentrancy_target_abi::Target;
 use reentrancy_attacker_abi::Attacker;
@@ -13,6 +13,12 @@ fn get_msg_sender_id_or_panic() -> ContractId {
         _ => revert(0),
     }
 }
+
+storage {
+    target_id: ContractId = ContractId::from(ZERO_B256),
+    helper: ContractId = ContractId::from(ZERO_B256),
+}
+
 
 impl Attacker for Contract {
     fn launch_attack(target: ContractId) -> bool {
@@ -27,8 +33,18 @@ impl Attacker for Contract {
         abi(Target, target.value).cross_function_reentrance_denied();
     }
 
-    fn launch_thwarted_attack_3(target: ContractId) {
-        abi(AttackHelper, attack_helper_id).attempt_cross_contract_reentrancy());
+    // call this from sdk test
+    // this calls target
+    // target calls evil callback 4
+    // eveil callback 4 calls helper
+    // helper calls target
+
+    // save target to storage
+    #[storage(write)]
+    fn launch_thwarted_attack_3(target: ContractId, helper: ContractId) {
+        storage.target_id.write(target);
+        storage.helper.write(helper);
+        abi(Target, target.value).cross_contract_reentrancy_denied();
     }
 
     fn innocent_call(target: ContractId) {
@@ -47,8 +63,9 @@ impl Attacker for Contract {
         abi(Attacker, contract_id().value).launch_thwarted_attack_2(get_msg_sender_id_or_panic());
     }
 
+    #[storage(read)]
     fn evil_callback_4() {
-        abi(Attacker, contract_id().value).launch_thwarted_attack_3(get_msg_sender_id_or_panic());
+        abi(AttackHelper, storage.helper.read().value).attempt_cross_contract_reentrancy(storage.target_id);
     }
 
     fn innocent_callback() {}
