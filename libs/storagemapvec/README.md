@@ -1,3 +1,5 @@
+> **Note** This library has been deprecated. Use of nested storage types is now legal in Sway.
+
 <p align="center">
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset=".docs/storagemapvec-logo-dark-theme.png">

@@ -4,7 +4,7 @@ mod token_metadata_structures;
 
 use token_metadata_structures::NFTMetadata;
 use ::nft_core::{errors::InputError, nft_storage::{TOKEN_METADATA, TOKENS}, NFTCore};
-use std::{hash::sha256, storage::{get, store}};
+use std::{hash::sha256, storage::storage_api::{read, write}};
 
 pub trait TokenMetadata<T> {
     /// Returns the metadata for this token
@@ -23,12 +23,12 @@ pub trait TokenMetadata<T> {
 impl<T> TokenMetadata<T> for NFTCore {
     #[storage(read)]
     fn token_metadata(self) -> Option<T> {
-        get::<Option<T>>(sha256((TOKEN_METADATA, self.token_id))).unwrap_or(Option::None)
+        read::<Option<T>>(sha256((TOKEN_METADATA, self.token_id)), 0).unwrap_or(Option::None)
     }
 
     #[storage(write)]
     fn set_token_metadata(self, token_metadata: Option<T>) {
-        store(sha256((TOKEN_METADATA, self.token_id)), token_metadata);
+        write(sha256((TOKEN_METADATA, self.token_id)), 0, token_metadata);
     }
 }
 
@@ -43,7 +43,7 @@ impl<T> TokenMetadata<T> for NFTCore {
 /// * Reads: `2`
 #[storage(read)]
 pub fn token_metadata<T>(token_id: u64) -> Option<T> {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
+    let nft = read::<Option<NFTCore>>(sha256((TOKENS, token_id)), 0).unwrap_or(Option::None);
     match nft {
         Option::Some(nft) => {
             nft.token_metadata()
@@ -71,7 +71,7 @@ pub fn token_metadata<T>(token_id: u64) -> Option<T> {
 /// * When the `token_id` does not map to an existing token
 #[storage(read, write)]
 pub fn set_token_metadata<T>(token_metadata: Option<T>, token_id: u64) {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
+    let nft = read::<Option<NFTCore>>(sha256((TOKENS, token_id)), 0).unwrap_or(Option::None);
     require(nft.is_some(), InputError::TokenDoesNotExist);
 
     nft.unwrap().set_token_metadata(token_metadata);
