@@ -4,7 +4,7 @@ mod burnable_events;
 
 use burnable_events::BurnEvent;
 use ::nft_core::{errors::{AccessError, InputError}, nft_storage::{BALANCES, TOKENS}, NFTCore};
-use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
 
 abi Burn {
     #[storage(read, write)]
@@ -26,8 +26,8 @@ impl Burnable for NFTCore {
     fn burn(self) {
         require(self.owner == msg_sender().unwrap(), AccessError::SenderNotOwner);
 
-        store(sha256((BALANCES, self.owner)), get::<u64>(sha256((BALANCES, self.owner))).unwrap() - 1);
-        store(sha256((TOKENS, self.token_id)), Option::None::<NFTCore>);
+        write(sha256((BALANCES, self.owner)), 0, read::<u64>(sha256((BALANCES, self.owner)), 0).unwrap() - 1);
+        write(sha256((TOKENS, self.token_id)), 0, Option::None::<NFTCore>);
 
         log(BurnEvent {
             owner: self.owner,
@@ -52,7 +52,7 @@ impl Burnable for NFTCore {
 /// * When the `token_id` specified does not map to an existing token.
 #[storage(read, write)]
 pub fn burn(token_id: u64) {
-    let nft = get::<Option<NFTCore>>(sha256((TOKENS, token_id))).unwrap_or(Option::None);
+    let nft = read::<Option<NFTCore>>(sha256((TOKENS, token_id)), 0).unwrap_or(Option::None);
     require(nft.is_some(), InputError::TokenDoesNotExist);
     nft.unwrap().burn();
 }

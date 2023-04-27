@@ -152,8 +152,6 @@ impl AsRawSlice for String {
     }
 }
 
-
-
 // Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
 // impl From<raw_slice> for String {
 //     fn from(slice: raw_slice) -> String {
@@ -175,7 +173,7 @@ impl String {
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    pub fn append(ref mut self, mut other: self) {
+    pub fn append(ref mut self, ref mut other: self) {
         self.bytes.append(other.into())
     }
 

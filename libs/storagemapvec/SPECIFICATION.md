@@ -1,3 +1,5 @@
+> **Note** This library has been deprecated. Use of nested storage types is now legal in Sway.
+
 # Overview
 
 This document provides an overview of the StorageMapVec library.

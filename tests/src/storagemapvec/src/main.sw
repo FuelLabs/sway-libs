@@ -1,6 +1,6 @@
 contract;
 
-use storagemapvec::StorageMapVec;
+use storagemapvec::*;
 
 storage {
     mapvec: StorageMapVec<u64, u64> = StorageMapVec {},
