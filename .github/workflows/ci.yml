@@ -17,7 +17,7 @@ env:
   REGISTRY: ghcr.io
   RUST_VERSION: 1.68.2
   FORC_VERSION: 0.38.0
-  CORE_VERSION: 0.17.10
+  CORE_VERSION: 0.17.11
   PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
