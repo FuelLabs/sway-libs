@@ -1,11 +1,11 @@
-library signed_integers;
+library;
 
-dep common;
-dep errors;
+mod common;
+mod errors;
 
-dep i8;
-dep i16;
-dep i32;
-dep i64;
-dep i128;
-dep i256;
+mod i8;
+mod i16;
+mod i32;
+mod i64;
+mod i128;
+mod i256;

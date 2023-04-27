@@ -1,4 +1,4 @@
-library i64;
+library;
 
 use ::common::TwosComplement;
 use ::errors::Error;

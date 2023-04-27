@@ -1,5 +1,5 @@
 // ANCHOR: module
-library style_guide;
+library;
 // ANCHOR_END: module
 // ANCHOR: const
 const MAXIMUM_DEPOSIT = 10;

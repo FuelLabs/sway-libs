@@ -1,3 +1,0 @@
-library ownership;
-
-dep ownable;

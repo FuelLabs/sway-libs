@@ -1,4 +1,4 @@
-library ufp64;
+library;
 // A wrapper library around the u64 type for mathematical functions operating with signed 64-bit fixed point numbers.
 use std::{math::{Exponent, Power, Root}, u128::U128};
 
@@ -211,7 +211,7 @@ impl Root for UFP64 {
     /// Sqaure root for UFP64
     fn sqrt(self) -> Self {
         let nominator_root = self.value.sqrt();
-         // Need to multiply over 2 ^ 16, as the square root of the denominator 
+        // Need to multiply over 2 ^ 16, as the square root of the denominator 
         // is also taken and we need to ensure that the denominator is constant
         let nominator = nominator_root << 16;
         Self {

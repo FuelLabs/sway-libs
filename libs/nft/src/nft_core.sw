@@ -1,12 +1,12 @@
-library nft_core;
+library;
 
-dep errors;
-dep events;
-dep nft_storage;
+mod errors;
+mod events;
+mod nft_storage;
 
 use errors::{AccessError, InputError};
 use events::{ApprovalEvent, MintEvent, OperatorEvent, TransferEvent};
-use std::{auth::msg_sender, hash::sha256, logging::log, storage::{get, store}};
+use std::{auth::msg_sender, hash::sha256, storage::{get, store}};
 use nft_storage::{BALANCES, OPERATOR_APPROVAL, TOKENS, TOKENS_MINTED};
 
 pub struct NFTCore {
@@ -23,6 +23,10 @@ impl NFTCore {
     /// # Arguments
     ///
     /// * `approved` - The user which will be allowed to transfer the token on the owner's behalf.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Writes: `1`
     ///
     /// # Reverts
     ///
@@ -54,6 +58,10 @@ impl NFTCore {
     /// # Arguments
     ///
     /// * `operator` - The user which may or may not transfer all tokens on the owner`s behalf.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Reads: `1`
     #[storage(read)]
     pub fn is_approved_for_all(self, operator: Identity) -> bool {
         get::<bool>(sha256((OPERATOR_APPROVAL, self.owner, operator))).unwrap_or(false)
@@ -65,6 +73,11 @@ impl NFTCore {
     ///
     /// * `to` - The user which will own the minted token.
     /// * `token_id` - The id the new token will have.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Reads: `1`
+    /// * Writes: `3`
     ///
     /// # Reverts
     ///
@@ -106,6 +119,10 @@ impl NFTCore {
     /// * `approve` - Represents whether the user is giving or revoking operator status.
     /// * `operator` - The user which may or may not transfer all tokens on this owner's behalf.
     ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Writes: `1`
+    ///
     /// # Reverts
     ///
     /// * When the sender is not the owner of this token
@@ -133,6 +150,11 @@ impl NFTCore {
     /// # Arguments
     ///
     /// * `to` - The user which the ownership of this token should be set to.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Reads: `3`
+    /// * Writes: `3`
     ///
     /// # Reverts
     ///

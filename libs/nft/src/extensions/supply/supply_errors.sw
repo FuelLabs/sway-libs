@@ -1,4 +1,4 @@
-library supply_errors;
+library;
 
 pub enum SupplyError {
     CannotReinitializeSupply: (),

@@ -1,4 +1,4 @@
-library i8;
+library;
 
 use ::errors::Error;
 use ::common::TwosComplement;
