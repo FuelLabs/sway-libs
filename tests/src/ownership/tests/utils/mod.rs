@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
-        abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration, TxParameters,
-        WalletUnlocked, WalletsConfig,
+        abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
+        StorageConfiguration, TxParameters, WalletUnlocked, WalletsConfig,
     },
     programs::call_response::FuelCallResponse,
     types::Identity,
@@ -86,9 +86,12 @@ pub mod test_helpers {
         let wallet2 = wallets.pop().unwrap();
         let wallet3 = wallets.pop().unwrap();
 
+        let storage_configuration = StorageConfiguration::load_from(
+            "src/ownership/out/debug/ownership_test-storage_slots.json",
+        );
         let id = Contract::load_from(
             "src/ownership/out/debug/ownership_test.bin",
-            LoadConfiguration::default(),
+            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
         )
         .unwrap()
         .deploy(&wallet1, TxParameters::default())

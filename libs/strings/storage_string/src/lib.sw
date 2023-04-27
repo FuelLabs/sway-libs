@@ -1,11 +1,22 @@
 library;
 
-use std::{bytes::Bytes, storage::{clear_slice, get, get_slice, StorableSlice, store_slice}};
+use std::{
+    bytes::Bytes,
+    storage::{
+        storable_slice::{
+            clear_slice,
+            get_slice,
+            StorableSlice,
+            store_slice,
+        },
+        storage_api::read,
+    },
+};
 use string::String;
 
 pub struct StorageString {}
 
-impl StorableSlice<String> for StorageString {
+impl StorableSlice<String> for StorageKey<StorageString> {
     /// Takes a `String` type and saves the underlying data in storage.
     ///
     /// ### Arguments
@@ -32,10 +43,9 @@ impl StorableSlice<String> for StorageString {
     ///     storage.stored_string.store(string);
     /// }
     /// ```
-    #[storage(write)]
+    #[storage(read, write)]
     fn store(self, string: String) {
-        let key = __get_storage_key();
-        store_slice(key, string.as_raw_slice());
+        store_slice(self.slot, string.as_raw_slice());
     }
 
     /// Constructs a `String` type from storage.
@@ -65,8 +75,7 @@ impl StorableSlice<String> for StorageString {
     /// ```
     #[storage(read)]
     fn load(self) -> Option<String> {
-        let key = __get_storage_key();
-        match get_slice(key) {
+        match get_slice(self.slot) {
             Option::Some(slice) => {
                 // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
                 // Option::Some(String::from_raw_slice(slice))
@@ -108,8 +117,7 @@ impl StorableSlice<String> for StorageString {
     /// ```
     #[storage(read, write)]
     fn clear(self) -> bool {
-        let key = __get_storage_key();
-        clear_slice(key)
+        clear_slice(self.slot)
     }
 
     /// Returns the length of `String` in storage.
@@ -138,6 +146,6 @@ impl StorableSlice<String> for StorageString {
     /// ```
     #[storage(read)]
     fn len(self) -> u64 {
-        get::<u64>(__get_storage_key()).unwrap_or(0)
+        read::<u64>(self.slot, 0).unwrap_or(0)
     }
 }
