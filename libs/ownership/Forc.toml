@@ -3,3 +3,8 @@ authors = ["Fuel Labs <contact@fuel.sh>"]
 entry = "ownable.sw"
 license = "Apache-2.0"
 name = "ownership"
+implicit-std = false
+
+[dependencies]
+core = { path = "../../../sway-lib-core/" }
+std = { path = "../../../sway-lib-std/" }
