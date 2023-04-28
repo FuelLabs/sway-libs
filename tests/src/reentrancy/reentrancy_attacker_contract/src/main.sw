@@ -25,11 +25,11 @@ impl Attacker for Contract {
     }
 
     fn launch_thwarted_attack_1(target: ContractId) {
-        abi(Target, target.value).intra_contract_call();
+        abi(Target, target.value).reentrance_denied();
     }
 
     fn launch_thwarted_attack_2(target: ContractId) {
-        abi(Target, target.value).cross_function_reentrance_denied();
+        abi(Target, target.value).intra_contract_call();
     }
 
     #[storage(write)]

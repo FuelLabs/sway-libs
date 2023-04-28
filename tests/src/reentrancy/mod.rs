@@ -112,7 +112,7 @@ mod revert {
     use super::*;
 
     #[tokio::test]
-    #[should_panic]
+    #[should_panic(expected = "NonReentrant")]
     async fn can_block_reentrancy() {
         let wallet = launch_provider_and_get_wallet().await;
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
@@ -128,7 +128,7 @@ mod revert {
     }
 
     #[tokio::test]
-    #[should_panic]
+    #[should_panic(expected = "NonReentrant")]
     async fn can_block_cross_function_reentrancy() {
         let wallet = launch_provider_and_get_wallet().await;
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
