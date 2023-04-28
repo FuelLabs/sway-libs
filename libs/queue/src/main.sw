@@ -25,7 +25,7 @@ impl<T> Queue<T> {
         self.vec.len()
     }
 
-    /// Enqueues a `Queue`
+    /// Enqueues a `Queue` with an element of type `T` chosen at the definition of the `Queue` called item.
     pub fn enqueue(ref mut self, item: T) {
         self.vec.push(item);
     }
