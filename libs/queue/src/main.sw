@@ -1,4 +1,4 @@
-//! The `Queue` type corresponds to the same data structure.
+// The `Queue` type corresponds to the same data structure.
 library;
 
 use std::vec::Vec;
