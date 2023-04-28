@@ -67,8 +67,11 @@ fn test_dequeue() {
     queue_for_dequeue.enqueue(1);
     queue_for_dequeue.enqueue(2);
     queue_for_dequeue.enqueue(3);
+    assert(queue_for_dequeue.len() == 3);
     assert(queue_for_dequeue.dequeue().unwrap() == 1);
+    assert(queue_for_dequeue.len() == 2);
     assert(queue_for_dequeue.dequeue().unwrap() == 2);
+    assert(queue_for_dequeue.len() == 1);
     assert(queue_for_dequeue.dequeue().unwrap() == 3);
     assert(queue_for_dequeue.dequeue().is_none());
     assert(queue_for_dequeue.len() == 0);
