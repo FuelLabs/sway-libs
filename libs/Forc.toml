@@ -1,10 +1,10 @@
 [workspace]
 members = [
-  "queue",
   "fixed_point",
   "merkle_proof",
   "nft",
   "ownership",
+  "queue",
   "reentrancy",
   "signed_integers",
   "storagemapvec",

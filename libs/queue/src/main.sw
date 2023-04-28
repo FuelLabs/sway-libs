@@ -1,8 +1,6 @@
 // The `Queue` type corresponds to the same data structure.
 library;
 
-use std::vec::Vec;
-
 pub struct Queue<T> {
     vec: Vec<T>,
 }
@@ -33,13 +31,13 @@ impl<T> Queue<T> {
     /// Dequeues a `Queue`
     pub fn dequeue(ref mut self) -> Option<T> {
         if self.vec.is_empty() {
-            Option::None
-        } else {
-            Option::Some(self.vec.remove(0))
+            return Option::None;
         }
+        
+        return Option::Some(self.vec.remove(0));
     }
 
-    /// Gets the last element
+    /// Gets the head of the queue
     pub fn peek(self) -> Option<T> {
         self.vec.get(0)
     }
@@ -48,7 +46,7 @@ impl<T> Queue<T> {
 #[test()]
 fn test_new_queue() {
     let new_queue: Queue<u64> = Queue::new();
-    assert(new_queue.is_empty() == true);
+    assert(new_queue.is_empty());
     assert(new_queue.len() == 0);
 }
 
@@ -56,9 +54,9 @@ fn test_new_queue() {
 fn test_enqueue() {
     let mut queue_for_enqueue: Queue<u64> = Queue::new();
     queue_for_enqueue.enqueue(1);
+    let queue_len = queue_for_enqueue.len();
     queue_for_enqueue.enqueue(2);
-    queue_for_enqueue.enqueue(3);
-    assert(queue_for_enqueue.len() == 3);
+    assert(queue_for_enqueue.len() == queue_len + 1);
 }
 
 #[test()]
