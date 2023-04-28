@@ -6,7 +6,7 @@ mod administrator_events;
 use administrator_errors::AdminError;
 use administrator_events::AdminEvent;
 use ::nft_core::nft_storage::ADMIN;
-use std::{auth::msg_sender, storage::{get, store}};
+use std::{auth::msg_sender, storage::storage_api::{read, write}};
 
 abi Administrator {
     #[storage(read)]
@@ -22,7 +22,7 @@ abi Administrator {
 /// * Reads: `1`
 #[storage(read)]
 pub fn admin() -> Option<Identity> {
-    get::<Option<Identity>>(ADMIN).unwrap_or(Option::None)
+    read::<Option<Identity>>(ADMIN, 0).unwrap_or(Option::None)
 }
 
 /// Changes the library's administrator.
@@ -42,10 +42,10 @@ pub fn admin() -> Option<Identity> {
 /// * When the sender is not the `admin` in storage.
 #[storage(read, write)]
 pub fn set_admin(new_admin: Option<Identity>) {
-    let admin = get::<Option<Identity>>(ADMIN).unwrap_or(Option::None);
+    let admin = read::<Option<Identity>>(ADMIN, 0).unwrap_or(Option::None);
     require(admin.is_none() || (admin.is_some() && admin.unwrap() == msg_sender().unwrap()), AdminError::SenderNotAdmin);
 
-    store(ADMIN, new_admin);
+    write(ADMIN, 0, new_admin);
 
     log(AdminEvent {
         admin: new_admin,

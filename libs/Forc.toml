@@ -8,5 +8,6 @@ members = [
   "reentrancy",
   "signed_integers",
   "storagemapvec",
-  "string",
+  "strings/storage_string",
+  "strings/string",
 ]

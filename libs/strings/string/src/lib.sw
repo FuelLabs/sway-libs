@@ -27,7 +27,8 @@ impl String {
     /// # Arguments
     ///
     /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(mut bytes: Vec<u8>) -> Self {
+    pub fn from_utf8(bytes: Vec<u8>) -> Self {
+        let mut bytes = bytes;
         Self {
             bytes: Bytes::from_vec_u8(bytes),
         }
@@ -123,6 +124,13 @@ impl String {
             bytes: Bytes::with_capacity(capacity),
         }
     }
+
+    // Should be removed when https://github.com/FuelLabs/sway/issues/3637 is resovled
+    pub fn from_raw_slice(slice: raw_slice) -> Self {
+        let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
+        bytes.buf.ptr = slice.ptr();
+        Self { bytes }
+    }
 }
 
 impl From<Bytes> for String {
@@ -137,13 +145,35 @@ impl From<Bytes> for String {
     }
 }
 
+impl AsRawSlice for String {
+    /// Returns a raw slice to all of the elements in the string.
+    fn as_raw_slice(self) -> raw_slice {
+        asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+    }
+}
+
+// Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
+// impl From<raw_slice> for String {
+//     fn from(slice: raw_slice) -> String {
+//         let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
+//         bytes.buf.ptr = slice.ptr();
+//         Self {
+//             bytes
+//         }
+//     }
+
+//     fn into(self) -> raw_slice {
+//         asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+//     }
+// }
+
 impl String {
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
     /// # Arguments
     ///
     /// * `other` - The String to join to self.
-    pub fn append(ref mut self, mut other: self) {
+    pub fn append(ref mut self, ref mut other: self) {
         self.bytes.append(other.into())
     }
 

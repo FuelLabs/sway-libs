@@ -1,13 +1,11 @@
 contract;
 
-use ownership::{
-    data_structures::State,
-    only_owner,
-    owner,
-    renounce_ownership,
-    set_ownership,
-    transfer_ownership,
-};
+use ownership::*;
+use ownership::data_structures::State;
+
+storage {
+    owner: Ownership = Ownership::uninitialized(),
+}
 
 abi OwnableTest {
     #[storage(read)]
@@ -25,26 +23,26 @@ abi OwnableTest {
 impl OwnableTest for Contract {
     #[storage(read)]
     fn only_owner() {
-        only_owner();
+        storage.owner.only_owner();
     }
 
     #[storage(read)]
     fn owner() -> State {
-        owner()
+        storage.owner.owner()
     }
 
     #[storage(read, write)]
     fn renounce_ownership() {
-        renounce_ownership();
+        storage.owner.renounce_ownership();
     }
 
     #[storage(read, write)]
     fn set_ownership(new_owner: Identity) {
-        set_ownership(new_owner);
+        storage.owner.set_ownership(new_owner);
     }
 
     #[storage(read, write)]
     fn transfer_ownership(new_owner: Identity) {
-        transfer_ownership(new_owner);
+        storage.owner.transfer_ownership(new_owner);
     }
 }

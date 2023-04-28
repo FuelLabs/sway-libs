@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
-        abigen, launch_custom_provider_and_get_wallets, Contract, StorageConfiguration,
-        TxParameters, WalletUnlocked, WalletsConfig,
+        abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
+        StorageConfiguration, TxParameters, WalletUnlocked, WalletsConfig,
     },
     programs::call_response::FuelCallResponse,
     types::Identity,
@@ -14,7 +14,7 @@ abigen!(Contract(
 ));
 
 pub struct Metadata {
-    pub contract: OwnershipLib,
+    pub contract: OwnershipLib<WalletUnlocked>,
     pub wallet: WalletUnlocked,
 }
 
@@ -22,15 +22,17 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn only_owner(contract: &OwnershipLib) -> FuelCallResponse<()> {
+    pub async fn only_owner(contract: &OwnershipLib<WalletUnlocked>) -> FuelCallResponse<()> {
         contract.methods().only_owner().call().await.unwrap()
     }
 
-    pub async fn owner(contract: &OwnershipLib) -> State {
+    pub async fn owner(contract: &OwnershipLib<WalletUnlocked>) -> State {
         contract.methods().owner().call().await.unwrap().value
     }
 
-    pub async fn renounce_ownership(contract: &OwnershipLib) -> FuelCallResponse<()> {
+    pub async fn renounce_ownership(
+        contract: &OwnershipLib<WalletUnlocked>,
+    ) -> FuelCallResponse<()> {
         contract
             .methods()
             .renounce_ownership()
@@ -40,7 +42,7 @@ pub mod abi_calls {
     }
 
     pub async fn set_ownership(
-        contract: &OwnershipLib,
+        contract: &OwnershipLib<WalletUnlocked>,
         new_owner: Identity,
     ) -> FuelCallResponse<()> {
         contract
@@ -52,7 +54,7 @@ pub mod abi_calls {
     }
 
     pub async fn transfer_ownership(
-        contract: &OwnershipLib,
+        contract: &OwnershipLib<WalletUnlocked>,
         new_owner: Identity,
     ) -> FuelCallResponse<()> {
         contract
@@ -84,12 +86,15 @@ pub mod test_helpers {
         let wallet2 = wallets.pop().unwrap();
         let wallet3 = wallets.pop().unwrap();
 
-        let id = Contract::deploy(
+        let storage_configuration = StorageConfiguration::load_from(
+            "src/ownership/out/debug/ownership_test-storage_slots.json",
+        );
+        let id = Contract::load_from(
             "src/ownership/out/debug/ownership_test.bin",
-            &wallet1,
-            TxParameters::default(),
-            StorageConfiguration::default(),
+            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
         )
+        .unwrap()
+        .deploy(&wallet1, TxParameters::default())
         .await
         .unwrap();
 
