@@ -15,7 +15,7 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the `ownership` library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
+In order to use the Ownership library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
 
 You may import the Ownership library's functionalities like so:
 
