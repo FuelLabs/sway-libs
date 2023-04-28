@@ -45,7 +45,6 @@ fn test_new_queue() {
     assert(new_queue.len() == 0);
 }
 
-
 #[test()]
 fn test_enqueue() {
     let mut queue_for_enqueue: Queue<u64> = Queue::new();
