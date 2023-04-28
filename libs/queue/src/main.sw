@@ -1,3 +1,4 @@
+//! The `Queue` type corresponds to the same data structure.
 library;
 
 use std::vec::Vec;
@@ -7,24 +8,29 @@ pub struct Queue<T> {
 }
 
 impl<T> Queue<T> {
+    /// Create a new `Queue`
     pub fn new() -> Self {
         Self {
             vec: Vec::new(),
         }
     }
 
+    /// Checks a `Queue` for emptiness
     pub fn is_empty(self) -> bool {
         self.vec.is_empty()
     }
 
+    /// Gets the number of elements in the `Queue`
     pub fn len(self) -> u64 {
         self.vec.len()
     }
 
+    /// Enqueues a `Queue`
     pub fn enqueue(ref mut self, item: T) {
         self.vec.push(item);
     }
 
+    /// Dequeues a `Queue`
     pub fn dequeue(ref mut self) -> Option<T> {
         if self.vec.is_empty() {
             Option::None
@@ -33,6 +39,7 @@ impl<T> Queue<T> {
         }
     }
 
+    /// Gets the last element
     pub fn peek(self) -> Option<T> {
         self.vec.get(0)
     }
@@ -82,17 +89,10 @@ fn test_queue_peek() {
 
 #[test()]
 fn test_queue_empty() {
-    let mut ve: Vec<u64> = Vec::new();
-    ve.push(1);
-    std::logging::log(ve.len());
-    let _ = ve.remove(0);
-    std::logging::log(ve.len());
     let mut queue_for_empty: Queue<u64> = Queue::new();
     assert(queue_for_empty.is_empty());
-    queue_for_empty.enqueue(1002000);
-    // queue_for_empty.enqueue(1002000);
+    queue_for_empty.enqueue(1);
     assert(!queue_for_empty.is_empty());
-    // let _ = queue_for_empty.dequeue();
     let _ = queue_for_empty.dequeue();
-    // assert(queue_for_empty.is_empty());
+    assert(queue_for_empty.is_empty());
 }
