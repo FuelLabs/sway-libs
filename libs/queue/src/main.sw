@@ -33,7 +33,7 @@ impl<T> Queue<T> {
         if self.vec.is_empty() {
             return Option::None;
         }
-        
+
         return Option::Some(self.vec.remove(0));
     }
 
