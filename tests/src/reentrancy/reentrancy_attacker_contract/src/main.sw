@@ -39,13 +39,6 @@ impl Attacker for Contract {
         abi(Target, target.value).cross_contract_reentrancy_denied();
     }
 
-    #[storage(write)]
-    fn launch_thwarted_attack_3(target: ContractId, helper: ContractId) {
-        storage.target_id.write(target);
-        storage.helper.write(helper);
-        abi(Target, target.value).cross_contract_reentrancy_denied();
-    }
-
     fn innocent_call(target: ContractId) {
         abi(Target, target.value).guarded_function_is_callable();
     }
