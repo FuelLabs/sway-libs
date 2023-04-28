@@ -69,13 +69,13 @@ impl StorageKey<Ownership> {
 impl StorageKey<Ownership> {
     /// Ensures that the sender is the owner.
     ///
-    /// ### Number of Storage Accesses
-    ///
-    /// * Reads: `1`
-    ///
     /// ### Reverts
     ///
     /// * When the sender is not the owner.
+    ///
+    /// ### Number of Storage Accesses
+    ///
+    /// * Reads: `1`
     ///
     /// ### Examples
     ///
@@ -100,14 +100,14 @@ impl StorageKey<Ownership> {
 impl StorageKey<Ownership> {
     /// Revokes ownership of the current owner and disallows any new owners.
     ///
+    /// ### Reverts
+    ///
+    /// * When the sender is not the owner.
+    ///
     /// ### Number of Storage Accesses
     ///
     /// * Reads: `1`
     /// * Writes: `1`
-    ///
-    /// ### Reverts
-    ///
-    /// * When the sender is not the owner.
     ///
     /// ### Examples
     ///
@@ -137,14 +137,18 @@ impl StorageKey<Ownership> {
 
     /// Sets the passed identity as the initial owner.
     ///
-    /// ### Number of Storage Acesses
+    /// ### Arguments
     ///
-    /// * Reads: `1`
-    /// * Write: `1`
+    /// * `new_owner` - The `Identity` that will be the first owner.
     ///
     /// ### Reverts
     ///
     /// * When ownership has been set before.
+    ///
+    /// ### Number of Storage Acesses
+    ///
+    /// * Reads: `1`
+    /// * Write: `1`
     ///
     /// ### Examples
     ///
@@ -172,14 +176,14 @@ impl StorageKey<Ownership> {
 
     /// Transfers ownership to the passed identity.
     ///
+    /// ### Reverts
+    ///
+    /// * When the sender is not the owner.
+    ///
     /// ### Number of Storage Acesses
     ///
     /// * Reads: `1`
     /// * Write: `1`
-    ///
-    /// ### Reverts
-    ///
-    /// * When the sender is not the owner.
     ///
     /// ### Examples
     ///
