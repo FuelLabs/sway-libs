@@ -25,11 +25,11 @@ use ownership::Ownership;
 
 Once imported, the `Ownership` struct should be added to the storage block of your contract. There are two approaches when declaring ownership in storage.
 
-1. Initalize the owner on contract deployment by calling the `initalized()` function.
+1. Initalize the owner on contract deployment by calling the `initialized()` function.
 
 ```rust
 storage {
-    owner: Ownership = Ownership::initalized(Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000))),
+    owner: Ownership = Ownership::initialized(Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000))),
 }
 ```
 

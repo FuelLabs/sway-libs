@@ -24,7 +24,7 @@ Only callable by the current owner, this function will remove the owner.
 
 ### `set_ownership()`
 
-This function will store a new owner if there has never been one set.
+This function will store a new owner if one has not been set.
 
 ### `transfer_ownership()`
 
@@ -32,14 +32,14 @@ Only callable by the current owner, this function will transfer ownership to ano
 
 ### `uninitialized()`
 
-Creates a new ownership in the `Uninitalized` state.
+Creates a new ownership in the `Uninitialized` state.
 
-### `initalized()`
+### `initialized()`
 
-Creates a new ownership in the `Initalized` state.
+Creates a new ownership in the `Initialized` state.
 
 ### `revoked()`
 
-Creates a new ownership in the `Revkoed` state.
+Creates a new ownership in the `Revoked` state.
 
-> **Note** Once the ownership has been revoked it cannot be set or transfered again.
+> **Note** Once the ownership has been revoked it cannot be set or transferred again.
