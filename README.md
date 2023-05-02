@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.37.0" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.37.0-orange" />
+    <a href="https://crates.io/crates/forc/0.38.0" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.38.0-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -35,10 +35,10 @@ These libraries contain helper functions, generalized standards, and other tools
 - [Non-Fungible Token (NFT)](./libs/nft/) is a token library which provides unqiue collectibles, identified and differentiated by token IDs.
 - [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
 - [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
-- [String](./libs/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
-- [Unsigned Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-- [StorageMapVec](./libs/storagemapvec/) is a temporary workaround for a StorageMap<K, StorageVec<V>> type.
+- [String](./libs/strings/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
+- [StorageString](./libs/strings/storage_string/) is used to store dynamic length strings that are UTF-8 encoded in storage.
+- [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 
 ### Standards
 
@@ -87,7 +87,7 @@ cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **Note**
-> All projects currently use `forc v0.37.0`, `fuels-rs v0.36.1` and `fuel-core 0.17.8`.
+> All projects currently use `forc v0.38.0`, `fuels-rs v0.41.0` and `fuel-core 0.17.11`.
 
 ## Contributing
 

@@ -5,8 +5,10 @@ members = [
   "merkle_proof",
   "nft",
   "ownership",
+  "queue",
   "reentrancy",
   "signed_integers",
   "storagemapvec",
-  "string",
+  "strings/storage_string",
+  "strings/string",
 ]

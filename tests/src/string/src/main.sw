@@ -19,9 +19,11 @@ abi StringTest {
     fn test_capacity();
     fn test_clear();
     fn test_from();
+    fn test_from_raw_slice();
     fn test_from_utf8();
     fn test_insert();
     fn test_into();
+    fn test_into_raw_slice();
     fn test_is_empty();
     fn test_len();
     fn test_new();
@@ -65,8 +67,6 @@ impl StringTest for Contract {
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
 
-
-
         // string.push(NUMBER0);
         // let bytes = string.as_vec();
         // assert(bytes.len() == string.len());
@@ -91,12 +91,6 @@ impl StringTest for Contract {
         let mut string = String::new();
 
         assert(string.capacity() == 0);
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
@@ -136,12 +130,6 @@ impl StringTest for Contract {
         string.clear();
         assert(string.is_empty());
 
-
-
-
-
-
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
         // assert(!string.is_empty());
@@ -175,7 +163,6 @@ impl StringTest for Contract {
 
     fn test_from() {
 
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut bytes = Bytes::new();
 
@@ -193,8 +180,27 @@ impl StringTest for Contract {
         // assert(bytes.get(2).unwrap() == string_from_bytes.nth(2).unwrap());
 }
 
-    fn test_from_utf8() {
+    fn test_from_raw_slice() {
 
+        // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
+        // let mut bytes = Bytes::new();
+
+        // bytes.push(NUMBER0);
+        // bytes.push(NUMBER1);
+        // bytes.push(NUMBER2);
+        // bytes.push(NUMBER3);
+        // bytes.push(NUMBER4);
+
+        // let raw_slice = bytes.as_raw_slice();
+        // let string_from_slice = String::from(raw_slice);
+        // assert(bytes.len() == string_from_slice.len());
+        // assert(bytes.capacity() == string_from_slice.capacity());
+        // assert(bytes.get(0).unwrap() == string_from_slice.nth(0).unwrap());
+        // assert(bytes.get(1).unwrap() == string_from_slice.nth(1).unwrap());
+        // assert(bytes.get(2).unwrap() == string_from_slice.nth(2).unwrap());
+}
+
+    fn test_from_utf8() {
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut vec: Vec<u8> = Vec::new();
@@ -217,8 +223,6 @@ impl StringTest for Contract {
         let mut string = String::new();
 
         assert(string.len() == 0);
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.insert(NUMBER0, 0);
@@ -245,8 +249,6 @@ impl StringTest for Contract {
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
 
-
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
         // let bytes = string.into();
@@ -268,16 +270,32 @@ impl StringTest for Contract {
         // assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
+    fn test_into_raw_slice() {
+        let mut string = String::new();
+
+        let raw_slice: raw_slice = string.as_raw_slice();
+        assert(raw_slice.number_of_bytes() == string.len());
+
+        // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
+        // string.push(NUMBER0);
+        // let raw_slice = string.as_raw_slice();
+        // assert(raw_slice.number_of_bytes() == string.len());
+        // assert(raw_slice.ptr().read_byte() == string.nth(0).unwrap());
+
+        // string.push(NUMBER1);
+        // let mut raw_slice = string.as_raw_slice();
+        // assert(raw_slice.number_of_bytes() == string.len());
+        // assert(raw_slice.ptr().add_uint_offset(1).read_byte() == string.nth(1).unwrap());
+
+        // let mut raw_slice = string.as_raw_slice();
+        // assert(raw_slice.number_of_bytes() == string.len());
+        // assert(raw_slice.ptr().read_byte() == string.nth(0).unwrap());
+    }
+
     fn test_is_empty() {
         let mut string = String::new();
 
         assert(string.is_empty());
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
@@ -306,14 +324,6 @@ impl StringTest for Contract {
         let mut string = String::new();
 
         assert(string.len() == 0);
-
-
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
@@ -347,7 +357,6 @@ impl StringTest for Contract {
         // string.clear();
         // assert(string.len() == 0);
     }
-
     fn test_new() {
         let mut string = String::new();
 
@@ -357,12 +366,6 @@ impl StringTest for Contract {
     }
 
     fn test_nth() {
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string = String::new();
@@ -403,11 +406,6 @@ impl StringTest for Contract {
 
     fn test_pop() {
 
-
-
-
-
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string = String::new();
 
@@ -443,18 +441,6 @@ impl StringTest for Contract {
         assert(string.len() == 0);
         assert(string.is_empty());
         assert(string.capacity() == 0);
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);
@@ -515,9 +501,6 @@ impl StringTest for Contract {
 
     fn test_set() {
 
-
-
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string = String::new();
 
@@ -541,9 +524,6 @@ impl StringTest for Contract {
 
     fn test_split_at() {
 
-
-
-
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string1 = String::new();
 
@@ -564,9 +544,6 @@ impl StringTest for Contract {
 }
 
     fn test_swap() {
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string = String::new();
@@ -595,13 +572,6 @@ impl StringTest for Contract {
 }
 
     fn test_remove() {
-
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // let mut string = String::new();
@@ -648,14 +618,6 @@ impl StringTest for Contract {
 
         let mut string = String::with_capacity(0);
         assert(string.capacity() == 0);
-
-
-
-
-
-
-
-
 
         // Uncomment when https://github.com/FuelLabs/sway/issues/4408 is resolved
         // string.push(NUMBER0);

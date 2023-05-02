@@ -4,7 +4,8 @@ use fuel_merkle::{
 };
 use fuels::{
     prelude::{
-        abigen, launch_provider_and_get_wallet, Contract, StorageConfiguration, TxParameters,
+        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxParameters,
+        WalletUnlocked,
     },
     types::Bits256,
 };
@@ -19,7 +20,10 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn leaf_digest(contract: &TestMerkleProofLib, data: Bits256) -> Bits256 {
+    pub async fn leaf_digest(
+        contract: &TestMerkleProofLib<WalletUnlocked>,
+        data: Bits256,
+    ) -> Bits256 {
         contract
             .methods()
             .leaf_digest(data)
@@ -30,7 +34,7 @@ pub mod abi_calls {
     }
 
     pub async fn node_digest(
-        contract: &TestMerkleProofLib,
+        contract: &TestMerkleProofLib<WalletUnlocked>,
         left: Bits256,
         right: Bits256,
     ) -> Bits256 {
@@ -44,7 +48,7 @@ pub mod abi_calls {
     }
 
     pub async fn process_proof(
-        contract: &TestMerkleProofLib,
+        contract: &TestMerkleProofLib<WalletUnlocked>,
         key: u64,
         leaf: Bits256,
         num_leaves: u64,
@@ -60,7 +64,7 @@ pub mod abi_calls {
     }
 
     pub async fn verify_proof(
-        contract: &TestMerkleProofLib,
+        contract: &TestMerkleProofLib<WalletUnlocked>,
         key: u64,
         leaf: Bits256,
         root: Bits256,
@@ -235,19 +239,15 @@ pub mod test_helpers {
         return_vec
     }
 
-    pub async fn merkle_proof_instance() -> TestMerkleProofLib {
+    pub async fn merkle_proof_instance() -> TestMerkleProofLib<WalletUnlocked> {
         let wallet = launch_provider_and_get_wallet().await;
 
-        let gas_price = 0;
-        let gas_limit = 10_000_000;
-        let maturity = 0;
-
-        let contract_id = Contract::deploy(
+        let contract_id = Contract::load_from(
             "./src/merkle_proof/out/debug/merkle_proof_test.bin",
-            &wallet,
-            TxParameters::new(Some(gas_price), Some(gas_limit), Some(maturity)),
-            StorageConfiguration::default(),
+            LoadConfiguration::default(),
         )
+        .unwrap()
+        .deploy(&wallet, TxParameters::default())
         .await
         .unwrap();
 
