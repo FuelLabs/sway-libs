@@ -110,7 +110,7 @@ fn test_deque_push_front() {
 }
 
 #[test()]
-fn test_deque_pop_front() {
+fn test_deque_push_front_push_back_pop_front() {
     let mut deque_push_back = Deque::new();
     let mut deque_len = deque_push_back.len();
     assert(deque_len == 0);
@@ -126,10 +126,18 @@ fn test_deque_pop_front() {
     deque_push_back.push_back(3);
     assert(deque_push_back.len() == deque_len + 1);
 
+    deque_len = deque_push_back.len();
     assert(deque_push_back.pop_front().unwrap() == 1);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
     assert(deque_push_back.pop_front().unwrap() == 1);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
     assert(deque_push_back.pop_front().unwrap() == 2);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
     assert(deque_push_back.pop_front().unwrap() == 3);
+    assert(deque_push_back.len() == deque_len - 1);
     assert(deque_push_back.pop_front().is_none());
 }
 
