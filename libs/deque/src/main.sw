@@ -86,23 +86,47 @@ fn test_new_deque() {
 #[test()]
 fn test_deque_push_front() {
     let mut deque_push_front = Deque::new();
+    let mut deque_len = deque_push_front.len();
+    assert(deque_len == 0);
     deque_push_front.push_front(1);
+    assert(deque_push_front.len() == deque_len + 1);
+    deque_len = deque_push_front.len();
     deque_push_front.push_front(2);
+    assert(deque_push_front.len() == deque_len + 1);
+    deque_len = deque_push_front.len();
     deque_push_front.push_front(3);
+    assert(deque_push_front.len() == deque_len + 1);
 
+    deque_len = deque_push_front.len();
     assert(deque_push_front.pop_front().unwrap() == 3);
+    assert(deque_push_front.len() == deque_len - 1);
+    deque_len = deque_push_front.len();
     assert(deque_push_front.pop_front().unwrap() == 2);
+    assert(deque_push_front.len() == deque_len - 1);
+    deque_len = deque_push_front.len();
     assert(deque_push_front.pop_front().unwrap() == 1);
+    assert(deque_push_front.len() == deque_len - 1);
     assert(deque_push_front.pop_front().is_none());
 }
 
 #[test()]
 fn test_deque_pop_front() {
     let mut deque_push_back = Deque::new();
+    let mut deque_len = deque_push_back.len();
+    assert(deque_len == 0);
+    deque_push_back.push_front(1);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
     deque_push_back.push_back(1);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
     deque_push_back.push_back(2);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
     deque_push_back.push_back(3);
+    assert(deque_push_back.len() == deque_len + 1);
 
+    assert(deque_push_back.pop_front().unwrap() == 1);
     assert(deque_push_back.pop_front().unwrap() == 1);
     assert(deque_push_back.pop_front().unwrap() == 2);
     assert(deque_push_back.pop_front().unwrap() == 3);
