@@ -1,4 +1,6 @@
 library;
+//! The `Deque` type corresponds to the same called data structure.
+//! A Deque is defined as a linear data structure that allows insertion and removal of elements from both ends.
 
 pub struct Deque<T> {
     front: Vec<T>,
