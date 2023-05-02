@@ -1,4 +1,5 @@
 library;
+/// **Note** This standard has moved to a new repository. Please visit the [Sway-Standards](https://github.com/FuelLabs/sway-standards) repository for the most up to date standards. 
 
 /// This event MUST be logged when the approved Identity for an NFT is changed or modified.
 /// Option::None indicates there is no approved Identity.
