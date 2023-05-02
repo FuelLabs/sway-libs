@@ -34,6 +34,7 @@ impl<T> Deque<T> {
         self.front.push(value);
     }
 
+    // Returns an element from front, in case the `Deque` is empty `None` is returned
     pub fn pop_front(ref mut self) -> Option<T> {
         if self.front.is_empty() {
             if !self.back.is_empty() {
@@ -43,6 +44,7 @@ impl<T> Deque<T> {
         self.front.pop()
     }
 
+    // Returns an element from back, in case the `Deque` is empty `None` is returned
     pub fn pop_back(ref mut self) -> Option<T> {
         if self.back.is_empty() {
             if !self.front.is_empty() {
