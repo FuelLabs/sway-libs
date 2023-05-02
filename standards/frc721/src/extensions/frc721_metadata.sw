@@ -1,4 +1,5 @@
 library;
+/// **Note** This standard has moved to a new repository. Please visit the [Sway-Standards](https://github.com/FuelLabs/sway-standards) repository for the most up to date standards. 
 
 /// Any contract that implements FRC721_metadata SHALL also implement FRC721.
 abi FRC721_metadata {

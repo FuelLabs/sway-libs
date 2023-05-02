@@ -1,3 +1,5 @@
+> **Note** This standard has moved to a new repository. Please visit the [Sway-Standards](https://github.com/FuelLabs/sway-standards) repository for the most up to date standards. 
+
 <p align="center">
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset=".docs/frc-721-logo-dark-theme.png">

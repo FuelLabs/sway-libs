@@ -24,7 +24,7 @@
 
 The purpose of this repository is to contain libraries which users can import and use that are not part of the standard library. 
 
-These libraries contain helper functions, generalized standards, and other tools valuable to blockchain development.
+These libraries contain helper functions and other tools valuable to blockchain development.
 
 > **Note**
 > Sway is a language under heavy development therefore the libraries may not be the most ergonomic. Over time they should receive updates / improvements in order to demonstrate how Sway can be used in real use cases.
@@ -39,11 +39,6 @@ These libraries contain helper functions, generalized standards, and other tools
 - [String](./libs/strings/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
 - [StorageString](./libs/strings/storage_string/) is used to store dynamic length strings that are UTF-8 encoded in storage.
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-
-### Standards
-
-- [Token Standard](./standards/frc20/) is used to add metadata to native assets on Fuel.
-- [Non-Fungible Token(NFT) Standard](./standards/frc721/) is a standard ABI used to implement NFTs on Fuel.
 
 ## Using a library
 
