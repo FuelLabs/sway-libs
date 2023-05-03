@@ -8,17 +8,17 @@ pub struct String {
 
 impl String {
     /// Returns a `Vec<u8>` of the bytes stored for the `String`.
-    pub fn as_vec(self) -> Vec<u8> {
+    pub fn as_vec(ref mut self) -> Vec<u8> {
         self.bytes.into_vec_u8()
     }
 
     /// Gets the amount of memory on the heap allocated to the `String`.
-    pub fn capacity(self) -> u64 {
+    pub fn capacity(ref mut self) -> u64 {
         self.bytes.capacity()
     }
 
     /// Truncates this `String` to a length of zero, removing all contents.
-    pub fn clear(self) {
+    pub fn clear(ref mut self) {
         self.bytes.clear()
     }
 
@@ -40,18 +40,18 @@ impl String {
     ///
     /// * `byte` - The element which will be added to the `String`.
     /// * `index` - The position in the `String` where the byte will be inserted.
-    pub fn insert(self, byte: u8, index: u64) {
+    pub fn insert(ref mut self, byte: u8, index: u64) {
         self.bytes.insert(index, byte);
     }
 
     /// Returns `true` if the vector contains no bytes.
-    pub fn is_empty(self) -> bool {
+    pub fn is_empty(ref mut self) -> bool {
         self.bytes.is_empty()
     }
 
     /// Returns the number of bytes in the `String`, also referred to
     /// as its 'length'.
-    pub fn len(self) -> u64 {
+    pub fn len(ref mut self) -> u64 {
         self.bytes.len()
     }
 
@@ -67,12 +67,12 @@ impl String {
     /// # Arguments
     ///
     /// * `index` - The position of the byte that will be returned.
-    pub fn nth(self, index: u64) -> Option<u8> {
+    pub fn nth(ref mut self, index: u64) -> Option<u8> {
         self.bytes.get(index)
     }
 
     /// Removes the last byte from the `String` buffer and returns it.
-    pub fn pop(self) -> Option<u8> {
+    pub fn pop(ref mut self) -> Option<u8> {
         self.bytes.pop()
     }
 
@@ -81,7 +81,7 @@ impl String {
     /// # Arguments
     ///
     /// * `byte` - The element to be appended to the end of the `String`.
-    pub fn push(self, byte: u8) {
+    pub fn push(ref mut self, byte: u8) {
         self.bytes.push(byte);
     }
 
@@ -90,7 +90,7 @@ impl String {
     /// # Arguments
     ///
     /// * `index` - The position of the byte that will be removed.
-    pub fn remove(self, index: u64) -> u8 {
+    pub fn remove(ref mut self, index: u64) -> u8 {
         self.bytes.remove(index)
     }
 
@@ -100,7 +100,7 @@ impl String {
     ///
     /// * `index` - The index of the byte to be set.
     /// * `byte` - The value of the byte to be set.
-    pub fn set(self, index: u64, byte: u8) {
+    pub fn set(ref mut self, index: u64, byte: u8) {
         self.bytes.set(index, byte);
     }
 
@@ -127,9 +127,9 @@ impl String {
 
     // Should be removed when https://github.com/FuelLabs/sway/issues/3637 is resovled
     pub fn from_raw_slice(slice: raw_slice) -> Self {
-        let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
-        bytes.buf.ptr = slice.ptr();
-        Self { bytes }
+        Self {
+            bytes: Bytes::from_raw_slice(slice),
+        }
     }
 }
 
@@ -174,7 +174,7 @@ impl String {
     ///
     /// * `other` - The String to join to self.
     pub fn append(ref mut self, ref mut other: self) {
-        self.bytes.append(other.into())
+        self.bytes.append(other.bytes);
     }
 
     /// Divides one Bytes into two at an index.
