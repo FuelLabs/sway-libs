@@ -84,7 +84,7 @@ fn test_new_deque() {
 }
 
 #[test()]
-fn test_deque_push_front() {
+fn test_deque_push_pop_front() {
     let mut deque_push_front = Deque::new();
     let mut deque_len = deque_push_front.len();
     assert(deque_len == 0);
@@ -142,13 +142,49 @@ fn test_deque_push_front_push_back_pop_front() {
 }
 
 #[test()]
-fn test_deque_push_pop_front() {
+fn test_deque_push_pop_back() {
     let mut deque = Deque::new();
-    assert(deque.len() == 0);
-    deque.push_front(1);
-    assert(deque.len() == 1);
-    deque.push_front(2);
-    assert(deque.len() == 2);
-    let _ = deque.pop_front();
-    assert(deque.len() == 1);
+    let mut deque_len = deque.len();
+    assert(deque_len == 0);
+    deque.push_back(1);
+    assert(deque.len() == deque_len + 1);
+    deque_len = deque.len();
+    deque.push_back(2);
+    assert(deque.len() == deque_len + 1);
+    deque_len = deque.len();
+    let _ = deque.pop_back();
+    assert(deque.len() == deque_len - 1);
+}
+
+
+#[test()]
+fn test_deque_push_front_pop_back() {
+    let mut deque_push_back = Deque::new();
+    let mut deque_len = deque_push_back.len();
+    assert(deque_len == 0);
+    deque_push_back.push_front(1);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
+    deque_push_back.push_front(1);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
+    deque_push_back.push_front(2);
+    assert(deque_push_back.len() == deque_len + 1);
+    deque_len = deque_push_back.len();
+    deque_push_back.push_front(3);
+    assert(deque_push_back.len() == deque_len + 1);
+
+    deque_len = deque_push_back.len();
+    assert(deque_push_back.pop_back().unwrap() == 1);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
+    assert(deque_push_back.pop_back().unwrap() == 1);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
+    assert(deque_push_back.pop_back().unwrap() == 2);
+    assert(deque_push_back.len() == deque_len - 1);
+    deque_len = deque_push_back.len();
+    assert(deque_push_back.pop_back().unwrap() == 3);
+    assert(deque_push_back.len() == deque_len - 1);
+    assert(deque_push_back.pop_back().is_none());
 }
