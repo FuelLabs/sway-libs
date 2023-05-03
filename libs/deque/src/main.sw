@@ -156,7 +156,6 @@ fn test_deque_push_pop_back() {
     assert(deque.len() == deque_len - 1);
 }
 
-
 #[test()]
 fn test_deque_push_front_pop_back() {
     let mut deque_push_back = Deque::new();
