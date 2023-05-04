@@ -8,12 +8,12 @@ pub struct String {
 
 impl String {
     /// Returns a `Vec<u8>` of the bytes stored for the `String`.
-    pub fn as_vec(ref mut self) -> Vec<u8> {
+    pub fn as_vec(self) -> Vec<u8> {
         self.bytes.into_vec_u8()
     }
 
     /// Gets the amount of memory on the heap allocated to the `String`.
-    pub fn capacity(ref mut self) -> u64 {
+    pub fn capacity(self) -> u64 {
         self.bytes.capacity()
     }
 
@@ -45,13 +45,13 @@ impl String {
     }
 
     /// Returns `true` if the vector contains no bytes.
-    pub fn is_empty(ref mut self) -> bool {
+    pub fn is_empty(self) -> bool {
         self.bytes.is_empty()
     }
 
     /// Returns the number of bytes in the `String`, also referred to
     /// as its 'length'.
-    pub fn len(ref mut self) -> u64 {
+    pub fn len(self) -> u64 {
         self.bytes.len()
     }
 
@@ -67,7 +67,7 @@ impl String {
     /// # Arguments
     ///
     /// * `index` - The position of the byte that will be returned.
-    pub fn nth(ref mut self, index: u64) -> Option<u8> {
+    pub fn nth(self, index: u64) -> Option<u8> {
         self.bytes.get(index)
     }
 

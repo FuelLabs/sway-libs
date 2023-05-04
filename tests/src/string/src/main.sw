@@ -82,13 +82,6 @@ impl StringTest for Contract {
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
         assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
-
-        let result_string = string.pop().unwrap();
-        let result_bytes = bytes.pop().unwrap();
-        assert(result_bytes == result_string);
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
     }
 
     fn test_capacity() {
@@ -496,13 +489,17 @@ impl StringTest for Contract {
         assert(string.nth(2).unwrap() == NUMBER2);
 
         string.set(0, NUMBER3);
+        assert(string.nth(0).unwrap() == NUMBER3);
+        assert(string.len() == 3);
+
         string.set(1, NUMBER4);
+        assert(string.nth(1).unwrap() == NUMBER4);
+        assert(string.len() == 3);
+
         string.set(2, NUMBER5);
+        assert(string.nth(2).unwrap() == NUMBER5);
 
         assert(string.len() == 3);
-        assert(string.nth(0).unwrap() == NUMBER3);
-        assert(string.nth(1).unwrap() == NUMBER4);
-        assert(string.nth(2).unwrap() == NUMBER5);
     }
 
     fn test_split_at() {
