@@ -18,7 +18,7 @@ impl String {
     }
 
     /// Truncates this `String` to a length of zero, removing all contents.
-    pub fn clear(self) {
+    pub fn clear(ref mut self) {
         self.bytes.clear()
     }
 
@@ -40,7 +40,7 @@ impl String {
     ///
     /// * `byte` - The element which will be added to the `String`.
     /// * `index` - The position in the `String` where the byte will be inserted.
-    pub fn insert(self, byte: u8, index: u64) {
+    pub fn insert(ref mut self, byte: u8, index: u64) {
         self.bytes.insert(index, byte);
     }
 
@@ -72,7 +72,7 @@ impl String {
     }
 
     /// Removes the last byte from the `String` buffer and returns it.
-    pub fn pop(self) -> Option<u8> {
+    pub fn pop(ref mut self) -> Option<u8> {
         self.bytes.pop()
     }
 
@@ -81,7 +81,7 @@ impl String {
     /// # Arguments
     ///
     /// * `byte` - The element to be appended to the end of the `String`.
-    pub fn push(self, byte: u8) {
+    pub fn push(ref mut self, byte: u8) {
         self.bytes.push(byte);
     }
 
@@ -90,7 +90,7 @@ impl String {
     /// # Arguments
     ///
     /// * `index` - The position of the byte that will be removed.
-    pub fn remove(self, index: u64) -> u8 {
+    pub fn remove(ref mut self, index: u64) -> u8 {
         self.bytes.remove(index)
     }
 
@@ -100,7 +100,7 @@ impl String {
     ///
     /// * `index` - The index of the byte to be set.
     /// * `byte` - The value of the byte to be set.
-    pub fn set(self, index: u64, byte: u8) {
+    pub fn set(ref mut self, index: u64, byte: u8) {
         self.bytes.set(index, byte);
     }
 
@@ -127,9 +127,9 @@ impl String {
 
     // Should be removed when https://github.com/FuelLabs/sway/issues/3637 is resovled
     pub fn from_raw_slice(slice: raw_slice) -> Self {
-        let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
-        bytes.buf.ptr = slice.ptr();
-        Self { bytes }
+        Self {
+            bytes: Bytes::from_raw_slice(slice),
+        }
     }
 }
 
@@ -174,7 +174,7 @@ impl String {
     ///
     /// * `other` - The String to join to self.
     pub fn append(ref mut self, ref mut other: self) {
-        self.bytes.append(other.into())
+        self.bytes.append(other.bytes);
     }
 
     /// Divides one Bytes into two at an index.

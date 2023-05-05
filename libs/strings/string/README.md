@@ -17,9 +17,7 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Known Issues
 
-Until https://github.com/FuelLabs/sway/issues/4158 is resolved, developers must directly access the underlying `Bytes` type to make modifications to the `String` type.
-
-It is important to note that unlike Rust's `String`, this `String` library does **not** guarantee a valid UTF-8 string. The `String` currently behaves only as a `vec` and does not perform any validation. This intended to be supported in the future with the introduction of [`char`](https://github.com/FuelLabs/sway/issues/2937) to the Sway language.
+It is important to note that unlike Rust's `String`, this `String` library does **not** guarantee a valid UTF-8 string. The `String` currently behaves only as a sequence of bytes and does not perform any validation. This intended to be supported in the future with the introduction of [`char`](https://github.com/FuelLabs/sway/issues/2937) to the Sway language.
 
 # Using the Library
 
