@@ -21,11 +21,11 @@ impl<T> Stack<T> {
         self.vec.len()
     }
 
-    pub fn push(self, value: T) {
+    pub fn push(ref mut self, value: T) {
         self.vec.push(value);
     }
 
-    pub fn pop(self) -> Option<T> {
+    pub fn pop(ref mut self) -> Option<T> {
         self.vec.pop()
     }
 
@@ -48,7 +48,10 @@ fn test_new_stack_is_empty() {
 fn test_push_single_element() {
     let mut stack = Stack::new();
     stack.push(42);
+
     assert(stack.len() == 1);
+    std::logging::log(stack.len());
+    std::logging::log(stack.vec.get(0).unwrap());
     assert(!stack.is_empty());
 }
 
