@@ -40,7 +40,7 @@ impl<T> Stack<T> {
 
 #[test]
 fn test_new_stack_is_empty() {
-    let stack: Stack<i32> = Stack::new();
+    let stack: Stack<u32> = Stack::new();
     assert(stack.is_empty());
 }
 
@@ -64,7 +64,7 @@ fn test_push_multiple_elements() {
 
 #[test]
 fn test_pop_empty_stack() {
-    let mut stack: Stack<i32> = Stack::new();
+    let mut stack: Stack<u32> = Stack::new();
     let popped = stack.pop();
     assert(popped.is_none());
     assert(stack.len() == 0);
@@ -110,7 +110,7 @@ fn test_pop_multiple_elements() {
 
 #[test]
 fn test_peek_empty_stack() {
-    let stack: Stack<i32> = Stack::new();
+    let stack: Stack<u32> = Stack::new();
     let peeked = stack.peek();
     assert(peeked.is_none());
     assert(stack.len() == 0);
