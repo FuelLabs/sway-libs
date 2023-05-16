@@ -7,6 +7,7 @@ members = [
   "queue",
   "reentrancy",
   "signed_integers",
+  "stack",
   "storagemapvec",
   "strings/storage_string",
   "strings/string",
