@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div>
-      <ErrorToast open={!!error} onClose={() => setError(undefined)} />
+      <ErrorToast message={error} onClose={() => setError(undefined)} />
 
       <ActionMenu
         onCompile={() => setCodeToCompile(code)}

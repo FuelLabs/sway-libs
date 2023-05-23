@@ -1,22 +1,14 @@
 import Snackbar from '@mui/base/Snackbar';
 import Alert from '@mui/material/Alert';
-import React, { useCallback, useEffect } from 'react';
 
 export interface ErrorToastProps {
-  open: boolean;
+  message: string | undefined;
   onClose: () => void;
 }
 
-function ErrorToast({ open, onClose }: ErrorToastProps) {
+function ErrorToast({ message, onClose }: ErrorToastProps) {
   return (
-    <Snackbar
-      open={open}
-      autoHideDuration={6000}
-      //   onClose={() => {
-      //     console.log('onClose');
-      //     setDismissed(true);
-      //   }}
-    >
+    <Snackbar open={!!message} autoHideDuration={6000}>
       <Alert
         onClose={onClose}
         severity='error'
@@ -25,7 +17,7 @@ function ErrorToast({ open, onClose }: ErrorToastProps) {
           bottom: '10px',
           left: '10px',
         }}>
-        This is an error message!
+        {message}
       </Alert>
     </Snackbar>
   );
