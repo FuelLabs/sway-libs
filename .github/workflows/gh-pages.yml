@@ -18,10 +18,10 @@ jobs:
 
       - name: npm ci and build
         env:
-          CI: false
+          CI: true
         run: |
-          npm ci
-          cp -r app/build build
+          cd app && npm ci
+          cp -r build ../build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

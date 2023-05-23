@@ -17,5 +17,5 @@ jobs:
         env:
           CI: true
         run: |
-          npm ci
-          cp -r app/build build
+          cd app && npm ci
+          cp -r build ../build
