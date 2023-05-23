@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ env:
   NODE_VERSION: '16'
 
 jobs:
-  deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
