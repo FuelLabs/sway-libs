@@ -2,8 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders compile and reset buttons', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const compileButton = screen.getByLabelText('Compile sway code');
+  const resetButton = screen.getByLabelText('reset the editor');
+  expect(compileButton).toBeInTheDocument();
+  expect(resetButton).toBeInTheDocument();
 });
