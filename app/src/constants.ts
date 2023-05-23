@@ -1,4 +1,6 @@
-contract;
+export const FUEL_GREEN = '#00f58c';
+
+export const DEFAULT_CONTRACT = `contract;
 
 abi TestContract {
     #[storage(write)]
@@ -25,4 +27,4 @@ impl TestContract for Contract {
         storage.counter = incremented;
         incremented
     }
-}
+}`;

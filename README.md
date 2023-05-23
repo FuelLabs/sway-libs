@@ -13,7 +13,7 @@ Sway Playground enables developers to build simple sway contracts in the browser
 
 Sway Playground has a simple multi-threaded Rocket backend server which creates a temp project per compile request, builds the project, removes the temp files and returns the output.
 
-The frontend is a simple static frontend using the Ace editor and ASCI_UP console logging.
+The frontend uses React and typescript with Ace editor.
 
 ## Sway Documentation
 
@@ -40,12 +40,16 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 ### Building Sway Playground
 
 Creating a local SSL Certificate:
+
 1. Install the [MkCert tool](https://github.com/FiloSottile/mkcert#installation)
-2. Run the installation command: 
+2. Run the installation command:
+
 ```sh
 mkcert -install
 ```
+
 3. Create the SSL certificates:
+
 ```sh
 cd certs
 mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
@@ -78,12 +82,11 @@ cargo run
 The frontend is just a simple static frontend and can be hosted anywhere.
 
 ```sh
-npm install http-server --global
-cd frontend
-http-server -S -C ../certs/example.com+5.pem -K ../certs/example.com+5-key.pem --cors
+cd app
+npm start
 ```
 
-Then open http://localhost:9000 on your browser.
+This will open http://localhost:3000 in your browser.
 
 ## Contributing to Sway
 
@@ -93,8 +96,10 @@ Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/ref
 
 ## Todo
 
-- Fuel focused UI design
-- Ace Editor support for Sway.
-- React based UI for easier maintenance and feature expansion.
-- Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
-- Better CI to always make available the latest stable version of Sway.
+[x] React based UI for easier maintenance and feature expansion.
+[ ] UI design in line with other Fuel apps.
+[ ] Ace Editor support for Sway syntax highlighting.
+[ ] Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
+[ ] Better CI to always make available the latest stable version of Sway.
+[ ] Support for deploying and testing contracts.
+[ ] React unit tests.
