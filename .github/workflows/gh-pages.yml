@@ -20,6 +20,7 @@ jobs:
         env:
           CI: false
         run: |
+          npm ci
           cp -r app/build build
 
       - name: Deploy
