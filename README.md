@@ -96,10 +96,9 @@ Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/ref
 
 ## Todo
 
-[x] React based UI for easier maintenance and feature expansion.
-[ ] UI design in line with other Fuel apps.
-[ ] Ace Editor support for Sway syntax highlighting.
-[ ] Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
-[ ] Better CI to always make available the latest stable version of Sway.
-[ ] Support for deploying and testing contracts.
-[ ] React unit tests.
+- UI design in line with other Fuel apps.
+- Ace Editor support for Sway syntax highlighting.
+- Ensuring IO non-blocking (not sure if the server is truly non-blocking and multi-threaded), might need tokio IO.
+- Better CI to always make available the latest stable version of Sway.
+- Support for deploying and testing contracts.
+- React unit tests.
