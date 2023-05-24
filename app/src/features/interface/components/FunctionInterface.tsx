@@ -1,7 +1,6 @@
 import { Stack } from '@fuel-ui/react';
 import { Contract, FunctionFragment } from 'fuels';
-import { useCallback, useEffect, useState } from 'react';
-import { getInstantiableType, isFunctionPrimitive } from '../utils';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cssObj } from '@fuel-ui/css';
 import { FunctionForm } from './FunctionForm';
 import { FunctionReturnInfo } from './FunctionReturnInfo';
@@ -11,13 +10,15 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { FormLabel, InputLabel, StepLabel } from '@mui/material';
-import { InputInstance } from './FunctionParameters';
+import { InputInstance, ParamType } from './FunctionParameters';
 import { Input } from '@mui/base';
 import { FunctionCallAccordion } from './FunctionCallAccordion';
+import { getInstantiableType } from '../utils/types';
 
 export interface FunctionInterfaceProps {
   contractId: string;
   functionFragment: FunctionFragment | undefined;
+  functionName: string;
   response: string;
   setResponse: (response: string) => void;
 }
@@ -25,45 +26,58 @@ export interface FunctionInterfaceProps {
 export function FunctionInterface({
   contractId,
   functionFragment,
+  functionName,
   response,
   setResponse,
 }: FunctionInterfaceProps) {
-  const [inputInstances, setInputInstances] = useState<InputInstance[]>([]);
+  // const [inputInstances, setInputInstances] = useState<InputInstance[]>([]);
 
-  const [initialized, setInitialized] = useState<boolean>(false);
+  // const nestedType = useCallback((input: any) => {
+  //   if (isFunctionPrimitive(input)) {
+  //     return { name: input.name, type: getInstantiableType(input.type) };
+  //   }
 
-  const nestedType = useCallback((input: any) => {
-    if (isFunctionPrimitive(input)) {
-      return { name: input.name, type: getInstantiableType(input.type) };
-    }
+  //   return {
+  //     name: input.name,
+  //     // components: input.components.map((nested: any) => {
+  //     //   return nestedType(nested);
+  //     // }),
+  //     components: [],
+  //   };
+  // }, []);
 
-    return {
-      name: input.name,
-      components: input.components.map((nested: any) => {
-        return nestedType(nested);
-      }),
-    };
-  }, []);
+  // useEffect(() => {
+  //   if (!!functionFragment) {
+  //     const mappedInputs = functionFragment?.inputs.map((input) => {
+  //       console.log('input', input);
+  //       // return nestedType(input);
+  //       return { name: input.name, type: getInstantiableType(input.type) };
+  //     });
+  //     setInputInstances(mappedInputs as InputInstance[]);
+  //   }
+  // }, [functionFragment]);
 
-  useEffect(() => {
-    if (!initialized && functionFragment) {
-      const mappedInputs = functionFragment.inputs.map((input) => {
-        return nestedType(input);
-      });
-      setInputInstances(mappedInputs as InputInstance[]);
-      setInitialized(true);
-    }
-  }, [functionFragment, initialized, nestedType]);
+  // TODO: handle object types
+  const inputInstances: InputInstance[] = useMemo(
+    () =>
+      functionFragment?.inputs.map((input) => {
+        console.log('input', input);
+        // return nestedType(input);
+        return {
+          name: input.name ?? '',
+          type: getInstantiableType(input.type),
+        };
+      }) ?? [],
+    [functionFragment?.inputs]
+  );
 
-  return functionFragment?.name ? (
+  return (
     <FunctionCallAccordion
       contractId={contractId}
-      functionName={functionFragment.name}
+      functionName={functionName}
       inputInstances={inputInstances}
       response={response}
       setResponse={setResponse}
     />
-  ) : (
-    <></>
   );
 }

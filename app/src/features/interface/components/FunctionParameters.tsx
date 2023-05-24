@@ -9,17 +9,15 @@ import Paper from '@mui/material/Paper';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
-import { Input } from '@mui/material';
 import ParameterInput from './ParameterInput';
+import { InstantiableType } from '../utils/types';
 
-export type ParamType = 'number' | 'boolean' | 'object';
+export type ParamType = 'number' | 'bool' | 'text' | 'string' | 'object';
 export type ParamValueType = number | boolean | Record<string, any>;
 
 export interface InputInstance {
   name: string;
-  type: {
-    type: ParamType;
-  };
+  type: InstantiableType;
 }
 
 interface FunctionParametersProps {
@@ -61,7 +59,9 @@ export function FunctionParameters({
               input: any, // TODO: no any
               index: number
             ) => (
-              <TableRow key={functionName + input.name + index}>
+              <TableRow
+                key={functionName + input.name + index}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component='th' scope='row'>
                   {input.name}
                 </TableCell>

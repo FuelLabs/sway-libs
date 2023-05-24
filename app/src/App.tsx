@@ -51,7 +51,7 @@ function App() {
         resetEditor={() => onCodeChange(DEFAULT_CONTRACT)}
       />
       <div style={{ display: 'flex' }}>
-        <div style={{ flex: '50%', overflow: 'auto' }}>
+        <div style={{ flex: '50%', overflow: 'auto', margin: 0 }}>
           <Editor code={code} onChange={onCodeChange} />
           <CompiledView results={results} />
         </div>

@@ -16,7 +16,7 @@ function ObjectParameterInput({}: ObjectParameterInputProps) {
 }`;
   const lines = value.split('\n').length;
   return (
-    <StyledBorder style={{ margin: '3px 0 0' }}>
+    <StyledBorder>
       <AceEditor
         style={{ width: '100%' }}
         minLines={lines}

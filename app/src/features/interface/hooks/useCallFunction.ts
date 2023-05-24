@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { FieldValues, UseFormWatch } from 'react-hook-form';
 import { useContract } from '.';
-import { getFunctionParameters, modifyJsonStringify } from '../utils';
+import { modifyJsonStringify } from '../utils/modifyJsonStringify';
 import { displayError } from '../../../utils/error';
 import { CallType } from '../../../utils/types';
 
@@ -37,6 +37,14 @@ CallFunctionProps) {
       //   watch,
       //   functionName
       // );
+
+      // console.log(contract.functions);
+
+      // console.log(contract.functions[functionName]);
+
+      // console.log(`${functionName} arguments`);
+
+      // console.log(JSON.stringify(contract.functions[functionName].prototype));
 
       const transactionResult = await contract.functions[functionName](111) // TODO: fill params & do input validation
         [callType === 'dryrun' ? 'get' : 'call']();

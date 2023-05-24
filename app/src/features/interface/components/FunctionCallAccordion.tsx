@@ -24,13 +24,13 @@ export function FunctionCallAccordion({
   setResponse,
 }: FunctionCallAccordionProps) {
   return (
-    <Accordion key={functionName}>
+    <Accordion key={contractId + functionName}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <FormLabel style={{ fontFamily: 'monospace', color: '#00000099' }}>
           {functionName}
         </FormLabel>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails style={{ paddingTop: 0 }}>
         <FunctionForm
           contractId={contractId}
           functionName={functionName}

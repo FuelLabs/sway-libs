@@ -1,5 +1,5 @@
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { isFunctionPrimitive } from '../utils';
+import { isFunctionPrimitive } from '../utils/isFunctionPrimitive';
 import { Stack, Text, Icon, Box } from '@fuel-ui/react';
 import { FunctionParameterPrimitive } from './FunctionParameterPrimitive';
 import { cssObj } from '@fuel-ui/css';

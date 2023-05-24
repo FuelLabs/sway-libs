@@ -14,6 +14,7 @@ function CompiledView({ results }: CompiledViewProps) {
         color: 'black',
         padding: '15px',
         overflow: 'auto',
+        marginTop: '15px',
       }}>
       <pre style={{ fontSize: '14px', margin: 0 }}>{results}</pre>
     </StyledBorder>
