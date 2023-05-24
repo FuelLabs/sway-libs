@@ -1,6 +1,41 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
+import {
+  loadAbi,
+  loadBytecode,
+  saveAbi,
+  saveBytecode,
+} from '../../../utils/localStorage';
+import { Swaypad } from '../../../utils/interface';
+
+function toResults(
+  prefixedBytecode: string,
+  abi: string
+): React.ReactElement[] {
+  return [
+    <div key={'bytecode'}>
+      <b>Bytecode</b>:<br />
+      {prefixedBytecode}
+      <br />
+      <br />
+    </div>,
+    <div key={'abi'}>
+      <b>ABI:</b>
+      <br />
+      {abi}
+    </div>,
+  ];
+}
+
+function loadResults(): React.ReactElement[] | undefined {
+  let abi = loadAbi();
+  let bytecode = loadBytecode();
+  if (!abi.length || !bytecode.length) {
+    return undefined;
+  }
+  return toResults(bytecode, abi);
+}
 
 export function useCompile(
   code: string | undefined,
@@ -11,7 +46,7 @@ export function useCompile(
 
   useEffect(() => {
     if (!code) {
-      setResults([<>Click 'Compile' to build your code.</>]);
+      setResults(loadResults() ?? [<>Click 'Compile' to build your code.</>]);
       return;
     }
 
@@ -48,23 +83,19 @@ export function useCompile(
             const Span = styled.span`
               ${css}
             `;
-            return <Span>{text}</Span>;
+            return <Span key={`${i}-${text}`}>{text}</Span>;
           });
           setResults(results);
+          saveAbi('');
+          saveBytecode('');
         } else {
-          setResults([
-            <>
-              <b>Bytecode</b>:<br />
-              0x{response.bytecode}
-              <br />
-              <br />
-            </>,
-            <>
-              <b>ABI:</b>
-              <br />
-              {response.abi}
-            </>,
-          ]);
+          const { abi, bytecode } = response;
+          const prefixedBytecode = `0x${bytecode}`;
+          saveAbi(abi);
+          saveBytecode(prefixedBytecode);
+          Swaypad.contract = new Swaypad(abi);
+
+          setResults(toResults(prefixedBytecode, abi));
         }
       })
       .catch(() => {

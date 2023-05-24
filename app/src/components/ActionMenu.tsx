@@ -17,11 +17,11 @@ function ActionMenu({ onCompile, resetEditor }: ActionMenuProps) {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        margin: '0 0 15px',
+        margin: '5px 0 15px',
       }}>
       <Tooltip disableFocusListener title='Compile sway code'>
         <Button
-          style={{ color: '#000000DE', background: FUEL_GREEN }}
+          style={{ color: 'black', background: FUEL_GREEN }}
           variant='contained'
           onClick={onCompile}
           endIcon={<PlayArrow />}>
