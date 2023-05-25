@@ -45,14 +45,14 @@ let mut my_string = String::new();
 my_string.push(0u8);
 
 // Store the string
-storage.stored_string.store(my_string);
+storage.stored_string.write_slice(my_string);
 ```
 
 Retrieving a `String` from storage can be done with the `load` function.
 
 ```rust
 // Get a string from storage
-let my_string: String = storage.stored_string.load();
+let my_string: String = storage.stored_string.read_slice();
 ```
 
 For more information please see the [specification](./SPECIFICATION.md).

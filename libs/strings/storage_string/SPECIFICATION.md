@@ -12,11 +12,11 @@ The StorageString library can be used anytime a string's length is unknown at co
 
 ## Public Functions
 
-### `store()`
+### `write_slice()`
 
 Stores a `String` in storage. 
 
-### `load()`
+### `read_slice()`
 
 Retrieves a `String` from storage. 
 
