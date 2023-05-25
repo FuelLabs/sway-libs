@@ -59,11 +59,12 @@ export function DeploymentButton({
   );
 }
 
-const styles = {
-  contractAddress: cssObj({
-    overflowWrap: 'anywhere',
-    paddingLeft: '$5',
-    paddingRight: '$5',
-    color: '$gray7',
-  }),
-};
+/*
+    <Button
+      onPress={onDeployClick}
+      type='button'
+      color='accent'
+      isDisabled={!abi || !bytecode || deployState === DeployState.DEPLOYING}>
+      {deployState === DeployState.NOT_DEPLOYED ? 'DEPLOY' : 'DEPLOYING'}
+    </Button>
+ */

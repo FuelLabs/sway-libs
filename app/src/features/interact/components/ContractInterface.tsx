@@ -1,4 +1,4 @@
-import { Stack } from '@fuel-ui/react';
+import { Copyable, Stack } from '@fuel-ui/react';
 import { useContractFunctions } from '../hooks';
 import { FunctionInterface } from './FunctionInterface';
 import { useState } from 'react';
@@ -44,6 +44,10 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
 
   return (
     <div key={contractId} style={{ marginLeft: '15px', width: '95%' }}>
+      <div>
+        Contract ID: <Copyable value={contractId}>{contractId}</Copyable>
+      </div>
+
       {contract && <Stack gap='$4'>{functionInterfaces}</Stack>}
     </div>
   );

@@ -44,48 +44,41 @@ function ConnectionButton({
     disConnectMutation.mutate();
   }
 
-  const { text, onClick, isDisabled, endIcon } = useMemo(() => {
-    if (networkState === NetworkState.CAN_CONNECT) {
-      return {
-        text: 'Link wallet',
-        onClick: onConnectClick,
-        isDisabled: false,
-        endIcon: <GppBadIcon />,
-      };
-    } else if (networkState === NetworkState.CONNECTING) {
-      return {
-        text: 'Connecting',
-        onClick: () => {},
-        isDisabled: true,
-        endIcon: <Spinner size={18} />,
-      };
-    } else if (networkState === NetworkState.CAN_DISCONNECT) {
-      return {
-        text: 'Unlink wallet',
-        onClick: onDisconnectClick,
-        isDisabled: false,
-        endIcon: <GppGoodIcon />,
-      };
-    } else {
-      return {
-        text: 'Disconnecting',
-        onClick: () => {},
-        isDisabled: true,
-        endIcon: <Spinner size={18} />,
-      };
-    }
+  const { text, tooltip, onClick, isDisabled, spinner } = useMemo(() => {
+    return {
+      text: [NetworkState.CAN_CONNECT, NetworkState.CONNECTING].includes(
+        networkState
+      )
+        ? 'Connect'
+        : 'Disconnect',
+      tooltip: [NetworkState.CAN_CONNECT, NetworkState.CONNECTING].includes(
+        networkState
+      )
+        ? 'Connect Fuel wallet'
+        : 'Disconnect Fuel wallet',
+      onClick:
+        networkState === NetworkState.CAN_CONNECT
+          ? onConnectClick
+          : onDisconnectClick,
+      isDisabled: [
+        NetworkState.CONNECTING,
+        NetworkState.DISCONNECTING,
+      ].includes(networkState),
+      spinner: networkState === NetworkState.CONNECTING,
+    };
   }, [networkState, onConnectClick, onDisconnectClick]);
 
   return (
-    <Tooltip title={text}>
+    <Tooltip title={tooltip}>
       <Button
+        style={{ width: '128px' }}
         onClick={onClick}
         disabled={isDisabled}
-        endIcon={endIcon}
+        endIcon={spinner ? <Spinner size={18} /> : undefined}
         color='primary'
         variant='outlined'
         type='submit'>
-        Wallet
+        {text}
       </Button>
     </Tooltip>
   );

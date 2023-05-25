@@ -8,8 +8,17 @@ import { useCompile } from './features/editor/hooks/useCompile';
 import { ContractInterface } from './features/interact/components/ContractInterface';
 import { Interface } from './features/interact/components/Interface';
 import { DeployState, NetworkState } from './utils/types';
+import { styled, useTheme } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Drawer from '@mui/material/Drawer';
+
+const DRAWER_WIDTH = '500px';
 
 function App() {
+  const theme = useTheme();
+
   const saveCode = useCallback((code: string) => {
     localStorage.setItem('playground_contract', code);
   }, []);
@@ -38,6 +47,47 @@ function App() {
   // An error message to display to the user.
   const [error, setError] = useState<string | undefined>(undefined);
 
+  // An error message to display to the user.
+  const [drawerOpen, setDrawerOpen] = useState(true);
+
+  const Main = styled('main', {
+    shouldForwardProp: (prop) => prop !== 'open',
+  })<{
+    open?: boolean;
+  }>(({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginRight: 0,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginRight: DRAWER_WIDTH,
+    }),
+  }));
+
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start',
+  }));
+
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+  };
+
   const onCodeChange = useCallback(
     (code: string) => {
       saveCode(code);
@@ -60,20 +110,43 @@ function App() {
         networkState={networkState}
         setNetworkState={setNetworkState}
       />
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: '50%', overflow: 'auto', margin: 0 }}>
+      <Main open={drawerOpen}>
+        {/* <div style={{ display: 'flex' }}> */}
+        {/* <div style={{ flex: '50%', overflow: 'auto', margin: 0 }}> */}
+        <div>
           <Editor code={code} onChange={onCodeChange} />
           <CompiledView results={results} />
         </div>
-        <div style={{ flex: '50%' }}>
-          <Interface
-            deployState={deployState}
-            setDeployState={setDeployState}
-            networkState={networkState}
-            setNetwork={setNetwork}
-          />
-        </div>
-      </div>
+
+        {/* </div> */}
+      </Main>
+      <Drawer
+        sx={{
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+          },
+        }}
+        variant='persistent'
+        anchor='right'
+        open={drawerOpen}>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <Interface
+          deployState={deployState}
+          setDeployState={setDeployState}
+          networkState={networkState}
+          setNetwork={setNetwork}
+        />
+      </Drawer>
     </div>
   );
 }

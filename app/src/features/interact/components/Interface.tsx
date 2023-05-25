@@ -23,6 +23,10 @@ export function Interface({
   const [contractId, setContractId] = useState('');
   useNetwork(setNetwork, setDeployState);
 
+  console.log(networkState.toString());
+
+  console.log(deployState.toString());
+
   return (
     <Box>
       <BoxCentered minHS>
@@ -35,8 +39,15 @@ export function Interface({
               setNetworkState={setNetworkState}
             />
           } */}
-          {(networkState === NetworkState.CAN_DISCONNECT ||
-            networkState === NetworkState.DISCONNECTING) && (
+          {deployState === DeployState.DEPLOYED ? (
+            [NetworkState.CAN_DISCONNECT, NetworkState.DISCONNECTING].includes(
+              networkState
+            ) ? (
+              <ContractInterface key={contractId} contractId={contractId} />
+            ) : (
+              <div>Connect your wallet to interact with the network.</div>
+            )
+          ) : (
             <DeploymentButton
               abi={loadAbi()}
               bytecode={loadBytecode()}

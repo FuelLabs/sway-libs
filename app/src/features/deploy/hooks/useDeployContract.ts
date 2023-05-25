@@ -24,9 +24,12 @@ export function useDeployContract(
         wallet
       );
 
+      console.log('contractFactory.deployContract');
       const contract = await contractFactory.deployContract({
         storageSlots: [],
       });
+
+      console.log('return contract.id.toB256()');
 
       return contract.id.toB256();
     },
