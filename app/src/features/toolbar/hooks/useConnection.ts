@@ -5,9 +5,9 @@ import { displayError } from '../../../utils/error';
 
 export function useConnection(
   connect: boolean,
-  setNetwork: React.Dispatch<React.SetStateAction<string>>,
-  setNetworkState: React.Dispatch<React.SetStateAction<NetworkState>>,
-  setDeployState: React.Dispatch<React.SetStateAction<DeployState>>
+  setNetworkState: (state: NetworkState) => void,
+  setDeployState: (state: DeployState) => void,
+  setNetwork: (network: string) => void
 ) {
   const [fuel] = useFuel();
 

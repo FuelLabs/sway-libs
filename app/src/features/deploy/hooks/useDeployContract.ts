@@ -1,14 +1,14 @@
 import { ContractFactory, JsonAbi } from 'fuels';
 import { useMutation } from '@tanstack/react-query';
-import { useWallet } from '../../wallet/hooks/useWallet';
 import { DeployState } from '../../../utils/types';
 import { displayError } from '../../../utils/error';
+import { useWallet } from '../../toolbar/hooks/useWallet';
 
 export function useDeployContract(
   abi: string,
   bytecode: string,
-  setContractId: React.Dispatch<React.SetStateAction<string>>,
-  setDeployState: React.Dispatch<React.SetStateAction<DeployState>>
+  setContractId: (contractId: string) => void,
+  setDeployState: (state: DeployState) => void
 ) {
   const { wallet } = useWallet();
 

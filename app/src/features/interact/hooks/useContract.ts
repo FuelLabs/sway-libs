@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { connectToContract } from '../utils/connectToContract';
-import { useWallet } from '../../wallet/hooks/useWallet';
+import { useWallet } from '../../toolbar/hooks/useWallet';
 
 export function useContract(contractId: string) {
   const { wallet, isLoading, isError } = useWallet();

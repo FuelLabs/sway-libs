@@ -3,8 +3,8 @@ import { DeployState } from '../../../utils/types';
 import { useFuel } from './useFuel';
 
 export function useNetwork(
-  setNetwork: React.Dispatch<React.SetStateAction<string>>,
-  setDeployState: React.Dispatch<React.SetStateAction<DeployState>>
+  setNetwork: (network: string) => void,
+  setDeployState: (state: DeployState) => void
 ) {
   const [fuel] = useFuel();
 

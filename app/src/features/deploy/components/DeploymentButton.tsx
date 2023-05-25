@@ -2,16 +2,14 @@ import { Button, Copyable, Text } from '@fuel-ui/react';
 import { cssObj } from '@fuel-ui/css';
 import { DeployState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
-import { UseDeployedContractButton } from './UseDeployedContractButton';
-import { UseDeployedContractForm } from './UseDeployedContractForm';
 
 interface DeploymentButtonProps {
   abi: string;
   bytecode: string;
   contractId: string;
-  setContractId: React.Dispatch<React.SetStateAction<string>>;
+  setContractId: (contractId: string) => void;
   deployState: DeployState;
-  setDeployState: React.Dispatch<React.SetStateAction<DeployState>>;
+  setDeployState: (state: DeployState) => void;
 }
 
 export function DeploymentButton({
@@ -45,14 +43,6 @@ export function DeploymentButton({
             isDisabled={!abi || !bytecode}>
             DEPLOY
           </Button>
-          <Text> or </Text>
-          <UseDeployedContractForm />
-          <UseDeployedContractButton
-            abi={abi}
-            bytecode={bytecode}
-            setContractId={setContractId}
-            setDeployState={setDeployState}
-          />
         </>
       ) : deployState === DeployState.DEPLOYING ? (
         <Button type='button' color='gray' isDisabled>

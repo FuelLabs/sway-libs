@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import Editor from './features/editor/components/Editor';
-import ActionMenu from './components/ActionMenu';
+import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import { DEFAULT_CONTRACT } from './constants';
 import CompiledView from './features/editor/components/CompiledView';
 import ErrorToast from './components/ErrorToast';
 import { useCompile } from './features/editor/hooks/useCompile';
-import { ContractInterface } from './features/interface/components/ContractInterface';
-import { Interface } from './features/interface/components/Interface';
-import { DeployState } from './utils/types';
+import { ContractInterface } from './features/interact/components/ContractInterface';
+import { Interface } from './features/interact/components/Interface';
+import { DeployState, NetworkState } from './utils/types';
 
 function App() {
   const saveCode = useCallback((code: string) => {
@@ -29,6 +29,12 @@ function App() {
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
 
+  // The network URL.
+  const [network, setNetwork] = useState('');
+
+  // The network connection state.
+  const [networkState, setNetworkState] = useState(NetworkState.CAN_CONNECT);
+
   // An error message to display to the user.
   const [error, setError] = useState<string | undefined>(undefined);
 
@@ -46,9 +52,13 @@ function App() {
     <div>
       <ErrorToast message={error} onClose={() => setError(undefined)} />
 
-      <ActionMenu
+      <ActionToolbar
         onCompile={() => setCodeToCompile(code)}
         resetEditor={() => onCodeChange(DEFAULT_CONTRACT)}
+        setDeployState={setDeployState}
+        setNetwork={setNetwork}
+        networkState={networkState}
+        setNetworkState={setNetworkState}
       />
       <div style={{ display: 'flex' }}>
         <div style={{ flex: '50%', overflow: 'auto', margin: 0 }}>
@@ -59,6 +69,8 @@ function App() {
           <Interface
             deployState={deployState}
             setDeployState={setDeployState}
+            networkState={networkState}
+            setNetwork={setNetwork}
           />
         </div>
       </div>
