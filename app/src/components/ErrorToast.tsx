@@ -15,7 +15,7 @@ function ErrorToast({ message, onClose }: ErrorToastProps) {
         sx={{
           position: 'fixed',
           bottom: '10px',
-          left: '10px',
+          right: '10px',
         }}>
         {message}
       </Alert>

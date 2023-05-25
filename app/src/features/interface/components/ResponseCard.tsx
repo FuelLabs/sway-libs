@@ -1,13 +1,14 @@
 // import { Card, Text } from '@fuel-ui/react';
 
+import { Spinner } from '@fuel-ui/react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-interface FunctionReturnInfoProps {
-  response: string;
+interface ResponseCardProps {
+  response: string | undefined;
 }
 
-export function FunctionReturnInfo({ response }: FunctionReturnInfoProps) {
+export function ResponseCard({ response }: ResponseCardProps) {
   return (
     <Card
       style={{
@@ -24,8 +25,17 @@ export function FunctionReturnInfo({ response }: FunctionReturnInfoProps) {
           fontFamily: 'monospace',
           backgroundColor: 'lightgrey',
           padding: '14px',
+          minHeight: '24px',
         }}>
-        {response}
+        {response === undefined ? (
+          'The response will appear here.'
+        ) : response.length === 0 ? (
+          <div style={{ position: 'absolute' }}>
+            <Spinner size={24} />
+          </div>
+        ) : (
+          response
+        )}
       </CardContent>
     </Card>
   );

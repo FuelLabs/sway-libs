@@ -1,4 +1,3 @@
-import { toast } from '@fuel-ui/react';
 import { useCallback, useEffect } from 'react';
 import { DeployState } from '../../../utils/types';
 import { useFuel } from './useFuel';
@@ -9,8 +8,6 @@ export function useNetwork(
 ) {
   const [fuel] = useFuel();
 
-  if (!fuel) toast.error('Fuel wallet could not be found');
-
   const handleNetworkChange = useCallback(
     async (network: any) => {
       setNetwork(network.url);
@@ -20,11 +17,11 @@ export function useNetwork(
   );
 
   useEffect(() => {
-    fuel?.on('network', handleNetworkChange);
-
-    return () => {
-      fuel?.off('network', handleNetworkChange);
-    };
+    if (!!fuel) {
+      // Register event listeners.
+      fuel.on('network', handleNetworkChange);
+      fuel.off('network', handleNetworkChange);
+    }
   }, [fuel, handleNetworkChange]);
 }
 

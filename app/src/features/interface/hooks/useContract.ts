@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Swaypad } from '../../../utils/interface';
+import { connectToContract } from '../utils/connectToContract';
 import { useWallet } from '../../wallet/hooks/useWallet';
 
 export function useContract(contractId: string) {
@@ -12,7 +12,7 @@ export function useContract(contractId: string) {
   } = useQuery(
     ['contract', contractId],
     async () => {
-      return Swaypad.contract.connect(contractId, wallet!);
+      return connectToContract(contractId, wallet!);
     },
     {
       enabled: !isLoading && !isError && !!wallet,

@@ -1,14 +1,11 @@
-import { cssObj } from '@fuel-ui/css';
-import { Form, Box, Heading, Stack } from '@fuel-ui/react';
-import { useForm } from 'react-hook-form';
-import { FunctionButtons } from './FunctionButtons';
+import { Form } from '@fuel-ui/react';
+import FunctionToolbar from './FunctionToolbar';
 import {
   FunctionParameters,
   InputInstance,
-  ParamValueType,
+  SimpleParamValue,
 } from './FunctionParameters';
-import ObjectParameterInput from './ObjectParameterInput';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 interface FunctionFormProps {
   contractId: string;
@@ -20,42 +17,50 @@ interface FunctionFormProps {
 
 export function FunctionForm({
   contractId,
-  // response,
   setResponse,
   functionName,
   inputInstances,
 }: FunctionFormProps) {
   const [paramValues, setParamValues] = useState(
-    Array<ParamValueType>(inputInstances.length)
+    Array<SimpleParamValue>(inputInstances.length)
   );
 
-  // const { register, handleSubmit, watch, setValue } = useForm();
+  useEffect(() => {
+    console.log('paramValues');
+    console.log(JSON.stringify(paramValues));
+  }, [paramValues]);
+
+  const transformedParams = useMemo(() => {
+    return paramValues.map((paramValue) => {
+      console.log(`typeof pv: ${typeof paramValue}`);
+      if (typeof paramValue === 'string') {
+        try {
+          // Try to parse the string as JSON
+          // TODO: support JSON strings, check the actual field type
+          return JSON.parse(paramValue);
+        } catch (e) {}
+      }
+      return paramValue;
+    });
+  }, [paramValues]);
 
   return (
     <div>
       <Form.Control className={contractId + functionName}>
         <div>
-          <div style={{ float: 'left', width: '80%' }}>
-            {/* <ObjectParameterInput /> */}
-            <FunctionParameters
-              inputInstances={inputInstances as InputInstance[]}
-              functionName={functionName}
-              // register={register}
-              paramValues={paramValues}
-              setParamValues={setParamValues}
-            />
-          </div>
+          <FunctionToolbar
+            contractId={contractId}
+            functionName={functionName}
+            parameters={transformedParams}
+            setResponse={setResponse}
+          />
 
-          <div style={{ float: 'left', width: '20%' }}>
-            <FunctionButtons
-              // inputInstances={inputInstances as InputInstance[]}
-              contractId={contractId}
-              functionName={functionName}
-              // response={response}
-              setResponse={setResponse}
-              // watch={watch}
-            />
-          </div>
+          <FunctionParameters
+            inputInstances={inputInstances as InputInstance[]}
+            functionName={functionName}
+            paramValues={paramValues}
+            setParamValues={setParamValues}
+          />
         </div>
       </Form.Control>
     </div>

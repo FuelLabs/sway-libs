@@ -1,30 +1,36 @@
-import { toast } from "@fuel-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { useFuel } from "./useFuel";
+import { toast } from '@fuel-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useFuel } from './useFuel';
 
 export function useProvider() {
-    const [fuel] = useFuel();
+  const [fuel, loading, error] = useFuel();
 
-    if (!fuel) toast.error("Fuel wallet could not be found");
-
-    const {
-        data: provider,
-        isLoading,
-        isError,
-    } = useQuery(
-        ["provider"],
-        async () => {
-            const isConnected = await fuel.isConnected();
-            if (!isConnected) {
-                return null;
-            }
-            const fuelProvider = await fuel.getProvider();
-            return fuelProvider;
-        },
-        {
-            enabled: !!fuel,
+  const {
+    data: provider,
+    isLoading,
+    isError,
+  } = useQuery(
+    ['provider'],
+    async () => {
+      if (!!fuel) {
+        const isConnected = await fuel.isConnected();
+        if (!isConnected) {
+          return undefined;
         }
-    );
+        const fuelProvider = await fuel.getProvider();
+        return fuelProvider;
+      } else {
+        return undefined;
+      }
+    },
+    {
+      enabled: !!fuel,
+    }
+  );
 
-    return { provider, isLoading, isError };
+  if (!fuel) {
+    return { provider, isLoading: loading, isError: !!error };
+  }
+
+  return { provider, isLoading, isError };
 }

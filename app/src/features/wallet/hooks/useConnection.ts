@@ -1,4 +1,3 @@
-import { toast } from '@fuel-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 import { DeployState, NetworkState } from '../../../utils/types';
@@ -11,28 +10,28 @@ export function useConnection(
   setDeployState: React.Dispatch<React.SetStateAction<DeployState>>
 ) {
   const [fuel] = useFuel();
-  if (!fuel) toast.error('Fuel wallet could not be found');
 
   const mutation = useMutation(
     async () => {
-      const isConnected = await fuel.isConnected();
-      if (connect) {
-        if (!isConnected) {
-          setNetworkState(NetworkState.CONNECTING);
-          await fuel.connect();
+      if (!!fuel) {
+        const isConnected = await fuel.isConnected();
+        if (connect) {
+          if (!isConnected) {
+            setNetworkState(NetworkState.CONNECTING);
+            await fuel.connect();
+          }
+          const provider = await fuel.getProvider();
+          if (!!provider) {
+            return provider.url;
+          }
+        } else {
+          if (isConnected) {
+            setNetworkState(NetworkState.DISCONNECTING);
+            await fuel.disconnect();
+          }
         }
-        let provider = await fuel.getProvider();
-        if (provider !== undefined && provider !== null) {
-          return provider.url;
-        }
-        return '';
-      } else {
-        if (isConnected) {
-          setNetworkState(NetworkState.DISCONNECTING);
-          await fuel.disconnect();
-        }
-        return '';
       }
+      return '';
     },
     {
       onSuccess: (data) => {

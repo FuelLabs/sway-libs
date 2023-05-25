@@ -7,7 +7,6 @@ import {
   saveAbi,
   saveBytecode,
 } from '../../../utils/localStorage';
-import { Swaypad } from '../../../utils/interface';
 
 function toResults(
   prefixedBytecode: string,
@@ -93,8 +92,6 @@ export function useCompile(
           const prefixedBytecode = `0x${bytecode}`;
           saveAbi(abi);
           saveBytecode(prefixedBytecode);
-          Swaypad.contract = new Swaypad(abi);
-
           setResults(toResults(prefixedBytecode, abi));
         }
       })

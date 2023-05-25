@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { Box, Stack } from '@fuel-ui/react';
-import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { FunctionParameterNested } from './FunctionParameterNested';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Table from '@mui/material/Table';
@@ -10,21 +7,28 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import ParameterInput from './ParameterInput';
-import { InstantiableType } from '../utils/types';
+import { TypeInfo } from '../utils/getTypeInfo';
 
-export type ParamType = 'number' | 'bool' | 'text' | 'string' | 'object';
-export type ParamValueType = number | boolean | Record<string, any>;
+// TODO: this is unnecessary
+export type SimpleParamType = 'number' | 'bool' | 'string' | 'object';
+export type SimpleParamValue = number | boolean | string;
+export type ObjectParamValue = Record<
+  string,
+  SimpleParamValue | Record<string, any>
+>;
+export type CallableParamValue = SimpleParamValue | ObjectParamValue;
 
 export interface InputInstance {
   name: string;
-  type: InstantiableType;
+  type: TypeInfo;
+  components: InputInstance[] | undefined;
 }
 
 interface FunctionParametersProps {
   inputInstances: InputInstance[];
   functionName: string;
-  paramValues: ParamValueType[];
-  setParamValues: (values: ParamValueType[]) => void;
+  paramValues: SimpleParamValue[];
+  setParamValues: (values: SimpleParamValue[]) => void;
 }
 
 export function FunctionParameters({
@@ -33,15 +37,14 @@ export function FunctionParameters({
   paramValues,
   setParamValues,
 }: FunctionParametersProps) {
-  function setValueAtIndex(index: number, value: ParamValueType) {
-    const newParamValues = [...paramValues];
-    newParamValues[index] = value;
-    setParamValues(newParamValues);
-  }
-
-  // function functionParameterElements() {
-
-  // console.log('paramValues', paramValues);
+  const setValueAtIndex = React.useCallback(
+    (index: number, value: SimpleParamValue) => {
+      const newParamValues = [...paramValues];
+      newParamValues[index] = value;
+      setParamValues(newParamValues);
+    },
+    [paramValues, setParamValues]
+  );
 
   return (
     <TableContainer component={Paper}>
@@ -54,49 +57,27 @@ export function FunctionParameters({
           </TableRow>
         </TableHead>
         <TableBody>
-          {inputInstances.map(
-            (
-              input: any, // TODO: no any
-              index: number
-            ) => (
-              <TableRow
-                key={functionName + input.name + index}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component='th' scope='row'>
-                  {input.name}
-                </TableCell>
-                <TableCell>{input.type.type}</TableCell>
-                <TableCell>
-                  <ParameterInput
-                    type={input.type.type}
-                    onChange={(value: ParamValueType) =>
-                      setValueAtIndex(index, value)
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            )
-          )}
+          {inputInstances.map((input, index) => (
+            <TableRow
+              key={functionName + input.name + index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component='th' scope='row'>
+                {input.name}
+              </TableCell>
+              <TableCell>{input.type.swayType}</TableCell>
+              <TableCell style={{ width: '100%' }}>
+                <ParameterInput
+                  input={input}
+                  value={paramValues[index]}
+                  onChange={(value: SimpleParamValue) =>
+                    setValueAtIndex(index, value)
+                  }
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-  // return inputInstances.map((input: any, index: number) => (
-  //   <Stack key={input.name + index}>
-  //     <FunctionParameterNested
-  //       name={`${functionName}.${input.name}`}
-  //       input={input}
-  //       index={index}
-  //       register={register}
-  //       setValue={setValue}
-  //     />
-  //   </Stack>
-  // ));
-  // }
-
-  // return (
-  //   <Box>
-  //     <Stack>{functionParameterElements()}</Stack>
-  //   </Box>
-  // );
 }

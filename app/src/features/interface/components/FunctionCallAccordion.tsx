@@ -6,7 +6,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import { FormLabel } from '@mui/material';
 import { InputInstance } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
-import { FunctionReturnInfo } from './FunctionReturnInfo';
+import { ResponseCard } from './ResponseCard';
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -23,6 +23,7 @@ export function FunctionCallAccordion({
   response,
   setResponse,
 }: FunctionCallAccordionProps) {
+  console.log('inputInstances', inputInstances);
   return (
     <Accordion key={contractId + functionName}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -37,7 +38,7 @@ export function FunctionCallAccordion({
           inputInstances={inputInstances}
           setResponse={setResponse}
         />
-        <FunctionReturnInfo response={response} />
+        <ResponseCard response={response} />
       </AccordionDetails>
     </Accordion>
   );
