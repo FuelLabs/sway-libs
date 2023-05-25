@@ -5,9 +5,9 @@ use std::{
     storage::{
         storable_slice::{
             clear_slice,
-            get_slice,
+            read_slice,
             StorableSlice,
-            store_slice,
+            write_slice,
         },
         storage_api::read,
     },
@@ -40,12 +40,12 @@ impl StorableSlice<String> for StorageKey<StorageString> {
     ///     string.push(7_u8);
     ///     string.push(9_u8);
     ///
-    ///     storage.stored_string.store(string);
+    ///     storage.stored_string.write_slice(string);
     /// }
     /// ```
     #[storage(read, write)]
-    fn store(self, string: String) {
-        store_slice(self.slot, string.as_raw_slice());
+    fn write_slice(self, string: String) {
+        write_slice(self.slot, string.as_raw_slice());
     }
 
     /// Constructs a `String` type from storage.
@@ -67,15 +67,15 @@ impl StorableSlice<String> for StorageKey<StorageString> {
     ///     string.push(7_u8);
     ///     string.push(9_u8);
     ///
-    ///     assert(storage.stored_string.load(key).is_none());
-    ///     storage.stored_string.store(string);
-    ///     let retrieved_string = storage.stored_string.load(key).unwrap();
+    ///     assert(storage.stored_string.read_slice(key).is_none());
+    ///     storage.stored_string.write_slice(string);
+    ///     let retrieved_string = storage.stored_string.read_slice(key).unwrap();
     ///     assert(string == retrieved_string);
     /// }
     /// ```
     #[storage(read)]
-    fn load(self) -> Option<String> {
-        match get_slice(self.slot) {
+    fn read_slice(self) -> Option<String> {
+        match read_slice(self.slot) {
             Option::Some(slice) => {
                 Option::Some(String::from_raw_slice(slice))
             },
@@ -102,12 +102,12 @@ impl StorableSlice<String> for StorageKey<StorageString> {
     ///     string.push(5_u8);
     ///     string.push(7_u8);
     ///     string.push(9_u8);
-    ///     storage.stored_string.store(string);
+    ///     storage.stored_string.write_slice(string);
     ///
-    ///     assert(storage.stored_string.load(key).is_some());
+    ///     assert(storage.stored_string.read_slice(key).is_some());
     ///     let cleared = storage.stored_string.clear();
     ///     assert(cleared);
-    ///     let retrieved_string = storage.stored_string.load(key);
+    ///     let retrieved_string = storage.stored_string.read_slice(key);
     ///     assert(retrieved_string.is_none());
     /// }
     /// ```
@@ -136,7 +136,7 @@ impl StorableSlice<String> for StorageKey<StorageString> {
     ///     string.push(9_u8);
     ///
     ///     assert(storage.stored_string.len() == 0)
-    ///     storage.stored_string.store(string);
+    ///     storage.stored_string.write_slice(string);
     ///     assert(storage.stored_string.len() == 3);
     /// }
     /// ```
