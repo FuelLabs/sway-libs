@@ -152,25 +152,6 @@ impl AsRawSlice for String {
     }
 }
 
-// Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
-// impl From<raw_slice> for String {
-//     fn from(slice: raw_slice) -> String {
-//         let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
-//         bytes.buf.ptr = slice.ptr();
-//         Self {
-//             bytes
-//         }
-//     }
-
-//     fn into(self) -> raw_slice {
-//         asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
-//     }
-// }
-
-
-
-
-
 impl String {
     /// Moves all elements of the `other` String into `self`, leaving `other` empty.
     ///
@@ -191,3 +172,18 @@ impl String {
         (Self::from(bytes1), Self::from(bytes2))
     }
 }
+
+// Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
+// impl From<raw_slice> for String {
+//     fn from(slice: raw_slice) -> String {
+//         let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
+//         bytes.buf.ptr = slice.ptr();
+//         Self {
+//             bytes
+//         }
+//     }
+
+//     fn into(self) -> raw_slice {
+//         asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+//     }
+// }
