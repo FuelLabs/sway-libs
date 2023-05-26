@@ -27,7 +27,7 @@ impl MyContract for Contract {
 
     #[storage(read)]
     fn get_string() -> Bytes {
-        match storage.stored_string.load() {
+        match storage.stored_string.read_slice() {
             Option::Some(string) => {
                 string.bytes
             },
@@ -37,7 +37,7 @@ impl MyContract for Contract {
 
     #[storage(write)]
     fn store_string(string: String) {
-        storage.stored_string.store(string);
+        storage.stored_string.write_slice(string);
     }
 
     #[storage(read)]
