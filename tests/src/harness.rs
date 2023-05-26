@@ -7,5 +7,4 @@ mod ownership;
 mod reentrancy;
 mod signed_integers;
 mod storage_string;
-mod storagemapvec;
 mod string;
