@@ -25,13 +25,13 @@ function CompileButton({
         <Button
           sx={{
             ...style,
-            background: darkColors.gray8,
-            borderColor: darkColors.gray8,
+            background: darkColors.green6,
+            borderColor: darkColors.green6,
             color: 'white',
             ':hover': {
               color: lightColors.green7,
-              background: darkColors.gray6,
-              borderColor: darkColors.gray6,
+              background: darkColors.green5,
+              borderColor: darkColors.green5,
             },
           }}
           variant='outlined'

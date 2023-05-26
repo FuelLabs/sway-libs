@@ -7,6 +7,8 @@ import { Tooltip } from '@mui/material';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import GppBadIcon from '@mui/icons-material/GppBad';
 import { ButtonSpinner } from '../../../components/shared';
+import SecondaryButton from '../../../components/SecondaryButton';
+import { useFuel } from '../hooks/useFuel';
 
 interface ConnectionButtonProps {
   networkState: NetworkState;
@@ -21,6 +23,7 @@ function ConnectionButton({
   networkState,
   setNetworkState,
 }: ConnectionButtonProps) {
+  const [fuel] = useFuel();
   const connectMutation = useConnection(
     true,
     setNetworkState,
@@ -45,43 +48,44 @@ function ConnectionButton({
     disConnectMutation.mutate();
   }
 
-  const { text, tooltip, onClick, isDisabled, spinner } = useMemo(() => {
+  const { tooltip, onClick } = useMemo(() => {
+    function onConnectClick() {
+      setNetworkState(NetworkState.CONNECTING);
+      connectMutation.mutate();
+    }
+
+    function onDisconnectClick() {
+      setNetworkState(NetworkState.DISCONNECTING);
+      disConnectMutation.mutate();
+    }
+
     return {
-      text: [NetworkState.CAN_CONNECT, NetworkState.CONNECTING].includes(
-        networkState
-      )
-        ? 'Connect'
-        : 'Disconnect',
-      tooltip: [NetworkState.CAN_CONNECT, NetworkState.CONNECTING].includes(
-        networkState
-      )
+      tooltip: !!fuel
         ? 'Connect Fuel wallet'
-        : 'Disconnect Fuel wallet',
+        : 'Install Fuel wallet to connect to the network',
       onClick:
         networkState === NetworkState.CAN_CONNECT
           ? onConnectClick
           : onDisconnectClick,
-      isDisabled: [
-        NetworkState.CONNECTING,
-        NetworkState.DISCONNECTING,
-      ].includes(networkState),
-      spinner: networkState === NetworkState.CONNECTING,
     };
-  }, [networkState, onConnectClick, onDisconnectClick]);
+  }, [connectMutation, disConnectMutation, networkState, setNetworkState]);
 
   return (
-    <Tooltip title={tooltip}>
-      <Button
-        style={{ width: '128px' }}
-        onClick={onClick}
-        disabled={isDisabled}
-        endIcon={spinner ? <ButtonSpinner /> : undefined}
-        color='primary'
-        variant='outlined'
-        type='submit'>
-        {text}
-      </Button>
-    </Tooltip>
+    <SecondaryButton
+      style={{ minWidth: '115px', marginLeft: '15px' }}
+      onClick={onClick}
+      text='CONNECT'
+      disabled={
+        !fuel ||
+        [NetworkState.CONNECTING, NetworkState.DISCONNECTING].includes(
+          networkState
+        )
+      }
+      endIcon={
+        networkState === NetworkState.CONNECTING ? <ButtonSpinner /> : undefined
+      }
+      tooltip={tooltip}
+    />
   );
 }
 

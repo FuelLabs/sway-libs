@@ -1,12 +1,15 @@
 import Button from '@mui/material/Button';
-import { DeployState } from '../../../utils/types';
+import { DeployState, NetworkState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
 import { colorKeys, darkColors } from '@fuel-ui/css';
 import { lightColors } from '@fuel-ui/css';
 import { Spinner } from '@fuel-ui/react';
 import Tooltip from '@mui/material/Tooltip';
-import SecondaryButton from '../../toolbar/components/SecondaryButton';
+import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
+import { useConnection } from '../hooks/useConnection';
+import { useCallback } from 'react';
+import ConnectionButton from './ConnectionButton';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -15,6 +18,9 @@ interface DeploymentButtonProps {
   setContractId: (contractId: string) => void;
   deployState: DeployState;
   setDeployState: (state: DeployState) => void;
+  networkState: NetworkState;
+  setNetworkState: (state: NetworkState) => void;
+  setNetwork: (network: string) => void;
 }
 
 export function DeploymentButton({
@@ -24,6 +30,9 @@ export function DeploymentButton({
   setContractId,
   deployState,
   setDeployState,
+  networkState,
+  setNetworkState,
+  setNetwork,
 }: DeploymentButtonProps) {
   const deployContractMutation = useDeployContract(
     abi,
@@ -32,9 +41,22 @@ export function DeploymentButton({
     setDeployState
   );
 
-  function onDeployClick() {
-    setDeployState(DeployState.DEPLOYING);
-    deployContractMutation.mutate();
+  const onDeployClick = useCallback(() => {
+    if (networkState === NetworkState.CAN_DISCONNECT) {
+      setDeployState(DeployState.DEPLOYING);
+      deployContractMutation.mutate();
+    }
+  }, [deployContractMutation, networkState, setDeployState]);
+
+  if (networkState === NetworkState.CAN_CONNECT) {
+    return (
+      <ConnectionButton
+        setDeployState={setDeployState}
+        setNetwork={setNetwork}
+        networkState={networkState}
+        setNetworkState={setNetworkState}
+      />
+    );
   }
 
   return (

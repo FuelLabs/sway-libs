@@ -2,6 +2,7 @@ import { useCallFunction } from '../hooks';
 import Button from '@mui/material/Button';
 import { CallType } from '../../../utils/types';
 import { CallableParamValue } from './FunctionParameters';
+import SecondaryButton from '../../../components/SecondaryButton';
 
 interface CallButtonProps {
   contractId: string;
@@ -32,13 +33,10 @@ export function CallButton({
   }
 
   return (
-    <Button
+    <SecondaryButton
       onClick={onFunctionClick}
-      color='primary'
-      variant='outlined'
-      type='submit'
-      size='large'>
-      {'CALL'}
-    </Button>
+      text='CALL'
+      tooltip='Call the contract function with the provided arguments'
+    />
   );
 }

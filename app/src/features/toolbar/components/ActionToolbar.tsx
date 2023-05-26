@@ -7,13 +7,13 @@ import { FUEL_GREEN } from '../../../constants';
 import Tooltip from '@mui/material/Tooltip';
 import ConnectionButton from './ConnectionButton';
 import { DeployState, NetworkState } from '../../../utils/types';
-import { DeploymentButton } from '../../deploy/components/DeploymentButton';
+import { DeploymentButton } from './DeploymentButton';
 import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import { darkColors, lightColors } from '@fuel-ui/css';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import styled from '@emotion/styled';
 import CompileButton from './CompileButton';
-import SecondaryButton from './SecondaryButton';
+import SecondaryButton from '../../../components/SecondaryButton';
 import { Spinner } from '@fuel-ui/react';
 import { ButtonSpinner } from '../../../components/shared';
 
@@ -64,6 +64,9 @@ function Toolbar({
         setContractId={setContractId}
         deployState={deployState}
         setDeployState={setDeployState}
+        networkState={networkState}
+        setNetworkState={setNetworkState}
+        setNetwork={setNetwork}
       />
       <SecondaryButton
         style={{ marginLeft: '15px' }}
