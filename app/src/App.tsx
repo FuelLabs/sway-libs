@@ -13,8 +13,10 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Drawer from '@mui/material/Drawer';
+import { lightGray } from 'ansicolor';
+import Delete from '@mui/icons-material/Delete';
 
-const DRAWER_WIDTH = '500px';
+const DRAWER_WIDTH = '50vw';
 
 function App() {
   const theme = useTheme();
@@ -47,8 +49,13 @@ function App() {
   // An error message to display to the user.
   const [error, setError] = useState<string | undefined>(undefined);
 
+  // The contract ID of the deployed contract.
+  const [contractId, setContractId] = useState('');
+
+  const [isCompiling, setIsCompiling] = useState(false);
+
   // An error message to display to the user.
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const Main = styled('main', {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -56,7 +63,6 @@ function App() {
     open?: boolean;
   }>(({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -71,23 +77,6 @@ function App() {
     }),
   }));
 
-  const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
-  }));
-
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
-
   const onCodeChange = useCallback(
     (code: string) => {
       saveCode(code);
@@ -96,24 +85,48 @@ function App() {
     [saveCode, setCode]
   );
 
-  const results = useCompile(codeToCompile, setError);
+  const results = useCompile(codeToCompile, setError, setIsCompiling);
 
   return (
     <div>
       <ErrorToast message={error} onClose={() => setError(undefined)} />
 
       <ActionToolbar
+        deployState={deployState}
+        contractId={contractId}
+        setContractId={setContractId}
         onCompile={() => setCodeToCompile(code)}
-        resetEditor={() => onCodeChange(DEFAULT_CONTRACT)}
+        isCompiling={isCompiling}
         setDeployState={setDeployState}
         setNetwork={setNetwork}
         networkState={networkState}
         setNetworkState={setNetworkState}
+        toggleDrawer={() => setDrawerOpen(!drawerOpen)}
       />
       <Main open={drawerOpen}>
-        {/* <div style={{ display: 'flex' }}> */}
-        {/* <div style={{ flex: '50%', overflow: 'auto', margin: 0 }}> */}
-        <div>
+        <div style={{ position: 'relative' }}>
+          <div
+            style={{
+              position: 'absolute',
+              height: '100%',
+              width: '100%',
+              zIndex: 5000,
+              pointerEvents: 'none',
+            }}>
+            <IconButton
+              style={{
+                position: 'absolute',
+                right: '5px',
+                top: '5px',
+                zIndex: 5000,
+                pointerEvents: 'all',
+              }}
+              onClick={() => onCodeChange(DEFAULT_CONTRACT)}
+              aria-label='reset the editor'>
+              <Delete />
+            </IconButton>
+          </div>
+
           <Editor code={code} onChange={onCodeChange} />
           <CompiledView results={results} />
         </div>
@@ -131,21 +144,15 @@ function App() {
         variant='persistent'
         anchor='right'
         open={drawerOpen}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Interface
-          deployState={deployState}
-          setDeployState={setDeployState}
-          networkState={networkState}
-          setNetwork={setNetwork}
-        />
+        <div style={{ height: '100%', width: '100%', background: '#F1F1F1' }}>
+          <Interface
+            contractId={contractId}
+            deployState={deployState}
+            setDeployState={setDeployState}
+            networkState={networkState}
+            setNetwork={setNetwork}
+          />
+        </div>
       </Drawer>
     </div>
   );

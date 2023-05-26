@@ -1,7 +1,12 @@
-import { Button, Copyable, Text } from '@fuel-ui/react';
-import { cssObj } from '@fuel-ui/css';
+import Button from '@mui/material/Button';
 import { DeployState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
+import { colorKeys, darkColors } from '@fuel-ui/css';
+import { lightColors } from '@fuel-ui/css';
+import { Spinner } from '@fuel-ui/react';
+import Tooltip from '@mui/material/Tooltip';
+import SecondaryButton from '../../toolbar/components/SecondaryButton';
+import { ButtonSpinner } from '../../../components/shared';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -33,38 +38,21 @@ export function DeploymentButton({
   }
 
   return (
-    <>
-      {deployState === DeployState.NOT_DEPLOYED ? (
-        <>
-          <Button
-            onPress={onDeployClick}
-            type='button'
-            color='accent'
-            isDisabled={!abi || !bytecode}>
-            DEPLOY
-          </Button>
-        </>
-      ) : deployState === DeployState.DEPLOYING ? (
-        <Button type='button' color='gray' isDisabled>
-          {' '}
-          DEPLOYING...
-        </Button>
-      ) : (
-        <>
-          {/* <Copyable value={contractId} css={styles.contractAddress}> */}
-          <Copyable value={contractId}>{contractId}</Copyable>
-        </>
-      )}
-    </>
+    <SecondaryButton
+      style={{ minWidth: '115px', marginLeft: '15px' }}
+      onClick={onDeployClick}
+      text='DEPLOY'
+      disabled={!abi || !bytecode || deployState === DeployState.DEPLOYING}
+      endIcon={
+        deployState === DeployState.DEPLOYING ? <ButtonSpinner /> : undefined
+      }
+      tooltip={
+        deployState === DeployState.NOT_DEPLOYED
+          ? 'Deploy a contract to interact with it on-chain'
+          : deployState === DeployState.DEPLOYING
+          ? 'Deploying contract'
+          : 'Deploy contract'
+      }
+    />
   );
 }
-
-/*
-    <Button
-      onPress={onDeployClick}
-      type='button'
-      color='accent'
-      isDisabled={!abi || !bytecode || deployState === DeployState.DEPLOYING}>
-      {deployState === DeployState.NOT_DEPLOYED ? 'DEPLOY' : 'DEPLOYING'}
-    </Button>
- */

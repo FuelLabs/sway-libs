@@ -38,7 +38,8 @@ function loadResults(): React.ReactElement[] | undefined {
 
 export function useCompile(
   code: string | undefined,
-  onError: (error: string | undefined) => void
+  onError: (error: string | undefined) => void,
+  setIsCompiling: (isCompiling: boolean) => void
 ): React.ReactElement[] {
   const [results, setResults] = useState<React.ReactElement[]>([]);
   const [serverError, setServerError] = useState<boolean>(false);
@@ -53,6 +54,8 @@ export function useCompile(
       setResults([<>Add some code to compile.</>]);
       return;
     }
+
+    setIsCompiling(true);
 
     // TODO: Determine the URL based on the NODE_ENV.
     const server_uri = 'https://api.sway-playground.org/compile';
@@ -99,7 +102,8 @@ export function useCompile(
         console.error('Unexpected error compiling contract.');
         setServerError(true);
       });
-  }, [code]);
+    setIsCompiling(false);
+  }, [code, setIsCompiling]);
 
   useEffect(() => {
     if (serverError) {

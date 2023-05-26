@@ -4,6 +4,9 @@ import 'ace-builds/src-noconflict/mode-rust';
 import 'ace-builds/src-noconflict/theme-chrome';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import { StyledBorder } from '../../../components/shared';
+import Tooltip from '@mui/material/Tooltip';
+import Delete from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 export interface EditorProps {
   code: string;

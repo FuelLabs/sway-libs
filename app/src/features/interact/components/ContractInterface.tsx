@@ -16,6 +16,9 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
 
   const { contract, functionNames } = useContractFunctions(contractId);
 
+  const formattedContractId =
+    contractId.slice(0, 6) + '...' + contractId.slice(-5, -1);
+
   function isType<T>(item: T | undefined): item is T {
     return !!item;
   }
@@ -43,12 +46,20 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
   ));
 
   return (
-    <div key={contractId} style={{ marginLeft: '15px', width: '95%' }}>
-      <div>
-        Contract ID: <Copyable value={contractId}>{contractId}</Copyable>
+    <div style={{ padding: '15px' }}>
+      <div style={{ padding: '20px 0 20px' }}>
+        <div
+          style={{
+            fontSize: '30px',
+            paddingBottom: '10px',
+            fontFamily: 'monospace',
+          }}>
+          Contract Interface
+        </div>
+        <Copyable value={contractId}>{formattedContractId}</Copyable>
       </div>
 
-      {contract && <Stack gap='$4'>{functionInterfaces}</Stack>}
+      {functionInterfaces}
     </div>
   );
 }

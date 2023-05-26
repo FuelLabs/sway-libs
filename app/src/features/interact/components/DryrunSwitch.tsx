@@ -15,10 +15,10 @@ function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
       label={
         <div
           style={{
-            fontSize: '14px',
+            fontSize: '12px',
             color: '#00000099',
           }}>
-          {dryrun ? 'Dry Run' : 'Live'}
+          {dryrun ? 'DRY RUN' : 'LIVE'}
         </div>
       }
       control={<Switch onChange={onChange} />}

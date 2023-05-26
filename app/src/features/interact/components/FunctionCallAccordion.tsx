@@ -23,7 +23,6 @@ export function FunctionCallAccordion({
   response,
   setResponse,
 }: FunctionCallAccordionProps) {
-  console.log('inputInstances', inputInstances);
   return (
     <Accordion key={contractId + functionName}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>

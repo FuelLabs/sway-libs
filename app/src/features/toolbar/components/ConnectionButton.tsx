@@ -6,6 +6,7 @@ import { Spinner } from '@fuel-ui/react';
 import { Tooltip } from '@mui/material';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import GppBadIcon from '@mui/icons-material/GppBad';
+import { ButtonSpinner } from '../../../components/shared';
 
 interface ConnectionButtonProps {
   networkState: NetworkState;
@@ -27,17 +28,17 @@ function ConnectionButton({
     setNetwork
   );
 
-  function onConnectClick() {
-    setNetworkState(NetworkState.CONNECTING);
-    connectMutation.mutate();
-  }
-
   const disConnectMutation = useConnection(
     false,
     setNetworkState,
     setDeployState,
     setNetwork
   );
+
+  function onConnectClick() {
+    setNetworkState(NetworkState.CONNECTING);
+    connectMutation.mutate();
+  }
 
   function onDisconnectClick() {
     setNetworkState(NetworkState.DISCONNECTING);
@@ -74,7 +75,7 @@ function ConnectionButton({
         style={{ width: '128px' }}
         onClick={onClick}
         disabled={isDisabled}
-        endIcon={spinner ? <Spinner size={18} /> : undefined}
+        endIcon={spinner ? <ButtonSpinner /> : undefined}
         color='primary'
         variant='outlined'
         type='submit'>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import PlayArrow from '@mui/icons-material/PlayArrow';
 import DeleteForever from '@mui/icons-material/DeleteForever';
@@ -7,54 +7,75 @@ import { FUEL_GREEN } from '../../../constants';
 import Tooltip from '@mui/material/Tooltip';
 import ConnectionButton from './ConnectionButton';
 import { DeployState, NetworkState } from '../../../utils/types';
+import { DeploymentButton } from '../../deploy/components/DeploymentButton';
+import { loadAbi, loadBytecode } from '../../../utils/localStorage';
+import { darkColors, lightColors } from '@fuel-ui/css';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import styled from '@emotion/styled';
+import CompileButton from './CompileButton';
+import SecondaryButton from './SecondaryButton';
+import { Spinner } from '@fuel-ui/react';
+import { ButtonSpinner } from '../../../components/shared';
 
 export interface ToolbarProps {
+  deployState: DeployState;
+  contractId: string;
+  setContractId: (contractId: string) => void;
   onCompile: () => void;
-  resetEditor: () => void;
+  isCompiling: boolean;
+  // resetEditor: () => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
   setNetwork: (network: string) => void;
+  toggleDrawer: () => void;
 }
 
 function Toolbar({
+  deployState,
+  contractId,
+  setContractId,
   onCompile,
-  resetEditor,
+  isCompiling,
+  // resetEditor,
   networkState,
   setNetworkState,
   setDeployState,
   setNetwork,
+  toggleDrawer,
 }: ToolbarProps) {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'space-between',
         margin: '5px 0 15px',
+        display: 'flex',
       }}>
-      <div>
-        <Tooltip title='Compile sway code'>
-          <Button
-            style={{ color: 'black', background: FUEL_GREEN }}
-            variant='contained'
-            onClick={onCompile}
-            endIcon={<PlayArrow />}>
-            COMPILE
-          </Button>
-        </Tooltip>
-        <ConnectionButton
-          setDeployState={setDeployState}
-          setNetwork={setNetwork}
-          networkState={networkState}
-          setNetworkState={setNetworkState}
-        />
-      </div>
-
-      <Tooltip disableFocusListener title='Reset the editor'>
-        <IconButton onClick={resetEditor} aria-label='reset the editor'>
-          <DeleteForever />
-        </IconButton>
-      </Tooltip>
+      <CompileButton
+        onClick={onCompile}
+        text='COMPILE'
+        endIcon={isCompiling ? <ButtonSpinner /> : <PlayArrow />}
+        disabled={deployState === DeployState.DEPLOYING}
+        tooltip='Compile sway code'
+      />
+      <DeploymentButton
+        abi={loadAbi()}
+        bytecode={loadBytecode()}
+        contractId={contractId}
+        setContractId={setContractId}
+        deployState={deployState}
+        setDeployState={setDeployState}
+      />
+      <SecondaryButton
+        style={{ marginLeft: '15px' }}
+        onClick={toggleDrawer}
+        text='INTERACT'
+        disabled={deployState !== DeployState.DEPLOYED}
+        tooltip={
+          deployState !== DeployState.DEPLOYED
+            ? 'Contract must be deployed to interact with it on-chain'
+            : 'Interact with the contract'
+        }
+      />
     </div>
   );
 }
