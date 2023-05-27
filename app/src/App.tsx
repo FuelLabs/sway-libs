@@ -9,20 +9,11 @@ import Drawer from '@mui/material/Drawer';
 import ActionOverlay from './features/editor/components/ActionOverlay';
 import { ContractInterface } from './features/interact/components/ContractInterface';
 import ErrorToast from './components/ErrorToast';
+import { loadCode, saveCode } from './utils/localStorage';
 
 const DRAWER_WIDTH = '50vw';
 
 function App() {
-  // const theme = useTheme();
-
-  const saveCode = useCallback((code: string) => {
-    localStorage.setItem('playground_contract', code);
-  }, []);
-
-  const loadCode = useCallback(() => {
-    return localStorage.getItem('playground_contract') || '';
-  }, []);
-
   // The current code in the editor.
   const [code, setCode] = useState(loadCode() ?? DEFAULT_CONTRACT);
 
@@ -58,7 +49,7 @@ function App() {
       saveCode(code);
       setCode(code);
     },
-    [saveCode, setCode]
+    [setCode]
   );
 
   const results = useCompile(
