@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query';
 import { DeployState } from '../../../utils/types';
 import { displayError } from '../../../utils/error';
 import { useWallet } from './useWallet';
-import { useConnection } from './useConnection';
 
 export function useDeployContract(
   abi: string,

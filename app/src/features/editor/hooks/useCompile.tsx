@@ -109,7 +109,7 @@ export function useCompile(
         setServerError(true);
       });
     setIsCompiled(true);
-  }, [code, setIsCompiled]);
+  }, [code, isCompiled, results.length, setIsCompiled]);
 
   useEffect(() => {
     if (serverError) {
@@ -118,7 +118,6 @@ export function useCompile(
           ? 'There was an unexpected error compiling your contract. Please try again.'
           : undefined
       );
-      //   setServerError(false);
     }
   }, [serverError, onError]);
 

@@ -1,4 +1,3 @@
-import { Copyable, Stack } from '@fuel-ui/react';
 import { useContractFunctions } from '../hooks';
 import { FunctionInterface } from './FunctionInterface';
 import { useState } from 'react';
@@ -16,9 +15,6 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
   const [responses, setResponses] = useState<Record<string, string>>({});
 
   const { contract, functionNames } = useContractFunctions(contractId);
-
-  const formattedContractId =
-    contractId.slice(0, 6) + '...' + contractId.slice(-5, -1);
 
   function isType<T>(item: T | undefined): item is T {
     return !!item;

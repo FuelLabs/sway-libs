@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useWallet } from '../../toolbar/hooks/useWallet';
-import { AbstractAddress, Contract, Interface, Provider } from 'fuels';
-import { FuelWalletLocked } from '@fuel-wallet/sdk';
+import { Contract, Interface } from 'fuels';
 import { loadAbi } from '../../../utils/localStorage';
 
 export function useContract(contractId: string) {

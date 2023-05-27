@@ -1,17 +1,10 @@
-import Button from '@mui/material/Button';
+import React from 'react';
 import { DeployState, NetworkState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
-import { colorKeys, darkColors } from '@fuel-ui/css';
-import { lightColors } from '@fuel-ui/css';
-import { Spinner } from '@fuel-ui/react';
-import Tooltip from '@mui/material/Tooltip';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useConnection } from '../hooks/useConnection';
 import { useCallback, useMemo } from 'react';
 import ConnectionButton from './ConnectionButton';
-import { useFuel } from '../hooks/useFuel';
-
 interface DeploymentButtonProps {
   abi: string;
   bytecode: string;

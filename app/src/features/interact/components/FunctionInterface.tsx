@@ -1,5 +1,5 @@
 import { FunctionFragment } from 'fuels';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { InputInstance } from './FunctionParameters';
 import { FunctionCallAccordion } from './FunctionCallAccordion';
 import { getTypeInfo } from '../utils/getTypeInfo';

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { InputInstance, SimpleParamValue } from './FunctionParameters';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';

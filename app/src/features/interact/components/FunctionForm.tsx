@@ -6,12 +6,11 @@ import {
   InputInstance,
   SimpleParamValue,
 } from './FunctionParameters';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 interface FunctionFormProps {
   contractId: string;
   functionName: string;
-  // response: string;
   setResponse: (response: string) => void;
   inputInstances: InputInstance[];
 }

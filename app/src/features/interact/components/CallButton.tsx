@@ -1,5 +1,4 @@
 import { useCallFunction } from '../hooks';
-import Button from '@mui/material/Button';
 import { CallType } from '../../../utils/types';
 import { CallableParamValue } from './FunctionParameters';
 import SecondaryButton from '../../../components/SecondaryButton';

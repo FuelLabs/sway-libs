@@ -5,20 +5,10 @@ import { DEFAULT_CONTRACT } from './constants';
 import CompiledView from './features/editor/components/CompiledView';
 import ErrorToast from './components/ErrorToast';
 import { useCompile } from './features/editor/hooks/useCompile';
-import { ContractInterface } from './features/interact/components/ContractInterface';
 import { Interface } from './features/interact/components/Interface';
 import { DeployState, NetworkState } from './utils/types';
-// import { styled, useTheme } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Drawer from '@mui/material/Drawer';
-import { lightGray } from 'ansicolor';
-import Delete from '@mui/icons-material/Delete';
-import styled from '@emotion/styled';
 import ActionOverlay from './features/editor/components/ActionOverlay';
-import { CopyableHex } from './components/shared';
-import { loadBytecode } from './utils/localStorage';
 
 const DRAWER_WIDTH = '50vw';
 
@@ -135,9 +125,7 @@ function App() {
           }}>
           <Interface
             contractId={contractId}
-            deployState={deployState}
             setDeployState={setDeployState}
-            networkState={networkState}
             setNetwork={setNetwork}
           />
         </div>

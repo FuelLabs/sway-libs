@@ -1,24 +1,10 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
+import React from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
-import DeleteForever from '@mui/icons-material/DeleteForever';
-import IconButton from '@mui/material/IconButton';
-import { FUEL_GREEN } from '../../../constants';
-import Tooltip from '@mui/material/Tooltip';
-import ConnectionButton from './ConnectionButton';
 import { DeployState, NetworkState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
 import { loadAbi, loadBytecode } from '../../../utils/localStorage';
-import { darkColors, lightColors } from '@fuel-ui/css';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import styled from '@emotion/styled';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { Spinner } from '@fuel-ui/react';
-import { ButtonSpinner } from '../../../components/shared';
-import PlayCircleFilledWhiteOutlinedIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
-import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
-import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
 
 export interface ToolbarProps {
   deployState: DeployState;
@@ -26,7 +12,6 @@ export interface ToolbarProps {
   setContractId: (contractId: string) => void;
   onCompile: () => void;
   isCompiled: boolean;
-  // resetEditor: () => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
@@ -40,7 +25,6 @@ function Toolbar({
   setContractId,
   onCompile,
   isCompiled,
-  // resetEditor,
   networkState,
   setNetworkState,
   setDeployState,
