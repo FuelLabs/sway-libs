@@ -18,19 +18,14 @@ export function useDeployContract(
       if (!wallet) {
         throw new Error('Cannot deploy without wallet');
       }
-
       const contractFactory = new ContractFactory(
         bytecode,
         JSON.parse(abi) as JsonAbi,
         wallet
       );
-
-      console.log('contractFactory.deployContract');
       const contract = await contractFactory.deployContract({
         storageSlots: [],
       });
-
-      console.log('return contract.id.toB256()');
 
       return contract.id.toB256();
     },

@@ -1,6 +1,7 @@
 import { Form } from '@fuel-ui/react';
 import FunctionToolbar from './FunctionToolbar';
 import {
+  CallableParamValue,
   FunctionParameters,
   InputInstance,
   SimpleParamValue,
@@ -25,24 +26,30 @@ export function FunctionForm({
     Array<SimpleParamValue>(inputInstances.length)
   );
 
-  useEffect(() => {
-    console.log('paramValues');
-    console.log(JSON.stringify(paramValues));
-  }, [paramValues]);
-
-  const transformedParams = useMemo(() => {
-    return paramValues.map((paramValue) => {
-      console.log(`typeof pv: ${typeof paramValue}`);
-      if (typeof paramValue === 'string') {
+  // Parse complex parameters stored as strings.
+  const transformedParams: CallableParamValue[] = useMemo(() => {
+    return paramValues.map((paramValue, index) => {
+      const input = inputInstances[index];
+      const literal = input.type.literal;
+      if (
+        typeof paramValue === 'string' &&
+        ['vector', 'object', 'option', 'enum'].includes(literal)
+      ) {
         try {
-          // Try to parse the string as JSON
-          // TODO: support JSON strings, check the actual field type
-          return JSON.parse(paramValue);
-        } catch (e) {}
+          const parsed = JSON.parse(paramValue);
+
+          // For Options, SDK expects to receive the value of "Some" or undefined for "None".
+          if (literal === 'option') {
+            return parsed['Some'];
+          }
+          return parsed;
+        } catch (e) {
+          // We shouldn't get here, but if we do, the server will return an error.
+        }
       }
       return paramValue;
     });
-  }, [paramValues]);
+  }, [inputInstances, paramValues]);
 
   return (
     <div>

@@ -12,7 +12,7 @@ export interface FunctionCallAccordionProps {
   contractId: string;
   functionName: string;
   inputInstances: InputInstance[];
-  response: string;
+  response?: string;
   setResponse: (response: string) => void;
 }
 
@@ -37,7 +37,10 @@ export function FunctionCallAccordion({
           inputInstances={inputInstances}
           setResponse={setResponse}
         />
-        <ResponseCard response={response} />
+        <ResponseCard
+          style={{ marginTop: '15px' }}
+          response={response ?? 'The response will appear here.'}
+        />
       </AccordionDetails>
     </Accordion>
   );

@@ -25,11 +25,11 @@ function SecondaryButton({
         <Button
           sx={{
             ...style,
-            color: darkColors.green5,
-            borderColor: darkColors.green5,
+            color: darkColors.gray6,
+            borderColor: darkColors.gray6,
             ':hover': {
-              bgcolor: lightColors.green2,
-              borderColor: darkColors.green5,
+              bgcolor: lightColors.green3,
+              borderColor: darkColors.gray6,
             },
           }}
           variant='outlined'

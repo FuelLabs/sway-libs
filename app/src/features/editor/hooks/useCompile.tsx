@@ -7,6 +7,7 @@ import {
   saveAbi,
   saveBytecode,
 } from '../../../utils/localStorage';
+import { CopyableHex } from '../../../components/shared';
 
 function toResults(
   prefixedBytecode: string,
@@ -15,7 +16,7 @@ function toResults(
   return [
     <div key={'bytecode'}>
       <b>Bytecode</b>:<br />
-      {prefixedBytecode}
+      <CopyableHex hex={prefixedBytecode} />
       <br />
       <br />
     </div>,
@@ -39,7 +40,8 @@ function loadResults(): React.ReactElement[] | undefined {
 export function useCompile(
   code: string | undefined,
   onError: (error: string | undefined) => void,
-  setIsCompiling: (isCompiling: boolean) => void
+  isCompiled: boolean,
+  setIsCompiled: (isCompiled: boolean) => void
 ): React.ReactElement[] {
   const [results, setResults] = useState<React.ReactElement[]>([]);
   const [serverError, setServerError] = useState<boolean>(false);
@@ -55,7 +57,11 @@ export function useCompile(
       return;
     }
 
-    setIsCompiling(true);
+    if (isCompiled && !!results.length) {
+      return;
+    }
+
+    setResults([<>Compiling...</>]);
 
     // TODO: Determine the URL based on the NODE_ENV.
     const server_uri = 'https://api.sway-playground.org/compile';
@@ -102,8 +108,8 @@ export function useCompile(
         console.error('Unexpected error compiling contract.');
         setServerError(true);
       });
-    setIsCompiling(false);
-  }, [code, setIsCompiling]);
+    setIsCompiled(true);
+  }, [code, setIsCompiled]);
 
   useEffect(() => {
     if (serverError) {

@@ -28,8 +28,7 @@ export function useCallFunction({
 
       const transactionResult = await contract.functions[functionName](
         ...parameters
-      ) // TODO: fill params & do input validation
-        [callType === 'dryrun' ? 'get' : 'call']();
+      )[callType === 'dryrun' ? 'get' : 'call']();
       return transactionResult;
     },
     {

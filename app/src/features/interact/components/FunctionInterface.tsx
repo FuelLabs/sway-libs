@@ -1,13 +1,14 @@
 import { FunctionFragment } from 'fuels';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { InputInstance } from './FunctionParameters';
 import { FunctionCallAccordion } from './FunctionCallAccordion';
 import { getTypeInfo } from '../utils/getTypeInfo';
 
-interface SdkParamType {
-  name: string | undefined;
+export interface SdkParamType {
+  name?: string;
   type: string;
-  components: SdkParamType[] | undefined;
+  components?: SdkParamType[];
+  typeArguments?: SdkParamType[];
 }
 
 export interface FunctionInterfaceProps {
@@ -26,11 +27,33 @@ export function FunctionInterface({
   setResponse,
 }: FunctionInterfaceProps) {
   const toInputInstance = useCallback((input: SdkParamType): InputInstance => {
-    return {
-      name: input.name ?? '',
-      type: getTypeInfo(input.type),
-      components: input.components?.map(toInputInstance),
-    };
+    const typeInfo = getTypeInfo(input);
+    switch (typeInfo.literal) {
+      case 'vector':
+        return {
+          name: input.name ?? '',
+          type: typeInfo,
+          components: [toInputInstance(input.typeArguments![0])],
+        };
+      case 'object':
+        return {
+          name: input.name ?? '',
+          type: typeInfo,
+          components: input.components?.map(toInputInstance),
+        };
+      case 'option':
+      case 'enum':
+        return {
+          name: input.name ?? '',
+          type: typeInfo,
+          components: [toInputInstance(input.components![0])],
+        };
+      default:
+        return {
+          name: input.name ?? '',
+          type: typeInfo,
+        };
+    }
   }, []);
 
   const inputInstances: InputInstance[] = useMemo(

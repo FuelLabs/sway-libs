@@ -5,18 +5,19 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 interface ResponseCardProps {
-  response: string | undefined;
+  response: React.ReactElement[] | string;
+  style?: React.CSSProperties;
 }
 
-export function ResponseCard({ response }: ResponseCardProps) {
+export function ResponseCard({ response, style }: ResponseCardProps) {
   return (
     <Card
       style={{
         right: '0',
         left: '0',
+        ...style,
         // overflowWrap: 'anywhere',
         // overflowY: 'scroll',
-        marginTop: '15px',
       }}>
       <CardContent
         style={{
@@ -24,18 +25,14 @@ export function ResponseCard({ response }: ResponseCardProps) {
           fontSize: '14px',
           fontFamily: 'monospace',
           backgroundColor: 'lightgrey',
-          padding: '14px',
-          minHeight: '24px',
+          padding: '2px 18px 2px',
+          minHeight: '52px',
         }}>
-        {response === undefined ? (
-          'The response will appear here.'
-        ) : response.length === 0 ? (
-          <div style={{ position: 'absolute' }}>
-            <Spinner size={24} />
-          </div>
-        ) : (
-          response
-        )}
+        {
+          <pre>
+            {response?.length === 0 ? 'Waiting for reponse...' : response}
+          </pre>
+        }
       </CardContent>
     </Card>
   );

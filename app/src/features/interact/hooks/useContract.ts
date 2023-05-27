@@ -4,14 +4,6 @@ import { AbstractAddress, Contract, Interface, Provider } from 'fuels';
 import { FuelWalletLocked } from '@fuel-wallet/sdk';
 import { loadAbi } from '../../../utils/localStorage';
 
-function connectToContract(
-  contractId: string | AbstractAddress,
-  walletOrProvider: FuelWalletLocked | Provider
-): Contract {
-  const abi: Interface = JSON.parse(loadAbi());
-  return new Contract(contractId, abi, walletOrProvider);
-}
-
 export function useContract(contractId: string) {
   const { wallet, isLoading, isError } = useWallet();
 
@@ -20,15 +12,16 @@ export function useContract(contractId: string) {
     isLoading: isContractLoading,
     isError: isContractError,
   } = useQuery(
-    ['contract', contractId],
+    ['contract'],
     async () => {
-      if (!!wallet) {
-        const abi: Interface = JSON.parse(loadAbi());
+      const cachedAbi = loadAbi();
+      if (!!wallet && !!cachedAbi.length && !!contractId.length) {
+        const abi: Interface = JSON.parse(cachedAbi);
         return new Contract(contractId, abi, wallet);
       }
     },
     {
-      enabled: !isLoading && !isError && !!wallet,
+      enabled: !isLoading && !isError && !!wallet && !!contractId.length,
     }
   );
 

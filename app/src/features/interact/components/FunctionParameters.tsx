@@ -9,19 +9,29 @@ import TableBody from '@mui/material/TableBody';
 import ParameterInput from './ParameterInput';
 import { TypeInfo } from '../utils/getTypeInfo';
 
-// TODO: this is unnecessary
-export type SimpleParamType = 'number' | 'bool' | 'string' | 'object';
+export type ParamTypeLiteral =
+  | 'number'
+  | 'bool'
+  | 'string'
+  | 'object'
+  | 'option'
+  | 'enum'
+  | 'vector';
 export type SimpleParamValue = number | boolean | string;
 export type ObjectParamValue = Record<
   string,
-  SimpleParamValue | Record<string, any>
+  SimpleParamValue | Record<string, any> | VectorParamValue
 >;
-export type CallableParamValue = SimpleParamValue | ObjectParamValue;
+export type VectorParamValue = Array<CallableParamValue>;
+export type CallableParamValue =
+  | SimpleParamValue
+  | ObjectParamValue
+  | VectorParamValue;
 
 export interface InputInstance {
   name: string;
   type: TypeInfo;
-  components: InputInstance[] | undefined;
+  components?: InputInstance[];
 }
 
 interface FunctionParametersProps {
@@ -37,7 +47,7 @@ export function FunctionParameters({
   paramValues,
   setParamValues,
 }: FunctionParametersProps) {
-  const setValueAtIndex = React.useCallback(
+  const setParamAtIndex = React.useCallback(
     (index: number, value: SimpleParamValue) => {
       const newParamValues = [...paramValues];
       newParamValues[index] = value;
@@ -70,7 +80,7 @@ export function FunctionParameters({
                   input={input}
                   value={paramValues[index]}
                   onChange={(value: SimpleParamValue) =>
-                    setValueAtIndex(index, value)
+                    setParamAtIndex(index, value)
                   }
                 />
               </TableCell>

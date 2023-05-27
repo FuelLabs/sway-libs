@@ -16,13 +16,16 @@ import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { Spinner } from '@fuel-ui/react';
 import { ButtonSpinner } from '../../../components/shared';
+import PlayCircleFilledWhiteOutlinedIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
+import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
+import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
 
 export interface ToolbarProps {
   deployState: DeployState;
   contractId: string;
   setContractId: (contractId: string) => void;
   onCompile: () => void;
-  isCompiling: boolean;
+  isCompiled: boolean;
   // resetEditor: () => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
@@ -36,7 +39,7 @@ function Toolbar({
   contractId,
   setContractId,
   onCompile,
-  isCompiling,
+  isCompiled,
   // resetEditor,
   networkState,
   setNetworkState,
@@ -53,14 +56,15 @@ function Toolbar({
       <CompileButton
         onClick={onCompile}
         text='COMPILE'
-        endIcon={isCompiling ? <ButtonSpinner /> : <PlayArrow />}
-        disabled={deployState === DeployState.DEPLOYING}
+        endIcon={<PlayArrow />}
+        disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
       <DeploymentButton
         abi={loadAbi()}
         bytecode={loadBytecode()}
         contractId={contractId}
+        isCompiled={isCompiled}
         setContractId={setContractId}
         deployState={deployState}
         setDeployState={setDeployState}
@@ -75,8 +79,8 @@ function Toolbar({
         disabled={deployState !== DeployState.DEPLOYED}
         tooltip={
           deployState !== DeployState.DEPLOYED
-            ? 'Contract must be deployed to interact with it on-chain'
-            : 'Interact with the contract'
+            ? 'A contract must be deployed to interact with it on-chain'
+            : 'Interact with the contract ABI'
         }
       />
     </div>

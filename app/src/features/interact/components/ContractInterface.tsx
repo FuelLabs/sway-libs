@@ -3,6 +3,7 @@ import { useContractFunctions } from '../hooks';
 import { FunctionInterface } from './FunctionInterface';
 import { useState } from 'react';
 import { FunctionFragment } from 'fuels/*';
+import { CopyableHex } from '../../../components/shared';
 
 const FUNCTION_COUNT_LIMIT = 1000;
 interface ContractInterfaceProps {
@@ -47,7 +48,7 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
 
   return (
     <div style={{ padding: '15px' }}>
-      <div style={{ padding: '20px 0 20px' }}>
+      <div style={{ padding: '20px 0 10px' }}>
         <div
           style={{
             fontSize: '30px',
@@ -56,7 +57,7 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
           }}>
           Contract Interface
         </div>
-        <Copyable value={contractId}>{formattedContractId}</Copyable>
+        <CopyableHex hex={contractId} />
       </div>
 
       {functionInterfaces}

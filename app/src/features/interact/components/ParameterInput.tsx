@@ -1,9 +1,9 @@
-import React from 'react';
-import { SimpleParamValue, InputInstance } from './FunctionParameters';
+import React, { useCallback } from 'react';
+import { InputInstance, SimpleParamValue } from './FunctionParameters';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ObjectParameterInput from './ObjectParameterInput';
+import ComplexParameterInput from './ComplexParameterInput';
 
 export interface ParameterInputProps {
   input: InputInstance;
@@ -12,8 +12,7 @@ export interface ParameterInputProps {
 }
 
 function ParameterInput({ input, value, onChange }: ParameterInputProps) {
-  // TODO: switch on value instead
-  switch (input.type.simpleType) {
+  switch (input.type.literal) {
     case 'string':
       return (
         <TextField
@@ -45,9 +44,12 @@ function ParameterInput({ input, value, onChange }: ParameterInputProps) {
           <ToggleButton value='false'>false</ToggleButton>
         </ToggleButtonGroup>
       );
+    case 'vector':
+    case 'enum':
+    case 'option':
     case 'object':
       return (
-        <ObjectParameterInput
+        <ComplexParameterInput
           input={input}
           value={value as string}
           onChange={onChange}

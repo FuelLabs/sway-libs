@@ -1,27 +1,30 @@
 import React, { useEffect, useMemo } from 'react';
 import AceEditor from 'react-ace';
+import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-chrome';
-import 'ace-builds/src-noconflict/ext-language_tools';
 import { StyledBorder } from '../../../components/shared';
-import { CallableParamValue, InputInstance } from './FunctionParameters';
+import {
+  CallableParamValue,
+  InputInstance,
+  ObjectParamValue,
+  VectorParamValue,
+} from './FunctionParameters';
 
-export interface ObjectParameterInputProps {
+export interface ComplexParameterInputProps {
   value: string;
   input: InputInstance;
   onChange: (value: string) => void;
 }
 
-function ObjectParameterInput({
+function ComplexParameterInput({
   value,
   input,
   onChange,
-}: ObjectParameterInputProps) {
+}: ComplexParameterInputProps) {
   // Construct the default object based to show in the JSON editor.
-  const defaultObject = useMemo(() => {
-    const getDefaultObject = (
-      input: InputInstance
-    ): Record<string, CallableParamValue> => {
+  const defaultObjectOrVector = useMemo(() => {
+    const getDefaultObject = (input: InputInstance): ObjectParamValue => {
       return !!input.components
         ? Object.fromEntries(
             input.components.map((nested: InputInstance) => {
@@ -31,34 +34,36 @@ function ObjectParameterInput({
         : {};
     };
 
-    const getDefaultValue = (inputInst: InputInstance): CallableParamValue => {
-      switch (inputInst.type.simpleType) {
+    const getDefaultVector = (input: InputInstance): VectorParamValue => {
+      return input.components?.map(getDefaultValue) ?? [];
+    };
+
+    const getDefaultValue = (input: InputInstance): CallableParamValue => {
+      switch (input.type.literal) {
         case 'string':
           return '';
         case 'number':
           return 0;
         case 'bool':
           return false;
+        case 'enum':
+        case 'option':
         case 'object':
-          return getDefaultObject(inputInst);
+          return getDefaultObject(input);
+        case 'vector':
+          return getDefaultVector(input);
       }
     };
 
-    return !!input.components
-      ? Object.fromEntries(
-          input.components.map((nested) => {
-            return [nested.name, getDefaultValue(nested)];
-          })
-        )
-      : {};
-  }, [input.components]);
+    return getDefaultValue(input);
+  }, [input]);
 
   useEffect(() => {
-    const defaultValue = JSON.stringify(defaultObject, null, 2);
+    const defaultValue = JSON.stringify(defaultObjectOrVector, null, 4);
     if (!value) {
       onChange(defaultValue);
     }
-  }, [defaultObject, onChange, value]);
+  }, [defaultObjectOrVector, onChange, value]);
 
   const lines = useMemo(
     () => (value ? value.split('\n').length + 1 : 2),
@@ -83,4 +88,4 @@ function ObjectParameterInput({
   );
 }
 
-export default ObjectParameterInput;
+export default ComplexParameterInput;

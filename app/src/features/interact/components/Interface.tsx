@@ -23,26 +23,5 @@ export function Interface({
   setNetwork,
 }: InterfaceProps) {
   useNetwork(setNetwork, setDeployState);
-
-  console.log(networkState.toString());
-
-  console.log(deployState.toString());
-
-  // if (deployState === DeployState.DEPLOYED) {
   return <ContractInterface key={contractId} contractId={contractId} />;
-
-  // if (
-
-  //   [NetworkState.CAN_DISCONNECT, NetworkState.DISCONNECTING].includes(
-  //     networkState
-  //   )
-  // ) {
-  //   return <ContractInterface key={contractId} contractId={contractId} />;
-  // } else {
-  //   return <div>Connect your wallet to interact with the network.</div>;
-  // }
-  // } else {
-  //   return (
-  //   );
-  // }
 }
