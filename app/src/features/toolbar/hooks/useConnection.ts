@@ -6,8 +6,7 @@ import { displayError } from '../../../utils/error';
 export function useConnection(
   connect: boolean,
   setNetworkState: (state: NetworkState) => void,
-  setDeployState: (state: DeployState) => void,
-  setNetwork: (network: string) => void
+  setDeployState: (state: DeployState) => void
 ) {
   const [fuel] = useFuel();
 
@@ -50,11 +49,9 @@ export function useConnection(
 
   function handleSuccess(data: any) {
     if (data === '') {
-      setNetwork('');
       setNetworkState(NetworkState.CAN_CONNECT);
       setDeployState(DeployState.NOT_DEPLOYED);
     } else {
-      setNetwork(data);
       setNetworkState(NetworkState.CAN_DISCONNECT);
     }
   }

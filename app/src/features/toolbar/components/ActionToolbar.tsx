@@ -15,7 +15,6 @@ export interface ToolbarProps {
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
-  setNetwork: (network: string) => void;
   toggleDrawer: () => void;
 }
 
@@ -28,7 +27,6 @@ function Toolbar({
   networkState,
   setNetworkState,
   setDeployState,
-  setNetwork,
   toggleDrawer,
 }: ToolbarProps) {
   return (
@@ -47,14 +45,12 @@ function Toolbar({
       <DeploymentButton
         abi={loadAbi()}
         bytecode={loadBytecode()}
-        contractId={contractId}
         isCompiled={isCompiled}
         setContractId={setContractId}
         deployState={deployState}
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
-        setNetwork={setNetwork}
       />
       <SecondaryButton
         style={{ marginLeft: '15px' }}

@@ -3,12 +3,12 @@ import Editor from './features/editor/components/Editor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import { DEFAULT_CONTRACT } from './constants';
 import CompiledView from './features/editor/components/CompiledView';
-import ErrorToast from './components/ErrorToast';
 import { useCompile } from './features/editor/hooks/useCompile';
-import { Interface } from './features/interact/components/Interface';
 import { DeployState, NetworkState } from './utils/types';
 import Drawer from '@mui/material/Drawer';
 import ActionOverlay from './features/editor/components/ActionOverlay';
+import { toast } from 'react-hot-toast';
+import { ContractInterface } from './features/interact/components/ContractInterface';
 
 const DRAWER_WIDTH = '50vw';
 
@@ -33,9 +33,6 @@ function App() {
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
-
-  // The network URL.
-  const [network, setNetwork] = useState('');
 
   // The network connection state.
   const [networkState, setNetworkState] = useState(NetworkState.CAN_CONNECT);
@@ -71,6 +68,13 @@ function App() {
     setIsCompiled
   );
 
+  useEffect(() => {
+    if (!!error?.length) {
+      toast.error(error ?? '');
+      setError(undefined);
+    }
+  }, [error, setError]);
+
   return (
     <div
       style={{
@@ -79,8 +83,6 @@ function App() {
         margin: '0px',
         background: '#F1F1F1',
       }}>
-      <ErrorToast message={error} onClose={() => setError(undefined)} />
-
       <ActionToolbar
         deployState={deployState}
         contractId={contractId}
@@ -88,7 +90,6 @@ function App() {
         onCompile={() => setCodeToCompile(code)}
         isCompiled={isCompiled}
         setDeployState={setDeployState}
-        setNetwork={setNetwork}
         networkState={networkState}
         setNetworkState={setNetworkState}
         toggleDrawer={() => setDrawerOpen(!drawerOpen)}
@@ -123,11 +124,7 @@ function App() {
           style={{
             width: '100%',
           }}>
-          <Interface
-            contractId={contractId}
-            setDeployState={setDeployState}
-            setNetwork={setNetwork}
-          />
+          <ContractInterface contractId={contractId} />
         </div>
       </Drawer>
     </div>

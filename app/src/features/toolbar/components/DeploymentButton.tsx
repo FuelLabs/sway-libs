@@ -8,27 +8,23 @@ import ConnectionButton from './ConnectionButton';
 interface DeploymentButtonProps {
   abi: string;
   bytecode: string;
-  contractId: string;
   isCompiled: boolean;
   setContractId: (contractId: string) => void;
   deployState: DeployState;
   setDeployState: (state: DeployState) => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
-  setNetwork: (network: string) => void;
 }
 
 export function DeploymentButton({
   abi,
   bytecode,
-  contractId,
   isCompiled,
   setContractId,
   deployState,
   setDeployState,
   networkState,
   setNetworkState,
-  setNetwork,
 }: DeploymentButtonProps) {
   const deployContractMutation = useDeployContract(
     abi,
@@ -69,7 +65,6 @@ export function DeploymentButton({
     return (
       <ConnectionButton
         setDeployState={setDeployState}
-        setNetwork={setNetwork}
         networkState={networkState}
         setNetworkState={setNetworkState}
       />
