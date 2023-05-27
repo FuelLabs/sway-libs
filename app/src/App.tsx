@@ -7,8 +7,8 @@ import { useCompile } from './features/editor/hooks/useCompile';
 import { DeployState, NetworkState } from './utils/types';
 import Drawer from '@mui/material/Drawer';
 import ActionOverlay from './features/editor/components/ActionOverlay';
-import { toast } from 'react-hot-toast';
 import { ContractInterface } from './features/interact/components/ContractInterface';
+import ErrorToast from './components/ErrorToast';
 
 const DRAWER_WIDTH = '50vw';
 
@@ -68,12 +68,10 @@ function App() {
     setIsCompiled
   );
 
-  useEffect(() => {
-    if (!!error?.length) {
-      toast.error(error ?? '');
-      setError(undefined);
-    }
-  }, [error, setError]);
+  const onCompile = useCallback(() => {
+    setCodeToCompile(code);
+    setIsCompiled(false);
+  }, [code]);
 
   return (
     <div
@@ -83,16 +81,18 @@ function App() {
         margin: '0px',
         background: '#F1F1F1',
       }}>
+      <ErrorToast message={error} onClose={() => setError(undefined)} />
       <ActionToolbar
         deployState={deployState}
         contractId={contractId}
         setContractId={setContractId}
-        onCompile={() => setCodeToCompile(code)}
+        onCompile={onCompile}
         isCompiled={isCompiled}
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
         toggleDrawer={() => setDrawerOpen(!drawerOpen)}
+        setError={setError}
       />
 
       <div
@@ -124,7 +124,7 @@ function App() {
           style={{
             width: '100%',
           }}>
-          <ContractInterface contractId={contractId} />
+          <ContractInterface contractId={contractId} setError={setError} />
         </div>
       </Drawer>
     </div>

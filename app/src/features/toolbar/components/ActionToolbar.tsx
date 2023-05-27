@@ -6,7 +6,7 @@ import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 
-export interface ToolbarProps {
+export interface ActionToolbarProps {
   deployState: DeployState;
   contractId: string;
   setContractId: (contractId: string) => void;
@@ -16,9 +16,10 @@ export interface ToolbarProps {
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
   toggleDrawer: () => void;
+  setError: (error: string) => void;
 }
 
-function Toolbar({
+function ActionToolbar({
   deployState,
   contractId,
   setContractId,
@@ -28,7 +29,8 @@ function Toolbar({
   setNetworkState,
   setDeployState,
   toggleDrawer,
-}: ToolbarProps) {
+  setError,
+}: ActionToolbarProps) {
   return (
     <div
       style={{
@@ -51,6 +53,7 @@ function Toolbar({
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
+        setError={setError}
       />
       <SecondaryButton
         style={{ marginLeft: '15px' }}
@@ -67,4 +70,4 @@ function Toolbar({
   );
 }
 
-export default Toolbar;
+export default ActionToolbar;

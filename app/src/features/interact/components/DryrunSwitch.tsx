@@ -1,6 +1,6 @@
 import React from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { Switch } from '@mui/material';
+import Switch from '@mui/material/Switch';
 
 export interface DryrunSwitchProps {
   dryrun: boolean;

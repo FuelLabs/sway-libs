@@ -47,6 +47,9 @@ export function useCompile(
   const [serverError, setServerError] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log('code: ', code);
+    console.log('isCompiled: ', isCompiled);
+
     if (!code) {
       setResults(loadResults() ?? [<>Click 'Compile' to build your code.</>]);
       return;
@@ -57,7 +60,7 @@ export function useCompile(
       return;
     }
 
-    if (isCompiled && !!results.length) {
+    if (isCompiled) {
       return;
     }
 

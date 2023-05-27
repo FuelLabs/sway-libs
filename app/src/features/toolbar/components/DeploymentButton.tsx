@@ -14,6 +14,7 @@ interface DeploymentButtonProps {
   setDeployState: (state: DeployState) => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
+  setError: (error: string) => void;
 }
 
 export function DeploymentButton({
@@ -25,12 +26,14 @@ export function DeploymentButton({
   setDeployState,
   networkState,
   setNetworkState,
+  setError,
 }: DeploymentButtonProps) {
   const deployContractMutation = useDeployContract(
     abi,
     bytecode,
     setContractId,
-    setDeployState
+    setDeployState,
+    setError
   );
 
   const onDeployClick = useCallback(() => {
@@ -67,6 +70,7 @@ export function DeploymentButton({
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
+        setError={setError}
       />
     );
   }

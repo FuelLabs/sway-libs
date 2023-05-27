@@ -1,4 +1,3 @@
-import { toast } from '@fuel-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 

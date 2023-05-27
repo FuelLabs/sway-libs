@@ -1,14 +1,14 @@
 import { ContractFactory, JsonAbi } from 'fuels';
 import { useMutation } from '@tanstack/react-query';
 import { DeployState } from '../../../utils/types';
-import { displayError } from '../../../utils/error';
 import { useWallet } from './useWallet';
 
 export function useDeployContract(
   abi: string,
   bytecode: string,
   setContractId: (contractId: string) => void,
-  setDeployState: (state: DeployState) => void
+  setDeployState: (state: DeployState) => void,
+  setError: (error: string) => void
 ) {
   const { wallet } = useWallet();
 
@@ -38,7 +38,7 @@ export function useDeployContract(
 
   function handleError(error: any) {
     setDeployState(DeployState.NOT_DEPLOYED);
-    displayError(error);
+    setError(error);
   }
 
   function handleSuccess(data: any) {

@@ -1,4 +1,4 @@
-import { useCallFunction } from '../hooks';
+import { useCallFunction } from '../hooks/useCallFunction';
 import { CallType } from '../../../utils/types';
 import { CallableParamValue } from './FunctionParameters';
 import SecondaryButton from '../../../components/SecondaryButton';
@@ -9,6 +9,7 @@ interface CallButtonProps {
   parameters: CallableParamValue[];
   callType: CallType;
   setResponse: (response: string) => void;
+  setError: (error: string) => void;
 }
 
 export function CallButton({
@@ -17,6 +18,7 @@ export function CallButton({
   parameters,
   callType,
   setResponse,
+  setError,
 }: CallButtonProps) {
   const functionMutation = useCallFunction({
     contractId,
@@ -24,6 +26,7 @@ export function CallButton({
     parameters,
     callType,
     setResponse,
+    setError,
   });
 
   function onFunctionClick() {

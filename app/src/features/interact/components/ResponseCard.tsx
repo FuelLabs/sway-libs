@@ -14,8 +14,6 @@ export function ResponseCard({ response, style }: ResponseCardProps) {
         right: '0',
         left: '0',
         ...style,
-        // overflowWrap: 'anywhere',
-        // overflowY: 'scroll',
       }}>
       <CardContent
         style={{
@@ -24,7 +22,7 @@ export function ResponseCard({ response, style }: ResponseCardProps) {
           fontFamily: 'monospace',
           backgroundColor: 'lightgrey',
           padding: '2px 18px 2px',
-          minHeight: '52px',
+          minHeight: '44px',
         }}>
         {
           <pre>

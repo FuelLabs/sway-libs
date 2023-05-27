@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 import { DeployState, NetworkState } from '../../../utils/types';
-import { displayError } from '../../../utils/error';
 
 export function useConnection(
   connect: boolean,
   setNetworkState: (state: NetworkState) => void,
-  setDeployState: (state: DeployState) => void
+  setDeployState: (state: DeployState) => void,
+  setError: (error: string) => void
 ) {
   const [fuel] = useFuel();
 
@@ -40,14 +40,14 @@ export function useConnection(
     }
   );
 
-  function handleError(error: any) {
-    displayError(error);
+  function handleError(error: string) {
+    setError(error);
     if (connect) {
       setNetworkState(NetworkState.CAN_CONNECT);
     }
   }
 
-  function handleSuccess(data: any) {
+  function handleSuccess(data: string) {
     if (data === '') {
       setNetworkState(NetworkState.CAN_CONNECT);
       setDeployState(DeployState.NOT_DEPLOYED);

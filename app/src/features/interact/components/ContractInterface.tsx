@@ -1,4 +1,4 @@
-import { useContractFunctions } from '../hooks';
+import { useContractFunctions } from '../hooks/useContractFunctions';
 import { FunctionInterface } from './FunctionInterface';
 import { useState } from 'react';
 import { FunctionFragment } from 'fuels/*';
@@ -7,9 +7,13 @@ import { CopyableHex } from '../../../components/shared';
 const FUNCTION_COUNT_LIMIT = 1000;
 interface ContractInterfaceProps {
   contractId: string;
+  setError: (error: string) => void;
 }
 
-export function ContractInterface({ contractId }: ContractInterfaceProps) {
+export function ContractInterface({
+  contractId,
+  setError,
+}: ContractInterfaceProps) {
   // Key: contract.id + functionName
   // Value: API response
   const [responses, setResponses] = useState<Record<string, string>>({});
@@ -38,6 +42,7 @@ export function ContractInterface({ contractId }: ContractInterfaceProps) {
             [contractId + functionFragment.name]: response,
           })
         }
+        setError={setError}
       />
     </div>
   ));

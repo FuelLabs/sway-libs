@@ -1,4 +1,3 @@
-import { Form } from '@fuel-ui/react';
 import FunctionToolbar from './FunctionToolbar';
 import {
   CallableParamValue,
@@ -11,8 +10,9 @@ import React, { useMemo, useState } from 'react';
 interface FunctionFormProps {
   contractId: string;
   functionName: string;
-  setResponse: (response: string) => void;
   inputInstances: InputInstance[];
+  setResponse: (response: string) => void;
+  setError: (error: string) => void;
 }
 
 export function FunctionForm({
@@ -20,6 +20,7 @@ export function FunctionForm({
   setResponse,
   functionName,
   inputInstances,
+  setError,
 }: FunctionFormProps) {
   const [paramValues, setParamValues] = useState(
     Array<SimpleParamValue>(inputInstances.length)
@@ -52,23 +53,20 @@ export function FunctionForm({
 
   return (
     <div>
-      <Form.Control className={contractId + functionName}>
-        <div>
-          <FunctionToolbar
-            contractId={contractId}
-            functionName={functionName}
-            parameters={transformedParams}
-            setResponse={setResponse}
-          />
+      <FunctionToolbar
+        contractId={contractId}
+        functionName={functionName}
+        parameters={transformedParams}
+        setResponse={setResponse}
+        setError={setError}
+      />
 
-          <FunctionParameters
-            inputInstances={inputInstances as InputInstance[]}
-            functionName={functionName}
-            paramValues={paramValues}
-            setParamValues={setParamValues}
-          />
-        </div>
-      </Form.Control>
+      <FunctionParameters
+        inputInstances={inputInstances as InputInstance[]}
+        functionName={functionName}
+        paramValues={paramValues}
+        setParamValues={setParamValues}
+      />
     </div>
   );
 }

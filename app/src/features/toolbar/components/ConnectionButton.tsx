@@ -9,20 +9,28 @@ interface ConnectionButtonProps {
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
+  setError: (error: string) => void;
 }
 
 function ConnectionButton({
   setDeployState,
   networkState,
   setNetworkState,
+  setError,
 }: ConnectionButtonProps) {
   const [fuel] = useFuel();
-  const connectMutation = useConnection(true, setNetworkState, setDeployState);
+  const connectMutation = useConnection(
+    true,
+    setNetworkState,
+    setDeployState,
+    setError
+  );
 
   const disConnectMutation = useConnection(
     false,
     setNetworkState,
-    setDeployState
+    setDeployState,
+    setError
   );
 
   const { tooltip, onClick } = useMemo(() => {

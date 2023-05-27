@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { useContract } from '.';
+import { useContract } from './useContract';
 import { modifyJsonStringify } from '../utils/modifyJsonStringify';
-import { displayError } from '../../../utils/error';
 import { CallType } from '../../../utils/types';
 import { CallableParamValue } from '../components/FunctionParameters';
 
@@ -11,6 +10,7 @@ interface CallFunctionProps {
   functionName: string;
   callType: CallType;
   setResponse: (response: string) => void;
+  setError: (error: string) => void;
 }
 
 export function useCallFunction({
@@ -19,6 +19,7 @@ export function useCallFunction({
   functionName,
   callType,
   setResponse,
+  setError,
 }: CallFunctionProps) {
   const { contract } = useContract(contractId);
 
@@ -40,7 +41,7 @@ export function useCallFunction({
   );
 
   function handleError(error: any) {
-    displayError(error);
+    setError(error);
     setResponse(`error: ${JSON.stringify(error?.message)}`);
   }
 
