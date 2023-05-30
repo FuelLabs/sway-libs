@@ -22,6 +22,12 @@ function App() {
     undefined
   );
 
+  // Whether or not the current code in the editor has been compiled.
+  const [isCompiled, setIsCompiled] = useState(false);
+
+  // The compilation results.
+  const [results, setResults] = useState<React.ReactElement[]>([]);
+
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
 
@@ -34,35 +40,19 @@ function App() {
   // The contract ID of the deployed contract.
   const [contractId, setContractId] = useState('');
 
-  // Whether or not the current code in the editor has been compiled.
-  const [isCompiled, setIsCompiled] = useState(false);
-
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  useEffect(() => {
-    setIsCompiled(false);
-  }, [code]);
 
   const onCodeChange = useCallback(
     (code: string) => {
       saveCode(code);
       setCode(code);
+      setIsCompiled(false);
     },
     [setCode]
   );
 
-  const results = useCompile(
-    codeToCompile,
-    setError,
-    isCompiled,
-    setIsCompiled
-  );
-
-  const onCompile = useCallback(() => {
-    setCodeToCompile(code);
-    setIsCompiled(false);
-  }, [code]);
+  useCompile(codeToCompile, setError, setIsCompiled, setResults);
 
   return (
     <div
@@ -75,9 +65,8 @@ function App() {
       <ErrorToast message={error} onClose={() => setError(undefined)} />
       <ActionToolbar
         deployState={deployState}
-        contractId={contractId}
         setContractId={setContractId}
-        onCompile={onCompile}
+        onCompile={() => setCodeToCompile(code)}
         isCompiled={isCompiled}
         setDeployState={setDeployState}
         networkState={networkState}

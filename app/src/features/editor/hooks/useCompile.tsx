@@ -40,10 +40,9 @@ function loadResults(): React.ReactElement[] | undefined {
 export function useCompile(
   code: string | undefined,
   onError: (error: string | undefined) => void,
-  isCompiled: boolean,
-  setIsCompiled: (isCompiled: boolean) => void
-): React.ReactElement[] {
-  const [results, setResults] = useState<React.ReactElement[]>([]);
+  setIsCompiled: (isCompiled: boolean) => void,
+  setResults: (results: React.ReactElement[]) => void
+) {
   const [serverError, setServerError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -51,13 +50,8 @@ export function useCompile(
       setResults(loadResults() ?? [<>Click 'Compile' to build your code.</>]);
       return;
     }
-
-    if (!code.length) {
+    if (!code?.length) {
       setResults([<>Add some code to compile.</>]);
-      return;
-    }
-
-    if (isCompiled) {
       return;
     }
 
@@ -109,17 +103,13 @@ export function useCompile(
         setServerError(true);
       });
     setIsCompiled(true);
-  }, [code, isCompiled, results.length, setIsCompiled]);
+  }, [code, setIsCompiled, setResults]);
 
   useEffect(() => {
     if (serverError) {
       onError(
-        serverError
-          ? 'There was an unexpected error compiling your contract. Please try again.'
-          : undefined
+        'There was an unexpected error compiling your contract. Please try again.'
       );
     }
   }, [serverError, onError]);
-
-  return results;
 }

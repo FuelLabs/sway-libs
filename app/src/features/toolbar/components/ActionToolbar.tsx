@@ -8,7 +8,6 @@ import SecondaryButton from '../../../components/SecondaryButton';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
-  contractId: string;
   setContractId: (contractId: string) => void;
   onCompile: () => void;
   isCompiled: boolean;
@@ -21,7 +20,6 @@ export interface ActionToolbarProps {
 
 function ActionToolbar({
   deployState,
-  contractId,
   setContractId,
   onCompile,
   isCompiled,
