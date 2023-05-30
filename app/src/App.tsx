@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Editor from './features/editor/components/Editor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import { DEFAULT_CONTRACT } from './constants';
