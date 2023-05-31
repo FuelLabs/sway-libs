@@ -1,7 +1,7 @@
 library;
 
-mod supply_errors;
-mod supply_events;
+pub mod supply_errors;
+pub mod supply_events;
 
 use ::nft_core::nft_storage::MAX_SUPPLY;
 use std::storage::storage_api::{read, write};

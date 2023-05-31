@@ -1,6 +1,6 @@
 library;
 
-mod burnable_events;
+pub mod burnable_events;
 
 use burnable_events::BurnEvent;
 use ::nft_core::{errors::{AccessError, InputError}, nft_storage::{BALANCES, TOKENS}, NFTCore};

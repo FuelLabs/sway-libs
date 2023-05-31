@@ -1,3 +1,3 @@
 library;
 
-mod binary_merkle_proof;
+pub mod binary_merkle_proof;

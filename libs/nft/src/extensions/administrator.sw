@@ -1,7 +1,7 @@
 library;
 
-mod administrator_errors;
-mod administrator_events;
+pub mod administrator_errors;
+pub mod administrator_events;
 
 use administrator_errors::AdminError;
 use administrator_events::AdminEvent;

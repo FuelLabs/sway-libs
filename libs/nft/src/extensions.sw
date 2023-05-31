@@ -1,6 +1,6 @@
 library;
 
-mod administrator;
-mod burnable;
-mod supply;
-mod token_metadata;
+pub mod administrator;
+pub mod burnable;
+pub mod supply;
+pub mod token_metadata;

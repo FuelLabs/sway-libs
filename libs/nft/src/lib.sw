@@ -1,8 +1,8 @@
 library;
 
 // TODO: Move these into alphabetical order once https://github.com/FuelLabs/sway/issues/409 is resolved
-mod nft_core;
-mod extensions;
+pub mod nft_core;
+pub mod extensions;
 
 use nft_core::{
     errors::InputError,
