@@ -5,11 +5,10 @@ import { DEFAULT_CONTRACT } from './constants';
 import CompiledView from './features/editor/components/CompiledView';
 import { useCompile } from './features/editor/hooks/useCompile';
 import { DeployState, NetworkState } from './utils/types';
-import Drawer from '@mui/material/Drawer';
 import ActionOverlay from './features/editor/components/ActionOverlay';
-import { ContractInterface } from './features/interact/components/ContractInterface';
 import ErrorToast from './components/ErrorToast';
 import { loadCode, saveCode } from './utils/localStorage';
+import InteractionDrawer from './features/interact/components/IntractionDrawer';
 
 const DRAWER_WIDTH = '50vw';
 
@@ -84,29 +83,12 @@ function App() {
         <Editor code={code} onChange={onCodeChange} />
         <CompiledView results={results} />
       </div>
-      <Drawer
-        PaperProps={{
-          sx: {
-            background: '#F1F1F1',
-          },
-        }}
-        sx={{
-          width: DRAWER_WIDTH,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: DRAWER_WIDTH,
-          },
-        }}
-        variant='persistent'
-        anchor='right'
-        open={drawerOpen}>
-        <div
-          style={{
-            width: '100%',
-          }}>
-          <ContractInterface contractId={contractId} setError={setError} />
-        </div>
-      </Drawer>
+      <InteractionDrawer
+        isOpen={drawerOpen}
+        width={DRAWER_WIDTH}
+        contractId={contractId}
+        setError={setError}
+      />
     </div>
   );
 }
