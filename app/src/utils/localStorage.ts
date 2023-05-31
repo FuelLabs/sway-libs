@@ -1,3 +1,5 @@
+import { DEFAULT_CONTRACT } from '../constants';
+
 const STORAGE_ABI_KEY = 'playground_abi';
 const STORAGE_BYTECODE_KEY = 'playground_bytecode';
 const STORAGE_CONTRACT_KEY = 'playground_contract';
@@ -23,5 +25,5 @@ export function saveCode(code: string) {
 }
 
 export function loadCode() {
-  return localStorage.getItem(STORAGE_CONTRACT_KEY) || '';
+  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? DEFAULT_CONTRACT;
 }

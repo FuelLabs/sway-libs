@@ -30,7 +30,7 @@ export function ContractInterface({
     .filter(isType<FunctionFragment>);
 
   let functionInterfaces = functionFragments.map((functionFragment, index) => (
-    <div key={`${index}`}>
+    <div key={`${index}`} style={{ marginBottom: '15px' }}>
       <FunctionInterface
         contractId={contractId}
         functionFragment={functionFragment}
