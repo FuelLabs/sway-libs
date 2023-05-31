@@ -3,7 +3,7 @@ use fuels::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, StorageConfiguration,
         TxParameters, WalletUnlocked,
     },
-    tx::ContractId,
+    types::ContractId,
 };
 
 abigen!(

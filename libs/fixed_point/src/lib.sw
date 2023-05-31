@@ -1,9 +1,9 @@
 library;
 
-mod ufp32;
-mod ufp64;
-mod ufp128;
+pub mod ufp32;
+pub mod ufp64;
+pub mod ufp128;
 
-mod ifp64;
-mod ifp128;
-mod ifp256;
+pub mod ifp64;
+pub mod ifp128;
+pub mod ifp256;

@@ -1,11 +1,11 @@
 library;
 
-mod common;
-mod errors;
+pub mod common;
+pub mod errors;
 
-mod i8;
-mod i16;
-mod i32;
-mod i64;
-mod i128;
-mod i256;
+pub mod i8;
+pub mod i16;
+pub mod i32;
+pub mod i64;
+pub mod i128;
+pub mod i256;

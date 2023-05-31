@@ -1,8 +1,8 @@
 library;
 
-mod data_structures;
-mod errors;
-mod events;
+pub mod data_structures;
+pub mod errors;
+pub mod events;
 
 use data_structures::State;
 use errors::AccessError;

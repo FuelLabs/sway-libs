@@ -1,6 +1,6 @@
 library;
 
-mod token_metadata_structures;
+pub mod token_metadata_structures;
 
 use token_metadata_structures::NFTMetadata;
 use ::nft_core::{errors::InputError, nft_storage::{TOKEN_METADATA, TOKENS}, NFTCore};
