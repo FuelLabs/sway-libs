@@ -70,7 +70,8 @@ function App() {
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
-        toggleDrawer={() => setDrawerOpen(!drawerOpen)}
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
         setError={setError}
       />
 

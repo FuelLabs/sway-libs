@@ -56,6 +56,10 @@ export function FunctionParameters({
     [paramValues, setParamValues]
   );
 
+  if (!inputInstances.length) {
+    return <React.Fragment />;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label='function parameter table'>

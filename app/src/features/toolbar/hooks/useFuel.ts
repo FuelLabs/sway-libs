@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const globalWindow = typeof window !== 'undefined' ? window : ({} as Window);
+export const globalWindow =
+  typeof window !== 'undefined' ? window : ({} as Window);
 
 export function useFuel() {
   const [error, setError] = useState<string | undefined>();
@@ -12,7 +13,7 @@ export function useFuel() {
       if (globalWindow.fuel) {
         setFuel(globalWindow.fuel);
       } else {
-        setError('fuel not detected on the window!');
+        setError('Fuel wallet is not installed');
       }
       setLoading(false);
     }, 500);

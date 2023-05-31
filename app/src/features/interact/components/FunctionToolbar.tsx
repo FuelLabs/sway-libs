@@ -22,9 +22,11 @@ function FunctionToolbar({
 }: FunctionToolbarProps) {
   const [dryrun, setDryrun] = React.useState(true);
 
+  const title = parameters.length ? 'Parameters' : 'No Parameters';
+
   return (
     <Toolbar style={{ padding: '0 2px 0', justifyContent: 'space-between' }}>
-      <div style={{ float: 'left' }}>Parameters</div>
+      <div style={{ float: 'left' }}>{title}</div>
       <FormGroup
         style={{
           marginLeft: '15px',

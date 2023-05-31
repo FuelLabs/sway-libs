@@ -14,6 +14,7 @@ interface DeploymentButtonProps {
   setDeployState: (state: DeployState) => void;
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
+  setDrawerOpen: (open: boolean) => void;
   setError: (error: string) => void;
 }
 
@@ -26,14 +27,25 @@ export function DeploymentButton({
   setDeployState,
   networkState,
   setNetworkState,
+  setDrawerOpen,
   setError,
 }: DeploymentButtonProps) {
+  function handleError(error: Error) {
+    setDeployState(DeployState.NOT_DEPLOYED);
+    setError(`Deployment failed: ${error.message}`);
+  }
+
+  function handleSuccess(data: any) {
+    setDeployState(DeployState.DEPLOYED);
+    setContractId(data);
+    setDrawerOpen(true);
+  }
+
   const deployContractMutation = useDeployContract(
     abi,
     bytecode,
-    setContractId,
-    setDeployState,
-    setError
+    handleError,
+    handleSuccess
   );
 
   const onDeployClick = useCallback(() => {

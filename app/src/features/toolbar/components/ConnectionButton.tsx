@@ -3,7 +3,7 @@ import { DeployState, NetworkState } from '../../../utils/types';
 import { useConnection } from '../hooks/useConnection';
 import { ButtonSpinner } from '../../../components/shared';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { useFuel } from '../hooks/useFuel';
+import { globalWindow, useFuel } from '../hooks/useFuel';
 
 interface ConnectionButtonProps {
   networkState: NetworkState;

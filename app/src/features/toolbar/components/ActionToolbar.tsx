@@ -14,7 +14,8 @@ export interface ActionToolbarProps {
   networkState: NetworkState;
   setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
-  toggleDrawer: () => void;
+  drawerOpen: boolean;
+  setDrawerOpen: (open: boolean) => void;
   setError: (error: string) => void;
 }
 
@@ -26,7 +27,8 @@ function ActionToolbar({
   networkState,
   setNetworkState,
   setDeployState,
-  toggleDrawer,
+  drawerOpen,
+  setDrawerOpen,
   setError,
 }: ActionToolbarProps) {
   return (
@@ -51,11 +53,12 @@ function ActionToolbar({
         setDeployState={setDeployState}
         networkState={networkState}
         setNetworkState={setNetworkState}
+        setDrawerOpen={setDrawerOpen}
         setError={setError}
       />
       <SecondaryButton
         style={{ marginLeft: '15px' }}
-        onClick={toggleDrawer}
+        onClick={() => setDrawerOpen(!drawerOpen)}
         text='INTERACT'
         disabled={deployState !== DeployState.DEPLOYED}
         tooltip={

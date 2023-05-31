@@ -62,7 +62,7 @@ export function FunctionForm({
       />
 
       <FunctionParameters
-        inputInstances={inputInstances as InputInstance[]}
+        inputInstances={inputInstances}
         functionName={functionName}
         paramValues={paramValues}
         setParamValues={setParamValues}
