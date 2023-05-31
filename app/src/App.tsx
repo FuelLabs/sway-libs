@@ -14,7 +14,9 @@ const DRAWER_WIDTH = '50vw';
 
 function App() {
   // The current code in the editor.
-  const [code, setCode] = useState(loadCode() ?? DEFAULT_CONTRACT);
+  const [code, setCode] = useState(
+    loadCode().length ? loadCode() : DEFAULT_CONTRACT
+  );
 
   // The most recent code that the user has requested to compile.
   const [codeToCompile, setCodeToCompile] = useState<string | undefined>(
