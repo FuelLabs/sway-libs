@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { useFuel } from './useFuel';
 
 export function useProvider() {
-  const fuel = window?.fuel;
+  const [fuel, loading, error] = useFuel();
 
   const {
     data: provider,
@@ -27,7 +28,7 @@ export function useProvider() {
   );
 
   if (!fuel) {
-    return { provider, isLoading, isError: true };
+    return { provider, isLoading: loading, isError: !!error };
   }
 
   return { provider, isLoading, isError };

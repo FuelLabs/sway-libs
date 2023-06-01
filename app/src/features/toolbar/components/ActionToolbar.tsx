@@ -5,6 +5,7 @@ import { DeploymentButton } from './DeploymentButton';
 import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
+import { useFuel } from '../hooks/useFuel';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -27,6 +28,8 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
+  const [fuel] = useFuel();
+
   return (
     <div
       style={{
@@ -40,7 +43,7 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      {!!window?.fuel ? (
+      {!!fuel ? (
         <DeploymentButton
           abi={loadAbi()}
           bytecode={loadBytecode()}
