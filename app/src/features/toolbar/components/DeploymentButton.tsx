@@ -53,6 +53,7 @@ export function DeploymentButton({
     bytecode,
     handleError,
     handleSuccess,
+    updateLog,
     // Only attempt to fetch the wallet after the deploy button has been clicked. This prevents
     // the wallet from opening when the page first loads.
     deployState === DeployState.NOT_DEPLOYED
