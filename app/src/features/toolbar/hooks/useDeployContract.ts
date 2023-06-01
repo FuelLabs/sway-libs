@@ -9,14 +9,18 @@ export function useDeployContract(
   bytecode: string,
   onError: (error: any) => void,
   onSuccess: (data: any) => void,
-  disabled: boolean
+  isDisabled: boolean
 ) {
-  const { wallet } = useWallet(disabled);
+  const { wallet, isLoading: walletIsLoading } = useWallet(isDisabled);
 
   const mutation = useMutation(
     async () => {
       if (!wallet) {
-        throw new Error('Wallet is not connected');
+        throw new Error(
+          walletIsLoading
+            ? 'Connecting to wallet...'
+            : 'Failed to connect to wallet'
+        );
       }
 
       const contractIdPromise = new Promise(async (resolve, reject) => {
@@ -53,6 +57,8 @@ export function useDeployContract(
       return await Promise.race([contractIdPromise, timeoutPromise]);
     },
     {
+      // Retry once if the wallet is still loading.
+      retry: walletIsLoading && !wallet ? 1 : 0,
       onSuccess: onSuccess,
       onError: onError,
     }

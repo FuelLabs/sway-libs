@@ -4,6 +4,7 @@ import { useDeployContract } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
 import { useProvider } from '../hooks/useProvider';
+
 interface DeploymentButtonProps {
   abi: string;
   bytecode: string;
@@ -29,17 +30,39 @@ export function DeploymentButton({
 
   const networkUrl = provider?.url;
 
-  function handleError(error: Error) {
-    setDeployState(DeployState.NOT_DEPLOYED);
-    updateLog(`Deployment failed: ${error.message}`);
-  }
+  const handleError = useCallback(
+    (error: Error) => {
+      setDeployState(DeployState.NOT_DEPLOYED);
+      updateLog(`Deployment failed: ${error.message}`);
+    },
+    [setDeployState, updateLog]
+  );
 
-  function handleSuccess(data: any) {
-    setDeployState(DeployState.DEPLOYED);
-    setContractId(data);
-    setDrawerOpen(true);
-    updateLog(`Contract deployed at address: ${data}`);
-  }
+  const handleSuccess = useCallback(
+    (data: any) => {
+      setDeployState(DeployState.DEPLOYED);
+      setContractId(data);
+      setDrawerOpen(true);
+      updateLog(`Contract deployed at address: ${data}`);
+    },
+    [setContractId, setDeployState, setDrawerOpen, updateLog]
+  );
+
+  const deployContractMutation = useDeployContract(
+    abi,
+    bytecode,
+    handleError,
+    handleSuccess,
+    // Only attempt to fetch the wallet after the deploy button has been clicked. This prevents
+    // the wallet from opening when the page first loads.
+    deployState === DeployState.NOT_DEPLOYED
+  );
+
+  const onDeployClick = useCallback(async () => {
+    updateLog(`Deploying contract to ${networkUrl}`);
+    setDeployState(DeployState.DEPLOYING);
+    deployContractMutation.mutate();
+  }, [deployContractMutation, networkUrl, setDeployState, updateLog]);
 
   const { isDisabled, tooltip } = useMemo(() => {
     switch (deployState) {
@@ -61,22 +84,6 @@ export function DeploymentButton({
         };
     }
   }, [abi, bytecode, deployState, isCompiled, networkUrl]);
-
-  const deployContractMutation = useDeployContract(
-    abi,
-    bytecode,
-    handleError,
-    handleSuccess,
-    // Only enable the mutation after the deploy button is clicked. This prevents
-    // the wallet from opening when the page first loads.
-    isDisabled || deployState === DeployState.NOT_DEPLOYED
-  );
-
-  const onDeployClick = useCallback(async () => {
-    updateLog(`Deploying contract to ${networkUrl}`);
-    setDeployState(DeployState.DEPLOYING);
-    deployContractMutation.mutate();
-  }, [deployContractMutation, networkUrl, setDeployState, updateLog]);
 
   return (
     <SecondaryButton

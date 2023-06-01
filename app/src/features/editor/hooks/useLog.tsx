@@ -12,11 +12,16 @@ export function useLog() {
   const [resultsToAdd, setResultsToAdd] = useState<React.ReactElement[]>();
   const resultsToAddRef = React.useRef<React.ReactElement[]>();
 
-  const updateLog = useCallback((entry?: string | React.ReactElement[]) => {
-    if (!!entry) {
-      setResultsToAdd(typeof entry === 'string' ? [<div>{entry}</div>] : entry);
-    }
-  }, []);
+  const updateLog = useCallback(
+    (entry?: string | React.ReactElement[]) => {
+      if (!!entry) {
+        setResultsToAdd(
+          typeof entry === 'string' ? [<div>{entry}</div>] : entry
+        );
+      }
+    },
+    [setResultsToAdd]
+  );
 
   // Update the results to show only if there are new results to add.
   useEffect(() => {
