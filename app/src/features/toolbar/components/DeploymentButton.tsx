@@ -43,7 +43,7 @@ export function DeploymentButton({
       setDeployState(DeployState.DEPLOYED);
       setContractId(data);
       setDrawerOpen(true);
-      updateLog(`Contract deployed to ${networkUrl}`);
+      updateLog(`Contract was successfully deployed to ${networkUrl}`);
     },
     [setContractId, setDeployState, setDrawerOpen, updateLog, networkUrl]
   );
