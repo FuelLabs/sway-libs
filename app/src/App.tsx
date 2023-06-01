@@ -1,14 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import Editor from './features/editor/components/Editor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
-import { DEFAULT_CONTRACT } from './constants';
-import CompiledView from './features/editor/components/CompiledView';
+import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
-import { DeployState, NetworkState } from './utils/types';
-import ActionOverlay from './features/editor/components/ActionOverlay';
-import ErrorToast from './components/ErrorToast';
+import { DeployState } from './utils/types';
 import { loadCode, saveCode } from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/IntractionDrawer';
+import { useLog } from './features/editor/hooks/useLog';
 
 const DRAWER_WIDTH = '50vw';
 
@@ -24,17 +22,11 @@ function App() {
   // Whether or not the current code in the editor has been compiled.
   const [isCompiled, setIsCompiled] = useState(false);
 
-  // The compilation results.
-  const [results, setResults] = useState<React.ReactElement[]>([]);
-
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
 
-  // The network connection state.
-  const [networkState, setNetworkState] = useState(NetworkState.CAN_CONNECT);
-
-  // An error message to display to the user.
-  const [error, setError] = useState<string | undefined>(undefined);
+  // Functions for reading and writing to the log output.
+  const [log, updateLog] = useLog();
 
   // The contract ID of the deployed contract.
   const [contractId, setContractId] = useState('');
@@ -51,28 +43,32 @@ function App() {
     [setCode]
   );
 
-  useCompile(codeToCompile, setError, setIsCompiled, setResults);
+  const setError = useCallback(
+    (error: string | undefined) => {
+      updateLog(error);
+    },
+    [updateLog]
+  );
+
+  useCompile(codeToCompile, setError, setIsCompiled, updateLog);
 
   return (
     <div
       style={{
-        minHeight: '100vh',
+        height: 'calc(100vh - 30px)',
         padding: '15px',
         margin: '0px',
         background: '#F1F1F1',
       }}>
-      <ErrorToast message={error} onClose={() => setError(undefined)} />
       <ActionToolbar
         deployState={deployState}
         setContractId={setContractId}
         onCompile={() => setCodeToCompile(code)}
         isCompiled={isCompiled}
         setDeployState={setDeployState}
-        networkState={networkState}
-        setNetworkState={setNetworkState}
         drawerOpen={drawerOpen}
         setDrawerOpen={setDrawerOpen}
-        setError={setError}
+        updateLog={updateLog}
       />
 
       <div
@@ -80,15 +76,14 @@ function App() {
           marginRight: drawerOpen ? DRAWER_WIDTH : 0,
           transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
         }}>
-        <ActionOverlay onClick={() => onCodeChange(DEFAULT_CONTRACT)} />
         <Editor code={code} onChange={onCodeChange} />
-        <CompiledView results={results} />
+        <LogView results={log} />
       </div>
       <InteractionDrawer
         isOpen={drawerOpen}
         width={DRAWER_WIDTH}
         contractId={contractId}
-        setError={setError}
+        updateLog={updateLog}
       />
     </div>
   );

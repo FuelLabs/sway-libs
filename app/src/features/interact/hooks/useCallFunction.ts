@@ -10,7 +10,7 @@ interface CallFunctionProps {
   functionName: string;
   callType: CallType;
   setResponse: (response: string) => void;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 export function useCallFunction({
@@ -19,12 +19,18 @@ export function useCallFunction({
   functionName,
   callType,
   setResponse,
-  setError,
+  updateLog,
 }: CallFunctionProps) {
   const { contract } = useContract(contractId);
 
   const mutation = useMutation(
     async () => {
+      updateLog(
+        `Calling ${functionName} with parameters ${JSON.stringify(parameters)}${
+          callType === 'dryrun' ? ' (DRY RUN)' : ''
+        }`
+      );
+
       if (!contract) throw new Error('Contract not connected');
 
       const transactionResult = await contract.functions[functionName](
@@ -41,7 +47,7 @@ export function useCallFunction({
   );
 
   function handleError(error: any) {
-    setError(error);
+    updateLog(error);
     setResponse(`error: ${JSON.stringify(error?.message)}`);
   }
 

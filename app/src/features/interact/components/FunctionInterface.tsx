@@ -17,7 +17,7 @@ export interface FunctionInterfaceProps {
   functionName: string;
   response: string;
   setResponse: (response: string) => void;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 export function FunctionInterface({
@@ -26,7 +26,7 @@ export function FunctionInterface({
   functionName,
   response,
   setResponse,
-  setError,
+  updateLog,
 }: FunctionInterfaceProps) {
   const toInputInstance = useCallback((input: SdkParamType): InputInstance => {
     const typeInfo = getTypeInfo(input);
@@ -73,7 +73,7 @@ export function FunctionInterface({
       inputInstances={inputInstances}
       response={response}
       setResponse={setResponse}
-      setError={setError}
+      updateLog={updateLog}
     />
   );
 }

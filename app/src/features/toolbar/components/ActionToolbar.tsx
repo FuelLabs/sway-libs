@@ -1,22 +1,21 @@
 import React from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
-import { DeployState, NetworkState } from '../../../utils/types';
+import { DeployState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
 import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
+import { useFuel } from '../hooks/useFuel';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
   setContractId: (contractId: string) => void;
   onCompile: () => void;
   isCompiled: boolean;
-  networkState: NetworkState;
-  setNetworkState: (state: NetworkState) => void;
   setDeployState: (state: DeployState) => void;
   drawerOpen: boolean;
   setDrawerOpen: (open: boolean) => void;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 function ActionToolbar({
@@ -24,13 +23,13 @@ function ActionToolbar({
   setContractId,
   onCompile,
   isCompiled,
-  networkState,
-  setNetworkState,
   setDeployState,
   drawerOpen,
   setDrawerOpen,
-  setError,
+  updateLog,
 }: ActionToolbarProps) {
+  const [fuel] = useFuel();
+
   return (
     <div
       style={{
@@ -44,20 +43,29 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      <DeploymentButton
-        abi={loadAbi()}
-        bytecode={loadBytecode()}
-        isCompiled={isCompiled}
-        setContractId={setContractId}
-        deployState={deployState}
-        setDeployState={setDeployState}
-        networkState={networkState}
-        setNetworkState={setNetworkState}
-        setDrawerOpen={setDrawerOpen}
-        setError={setError}
-      />
+      {!!fuel ? (
+        <DeploymentButton
+          abi={loadAbi()}
+          bytecode={loadBytecode()}
+          isCompiled={isCompiled}
+          setContractId={setContractId}
+          deployState={deployState}
+          setDeployState={setDeployState}
+          setDrawerOpen={setDrawerOpen}
+          updateLog={updateLog}
+        />
+      ) : (
+        <SecondaryButton
+          style={{ minWidth: '115px', marginLeft: '15px' }}
+          onClick={() =>
+            window.open('https://wallet.fuel.network/docs/install/', '_blank')
+          }
+          text='INSTALL'
+          tooltip={'Install the fuel wallet to deploy contracts'}
+        />
+      )}
       <SecondaryButton
-        style={{ marginLeft: '15px' }}
+        style={{ minWidth: '115px', marginLeft: '15px' }}
         onClick={() => setDrawerOpen(!drawerOpen)}
         text='INTERACT'
         disabled={deployState !== DeployState.DEPLOYED}

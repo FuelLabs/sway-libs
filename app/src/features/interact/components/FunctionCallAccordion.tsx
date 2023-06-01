@@ -14,7 +14,7 @@ export interface FunctionCallAccordionProps {
   inputInstances: InputInstance[];
   response?: string;
   setResponse: (response: string) => void;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 export function FunctionCallAccordion({
@@ -23,7 +23,7 @@ export function FunctionCallAccordion({
   inputInstances,
   response,
   setResponse,
-  setError,
+  updateLog,
 }: FunctionCallAccordionProps) {
   return (
     <Accordion key={contractId + functionName}>
@@ -38,7 +38,7 @@ export function FunctionCallAccordion({
           functionName={functionName}
           inputInstances={inputInstances}
           setResponse={setResponse}
-          setError={setError}
+          updateLog={updateLog}
         />
         <ResponseCard
           style={{ marginTop: '15px' }}

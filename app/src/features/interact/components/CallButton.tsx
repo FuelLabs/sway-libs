@@ -9,7 +9,7 @@ interface CallButtonProps {
   parameters: CallableParamValue[];
   callType: CallType;
   setResponse: (response: string) => void;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 export function CallButton({
@@ -18,7 +18,7 @@ export function CallButton({
   parameters,
   callType,
   setResponse,
-  setError,
+  updateLog,
 }: CallButtonProps) {
   const functionMutation = useCallFunction({
     contractId,
@@ -26,7 +26,7 @@ export function CallButton({
     parameters,
     callType,
     setResponse,
-    setError,
+    updateLog,
   });
 
   function onFunctionClick() {

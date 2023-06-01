@@ -6,14 +6,14 @@ export interface InteractionDrawerProps {
   isOpen: boolean;
   width: string;
   contractId: string;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 function InteractionDrawer({
   isOpen,
   width,
   contractId,
-  setError,
+  updateLog,
 }: InteractionDrawerProps) {
   return (
     <Drawer
@@ -36,7 +36,7 @@ function InteractionDrawer({
         style={{
           width: '100%',
         }}>
-        <ContractInterface contractId={contractId} setError={setError} />
+        <ContractInterface contractId={contractId} updateLog={updateLog} />
       </div>
     </Drawer>
   );

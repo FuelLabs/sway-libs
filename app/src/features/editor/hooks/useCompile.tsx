@@ -1,12 +1,7 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
-import {
-  loadAbi,
-  loadBytecode,
-  saveAbi,
-  saveBytecode,
-} from '../../../utils/localStorage';
+import { saveAbi, saveBytecode } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 
 function toResults(
@@ -28,26 +23,17 @@ function toResults(
   ];
 }
 
-function loadResults(): React.ReactElement[] | undefined {
-  let abi = loadAbi();
-  let bytecode = loadBytecode();
-  if (!abi.length || !bytecode.length) {
-    return undefined;
-  }
-  return toResults(bytecode, abi);
-}
-
 export function useCompile(
   code: string | undefined,
   onError: (error: string | undefined) => void,
   setIsCompiled: (isCompiled: boolean) => void,
-  setResults: (results: React.ReactElement[]) => void
+  setResults: (entry: React.ReactElement[]) => void
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
 
   useEffect(() => {
     if (!code) {
-      setResults(loadResults() ?? [<>Click 'Compile' to build your code.</>]);
+      setResults([<>Click 'Compile' to build your code.</>]);
       return;
     }
     if (!code?.length) {

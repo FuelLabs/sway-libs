@@ -7,12 +7,12 @@ import { CopyableHex } from '../../../components/shared';
 const FUNCTION_COUNT_LIMIT = 1000;
 interface ContractInterfaceProps {
   contractId: string;
-  setError: (error: string) => void;
+  updateLog: (entry: string) => void;
 }
 
 export function ContractInterface({
   contractId,
-  setError,
+  updateLog,
 }: ContractInterfaceProps) {
   // Key: contract.id + functionName
   // Value: API response
@@ -42,7 +42,7 @@ export function ContractInterface({
             [contractId + functionFragment.name]: response,
           })
         }
-        setError={setError}
+        updateLog={updateLog}
       />
     </div>
   ));
