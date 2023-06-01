@@ -43,9 +43,9 @@ export function DeploymentButton({
       setDeployState(DeployState.DEPLOYED);
       setContractId(data);
       setDrawerOpen(true);
-      updateLog(`Contract deployed at address: ${data}`);
+      updateLog(`Contract deployed to ${networkUrl}`);
     },
-    [setContractId, setDeployState, setDrawerOpen, updateLog]
+    [setContractId, setDeployState, setDrawerOpen, updateLog, networkUrl]
   );
 
   const deployContractMutation = useDeployContract(
@@ -59,17 +59,17 @@ export function DeploymentButton({
   );
 
   const onDeployClick = useCallback(async () => {
-    updateLog(`Deploying contract to ${networkUrl}`);
+    updateLog(`Deploying contract...`);
     setDeployState(DeployState.DEPLOYING);
     deployContractMutation.mutate();
-  }, [deployContractMutation, networkUrl, setDeployState, updateLog]);
+  }, [deployContractMutation, setDeployState, updateLog]);
 
   const { isDisabled, tooltip } = useMemo(() => {
     switch (deployState) {
       case DeployState.DEPLOYING:
         return {
           isDisabled: true,
-          tooltip: `Deploying contract to ${networkUrl}`,
+          tooltip: `Deploying contract`,
         };
       case DeployState.NOT_DEPLOYED:
         return {
@@ -83,7 +83,7 @@ export function DeploymentButton({
             'Contract is deployed. You can interact with the deployed contract or re-compile and deploy a new contract.',
         };
     }
-  }, [abi, bytecode, deployState, isCompiled, networkUrl]);
+  }, [abi, bytecode, deployState, isCompiled]);
 
   return (
     <SecondaryButton
