@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useFuel } from './useFuel';
 
 export function useWallet() {
-  const [fuel, error, loading] = useFuel();
+  const fuel = window?.fuel;
 
   const {
     data: wallet,
@@ -29,7 +28,7 @@ export function useWallet() {
   );
 
   if (!fuel) {
-    return { wallet, isLoading: loading, isError: !!error };
+    return { wallet, isLoading, isError: true };
   }
 
   return { wallet, isLoading, isError };
