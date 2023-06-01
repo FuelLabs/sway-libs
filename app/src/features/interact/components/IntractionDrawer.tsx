@@ -36,7 +36,9 @@ function InteractionDrawer({
         style={{
           width: '100%',
         }}>
-        <ContractInterface contractId={contractId} updateLog={updateLog} />
+        {isOpen && (
+          <ContractInterface contractId={contractId} updateLog={updateLog} />
+        )}
       </div>
     </Drawer>
   );
