@@ -28,7 +28,7 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
-  const [fuel, _error, isLoading] = useFuel();
+  const { fuel, isLoading } = useFuel();
 
   return (
     <div

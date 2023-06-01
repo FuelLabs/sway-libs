@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const globalWindow =
   typeof window !== 'undefined' ? window : ({} as Window);
@@ -20,5 +20,5 @@ export function useFuel() {
     return () => clearTimeout(timeout);
   }, []);
 
-  return [fuel, error, isLoading] as const;
+  return { fuel, error, isLoading };
 }

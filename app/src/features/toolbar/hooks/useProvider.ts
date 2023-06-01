@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 
 export function useProvider() {
-  const [fuel, loading, error] = useFuel();
+  const { fuel, isLoading: loading, error } = useFuel();
 
   const {
     data: provider,

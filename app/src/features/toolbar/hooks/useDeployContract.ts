@@ -19,7 +19,6 @@ export function useDeployContract(
       if (!wallet) {
         if (walletIsLoading) {
           updateLog('Connecting to wallet...');
-          return '';
         } else {
           throw new Error('Failed to connect to wallet');
         }

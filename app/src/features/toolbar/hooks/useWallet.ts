@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 
 export function useWallet(disabled?: boolean) {
-  const [fuel, error, loading] = useFuel();
+  const { fuel, error, isLoading: loading } = useFuel();
 
   const {
     data: wallet,
