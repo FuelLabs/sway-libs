@@ -8,9 +8,10 @@ export function useDeployContract(
   abi: string,
   bytecode: string,
   onError: (error: any) => void,
-  onSuccess: (data: any) => void
+  onSuccess: (data: any) => void,
+  disabled: boolean
 ) {
-  const { wallet } = useWallet();
+  const { wallet } = useWallet(disabled);
 
   const mutation = useMutation(
     async () => {

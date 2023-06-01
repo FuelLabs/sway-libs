@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useFuel } from './useFuel';
 
-export function useWallet() {
+export function useWallet(disabled?: boolean) {
   const [fuel, error, loading] = useFuel();
 
   const {
@@ -24,7 +24,7 @@ export function useWallet() {
       }
     },
     {
-      enabled: !!fuel,
+      enabled: !!fuel && !disabled,
     }
   );
 

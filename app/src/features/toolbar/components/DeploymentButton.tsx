@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { DeployState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useCallback, useMemo } from 'react';
 import { useProvider } from '../hooks/useProvider';
 interface DeploymentButtonProps {
   abi: string;
@@ -42,19 +41,6 @@ export function DeploymentButton({
     updateLog(`Contract deployed at address: ${data}`);
   }
 
-  const deployContractMutation = useDeployContract(
-    abi,
-    bytecode,
-    handleError,
-    handleSuccess
-  );
-
-  const onDeployClick = useCallback(async () => {
-    updateLog(`Deploying contract to ${networkUrl}`);
-    setDeployState(DeployState.DEPLOYING);
-    deployContractMutation.mutate();
-  }, [deployContractMutation, networkUrl, setDeployState, updateLog]);
-
   const { isDisabled, tooltip } = useMemo(() => {
     switch (deployState) {
       case DeployState.DEPLOYING:
@@ -75,6 +61,22 @@ export function DeploymentButton({
         };
     }
   }, [abi, bytecode, deployState, isCompiled, networkUrl]);
+
+  const deployContractMutation = useDeployContract(
+    abi,
+    bytecode,
+    handleError,
+    handleSuccess,
+    // Only enable the mutation after the deploy button is clicked. This prevents
+    // the wallet from opening when the page first loads.
+    isDisabled || deployState === DeployState.NOT_DEPLOYED
+  );
+
+  const onDeployClick = useCallback(async () => {
+    updateLog(`Deploying contract to ${networkUrl}`);
+    setDeployState(DeployState.DEPLOYING);
+    deployContractMutation.mutate();
+  }, [deployContractMutation, networkUrl, setDeployState, updateLog]);
 
   return (
     <SecondaryButton

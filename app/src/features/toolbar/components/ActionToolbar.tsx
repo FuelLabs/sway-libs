@@ -28,7 +28,7 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
-  const [fuel] = useFuel();
+  const [fuel, _error, isLoading] = useFuel();
 
   return (
     <div
@@ -43,7 +43,16 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      {!!fuel ? (
+      {!fuel && !isLoading ? (
+        <SecondaryButton
+          style={{ minWidth: '115px', marginLeft: '15px' }}
+          onClick={() =>
+            window.open('https://wallet.fuel.network/docs/install/', '_blank')
+          }
+          text='INSTALL'
+          tooltip={'Install the fuel wallet to deploy contracts'}
+        />
+      ) : (
         <DeploymentButton
           abi={loadAbi()}
           bytecode={loadBytecode()}
@@ -53,15 +62,6 @@ function ActionToolbar({
           setDeployState={setDeployState}
           setDrawerOpen={setDrawerOpen}
           updateLog={updateLog}
-        />
-      ) : (
-        <SecondaryButton
-          style={{ minWidth: '115px', marginLeft: '15px' }}
-          onClick={() =>
-            window.open('https://wallet.fuel.network/docs/install/', '_blank')
-          }
-          text='INSTALL'
-          tooltip={'Install the fuel wallet to deploy contracts'}
         />
       )}
       <SecondaryButton
