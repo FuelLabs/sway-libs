@@ -24,14 +24,14 @@ Once imported, using the Merkle Proof library is as simple as calling the desire
 
 ## Using the Merkle Proof Library in Fuels-rs
 
-To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, use the [Fuel-Merkle](https://github.com/FuelLabs/fuel-merkle) crate. 
+To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, use the [Fuel-Merkle](https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle) crate. 
 
 ### Importing Into Your Project
 
 The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
 ```
-fuel-merkle = { version = "0.3" }
+fuel-merkle = { version = "0.33.0" }
 ```
 
 ### Importing Into Your Rust File
@@ -39,7 +39,10 @@ fuel-merkle = { version = "0.3" }
 The following should be added to your Rust file to use the Fuel-Merkle crate.
 
 ```rust
-use fuel_merkle::binary::in_memory::MerkleTree;
+use fuel_merkle::{
+    binary::in_memory::MerkleTree,
+    common::Bytes32,
+};
 ```
 
 ### Using Fuel-Merkle

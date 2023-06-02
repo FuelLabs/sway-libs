@@ -1,6 +1,6 @@
 use fuel_merkle::{
     binary::in_memory::MerkleTree,
-    common::{empty_sum_sha256, Bytes32, LEAF, NODE},
+    common::{empty_sum_sha256, Bytes32},
 };
 use fuels::{
     prelude::{
@@ -15,6 +15,9 @@ abigen!(Contract(
     name = "TestMerkleProofLib",
     abi = "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
 ));
+
+pub const NODE: u8 = 0x01;
+pub const LEAF: u8 = 0x00;
 
 pub mod abi_calls {
 
