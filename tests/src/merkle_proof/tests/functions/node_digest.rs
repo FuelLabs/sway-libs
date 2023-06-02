@@ -1,8 +1,9 @@
 use crate::merkle_proof::tests::utils::{
     abi_calls::node_digest,
     test_helpers::{build_tree, merkle_proof_instance},
+    LEAF, NODE,
 };
-use fuel_merkle::common::{Bytes32, LEAF, NODE};
+use fuel_merkle::common::Bytes32;
 use fuels::types::Bits256;
 use sha2::{Digest, Sha256};
 
