@@ -5,7 +5,7 @@ import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
 import { DeployState } from './utils/types';
 import { loadCode, saveCode } from './utils/localStorage';
-import InteractionDrawer from './features/interact/components/IntractionDrawer';
+import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
 
 const DRAWER_WIDTH = '50vw';

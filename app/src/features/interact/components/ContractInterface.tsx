@@ -16,7 +16,9 @@ export function ContractInterface({
 }: ContractInterfaceProps) {
   // Key: contract.id + functionName
   // Value: API response
-  const [responses, setResponses] = useState<Record<string, string>>({});
+  const [responses, setResponses] = useState<Record<string, string | Error>>(
+    {}
+  );
 
   const { contract, functionNames } = useContractFunctions(contractId);
 
@@ -36,7 +38,7 @@ export function ContractInterface({
         functionFragment={functionFragment}
         functionName={functionFragment.name}
         response={responses[contractId + functionFragment.name]}
-        setResponse={(response: string) =>
+        setResponse={(response: string | Error) =>
           setResponses({
             ...responses,
             [contractId + functionFragment.name]: response,

@@ -15,8 +15,8 @@ export interface FunctionInterfaceProps {
   contractId: string;
   functionFragment: FunctionFragment | undefined;
   functionName: string;
-  response: string;
-  setResponse: (response: string) => void;
+  response?: string | Error;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 
@@ -58,6 +58,12 @@ export function FunctionInterface({
     }
   }, []);
 
+  const outputType = useMemo(() => {
+    return functionFragment?.outputs
+      ? getTypeInfo(functionFragment.outputs[0]).literal
+      : undefined;
+  }, [functionFragment]);
+
   const inputInstances: InputInstance[] = useMemo(
     () =>
       functionFragment?.inputs.map((input) =>
@@ -71,6 +77,7 @@ export function FunctionInterface({
       contractId={contractId}
       functionName={functionName}
       inputInstances={inputInstances}
+      outputType={outputType}
       response={response}
       setResponse={setResponse}
       updateLog={updateLog}

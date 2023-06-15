@@ -11,7 +11,7 @@ interface FunctionFormProps {
   contractId: string;
   functionName: string;
   inputInstances: InputInstance[];
-  setResponse: (response: string) => void;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 

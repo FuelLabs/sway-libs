@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { ParamTypeLiteral } from './FunctionParameters';
 
 interface ResponseCardProps {
-  response: React.ReactElement[] | string;
+  response?: string | Error;
+  outputType?: ParamTypeLiteral;
   style?: React.CSSProperties;
 }
 
-export function ResponseCard({ response, style }: ResponseCardProps) {
+export function ResponseCard({
+  response,
+  outputType,
+  style,
+}: ResponseCardProps) {
+  const formattedResponse = useMemo(() => {
+    if (!response) return 'The response will appear here.';
+    if (response instanceof Error) return response.toString();
+    if (!response.length) return 'Waiting for reponse...';
+
+    switch (outputType) {
+      case 'number': {
+        return Number(JSON.parse(response));
+      }
+      default: {
+        return response;
+      }
+    }
+  }, [outputType, response]);
+
   return (
     <Card
       style={{
@@ -24,11 +45,7 @@ export function ResponseCard({ response, style }: ResponseCardProps) {
           padding: '2px 18px 2px',
           minHeight: '44px',
         }}>
-        {
-          <pre>
-            {response?.length === 0 ? 'Waiting for reponse...' : response}
-          </pre>
-        }
+        {<pre>{formattedResponse}</pre>}
       </CardContent>
     </Card>
   );
