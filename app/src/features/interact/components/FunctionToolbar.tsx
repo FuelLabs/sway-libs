@@ -9,7 +9,7 @@ interface FunctionToolbarProps {
   contractId: string;
   functionName: string;
   parameters: CallableParamValue[];
-  setResponse: (response: string) => void;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 

@@ -4,7 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import FormLabel from '@mui/material/FormLabel';
-import { InputInstance } from './FunctionParameters';
+import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
 import { ResponseCard } from './ResponseCard';
 
@@ -12,8 +12,9 @@ export interface FunctionCallAccordionProps {
   contractId: string;
   functionName: string;
   inputInstances: InputInstance[];
-  response?: string;
-  setResponse: (response: string) => void;
+  outputType?: ParamTypeLiteral;
+  response?: string | Error;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 
@@ -21,6 +22,7 @@ export function FunctionCallAccordion({
   contractId,
   functionName,
   inputInstances,
+  outputType,
   response,
   setResponse,
   updateLog,
@@ -42,7 +44,8 @@ export function FunctionCallAccordion({
         />
         <ResponseCard
           style={{ marginTop: '15px' }}
-          response={response ?? 'The response will appear here.'}
+          outputType={outputType}
+          response={response}
         />
       </AccordionDetails>
     </Accordion>

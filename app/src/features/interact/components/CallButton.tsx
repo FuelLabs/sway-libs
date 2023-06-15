@@ -8,7 +8,7 @@ interface CallButtonProps {
   functionName: string;
   parameters: CallableParamValue[];
   callType: CallType;
-  setResponse: (response: string) => void;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 

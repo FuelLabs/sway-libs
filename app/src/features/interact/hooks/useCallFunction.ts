@@ -9,7 +9,7 @@ interface CallFunctionProps {
   contractId: string;
   functionName: string;
   callType: CallType;
-  setResponse: (response: string) => void;
+  setResponse: (response: string | Error) => void;
   updateLog: (entry: string) => void;
 }
 
@@ -47,8 +47,8 @@ export function useCallFunction({
   );
 
   function handleError(error: any) {
-    updateLog(error);
-    setResponse(`error: ${JSON.stringify(error?.message)}`);
+    updateLog(`Function call failed. Error: ${error?.message}`);
+    setResponse(new Error(error?.message));
   }
 
   function handleSuccess(data: any) {
