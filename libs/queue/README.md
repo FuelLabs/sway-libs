@@ -1,4 +1,4 @@
-Place Sway Queue Logo Here
+(Place Sway Queue Logo Here)
 
 # Overview
 
