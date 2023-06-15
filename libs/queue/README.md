@@ -1,6 +1,6 @@
 # Overview
 
-The Queue library provides an implementation of a queue data structure. A Queue is a linear structure which follows the First-In-First-Out (FIFO) principle. This means that the elements added first are the ones that get removed first.
+A Queue is a linear structure which follows the First-In-First-Out (FIFO) principle. This means that the elements added first are the ones that get removed first.
 
 The `Queue<T>` is a structure with a generic type parameter T. The elements in the queue are stored as a `Vec<T>`. The data structure is created empty and is growable.
 
