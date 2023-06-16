@@ -8,7 +8,7 @@ For more information about implementation and specifications, please see the [SP
 
 ## Getting Started
 
-To use the Queue library, you need to add it to the Forc.toml file and then import it into your Sway project. For more details on how to add Sway-libs as a dependency to your Forc.toml, refer to the [README.md](./README.md).
+To use the Queue library, you need to add it to the Forc.toml file and then import it into your Sway project. For more details on how to add Sway-libs as a dependency to your Forc.toml, refer to the [README.md](../../README.md).
 
 ```rust
 use queue::Queue;
