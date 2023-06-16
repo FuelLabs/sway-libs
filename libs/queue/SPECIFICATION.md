@@ -12,7 +12,7 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 ## Use Cases
 
-The Queue library can be used as a data structure to retrieve items in the order that they were introduced. Example uses include preserving the chronological order of events such as server requests, scheduling tasks, or traversing Binary Search Trees (BST).
+The Queue library can be used as a data structure to retrieve items in the order that they were introduced. Examples where this is useful include, preserving the chronological order of events such as server requests, scheduling tasks, or traversing Binary Search Trees (BST).
 
 ## Public Functions
 
