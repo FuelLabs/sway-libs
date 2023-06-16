@@ -8,7 +8,7 @@ The `Queue<T>` is a linear structure with a generic type parameter `T`. The elem
 
 ## Use Cases
 
-The Queue library can be used First-In-First-Out data structure when you want to get items out in the order that they are added.
+The Queue library can be used as a data structure to retrieve items in the order that they were introduced. This is useful for preserving the chronological order of events such as server requests, scheduling tasks, or traversing Binary Search Trees (BST).
 
 ## Public Functions
 
