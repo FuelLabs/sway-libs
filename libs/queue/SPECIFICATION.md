@@ -30,7 +30,7 @@ The Queue library can be used as a data structure to retrieve items in the order
 
 ### `enqueue()`
 
-- Adds the item into the `Queue`
+- Adds an item into the `Queue`
 
 ### `dequeue()`
 
