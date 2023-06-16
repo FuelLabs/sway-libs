@@ -30,7 +30,7 @@ The Queue library can be used First-In-First-Out data structure when you want to
 
 ### `dequeue()`
 
-- Removes an element from the `Queue`
+- Removes an item from the `Queue`
 
 ### `peek()`
 
