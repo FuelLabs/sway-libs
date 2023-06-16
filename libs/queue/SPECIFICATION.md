@@ -4,7 +4,11 @@ This document provides an overview of the Queue library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
-The `Queue<T>` is a linear structure with a generic type parameter `T`. The elements in the queue are stored as a `Vec<T>`. Queues are growable, operate in a First-In-First-Out (FIFO) manner, and are created empty.
+### Traits of the `Queue`
+
+- The `Queue<T>` is a linear structure with a generic type parameter `T`.
+- The elements in the queue are stored as a `Vec<T>`.
+- Queues are growable, operate in a First-In-First-Out (FIFO) manner, and are created empty.
 
 ## Use Cases
 
