@@ -4,8 +4,6 @@ A Queue is a linear structure which follows the First-In-First-Out (FIFO) princi
 
 For more information about implementation and specifications, please see the [SPECIFICATION.md](./SPECIFICATION.md).
 
-> **Note** The Queue<T> type in this library is different from built-in arrays and vectors due to its unique characteristics, especially its operation in FIFO manner.
-
 # Using the Library
 
 ## Getting Started
