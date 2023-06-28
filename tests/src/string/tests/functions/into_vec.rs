@@ -1,4 +1,4 @@
-use crate::string::tests::utils::{abi_calls::as_vec, test_helpers::setup};
+use crate::string::tests::utils::{abi_calls::into_vec, test_helpers::setup};
 
 mod success {
 
@@ -8,6 +8,6 @@ mod success {
     async fn returns_vec() {
         let instance = setup().await;
 
-        as_vec(&instance).await;
+        into_vec(&instance).await;
     }
 }

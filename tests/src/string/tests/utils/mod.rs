@@ -20,8 +20,8 @@ pub mod abi_calls {
         contract.methods().test_append().call().await.unwrap()
     }
 
-    pub async fn as_vec(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
-        contract.methods().test_as_vec().call().await.unwrap()
+    pub async fn into_vec(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
+        contract.methods().test_into_vec().call().await.unwrap()
     }
 
     pub async fn capacity(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
@@ -32,8 +32,8 @@ pub mod abi_calls {
         contract.methods().test_clear().call().await.unwrap()
     }
 
-    pub async fn from(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
-        contract.methods().test_from().call().await.unwrap()
+    pub async fn from_bytes(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
+        contract.methods().test_from_bytes().call().await.unwrap()
     }
 
     pub async fn from_raw_slice(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
@@ -45,16 +45,16 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn from_utf8(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
-        contract.methods().test_from_utf8().call().await.unwrap()
+    pub async fn from_vec(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
+        contract.methods().test_from_vec().call().await.unwrap()
     }
 
     pub async fn insert(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
         contract.methods().test_insert().call().await.unwrap()
     }
 
-    pub async fn into(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
-        contract.methods().test_into().call().await.unwrap()
+    pub async fn into_bytes(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {
+        contract.methods().test_into_bytes().call().await.unwrap()
     }
 
     pub async fn into_raw_slice(contract: &StringTestLib<WalletUnlocked>) -> FuelCallResponse<()> {

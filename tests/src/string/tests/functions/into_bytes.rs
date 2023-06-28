@@ -1,4 +1,4 @@
-use crate::string::tests::utils::{abi_calls::into, test_helpers::setup};
+use crate::string::tests::utils::{abi_calls::into_bytes, test_helpers::setup};
 
 mod success {
 
@@ -8,6 +8,6 @@ mod success {
     async fn returns_bytes() {
         let instance = setup().await;
 
-        into(&instance).await;
+        into_bytes(&instance).await;
     }
 }
