@@ -16,10 +16,6 @@ The String library can be used anytime a string's length is unknown at compile t
 
 Joins two `String` instances into a single larger `String`. 
 
-### `as_vec()`
-
-Convert the `String` struct to a `Vec` of `u8` bytes. 
-
 ### `capacity()`
 
 Returns the total amount of memory on the heap allocated to the `String` which can be filled with bytes. 
@@ -32,11 +28,7 @@ Truncates the `String` to a length of 0 and will appear empty. This does not cle
 
 ### `from()`
 
-A new instance of a `String` will be created from the `Bytes` type.
-
-### `from_utf8()`
-
-A new instance of a `String` will be created from a vector of `u8`'s.
+A new instance of a `String` will be created from `Bytes`, `raw_slice`, or `Vec<u8>`.
 
 ### `insert()`
 
@@ -44,7 +36,7 @@ Inserts a new byte at the specified index in the `String`.
 
 ### `into()`
 
-Convert the `String` struct to the `Bytes` type. 
+Convert the `String` struct to a `Vec` of `u8` bytes, `raw_slice`, or `Bytes`. 
 
 ### `is_empty()`
 
