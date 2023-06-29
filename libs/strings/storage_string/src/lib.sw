@@ -77,7 +77,7 @@ impl StorableSlice<String> for StorageKey<StorageString> {
     fn read_slice(self) -> Option<String> {
         match read_slice(self.slot) {
             Option::Some(slice) => {
-                Option::Some(String::from_raw_slice(slice))
+                Option::Some(String::from(slice))
             },
             Option::None => Option::None,
         }

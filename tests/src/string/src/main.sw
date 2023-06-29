@@ -15,15 +15,15 @@ const NUMBER8 = 8u8;
 
 abi StringTest {
     fn test_append();
-    fn test_as_vec();
     fn test_capacity();
     fn test_clear();
-    fn test_from();
+    fn test_from_bytes();
     fn test_from_raw_slice();
-    fn test_from_utf8();
+    fn test_from_vec();
     fn test_insert();
-    fn test_into();
+    fn test_into_bytes();
     fn test_into_raw_slice();
+    fn test_into_vec();
     fn test_is_empty();
     fn test_len();
     fn test_new();
@@ -62,26 +62,6 @@ impl StringTest for Contract {
         assert(string1.nth(3).unwrap() == NUMBER3);
         assert(string1.nth(4).unwrap() == NUMBER4);
         assert(string1.nth(5).unwrap() == NUMBER5);
-    }
-
-    fn test_as_vec() {
-        let mut string = String::new();
-
-        let bytes = string.as_vec();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-
-        string.push(NUMBER0);
-        let bytes = string.as_vec();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
-
-        string.push(NUMBER1);
-        let mut bytes = string.as_vec();
-        assert(bytes.len() == string.len());
-        assert(bytes.capacity() == string.capacity());
-        assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
     }
 
     fn test_capacity() {
@@ -156,7 +136,7 @@ impl StringTest for Contract {
         assert(string.is_empty());
     }
 
-    fn test_from() {
+    fn test_from_bytes() {
         let mut bytes = Bytes::new();
 
         bytes.push(NUMBER0);
@@ -183,14 +163,14 @@ impl StringTest for Contract {
         bytes.push(NUMBER4);
 
         let raw_slice = bytes.as_raw_slice();
-        let mut string_from_slice = String::from_raw_slice(raw_slice);
+        let mut string_from_slice = String::from(raw_slice);
         assert(bytes.len() == string_from_slice.len());
         assert(bytes.get(0).unwrap() == string_from_slice.nth(0).unwrap());
         assert(bytes.get(1).unwrap() == string_from_slice.nth(1).unwrap());
         assert(bytes.get(2).unwrap() == string_from_slice.nth(2).unwrap());
     }
 
-    fn test_from_utf8() {
+    fn test_from_vec() {
         let mut vec: Vec<u8> = Vec::new();
 
         vec.push(NUMBER0);
@@ -199,7 +179,7 @@ impl StringTest for Contract {
         vec.push(NUMBER3);
         vec.push(NUMBER4);
 
-        let mut string_from_uft8 = String::from_utf8(vec);
+        let mut string_from_uft8 = String::from(vec);
         assert(vec.len() == string_from_uft8.len());
         assert(vec.capacity() == string_from_uft8.capacity());
         assert(vec.get(0).unwrap() == string_from_uft8.nth(0).unwrap());
@@ -229,21 +209,21 @@ impl StringTest for Contract {
         assert(string.nth(string.len() - 2).unwrap() == NUMBER5);
     }
 
-    fn test_into() {
+    fn test_into_bytes() {
         let mut string = String::new();
 
-        let bytes = string.into();
+        let bytes: Bytes = string.into();
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
 
         string.push(NUMBER0);
-        let bytes = string.into();
+        let bytes: Bytes = string.into();
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
         assert(bytes.get(0).unwrap() == string.nth(0).unwrap());
 
         string.push(NUMBER1);
-        let mut bytes = string.into();
+        let mut bytes: Bytes = string.into();
         assert(bytes.len() == string.len());
         assert(bytes.capacity() == string.capacity());
         assert(bytes.get(1).unwrap() == string.nth(1).unwrap());
@@ -259,22 +239,49 @@ impl StringTest for Contract {
     fn test_into_raw_slice() {
         let mut string = String::new();
 
-        let raw_slice: raw_slice = string.as_raw_slice();
+        let raw_slice: raw_slice = string.into();
         assert(raw_slice.number_of_bytes() == string.len());
 
         string.push(NUMBER0);
-        let raw_slice = string.as_raw_slice();
+        let raw_slice: raw_slice = string.into();
         assert(raw_slice.number_of_bytes() == string.len());
         assert(raw_slice.ptr().read_byte() == string.nth(0).unwrap());
 
         string.push(NUMBER1);
-        let mut raw_slice = string.as_raw_slice();
+        let mut raw_slice: raw_slice = string.into();
         assert(raw_slice.number_of_bytes() == string.len());
         assert(raw_slice.ptr().add_uint_offset(1).read_byte() == string.nth(1).unwrap());
 
-        let mut raw_slice = string.as_raw_slice();
+        let mut raw_slice: raw_slice = string.as_raw_slice();
         assert(raw_slice.number_of_bytes() == string.len());
         assert(raw_slice.ptr().read_byte() == string.nth(0).unwrap());
+    }
+
+    fn test_into_vec() {
+        let mut string = String::new();
+
+        let vec: Vec<u8> = string.into();
+        assert(vec.len() == string.len());
+        assert(vec.capacity() == string.capacity());
+
+        string.push(NUMBER0);
+        let vec: Vec<u8> = string.into();
+        assert(vec.len() == string.len());
+        assert(vec.capacity() == string.capacity());
+        assert(vec.get(0).unwrap() == string.nth(0).unwrap());
+
+        string.push(NUMBER1);
+        let mut vec: Vec<u8> = string.into();
+        assert(vec.len() == string.len());
+        assert(vec.capacity() == string.capacity());
+        assert(vec.get(1).unwrap() == string.nth(1).unwrap());
+
+        let result_string = string.pop().unwrap();
+        let result_vec = vec.pop().unwrap();
+        assert(result_vec == result_string);
+        assert(vec.len() == string.len());
+        assert(vec.capacity() == string.capacity());
+        assert(vec.get(0).unwrap() == string.nth(0).unwrap());
     }
 
     fn test_is_empty() {

@@ -1,13 +1,13 @@
 mod append;
-mod as_vec;
 mod capacity;
 mod clear;
-mod from;
+mod from_bytes;
 mod from_raw_slice;
-mod from_utf8;
+mod from_vec;
 mod insert;
-mod into;
+mod into_bytes;
 mod into_raw_slice;
+mod into_vec;
 mod is_empty;
 mod len;
 mod new;

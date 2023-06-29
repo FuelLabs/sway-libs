@@ -7,11 +7,6 @@ pub struct String {
 }
 
 impl String {
-    /// Returns a `Vec<u8>` of the bytes stored for the `String`.
-    pub fn as_vec(self) -> Vec<u8> {
-        self.bytes.into_vec_u8()
-    }
-
     /// Gets the amount of memory on the heap allocated to the `String`.
     pub fn capacity(self) -> u64 {
         self.bytes.capacity()
@@ -20,18 +15,6 @@ impl String {
     /// Truncates this `String` to a length of zero, removing all contents.
     pub fn clear(ref mut self) {
         self.bytes.clear()
-    }
-
-    /// Converts a vector of bytes to a `String`.
-    ///
-    /// # Arguments
-    ///
-    /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
-    pub fn from_utf8(bytes: Vec<u8>) -> Self {
-        let mut bytes = bytes;
-        Self {
-            bytes: Bytes::from_vec_u8(bytes),
-        }
     }
 
     /// Inserts a byte at the index within the `String`.
@@ -124,13 +107,6 @@ impl String {
             bytes: Bytes::with_capacity(capacity),
         }
     }
-
-    // Should be removed when https://github.com/FuelLabs/sway/issues/3637 is resovled
-    pub fn from_raw_slice(slice: raw_slice) -> Self {
-        Self {
-            bytes: Bytes::from_raw_slice(slice),
-        }
-    }
 }
 
 impl From<Bytes> for String {
@@ -173,17 +149,33 @@ impl String {
     }
 }
 
-// Uncomment when https://github.com/FuelLabs/sway/issues/3637 is resolved.
-// impl From<raw_slice> for String {
-//     fn from(slice: raw_slice) -> String {
-//         let mut bytes = Bytes::with_capacity(slice.number_of_bytes());
-//         bytes.buf.ptr = slice.ptr();
-//         Self {
-//             bytes
-//         }
-//     }
+impl From<raw_slice> for String {
+    fn from(slice: raw_slice) -> Self {
+        Self {
+            bytes: Bytes::from_raw_slice(slice),
+        }
+    }
 
-//     fn into(self) -> raw_slice {
-//         asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
-//     }
-// }
+    fn into(self) -> raw_slice {
+        asm(ptr: (self.bytes.buf.ptr(), self.bytes.len)) { ptr: raw_slice }
+    }
+}
+
+impl From<Vec<u8>> for String {
+    /// Converts a vector of bytes to a `String`.
+    ///
+    /// # Arguments
+    ///
+    /// * `vec` - The vector of `u8` bytes which will be converted into a `String`.
+    fn from(vec: Vec<u8>) -> Self {
+        let mut vec = vec;
+        Self {
+            bytes: Bytes::from_vec_u8(vec),
+        }
+    }
+
+    /// Returns a `Vec<u8>` of the bytes stored for the `String`.
+    fn into(self) -> Vec<u8> {
+        self.bytes.into_vec_u8()
+    }
+}
