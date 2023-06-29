@@ -150,7 +150,7 @@ impl String {
 }
 
 impl From<raw_slice> for String {
-    fn from(slice: raw_slice) -> String {
+    fn from(slice: raw_slice) -> Self {
         Self {
             bytes: Bytes::from_raw_slice(slice),
         }
@@ -166,7 +166,7 @@ impl From<Vec<u8>> for String {
     ///
     /// # Arguments
     ///
-    /// * `bytes` - The vector of `u8` bytes which will be converted into a `String`.
+    /// * `vec` - The vector of `u8` bytes which will be converted into a `String`.
     fn from(vec: Vec<u8>) -> Self {
         let mut vec = vec;
         Self {
