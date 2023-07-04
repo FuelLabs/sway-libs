@@ -7,6 +7,4 @@ members = [
   "queue",
   "reentrancy",
   "signed_integers",
-  "strings/storage_string",
-  "strings/string",
 ]

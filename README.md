@@ -36,8 +36,6 @@ These libraries contain helper functions and other tools valuable to blockchain 
 - [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
 - [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
-- [String](./libs/strings/string/) is an interface to implement dynamic length strings that are UTF-8 encoded.
-- [StorageString](./libs/strings/storage_string/) is used to store dynamic length strings that are UTF-8 encoded in storage.
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 
 ## Using a library
