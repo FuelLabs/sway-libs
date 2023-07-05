@@ -37,7 +37,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 - [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-- [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out(FIFO) operations. 
+- [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 
 ## Using a library
 
