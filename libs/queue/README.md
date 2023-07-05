@@ -1,3 +1,11 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/queue-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/queue-logo-light-theme.png">
+    </picture>
+</p>
+
+
 # Overview
 
 A Queue is a linear structure which follows the First-In-First-Out (FIFO) principle. This means that the elements added first are the ones that get removed first.
