@@ -1,5 +1,5 @@
 library;
-// A wrapper around U128 type for a library for Sway for mathematical functions operating with signed 64.64-bit fixed point numbers.
+// A wrapper around U128 type for a library for Sway for mathematical functions operating with unsigned 64.64-bit fixed point numbers.
 use std::{math::{Exponent, Power, Root}, u128::U128, u256::U256};
 
 pub struct UFP128 {

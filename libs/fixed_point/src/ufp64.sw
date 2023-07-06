@@ -1,5 +1,5 @@
 library;
-// A wrapper library around the u64 type for mathematical functions operating with signed 64-bit fixed point numbers.
+// A wrapper library around the u64 type for mathematical functions operating with unsigned 64-bit fixed point numbers.
 use std::{math::{Exponent, Power, Root}, u128::U128};
 
 pub struct UFP64 {
