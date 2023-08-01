@@ -10,6 +10,7 @@ export interface SecondaryButtonProps {
   disabled?: boolean;
   tooltip?: string;
   style?: React.CSSProperties;
+  header?: boolean;
 }
 function SecondaryButton({
   onClick,
@@ -18,7 +19,11 @@ function SecondaryButton({
   disabled,
   tooltip,
   style,
+  header,
 }: SecondaryButtonProps) {
+  if (!!header) {
+    style = { ...style, minWidth: '115px', marginLeft: '15px' };
+  }
   return (
     <Tooltip title={tooltip}>
       <span>
@@ -27,6 +32,7 @@ function SecondaryButton({
             ...style,
             color: darkColors.gray6,
             borderColor: darkColors.gray6,
+            fontSize: '14px',
             ':hover': {
               bgcolor: lightColors.green3,
               borderColor: darkColors.gray6,
