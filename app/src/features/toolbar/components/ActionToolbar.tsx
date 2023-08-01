@@ -1,5 +1,6 @@
 import React from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
+import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
 import { loadAbi, loadBytecode } from '../../../utils/localStorage';
@@ -45,7 +46,7 @@ function ActionToolbar({
       />
       {!fuel && !isLoading ? (
         <SecondaryButton
-          style={{ minWidth: '115px', marginLeft: '15px' }}
+          header={true}
           onClick={() =>
             window.open('https://wallet.fuel.network/docs/install/', '_blank')
           }
@@ -65,7 +66,7 @@ function ActionToolbar({
         />
       )}
       <SecondaryButton
-        style={{ minWidth: '115px', marginLeft: '15px' }}
+        header={true}
         onClick={() => setDrawerOpen(!drawerOpen)}
         text='INTERACT'
         disabled={deployState !== DeployState.DEPLOYED}
@@ -74,6 +75,15 @@ function ActionToolbar({
             ? 'A contract must be deployed to interact with it on-chain'
             : 'Interact with the contract ABI'
         }
+      />
+      <SecondaryButton
+        header={true}
+        onClick={() =>
+          window.open('https://fuellabs.github.io/sway', '_blank', 'noreferrer')
+        }
+        text='DOCS'
+        tooltip={'Open documentation for Sway in a new tab'}
+        endIcon={<OpenInNew />}
       />
     </div>
   );

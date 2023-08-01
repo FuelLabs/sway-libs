@@ -22,6 +22,7 @@ jobs:
         run: |
           cd app && npm ci && npm run build
           cp -r build ../build
+          cp ../CNAME ../build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

@@ -28,6 +28,7 @@ function CompileButton({
             background: lightColors.green7,
             borderColor: darkColors.gray6,
             color: darkColors.gray6,
+            fontSize: '14px',
             ':hover': {
               color: darkColors.gray6,
               background: lightColors.green10,
