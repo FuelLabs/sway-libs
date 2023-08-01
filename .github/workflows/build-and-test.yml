@@ -2,6 +2,8 @@ name: Build and Test
 
 on:
   push:
+    branches-ignore:
+      - master
 
 env:
   NODE_VERSION: '16'
