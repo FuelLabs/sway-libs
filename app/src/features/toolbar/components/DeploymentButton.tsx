@@ -88,7 +88,7 @@ export function DeploymentButton({
 
   return (
     <SecondaryButton
-      style={{ minWidth: '115px', marginLeft: '15px' }}
+      header={true}
       onClick={onDeployClick}
       text='DEPLOY'
       disabled={isDisabled}
