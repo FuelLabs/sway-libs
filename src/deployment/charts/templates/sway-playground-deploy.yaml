@@ -58,7 +58,3 @@ spec:
           env:
             - name: PORT
               value: "{{ .Values.app.target_port }}"
-            - name: FUEL_NODE_URL
-              value: "{{ .Values.app.node_url }}"
-            - name: PUBLIC_FUEL_NODE_URL
-              value: "{{ .Values.app.public_node_url }}"

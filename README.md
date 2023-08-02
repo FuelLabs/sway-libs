@@ -39,22 +39,6 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 
 ### Building Sway Playground
 
-Creating a local SSL Certificate:
-
-1. Install the [MkCert tool](https://github.com/FiloSottile/mkcert#installation)
-2. Run the installation command:
-
-```sh
-mkcert -install
-```
-
-3. Create the SSL certificates:
-
-```sh
-cd certs
-mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
-```
-
 Clone the repository and build the Sway toolchain:
 
 ```sh
