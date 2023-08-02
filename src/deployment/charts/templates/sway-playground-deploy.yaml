@@ -1,0 +1,64 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: {{ template "sway-playground.name" . }}
+    chart: {{ template "sway-playground.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "sway-playground.name" . }}-service
+spec:
+  type: NodePort
+  selector:
+    app: {{ template "sway-playground.name" . }}
+  ports:
+    - name: http
+      port: {{ .Values.app.http_port }}
+      protocol: TCP
+      targetPort: {{ .Values.app.target_port }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sway-playground.name" . }}-k8s
+  labels:
+    app: {{ template "sway-playground.name" . }}
+    chart: {{ template "sway-playground.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "sway-playground.name" . }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.app.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "sway-playground.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.app.name }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          command: ["./sway-playground"]
+          resources: {}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.target_port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.app.target_port }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 60
+          env:
+            - name: PORT
+              value: "{{ .Values.app.target_port }}"
+            - name: FUEL_NODE_URL
+              value: "{{ .Values.app.node_url }}"
+            - name: PUBLIC_FUEL_NODE_URL
+              value: "{{ .Values.app.public_node_url }}"
