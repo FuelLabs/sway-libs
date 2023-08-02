@@ -1,16 +1,17 @@
-#[macro_use] extern crate rocket;
-use rocket::serde::{Serialize, Deserialize, json::Json};
+#[macro_use]
+extern crate rocket;
 use fs_extra::dir::{copy, CopyOptions};
 use hex::encode;
 use nanoid::nanoid;
+use regex::Regex;
+use rocket::fairing::{Fairing, Info, Kind};
+use rocket::http::Header;
+use rocket::serde::{json::Json, Deserialize, Serialize};
+use rocket::{Request, Response};
 use std::fs::{create_dir, read_to_string, remove_dir_all, File};
 use std::io::prelude::*;
 use std::path::Path;
 use std::process::{Command, Stdio};
-use regex::Regex;
-use rocket::fairing::{Fairing, Info, Kind};
-use rocket::http::Header;
-use rocket::{Request, Response};
 
 // Copy the template project to a new project.
 fn create_project() -> Result<std::string::String, fs_extra::error::Error> {
@@ -163,7 +164,7 @@ fn build_and_destroy_project(contract: String) -> (String, String, String) {
 // The receiving request message for compiling.
 #[derive(Deserialize)]
 struct Message {
-   contents: String,
+    contents: String,
 }
 
 // The return response message for compiling.
@@ -171,7 +172,7 @@ struct Message {
 struct CompileReturn {
     abi: String,
     bytecode: String,
-    error: String
+    error: String,
 }
 
 // The compile endpoint.
@@ -179,10 +180,10 @@ struct CompileReturn {
 fn compile(message: Json<Message>) -> Json<CompileReturn> {
     let (abi, bytecode, error) = build_and_destroy_project(message.contents.to_string());
 
-    Json(CompileReturn{
+    Json(CompileReturn {
         abi: abi,
         bytecode: bytecode,
-        error: error
+        error: error,
     })
 }
 
