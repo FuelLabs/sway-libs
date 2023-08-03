@@ -22,7 +22,7 @@ function SecondaryButton({
   header,
 }: SecondaryButtonProps) {
   if (!!header) {
-    style = { ...style, minWidth: '115px', marginLeft: '15px' };
+    style = { ...style, minWidth: '115px', height: '40px', marginLeft: '15px' };
   }
   return (
     <Tooltip title={tooltip}>
@@ -32,7 +32,6 @@ function SecondaryButton({
             ...style,
             color: darkColors.gray6,
             borderColor: darkColors.gray6,
-            fontSize: '14px',
             ':hover': {
               bgcolor: lightColors.green3,
               borderColor: darkColors.gray6,

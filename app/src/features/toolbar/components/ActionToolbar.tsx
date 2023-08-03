@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
@@ -7,6 +7,7 @@ import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { useFuel } from '../hooks/useFuel';
+import ToolchainDropdown, { Toolchain } from './ToolchainDropdown';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -40,7 +41,7 @@ function ActionToolbar({
       <CompileButton
         onClick={onCompile}
         text='COMPILE'
-        endIcon={<PlayArrow />}
+        endIcon={<PlayArrow style={{ fontSize: '18px' }} />}
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
@@ -83,7 +84,7 @@ function ActionToolbar({
         }
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}
-        endIcon={<OpenInNew />}
+        endIcon={<OpenInNew style={{ fontSize: '16px' }} />}
       />
     </div>
   );

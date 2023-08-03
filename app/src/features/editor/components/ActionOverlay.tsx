@@ -1,12 +1,23 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
+import ToolchainDropdown, {
+  Toolchain,
+} from '../../toolbar/components/ToolchainDropdown';
+import Tooltip from '@mui/material/Tooltip';
+import FormControl from '@mui/material/FormControl';
 
 export interface ActionOverlayProps {
-  onClick: () => void;
+  handleReset: () => void;
+  toolchain: Toolchain;
+  setToolchain: (toolchain: Toolchain) => void;
 }
 
-function ActionOverlay({ onClick }: ActionOverlayProps) {
+function ActionOverlay({
+  handleReset,
+  toolchain,
+  setToolchain,
+}: ActionOverlayProps) {
   return (
     <div style={{ position: 'relative' }}>
       <div
@@ -17,17 +28,31 @@ function ActionOverlay({ onClick }: ActionOverlayProps) {
           zIndex: 1,
           pointerEvents: 'none',
         }}>
-        <IconButton
+        <ToolchainDropdown
           style={{
             position: 'absolute',
-            right: '18px',
+            right: '68px',
             top: '18px',
             pointerEvents: 'all',
           }}
-          onClick={onClick}
-          aria-label='reset the editor'>
-          <Delete />
-        </IconButton>
+          toolchain={toolchain}
+          setToolchain={setToolchain}
+        />
+        <div>
+          <Tooltip placement='top' title={'Reset the editor'}>
+            <IconButton
+              style={{
+                position: 'absolute',
+                right: '18px',
+                top: '18px',
+                pointerEvents: 'all',
+              }}
+              onClick={handleReset}
+              aria-label='reset the editor'>
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
     </div>
   );
