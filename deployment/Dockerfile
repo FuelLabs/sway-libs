@@ -29,11 +29,14 @@ RUN cargo build --release
 FROM ubuntu:22.04 as run
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends ca-certificates \
+    && apt-get install -y --no-install-recommends ca-certificates curl \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh -s -- --no-modify-path
+RUN export PATH="$HOME/.fuelup/bin:$PATH"
 
 WORKDIR /root/
 
