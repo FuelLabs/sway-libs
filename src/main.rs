@@ -1,3 +1,5 @@
+// We ignore this lint because clippy doesn't like the rocket macro for OPTIONS.
+#![allow(clippy::let_unit_value)]
 #[macro_use]
 extern crate rocket;
 use fs_extra::dir::{copy, CopyOptions};
@@ -34,12 +36,12 @@ fn create_project() -> Result<std::string::String, fs_extra::error::Error> {
     // Copy the template project over to the new directory.
     copy(
         "projects/swaypad",
-        format!("projects/{}", project_name.to_owned()),
+        format!("projects/{}", project_name),
         &options,
     )?;
 
     // Return the project id.
-    Ok(project_name.to_owned())
+    Ok(project_name)
 }
 
 // Remove a project from the projects dir.
@@ -88,7 +90,7 @@ fn clean_error_content(content: String) -> std::string::String {
 // Build and destroy a project.
 fn build_and_destroy_project(contract: String) -> (String, String, String) {
     // Check if any contract has been submitted.
-    if contract.len() == 0 {
+    if contract.is_empty() {
         return ("".to_string(), "".to_string(), "No contract.".to_string());
     }
 
@@ -105,7 +107,7 @@ fn build_and_destroy_project(contract: String) -> (String, String, String) {
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
-        .arg(format!("projects/{}", project_name.to_owned()))
+        .arg(format!("projects/{}", project_name))
         .spawn()
         .expect("failed to execute child");
 
@@ -120,25 +122,22 @@ fn build_and_destroy_project(contract: String) -> (String, String, String) {
         // Read the ABI data file which was outputed from the build.
         let abi = read_to_string(format!(
             "projects/{}/out/debug/swaypad-abi.json",
-            project_name.to_owned()
+            project_name
         ))
         .expect("Should have been able to read the file");
 
         // Read the file contents from the outputed bin file.
-        let k = read_file_contents(format!(
-            "projects/{}/out/debug/swaypad.bin",
-            project_name.to_owned()
-        ));
+        let k = read_file_contents(format!("projects/{}/out/debug/swaypad.bin", project_name));
 
         // Remove the project directory and contents.
-        remove_project(project_name.to_owned()).unwrap();
+        remove_project(project_name).unwrap();
 
         // Return the abi, bin and empty error message.
-        return (
-            clean_error_content(String::from(abi)),
+        (
+            clean_error_content(abi),
             clean_error_content(encode(k)),
             String::from(""),
-        );
+        )
     } else {
         // Get the error message presented in the console output.
         let error = std::str::from_utf8(&output.stderr).unwrap();
@@ -150,14 +149,14 @@ fn build_and_destroy_project(contract: String) -> (String, String, String) {
         let trunc = String::from(error).split_off(main_index);
 
         // Remove the project.
-        remove_project(project_name.to_owned()).unwrap();
+        remove_project(project_name).unwrap();
 
         // Return an empty abi, bin and the error message.
-        return (
+        (
             String::from(""),
             String::from(""),
-            clean_error_content(String::from(trunc)),
-        );
+            clean_error_content(trunc),
+        )
     }
 }
 
@@ -181,9 +180,9 @@ fn compile(message: Json<Message>) -> Json<CompileReturn> {
     let (abi, bytecode, error) = build_and_destroy_project(message.contents.to_string());
 
     Json(CompileReturn {
-        abi: abi,
-        bytecode: bytecode,
-        error: error,
+        abi,
+        bytecode,
+        error,
     })
 }
 
