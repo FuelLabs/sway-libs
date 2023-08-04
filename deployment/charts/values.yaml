@@ -1,0 +1,11 @@
+# Default values for fuel sway-playground
+
+app:
+  name: sway-playground
+  replicas: 1
+  http_port: 80
+  target_port: 8080
+  image:
+    repository: '${sway_playground_image_repository}'
+    tag: '${sway_playground_image_tag}'
+    pullPolicy: Always
