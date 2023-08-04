@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Editor from './features/editor/components/Editor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
@@ -7,7 +7,7 @@ import { DeployState } from './utils/types';
 import { loadCode, saveCode } from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
-import { Toolchain } from './features/toolbar/components/ToolchainDropdown';
+import { Toolchain } from './features/editor/components/ToolchainDropdown';
 
 const DRAWER_WIDTH = '40vw';
 

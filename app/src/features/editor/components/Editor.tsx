@@ -6,7 +6,7 @@ import 'ace-builds/src-noconflict/theme-chrome';
 import { StyledBorder } from '../../../components/shared';
 import ActionOverlay from './ActionOverlay';
 import { DEFAULT_CONTRACT } from '../../../constants';
-import { Toolchain } from '../../toolbar/components/ToolchainDropdown';
+import { Toolchain } from './ToolchainDropdown';
 
 export interface EditorProps {
   code: string;

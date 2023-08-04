@@ -3,7 +3,7 @@ import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
 import { saveAbi, saveBytecode } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
-import { Toolchain } from '../../toolbar/components/ToolchainDropdown';
+import { Toolchain } from '../components/ToolchainDropdown';
 
 function toResults(
   prefixedBytecode: string,

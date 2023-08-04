@@ -1,11 +1,8 @@
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
-import ToolchainDropdown, {
-  Toolchain,
-} from '../../toolbar/components/ToolchainDropdown';
+import ToolchainDropdown, { Toolchain } from './ToolchainDropdown';
 import Tooltip from '@mui/material/Tooltip';
-import FormControl from '@mui/material/FormControl';
 
 export interface ActionOverlayProps {
   handleReset: () => void;

@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { darkColors, lightColors } from '@fuel-ui/css';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
