@@ -18,7 +18,24 @@ pub const NODE = 1u8;
 ///
 /// # Arguments
 ///
-/// * 'data' - The hash of the leaf data.
+/// * 'data': [b256] - The hash of the leaf data.
+///
+/// # Returns
+///
+/// * [b256] - The computed hash.
+///
+/// # Examples
+///
+/// ```sway
+/// use sway_libs::binary_merkle_proof::leaf_digest;
+/// use std::contants::ZERO_B256;
+///
+/// fn foo() {
+///     let data = ZERO_B256;
+///     let digest = leaf_digest(data);
+///     assert(digest == 0x54f05a87f5b881780cdc40e3fddfebf72e3ba7e5f65405ab121c7f22d9849ab4);
+/// }
+/// ```
 pub fn leaf_digest(data: b256) -> b256 {
     let mut bytes = Bytes::with_capacity(33);
     let new_ptr = bytes.buf.ptr().add_uint_offset(1);
@@ -34,8 +51,26 @@ pub fn leaf_digest(data: b256) -> b256 {
 ///
 /// # Arguments
 ///
-/// * 'left' - The hash of the left node.
-/// * 'right' - The hash of the right node.
+/// * 'left': [b256] - The hash of the left node.
+/// * 'right': [b256] - The hash of the right node.
+///
+/// # Returns
+/// 
+/// * [b256] - The hash of the node data.
+///
+/// # Examples
+///
+/// ```sway
+/// use sway_libs::binary_merkle_proof::node_digest;
+/// use std::contants::ZERO_B256;
+///
+/// fn foo() {
+///     let leaf_1 = ZERO_B256;
+///     let leaf_2 = ZERO_B256;
+///     let digest = node_digest(leaf_1, leaf_2);
+///     assert(digest == 0xee510d4daf24756c7b56b56b838212b193d9265c85c4a3b2c74f5a3189477c80);
+/// }
+/// ```
 pub fn node_digest(left: b256, right: b256) -> b256 {
     let mut bytes = Bytes::with_capacity(65);
     let new_ptr_left = bytes.buf.ptr().add_uint_offset(1);
@@ -53,8 +88,12 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 ///
 /// # Arguments
 ///
-/// * `key` - The key or index of the leaf.
-/// * `num_leaves` - The total number of leaves in the Merkle Tree.
+/// * `key`: [u64] - The key or index of the leaf.
+/// * `num_leaves`: [u64] - The total number of leaves in the Merkle Tree.
+///
+/// # Returns
+///
+/// * [u64] - The length from the leaf to a root.
 fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
     let mut total_length = 0;
     let mut num_leaves = num_leaves;
@@ -93,10 +132,14 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
 ///
 /// # Arguments
 ///
-/// * 'key' - The key or index of the leaf to prove.
-/// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
-/// * 'num_leaves' - The number of leaves in the Merkle Tree.
-/// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+/// * 'key': [u64] - The key or index of the leaf to prove.
+/// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
+/// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
+/// * `proof`: [u64] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+///
+/// # Returns
+///
+/// * [b256] - The calculated root.
 ///
 /// # Reverts
 ///
@@ -104,6 +147,23 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
 /// * When there is one or no leaves and a proof is provided.
 /// * When the key is greater than or equal to the number of leaves.
 /// * When the computed height gets larger than the proof.
+///
+/// # Examples
+///
+/// ```sway
+/// use sway_libs::binary_merkle_proof::process_proof;
+/// use std::contants::ZERO_B256;
+/// 
+/// fn foo() {
+///     let key = 0;
+///     let leaf = ZERO_B256;
+///     let num_leaves = 3;
+///     let mut proof = Vec::new();
+///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);
+///     let root = process_proof(key, leaf, num_leaves, proof);
+///     assert(root == 0xed84ee783dcb8999206160218e4fe8a1dc5ccb056e3b98f0a6fa633ca5896a47);
+/// }
+/// ```
 pub fn process_proof(
     key: u64,
     merkle_leaf: b256,
@@ -168,7 +228,11 @@ pub fn process_proof(
 ///
 /// # Arguments
 ///
-/// * `num_leaves` - The number of leaves in the Merkle Tree.
+/// * `num_leaves`: [u64] - The number of leaves in the Merkle Tree.
+///
+/// # Returns
+///
+/// * [u64] - The starting bit.
 fn starting_bit(num_leaves: u64) -> u64 {
     let mut starting_bit = 0;
 
@@ -184,11 +248,40 @@ fn starting_bit(num_leaves: u64) -> u64 {
 ///
 /// # Arguments
 ///
-/// * 'key' - The key or index of the leaf to verify.
-/// * `merkle_leaf` - The hash of a leaf on the Merkle Tree.
-/// * `merkle_root` - The pre-computed Merkle root that will be used to verify the leaf and proof.
-/// * 'num_leaves' - The number of leaves in the Merkle Tree.
-/// * `proof` - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+/// * 'key': [u64] - The key or index of the leaf to verify.
+/// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
+/// * `merkle_root`: [b256] - The pre-computed Merkle root that will be used to verify the leaf and proof.
+/// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
+/// * `proof`: [Vec<b256>] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+///
+/// # Returns
+///
+/// * [bool] - `true` if the computed root matches the provided root, otherwise 'false'.
+///
+/// # Reverts
+///
+/// * When an incorrect proof length is provided.
+/// * When there is one or no leaves and a proof is provided.
+/// * When the key is greater than or equal to the number of leaves.
+/// * When the computed height gets larger than the proof.
+///
+/// # Examples
+///
+/// ```sway
+/// use sway_libs::binary_merkle_proof::process_proof;
+/// use std::contants::ZERO_B256;
+/// 
+/// fn foo() {
+///     let key = 0;
+///     let leaf = ZERO_B256;
+///     let num_leaves = 3;
+///     let mut proof = Vec::new();
+///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);
+///     let root = 0xed84ee783dcb8999206160218e4fe8a1dc5ccb056e3b98f0a6fa633ca5896a47;
+/// 
+///     assert(verify_proof(key, leaf, root, num_leaves, proof) == true);
+/// }
+/// ```
 pub fn verify_proof(
     key: u64,
     merkle_leaf: b256,
