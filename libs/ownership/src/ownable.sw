@@ -13,7 +13,7 @@ impl Ownership {
     ///
     /// # Returns
     ///
-    /// * [Ownership] - The struct in the `Uninitalized` state.
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
     ///
     /// # Examples
     ///
@@ -39,7 +39,7 @@ impl Ownership {
     ///
     /// # Returns
     ///
-    /// * [Ownership] - The struct in the `Initialized` state.
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
     ///
     /// # Examples
     ///
@@ -67,7 +67,7 @@ impl Ownership {
     ///
     /// # Returns
     ///
-    /// * [Ownership] - The struct in the `Revoked` state.
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
     ///
     /// # Examples
     ///
