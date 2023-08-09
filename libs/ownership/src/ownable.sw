@@ -1,41 +1,87 @@
 library;
 
-pub mod data_structures;
 pub mod errors;
 pub mod events;
 
-use data_structures::State;
 use errors::AccessError;
 use events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
-
-pub struct Ownership {
-    owner: State,
-}
+use src_5::{Ownership, State};
 
 impl Ownership {
     /// Returns the `Ownership` struct in the `Uninitalized` state.
+    ///
+    /// # Returns
+    ///
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use ownership::Ownership;
+    ///
+    /// fn foo() {
+    ///     let ownership = Ownership::uninitalized();
+    ///     assert(ownership.state == State::Uninitalized);
+    /// }
+    /// ```
     pub fn uninitialized() -> Self {
         Self {
-            owner: State::Uninitialized,
+            state: State::Uninitialized,
         }
     }
 
     /// Returns the `Ownership` struct in the `Initalized` state.
     ///
-    /// ### Arguments
+    /// # Arguments
     ///
-    /// * `identity` - The `Identity` which ownership is set to.
+    /// * `identity`: [Identity] - The `Identity` which ownership is set to.
+    ///
+    /// # Returns
+    ///
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use ownership::Ownership;
+    /// use std::constants::ZERO_B256;
+    ///
+    /// fn foo() {
+    ///     let identity = Identity::Address(Address::from(ZERO_B256));
+    ///     let ownership = Ownership::initialized();
+    ///     assert(ownership.state == State::Initialized(identity));
+    /// }
+    /// ```
     pub fn initialized(identity: Identity) -> Self {
         Self {
-            owner: State::Initialized(identity),
+            state: State::Initialized(identity),
         }
     }
 
     /// Returns the `Ownership` struct in the `Revoked` state.
+    ///
+    /// # Additional Information
+    ///
+    /// Any ownership that is revoked is forever locked in that state. The ownership cannot be reset.
+    ///
+    /// # Returns
+    ///
+    /// * [Ownership] - The SRC-5 Ownership Standard struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use ownership::Ownership;
+    ///
+    /// fn foo() {
+    ///     let ownership = Ownership::revoked();
+    ///     assert(ownership.state == State::Revoked);
+    /// }
+    /// ```
     pub fn revoked() -> Self {
         Self {
-            owner: State::Revoked,
+            state: State::Revoked,
         }
     }
 }
@@ -43,11 +89,15 @@ impl Ownership {
 impl StorageKey<Ownership> {
     /// Returns the owner.
     ///
-    /// ### Number of Storage Accesses
+    /// # Returns
+    ///
+    /// * [State] - The state of the ownership.
+    ///
+    /// # Number of Storage Accesses
     ///
     /// * Reads: `1`
     ///
-    /// ### Examples
+    /// # Examples
     ///
     /// ```sway
     /// use ownable::Ownership;
@@ -62,22 +112,22 @@ impl StorageKey<Ownership> {
     /// ```
     #[storage(read)]
     pub fn owner(self) -> State {
-        self.read().owner
+        self.read().state
     }
 }
 
 impl StorageKey<Ownership> {
     /// Ensures that the sender is the owner.
     ///
-    /// ### Reverts
+    /// # Reverts
     ///
     /// * When the sender is not the owner.
     ///
-    /// ### Number of Storage Accesses
+    /// # Number of Storage Accesses
     ///
     /// * Reads: `1`
     ///
-    /// ### Examples
+    /// # Examples
     ///
     /// ```sway
     /// use ownable::Ownership;
@@ -100,16 +150,16 @@ impl StorageKey<Ownership> {
 impl StorageKey<Ownership> {
     /// Revokes ownership of the current owner and disallows any new owners.
     ///
-    /// ### Reverts
+    /// # Reverts
     ///
     /// * When the sender is not the owner.
     ///
-    /// ### Number of Storage Accesses
+    /// # Number of Storage Accesses
     ///
     /// * Reads: `1`
     /// * Writes: `1`
     ///
-    /// ### Examples
+    /// # Examples
     ///
     /// ```sway
     /// use ownable::Ownership;
@@ -137,20 +187,20 @@ impl StorageKey<Ownership> {
 
     /// Sets the passed identity as the initial owner.
     ///
-    /// ### Arguments
+    /// # Arguments
     ///
-    /// * `new_owner` - The `Identity` that will be the first owner.
+    /// * `new_owner`: [Identity] - The `Identity` that will be the first owner.
     ///
-    /// ### Reverts
+    /// # Reverts
     ///
     /// * When ownership has been set before.
     ///
-    /// ### Number of Storage Acesses
+    /// # Number of Storage Acesses
     ///
     /// * Reads: `1`
     /// * Write: `1`
     ///
-    /// ### Examples
+    /// # Examples
     ///
     /// ```sway
     /// use ownable::Ownership;
@@ -176,16 +226,20 @@ impl StorageKey<Ownership> {
 
     /// Transfers ownership to the passed identity.
     ///
-    /// ### Reverts
+    /// # Arguments
+    ///
+    /// * `new_owner`: [Identity] - The `Identity` that will be the next owner.
+    ///
+    /// # Reverts
     ///
     /// * When the sender is not the owner.
     ///
-    /// ### Number of Storage Acesses
+    /// # Number of Storage Acesses
     ///
     /// * Reads: `1`
     /// * Write: `1`
     ///
-    /// ### Examples
+    /// # Examples
     ///
     /// ```sway
     /// use ownable::Ownership;

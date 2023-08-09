@@ -1,7 +1,7 @@
 contract;
 
 use ownership::*;
-use ownership::data_structures::State;
+use src_5::{Ownership, State};
 
 storage {
     owner: Ownership = Ownership::uninitialized(),
