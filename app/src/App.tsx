@@ -24,7 +24,7 @@ function App() {
   const [isCompiled, setIsCompiled] = useState(false);
 
   // The toolchain to use for compilation.
-  const [toolchain, setToolchain] = useState<Toolchain>('latest');
+  const [toolchain, setToolchain] = useState<Toolchain>('beta-3');
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
