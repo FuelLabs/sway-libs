@@ -121,7 +121,7 @@ impl I64 {
     ///
     /// ```sway
     /// use signed_integers::I64;
-    /// 
+    ///
     /// fn foo() {
     ///     let i64 = I64::max();
     ///     assert(i64.underlying == u64::max());

@@ -122,7 +122,7 @@ impl I16 {
     ///
     /// ```sway
     /// use signed_integers::I16;
-    /// 
+    ///
     /// fn foo() {
     ///     let i16 = I16::max();
     ///     assert(i16.underlying == u16::max());

@@ -121,7 +121,7 @@ impl I32 {
     ///
     /// ```sway
     /// use signed_integers::I32;
-    /// 
+    ///
     /// fn foo() {
     ///     let i32 = I32::max();
     ///     assert(i32.underlying == u32::max());

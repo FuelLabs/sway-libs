@@ -129,7 +129,7 @@ impl I128 {
     /// ```sway
     /// use signed_integers::I128;
     /// use std::U128::*;
-    /// 
+    ///
     /// fn foo() {
     ///     let i128 = I128::max();
     ///     assert(i128.underlying == U128::max());

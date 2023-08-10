@@ -192,7 +192,7 @@ impl I8 {
     /// * [I8] - The newly created `I8` struct.
     ///
     /// # Examples
-    /// 
+    ///
     /// ```sway
     /// use signed_integers::I8;
     ///

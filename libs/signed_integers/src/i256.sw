@@ -129,7 +129,7 @@ impl I256 {
     /// ```sway
     /// use signed_integers::I256;
     /// use std::U256::*;
-    /// 
+    ///
     /// fn foo() {
     ///     let i256 = I256::max();
     ///     assert(i256.underlying == U256::max());
@@ -211,7 +211,7 @@ impl I256 {
     ///     let i256 = I256::new();
     ///     assert(i256.underlying == U256{a: 0, b: 1, c: 0, d: 0});
     /// }
-    /// ```  
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
