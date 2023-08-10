@@ -39,11 +39,17 @@ fn not_found() -> String {
     "Not found".to_string()
 }
 
-/// Launch the rocket server.
+// Indicates the service is running
+#[get("/health")]
+fn health() -> String {
+    "true".to_string()
+}
+
+// Launch the rocket server.
 #[launch]
 fn rocket() -> _ {
     rocket::build()
         .attach(Cors)
-        .mount("/", routes![compile, all_options])
+        .mount("/", routes![compile, all_options, health])
         .register("/", catchers![not_found])
 }
