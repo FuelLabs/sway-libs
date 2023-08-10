@@ -5,6 +5,9 @@ use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 256-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying U256 value.
 /// Actual value is underlying value minus 2 ^ 255
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
@@ -13,7 +16,23 @@ pub struct I256 {
 }
 
 impl I256 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero signed value.
+    ///
+    /// # Returns
+    ///
+    /// * [U256] - The unsigned integer value representing a zero signed value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    ///
+    /// fn foo() {
+    ///     let zero = I256::indent();
+    ///     assert(zero == U256{a: 0, b: 1, c: 0, d: 0});
+    /// }
+    /// ```
     pub fn indent() -> U256 {
         U256 {
             a: 0,
@@ -54,16 +73,68 @@ impl core::ops::Ord for I256 {
 
 impl I256 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `I256` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use signed_integers::I256;
+    ///
+    /// fn foo() {
+    ///     let bits = I256::bits();
+    ///     assert(bits == 128u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         128
     }
 
-    /// Helper function to get a signed number from with an underlying
+    /// Helper function to get a signed number from with an underlying.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [U256] - The unsigned number to become the underlying value for the `I256`.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    ///
+    /// fn foo() {
+    ///     let underlying = U256::from(0,0, 0, 1);
+    ///     let i256 = I256::from_uint(underlying);
+    ///     assert(256.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: U256) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    /// 
+    /// fn foo() {
+    ///     let i256 = I256::max();
+    ///     assert(i256.underlying == U256::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: U256::max(),
@@ -71,13 +142,49 @@ impl I256 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::min();
+    ///     assert(i256.underlying == U256::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: U256::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned number
+    /// Helper function to get a negative value of an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [U256] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    ///
+    /// fn foo() {
+    ///     let underlying = U256::from(0, 0, 0, 1);
+    ///     let i256 = I256::neg_from(underlying);
+    /// }
+    /// ```
     pub fn neg_from(value: U256) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -85,6 +192,26 @@ impl I256 {
     }
 
     /// Initializes a new, zeroed I256.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value of I256 is U256{a: 0, b: 1, c: 0, d: 0}.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I256;
+    /// use std::U256::*;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::new();
+    ///     assert(i256.underlying == U256{a: 0, b: 1, c: 0, d: 0});
+    /// }
+    /// ```  
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),

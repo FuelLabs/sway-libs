@@ -4,15 +4,34 @@ use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 32-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying u32 value.
 /// Actual value is underlying value minus 2 ^ 31
 /// Max value is 2 ^ 31 - 1, min value is - 2 ^ 31
 pub struct I32 {
+    /// The underlying u32 type that represent a I32.
     underlying: u32,
 }
 
 impl I32 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero signed value.
+    ///
+    /// # Returns
+    ///
+    /// * [u32] - The unsigned integer value representing a zero signed value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let zero = I32::indent();
+    ///     assert(zero == 2147483648u32);
+    /// }
+    /// ```
     pub fn indent() -> u32 {
         2147483648u32
     }
@@ -48,16 +67,66 @@ impl core::ops::Ord for I32 {
 
 impl I32 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `I32` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let bits = I32::bits();
+    ///     assert(bits == 32u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         32
     }
 
-    /// Helper function to get a signed number from with an underlying
+    /// Helper function to get a signed number from with an underlying.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [u32] - The unsigned number to become the underlying value for the `I32`.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u32;
+    ///     let i32 = I32::from_uint(underlying);
+    ///     assert(i32.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: u32) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    /// 
+    /// fn foo() {
+    ///     let i32 = I32::max();
+    ///     assert(i32.underlying == u32::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: u32::max(),
@@ -65,13 +134,47 @@ impl I32 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::min();
+    ///     assert(i32.underlying == u32::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: u32::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned numbers
+    /// Helper function to get a negative value of an unsigned numbers.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [u32] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u32;
+    ///     let i32 = I32::neg_from(underlying);
+    /// }
+    /// ```
     pub fn neg_from(value: u32) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -79,6 +182,25 @@ impl I32 {
     }
 
     /// Initializes a new, zeroed I32.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value of I32 is 2147483648u32.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::new();
+    ///     assert(i32.underlying == 2147483648u32);
+    /// }
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),

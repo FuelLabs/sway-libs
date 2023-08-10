@@ -4,15 +4,34 @@ use ::errors::Error;
 use ::common::TwosComplement;
 
 /// The 8-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying u8 value.
 /// Actual value is underlying value minus 2 ^ 7
 /// Max value is 2 ^ 7 - 1, min value is - 2 ^ 7
 pub struct I8 {
+    /// The underlying unsigned `u8` type that makes up the signed `I8` type.
     underlying: u8,
 }
 
 impl I8 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero signed value.
+    ///
+    /// # Returns
+    ///
+    /// * [u8] - The corresponding zero signed value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let zero = I8::indent();
+    ///     assert(zero == 128u8);
+    /// }
+    /// ```
     pub fn indent() -> u8 {
         128u8
     }
@@ -48,16 +67,66 @@ impl core::ops::Ord for I8 {
 
 impl I8 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// * [u32] - The number of bits.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let bits = I8::bits();
+    ///     assert(bits == 8u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         8
     }
 
-    /// Helper function to get a signed number from with an underlying
+    /// Helper function to get a signed `I8` from an underlying `u8`.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [u8] - The `u8` that will represent the `I8`.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u8;
+    ///     let i8 = I8::from_uint(underlying);
+    ///     assert(i8.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: u8) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::max();
+    ///     assert(i8.underlying == u8::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: u8::max(),
@@ -65,13 +134,47 @@ impl I8 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::new();
+    ///     assert(i8.underlying == u8::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: u8::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned number
+    /// Helper function to get a negative value of an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [u8] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u8;
+    ///     let i8 = I8::neg_from(underlying);
+    /// }
+    /// ```
     pub fn neg_from(value: u8) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -79,6 +182,25 @@ impl I8 {
     }
 
     /// Initializes a new, zeroed I8.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value for I8 is 128u8.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    /// 
+    /// ```sway
+    /// use signed_integers::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::new();
+    ///     assert(i8.underlying == 128u8);
+    /// }
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
