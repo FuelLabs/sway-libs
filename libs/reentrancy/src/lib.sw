@@ -6,23 +6,56 @@ library;
 use std::call_frames::*;
 use std::registers::frame_ptr;
 
+/// Error log for when reentrancy has been detected
 pub enum ReentrancyError {
+    /// Emitted when the caller is a reentrant.
     NonReentrant: (),
 }
 
 /// Reverts if the reentrancy pattern is detected in the contract in which this is called.
+///
+/// # Additional Information
+///
 /// Not needed if the Checks-Effects-Interactions (CEI) pattern is followed (as prompted by the
 /// compiler).
 /// > Caution: While this can protect against both single-function reentrancy and cross-function
 /// reentrancy attacks, it WILL NOT PREVENT a cross-contract reentrancy attack.
+///
+/// # Examples
+///
+/// ```sway
+/// use reentrancy::reentrancy_guard;
+///
+/// fn foo() {
+///     reentrancy_guard();
+///     // Do critical stuff here
+/// }
+/// ```
 pub fn reentrancy_guard() {
     require(!is_reentrant(), ReentrancyError::NonReentrant);
 }
 
 /// Returns `true` if the reentrancy pattern is detected, and `false` otherwise.
 ///
+/// # Additional Information
+///
 /// Detects reentrancy by iteratively checking previous calls in the current call stack for a
 /// contract ID equal to the current contract ID. If a match is found, it returns true, else false.
+///
+/// # Returns
+///
+/// * [bool] - `true` if reentrancy pattern has occured.
+///
+/// # Examples
+///
+/// ```sway
+/// use reentrancy::is_reentrant;
+///
+/// fn foo() {
+///     assert(is_reentrant() == false);
+///     // Do critical stuff here
+/// }
+/// ```
 pub fn is_reentrant() -> bool {
     // Get our current contract ID
     let this_id = contract_id();
