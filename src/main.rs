@@ -198,7 +198,7 @@ fn not_found() -> String {
     "Not found".to_string()
 }
 
-// Catch 404 not founds.
+// Indicates the service is running
 #[get("/health")]
 fn health() -> String {
     "true".to_string()
