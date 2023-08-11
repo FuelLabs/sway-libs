@@ -3,6 +3,11 @@ library;
 use std::math::{Exponent, Power, Root};
 use ::ufp128::UFP128;
 
+/// The 256-bit signed fixed point number type.
+///
+/// # Additional Information
+///
+/// Represented by an underlying `UFP128` number and a boolean.
 pub struct IFP256 {
     underlying: UFP128,
     non_negative: bool,
@@ -24,16 +29,61 @@ impl From<UFP128> for IFP256 {
 
 impl IFP256 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use fixed_point::IFP256;
+    ///
+    /// fn foo() {
+    ///     let bits = IFP256::bits();
+    ///     assert(bits == 136u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         136
     }
 
     /// The largest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::max();
+    ///     assert(ifp256.underlying == UFP128::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self::from(UFP128::max())
     }
 
     /// The smallest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::min();
+    ///     assert(ifp256.underlying == UFP128::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: UFP128::min(),
@@ -41,10 +91,44 @@ impl IFP256 {
         }
     }
 
+    /// The zero value of this type.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::zero();
+    ///     assert(ifp256.underlying == UFP128::zero());
+    /// }
+    /// ```
     pub fn zero() -> Self {
         Self::from(UFP128::zero())
     }
 
+    /// Inverts the sign for this type.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::IFP256;
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::zero();
+    ///     assert(ifp256.non_negative == true);
+    ///     let reverse = ifp256.sign_inverse();
+    ///     assert(reverse.non_negative == false);
+    /// }
+    /// ```
     pub fn sign_reverse(self) -> Self {
         Self {
             underlying: self.underlying,
@@ -161,7 +245,26 @@ impl core::ops::Divide for IFP256 {
 }
 
 impl IFP256 {
-    /// Creates IFP256 that correponds to a unsigned integer
+    /// Creates IFP256 that corresponds to a unsigned integer.
+    ///
+    /// # Arguments
+    ///
+    /// * `uint`: [u64] - The unsigned number to become the underlying value for the `IFP256`.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(1);
+    ///     assert(ifp256.underlying == UFP128::from_uint(1));
+    /// }
+    /// ```
     pub fn from_uint(uint: u64) -> Self {
         Self::from(UFP128::from_uint(uint))
     }
@@ -169,6 +272,26 @@ impl IFP256 {
 
 impl IFP256 {
     /// Takes the reciprocal (inverse) of a number, `1/x`.
+    ///
+    /// # Arguments
+    ///
+    /// * `number`: [IFP126] - The value to create the reciprocal from.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let recip = IFP256::recip(ifp256);
+    ///     assert(recip.underlying == UFP128::recip(UFP128::from(128)));
+    /// }
+    /// ```
     pub fn recip(number: IFP256) -> Self {
         Self {
             underlying: UFP128::recip(number.underlying),
@@ -177,7 +300,26 @@ impl IFP256 {
     }
 
     /// Returns the integer part of `self`.
+    ///
+    /// # Additional Information
+    ///
     /// This means that non-integer numbers are always truncated towards zero.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let trunc = ifp256.trunc();
+    ///     assert(trunc.underlying == UFP128::from(128).trunc());
+    /// }
+    /// ```
     pub fn trunc(self) -> Self {
         Self {
             underlying: self.underlying.trunc(),
@@ -188,6 +330,22 @@ impl IFP256 {
 
 impl IFP256 {
     /// Returns the largest integer less than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let floor = ifp256.floor();
+    ///     assert(floor.underlying == UFP128::from(128).floor());
+    /// }
+    /// ```
     pub fn floor(self) -> Self {
         if self.non_negative {
             self.trunc()
@@ -202,6 +360,22 @@ impl IFP256 {
     }
 
     /// Returns the fractional part of `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - the newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let fract = ifp256.fract();
+    ///     assert(fract.underlying == UFP128::from(128).fract());
+    /// }
+    /// ```
     pub fn fract(self) -> Self {
         Self {
             underlying: self.underlying.fract(),
@@ -212,6 +386,22 @@ impl IFP256 {
 
 impl IFP256 {
     /// Returns the smallest integer greater than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let ceil = ifp256.ceil();
+    ///     assert(ceil.underlying = UFP128::from(128).ceil().underlying);
+    /// }
+    /// ```
     pub fn ceil(self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
@@ -237,7 +427,23 @@ impl IFP256 {
 }
 
 impl IFP256 {
-    /// Returns the nearest integer to `self`. Round half-way cases away from
+    /// Returns the nearest integer to `self`. Round half-way cases away from zero.
+    //
+    /// # Returns
+    ///
+    /// * [IFP256] - The newly created `IFP256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::{IFP256, UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::from_uint(128);
+    ///     let round = ifp256.round();
+    ///     assert(round.underlying == UFP128::from(128).round().underlying);
+    /// }
+    /// ```
     pub fn round(self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
