@@ -126,9 +126,9 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::zero();
-    ///     assert(ifp64.non_negative == true);
+    ///     assert(ifp64.non_negative);
     ///     let reverse = ifp64.sign_inverse();
-    ///     assert(reverse.non_negative == false);
+    ///     assert(!reverse.non_negative);
     /// }
     /// ```
     fn sign_reverse(self) -> Self {

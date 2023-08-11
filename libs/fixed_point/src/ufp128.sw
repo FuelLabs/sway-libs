@@ -8,6 +8,7 @@ use std::{math::{Exponent, Power, Root}, u128::U128, u256::U256};
 ///
 /// Represented by an underlying `U128` number.
 pub struct UFP128 {
+    /// The underlying value representing the `UFP128` type.
     value: U128,
 }
 

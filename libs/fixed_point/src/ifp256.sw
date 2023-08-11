@@ -9,7 +9,9 @@ use ::ufp128::UFP128;
 ///
 /// Represented by an underlying `UFP128` number and a boolean.
 pub struct IFP256 {
+    /// The underlying value representing the `IFP256` type.
     underlying: UFP128,
+    /// The underlying boolean representing a negative value for the `IFP256` type.
     non_negative: bool,
 }
 
@@ -124,9 +126,9 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::zero();
-    ///     assert(ifp256.non_negative == true);
+    ///     assert(ifp256.non_negative);
     ///     let reverse = ifp256.sign_inverse();
-    ///     assert(reverse.non_negative == false);
+    ///     assert(!reverse.non_negative);
     /// }
     /// ```
     pub fn sign_reverse(self) -> Self {
