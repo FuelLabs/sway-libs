@@ -16,11 +16,11 @@ pub struct I8 {
 }
 
 impl I8 {
-    /// The underlying value that corresponds to zero signed value.
+    /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// * [u8] - The corresponding zero signed value.
+    /// * [u8] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
@@ -173,6 +173,7 @@ impl I8 {
     /// fn foo() {
     ///     let underlying = 1u8;
     ///     let i8 = I8::neg_from(underlying);
+    ///     assert(i8.underlying == 127u8);
     /// }
     /// ```
     pub fn neg_from(value: u8) -> Self {

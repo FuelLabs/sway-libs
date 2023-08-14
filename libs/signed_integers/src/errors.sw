@@ -1,6 +1,6 @@
 library;
 
-/// Error log for unexpected behavior has occured.
+/// Error log for when unexpected behavior has occurred.
 pub enum Error {
     /// Emitted when division by zero has occured.
     ZeroDivisor: (),

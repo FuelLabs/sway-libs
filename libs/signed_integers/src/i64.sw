@@ -16,11 +16,11 @@ pub struct I64 {
 }
 
 impl I64 {
-    /// The underlying value that corresponds to zero signed value.
+    /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// * [u64] - The unsigned integer value representing a zero signed value.
+    /// * [u64] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
@@ -173,6 +173,7 @@ impl I64 {
     /// fn foo() {
     ///     let underlying = 1u64;
     ///     let i64 = I64::neg_from(underlying);
+    ///     assert(i64.underlying == 9223372036854775807u64);
     /// }
     /// ```
     pub fn neg_from(value: u64) -> Self {

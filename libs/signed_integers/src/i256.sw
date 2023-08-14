@@ -16,11 +16,11 @@ pub struct I256 {
 }
 
 impl I256 {
-    /// The underlying value that corresponds to zero signed value.
+    /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// * [U256] - The unsigned integer value representing a zero signed value.
+    /// * [U256] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
@@ -30,7 +30,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let zero = I256::indent();
-    ///     assert(zero == U256{a: 0, b: 1, c: 0, d: 0});
+    ///     assert(zero == U256 { a: 0, b: 1, c: 0, d: 0 } );
     /// }
     /// ```
     pub fn indent() -> U256 {
@@ -181,8 +181,9 @@ impl I256 {
     /// use std::U256::*;
     ///
     /// fn foo() {
-    ///     let underlying = U256::from(0, 0, 0, 1);
+    ///     let underlying = U256::from(0, 1, 0, 0);
     ///     let i256 = I256::neg_from(underlying);
+    ///     assert(i256.underlying == U256::from(0, 0, 0, 0));
     /// }
     /// ```
     pub fn neg_from(value: U256) -> Self {
@@ -195,7 +196,7 @@ impl I256 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I256 is U256{a: 0, b: 1, c: 0, d: 0}.
+    /// The zero value of I256 is U256 { a: 0, b: 1, c: 0, d: 0 }.
     ///
     /// # Returns
     ///
@@ -209,7 +210,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::new();
-    ///     assert(i256.underlying == U256{a: 0, b: 1, c: 0, d: 0});
+    ///     assert(i256.underlying == U256 { a: 0, b: 1, c: 0, d: 0 } );
     /// }
     /// ```
     pub fn new() -> Self {

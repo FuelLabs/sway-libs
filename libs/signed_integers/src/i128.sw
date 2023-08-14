@@ -17,11 +17,11 @@ pub struct I128 {
 }
 
 impl I128 {
-    /// The underlying value that corresponds to zero signed value.
+    /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// * [U128] - The unsigned integer value representing a zero signed value.
+    /// * [U128] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
@@ -31,7 +31,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let zero = I128::indent();
-    ///     assert(zero == U128{upper: 1, lower: 0});
+    ///     assert(zero == U128 { upper: 1, lower: 0 } );
     /// }
     /// ```
     pub fn indent() -> U128 {
@@ -181,8 +181,9 @@ impl I128 {
     /// use std::U128::*;
     ///
     /// fn foo() {
-    ///     let underlying = U128::from(0,1);
+    ///     let underlying = U128::from(1, 0);
     ///     let i128 = I128::neg_from(underlying);
+    ///     assert(i128.underlying == U128::from(0, 0));
     /// }
     /// ```
     pub fn neg_from(value: U128) -> Self {
@@ -195,7 +196,7 @@ impl I128 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I128 is U128{upper: 1, lower: 0}.
+    /// The zero value of I128 is U128 { upper: 1, lower: 0 }.
     ///
     /// # Returns
     ///
@@ -209,7 +210,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::new();
-    ///     assert(i128.underlying == U128{upper: 1, lower: 0});
+    ///     assert(i128.underlying == U128 { upper: 1, lower: 0 });
     /// }
     /// ```
     pub fn new() -> Self {

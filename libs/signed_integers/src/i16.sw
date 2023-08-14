@@ -16,11 +16,11 @@ pub struct I16 {
 }
 
 impl I16 {
-    /// The underlying value that corresponds to zero signed value.
+    /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// [u16] - The `u16` value that represents the zero signed value.
+    /// [u16] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
@@ -174,6 +174,7 @@ impl I16 {
     /// fn foo() {
     ///     let underlying = 1u16;
     ///     let i16 = I16::neg_from(underlying);
+    ///     assert(i16.underlying == 32767u16)
     /// }
     /// ```
     pub fn neg_from(value: u16) -> Self {
