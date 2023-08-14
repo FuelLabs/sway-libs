@@ -2,7 +2,13 @@ library;
 // A wrapper library around the u64 type for mathematical functions operating with unsigned 64-bit fixed point numbers.
 use std::{math::{Exponent, Power, Root}, u128::U128};
 
+/// The 64-bit unsigned fixed point number type.
+///
+/// # Additional Information
+///
+/// Represented by an underlying `u64` number.
 pub struct UFP64 {
+    /// The underlying value representing the `UFP64` type.
     value: u64,
 }
 
@@ -19,16 +25,61 @@ impl From<u64> for UFP64 {
 
 impl UFP64 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let bits = UFP64::bits();
+    ///     assert(bits == 64u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         64
     }
 
     /// Convenience function to know the denominator.
+    ///
+    /// # Returns
+    ///
+    /// * [u64] - The value of the denominator for the `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let denominator = UFP64::denominator();
+    ///     assert(denominator == 4294967296);
+    /// }
+    /// ```
     pub fn denominator() -> u64 {
         1 << 32
     }
 
     /// The largest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::max();
+    ///     assert(ufp64.value == u64::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             value: u64::max(),
@@ -36,12 +87,43 @@ impl UFP64 {
     }
 
     /// The smallest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::min();
+    ///     assert(ufp64.underlying == u64::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             value: u64::min(),
         }
     }
 
+    /// The zero value of this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::zero();
+    ///     assert(ufp64.underlying == 0);
+    /// }
+    /// ```
     pub fn zero() -> Self {
         Self { value: 0 }
     }
@@ -131,7 +213,26 @@ impl core::ops::Divide for UFP64 {
 }
 
 impl UFP64 {
-    /// Creates UFP64 that correponds to a unsigned integer
+    /// Creates UFP64 that corresponds to a unsigned integer.
+    ///
+    /// # Arguments
+    ///
+    /// * `uint`: [u64] - The unsigned number to become the underlying value for the `UFP64`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(1);
+    ///     assert(ufp64.underlying == 4294967296);
+    /// }
+    /// ```
     pub fn from_uint(uint: u64) -> Self {
         Self {
             value: Self::denominator() * uint,
@@ -141,6 +242,26 @@ impl UFP64 {
 
 impl UFP64 {
     /// Takes the reciprocal (inverse) of a number, `1/x`.
+    ///
+    /// # Arguments
+    ///
+    /// * `number`: [UFP64] - The value to create the reciprocal from.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let recip = UFP64::recip(ufp64);
+    ///     assert(recip.underlying == 33554432);
+    /// }
+    /// ```
     pub fn recip(number: UFP64) -> Self {
         let one = UFP64::from_uint(1);
 
@@ -149,7 +270,26 @@ impl UFP64 {
     }
 
     /// Returns the integer part of `self`.
+    ///
+    /// # Additional Information
+    ///
     /// This means that non-integer numbers are always truncated towards zero.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let trunc = ufp64.trunc();
+    ///     assert(trunc.underlying == 0);
+    /// }
+    /// ```
     pub fn trunc(self) -> Self {
         Self {
             // first move to the right (divide by the denominator)
@@ -163,11 +303,43 @@ impl UFP64 {
 
 impl UFP64 {
     /// Returns the largest integer less than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let floor = ufp64.floor();
+    ///     assert(floor.underlying == 0);
+    /// }
+    /// ```
     pub fn floor(self) -> Self {
         return self.trunc();
     }
 
     /// Returns the fractional part of `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - the newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let fract = ufp64.fract();
+    ///     assert(fract.underlying == 0);
+    /// }
+    /// ```
     pub fn fract(self) -> Self {
         Self {
             // first move to the left (multiply by the denominator)
@@ -181,6 +353,22 @@ impl UFP64 {
 
 impl UFP64 {
     /// Returns the smallest integer greater than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let ceil = ufp64.ceil();
+    ///     assert(ceil.underlying = 4294967296);
+    /// }
+    /// ```
     pub fn ceil(self) -> Self {
         if self.fract().value != 0 {
             let res = self.trunc() + UFP64::from_uint(1);
@@ -191,7 +379,23 @@ impl UFP64 {
 }
 
 impl UFP64 {
-    /// Returns the nearest integer to `self`. Round half-way cases away from
+    /// Returns the nearest integer to `self`. Round half-way cases away from zero.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::from_uint(128);
+    ///     let round = ufp64.round();
+    ///     assert(round.underlying == 0);
+    /// }
+    /// ```
     pub fn round(self) -> Self {
         let floor = self.floor();
         let ceil = self.ceil();

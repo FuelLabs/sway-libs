@@ -2,7 +2,13 @@ library;
 // A wrapper around U128 type for a library for Sway for mathematical functions operating with unsigned 64.64-bit fixed point numbers.
 use std::{math::{Exponent, Power, Root}, u128::U128, u256::U256};
 
+/// The 128-bit unsigned fixed point number type.
+///
+/// # Additional Information
+///
+/// Represented by an underlying `U128` number.
 pub struct UFP128 {
+    /// The underlying value representing the `UFP128` type.
     value: U128,
 }
 
@@ -19,6 +25,22 @@ impl From<(u64, u64)> for UFP128 {
 }
 
 impl UFP128 {
+    /// The zero value of this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::zero();
+    ///     assert(ufp128.underlying == U128::from((0, 0)));
+    /// }
+    /// ```
     pub fn zero() -> Self {
         Self {
             value: U128::from((0, 0)),
@@ -26,13 +48,45 @@ impl UFP128 {
     }
 
     /// The smallest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    /// use std::u128::U128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::min();
+    ///     assert(ufp128.underlying == U128::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             value: U128::min(),
         }
     }
 
-    /// The largest value that can be represented by this type,
+    /// The largest value that can be represented by this type.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    /// use std::u128::U128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::max();
+    ///     assert(ufp128.value == U128::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             value: U128::max(),
@@ -40,13 +94,48 @@ impl UFP128 {
     }
 
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let bits = UFP128::bits();
+    ///     assert(bits == 128u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         128
     }
 }
 
 impl UFP128 {
-    /// Creates UFP128 that correponds to a unsigned integer
+    /// Creates UFP128 that corresponds to a unsigned integer.
+    ///
+    /// # Arguments
+    ///
+    /// * `uint`: [u64] - The unsigned number to become the underlying value for the `UFP128`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    /// use std::u128::U128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(1);
+    ///     assert(ufp128.underlying == U128::from((1, 0));
+    /// }
+    /// ```
     pub fn from_uint(uint: u64) -> Self {
         Self {
             value: U128::from((uint, 0)),
@@ -135,16 +224,71 @@ impl core::ops::Divide for UFP128 {
 }
 
 impl UFP128 {
+    /// Takes the reciprocal (inverse) of a number, `1/x`.
+    ///
+    /// # Arguments
+    ///
+    /// * `number`: [UFP128] - The value to create the reciprocal from.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP128::from_uint(128);
+    ///     let recip = UFP64::recip(ufp64);
+    ///     assert(recip.underlying == U128::from((33554432, 0));
+    /// }
+    /// ```
     pub fn recip(number: UFP128) -> Self {
         let one = UFP128::from((1, 0));
 
         one / number
     }
 
+    /// Returns the largest integer less than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(128);
+    ///     let floor = ufp128.floor();
+    ///     assert(floor.underlying == U128::from((0,0)));
+    /// }
+    /// ```
     pub fn floor(self) -> Self {
         Self::from((self.value.upper, 0))
     }
 
+    /// Returns the smallest integer greater than or equal to `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP64] - The newly created `UFP64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(128);
+    ///     let ceil = ufp128.ceil();
+    ///     assert(ceil.underlying = U128::from((4294967296, 0)));
+    /// }
+    /// ```
     pub fn ceil(self) -> Self {
         let val = self.value;
         if val.lower == 0 {
@@ -156,6 +300,23 @@ impl UFP128 {
 }
 
 impl UFP128 {
+    /// Returns the nearest integer to `self`. Round half-way cases away from zero.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(128);
+    ///     let round = ufp128.round();
+    ///     assert(round.underlying == U128::from(0,0)));
+    /// }
+    /// ```
     pub fn round(self) -> Self {
         let floor = self.floor();
         let ceil = self.ceil();
@@ -168,10 +329,48 @@ impl UFP128 {
         }
     }
 
+    /// Returns the integer part of `self`.
+    ///
+    /// # Additional Information
+    ///
+    /// This means that non-integer numbers are always truncated towards zero.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(128);
+    ///     let trunc = ufp128.trunc();
+    ///     assert(trunc.underlying == U128::from((0,0)));
+    /// }
+    /// ```
     pub fn trunc(self) -> Self {
         Self::from((self.value.upper, 0))
     }
 
+    /// Returns the fractional part of `self`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - the newly created `UFP128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use fixed_point::UFP128;
+    ///
+    /// fn foo() {
+    ///     let ufp128 = UFP128::from_uint(128);
+    ///     let fract = ufp128.fract();
+    ///     assert(fract.underlying == U128::from((0, 0)));
+    /// }
+    /// ```
     pub fn fract(self) -> Self {
         Self::from((0, self.value.lower))
     }
