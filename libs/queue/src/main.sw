@@ -3,6 +3,8 @@ library;
 ///
 /// # Additional Information
 ///
+/// A Queue is defined as a linear data structure that is open at both ends and the operations are performed in First In First Out order.
+/// Meaning additions to the list are made at one end, and all deletions from the list are made at the other end.
 pub struct Queue<T> {
     /// The underlying vector that stored the elements of the `Queue`.
     vec: Vec<T>,
