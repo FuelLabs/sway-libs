@@ -5,15 +5,35 @@ use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 128-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying U128 value.
 /// Actual value is underlying value minus 2 ^ 127
 /// Max value is 2 ^ 127 - 1, min value is - 2 ^ 127
 pub struct I128 {
+    /// The underlying unsigned number representing the `I128` type.
     underlying: U128,
 }
 
 impl I128 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero value.
+    ///
+    /// # Returns
+    ///
+    /// * [U128] - The unsigned integer value representing a zero value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let zero = I128::indent();
+    ///     assert(zero == U128 { upper: 1, lower: 0 } );
+    /// }
+    /// ```
     pub fn indent() -> U128 {
         U128 {
             upper: 1,
@@ -53,16 +73,68 @@ impl core::ops::Ord for I128 {
 
 impl I128 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `I128` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use signed_integers::I128;
+    ///
+    /// fn foo() {
+    ///     let bits = I128::bits();
+    ///     assert(bits == 128u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         128
     }
 
-    /// Helper function to get a positive value from an unsigned number
+    /// Helper function to get a positive value from an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [U128] - The unsigned number to become the underlying value for the `I128`.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let underlying = U128::from(0, 1);
+    ///     let i128 = I128::from_uint(underlying);
+    ///     assert(i128.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: U128) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::max();
+    ///     assert(i128.underlying == U128::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: U128::max(),
@@ -70,13 +142,50 @@ impl I128 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::min();
+    ///     assert(i128.underlying == U128::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: U128::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned number
+    /// Helper function to get a negative value of an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [U128] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let underlying = U128::from(1, 0);
+    ///     let i128 = I128::neg_from(underlying);
+    ///     assert(i128.underlying == U128::from(0, 0));
+    /// }
+    /// ```
     pub fn neg_from(value: U128) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -84,6 +193,26 @@ impl I128 {
     }
 
     /// Initializes a new, zeroed I128.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value of I128 is U128 { upper: 1, lower: 0 }.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I128;
+    /// use std::U128::*;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::new();
+    ///     assert(i128.underlying == U128 { upper: 1, lower: 0 });
+    /// }
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),

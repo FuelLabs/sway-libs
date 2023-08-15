@@ -4,15 +4,34 @@ use ::errors::Error;
 use ::common::TwosComplement;
 
 /// The 16-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying u16 value.
 /// Actual value is underlying value minus 2 ^ 15
 /// Max value is 2 ^ 15 - 1, min value is - 2 ^ 15
 pub struct I16 {
+    /// The underlying value representing the signed integer.
     underlying: u16,
 }
 
 impl I16 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero value.
+    ///
+    /// # Returns
+    ///
+    /// [u16] - The unsigned integer value representing a zero value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let zero = I16::indent();
+    ///     assert(zero == 32768u16);
+    /// }
+    /// ```
     pub fn indent() -> u16 {
         32768u16
     }
@@ -49,16 +68,66 @@ impl core::ops::Ord for I16 {
 
 impl I16 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `I16` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let bits = I16::bits();
+    ///     assert(bits == 16u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         16
     }
 
     /// Helper function to get a positive value from an unsigned number
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [u16] - The unsigned number to become the underlying value for the `I16`.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u16;
+    ///     let i16 = I16::from_uint(underlying);
+    ///     assert(i16.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: u16) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::max();
+    ///     assert(i16.underlying == u16::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: u16::max(),
@@ -66,13 +135,48 @@ impl I16 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::min();
+    ///     assert(i16.underlying == u16::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: u16::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned number
+    /// Helper function to get a negative value of an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [u16] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u16;
+    ///     let i16 = I16::neg_from(underlying);
+    ///     assert(i16.underlying == 32767u16)
+    /// }
+    /// ```
     pub fn neg_from(value: u16) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -80,6 +184,25 @@ impl I16 {
     }
 
     /// Initializes a new, zeroed I16.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value of I16 is 32768u16.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::new();
+    ///     assert(i16.underlying == 32768u16);
+    /// }
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),

@@ -4,15 +4,34 @@ use ::common::TwosComplement;
 use ::errors::Error;
 
 /// The 64-bit signed integer type.
+///
+/// # Additional Information
+///
 /// Represented as an underlying u64 value.
 /// Actual value is underlying value minus 2 ^ 63
 /// Max value is 2 ^ 63 - 1, min value is - 2 ^ 63
 pub struct I64 {
+    /// The underlying unsigned number representing the `I64` type.
     underlying: u64,
 }
 
 impl I64 {
-    /// The underlying value that corresponds to zero signed value
+    /// The underlying value that corresponds to zero value.
+    ///
+    /// # Returns
+    ///
+    /// * [u64] - The unsigned integer value representing a zero value.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let zero = I64::indent();
+    ///     assert(zero == 9223372036854775808u64);
+    /// }
+    /// ```
     pub fn indent() -> u64 {
         9223372036854775808u64
     }
@@ -48,16 +67,66 @@ impl core::ops::Ord for I64 {
 
 impl I64 {
     /// The size of this type in bits.
+    ///
+    /// # Returns
+    ///
+    /// [u32] - The defined size of the `I64` type.
+    ///
+    /// # Examples
+    ///
+    /// ``sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let bits = I64::bits();
+    ///     assert(bits == 64u32);
+    /// }
+    /// ```
     pub fn bits() -> u32 {
         64
     }
 
-    /// Helper function to get a signed number from with an underlying
+    /// Helper function to get a signed number from with an underlying.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [u64] - The unsigned number to become the underlying value for the `I64`.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u64;
+    ///     let i64 = I64::from_uint(underlying);
+    ///     assert(i64.underlying == underlying);
+    /// }
+    /// ```
     pub fn from_uint(underlying: u64) -> Self {
         Self { underlying }
     }
 
-    /// The largest value that can be represented by this integer type,
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::max();
+    ///     assert(i64.underlying == u64::max());
+    /// }
+    /// ```
     pub fn max() -> Self {
         Self {
             underlying: u64::max(),
@@ -65,13 +134,48 @@ impl I64 {
     }
 
     /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::min();
+    ///     assert(i64.underlying == u64::min());
+    /// }
+    /// ```
     pub fn min() -> Self {
         Self {
             underlying: u64::min(),
         }
     }
 
-    /// Helper function to get a negative value of an unsigned number
+    /// Helper function to get a negative value of an unsigned number.
+    ///
+    /// # Arguments
+    ///
+    /// * `value`: [u64] - The unsigned number to negate.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u64;
+    ///     let i64 = I64::neg_from(underlying);
+    ///     assert(i64.underlying == 9223372036854775807u64);
+    /// }
+    /// ```
     pub fn neg_from(value: u64) -> Self {
         Self {
             underlying: Self::indent() - value,
@@ -79,6 +183,25 @@ impl I64 {
     }
 
     /// Initializes a new, zeroed I64.
+    ///
+    /// # Additional Information
+    ///
+    /// The zero value of I64 is 9223372036854775808.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use signed_integers::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::new();
+    ///     assert(i64.underlying == 9223372036854775808);
+    /// }
+    /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
