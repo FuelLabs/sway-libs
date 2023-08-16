@@ -5,11 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
 const ToolchainNames = [
-  'latest',
-  'nightly',
   'beta-3',
   'beta-2',
   'beta-1',
+  'latest',
+  'nightly',
 ] as const;
 export type Toolchain = (typeof ToolchainNames)[number];
 
