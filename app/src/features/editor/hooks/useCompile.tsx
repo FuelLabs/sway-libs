@@ -3,6 +3,7 @@ import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
 import { saveAbi, saveBytecode } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
+import { Toolchain } from '../components/ToolchainDropdown';
 
 function toResults(
   prefixedBytecode: string,
@@ -27,9 +28,11 @@ export function useCompile(
   code: string | undefined,
   onError: (error: string | undefined) => void,
   setIsCompiled: (isCompiled: boolean) => void,
-  setResults: (entry: React.ReactElement[]) => void
+  setResults: (entry: React.ReactElement[]) => void,
+  toolchain: Toolchain
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
+  const [version, setVersion] = useState<string | undefined>();
 
   useEffect(() => {
     if (!code) {
@@ -49,7 +52,8 @@ export function useCompile(
     const request = new Request(server_uri, {
       method: 'POST',
       body: JSON.stringify({
-        contents: code,
+        contract: code,
+        toolchain,
       }),
     });
 
@@ -62,7 +66,7 @@ export function useCompile(
         }
       })
       .then((response) => {
-        const error = response.error;
+        const { error, forcVersion } = response;
         if (error.length) {
           // Preserve the ANSI color codes from the compiler output.
           let parsedAnsi = ansicolor.parse(error);
@@ -74,14 +78,16 @@ export function useCompile(
             return <Span key={`${i}-${text}`}>{text}</Span>;
           });
           setResults(results);
+          setVersion(forcVersion);
           saveAbi('');
           saveBytecode('');
         } else {
-          const { abi, bytecode } = response;
+          const { abi, bytecode, forcVersion } = response;
           const prefixedBytecode = `0x${bytecode}`;
           saveAbi(abi);
           saveBytecode(prefixedBytecode);
           setResults(toResults(prefixedBytecode, abi));
+          setVersion(forcVersion);
         }
       })
       .catch(() => {
@@ -89,7 +95,7 @@ export function useCompile(
         setServerError(true);
       });
     setIsCompiled(true);
-  }, [code, setIsCompiled, setResults]);
+  }, [code, setIsCompiled, setResults, toolchain]);
 
   useEffect(() => {
     if (serverError) {
@@ -98,4 +104,11 @@ export function useCompile(
       );
     }
   }, [serverError, onError]);
+
+  useEffect(() => {
+    if (version) {
+      setResults([<div>Compiled with {version}</div>]);
+      setVersion(undefined);
+    }
+  }, [setResults, version]);
 }

@@ -40,7 +40,7 @@ function ActionToolbar({
       <CompileButton
         onClick={onCompile}
         text='COMPILE'
-        endIcon={<PlayArrow />}
+        endIcon={<PlayArrow style={{ fontSize: '18px' }} />}
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
@@ -83,7 +83,7 @@ function ActionToolbar({
         }
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}
-        endIcon={<OpenInNew />}
+        endIcon={<OpenInNew style={{ fontSize: '16px' }} />}
       />
     </div>
   );

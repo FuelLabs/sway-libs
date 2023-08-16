@@ -7,8 +7,9 @@ import { DeployState } from './utils/types';
 import { loadCode, saveCode } from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
+import { Toolchain } from './features/editor/components/ToolchainDropdown';
 
-const DRAWER_WIDTH = '50vw';
+const DRAWER_WIDTH = '40vw';
 
 function App() {
   // The current code in the editor.
@@ -21,6 +22,9 @@ function App() {
 
   // Whether or not the current code in the editor has been compiled.
   const [isCompiled, setIsCompiled] = useState(false);
+
+  // The toolchain to use for compilation.
+  const [toolchain, setToolchain] = useState<Toolchain>('beta-3');
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
@@ -50,7 +54,7 @@ function App() {
     [updateLog]
   );
 
-  useCompile(codeToCompile, setError, setIsCompiled, updateLog);
+  useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
     <div
@@ -60,23 +64,27 @@ function App() {
         margin: '0px',
         background: '#F1F1F1',
       }}>
-      <ActionToolbar
-        deployState={deployState}
-        setContractId={setContractId}
-        onCompile={() => setCodeToCompile(code)}
-        isCompiled={isCompiled}
-        setDeployState={setDeployState}
-        drawerOpen={drawerOpen}
-        setDrawerOpen={setDrawerOpen}
-        updateLog={updateLog}
-      />
-
       <div
         style={{
           marginRight: drawerOpen ? DRAWER_WIDTH : 0,
           transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
         }}>
-        <Editor code={code} onChange={onCodeChange} />
+        <ActionToolbar
+          deployState={deployState}
+          setContractId={setContractId}
+          onCompile={() => setCodeToCompile(code)}
+          isCompiled={isCompiled}
+          setDeployState={setDeployState}
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          updateLog={updateLog}
+        />
+        <Editor
+          code={code}
+          onChange={onCodeChange}
+          toolchain={toolchain}
+          setToolchain={setToolchain}
+        />
         <LogView results={log} />
       </div>
       <InteractionDrawer
