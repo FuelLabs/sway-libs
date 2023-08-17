@@ -100,7 +100,7 @@ jobs:
             ghcr.io/fuellabs/sway-playground
           tags: |
             type=ref,event=branch
-            type=sha,prefix=sha-
+            type=sha,prefix=
             type=semver,pattern={{raw}}
 
       - name: Set up Docker Buildx
@@ -132,7 +132,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           tag=(`echo $GITHUB_SHA | cut -c1-7`)
-          echo "IMAGE_TAG=`echo sha-$tag`" >> $GITHUB_ENV
+          echo "IMAGE_TAG=`echo $tag`" >> $GITHUB_ENV
           echo "DEPLOYMENT_VERSION=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
 
       - name: Deploy Sway Playground Backend Environment
