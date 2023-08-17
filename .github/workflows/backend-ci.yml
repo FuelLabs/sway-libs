@@ -1,4 +1,4 @@
-name: Backend - Build and Test
+name: Backend CI
 on:
   push:
     branches:
@@ -123,3 +123,26 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs:
+      - build-and-publish-image
+    runs-on: buildjet-4vcpu-ubuntu-2204
+    steps:
+      - name: Set Environment Variables
+        run: |
+          tag=(`echo $GITHUB_SHA | cut -c1-7`)
+          echo "IMAGE_TAG=`echo sha-$tag`" >> $GITHUB_ENV
+          echo "DEPLOYMENT_VERSION=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
+
+      - name: Deploy Sway Playground Backend Environment
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Deploy Sway Playground on k8s
+          repo: FuelLabs/fuel-deployment
+          ref: refs/heads/master
+          token: ${{ secrets.REPO_TOKEN }}
+          inputs: '{ "k8s-type": "${{ env.K8S }}", "config-directory": "${{ env.CONFIG }}", "deployment-version": "${{ github.sha }}", "image-tag": "${{ steps.meta.outputs.tags }}" }'
+        env:
+          K8S: 'eks'
+          CONFIG: 'fuel-prod-1'
