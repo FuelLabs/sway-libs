@@ -35,8 +35,6 @@ RUN apt-get update -y \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh -s -- --no-modify-path
-
 WORKDIR /root/
 
 COPY --from=builder /build/target/debug/sway-playground .
@@ -44,7 +42,16 @@ COPY --from=builder /build/target/debug/sway-playground.d .
 COPY --from=builder /build/Rocket.toml .
 COPY --from=builder /build/projects projects
 
+# Install fuelup
+RUN curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh -s -- --no-modify-path
 ENV PATH="/root/.fuelup/bin:$PATH"
+
+# Install all fuel toolchains
+RUN fuelup toolchain install latest
+RUN fuelup toolchain install nightly
+RUN fuelup toolchain install beta-1
+RUN fuelup toolchain install beta-2
+RUN fuelup toolchain install beta-3
 
 EXPOSE 8080
 
