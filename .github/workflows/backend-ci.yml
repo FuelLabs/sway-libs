@@ -100,7 +100,7 @@ jobs:
             ghcr.io/fuellabs/sway-playground
           tags: |
             type=ref,event=branch
-            type=sha,prefix=
+            type=sha,prefix=sha-
             type=semver,pattern={{raw}}
 
       - name: Set up Docker Buildx
@@ -142,6 +142,6 @@ jobs:
           repo: FuelLabs/fuel-deployment
           ref: refs/heads/master
           token: ${{ secrets.REPO_TOKEN }}
-          inputs: '{ "cluster": "${{ env.CONFIG }}", "deployment-version": "${{ github.sha }}", "image-version": "${{ steps.meta.outputs.tags }}" }'
+          inputs: '{ "cluster": "${{ env.CONFIG }}", "deployment-version": "${{ github.sha }}", "image-version": "${{ env.IMAGE_TAG }}" }'
         env:
           CONFIG: 'fuel-prod-1'
