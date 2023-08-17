@@ -7,14 +7,6 @@ const FUELUP: &str = "fuelup";
 
 /// Switch to the given fuel toolchain.
 pub fn switch_fuel_toolchain(toolchain: String) {
-    // Install the provided toolchain.
-    let _ = spawn_and_wait(
-        Command::new(FUELUP)
-            .arg("toolchain")
-            .arg("install")
-            .arg(toolchain.clone()),
-    );
-
     // Set the default toolchain to the one provided.
     let _ = spawn_and_wait(Command::new(FUELUP).arg("default").arg(toolchain));
 }
