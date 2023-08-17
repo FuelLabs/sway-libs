@@ -142,7 +142,6 @@ jobs:
           repo: FuelLabs/fuel-deployment
           ref: refs/heads/master
           token: ${{ secrets.REPO_TOKEN }}
-          inputs: '{ "k8s-type": "${{ env.K8S }}", "config-directory": "${{ env.CONFIG }}", "deployment-version": "${{ github.sha }}", "image-tag": "${{ steps.meta.outputs.tags }}" }'
+          inputs: '{ "cluster": "${{ env.CONFIG }}", "deployment-version": "${{ github.sha }}", "image-version": "${{ steps.meta.outputs.tags }}" }'
         env:
-          K8S: 'eks'
           CONFIG: 'fuel-prod-1'
