@@ -125,6 +125,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   deploy:
+    if: github.ref == 'refs/heads/master'
     needs:
       - build-and-publish-image
     runs-on: buildjet-4vcpu-ubuntu-2204
@@ -133,7 +134,6 @@ jobs:
         run: |
           tag=(`echo $GITHUB_SHA | cut -c1-7`)
           echo "IMAGE_TAG=`echo $tag`" >> $GITHUB_ENV
-          echo "DEPLOYMENT_VERSION=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
 
       - name: Deploy Sway Playground Backend Environment
         uses: benc-uk/workflow-dispatch@v1
