@@ -24,8 +24,6 @@ members = [
   "./src/fixed_point/ifp256_div_test",
   "./src/fixed_point/ifp256_test",
   "./src/merkle_proof",
-  "./src/nft/nft_core",
-  "./src/nft/nft_extensions",
   "./src/ownership",
   "./src/reentrancy/reentrancy_attacker_abi",
   "./src/reentrancy/reentrancy_attacker_contract",
