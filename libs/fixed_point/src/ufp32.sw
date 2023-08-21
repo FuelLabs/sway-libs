@@ -169,12 +169,12 @@ impl core::ops::Subtract for UFP32 {
 impl core::ops::Multiply for UFP32 {
     /// Multiply a UFP32 with a UFP32. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-        let self_u64: u64 = self.value;
-        let other_u64: u64 = other.value;
+        let self_u64: u64 = self.value.as_u64();
+        let other_u64: u64 = other.value.as_u64();
 
         let self_multiply_other = self_u64 * other_u64;
         let res_u64 = self_multiply_other >> 16;
-        if res_u64 > u32::max() {
+        if res_u64 > u32::max().as_u64() {
             // panic on overflow
             revert(0);
         }
@@ -191,18 +191,18 @@ impl core::ops::Divide for UFP32 {
         let zero = UFP32::zero();
         assert(divisor != zero);
 
-        let denominator: u64 = Self::denominator();
+        let denominator: u64 = Self::denominator().as_u64();
         // Conversion to U64 done to ensure no overflow happen
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
-        let self_u64: u64 = self.value;
-        let divisor_u64: u64 = divisor.value;
+        let self_u64: u64 = self.value.as_u64();
+        let divisor_u64: u64 = divisor.value.as_u64();
 
         // Multiply by denominator to ensure accuracy 
         let res_u64 = self_u64 * denominator / divisor_u64;
 
-        if res_u64 > u32::max() {
+        if res_u64 > u32::max().as_u64() {
             // panic on overflow
             revert(0);
         }
@@ -454,7 +454,7 @@ impl Power for UFP32 {
         // which means that the denominator is always 2 ^ 16
         // we need to divide the nominator by 2 ^ (16 * exponent - 1)
         // - 1 is the formula is due to denominator need to stay 2 ^ 16
-        let nominator = nominator_pow >> 16 * (exponent_int - 1u32);
+        let nominator = nominator_pow >> 16 * (exponent_int - 1u32).as_u64();
 
         if nominator > u32::max() {
             // panic on overflow
