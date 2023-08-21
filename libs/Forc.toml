@@ -2,7 +2,6 @@
 members = [
   "fixed_point",
   "merkle_proof",
-  "nft",
   "ownership",
   "queue",
   "reentrancy",
