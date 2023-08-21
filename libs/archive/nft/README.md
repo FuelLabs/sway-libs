@@ -6,7 +6,7 @@
 </p>
 
 > **Warning**
-> This library has been deprecated with the introduction of [Sway multi-token standard](https://github.com/FuelLabs/sway-standards/issues/1). Use of this library is *highly* discouraged. The last supported version is forc v0.40.1.g
+> This library has been deprecated with the introduction of [Sway multi-token standard](https://github.com/FuelLabs/sway-standards/issues/1). Use of this library is *highly* discouraged. The last supported version is forc v0.40.1.
 
 ## Overview
 
