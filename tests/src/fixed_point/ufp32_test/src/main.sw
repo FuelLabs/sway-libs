@@ -26,7 +26,7 @@ fn main() -> bool {
 
     // recip
     let mut value = UFP32 {
-        value: 1 << 32 + 3,
+        value: 3u32,
     };
     res = UFP32::recip(value);
     assert(UFP32 {
@@ -35,21 +35,21 @@ fn main() -> bool {
 
     // trunc
     value = UFP32 {
-        value: (1 << 32) + 3,
+        value: 3u32,
     };
     res = value.trunc();
     assert(UFP32::from_uint(1) == res);
 
     // floor
     value = UFP32 {
-        value: (1 << 32) + 3,
+        value: 3u32,
     };
     res = value.floor();
     assert(UFP32::from_uint(1) == res);
 
     // fract
     value = UFP32 {
-        value: (1 << 32) + 3,
+        value: 3u32,
     };
     res = value.fract();
     assert(UFP32 { value: 3 } == res);
@@ -60,7 +60,7 @@ fn main() -> bool {
 
     // ceil
     value = UFP32 {
-        value: (1 << 32) + 3,
+        value: 3u32,
     };
     res = value.ceil();
     assert(UFP32::from_uint(2) == res);
@@ -71,13 +71,13 @@ fn main() -> bool {
 
     // round
     value = UFP32 {
-        value: (1 << 32) + 3,
+        value: 3u32,
     };
     res = value.round();
     assert(UFP32::from_uint(1) == res);
 
     value = UFP32 {
-        value: (1 << 32) + (1 << 31) + 1,
+        value: 2147483649u32,
     };
     res = value.round();
     assert(UFP32::from_uint(2) == res);

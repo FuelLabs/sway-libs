@@ -5,6 +5,9 @@
     </picture>
 </p>
 
+> **Warning**
+> This library has been deprecated with the introduction of [Sway multi-token standard](https://github.com/FuelLabs/sway-standards/issues/1). Use of this library is *highly* discouraged. The last supported version is forc v0.40.1.
+
 ## Overview
 
 A non-fungible token (NFT) is a unique token that has an identifier which distinguishes itself from other tokens within the same token contract. Unlike Fuel's Native Assets, these tokens are not fungible with one another and may contain metadata or other traits giving them distinctive characteristics.
