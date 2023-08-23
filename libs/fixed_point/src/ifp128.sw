@@ -34,7 +34,7 @@ impl IFP128 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `IFP128` type.
+    /// [u64] - The defined size of the `IFP128` type.
     ///
     /// # Examples
     ///
@@ -43,10 +43,10 @@ impl IFP128 {
     ///
     /// fn foo() {
     ///     let bits = IFP128::bits();
-    ///     assert(bits == 72u32);
+    ///     assert(bits == 72);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         72
     }
 

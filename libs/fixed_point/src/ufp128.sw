@@ -97,7 +97,7 @@ impl UFP128 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `UFP128` type.
+    /// [u64] - The defined size of the `UFP128` type.
     ///
     /// # Examples
     ///
@@ -106,10 +106,10 @@ impl UFP128 {
     ///
     /// fn foo() {
     ///     let bits = UFP128::bits();
-    ///     assert(bits == 128u32);
+    ///     assert(bits == 128);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         128
     }
 }

@@ -28,7 +28,7 @@ impl UFP64 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `UFP64` type.
+    /// [u64] - The defined size of the `UFP64` type.
     ///
     /// # Examples
     ///
@@ -37,10 +37,10 @@ impl UFP64 {
     ///
     /// fn foo() {
     ///     let bits = UFP64::bits();
-    ///     assert(bits == 64u32);
+    ///     assert(bits == 64);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         64
     }
 
