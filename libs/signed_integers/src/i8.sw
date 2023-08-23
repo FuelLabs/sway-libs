@@ -70,7 +70,7 @@ impl I8 {
     ///
     /// # Returns
     ///
-    /// * [u32] - The number of bits.
+    /// * [u64] - The number of bits.
     ///
     /// # Examples
     ///
@@ -79,10 +79,10 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let bits = I8::bits();
-    ///     assert(bits == 8u32);
+    ///     assert(bits == 8);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         8
     }
 
