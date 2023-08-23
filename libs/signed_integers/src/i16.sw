@@ -71,7 +71,7 @@ impl I16 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `I16` type.
+    /// [u64] - The defined size of the `I16` type.
     ///
     /// # Examples
     ///
@@ -80,10 +80,10 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let bits = I16::bits();
-    ///     assert(bits == 16u32);
+    ///     assert(bits == 16);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         16
     }
 

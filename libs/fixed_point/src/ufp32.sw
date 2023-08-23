@@ -28,7 +28,7 @@ impl UFP32 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `UFP32` type.
+    /// [u64] - The defined size of the `UFP32` type.
     ///
     /// # Examples
     ///
@@ -37,10 +37,10 @@ impl UFP32 {
     ///
     /// fn foo() {
     ///     let bits = UFP32::bits();
-    ///     assert(bits == 32u32);
+    ///     assert(bits == 32);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         32
     }
 

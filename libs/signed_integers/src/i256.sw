@@ -76,7 +76,7 @@ impl I256 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `I256` type.
+    /// [u64] - The defined size of the `I256` type.
     ///
     /// # Examples
     ///
@@ -85,10 +85,10 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let bits = I256::bits();
-    ///     assert(bits == 128u32);
+    ///     assert(bits == 128);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         128
     }
 

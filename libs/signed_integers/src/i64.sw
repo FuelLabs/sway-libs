@@ -70,7 +70,7 @@ impl I64 {
     ///
     /// # Returns
     ///
-    /// [u32] - The defined size of the `I64` type.
+    /// [u64] - The defined size of the `I64` type.
     ///
     /// # Examples
     ///
@@ -79,10 +79,10 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let bits = I64::bits();
-    ///     assert(bits == 64u32);
+    ///     assert(bits == 64);
     /// }
     /// ```
-    pub fn bits() -> u32 {
+    pub fn bits() -> u64 {
         64
     }
 
