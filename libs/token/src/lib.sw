@@ -210,7 +210,6 @@ pub fn _decimals(
 ) -> Option<u8> {
     decimals_key.get(asset).try_read()
 }
-
 /// Unconditionally mints new tokens using the `sub_id` sub-identifier.
 ///
 /// # Arguments

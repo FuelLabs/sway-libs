@@ -3,23 +3,19 @@ contract;
 use src_20::SRC20;
 use src_3::SRC3;
 use token::{
-    _total_assets, 
-    _total_supply,
-    _name,
-    _symbol,
+    _burn,
     _decimals,
     _mint,
-    _burn,
+    _name,
+    _set_decimals,
     _set_name,
     _set_symbol,
-    _set_decimals,
-    SetTokenAttributes
+    _symbol,
+    _total_assets,
+    _total_supply,
+    SetTokenAttributes,
 };
-use std::{
-    asset_id::construct_asset_id,
-    storage::storage_string::*,
-    string::String
-};
+use std::{asset_id::construct_asset_id, storage::storage_string::*, string::String};
 
 storage {
     total_assets: u64 = 0,
@@ -85,7 +81,6 @@ impl SetTokenAttributes for Contract {
     }
 }
 
-// Tests
 #[test]
 fn test_total_assets() {
     let src3_abi = abi(SRC3, CONTRACT_ID);
