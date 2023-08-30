@@ -60,7 +60,7 @@ export function ContractInterface({
           }}>
           Contract Interface
         </div>
-        <CopyableHex hex={contractId} />
+        <CopyableHex hex={contractId} tooltip='contract ID' />
       </div>
 
       {functionInterfaces}
