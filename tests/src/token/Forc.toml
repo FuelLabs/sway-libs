@@ -5,6 +5,6 @@ license = "Apache-2.0"
 name = "token_test"
 
 [dependencies]
-src_20 = { git = "https://github.com/FuelLabs/sway-standards", branch = "src-20-token-standard" }
 src_3 = { git = "https://github.com/FuelLabs/sway-standards", branch = "src-3-mint-burn-standard" }
+src_20 = { git = "https://github.com/FuelLabs/sway-standards", branch = "src-20-token-standard" }
 token = { path = "../../../libs/token" }
