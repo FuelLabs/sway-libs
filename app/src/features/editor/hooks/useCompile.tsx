@@ -12,7 +12,7 @@ function toResults(
   return [
     <div key={'bytecode'}>
       <b>Bytecode</b>:<br />
-      <CopyableHex hex={prefixedBytecode} />
+      <CopyableHex hex={prefixedBytecode} tooltip='bytecode' />
       <br />
       <br />
     </div>,

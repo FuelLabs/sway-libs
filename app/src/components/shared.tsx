@@ -19,7 +19,13 @@ export const ButtonSpinner = () => (
   />
 );
 
-export const CopyableHex = ({ hex }: { hex: string }) => {
+export const CopyableHex = ({
+  hex,
+  tooltip,
+}: {
+  hex: string;
+  tooltip: string;
+}) => {
   const formattedHex = hex.slice(0, 6) + '...' + hex.slice(-4, hex.length);
-  return <Copyable value={hex} label={formattedHex} />;
+  return <Copyable value={hex} label={formattedHex} tooltip={tooltip} />;
 };
