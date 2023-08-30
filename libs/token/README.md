@@ -7,7 +7,7 @@
 
 # Overview
 
-The Token library provides basic function implementations of the [SRC-20; Token Standard]() and the [SRC-3; Mint and Burn Standard](). It is intended to make develpment of Native Assets using Sway quick and easy while following the standard's specifications.
+The Token library provides basic function implementations of the [SRC-20; Token Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3). It is intended to make develpment of Native Assets using Sway quick and easy while following the standard's specifications.
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -23,7 +23,7 @@ You may import the Token library's functionalities like so:
 use token::*;
 ```
 
-Once imported, the Token library's functions should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20]() standard.
+Once imported, the Token library's functions should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) standard.
 
 ```rust
 storage {
@@ -37,7 +37,7 @@ storage {
 
 ## Basic Functionality
 
-To use a function, simply pass the `StorageKey` from the prescribed storage block above. The example below shows the implementation of the [SRC-20]() standard in combination with the Token library with no user defined restrictions or custom functionality.
+To use a function, simply pass the `StorageKey` from the prescribed storage block above. The example below shows the implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) standard in combination with the Token library with no user defined restrictions or custom functionality.
 
 ```rust
 use token::{

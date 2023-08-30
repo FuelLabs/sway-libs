@@ -6,7 +6,7 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 ## Use Cases
 
-The Token library can be used anytime a contract needs a basic implementation of the SRC-20 and SRC-3 standards.
+The Token library can be used anytime a contract needs a basic implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3) standards.
 
 ## Public Functions
 
