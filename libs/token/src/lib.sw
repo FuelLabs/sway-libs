@@ -302,7 +302,7 @@ pub fn _mint(
 /// }
 /// ```
 #[storage(read, write)]
-fn _burn(
+pub fn _burn(
     total_supply_storage_key: StorageKey<StorageMap<AssetId, u64>>,
     sub_id: SubId,
     amount: u64,
@@ -347,7 +347,7 @@ fn _burn(
 /// }
 /// ```
 #[storage(write)]
-pub fn set_name(
+pub fn _set_name(
     name_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
     name: String,
@@ -393,7 +393,7 @@ pub fn set_name(
 /// }
 /// ```
 #[storage(write)]
-pub fn set_symbol(
+pub fn _set_symbol(
     symbol_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
     symbol: String,
@@ -439,10 +439,18 @@ pub fn set_symbol(
 /// }
 /// ```
 #[storage(write)]
-pub fn set_decimals(
+pub fn _set_decimals(
     decimals_storage_key: StorageKey<StorageMap<AssetId, u8>>,
     asset: AssetId,
     decimals: u8,
 ) {
     decimals_storage_key.insert(asset, decimals);
+}
+abi SetTokenAttributes {
+    #[storage(write)]
+    fn set_name(asset: AssetId, name: String);
+    #[storage(write)]
+    fn set_symbol(asset: AssetId, symbol: String);
+    #[storage(write)]
+    fn set_decimals(asset: AssetId, decimals: u8);
 }
