@@ -59,26 +59,28 @@ function App() {
   return (
     <div
       style={{
-        height: 'calc(100vh - 30px)',
         padding: '15px',
         margin: '0px',
         background: '#F1F1F1',
       }}>
+      <ActionToolbar
+        deployState={deployState}
+        setContractId={setContractId}
+        onCompile={() => setCodeToCompile(code)}
+        isCompiled={isCompiled}
+        setDeployState={setDeployState}
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        updateLog={updateLog}
+      />
       <div
         style={{
           marginRight: drawerOpen ? DRAWER_WIDTH : 0,
           transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+          height: 'calc(100vh - 90px)',
+          display: 'flex',
+          flexDirection: 'column',
         }}>
-        <ActionToolbar
-          deployState={deployState}
-          setContractId={setContractId}
-          onCompile={() => setCodeToCompile(code)}
-          isCompiled={isCompiled}
-          setDeployState={setDeployState}
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
-          updateLog={updateLog}
-        />
         <Editor
           code={code}
           onChange={onCodeChange}

@@ -23,7 +23,7 @@ function LogView({ results }: LogViewProps) {
         padding: '15px',
         overflow: 'auto',
         marginTop: '15px',
-        height: 'calc(40vh - 75px)',
+        flex: 1,
         scrollMarginTop: '99999px',
       }}>
       <pre style={{ fontSize: '14px', margin: 0 }}>
