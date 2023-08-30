@@ -29,8 +29,8 @@ Once imported, the Token library's functions should be available. To use them, b
 storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
-    name: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
-    symbol: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
+    name: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
+    symbol: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
 ```

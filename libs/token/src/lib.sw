@@ -23,7 +23,7 @@ use std::{
 ///
 /// # Arguments
 ///
-/// * `total_assets_storage_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets are stored.
+/// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
 ///
 /// # Returns
 ///
@@ -48,20 +48,20 @@ use std::{
 /// }
 /// ```
 #[storage(read)]
-pub fn _total_assets(total_assets_storage_key: StorageKey<u64>) -> u64 {
-    total_assets_storage_key.try_read().unwrap_or(0)
+pub fn _total_assets(total_assets_key: StorageKey<u64>) -> u64 {
+    total_assets_key.try_read().unwrap_or(0)
 }
 
 /// Returns the total supply of tokens for an asset.
 ///
 /// # Arguments
 ///
-/// * `total_supply_storage_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
+/// * `total_supply_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to query the total supply.
 ///
 /// # Returns
 ///
-/// * [Option<u64>] - The total supply of tokens for `asset`.
+/// * [Option<u64>] - The total supply of an `asset`.
 ///
 /// # Number of Storage Accesses
 ///
@@ -78,22 +78,22 @@ pub fn _total_assets(total_assets_storage_key: StorageKey<u64>) -> u64 {
 ///
 /// fn foo(asset_id: AssetId) {
 ///     let supply = _total_supply(storage.total_supply, asset_id);
-///     assert(supply.unwrap() != 0);
+///     assert(supply.unwrap_or(0) != 0);
 /// }
 /// ```
 #[storage(read)]
 pub fn _total_supply(
-    total_supply_storage_key: StorageKey<StorageMap<AssetId, u64>>,
+    total_supply_key: StorageKey<StorageMap<AssetId, u64>>,
     asset: AssetId,
 ) -> Option<u64> {
-    total_supply_storage_key.get(asset).try_read()
+    total_supply_key.get(asset).try_read()
 }
 
 /// Returns the name of the asset, such as “Ether”.
 ///
 /// # Arguments
 ///
-/// * `name_storage_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the names of assets is stored.
+/// * `name_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the names of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to query the name.
 ///
 /// # Returns
@@ -111,20 +111,20 @@ pub fn _total_supply(
 /// use std::string::String;
 ///
 /// storage {
-///     name: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
+///     name: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
 /// }
 ///
 /// fn foo(asset: AssetId) {
 ///     let name = _name(storage.name, asset);
-///     assert(name.unwrap().len() != 0);
+///     assert(name.unwrap_or(String::new()).len() != 0);
 /// }
 /// ```
 #[storage(read)]
 pub fn _name(
-    name_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    name_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
 ) -> Option<String> {
-    match name_storage_key.get(asset).try_read() {
+    match name_key.get(asset).try_read() {
         Option::Some(s) => s.read_slice(),
         Option::None(s) => Option::None,
     }
@@ -133,7 +133,7 @@ pub fn _name(
 ///
 /// # Arguments
 ///
-/// * `symbol_storage_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
+/// * `symbol_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to query the symbol.
 ///
 /// # Returns
@@ -151,20 +151,20 @@ pub fn _name(
 /// use std::string::String;
 ///
 /// storage {
-///     symbol: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
+///     symbol: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
 /// }
 ///
 /// fn foo(asset: AssetId) {
 ///     let symbol = _symbol(storage.symbol, asset);
-///     assert(symbol.unwrap().len() != 0);
+///     assert(symbol.unwrap_or(String::new()).len() != 0);
 /// }
 /// ```
 #[storage(read)]
 pub fn _symbol(
-    symbol_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    symbol_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
 ) -> Option<String> {
-    match symbol_storage_key.get(asset).try_read() {
+    match symbol_key.get(asset).try_read() {
         Option::Some(s) => s.read_slice(),
         Option::None(s) => Option::None,
     }
@@ -178,7 +178,7 @@ pub fn _symbol(
 ///
 /// # Arguments
 ///
-/// * `decimals_storage_key`: [StorageKey<StorageMap<AssetId, u8>>] - The location in storage which the `StorageMap` that stores the decimals of assets is stored.
+/// * `decimals_key`: [StorageKey<StorageMap<AssetId, u8>>] - The location in storage which the `StorageMap` that stores the decimals of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to query the decimals.
 ///
 /// # Returns
@@ -200,22 +200,23 @@ pub fn _symbol(
 ///
 /// fn foo(asset: AssedId) {
 ///     let decimals = _decimals(storage.decimals, asset);
-///     assert(decimals == 8);
+///     assert(decimals.unwrap_or(0u8) == 8);
 /// }
 /// ```
 #[storage(read)]
 pub fn _decimals(
-    decimals_storage_key: StorageKey<StorageMap<AssetId, u8>>,
+    decimals_key: StorageKey<StorageMap<AssetId, u8>>,
     asset: AssetId,
 ) -> Option<u8> {
-    decimals_storage_key.get(asset).try_read()
+    decimals_key.get(asset).try_read()
 }
+
 /// Unconditionally mints new tokens using the `sub_id` sub-identifier.
 ///
 /// # Arguments
 ///
-/// * `total_assets_storage_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets are stored.
-/// * `total_supply_storage_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
+/// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
+/// * `total_supply_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
 /// * `recipient`: [Identity] - The user to which the newly minted tokens are transferred to.
 /// * `sub_id`: [SubId] - The sub-identifier of the newly minted token.
 /// * `amount`: [u64] - The quantity of tokens to mint.
@@ -243,25 +244,25 @@ pub fn _decimals(
 /// fn foo(recipient: Identity) {
 ///     let recipient = Identity::ContractId(ContractId::from(ZERO_B256));
 ///     let asset_id = _mint(storage.total_assets, storage.total_supply, recipient, ZERO_B256, 100);
-///     balance_of(recipient.as_contract_id(), asset_id)
+///     assert(balance_of(recipient.as_contract_id(), asset_id), 100);
 /// }
 /// ```
 #[storage(read, write)]
 pub fn _mint(
-    total_assets_storage_key: StorageKey<u64>,
-    total_supply_storage_key: StorageKey<StorageMap<AssetId, u64>>,
+    total_assets_key: StorageKey<u64>,
+    total_supply_key: StorageKey<StorageMap<AssetId, u64>>,
     recipient: Identity,
     sub_id: SubId,
     amount: u64,
 ) -> AssetId {
     let asset_id = construct_asset_id(contract_id(), sub_id);
-    let supply = _total_supply(total_supply_storage_key, asset_id);
+    let supply = _total_supply(total_supply_key, asset_id);
     // Only increment the number of assets minted by this contract if it hasn't been minted before.
     if supply.is_none() {
-        total_assets_storage_key.write(_total_assets(total_assets_storage_key) + 1);
+        total_assets_key.write(_total_assets(total_assets_key) + 1);
     }
     let current_supply = supply.unwrap_or(0);
-    total_supply_storage_key.insert(asset_id, current_supply + amount);
+    total_supply_key.insert(asset_id, current_supply + amount);
     mint_to(recipient, sub_id, amount);
     asset_id
 }
@@ -273,6 +274,7 @@ pub fn _mint(
 ///
 /// # Arguments
 ///
+/// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
 /// * `sub_id`: [SubId] - The sub-identifier of the token to burn.
 /// * `amount`: [u64] - The quantity of tokens to burn.
 ///
@@ -303,15 +305,15 @@ pub fn _mint(
 /// ```
 #[storage(read, write)]
 pub fn _burn(
-    total_supply_storage_key: StorageKey<StorageMap<AssetId, u64>>,
+    total_supply_key: StorageKey<StorageMap<AssetId, u64>>,
     sub_id: SubId,
     amount: u64,
 ) {
     let asset_id = construct_asset_id(contract_id(), sub_id);
     require(this_balance(asset_id) >= amount, BurnError::NotEnoughTokens);
     // If we pass the check above, we can assume it is safe to unwrap.
-    let supply = _total_supply(total_supply_storage_key, asset_id).unwrap();
-    total_supply_storage_key.insert(asset_id, supply - amount);
+    let supply = _total_supply(total_supply_key, asset_id).unwrap();
+    total_supply_key.insert(asset_id, supply - amount);
     burn(sub_id, amount);
 }
 /// Unconditionally sets the name of an asset.
@@ -322,7 +324,7 @@ pub fn _burn(
 ///
 /// # Arguments
 ///
-/// * `name_storage_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the names of assets is stored.
+/// * `name_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the names of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the name.
 /// * `name`: [String] - The name of the asset.
 ///
@@ -333,22 +335,22 @@ pub fn _burn(
 /// # Examples
 ///
 /// ```sway
-/// use token::{set_name, _name};
+/// use token::{_set_name, _name};
 /// use std::string::String;
 ///
 /// storage {
-///     name: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
+///     name: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
 /// }
 ///
 /// fn foo(asset: AssetId) {
 ///     let name = String::from_ascii_str("Ether");
-///     set_name(storage.name, asset, name);
+///     _set_name(storage.name, asset, name);
 ///     assert(_name(storage.name, asset) == name);
 /// }
 /// ```
 #[storage(write)]
 pub fn _set_name(
-    name_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    name_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
     name: String,
 ) {
@@ -358,7 +360,7 @@ pub fn _set_name(
         field_id: sha256((asset, String::from_ascii_str("name_field_id"))),
     };
     name_string_key.write_slice(name);
-    name_storage_key.insert(asset, name_string_key);
+    name_key.insert(asset, name_string_key);
 }
 /// Unconditionally sets the symbol of an asset.
 ///
@@ -368,7 +370,7 @@ pub fn _set_name(
 ///
 /// # Arguments
 ///
-/// * `symbol_storage_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
+/// * `symbol_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the symbol.
 /// * `symbol`: [String] - The symbol of the asset.
 ///
@@ -379,22 +381,22 @@ pub fn _set_name(
 /// # Examples
 ///
 /// ```sway
-/// use token::{set_symbol, _symbol};
+/// use token::{_set_symbol, _symbol};
 /// use std::string::String;
 ///
 /// storage {
-///     symbol: StorageMap<AssetId, StorageKey<StorageString>>> = StorageMap {},
+///     symbol: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
 /// }
 ///
 /// fn foo(asset: AssetId) {
 ///     let symbol = String::from_ascii_str("ETH");
-///     set_symbol(storage.symbol, asset, symbol);
+///     _set_symbol(storage.symbol, asset, symbol);
 ///     assert(_symbol(storage.symbol, asset) == symbol);
 /// }
 /// ```
 #[storage(write)]
 pub fn _set_symbol(
-    symbol_storage_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    symbol_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
     asset: AssetId,
     symbol: String,
 ) {
@@ -404,7 +406,7 @@ pub fn _set_symbol(
         field_id: sha256((asset, String::from_ascii_str("symbol_field_id"))),
     };
     symbol_string_key.write_slice(symbol);
-    symbol_storage_key.insert(asset, symbol_string_key);
+    symbol_key.insert(asset, symbol_string_key);
 }
 /// Unconditionally sets the decimals of an asset.
 ///
@@ -414,7 +416,7 @@ pub fn _set_symbol(
 ///
 /// # Arguments
 ///
-/// * `decimals_storage_key`: [StorageKey<StorageMap<AssetId, u8>>] - The location in storage which the `StorageMap` that stores the decimals of assets is stored.
+/// * `decimals_key`: [StorageKey<StorageMap<AssetId, u8>>] - The location in storage which the `StorageMap` that stores the decimals of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the decimals.
 /// * `decimal`: [u8] - The decimals of the asset.
 ///
@@ -425,7 +427,7 @@ pub fn _set_symbol(
 /// # Examples
 ///
 /// ```sway
-/// use token::{set_decimals, _decimals};
+/// use token::{_set_decimals, _decimals};
 /// use std::string::String;
 ///
 /// storage {
@@ -434,17 +436,17 @@ pub fn _set_symbol(
 ///
 /// fn foo(asset: AssetId) {
 ///     let decimals = 8u8;
-///     set_decimals(storage.decimals, asset, decimals);
+///     _set_decimals(storage.decimals, asset, decimals);
 ///     assert(_decimals(storage.decimals, asset) == decimals);
 /// }
 /// ```
 #[storage(write)]
 pub fn _set_decimals(
-    decimals_storage_key: StorageKey<StorageMap<AssetId, u8>>,
+    decimals_key: StorageKey<StorageMap<AssetId, u8>>,
     asset: AssetId,
     decimals: u8,
 ) {
-    decimals_storage_key.insert(asset, decimals);
+    decimals_key.insert(asset, decimals);
 }
 abi SetTokenAttributes {
     #[storage(write)]

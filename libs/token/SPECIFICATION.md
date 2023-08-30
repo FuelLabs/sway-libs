@@ -38,14 +38,14 @@ This function will unconditionally mint new tokens using a sub-identifier.
 
 This function will burns tokens with the given sub-identifier.
 
-### `set_name()`
+### `_set_name()`
 
-This function will unconditionally sets the name of an asset.
+This function will unconditionally set the name of an asset.
 
-### `set_symbol()`
+### `_set_symbol()`
 
-This function will unconditionally sets the symbol of an asset.
+This function will unconditionally set the symbol of an asset.
 
-### `set_decimals`
+### `_set_decimals`
 
-This function will unconditionally sets the decimals of an asset.
+This function will unconditionally set the decimals of an asset.
