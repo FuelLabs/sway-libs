@@ -25,7 +25,12 @@ function Editor({ code, onChange, toolchain, setToolchain }: EditorProps) {
       />
       <StyledBorder>
         <AceEditor
-          style={{ width: '100%', height: 'calc(60vh - 75px)' }}
+          style={{
+            width: '100%',
+            resize: 'vertical',
+            minHeight: '10vh',
+            maxHeight: '80vh',
+          }}
           mode='rust'
           theme='chrome'
           name='editor'
