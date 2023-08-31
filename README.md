@@ -37,6 +37,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 - [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 - [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Token](./libs/token/) is a basic implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3) standards.
 
 ## Using a library
 

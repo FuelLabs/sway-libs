@@ -6,4 +6,5 @@ members = [
   "queue",
   "reentrancy",
   "signed_integers",
+  "token",
 ]
