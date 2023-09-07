@@ -17,6 +17,8 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 In order to use the Ownership library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
 
+> **NOTE** Until [Issue #5025](https://github.com/FuelLabs/sway/issues/5025) is resolved, in order to use the Ownership Library you must also add the [SRC-5](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_5) standard as a dependencies.
+
 You may import the Ownership library's functionalities like so:
 
 ```rust
