@@ -1,4 +1,5 @@
-import { SdkParamType } from '../components/FunctionInterface';
+import { AbiTypeMap } from '../components/ContractInterface';
+import { SdkJsonAbiType } from '../components/FunctionInterface';
 import { ParamTypeLiteral } from '../components/FunctionParameters';
 
 export interface TypeInfo {
@@ -30,23 +31,33 @@ function getLiteral(sdkType: string): ParamTypeLiteral {
   }
 }
 
-function formatTypeArguments({
-  type: sdkType,
-  typeArguments,
-}: SdkParamType): string {
-  const [type, name] = sdkType.split(' ');
+function formatTypeArguments(
+  sdkArgumentTypeId: number,
+  typeMap: AbiTypeMap
+  ): string {
+  const sdkType = typeMap.get(sdkArgumentTypeId);
+  if (!sdkType) {
+    return 'Unknown';
+  }
+  const [type, name] = sdkType.type.split(' ');
   if (!name) {
     return type;
   }
-  if (!typeArguments?.length) {
+  if (!sdkType?.typeParameters?.length) {
     return name;
   }
-  return `${name}<${typeArguments.map(formatTypeArguments).join(', ')}>`;
+  return `${name}<${sdkType.typeParameters.map(ta => formatTypeArguments(ta, typeMap)).join(', ')}>`;
 }
 
-export function getTypeInfo(sdkParam: SdkParamType): TypeInfo {
+export function getTypeInfo(sdkType: SdkJsonAbiType, typeMap: AbiTypeMap): TypeInfo {
+  if (!typeMap) {
+    return {
+      literal: 'string',
+      swayType: 'Unknown',
+    };
+  }
   return {
-    literal: getLiteral(sdkParam.type),
-    swayType: formatTypeArguments(sdkParam),
+    literal: getLiteral(sdkType.type),
+    swayType: formatTypeArguments(sdkType.typeId, typeMap),
   };
 }
