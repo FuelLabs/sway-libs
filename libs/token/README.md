@@ -7,7 +7,7 @@
 
 # Overview
 
-The Token library provides basic function implementations of the [SRC-20; Token Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and the [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3). It is intended to make develpment of Native Assets using Sway quick and easy while following the standard's specifications.
+The Token library provides basic helper functions for the [SRC-20; Token Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20), [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3), and the [SRC-7; Arbitrary Asset Metadata Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7). It is intended to make develpment of Native Assets using Sway quick and easy while following the standard's specifications.
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -40,7 +40,7 @@ storage {
 To use a function, simply pass the `StorageKey` from the prescribed storage block above. The example below shows the implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) standard in combination with the Token library with no user defined restrictions or custom functionality.
 
 ```rust
-use token::{
+use token::src_20::{
     _total_assets, 
     _total_supply,
     _name,
@@ -87,3 +87,5 @@ impl SRC20 for Contract {
 ```
 
 For more information please see the [specification](./SPECIFICATION.md).
+
+> **NOTE** Until [Issue #5025](https://github.com/FuelLabs/sway/issues/5025) is resolved, in order to use the SRC-7 portion of the library, you must also add the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7) standard as a dependency.

@@ -3,3 +3,6 @@ authors = ["Fuel Labs <contact@fuel.sh>"]
 entry = "lib.sw"
 license = "Apache-2.0"
 name = "token"
+
+[dependencies]
+src_7 = { git = "https://github.com/FuelLabs/sway-standards", branch = "src-7-metadata" }
