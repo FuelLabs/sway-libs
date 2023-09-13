@@ -2,18 +2,24 @@ contract;
 
 use src_20::SRC20;
 use src_3::SRC3;
+use src_7::Metadata;
 use token::{
-    _burn,
-    _decimals,
-    _mint,
-    _name,
-    _set_decimals,
-    _set_name,
-    _set_symbol,
-    _symbol,
-    _total_assets,
-    _total_supply,
-    SetTokenAttributes,
+    src_20::{
+        _decimals,
+        _name,
+        _set_decimals,
+        _set_name,
+        _set_symbol,
+        _symbol,
+        _total_assets,
+        _total_supply,
+        SetTokenAttributes,
+    },
+    src_3::{
+        _burn,
+        _mint,
+    },
+    src_7::*
 };
 use std::{asset_id::construct_asset_id, storage::storage_string::*, string::String};
 
@@ -198,4 +204,52 @@ fn test_burn() {
 
     src3_abi.burn(sub_id, 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 0);
+}
+
+#[test]
+fn test_metadata_as_string() {
+    let data_string = String::from_ascii_str("Fuel is blazingly fast");
+    let metadata = Metadata::StringData(data_string);
+
+    assert(data_string == metadata.as_string().unwrap());
+}
+
+#[test]
+fn test_metadata_is_string() {
+    let data_string = String::from_ascii_str("Fuel is blazingly fast");
+    let metadata = Metadata::StringData(data_string);
+
+    assert(metadata.is_string());
+}
+
+#[test]
+fn test_metadata_as_u64() {
+    let data_int = 1;
+    let metadata = Metadata::IntData(data_int);
+
+    assert(data_int == metadata.as_u64().unwrap());
+}
+
+#[test]
+fn test_metadata_is_u64() {
+    let data_int = 1;
+    let metadata = Metadata::IntData(data_int);
+
+    assert(metadata.is_u64());
+}
+
+#[test]
+fn test_metadata_as_bytes() {
+    let data_bytes: Bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let metadata = Metadata::BytesData(data_bytes);
+
+    assert(data_bytes == metadata.as_bytes().unwrap());
+}
+
+#[test]
+fn test_metadata_is_bytes() {
+    let data_bytes: Bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let metadata = Metadata::BytesData(data_bytes);
+
+    assert(metadata.is_bytes());
 }
