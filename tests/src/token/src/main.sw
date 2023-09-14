@@ -209,7 +209,7 @@ fn test_burn() {
 #[test]
 fn test_metadata_as_string() {
     let data_string = String::from_ascii_str("Fuel is blazingly fast");
-    let metadata = Metadata::StringData(data_string);
+    let metadata = Metadata::String(data_string);
 
     assert(data_string == metadata.as_string().unwrap());
 }
@@ -217,7 +217,7 @@ fn test_metadata_as_string() {
 #[test]
 fn test_metadata_is_string() {
     let data_string = String::from_ascii_str("Fuel is blazingly fast");
-    let metadata = Metadata::StringData(data_string);
+    let metadata = Metadata::String(data_string);
 
     assert(metadata.is_string());
 }
@@ -225,7 +225,7 @@ fn test_metadata_is_string() {
 #[test]
 fn test_metadata_as_u64() {
     let data_int = 1;
-    let metadata = Metadata::IntData(data_int);
+    let metadata = Metadata::Int(data_int);
 
     assert(data_int == metadata.as_u64().unwrap());
 }
@@ -233,23 +233,39 @@ fn test_metadata_as_u64() {
 #[test]
 fn test_metadata_is_u64() {
     let data_int = 1;
-    let metadata = Metadata::IntData(data_int);
+    let metadata = Metadata::Int(data_int);
 
     assert(metadata.is_u64());
 }
 
 #[test]
 fn test_metadata_as_bytes() {
-    let data_bytes: Bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
-    let metadata = Metadata::BytesData(data_bytes);
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let metadata = Metadata::Bytes(data_bytes);
 
     assert(data_bytes == metadata.as_bytes().unwrap());
 }
 
 #[test]
 fn test_metadata_is_bytes() {
-    let data_bytes: Bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
-    let metadata = Metadata::BytesData(data_bytes);
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let metadata = Metadata::Bytes(data_bytes);
 
     assert(metadata.is_bytes());
+}
+
+#[test]
+fn test_metadata_as_b256() {
+    let data_b256 = ZERO_B256;
+    let metadata = Metadata::B256(data_b256);
+
+    assert(data_b256 == metadata.as_b256().unwrap());
+}
+
+#[test]
+fn test_metadata_is_b256() {
+    let data_b256 = ZERO_B256;
+    let metadata = Metadata::B256(data_b256);
+
+    assert(metadata.is_b256());
 }
