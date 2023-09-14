@@ -28,7 +28,7 @@ impl Metadata {
     fn as_string(self) -> Option<String> {
         match self {
             String(data) => Option::Some(data),
-            _ => Option::None(),
+            _ => Option::None,
         }
     }
 
@@ -83,7 +83,7 @@ impl Metadata {
     fn as_u64(self) -> Option<u64> {
         match self {
             Int(data) => Option::Some(data),
-            _ => Option::None(),
+            _ => Option::None,
         }
     }
 
@@ -138,7 +138,7 @@ impl Metadata {
     fn as_bytes(self) -> Option<Bytes> {
         match self {
             Bytes(data) => Option::Some(data),
-            _ => Option::None(),
+            _ => Option::None,
         }
     }
 
@@ -193,7 +193,7 @@ impl Metadata {
     fn as_b256(self) -> Option<b256> {
         match self {
             B256(data) => Option::Some(data),
-            _ => Option::None(),
+            _ => Option::None,
         }
     }
 

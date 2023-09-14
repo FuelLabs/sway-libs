@@ -64,7 +64,6 @@ This function will return the metadata as a string.
 
 This function will return the metadata as an int.
 
-
 #### `as_bytes()`
 
 This function will return the metadata as bytes.
@@ -75,16 +74,15 @@ This function will return the metadata as a b256.
 
 #### `is_string()`
 
-This function will return whether the metadata is a string or not.
+This function will return whether the metadata is a string.
 
 #### `is_int()`
 
-This function will return the whether metadata is an int or not.
-
+This function will return the whether metadata is an int.
 
 #### `is_bytes()`
 
-This function will return the whether metadata are bytes or not.
+This function will return the whether metadata are bytes.
 
 #### `is_b256()`
 
