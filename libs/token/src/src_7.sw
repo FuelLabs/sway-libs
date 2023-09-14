@@ -27,7 +27,7 @@ impl Metadata {
     /// ```
     fn as_string(self) -> Option<String> {
         match self {
-            StringData(data) => Option::Some(data),
+            String(data) => Option::Some(data),
             _ => Option::None(),
         }
     }
@@ -54,7 +54,7 @@ impl Metadata {
     /// ```
     fn is_string(self) -> bool {
         match self {
-            StringData(data) => true,
+            String(data) => true,
             _ => false,
         }
     }
@@ -82,7 +82,7 @@ impl Metadata {
     /// ```
     fn as_u64(self) -> Option<u64> {
         match self {
-            IntData(data) => Option::Some(data),
+            Int(data) => Option::Some(data),
             _ => Option::None(),
         }
     }
@@ -109,7 +109,7 @@ impl Metadata {
     /// ```
     fn is_u64(self) -> bool {
         match self {
-            IntData(data) => true,
+            Int(data) => true,
             _ => false,
         }
     }
@@ -137,7 +137,7 @@ impl Metadata {
     /// ```
     fn as_bytes(self) -> Option<Bytes> {
         match self {
-            BytesData(data) => Option::Some(data),
+            Bytes(data) => Option::Some(data),
             _ => Option::None(),
         }
     }
@@ -164,7 +164,62 @@ impl Metadata {
     /// ```
     fn is_bytes(self) -> bool {
         match self {
-            BytesData(data) => true,
+            Bytes(data) => true,
+            _ => false,
+        }
+    }
+
+    /// Returns the underlying metadata as a `b256`.
+    ///
+    /// # Returns
+    ///
+    /// * [Option<u64>] - `Some` if the underlying type is a `b256`, otherwise `None`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use std::string::String;
+    /// use token::src_7::*;
+    /// use src_7::{SRC7, Metadata};
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
+    ///     let metadata_abi = abi(SRC7, contract_id);
+    ///     let metadata = metadata_abi.metadata(asset, key);
+    ///
+    ///     let int = metadata.unwrap().as_b256();
+    ///     assert(int != 0);
+    /// }
+    /// ```
+    fn as_b256(self) -> Option<b256> {
+        match self {
+            B256(data) => Option::Some(data),
+            _ => Option::None(),
+        }
+    }
+
+    /// Returns whether the underlying metadata is a `b256`.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] - `true` if the metadata is a `b256`, otherwise `false`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use std::string::String;
+    /// use token::src_7::*;
+    /// use src_7::{SRC7, Metadata};
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
+    ///     let metadata_abi = abi(SRC7, contract_id);
+    ///     let metadata = metadata_abi.metadata(asset, key);
+    ///
+    ///     assert(metadata.unwrap().is_b256());
+    /// }
+    /// ```
+    fn is_b256(self) -> bool {
+        match self {
+            B256(data) => true,
             _ => false,
         }
     }
