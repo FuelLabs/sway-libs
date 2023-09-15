@@ -165,7 +165,6 @@ pub fn _symbol(
 ) -> Option<String> {
     symbol_key.get(asset).read_slice()
 }
-
 /// Returns the number of decimals the asset uses.
 ///
 /// # Additional Information
@@ -349,7 +348,7 @@ pub fn _set_name(
     asset: AssetId,
     name: String,
 ) {
-    name_key.insert(asset, StorageString{});
+    name_key.insert(asset, StorageString {});
     name_key.get(asset).write_slice(name);
 }
 /// Unconditionally sets the symbol of an asset.
@@ -390,7 +389,7 @@ pub fn _set_symbol(
     asset: AssetId,
     symbol: String,
 ) {
-    symbol_key.insert(asset, StorageString{});
+    symbol_key.insert(asset, StorageString {});
     symbol_key.get(asset).write_slice(symbol);
 }
 /// Unconditionally sets the decimals of an asset.
