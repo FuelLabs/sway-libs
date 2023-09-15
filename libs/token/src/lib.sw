@@ -123,13 +123,10 @@ pub fn _total_supply(
 /// ```
 #[storage(read)]
 pub fn _name(
-    name_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    name_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
 ) -> Option<String> {
-    match name_key.get(asset).try_read() {
-        Option::Some(s) => s.read_slice(),
-        Option::None(s) => Option::None,
-    }
+    name_key.get(asset).read_slice()
 }
 /// Returns the symbol of the asset, such as “ETH”.
 ///
@@ -163,13 +160,10 @@ pub fn _name(
 /// ```
 #[storage(read)]
 pub fn _symbol(
-    symbol_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    symbol_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
 ) -> Option<String> {
-    match symbol_key.get(asset).try_read() {
-        Option::Some(s) => s.read_slice(),
-        Option::None(s) => Option::None,
-    }
+    symbol_key.get(asset).read_slice()
 }
 
 /// Returns the number of decimals the asset uses.
@@ -351,17 +345,12 @@ pub fn _burn(
 /// ```
 #[storage(write)]
 pub fn _set_name(
-    name_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    name_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
     name: String,
 ) {
-    let name_string_key: StorageKey<StorageString> = StorageKey {
-        slot: sha256((asset, String::from_ascii_str("name_slot"))),
-        offset: 0,
-        field_id: sha256((asset, String::from_ascii_str("name_field_id"))),
-    };
-    name_string_key.write_slice(name);
-    name_key.insert(asset, name_string_key);
+    name_key.insert(asset, StorageString{});
+    name_key.get(asset).write_slice(name);
 }
 /// Unconditionally sets the symbol of an asset.
 ///
@@ -397,17 +386,12 @@ pub fn _set_name(
 /// ```
 #[storage(write)]
 pub fn _set_symbol(
-    symbol_key: StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>,
+    symbol_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
     symbol: String,
 ) {
-    let symbol_string_key: StorageKey<StorageString> = StorageKey {
-        slot: sha256((asset, String::from_ascii_str("symbol_slot"))),
-        offset: 0,
-        field_id: sha256((asset, String::from_ascii_str("symbol_field_id"))),
-    };
-    symbol_string_key.write_slice(symbol);
-    symbol_key.insert(asset, symbol_string_key);
+    symbol_key.insert(asset, StorageString{});
+    symbol_key.get(asset).write_slice(symbol);
 }
 /// Unconditionally sets the decimals of an asset.
 ///
