@@ -1,6 +1,6 @@
 library;
 
-use std::{bytes::Bytes, hash::sha256};
+use std::{bytes::Bytes, hash::{Hash, sha256}};
 
 pub enum ProofError {
     InvalidKey: (),
@@ -44,7 +44,7 @@ pub fn leaf_digest(data: b256) -> b256 {
     __addr_of(data).copy_bytes_to(new_ptr, 32);
     bytes.len = 33;
 
-    bytes.sha256()
+    sha256(bytes)
 }
 
 /// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
@@ -81,7 +81,7 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
     __addr_of(right).copy_bytes_to(new_ptr_right, 32);
     bytes.len = 65;
 
-    bytes.sha256()
+    sha256(bytes)
 }
 
 /// Calculates the length of the path to a leaf

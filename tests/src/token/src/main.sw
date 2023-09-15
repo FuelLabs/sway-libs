@@ -15,13 +15,13 @@ use token::{
     _total_supply,
     SetTokenAttributes,
 };
-use std::{asset_id::construct_asset_id, storage::storage_string::*, string::String};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 storage {
     total_assets: u64 = 0,
     total_supply: StorageMap<AssetId, u64> = StorageMap {},
-    name: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
-    symbol: StorageMap<AssetId, StorageKey<StorageString>> = StorageMap {},
+    name: StorageMap<AssetId, StorageString> = StorageMap {},
+    symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
 }
 
@@ -106,7 +106,7 @@ fn test_total_supply() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     assert(src20_abi.total_supply(asset_id).is_none());
 
@@ -124,7 +124,7 @@ fn test_name() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let name = String::from_ascii_str("Fuel Token");
 
     assert(src20_abi.name(asset_id).is_none());
@@ -140,7 +140,7 @@ fn test_symbol() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let symbol = String::from_ascii_str("FUEL");
 
     assert(src20_abi.symbol(asset_id).is_none());
@@ -156,7 +156,7 @@ fn test_decimals() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let decimals = 8u8;
 
     assert(src20_abi.decimals(asset_id).is_none());
@@ -174,7 +174,7 @@ fn test_mint() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 0);
 
@@ -191,7 +191,7 @@ fn test_burn() {
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    let asset_id = construct_asset_id(ContractId::from(CONTRACT_ID), sub_id);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     src3_abi.mint(recipient, sub_id, 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
