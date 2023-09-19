@@ -46,8 +46,6 @@ export function useCompile(
 
     setResults([<>Compiling...</>]);
 
-    console.log('toolchain', toolchain);
-
     // TODO: Determine the URL based on the NODE_ENV.
     const server_uri = 'https://api.sway-playground.org/compile';
     // const server_uri = 'http://0.0.0.0:8080/compile';
