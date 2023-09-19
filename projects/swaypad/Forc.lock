@@ -1,13 +1,13 @@
 [[package]]
-name = 'core'
-source = 'path+from-root-EC2069570D70DA98'
+name = "core"
+source = "path+from-root-63B5D95B29B128A3"
 
 [[package]]
-name = 'std'
-source = 'git+https://github.com/fuellabs/sway?tag=v0.41.0#0d45b890c9eaa75b88093a9a4cbecbf5ca8c0731'
-dependencies = ['core']
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.45.0#92dc9f361a9508a940c0d0708130f26fa044f6b3"
+dependencies = ["core"]
 
 [[package]]
-name = 'swaypad'
-source = 'member'
-dependencies = ['std']
+name = "swaypad"
+source = "member"
+dependencies = ["std"]

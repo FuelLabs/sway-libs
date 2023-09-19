@@ -3,10 +3,10 @@ import PlayArrow from '@mui/icons-material/PlayArrow';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
-import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { useFuel } from '@fuel-wallet/react';
+import { loadAbi, loadBytecode, loadStorageSlots } from '../../../utils/localStorage';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -57,6 +57,7 @@ function ActionToolbar({
         <DeploymentButton
           abi={loadAbi()}
           bytecode={loadBytecode()}
+          storageSlots={loadStorageSlots()}
           isCompiled={isCompiled}
           setContractId={setContractId}
           deployState={deployState}

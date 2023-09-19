@@ -1,4 +1,4 @@
-use crate::util::read_file_contents;
+use crate::{util::read_file_contents, types::CompileResponse};
 
 use self::{
     swaypad::{clean_error_content, create_project, remove_project, write_main_file},
@@ -14,15 +14,16 @@ pub mod tooling;
 pub fn build_and_destroy_project(
     contract: String,
     toolchain: String,
-) -> (String, String, String, String) {
+) -> CompileResponse {
     // Check if any contract has been submitted.
     if contract.is_empty() {
-        return (
-            "".to_string(),
-            "".to_string(),
-            "No contract.".to_string(),
-            "".to_string(),
-        );
+        return CompileResponse {
+            abi: "".to_string(),
+            bytecode: "".to_string(),
+            storage_slots: "".to_string(),
+            error: "No contract.".to_string(),
+            forc_version: "".to_string(),
+        };
     }
 
     // Switch to the given fuel toolchain and check forc version.
@@ -44,17 +45,19 @@ pub fn build_and_destroy_project(
         ))
         .expect("Should have been able to read the file");
         let bin = read_file_contents(format!("projects/{}/out/debug/swaypad.bin", project_name));
+        let storage_slots = read_file_contents(format!("projects/{}/out/debug/swaypad-storage_slots.json", project_name));
 
         // Remove the project directory and contents.
         remove_project(project_name).unwrap();
 
         // Return the abi, bin, empty error message, and forc version.
-        (
-            clean_error_content(abi),
-            clean_error_content(encode(bin)),
-            String::from(""),
+        CompileResponse {
+            abi: clean_error_content(abi),
+            bytecode: clean_error_content(encode(bin)),
+            storage_slots: String::from_utf8_lossy(&storage_slots).into(),
+            error: String::from(""),
             forc_version,
-        )
+        }
     } else {
         // Get the error message presented in the console output.
         let error = std::str::from_utf8(&output.stderr).unwrap();
@@ -69,11 +72,12 @@ pub fn build_and_destroy_project(
         remove_project(project_name).unwrap();
 
         // Return an empty abi, bin, error message, and forc version.
-        (
-            String::from(""),
-            String::from(""),
-            clean_error_content(trunc),
+        CompileResponse {
+            abi: String::from(""),
+            bytecode: String::from(""),
+            storage_slots: String::from(""),
+            error: clean_error_content(trunc),
             forc_version,
-        )
+        }
     }
 }

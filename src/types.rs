@@ -13,6 +13,7 @@ pub struct CompileRequest {
 pub struct CompileResponse {
     pub abi: String,
     pub bytecode: String,
+    pub storage_slots: String,
     pub error: String,
     pub forc_version: String,
 }

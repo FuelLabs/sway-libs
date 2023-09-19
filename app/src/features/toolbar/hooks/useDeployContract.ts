@@ -1,4 +1,4 @@
-import { ContractFactory, JsonAbi } from 'fuels';
+import { ContractFactory, JsonAbi, StorageSlot } from 'fuels';
 import { useMutation } from '@tanstack/react-query';
 import { useWallet } from './useWallet';
 
@@ -7,6 +7,7 @@ const DEPLOYMENT_TIMEOUT_MS = 120000;
 export function useDeployContract(
   abi: string,
   bytecode: string,
+  storageSlots: string,
   onError: (error: any) => void,
   onSuccess: (data: any) => void,
   updateLog: (entry: string) => void,
@@ -33,7 +34,7 @@ export function useDeployContract(
 
         try {
           const contract = await contractFactory.deployContract({
-            storageSlots: [],
+            storageSlots: JSON.parse(storageSlots) as StorageSlot[],
           });
           resolve(contract.id.toB256());
         } catch (error) {
