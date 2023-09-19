@@ -1,4 +1,4 @@
-use crate::{util::read_file_contents, types::CompileResponse};
+use crate::{types::CompileResponse, util::read_file_contents};
 
 use self::{
     swaypad::{clean_error_content, create_project, remove_project, write_main_file},
@@ -11,10 +11,7 @@ pub mod swaypad;
 pub mod tooling;
 
 /// Build and destroy a project.
-pub fn build_and_destroy_project(
-    contract: String,
-    toolchain: String,
-) -> CompileResponse {
+pub fn build_and_destroy_project(contract: String, toolchain: String) -> CompileResponse {
     // Check if any contract has been submitted.
     if contract.is_empty() {
         return CompileResponse {
@@ -45,7 +42,10 @@ pub fn build_and_destroy_project(
         ))
         .expect("Should have been able to read the file");
         let bin = read_file_contents(format!("projects/{}/out/debug/swaypad.bin", project_name));
-        let storage_slots = read_file_contents(format!("projects/{}/out/debug/swaypad-storage_slots.json", project_name));
+        let storage_slots = read_file_contents(format!(
+            "projects/{}/out/debug/swaypad-storage_slots.json",
+            project_name
+        ));
 
         // Remove the project directory and contents.
         remove_project(project_name).unwrap();
