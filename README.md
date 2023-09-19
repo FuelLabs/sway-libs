@@ -61,6 +61,13 @@ The server is a simple Hyper server for now.
 cargo run
 ```
 
+Alternatively, it can be run locally with Docker, as it is in the deployed environment.
+
+```sh
+docker build -f deployment .
+docker run -p 8080:8080 -d <image-sha>
+```
+
 ### Running the Frontend
 
 The frontend is just a simple static frontend and can be hosted anywhere.

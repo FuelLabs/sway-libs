@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { useFuel } from './useFuel';
+import { useFuel } from '@fuel-wallet/react';
 
 export function useWallet(disabled?: boolean) {
-  const { fuel, error, isLoading: loading } = useFuel();
+  const { fuel } = useFuel();
 
   const {
     data: wallet,
@@ -16,7 +16,7 @@ export function useWallet(disabled?: boolean) {
         if (!isConnected) {
           await fuel.connect();
         }
-        const selectedAccount = (await fuel.currentAccount()) as string;
+        const selectedAccount = await fuel.currentAccount();
         const selectedWallet = await fuel.getWallet(selectedAccount);
         return selectedWallet;
       } else {
@@ -29,7 +29,7 @@ export function useWallet(disabled?: boolean) {
   );
 
   if (!fuel) {
-    return { wallet, isLoading: loading, isError: !!error };
+    return { wallet };
   }
 
   return { wallet, isLoading, isError };

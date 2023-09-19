@@ -45,7 +45,7 @@ export function ResponseCard({
           padding: '2px 18px 2px',
           minHeight: '44px',
         }}>
-        {<pre>{formattedResponse}</pre>}
+        {<pre style={{ overflow: 'auto' }}>{formattedResponse}</pre>}
       </CardContent>
     </Card>
   );

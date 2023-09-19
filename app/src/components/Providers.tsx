@@ -2,6 +2,7 @@ import { globalCss } from '@fuel-ui/css';
 import type { ReactNode } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/queryClient';
+import { FuelProvider } from '@fuel-wallet/react';
 
 type ProvidersProps = {
   children: ReactNode;
@@ -10,8 +11,10 @@ type ProvidersProps = {
 export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
+      <FuelProvider>
       {globalCss()()}
       {children}
+      </FuelProvider>
     </QueryClientProvider>
   );
 }
