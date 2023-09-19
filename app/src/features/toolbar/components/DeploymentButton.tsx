@@ -3,7 +3,7 @@ import { DeployState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useProvider } from '../hooks/useProvider';
+import { useProvider } from '@fuel-wallet/react';
 
 interface DeploymentButtonProps {
   abi: string;

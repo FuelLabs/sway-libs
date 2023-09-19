@@ -6,6 +6,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@fuel-ui/css": "^0.13.0",
+    "@fuel-wallet/react": "0.13.0-next-4bf1b51",
     "@fuel-wallet/sdk": "^0.12.3",
     "@mui/base": "^5.0.0-beta.2",
     "@mui/icons-material": "^5.11.16",
