@@ -3,13 +3,15 @@ library;
 use ::errors::BurnError;
 use ::src_20::{_total_assets, _total_supply};
 use std::{
-    asset_id::construct_asset_id,
     call_frames::{
         contract_id,
         msg_asset_id,
     },
     context::this_balance,
-    hash::sha256,
+    hash::{
+        Hash, 
+        sha256
+    },
     storage::storage_string::*,
     string::String,
     token::{
@@ -62,7 +64,7 @@ pub fn _mint(
     sub_id: SubId,
     amount: u64,
 ) -> AssetId {
-    let asset_id = construct_asset_id(contract_id(), sub_id);
+    let asset_id = AssetId::new(contract_id(), sub_id);
     let supply = _total_supply(total_supply_key, asset_id);
     // Only increment the number of assets minted by this contract if it hasn't been minted before.
     if supply.is_none() {
@@ -73,6 +75,7 @@ pub fn _mint(
     mint_to(recipient, sub_id, amount);
     asset_id
 }
+
 /// Burns tokens with the given `sub_id`.
 ///
 /// # Additional Information
@@ -116,7 +119,7 @@ pub fn _burn(
     sub_id: SubId,
     amount: u64,
 ) {
-    let asset_id = construct_asset_id(contract_id(), sub_id);
+    let asset_id = AssetId::new(contract_id(), sub_id);
     require(this_balance(asset_id) >= amount, BurnError::NotEnoughTokens);
     // If we pass the check above, we can assume it is safe to unwrap.
     let supply = _total_supply(total_supply_key, asset_id).unwrap();
