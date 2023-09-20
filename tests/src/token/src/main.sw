@@ -4,7 +4,7 @@ use src_20::SRC20;
 use src_3::SRC3;
 use src_7::Metadata;
 use token::{
-    src_20::{
+    base::{
         _decimals,
         _name,
         _set_decimals,
@@ -15,11 +15,11 @@ use token::{
         _total_supply,
         SetTokenAttributes,
     },
-    src_3::{
+    mint::{
         _burn,
         _mint,
     },
-    src_7::*
+    metadata::*
 };
 use std::{hash::Hash, storage::storage_string::*, string::String};
 

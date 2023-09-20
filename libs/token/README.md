@@ -40,7 +40,7 @@ storage {
 To use a function, simply pass the `StorageKey` from the prescribed storage block above. The example below shows the implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) standard in combination with the Token library with no user defined restrictions or custom functionality.
 
 ```rust
-use token::src_20::{
+use token::base::{
     _total_assets, 
     _total_supply,
     _name,

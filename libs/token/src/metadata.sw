@@ -1,7 +1,10 @@
 library;
 
 use src_7::Metadata;
-use std::string::String;
+use std::{
+    bytes::Bytes,
+    string::String
+};
 
 impl Metadata {
     /// Returns the underlying metadata as a `String`.
@@ -27,7 +30,7 @@ impl Metadata {
     /// ```
     fn as_string(self) -> Option<String> {
         match self {
-            String(data) => Option::Some(data),
+            Self::String(data) => Option::Some(data),
             _ => Option::None,
         }
     }
@@ -54,7 +57,7 @@ impl Metadata {
     /// ```
     fn is_string(self) -> bool {
         match self {
-            String(data) => true,
+            Self::String(data) => true,
             _ => false,
         }
     }
@@ -82,7 +85,7 @@ impl Metadata {
     /// ```
     fn as_u64(self) -> Option<u64> {
         match self {
-            Int(data) => Option::Some(data),
+            Self::Int(data) => Option::Some(data),
             _ => Option::None,
         }
     }
@@ -109,7 +112,7 @@ impl Metadata {
     /// ```
     fn is_u64(self) -> bool {
         match self {
-            Int(data) => true,
+            Self::Int(data) => true,
             _ => false,
         }
     }
@@ -137,7 +140,7 @@ impl Metadata {
     /// ```
     fn as_bytes(self) -> Option<Bytes> {
         match self {
-            Bytes(data) => Option::Some(data),
+            Self::Bytes(data) => Option::Some(data),
             _ => Option::None,
         }
     }
@@ -164,7 +167,7 @@ impl Metadata {
     /// ```
     fn is_bytes(self) -> bool {
         match self {
-            Bytes(data) => true,
+            Self::Bytes(data) => true,
             _ => false,
         }
     }
@@ -192,7 +195,7 @@ impl Metadata {
     /// ```
     fn as_b256(self) -> Option<b256> {
         match self {
-            B256(data) => Option::Some(data),
+            Self::B256(data) => Option::Some(data),
             _ => Option::None,
         }
     }
@@ -219,7 +222,7 @@ impl Metadata {
     /// ```
     fn is_b256(self) -> bool {
         match self {
-            B256(data) => true,
+            Self::B256(data) => true,
             _ => false,
         }
     }

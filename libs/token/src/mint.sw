@@ -1,7 +1,7 @@
 library;
 
 use ::errors::BurnError;
-use ::src_20::{_total_assets, _total_supply};
+use ::base::{_total_assets, _total_supply};
 use std::{
     call_frames::{
         contract_id,
