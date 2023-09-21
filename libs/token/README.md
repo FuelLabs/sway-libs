@@ -48,7 +48,7 @@ use token::{
     _decimals
 };
 use src_20::SRC20;
-use std::string::String;
+use std::{hash::Hash, string::String};
 
 storage {
     total_assets: u64 = 0,
