@@ -33,7 +33,7 @@ function SecondaryButton({
             color: darkColors.gray6,
             borderColor: darkColors.gray6,
             ':hover': {
-              bgcolor: lightColors.green3,
+              bgcolor: lightColors.scalesGreen3,
               borderColor: darkColors.gray6,
             },
           }}

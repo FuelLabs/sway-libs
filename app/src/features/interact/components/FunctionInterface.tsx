@@ -88,8 +88,6 @@ export function FunctionInterface({
     
   }, [functionFragment?.jsonFn.output, typeMap]);
 
-  // const outputType = undefined;
-
   const inputInstances: InputInstance[] = useMemo(
     () =>
       functionFragment?.jsonFn.inputs.map((input) =>
@@ -97,8 +95,7 @@ export function FunctionInterface({
       ) ?? [],
     [functionFragment?.jsonFn.inputs, toInputInstance]
   );
-  // const inputInstances: InputInstance[] = [];
-
+  
   return (
     <FunctionCallAccordion
       contractId={contractId}

@@ -26,16 +26,16 @@ function CompileButton({
           sx={{
             ...style,
             height: '40px',
-            background: lightColors.green7,
+            background: lightColors.scalesGreen7,
             borderColor: darkColors.gray6,
             color: darkColors.gray6,
             ':hover': {
               color: darkColors.gray6,
-              background: lightColors.green10,
+              background: lightColors.scalesGreen10,
               borderColor: darkColors.gray6,
             },
             ':disabled': {
-              background: lightColors.green4,
+              background: lightColors.scalesGreen4,
             },
           }}
           variant='outlined'
