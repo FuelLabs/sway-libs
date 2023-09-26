@@ -80,7 +80,7 @@ function ActionToolbar({
       <SecondaryButton
         header={true}
         onClick={() =>
-          window.open('https://fuellabs.github.io/sway', '_blank', 'noreferrer')
+          window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer')
         }
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}
