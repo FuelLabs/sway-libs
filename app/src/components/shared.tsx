@@ -14,7 +14,7 @@ export const ButtonSpinner = () => (
       margin: '2px',
       height: '14px',
       width: '14px',
-      color: lightColors.green10,
+      color: lightColors.scalesGreen10,
     }}
   />
 );

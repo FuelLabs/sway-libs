@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useContract } from './useContract';
+import { Contract } from 'fuels';
 
-export function useContractFunctions(contractId: string) {
+export function useContractFunctions(contractId: string): { contract: Contract | undefined; functionNames: string[] } {
   const { contract } = useContract(contractId);
 
   const { data: functions } = useQuery(
@@ -16,7 +17,7 @@ export function useContractFunctions(contractId: string) {
   );
 
   return {
-    contract: contract,
+    contract,
     functionNames: functions ? [...Object.keys(functions)] : [],
   };
 }

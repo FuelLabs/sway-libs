@@ -33,9 +33,10 @@ export function useCallFunction({
 
       if (!contract) throw new Error('Contract not connected');
 
-      const transactionResult = await contract.functions[functionName](
+      const functionCaller = contract.functions[functionName](
         ...parameters
-      )[callType === 'dryrun' ? 'get' : 'call']();
+      );
+      const transactionResult = callType === 'dryrun' ? await functionCaller.dryRun() : await functionCaller.call();
       return transactionResult;
     },
     {

@@ -52,6 +52,7 @@ RUN fuelup toolchain install nightly
 RUN fuelup toolchain install beta-1
 RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
+RUN fuelup toolchain install beta-4
 
 EXPOSE 8080
 

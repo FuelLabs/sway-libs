@@ -3,10 +3,10 @@ import PlayArrow from '@mui/icons-material/PlayArrow';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
-import { loadAbi, loadBytecode } from '../../../utils/localStorage';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { useFuel } from '../hooks/useFuel';
+import { useFuel } from '@fuel-wallet/react';
+import { loadAbi, loadBytecode, loadStorageSlots } from '../../../utils/localStorage';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -29,7 +29,7 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
-  const { fuel, isLoading } = useFuel();
+  const { fuel } = useFuel();
 
   return (
     <div
@@ -44,7 +44,7 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      {!fuel && !isLoading ? (
+      {!fuel ? (
         <SecondaryButton
           header={true}
           onClick={() =>
@@ -57,6 +57,7 @@ function ActionToolbar({
         <DeploymentButton
           abi={loadAbi()}
           bytecode={loadBytecode()}
+          storageSlots={loadStorageSlots()}
           isCompiled={isCompiled}
           setContractId={setContractId}
           deployState={deployState}
@@ -79,7 +80,7 @@ function ActionToolbar({
       <SecondaryButton
         header={true}
         onClick={() =>
-          window.open('https://fuellabs.github.io/sway', '_blank', 'noreferrer')
+          window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer')
         }
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}

@@ -3,11 +3,12 @@ import { DeployState } from '../../../utils/types';
 import { useDeployContract } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useProvider } from '../hooks/useProvider';
+import { useProvider } from '@fuel-wallet/react';
 
 interface DeploymentButtonProps {
   abi: string;
   bytecode: string;
+  storageSlots: string;
   isCompiled: boolean;
   setContractId: (contractId: string) => void;
   deployState: DeployState;
@@ -19,6 +20,7 @@ interface DeploymentButtonProps {
 export function DeploymentButton({
   abi,
   bytecode,
+  storageSlots,
   isCompiled,
   setContractId,
   deployState,
@@ -51,6 +53,7 @@ export function DeploymentButton({
   const deployContractMutation = useDeployContract(
     abi,
     bytecode,
+    storageSlots,
     handleError,
     handleSuccess,
     updateLog,

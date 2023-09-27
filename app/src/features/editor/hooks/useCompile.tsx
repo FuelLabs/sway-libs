@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
-import { saveAbi, saveBytecode } from '../../../utils/localStorage';
+import { saveAbi, saveBytecode, saveStorageSlots } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
 
@@ -81,11 +81,13 @@ export function useCompile(
           setVersion(forcVersion);
           saveAbi('');
           saveBytecode('');
+          saveStorageSlots('');
         } else {
-          const { abi, bytecode, forcVersion } = response;
+          const { abi, bytecode, storageSlots, forcVersion } = response;
           const prefixedBytecode = `0x${bytecode}`;
           saveAbi(abi);
           saveBytecode(prefixedBytecode);
+          saveStorageSlots(storageSlots);
           setResults(toResults(prefixedBytecode, abi));
           setVersion(forcVersion);
         }

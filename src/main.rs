@@ -16,15 +16,10 @@ use types::{CompileRequest, CompileResponse};
 /// The compile endpoint.
 #[post("/compile", data = "<request>")]
 fn compile(request: Json<CompileRequest>) -> Json<CompileResponse> {
-    let (abi, bytecode, error, forc_version) =
-        build_and_destroy_project(request.contract.to_string(), request.toolchain.to_string());
-
-    Json(CompileResponse {
-        abi,
-        bytecode,
-        error,
-        forc_version,
-    })
+    Json(build_and_destroy_project(
+        request.contract.to_string(),
+        request.toolchain.to_string(),
+    ))
 }
 
 /// Catches all OPTION requests in order to get the CORS related Fairing triggered.

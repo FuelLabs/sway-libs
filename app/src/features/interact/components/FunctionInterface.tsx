@@ -3,16 +3,25 @@ import { useCallback, useMemo } from 'react';
 import { InputInstance } from './FunctionParameters';
 import { FunctionCallAccordion } from './FunctionCallAccordion';
 import { getTypeInfo } from '../utils/getTypeInfo';
+import { AbiTypeMap } from './ContractInterface';
+import React from 'react';
 
-export interface SdkParamType {
-  name?: string;
-  type: string;
-  components?: SdkParamType[];
-  typeArguments?: SdkParamType[];
+export interface SdkJsonAbiArgument {
+  readonly type: number;
+  readonly name: string;
+  readonly typeArguments: readonly SdkJsonAbiArgument[] | null;
+}
+
+export interface SdkJsonAbiType {
+  readonly typeId: number;
+  readonly type: string;
+  readonly components: readonly SdkJsonAbiArgument[] | null;
+  readonly typeParameters: readonly number[] | null;
 }
 
 export interface FunctionInterfaceProps {
   contractId: string;
+  typeMap: AbiTypeMap;
   functionFragment: FunctionFragment | undefined;
   functionName: string;
   response?: string | Error;
@@ -22,56 +31,71 @@ export interface FunctionInterfaceProps {
 
 export function FunctionInterface({
   contractId,
+  typeMap,
   functionFragment,
   functionName,
   response,
   setResponse,
   updateLog,
 }: FunctionInterfaceProps) {
-  const toInputInstance = useCallback((input: SdkParamType): InputInstance => {
-    const typeInfo = getTypeInfo(input);
+
+  const toInputInstance = useCallback((typeId: number ,name: string): InputInstance => {
+    const input = typeMap?.get(typeId);
+    if (!input) {
+      return {
+        name,
+        type: {
+          literal: 'string',
+          swayType: 'Unknown',
+        },
+      };
+    }
+    const typeInfo = getTypeInfo(input, typeMap);
     switch (typeInfo.literal) {
       case 'vector':
         return {
-          name: input.name ?? '',
+          name,
           type: typeInfo,
-          components: [toInputInstance(input.typeArguments![0])],
+          components: [toInputInstance(input.typeParameters![0], '')],
         };
       case 'object':
         return {
-          name: input.name ?? '',
+          name,
           type: typeInfo,
-          components: input.components?.map(toInputInstance),
+          components: input.components?.map(c => toInputInstance(c.type, c.name)),
         };
       case 'option':
       case 'enum':
         return {
-          name: input.name ?? '',
+          name,
           type: typeInfo,
-          components: [toInputInstance(input.components![0])],
+          components: [toInputInstance(input.components![0].type, input.components![0].name)],
         };
       default:
         return {
-          name: input.name ?? '',
+          name,
           type: typeInfo,
         };
     }
-  }, []);
+  }, [typeMap]);
 
   const outputType = useMemo(() => {
-    return functionFragment?.outputs
-      ? getTypeInfo(functionFragment.outputs[0]).literal
-      : undefined;
-  }, [functionFragment]);
+    const outputTypeId = functionFragment?.jsonFn.output?.type;
+    if (outputTypeId !== undefined) {
+      const sdkType = typeMap.get(outputTypeId);
+      return sdkType ? getTypeInfo(sdkType, typeMap).literal : undefined;
+    }
+    
+  }, [functionFragment?.jsonFn.output, typeMap]);
 
   const inputInstances: InputInstance[] = useMemo(
     () =>
-      functionFragment?.inputs.map((input) =>
-        toInputInstance(input as SdkParamType)
+      functionFragment?.jsonFn.inputs.map((input) =>
+        toInputInstance(input.type, input.name)
       ) ?? [],
-    [functionFragment?.inputs, toInputInstance]
+    [functionFragment?.jsonFn.inputs, toInputInstance]
   );
-
+  
   return (
     <FunctionCallAccordion
       contractId={contractId}
