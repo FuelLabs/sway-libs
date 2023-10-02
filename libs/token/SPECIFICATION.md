@@ -56,6 +56,10 @@ This function will burns tokens with the given sub-identifier.
 
 ### SRC-7
 
+### `_set_metadata()`
+
+This function will set metdata for an asset.
+
 #### `as_string()`
 
 This function will return the metadata as a string.
