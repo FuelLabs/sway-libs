@@ -1,13 +1,6 @@
 library;
 
-use std::{
-    hash::{
-        Hash,
-        sha256
-    },
-    storage::storage_string::*,
-    string::String,
-};
+use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
 
 /// Returns the total number of individual assets for a contract.
 ///
@@ -116,7 +109,6 @@ pub fn _name(
 ) -> Option<String> {
     name_key.get(asset).read_slice()
 }
-
 /// Returns the symbol of the asset, such as “ETH”.
 ///
 /// # Arguments
@@ -154,7 +146,6 @@ pub fn _symbol(
 ) -> Option<String> {
     symbol_key.get(asset).read_slice()
 }
-
 /// Returns the number of decimals the asset uses.
 ///
 /// # Additional Information
@@ -195,7 +186,6 @@ pub fn _decimals(
 ) -> Option<u8> {
     decimals_key.get(asset).try_read()
 }
-
 /// Unconditionally sets the name of an asset.
 ///
 /// # Additional Information
@@ -237,7 +227,6 @@ pub fn _set_name(
     name_key.insert(asset, StorageString {});
     name_key.get(asset).write_slice(name);
 }
-
 /// Unconditionally sets the symbol of an asset.
 ///
 /// # Additional Information
@@ -279,7 +268,6 @@ pub fn _set_symbol(
     symbol_key.insert(asset, StorageString {});
     symbol_key.get(asset).write_slice(symbol);
 }
-
 /// Unconditionally sets the decimals of an asset.
 ///
 /// # Additional Information
@@ -320,7 +308,6 @@ pub fn _set_decimals(
 ) {
     decimals_key.insert(asset, decimals);
 }
-
 abi SetTokenAttributes {
     #[storage(write)]
     fn set_name(asset: AssetId, name: String);

@@ -2,7 +2,7 @@ contract;
 
 use src_20::SRC20;
 use src_3::SRC3;
-use src_7::Metadata;
+use src_7::{SRC7, Metadata};
 use token::{
     base::{
         _decimals,
@@ -19,7 +19,7 @@ use token::{
         _burn,
         _mint,
     },
-    metadata::*
+    metadata::*,
 };
 use std::{hash::Hash, storage::storage_string::*, string::String};
 
@@ -29,6 +29,7 @@ storage {
     name: StorageMap<AssetId, StorageString> = StorageMap {},
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
+    metadata: StorageMap<b256, Metadata> = StorageMap {},
 }
 
 impl SRC20 for Contract {

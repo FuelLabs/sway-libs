@@ -9,8 +9,8 @@ use std::{
     },
     context::this_balance,
     hash::{
-        Hash, 
-        sha256
+        Hash,
+        sha256,
     },
     storage::storage_string::*,
     string::String,

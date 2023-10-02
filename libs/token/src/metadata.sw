@@ -1,10 +1,7 @@
 library;
 
 use src_7::Metadata;
-use std::{
-    bytes::Bytes,
-    string::String
-};
+use std::{bytes::Bytes, string::String};
 
 impl Metadata {
     /// Returns the underlying metadata as a `String`.
