@@ -29,7 +29,6 @@ storage {
     name: StorageMap<AssetId, StorageString> = StorageMap {},
     symbol: StorageMap<AssetId, StorageString> = StorageMap {},
     decimals: StorageMap<AssetId, u8> = StorageMap {},
-    metadata: StorageMap<b256, Metadata> = StorageMap {},
 }
 
 impl SRC20 for Contract {
