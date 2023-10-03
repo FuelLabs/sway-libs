@@ -30,9 +30,9 @@ impl StorageKey<StorageMetadata> {
     ///
     /// # Arugments
     ///
-    /// * `asset`: [AssetId] - The asset for the metadata is to be stored.
-    /// * `key`: [String] - The key for the metadata is to be stored.
-    /// * `metadata`: [Metadata] - The metadata which is to be stored.
+    /// * `asset`: [AssetId] - The asset for the metadata to be stored.
+    /// * `key`: [String] - The key for the metadata to be stored.
+    /// * `metadata`: [Metadata] - The metadata which to be stored.
     ///
     /// # Number of Storage Accesses
     ///
@@ -82,8 +82,8 @@ impl StorageKey<StorageMetadata> {
     ///
     /// # Arugments
     ///
-    /// * `asset`: [AssetId] - The asset for the metadata is to be queried.
-    /// * `key`: [String] - The key for the metadata is to be queried.
+    /// * `asset`: [AssetId] - The asset for the metadata to be queried.
+    /// * `key`: [String] - The key for the metadata to be queried.
     ///
     /// # Returns
     ///
@@ -137,9 +137,9 @@ impl StorageKey<StorageMetadata> {
 /// # Arguments
 ///
 /// * `metadata_key`: [StorageKey<StorageMetadata>] - The storage location for metadata.
-/// * `asset`: [AssetId] - The asset for the metadata is to be stored.
-/// * `key`: [String] - The key for the metadata is to be stored.
-/// * `metadata`: [Metadata] - The metadata which is to be stored.
+/// * `asset`: [AssetId] - The asset for the metadata to be stored.
+/// * `key`: [String] - The key for the metadata to be stored.
+/// * `metadata`: [Metadata] - The metadata which to be stored.
 ///
 /// # Number of Storage Accesses
 ///
@@ -349,7 +349,7 @@ impl Metadata {
     /// # Examples
     ///
     /// ```sway
-    /// use std::string::String;
+    /// use std::{constants::ZERO_B256, string::String};
     /// use token::src_7::*;
     /// use src_7::{SRC7, Metadata};
     ///
@@ -357,8 +357,8 @@ impl Metadata {
     ///     let metadata_abi = abi(SRC7, contract_id);
     ///     let metadata = metadata_abi.metadata(asset, key);
     ///
-    ///     let int = metadata.unwrap().as_b256();
-    ///     assert(int != 0);
+    ///     let val = metadata.unwrap().as_b256();
+    ///     assert(val != ZERO_B256);
     /// }
     /// ```
     pub fn as_b256(self) -> Option<b256> {
