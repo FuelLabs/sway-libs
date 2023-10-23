@@ -1,9 +1,5 @@
-library; 
-
-use std::{
-    constants::ZERO_B256,
-    token::{mint, burn},
-};
+library;
+use std::{constants::ZERO_B256, token::{burn, mint}};
 
 // Precomputed hash of sha256("pausable")
 const PAUSABLE = 0xd987cda398e9af257cbcf8a8995c5dccb19833cadc727ba56b0fec60ccf8944c;
@@ -21,7 +17,7 @@ abi Pausable {
     ///
     /// # Additional Information
     ///
-    /// It is highly encouraged to use the Ownership Library in order to lock this 
+    /// It is highly encouraged to use the Ownership Library in order to lock this
     /// function to a single administrative user.
     ///
     /// # Examples
@@ -59,7 +55,7 @@ abi Pausable {
     ///
     /// # Additional Information
     ///
-    /// It is highly encouraged to use the Ownership Library in order to lock this 
+    /// It is highly encouraged to use the Ownership Library in order to lock this
     /// function to a single administrative user.
     ///
     /// # Examples
@@ -154,7 +150,7 @@ pub fn require_paused() {
 /// Requires that the contract is in the unpaused state.
 ///
 /// # Reverts
-/// 
+///
 /// * When the contract is paused.
 ///
 /// # Examples
@@ -173,14 +169,13 @@ pub fn require_not_paused() {
 
 fn balance() -> u64 {
     let id = asm() { fp: b256 };
-    let result_buffer = ZERO_B256;  
-    
+    let result_buffer = ZERO_B256;
     // Hashing in assmeby gives us significant gas savings over using the std::hash::sha256
     // as this does not use std::bytes::Bytes. 
     // Only possible because of the fixed length of bytes.
     asm(balance, token_id: result_buffer, ptr: (id, PAUSABLE), bytes: 64, id: id) {
         s256 token_id ptr bytes;
-        bal balance token_id id;
+        bal  balance token_id id;
         balance: u64
     }
 }
