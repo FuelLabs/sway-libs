@@ -24,6 +24,7 @@ members = [
   "./src/fixed_point/ifp256_div_test",
   "./src/fixed_point/ifp256_test",
   "./src/merkle_proof",
+  "./src/pausable",
   "./src/ownership",
   "./src/reentrancy/reentrancy_attacker_abi",
   "./src/reentrancy/reentrancy_attacker_contract",
