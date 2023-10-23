@@ -9,9 +9,9 @@
 
 The Pausable library allows contracts to implement an emergency stop mechanism. This can be useful for scenarios such as having an emergency switch to freeze all transactions in the event of a large bug.
 
-It is highly encouraged to use the [Ownership Library](../ownership/) in combination with the Pausable Library to ensure that only a single administrative user has the ability to pause your contract.
-
 This library is completely stateless and follows a packet oriented design providing significant gas savings.
+
+> **NOTE** It is highly encouraged to use the [Ownership Library](../ownership/) in combination with the Pausable Library to ensure that only a single administrative user has the ability to pause your contract.
 
 More information can be found in the [specification](./SPECIFICATION.md).
 

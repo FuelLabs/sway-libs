@@ -38,6 +38,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 - [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
 - [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 - [Token](./libs/token/) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20), [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3), and [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7) standards.
+- [Pausable](./libs/pausable/) allows contracts to implement an emergency stop mechanism.
 
 ## Using a library
 
