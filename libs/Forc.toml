@@ -3,6 +3,7 @@ members = [
   "fixed_point",
   "merkle_proof",
   "ownership",
+  "pausable",
   "queue",
   "reentrancy",
   "signed_integers",
