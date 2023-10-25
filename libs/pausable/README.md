@@ -23,7 +23,7 @@ In order to use the Pausable library it must be added to the `Forc.toml` file an
 
 You may import the Pausable library's functionalities like so:
 
-```rust
+```sway
 use pausable::*;
 ```
 

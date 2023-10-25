@@ -25,8 +25,8 @@ abi Pausable {
     /// ```sway
     /// use pausable::Pausable;
     ///
-    /// fn foo(contract: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract);
+    /// fn foo(contract_id: ContractId) {
+    ///     let pausable_abi = abi(Pauseable, contract_id);
     ///     pausable_abi.pause();
     ///     assert(pausable_abi.is_paused() == true);
     /// }
@@ -44,8 +44,8 @@ abi Pausable {
     /// ```sway
     /// use pausable::Pausable;
     ///
-    /// fn foo(contract: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract);
+    /// fn foo(contract_id: ContractId) {
+    ///     let pausable_abi = abi(Pauseable, contract_id);
     ///     assert(pausable_abi.is_paused() == false);
     /// }
     /// ```
@@ -63,8 +63,8 @@ abi Pausable {
     /// ```sway
     /// use pausable::Pausable;
     ///
-    /// fn foo(contract: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract);
+    /// fn foo(contract_id: ContractId) {
+    ///     let pausable_abi = abi(Pauseable, contract_id);
     ///     pausable_abi.unpause();
     ///     assert(pausable_abi.is_paused() == false);
     /// }
@@ -108,7 +108,7 @@ pub fn _unpause() {
     }
 }
 
-/// Returns whether the contract is in the paused or unpaused state.
+/// Returns whether the contract is in the paused state.
 ///
 /// # Returns
 ///
