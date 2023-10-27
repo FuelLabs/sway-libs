@@ -2,32 +2,43 @@ contract;
 
 use pausable::{_is_paused, _pause, _unpause, Pausable, require_not_paused, require_paused};
 
+storage {
+    paused: bool = false,
+}
+
 abi RequireTests {
+    #[storage(read)]
     fn test_require_paused();
+    #[storage(read)]
     fn test_require_not_paused();
 }
 
 impl Pausable for Contract {
+    #[storage(write)]
     fn pause() {
-        _pause();
+        _pause(storage.paused);
     }
 
+    #[storage(write)]
     fn unpause() {
-        _unpause();
+        _unpause(storage.paused);
     }
 
+    #[storage(read)]
     fn is_paused() -> bool {
-        _is_paused()
+        _is_paused(storage.paused)
     }
 }
 
 impl RequireTests for Contract {
+    #[storage(read)]
     fn test_require_paused() {
-        require_paused();
+        require_paused(storage.paused);
     }
 
+    #[storage(read)]
     fn test_require_not_paused() {
-        require_not_paused();
+        require_not_paused(storage.paused);
     }
 }
 
