@@ -2,10 +2,6 @@ contract;
 
 use pausable::{_is_paused, _pause, _unpause, Pausable, require_not_paused, require_paused};
 
-storage {
-    paused: bool = false,
-}
-
 abi RequireTests {
     #[storage(read)]
     fn test_require_paused();
@@ -16,29 +12,29 @@ abi RequireTests {
 impl Pausable for Contract {
     #[storage(write)]
     fn pause() {
-        _pause(storage.paused);
+        _pause();
     }
 
     #[storage(write)]
     fn unpause() {
-        _unpause(storage.paused);
+        _unpause();
     }
 
     #[storage(read)]
     fn is_paused() -> bool {
-        _is_paused(storage.paused)
+        _is_paused()
     }
 }
 
 impl RequireTests for Contract {
     #[storage(read)]
     fn test_require_paused() {
-        require_paused(storage.paused);
+        require_paused();
     }
 
     #[storage(read)]
     fn test_require_not_paused() {
-        require_not_paused(storage.paused);
+        require_not_paused();
     }
 }
 
@@ -46,16 +42,16 @@ impl RequireTests for Contract {
 fn test_is_paused() {
     let pausable_abi = abi(Pausable, CONTRACT_ID);
 
-    assert(pausable_abi.is_paused() == false);
+    assert(!pausable_abi.is_paused());
 }
 
 #[test]
 fn test_pause() {
     let pausable_abi = abi(Pausable, CONTRACT_ID);
 
-    assert(pausable_abi.is_paused() == false);
+    assert(!pausable_abi.is_paused());
     pausable_abi.pause();
-    assert(pausable_abi.is_paused() == true);
+    assert(pausable_abi.is_paused());
 }
 
 #[test]
@@ -63,9 +59,9 @@ fn test_unpause() {
     let pausable_abi = abi(Pausable, CONTRACT_ID);
     pausable_abi.pause();
 
-    assert(pausable_abi.is_paused() == true);
+    assert(pausable_abi.is_paused());
     pausable_abi.unpause();
-    assert(pausable_abi.is_paused() == false);
+    assert(!pausable_abi.is_paused());
 }
 
 #[test]
