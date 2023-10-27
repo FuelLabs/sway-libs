@@ -25,14 +25,6 @@ You may import the Pausable library's functionalities like so:
 use pausable::*;
 ```
 
-Be sure to add the storage block bellow to your contract which enables the library.
-
-```sway
-storage {
-    paused: bool = false,
-}
-```
-
 ## Basic Functionality
 
 Once imported, the Pausable library's functions should be available. Using the Pausable Library is as simple as calling your desired function.
@@ -47,24 +39,20 @@ By default, your contract will start in the `Unpaused` state. To pause your cont
 ```sway
 use pausable::{_is_paused, _pause, _unpause, Pausable};
 
-storage {
-    paused: bool = false,
-}
-
 impl Pausable for Contract {
     #[storage(write)]
     fn pause() {
-        _pause(storage.paused);
+        _pause();
     }
 
     #[storage(write)]
     fn unpause() {
-        _unpause(storage.paused);
+        _unpause();
     }
 
     #[storage(read)]
     fn is_paused() -> bool {
-        _is_paused(storage.paused)
+        _is_paused()
     }
 }
 ```
@@ -76,10 +64,6 @@ When developing a contract, you may want to lock functions down to a specific st
 ```sway
 use pausable::{require_not_paused, require_paused};
 
-storage {
-    paused: bool = false,
-}
-
 abi MyAbi {
     #[storage(read)]
     fn require_paused_state();
@@ -90,13 +74,13 @@ abi MyAbi {
 impl MyAbi for Contract {
     #[storage(read)]
     fn require_paused_state() {
-        require_paused(storage.paused);
+        require_paused();
         // This comment will only ever be reached if the contract is in the paused state
     }
 
     #[storage(read)]
     fn require_not_paused_state() {
-        require_not_paused(storage.paused);
+        require_not_paused();
         // This comment will only ever be reached if the contract is in the unpaused state
     }
 }

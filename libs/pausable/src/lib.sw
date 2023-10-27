@@ -1,5 +1,8 @@
 library;
 
+// Precomputed hash of sha256("pausable")
+const PAUSABLE = 0xd987cda398e9af257cbcf8a8995c5dccb19833cadc727ba56b0fec60ccf8944c;
+
 /// Error emitted upon the opposite of the desired pause state.
 pub enum PauseError {
     /// Emitted when the contract is paused.
@@ -28,7 +31,7 @@ abi Pausable {
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
     ///     pausable_abi.pause();
-    ///     assert(pausable_abi.is_paused() == true);
+    ///     assert(pausable_abi.is_paused());
     /// }
     /// ```
     #[storage(write)]
@@ -51,7 +54,7 @@ abi Pausable {
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
-    ///     assert(pausable_abi.is_paused() == false);
+    ///     assert(!pausable_abi.is_paused());
     /// }
     /// ```
     #[storage(read)]
@@ -76,7 +79,7 @@ abi Pausable {
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
     ///     pausable_abi.unpause();
-    ///     assert(pausable_abi.is_paused() == false);
+    ///     assert(!pausable_abi.is_paused());
     /// }
     /// ```
     #[storage(write)]
@@ -84,10 +87,6 @@ abi Pausable {
 }
 
 /// Unconditionally sets the contract to the paused state.
-///
-/// # Arguments
-///
-/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
 ///
 /// # Number of Storage Accesses
 ///
@@ -98,25 +97,18 @@ abi Pausable {
 /// ```sway
 /// use pausable::{_pause, _is_paused};
 ///
-/// storage {
-///     paused: bool = false,
-/// }
-///
 /// fn foo() {
-///     _pause(storage.paused);
-///     assert(_is_paused(storage.paused) == true);
+///     _pause();
+///     assert(_is_paused());
 /// }
 /// ```
 #[storage(write)]
-pub fn _pause(paused_key: StorageKey<bool>) {
+pub fn _pause() {
+    let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(true);
 }
 
 /// Unconditionally sets the contract to the unpaused state.
-///
-/// # Arguments
-///
-/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
 ///
 /// # Number of Storage Accesses
 ///
@@ -127,25 +119,18 @@ pub fn _pause(paused_key: StorageKey<bool>) {
 /// ```sway
 /// use pausable::{_unpause, _is_paused};
 ///
-/// storage {
-///     paused: bool = false,
-/// }
-///
 /// fn foo() {
-///     _unpause(storage.paused);
-///     assert(_is_paused(storage.paused) == false);
+///     _unpause();
+///     assert(!_is_paused());
 /// }
 /// ```
 #[storage(write)]
-pub fn _unpause(paused_key: StorageKey<bool>) {
+pub fn _unpause() {
+    let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(false);
 }
 
 /// Returns whether the contract is in the paused state.
-///
-/// # Arguments
-///
-/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
 ///
 /// # Returns
 ///
@@ -160,24 +145,17 @@ pub fn _unpause(paused_key: StorageKey<bool>) {
 /// ```sway
 /// use pausable::_is_paused;
 ///
-/// storage {
-///     paused: bool = false,
-/// }
-///
 /// fn foo() {
-///     assert(_is_paused(storage.paused) == false);
+///     assert(!_is_paused());
 /// }
 /// ```
 #[storage(read)]
-pub fn _is_paused(paused_key: StorageKey<bool>) -> bool {
+pub fn _is_paused() -> bool {
+    let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.read()
 }
 
 /// Requires that the contract is in the paused state.
-///
-/// # Arguments
-///
-/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
 ///
 /// # Reverts
 ///
@@ -192,26 +170,19 @@ pub fn _is_paused(paused_key: StorageKey<bool>) -> bool {
 /// ```sway
 /// use pausable::{_pause, require_paused};
 ///
-/// storage {
-///     paused: bool = false,
-/// }
-///
 /// fn foo() {
-///     _pause(storage.paused);
-///     require_paused(storage.paused);
+///     _pause();
+///     require_paused();
 ///     // Only reachable when paused
 /// }
 /// ```
 #[storage(read)]
-pub fn require_paused(paused_key: StorageKey<bool>) {
+pub fn require_paused() {
+    let paused_key = StorageKey::<bool>::new(PAUSABLE, 0, PAUSABLE);
     require(paused_key.read(), PauseError::NotPaused);
 }
 
 /// Requires that the contract is in the unpaused state.
-///
-/// # Arguments
-///
-/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
 ///
 /// # Reverts
 ///
@@ -226,17 +197,14 @@ pub fn require_paused(paused_key: StorageKey<bool>) {
 /// ```sway
 /// use pausable::{_unpause, require_not_paused};
 ///
-/// storage {
-///     paused: bool = false,
-/// }
-///
 /// fn foo() {
-///     _unpause(storage.paused);
-///     require_not_paused(storage.paused);
+///     _unpause();
+///     require_not_paused();
 ///     // Only reachable when unpaused
 /// }
 /// ```
 #[storage(read)]
-pub fn require_not_paused(paused_key: StorageKey<bool>) {
+pub fn require_not_paused() {
+    let paused_key = StorageKey::<bool>::new(PAUSABLE, 0, PAUSABLE);
     require(!paused_key.read(), PauseError::Paused);
 }
