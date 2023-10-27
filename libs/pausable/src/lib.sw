@@ -1,8 +1,4 @@
 library;
-use std::{constants::ZERO_B256, token::{burn, mint}};
-
-// Precomputed hash of sha256("pausable")
-const PAUSABLE = 0xd987cda398e9af257cbcf8a8995c5dccb19833cadc727ba56b0fec60ccf8944c;
 
 /// Error emitted upon the opposite of the desired pause state.
 pub enum PauseError {
@@ -20,6 +16,10 @@ abi Pausable {
     /// It is highly encouraged to use the Ownership Library in order to lock this
     /// function to a single administrative user.
     ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Writes: `1`
+    ///
     /// # Examples
     ///
     /// ```sway
@@ -31,6 +31,7 @@ abi Pausable {
     ///     assert(pausable_abi.is_paused() == true);
     /// }
     /// ```
+    #[storage(write)]
     fn pause();
 
     /// Returns whether the contract is paused.
@@ -38,6 +39,10 @@ abi Pausable {
     /// # Returns
     ///
     /// * [bool] - The pause state for the contract.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Reads: `1`
     ///
     /// # Examples
     ///
@@ -49,6 +54,7 @@ abi Pausable {
     ///     assert(pausable_abi.is_paused() == false);
     /// }
     /// ```
+    #[storage(read)]
     fn is_paused() -> bool;
 
     /// Unpauses the contract.
@@ -57,6 +63,10 @@ abi Pausable {
     ///
     /// It is highly encouraged to use the Ownership Library in order to lock this
     /// function to a single administrative user.
+    ///
+    /// # Number of Storage Accesses
+    ///
+    /// * Writes: `1`
     ///
     /// # Examples
     ///
@@ -69,113 +79,164 @@ abi Pausable {
     ///     assert(pausable_abi.is_paused() == false);
     /// }
     /// ```
+    #[storage(write)]
     fn unpause();
 }
 
 /// Unconditionally sets the contract to the paused state.
+///
+/// # Arguments
+///
+/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
+///
+/// # Number of Storage Accesses
+///
+/// * Writes: `1`
 ///
 /// # Examples
 ///
 /// ```sway
 /// use pausable::{_pause, _is_paused};
 ///
+/// storage {
+///     paused: bool = false,
+/// }
+///
 /// fn foo() {
-///     _pause();
-///     assert(_is_paused() == true);
+///     _pause(storage.paused);
+///     assert(_is_paused(storage.paused) == true);
 /// }
 /// ```
-pub fn _pause() {
-    if balance() == 0 {
-        mint(PAUSABLE, 1);
-    }
+#[storage(write)]
+pub fn _pause(paused_key: StorageKey<bool>) {
+    paused_key.write(true);
 }
 
 /// Unconditionally sets the contract to the unpaused state.
+///
+/// # Arguments
+///
+/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
+///
+/// # Number of Storage Accesses
+///
+/// * Writes: `1`
 ///
 /// # Examples
 ///
 /// ```sway
 /// use pausable::{_unpause, _is_paused};
 ///
+/// storage {
+///     paused: bool = false,
+/// }
+///
 /// fn foo() {
-///     _unpause();
-///     assert(_is_paused() == false);
+///     _unpause(storage.paused);
+///     assert(_is_paused(storage.paused) == false);
 /// }
 /// ```
-pub fn _unpause() {
-    if balance() == 1 {
-        burn(PAUSABLE, 1);
-    }
+#[storage(write)]
+pub fn _unpause(paused_key: StorageKey<bool>) {
+    paused_key.write(false);
 }
 
 /// Returns whether the contract is in the paused state.
 ///
+/// # Arguments
+///
+/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
+///
 /// # Returns
 ///
 /// * [bool] - The pause state of the contract.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 ///
 /// # Examples
 ///
 /// ```sway
 /// use pausable::_is_paused;
 ///
+/// storage {
+///     paused: bool = false,
+/// }
+///
 /// fn foo() {
-///     assert(_is_paused() == false);
+///     assert(_is_paused(storage.paused) == false);
 /// }
 /// ```
-pub fn _is_paused() -> bool {
-    balance() == 1
+#[storage(read)]
+pub fn _is_paused(paused_key: StorageKey<bool>) -> bool {
+    paused_key.read()
 }
 
 /// Requires that the contract is in the paused state.
 ///
+/// # Arguments
+///
+/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
+///
 /// # Reverts
 ///
 /// * When the contract is not paused.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 ///
 /// # Examples
 ///
 /// ```sway
 /// use pausable::{_pause, require_paused};
 ///
+/// storage {
+///     paused: bool = false,
+/// }
+///
 /// fn foo() {
-///     _pause();
-///     require_paused();
+///     _pause(storage.paused);
+///     require_paused(storage.paused);
+///     // Only reachable when paused
 /// }
 /// ```
-pub fn require_paused() {
-    require(balance() == 1, PauseError::NotPaused);
+#[storage(read)]
+pub fn require_paused(paused_key: StorageKey<bool>) {
+    require(paused_key.read(), PauseError::NotPaused);
 }
 
 /// Requires that the contract is in the unpaused state.
 ///
+/// # Arguments
+///
+/// * `paused_key`: [StorageKey<bool>] - The location in storage at which the paused state is stored.
+///
 /// # Reverts
 ///
 /// * When the contract is paused.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `1`
 ///
 /// # Examples
 ///
 /// ```sway
 /// use pausable::{_unpause, require_not_paused};
 ///
+/// storage {
+///     paused: bool = false,
+/// }
+///
 /// fn foo() {
-///     _unpause();
-///     require_not_paused();
+///     _unpause(storage.paused);
+///     require_not_paused(storage.paused);
+///     // Only reachable when unpaused
 /// }
 /// ```
-pub fn require_not_paused() {
-    require(balance() == 0, PauseError::Paused);
-}
-
-fn balance() -> u64 {
-    let id = asm() { fp: b256 };
-    let result_buffer = ZERO_B256;
-    // Hashing in assmeby gives us significant gas savings over using the std::hash::sha256
-    // as this does not use std::bytes::Bytes. 
-    // Only possible because of the fixed length of bytes.
-    asm(balance, token_id: result_buffer, ptr: (id, PAUSABLE), bytes: 64, id: id) {
-        s256 token_id ptr bytes;
-        bal  balance token_id id;
-        balance: u64
-    }
+#[storage(read)]
+pub fn require_not_paused(paused_key: StorageKey<bool>) {
+    require(!paused_key.read(), PauseError::Paused);
 }
