@@ -1,0 +1,36 @@
+name: Build and publish Helm Chart
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'helm/sway-playground/Chart.yaml'
+
+permissions:
+  contents: read
+
+jobs:
+  helm-release:
+    name: Build Helm Chart
+    runs-on: buildjet-4vcpu-ubuntu-2204
+    if: |
+      (github.event_name == 'release' && github.event.action == 'published') ||
+      github.ref == 'refs/heads/master' || github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Package and Push Charts
+        uses: bsord/helm-push@v4.1.0
+        with:
+          useOCIRegistry: true
+          registry-url: oci://ghcr.io/fuellabs/helmcharts
+          username: ${{ github.repository_owner }}
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
+          chart-folder: ./helm/sway-playground
