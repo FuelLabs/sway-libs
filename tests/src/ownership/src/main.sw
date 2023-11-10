@@ -1,7 +1,7 @@
 contract;
 
 use ownership::*;
-use src_5::{Ownership, State};
+use src_5::{SRC5, State};
 
 storage {
     owner: Ownership = Ownership::uninitialized(),
@@ -10,8 +10,6 @@ storage {
 abi OwnableTest {
     #[storage(read)]
     fn only_owner();
-    #[storage(read)]
-    fn owner() -> State;
     #[storage(read, write)]
     fn renounce_ownership();
     #[storage(read, write)]
@@ -20,15 +18,17 @@ abi OwnableTest {
     fn transfer_ownership(new_owner: Identity);
 }
 
+impl SRC5 for Contract {
+    #[storage(read)]
+    fn owner() -> State {
+        storage.owner.owner()
+    }
+}
+
 impl OwnableTest for Contract {
     #[storage(read)]
     fn only_owner() {
         storage.owner.only_owner();
-    }
-
-    #[storage(read)]
-    fn owner() -> State {
-        storage.owner.owner()
     }
 
     #[storage(read, write)]

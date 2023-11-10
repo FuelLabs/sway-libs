@@ -6,7 +6,11 @@ pub mod events;
 use errors::AccessError;
 use events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
-use src_5::{Ownership, State};
+use src_5::State;
+
+pub struct Ownership {
+    state: State,
+}
 
 impl Ownership {
     /// Returns the `Ownership` struct in the `Uninitalized` state.
