@@ -171,7 +171,10 @@ pub fn process_proof(
     proof: Vec<b256>,
 ) -> b256 {
     let proof_length = proof.len();
-    require((num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0), ProofError::InvalidProofLength);
+    require(
+        (num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0),
+        ProofError::InvalidProofLength,
+    );
     require(key < num_leaves, ProofError::InvalidKey);
 
     let mut digest = merkle_leaf;

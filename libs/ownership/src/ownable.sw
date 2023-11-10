@@ -143,7 +143,11 @@ impl StorageKey<Ownership> {
     /// ```
     #[storage(read)]
     pub fn only_owner(self) {
-        require(self.owner() == State::Initialized(msg_sender().unwrap()), AccessError::NotOwner);
+        require(
+            self
+                .owner() == State::Initialized(msg_sender().unwrap()),
+            AccessError::NotOwner,
+        );
     }
 }
 
@@ -217,7 +221,11 @@ impl StorageKey<Ownership> {
     /// ```
     #[storage(read, write)]
     pub fn set_ownership(self, new_owner: Identity) {
-        require(self.owner() == State::Uninitialized, AccessError::CannotReinitialized);
+        require(
+            self
+                .owner() == State::Uninitialized,
+            AccessError::CannotReinitialized,
+        );
 
         self.write(Ownership::initialized(new_owner));
 

@@ -29,9 +29,11 @@ fn main() -> bool {
         value: U128::from((1, 3)),
     };
     res = UFP128::recip(value);
-    assert(UFP128 {
-        value: U128::from((0, 18446744073709551613)),
-    } == res);
+    assert(
+        UFP128 {
+            value: U128::from((0, 18446744073709551613)),
+        } == res,
+    );
 
     // trunc
     let mut value = UFP128 {

@@ -2,7 +2,7 @@ contract;
 
 use src_20::SRC20;
 use src_3::SRC3;
-use src_7::{SRC7, Metadata};
+use src_7::{Metadata, SRC7};
 use token::{
     base::{
         _decimals,
@@ -15,17 +15,13 @@ use token::{
         _total_supply,
         SetTokenAttributes,
     },
+    metadata::*,
     mint::{
         _burn,
         _mint,
     },
-    metadata::*,
 };
-use std::{
-    hash::Hash, 
-    storage::storage_string::*, 
-    string::String
-};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 storage {
     total_assets: u64 = 0,
@@ -66,7 +62,15 @@ impl SRC20 for Contract {
 impl SRC3 for Contract {
     #[storage(read, write)]
     fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
-        _mint(storage.total_assets, storage.total_supply, recipient, sub_id, amount);
+        _mint(
+            storage
+                .total_assets,
+            storage
+                .total_supply,
+            recipient,
+            sub_id,
+            amount,
+        );
     }
 
     #[storage(read, write)]
@@ -149,7 +153,7 @@ fn test_total_supply() {
 #[test]
 fn test_name() {
     use std::constants::ZERO_B256;
-    
+
     let src20_abi = abi(SRC20, CONTRACT_ID);
     let attributes_abi = abi(SetTokenAttributes, CONTRACT_ID);
 
@@ -161,7 +165,13 @@ fn test_name() {
     assert(src20_abi.name(asset_id).is_none());
 
     attributes_abi.set_name(asset_id, name);
-    assert(src20_abi.name(asset_id).unwrap().as_bytes() == name.as_bytes());
+    assert(
+        src20_abi
+            .name(asset_id)
+            .unwrap()
+            .as_bytes() == name
+            .as_bytes(),
+    );
 }
 
 #[test]
@@ -179,7 +189,13 @@ fn test_symbol() {
     assert(src20_abi.symbol(asset_id).is_none());
 
     attributes_abi.set_symbol(asset_id, symbol);
-    assert(src20_abi.symbol(asset_id).unwrap().as_bytes() == symbol.as_bytes());
+    assert(
+        src20_abi
+            .symbol(asset_id)
+            .unwrap()
+            .as_bytes() == symbol
+            .as_bytes(),
+    );
 }
 
 #[test]
@@ -311,7 +327,7 @@ fn test_set_metadata_b256() {
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
-    
+
     set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
@@ -329,7 +345,7 @@ fn test_set_metadata_u64() {
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
-    
+
     set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
@@ -347,7 +363,7 @@ fn test_set_metadata_string() {
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
-    
+
     set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
@@ -365,7 +381,7 @@ fn test_set_metadata_bytes() {
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
-    
+
     set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
