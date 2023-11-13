@@ -493,12 +493,12 @@ impl Exponent for IFP128 {
 impl Power for IFP128 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: u32) -> Self {
-        let upf64_exponent = UFP64::from(exponent.as_u64());
+        let ufp64_exponent = UFP64::from(exponent.as_u64());
         let non_negative = if !self.non_negative {
             // roots of negative numbers are complex numbers which we lack for now
-            assert(upf64_exponent.floor() == upf64_exponent);
+            assert(ufp64_exponent.floor() == ufp64_exponent);
 
-            let div_2 = upf64_exponent / UFP64::from(2);
+            let div_2 = ufp64_exponent / UFP64::from(2);
             div_2.floor() == div_2
         } else {
             true
