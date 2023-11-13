@@ -492,20 +492,18 @@ impl Exponent for IFP64 {
 
 impl Power for IFP64 {
     /// Power function. x ^ exponent
-    fn pow(self, exponent: Self) -> Self {
+    fn pow(self, exponent: u32) -> Self {
+        let ufp32_exponent = UFP32::from(exponent);
         let non_negative = if !self.non_negative {
             // roots of negative numbers are complex numbers which we lack for now
-            assert(exponent.underlying.floor() == exponent.underlying);
+            assert(ufp32_exponent.floor() == ufp32_exponent);
 
-            let div_2 = exponent.underlying / UFP32::from(2u32);
+            let div_2 = ufp32_exponent / UFP32::from(2u32);
             div_2.floor() == div_2
         } else {
             true
         };
-        let mut underlying = self.underlying.pow(exponent.underlying);
-        if !exponent.non_negative {
-            underlying = UFP32::recip(underlying);
-        }
+        let mut underlying = self.underlying.pow(exponent);
         Self {
             underlying: underlying,
             non_negative: non_negative,

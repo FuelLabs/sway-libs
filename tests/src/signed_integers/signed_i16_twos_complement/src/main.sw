@@ -11,19 +11,39 @@ fn main() -> bool {
     assert(res.twos_complement() == I16::from(10u16));
 
     res = I16::neg_from(5);
-    assert(res.twos_complement().underlying + res.underlying == u16::max() + 1);
+    assert(
+        res
+            .twos_complement()
+            .underlying + res.underlying == u16::max() + 1,
+    );
 
     res = I16::neg_from(27u16);
-    assert(res.twos_complement().underlying + res.underlying == u16::max() + 1);
+    assert(
+        res
+            .twos_complement()
+            .underlying + res.underlying == u16::max() + 1,
+    );
 
     res = I16::neg_from(110u16);
-    assert(res.twos_complement().underlying + res.underlying == u16::max() + 1);
+    assert(
+        res
+            .twos_complement()
+            .underlying + res.underlying == u16::max() + 1,
+    );
 
     res = I16::neg_from(93u16);
-    assert(res.twos_complement().underlying + res.underlying == u16::max() + 1);
+    assert(
+        res
+            .twos_complement()
+            .underlying + res.underlying == u16::max() + 1,
+    );
 
     res = I16::neg_from(78u16);
-    assert(res.twos_complement().underlying + res.underlying == u16::max() + 1);
+    assert(
+        res
+            .twos_complement()
+            .underlying + res.underlying == u16::max() + 1,
+    );
 
     true
 }

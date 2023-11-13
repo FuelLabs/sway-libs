@@ -13,19 +13,39 @@ fn main() -> bool {
     assert(res.twos_complement() == I128::from(U128::from((0, 10))));
 
     res = I128::neg_from(U128::from((0, 5)));
-    assert(res.twos_complement().underlying - u_one + res.underlying == U128::max());
+    assert(
+        res
+            .twos_complement()
+            .underlying - u_one + res.underlying == U128::max(),
+    );
 
     res = I128::neg_from(U128::from((0, 27)));
-    assert(res.twos_complement().underlying - u_one + res.underlying == U128::max());
+    assert(
+        res
+            .twos_complement()
+            .underlying - u_one + res.underlying == U128::max(),
+    );
 
     res = I128::neg_from(U128::from((0, 110)));
-    assert(res.twos_complement().underlying - u_one + res.underlying == U128::max());
+    assert(
+        res
+            .twos_complement()
+            .underlying - u_one + res.underlying == U128::max(),
+    );
 
     res = I128::neg_from(U128::from((0, 93)));
-    assert(res.twos_complement().underlying - u_one + res.underlying == U128::max());
+    assert(
+        res
+            .twos_complement()
+            .underlying - u_one + res.underlying == U128::max(),
+    );
 
     res = I128::neg_from(U128::from((0, 78)));
-    assert(res.twos_complement().underlying - u_one + res.underlying == U128::max());
+    assert(
+        res
+            .twos_complement()
+            .underlying - u_one + res.underlying == U128::max(),
+    );
 
     true
 }

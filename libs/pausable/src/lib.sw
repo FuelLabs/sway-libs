@@ -152,7 +152,7 @@ pub fn _unpause() {
 #[storage(read)]
 pub fn _is_paused() -> bool {
     let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
-    paused_key.read()
+    paused_key.try_read().unwrap_or(false)
 }
 
 /// Requires that the contract is in the paused state.
@@ -179,7 +179,12 @@ pub fn _is_paused() -> bool {
 #[storage(read)]
 pub fn require_paused() {
     let paused_key = StorageKey::<bool>::new(PAUSABLE, 0, PAUSABLE);
-    require(paused_key.read(), PauseError::NotPaused);
+    require(
+        paused_key
+            .try_read()
+            .unwrap_or(false),
+        PauseError::NotPaused,
+    );
 }
 
 /// Requires that the contract is in the unpaused state.
@@ -206,5 +211,5 @@ pub fn require_paused() {
 #[storage(read)]
 pub fn require_not_paused() {
     let paused_key = StorageKey::<bool>::new(PAUSABLE, 0, PAUSABLE);
-    require(!paused_key.read(), PauseError::Paused);
+    require(!paused_key.try_read().unwrap_or(false), PauseError::Paused);
 }

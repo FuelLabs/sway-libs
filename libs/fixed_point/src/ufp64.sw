@@ -446,15 +446,14 @@ impl Exponent for UFP64 {
 
 impl Power for UFP64 {
     /// Power function. x ^ exponent
-    fn pow(self, exponent: Self) -> Self {
+    fn pow(self, exponent: u32) -> Self {
         let demoninator_power = UFP64::denominator();
-        let exponent_int = exponent.value >> 32;
-        let nominator_pow = U128::from((0, self.value)).pow(U128::from((0, exponent_int)));
+        let nominator_pow = U128::from((0, self.value)).pow(exponent);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 32
         // we need to delete the nominator by 2 ^ (32 * exponent - 1)
         // - 1 is the formula is due to denominator need to stay 2 ^ 32
-        let nominator = nominator_pow >> demoninator_power * (exponent_int - 1);
+        let nominator = nominator_pow >> demoninator_power * (exponent.as_u64() - 1);
 
         if nominator.upper != 0 {
             // panic on overflow

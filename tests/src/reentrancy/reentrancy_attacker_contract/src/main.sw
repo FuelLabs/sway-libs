@@ -44,21 +44,31 @@ impl Attacker for Contract {
     }
 
     fn evil_callback_1() {
-        assert(abi(Attacker, contract_id().value).launch_attack(get_msg_sender_id_or_panic()));
+        assert(
+            abi(Attacker, contract_id()
+                .value)
+                .launch_attack(get_msg_sender_id_or_panic()),
+        );
     }
 
     fn evil_callback_2() {
-        abi(Attacker, contract_id().value).launch_thwarted_attack_1(get_msg_sender_id_or_panic());
+        abi(Attacker, contract_id()
+            .value)
+            .launch_thwarted_attack_1(get_msg_sender_id_or_panic());
     }
 
     fn evil_callback_3() {
-        abi(Attacker, contract_id().value).launch_thwarted_attack_2(get_msg_sender_id_or_panic());
+        abi(Attacker, contract_id()
+            .value)
+            .launch_thwarted_attack_2(get_msg_sender_id_or_panic());
     }
 
     #[storage(read)]
     fn evil_callback_4() {
         let helper = storage.helper.read();
-        abi(AttackHelper, helper.value).attempt_cross_contract_reentrancy(storage.target_id.read());
+        abi(AttackHelper, helper
+            .value)
+            .attempt_cross_contract_reentrancy(storage.target_id.read());
     }
 
     fn innocent_callback() {}
