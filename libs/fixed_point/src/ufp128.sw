@@ -385,12 +385,10 @@ impl Root for UFP128 {
 }
 
 impl Power for UFP128 {
-    fn pow(self, exponent: Self) -> Self {
-        let nominator_pow = self.value.pow(exponent.value);
-        let u128_1 = U128::from((0, 1));
+    fn pow(self, exponent: u32) -> Self {
+        let nominator_pow = self.value.pow(exponent);
         let u128_2 = U128::from((0, 2));
-        let u128_64 = U128::from((0, 64));
-        let two_pow_64_n_minus_1 = u128_2.pow(u128_64 * (exponent.value - u128_1));
+        let two_pow_64_n_minus_1 = u128_2.pow((64u32 * (exponent - 1u32)));
         let nominator = nominator_pow / two_pow_64_n_minus_1;
         Self::from((nominator.upper, nominator.lower))
     }

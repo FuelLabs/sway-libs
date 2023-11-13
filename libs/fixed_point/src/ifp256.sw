@@ -492,20 +492,18 @@ impl Exponent for IFP256 {
 
 impl Power for IFP256 {
     /// Power function. x ^ exponent
-    fn pow(self, exponent: Self) -> Self {
+    fn pow(self, exponent: u32) -> Self {
+        let ufp128_exponent = UFP128::from((0, exponent.as_u64()));
         let non_negative = if !self.non_negative {
             // roots of negative numbers are complex numbers which we lack for now
-            assert(exponent.underlying.floor() == exponent.underlying);
+            assert(ufp128_exponent.floor() == ufp128_exponent);
 
-            let div_2 = exponent.underlying / UFP128::from((2, 0));
+            let div_2 = ufp128_exponent / UFP128::from((2, 0));
             div_2.floor() == div_2
         } else {
             true
         };
-        let mut underlying = self.underlying.pow(exponent.underlying);
-        if !exponent.non_negative {
-            underlying = UFP128::recip(underlying);
-        }
+        let mut underlying = self.underlying.pow(exponent);
         Self {
             underlying: underlying,
             non_negative: non_negative,
