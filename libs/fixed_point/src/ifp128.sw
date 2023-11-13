@@ -496,7 +496,7 @@ impl Power for IFP128 {
         let upf64_exponent = UFP64::from(exponent.as_u64());
         let non_negative = if !self.non_negative {
             // roots of negative numbers are complex numbers which we lack for now
-            assert(upf64_exponent.floor() ==upf64_exponent);
+            assert(upf64_exponent.floor() == upf64_exponent);
 
             let div_2 = upf64_exponent / UFP64::from(2);
             div_2.floor() == div_2
