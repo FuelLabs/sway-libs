@@ -31,14 +31,28 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 ### Libraries
 
-- [Binary Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
-- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
-- [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
-- [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
-- [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-- [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+#### Assets
+
 - [Token](./libs/token/) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20), [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3), and [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7) standards.
+
+#### Access Control and Security
+
+- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
 - [Pausable](./libs/pausable/) allows contracts to implement an emergency stop mechanism.
+- [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
+
+#### Cryptography
+
+- [Binary Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+
+#### Math
+
+- [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
+- [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
+
+#### Data Structures
+
+- [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 
 ## Using a library
 
