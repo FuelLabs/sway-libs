@@ -58,7 +58,10 @@ pub fn _owner() -> State {
 /// ```
 #[storage(read)]
 pub fn only_owner() {
-    require(_owner() == State::Initialized(msg_sender().unwrap()), AccessError::NotOwner);
+    require(
+        _owner() == State::Initialized(msg_sender().unwrap()),
+        AccessError::NotOwner,
+    );
 }
 
 /// Revokes ownership of the current owner and disallows any new owners.
@@ -123,7 +126,10 @@ pub fn renounce_ownership() {
 /// ```
 #[storage(read, write)]
 pub fn initialize_ownership(new_owner: Identity) {
-    require(_owner() == State::Uninitialized, InitializationError::CannotReinitialized);
+    require(
+        _owner() == State::Uninitialized,
+        InitializationError::CannotReinitialized,
+    );
 
     let owner_key = StorageKey::new(OWNER, 0, OWNER);
     owner_key.write(State::Initialized(new_owner));
