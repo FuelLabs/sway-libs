@@ -26,7 +26,7 @@ The purpose of this repository is to contain libraries which users can import an
 
 These libraries contain helper functions and other tools valuable to blockchain development.
 
-> **Note**
+> **Note:**
 > Sway is a language under heavy development therefore the libraries may not be the most ergonomic. Over time they should receive updates / improvements in order to demonstrate how Sway can be used in real use cases.
 
 ### Libraries
@@ -62,7 +62,8 @@ To import a library, a dependency should be added to the project's `Forc.toml` f
 merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
-> **NOTE** Be sure to set the tag as the most recent release.
+> **NOTE:** 
+> Be sure to set the tag as the most recent release.
 
 You may then import your desired library in your Sway Smart Contract as so:
 
@@ -86,7 +87,7 @@ Build the test projects:
 forc build
 ```
 
-> **Note**
+> **Note:**
 > This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, indiviual test projects may be built on their own to save time.
 
 Run the tests:
@@ -97,7 +98,7 @@ cargo test
 
 Any instructions related to using a specific library should be found within the README.md of that library.
 
-> **Note**
+> **Note:**
 > All projects currently use `forc v0.47.0`, `fuels-rs v0.46.0` and `fuel-core 0.20.8`.
 
 ## Contributing
