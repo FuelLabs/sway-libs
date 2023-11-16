@@ -43,7 +43,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 #### Cryptography
 
-- [Binary Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
 
@@ -56,22 +56,24 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 ## Using a library
 
-To import the Merkle Proof library the following should be added to the project's `Forc.toml` file under `[dependencies]` with the most recent release:
+To import a library, a dependency should be added to the project's `Forc.toml` file under `[dependencies]`. The following shows adding the Merkle Proof Library.
 
 ```rust
 merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
+> **NOTE** Be sure to set the tag as the most recent release.
+
 You may then import your desired library in your Sway Smart Contract as so:
 
-```rust
+```sway
 use merkle_proof::<library_function>;
 ```
 
-For example, to import the Merkle Proof library use the following statement:
+For example, to import the `verify_proof()` function use the following statement:
 
-```rust
-merkle_proof::binary_merkle_proof::verify_proof;
+```sway
+use merkle_proof::binary_merkle_proof::verify_proof;
 ```
 
 ## Running Tests
