@@ -26,7 +26,7 @@ The purpose of this repository is to contain libraries which users can import an
 
 These libraries contain helper functions and other tools valuable to blockchain development.
 
-> **Note:**
+> **NOTE:**
 > Sway is a language under heavy development therefore the libraries may not be the most ergonomic. Over time they should receive updates / improvements in order to demonstrate how Sway can be used in real use cases.
 
 ### Libraries
@@ -87,7 +87,7 @@ Build the test projects:
 forc build
 ```
 
-> **Note:**
+> **NOTE:**
 > This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, indiviual test projects may be built on their own to save time.
 
 Run the tests:
@@ -98,7 +98,7 @@ cargo test
 
 Any instructions related to using a specific library should be found within the README.md of that library.
 
-> **Note:**
+> **NOTE:**
 > All projects currently use `forc v0.47.0`, `fuels-rs v0.46.0` and `fuel-core 0.20.8`.
 
 ## Contributing
