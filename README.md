@@ -63,7 +63,7 @@ merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 > **NOTE:** 
-> Be sure to set the tag as the most recent release.
+> Be sure to set the tag to the latest release.
 
 You may then import your desired library in your Sway Smart Contract as so:
 
