@@ -85,7 +85,7 @@ In order to run the inline tests, make sure you are in the `libs/` folder of thi
 
 Run the tests:
 
-```rust
+```bash
 forc test
 ```
 
@@ -93,7 +93,7 @@ Once these tests have passed, make sure you are in the `tests/` folder of this r
 
 Run the tests:
 
-```
+```bash
 forc test && cargo test
 ```
 
