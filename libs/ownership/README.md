@@ -25,7 +25,7 @@ You may import the Ownership library's functionalities like so:
 use ownership::*;
 ```
 
-Once imported, the Ownership library's functions should be available. To use them, be sure to initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor.
+Once imported, the Ownership library's functions will be available. To use them initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor method.
 
 ```sway
 #[storage(read, write)]
@@ -65,6 +65,6 @@ impl SRC5 for Contract {
 }
 ```
 
-> **NOTE** A constructor must be implemented to initialize the owner.
+> **NOTE** A constructor method must be implemented to initialize the owner.
 
 For more information please see the [specification](./SPECIFICATION.md).
