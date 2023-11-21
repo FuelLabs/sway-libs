@@ -7,7 +7,7 @@
 
 # Overview
 
-The Ownership library provides a way to block users other than a single "owner" or "admin" from calling functions. Ownership is often used when needing administrative calls on a contract.
+The Ownership library provides a way to block users other than a single "owner" from calling functions. Ownership is often used when needing administrative calls on a contract.
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -15,53 +15,56 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the Ownership library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
+In order to use the Ownership library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 > **NOTE** Until [Issue #5025](https://github.com/FuelLabs/sway/issues/5025) is resolved, in order to use the Ownership Library you must also add the [SRC-5](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_5) standard as a dependencies.
 
 You may import the Ownership library's functionalities like so:
 
-```rust
-use ownership::Ownership;
+```sway
+use ownership::*;
 ```
 
-Once imported, the `Ownership` struct should be added to the storage block of your contract. There are two approaches when declaring ownership in storage.
+Once imported, the Ownership library's functions will be available. To use them initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor method.
 
-1. Initalize the owner on contract deployment by calling the `initialized()` function.
-
-```rust
-storage {
-    owner: Ownership = Ownership::initialized(Identity::Address(Address::from(0x0000000000000000000000000000000000000000000000000000000000000000))),
-}
-```
-
-2. Leave the owner uninitialized and call the `set_ownership()` function in your own constructor.
-
-```rust
-storage {
-    owner: Ownership = Ownership::uninitialized(),
-}
-
+```sway
 #[storage(read, write)]
 fn my_constructor(new_owner: Identity) {
-    storage.owner.set_ownership(new_owner);
+    initialize_ownership(new_owner);
 }
 ```
-
-> **Note** If this approach is taken, `set_ownership()` **MUST** be called to have a contract owner.
 
 ## Basic Functionality
 
 To restrict a function to only the owner, call the `only_owner()` function.
 
-```rust
-storage.owner.only_owner();
+```sway
+only_owner();
+// Only the contract's owner may reach this line.
 ```
 
-To return the owner from storage, call the `owner()` function.
+To return the ownership state from storage, call the `_owner()` function.
 
-```rust
-let owner: Option<Identity> = storage.owner.owner();
+```sway
+let owner: State = _owner();
 ```
+
+## Integrating the Ownership Library into the SRC-5 Standard
+
+To implement the SRC-5 standard with the Ownership library, be sure to add the [SRC-5](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_5) abi to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.
+
+```sway
+use ownership::_owner;
+use src_5::{State, SRC5};
+
+impl SRC5 for Contract {
+    #[storage(read)]
+    fn owner() -> State {
+        _owner()
+    }
+}
+```
+
+> **NOTE** A constructor method must be implemented to initialize the owner.
 
 For more information please see the [specification](./SPECIFICATION.md).
