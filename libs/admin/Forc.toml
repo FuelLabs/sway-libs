@@ -1,0 +1,9 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "admin.sw"
+license = "Apache-2.0"
+name = "admin"
+
+[dependencies]
+ownership = { path = "../ownership" }
+src_5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.2.0" }
