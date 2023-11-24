@@ -2,7 +2,7 @@ library;
 
 mod errors;
 
-use errors::AccessError;
+use errors::AdminError;
 use ownership::{_owner, only_owner};
 use src_5::State;
 use std::{auth::msg_sender, storage::storage_api::clear,};
