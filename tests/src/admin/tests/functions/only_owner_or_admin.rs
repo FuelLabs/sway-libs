@@ -1,5 +1,5 @@
 use crate::admin::tests::utils::{
-    abi_calls::{only_owner_or_admin, add_admin, set_ownership},
+    abi_calls::{add_admin, only_owner_or_admin, set_ownership},
     test_helpers::setup,
 };
 use fuels::types::Identity;

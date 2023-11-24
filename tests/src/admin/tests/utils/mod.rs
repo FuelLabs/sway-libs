@@ -46,10 +46,7 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn is_admin(
-        contract: &AdminLib<WalletUnlocked>,
-        admin: Identity,
-    ) -> bool {
+    pub async fn is_admin(contract: &AdminLib<WalletUnlocked>, admin: Identity) -> bool {
         contract
             .methods()
             .is_admin(admin)
@@ -59,20 +56,11 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn only_admin(
-        contract: &AdminLib<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
-        contract
-            .methods()
-            .only_admin()
-            .call()
-            .await
-            .unwrap()
+    pub async fn only_admin(contract: &AdminLib<WalletUnlocked>) -> FuelCallResponse<()> {
+        contract.methods().only_admin().call().await.unwrap()
     }
 
-    pub async fn only_owner_or_admin(
-        contract: &AdminLib<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    pub async fn only_owner_or_admin(contract: &AdminLib<WalletUnlocked>) -> FuelCallResponse<()> {
         contract
             .methods()
             .only_owner_or_admin()
@@ -119,9 +107,8 @@ pub mod test_helpers {
         let wallet3 = wallets.pop().unwrap();
         let wallet4 = wallets.pop().unwrap();
 
-        let storage_configuration = StorageConfiguration::load_from(
-            "src/admin/out/debug/admin_test-storage_slots.json",
-        );
+        let storage_configuration =
+            StorageConfiguration::load_from("src/admin/out/debug/admin_test-storage_slots.json");
         let id = Contract::load_from(
             "src/admin/out/debug/admin_test.bin",
             LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
