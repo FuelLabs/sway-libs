@@ -15,7 +15,7 @@ mod success {
         let owner_identity = Identity::Address(owner.wallet.address().into());
         let admin1_identity = Identity::Address(admin1.wallet.address().into());
         set_ownership(&owner.contract, owner_identity.clone()).await;
-        set_admin(&owner.contract, admin1_identity.clone()).await;
+        add_admin(&owner.contract, admin1_identity.clone()).await;
 
         only_admin(&admin1.contract).await;
     }
@@ -30,7 +30,7 @@ mod reverts {
     async fn when_no_admin_set() {
         let (_deployer, _owner, admin1, _admin2) = setup().await;
 
-        only_admin(admin1.contract).await;
+        only_admin(&admin1.contract).await;
     }
 
     #[tokio::test]
@@ -42,8 +42,8 @@ mod reverts {
         let admin1_identity = Identity::Address(admin1.wallet.address().into());
         let admin2_identity = Identity::Address(admin2.wallet.address().into());
         set_ownership(&owner.contract, owner_identity.clone()).await;
-        set_admin(&owner.contract, admin1_identity.clone()).await;
+        add_admin(&owner.contract, admin1_identity.clone()).await;
 
-        only_admin(admin2.contract).await;
+        only_admin(&admin2.contract).await;
     }
 }

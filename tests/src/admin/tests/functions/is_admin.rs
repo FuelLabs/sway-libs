@@ -17,7 +17,7 @@ mod success {
         set_ownership(&owner.contract, owner_identity.clone()).await;
 
         assert!(!is_admin(&owner.contract, admin1_identity.clone()).await);
-        set_admin(&owner.contract, admin1_identity.clone()).await;
+        add_admin(&owner.contract, admin1_identity.clone()).await;
         assert!(is_admin(&owner.contract, admin1_identity.clone()).await);
     }
 
@@ -33,8 +33,8 @@ mod success {
         assert!(!is_admin(&owner.contract, admin1_identity.clone()).await);
         assert!(!is_admin(&owner.contract, admin2_identity.clone()).await);
 
-        set_admin(&owner.contract, admin1_identity.clone()).await;
-        set_admin(&owner.contract, admin2_identity.clone()).await;
+        add_admin(&owner.contract, admin1_identity.clone()).await;
+        add_admin(&owner.contract, admin2_identity.clone()).await;
 
         assert!(is_admin(&owner.contract, admin1_identity.clone()).await);
         assert!(is_admin(&owner.contract, admin2_identity.clone()).await);
