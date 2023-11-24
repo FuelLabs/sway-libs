@@ -36,7 +36,7 @@ impl AdminTest for Contract {
 
     #[storage(read, write)]
     fn remove_admin(old_admin: Identity) {
-        remove_admin(old_admin);
+        revoke_admin(old_admin);
     }
 
     #[storage(read)]

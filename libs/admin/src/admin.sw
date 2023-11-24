@@ -61,15 +61,15 @@ pub fn add_admin(new_admin: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use admin::{remove_admin, is_admin};
+/// use admin::{revoke_admin, is_admin};
 ///
 /// fn foo(old_admin: Identity) {
-///     remove_admin(old_admin);
+///     revoke_admin(old_admin);
 ///     assert(!is_admin(old_admin));
 /// }
 /// ```
 #[storage(read, write)]
-pub fn remove_admin(old_admin: Identity) {
+pub fn revoke_admin(old_admin: Identity) {
     only_owner();
     let admin_value = match old_admin {
         Identity::Address(addr) => addr.value,
