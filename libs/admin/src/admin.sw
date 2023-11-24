@@ -147,7 +147,7 @@ pub fn is_admin(admin: Identity) -> bool {
 /// ```
 #[storage(read)]
 pub fn only_admin() {
-    require(is_admin(msg_sender().unwrap()), AccessError::NotAdmin);
+    require(is_admin(msg_sender().unwrap()), AdminError::NotAdmin);
 }
 
 // Ensures that the sender is an owner or administrator.
@@ -175,6 +175,6 @@ pub fn only_owner_or_admin() {
     let sender = msg_sender().unwrap();
     require(
         _owner() == State::Initialized(sender) || is_admin(sender),
-        AccessError::NotAdmin,
+        AdminError::NotAdmin,
     );
 }
