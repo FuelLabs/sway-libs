@@ -4,13 +4,10 @@ mod errors;
 
 use errors::AccessError;
 use ownership::{_owner, only_owner};
-use src_5::{State};
-use std::{
-    auth::msg_sender,
-    storage::storage_api::clear,
-};
-
-/// Sets a new administrator.
+use src_5::State;
+use std::{auth::msg_sender, storage::storage_api::clear,};
+/
+// Sets a new administrator.
 ///
 /// # Arguments
 ///
@@ -38,17 +35,17 @@ use std::{
 #[storage(read, write)]
 pub fn add_admin(new_admin: Identity) {
     only_owner();
-
-    let admin_value = match new_admin {
+    let admin_value
+ = match new_admin {
         Identity::Address(addr) => addr.value,
         Identity::ContractId(contr) => contr.value,
     };
     let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
-
-    admin_key.write(new_admin);
+    admin_key.
+write(new_admin);
 }
-
-/// Removes an administrator.
+/
+// Removes an administrator.
 ///
 /// # Arguments
 ///
@@ -76,19 +73,19 @@ pub fn add_admin(new_admin: Identity) {
 #[storage(read, write)]
 pub fn remove_admin(old_admin: Identity) {
     only_owner();
-
-    let admin_value = match old_admin {
+    let admin_value
+ = match old_admin {
         Identity::Address(addr) => addr.value,
         Identity::ContractId(contr) => contr.value,
-    };    
+    };
     let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
-
     // TODO: Update to use StorageKey::clear() on next release
     // https://github.com/FuelLabs/sway/pull/5284
-    let _ = clear::<Identity>(admin_key.slot, admin_key.offset);
+    let _
+ = clear::<Identity>(admin_key.slot, admin_key.offset);
 }
-
-/// Returns whether `admin` is an administrator.
+/
+// Returns whether `admin` is an administrator.
 ///
 /// # Arguments
 ///
@@ -118,14 +115,18 @@ pub fn is_admin(admin: Identity) -> bool {
         Identity::ContractId(contr) => contr.value,
     };
     let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
-
-    match admin_key.try_read() {
-        Some(identity) => { admin == identity },
-        None => { false },
+    match admin_key
+.try_read() {
+        Some(identity) => {
+            admin == identity
+        },
+        None => {
+            false
+        },
     }
 }
-
-/// Ensures that the sender is an administrator.
+/
+// Ensures that the sender is an administrator.
 ///
 /// # Additional Information
 ///
@@ -153,8 +154,8 @@ pub fn is_admin(admin: Identity) -> bool {
 pub fn only_admin() {
     require(is_admin(msg_sender().unwrap()), AccessError::NotAdmin);
 }
-
-/// Ensures that the sender is an owner or administrator.
+/
+// Ensures that the sender is an owner or administrator.
 ///
 /// # Reverts
 ///
@@ -177,5 +178,8 @@ pub fn only_admin() {
 #[storage(read)]
 pub fn only_owner_or_admin() {
     let sender = msg_sender().unwrap();
-    require(_owner() == State::Initialized(sender) || is_admin(sender), AccessError::NotAdmin);
+    require(
+        _owner() == State::Initialized(sender) || is_admin(sender),
+        AccessError::NotAdmin,
+    );
 }
