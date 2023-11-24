@@ -1,0 +1,86 @@
+<p align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset=".docs/admin-logo-dark-theme.png">
+        <img alt="SwayApps logo" width="400px" src=".docs/admin-logo-light-theme.png">
+    </picture>
+</p>
+
+# Overview
+
+The Admin library provides a way to block users without an "adimistrative status" from calling functions within a contract. Admin is often used when needing administrative calls on a contract that involve multiple users.
+
+This library extends the [Ownership Library](../ownership/). The Ownership library must be imported and used to enable the Admin library. Only the Owner may add and remove administrative users. 
+
+For more information please see the [specification](./SPECIFICATION.md).
+
+# Using the Library
+
+## Getting Started
+
+In order to use the Admin library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+
+You may import the Admin library's functionalities like so:
+
+```sway
+use admin::*;
+```
+
+Once imported, the Admin library's functions will be available. To use them, the Ownership library's Owner must add a user as an admin with the `add_admin()` function. There is no limit to the number of admins a contract may have.
+
+```sway
+#[storage(read, write)]
+fn add_a_admin(new_admin: Identity) {
+    // Can only be called by the Ownership Library's Owner
+    add_admin(new_admin);
+}
+```
+
+## Basic Functionality
+
+To restrict a function to only an admin, call the `only_admin()` function.
+
+```sway
+only_admin();
+// Only an admin may reach this line.
+```
+
+> **NOTE:** Admins and the Owner are independent of one another. `only_admin()` will revert if called by the contract's Owner.
+
+To restrict a function to only an admin or the owner, call the `only_owner_or_admin()` function.
+
+```sway
+only_owner_or_admin();
+// Only an admin may reach this line.
+```
+
+To check the administrative privledges of a user, call the `is_admin()` function.
+
+```sway
+#[storage(read)]
+fn check_if_admin(admin: Identity) {
+    let status = is_admin(admin);
+    assert(status);
+}
+```
+
+## Integrating the Admin Library into the Ownership Library
+
+To implement the Ownership library with the Admin library, be sure to add set a contract owner for your contract. The following demonstrates the integration of the Ownership library with the Admin library.
+
+```sway
+use ownership::initialize_ownership;
+use admin::add_admin;
+
+#[storage(read, write)]
+fn my_constructor(new_owner: Identity) {
+    initialize_ownership(new_owner);
+}
+
+#[storage(read, write)]
+fn add_a_admin(new_admin: Identity) {
+    // Can only be called by Owner set in the constructor.
+    add_admin(new_admin);
+}
+```
+
+For more information please see the [specification](./SPECIFICATION.md).
