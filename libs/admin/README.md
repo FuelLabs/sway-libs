@@ -7,7 +7,7 @@
 
 # Overview
 
-The Admin library provides a way to block users without an "adimistrative status" from calling functions within a contract. Admin is often used when needing administrative calls on a contract that involve multiple users.
+The Admin library provides a way to block users without an "adimistrative status" from calling functions within a contract. Admin is often used when needing administrative calls on a contract that involve multiple users or a whitelist.
 
 This library extends the [Ownership Library](../ownership/). The Ownership library must be imported and used to enable the Admin library. Only the contract's owner may add and remove administrative users. 
 
