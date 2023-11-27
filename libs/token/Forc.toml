@@ -5,4 +5,5 @@ license = "Apache-2.0"
 name = "token"
 
 [dependencies]
+std = { git = "https://github.com/fuellabs/sway", branch = "feat/transaction-policies" }
 src_7 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.2.0" }
