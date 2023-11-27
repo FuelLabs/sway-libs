@@ -135,7 +135,7 @@ pub mod test_helpers {
 
         let admin2 = Metadata {
             contract: AdminLib::new(id.clone(), wallet4.clone()),
-            wallet: wallet3.clone(),
+            wallet: wallet4.clone(),
         };
 
         (deploy_wallet, owner, admin1, admin2)

@@ -11,7 +11,7 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 ///
 /// # Arguments
 ///
-/// * `new_admin`: [Identity] = The `Identity` which is to recieve administrator status.
+/// * `new_admin`: [Identity] - The `Identity` which is to recieve administrator status.
 ///
 /// # Reverts
 ///
@@ -47,7 +47,7 @@ pub fn add_admin(new_admin: Identity) {
 ///
 /// # Arguments
 ///
-/// * `old_admin`: [Identity] = The `Identity` which the administrator status is to be removed.
+/// * `old_admin`: [Identity] - The `Identity` which the administrator status is to be removed.
 ///
 /// # Reverts
 ///
@@ -85,7 +85,7 @@ pub fn revoke_admin(old_admin: Identity) {
 ///
 /// # Arguments
 ///
-/// * `admin`: [Identity] = The `Identity` of which to check the administrator status.
+/// * `admin`: [Identity] - The `Identity` of which to check the administrator status.
 ///
 /// # Returns
 ///

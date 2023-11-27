@@ -9,7 +9,7 @@
 
 The Admin library provides a way to block users without an "adimistrative status" from calling functions within a contract. Admin is often used when needing administrative calls on a contract that involve multiple users.
 
-This library extends the [Ownership Library](../ownership/). The Ownership library must be imported and used to enable the Admin library. Only the Owner may add and remove administrative users. 
+This library extends the [Ownership Library](../ownership/). The Ownership library must be imported and used to enable the Admin library. Only the contract's owner may add and remove administrative users. 
 
 For more information please see the [specification](./SPECIFICATION.md).
 
@@ -25,7 +25,7 @@ You may import the Admin library's functionalities like so:
 use admin::*;
 ```
 
-Once imported, the Admin library's functions will be available. To use them, the Ownership library's Owner must add a user as an admin with the `add_admin()` function. There is no limit to the number of admins a contract may have.
+Once imported, the Admin library's functions will be available. To use them, the contract's owner must add a user as an admin with the `add_admin()` function. There is no limit to the number of admins a contract may have.
 
 ```sway
 #[storage(read, write)]
@@ -44,9 +44,9 @@ only_admin();
 // Only an admin may reach this line.
 ```
 
-> **NOTE:** Admins and the Owner are independent of one another. `only_admin()` will revert if called by the contract's Owner.
+> **NOTE:** Admins and the contract's owner are independent of one another. `only_admin()` will revert if called by the contract's owner.
 
-To restrict a function to only an admin or the owner, call the `only_owner_or_admin()` function.
+To restrict a function to only an admin or the contract's owner, call the `only_owner_or_admin()` function.
 
 ```sway
 only_owner_or_admin();
@@ -65,7 +65,7 @@ fn check_if_admin(admin: Identity) {
 
 ## Integrating the Admin Library into the Ownership Library
 
-To implement the Ownership library with the Admin library, be sure to add set a contract owner for your contract. The following demonstrates the integration of the Ownership library with the Admin library.
+To implement the Ownership library with the Admin library, be sure to set a contract owner for your contract. The following demonstrates the integration of the Ownership library with the Admin library.
 
 ```sway
 use ownership::initialize_ownership;
@@ -78,7 +78,7 @@ fn my_constructor(new_owner: Identity) {
 
 #[storage(read, write)]
 fn add_a_admin(new_admin: Identity) {
-    // Can only be called by Owner set in the constructor.
+    // Can only be called by contract's owner set in the constructor above.
     add_admin(new_admin);
 }
 ```
