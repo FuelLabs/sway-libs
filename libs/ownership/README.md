@@ -7,7 +7,7 @@
 
 # Overview
 
-The Ownership library provides a way to block users other than a single "owner" from calling functions. Ownership is often used when needing administrative calls on a contract.
+The Ownership library provides a way to block users other than a **single** "owner" from calling functions. Ownership is often used when needing administrative calls on a contract.
 
 For more information please see the [specification](./SPECIFICATION.md).
 

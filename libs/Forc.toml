@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "admin",
   "fixed_point",
   "merkle_proof",
   "ownership",

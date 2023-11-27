@@ -37,7 +37,8 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 #### Access Control and Security
 
-- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a single user may call them.
+- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a **single** user may call them.
+- [Admin](./libs/admin/) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
 - [Pausable](./libs/pausable/) allows contracts to implement an emergency stop mechanism.
 - [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
 
