@@ -138,10 +138,10 @@ impl<T> Queue<T> {
     ///     let mut queue = Queue::new::<u64>();
     ///     queue.enqueue(5);
     ///     let element = queue.peek().unwrap();
-    //      assert(element == 5);
     ///     assert(queue.len() == 1);
     /// }
     /// ```
+    //      assert(element == 5);
     pub fn peek(self) -> Option<T> {
         self.vec.get(0)
     }

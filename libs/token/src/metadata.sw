@@ -225,7 +225,7 @@ impl Metadata {
     /// ```
     pub fn is_string(self) -> bool {
         match self {
-            Self::String(data) => true,
+            Self::String(_) => true,
             _ => false,
         }
     }
@@ -280,7 +280,7 @@ impl Metadata {
     /// ```
     pub fn is_u64(self) -> bool {
         match self {
-            Self::Int(data) => true,
+            Self::Int(_) => true,
             _ => false,
         }
     }
@@ -335,7 +335,7 @@ impl Metadata {
     /// ```
     pub fn is_bytes(self) -> bool {
         match self {
-            Self::Bytes(data) => true,
+            Self::Bytes(_) => true,
             _ => false,
         }
     }
@@ -390,7 +390,7 @@ impl Metadata {
     /// ```
     pub fn is_b256(self) -> bool {
         match self {
-            Self::B256(data) => true,
+            Self::B256(_) => true,
             _ => false,
         }
     }

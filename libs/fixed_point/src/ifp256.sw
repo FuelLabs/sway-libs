@@ -430,7 +430,6 @@ impl IFP256 {
 
 impl IFP256 {
     /// Returns the nearest integer to `self`. Round half-way cases away from zero.
-    //
     /// # Returns
     ///
     /// * [IFP256] - The newly created `IFP256` type.
@@ -446,6 +445,7 @@ impl IFP256 {
     ///     assert(round.underlying == UFP128::from(128).round().underlying);
     /// }
     /// ```
+    //
     pub fn round(self) -> Self {
         let mut underlying = self.underlying;
         let mut non_negative = self.non_negative;
