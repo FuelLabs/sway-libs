@@ -13,7 +13,7 @@ mod success {
     async fn runs_ufp32_div_test_script() {
         let path_to_bin = "src/fixed_point/ufp32_div_test/out/debug/ufp32_div_test.bin";
 
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = TestUfp32Div::new(wallet, path_to_bin);
 

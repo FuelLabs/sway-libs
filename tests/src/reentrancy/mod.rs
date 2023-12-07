@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, StorageConfiguration,
-        TxParameters, WalletUnlocked,
+        TxPolicies, WalletUnlocked,
     },
     types::ContractId,
 };
@@ -25,13 +25,14 @@ const REENTRANCY_TARGET_STORAGE: &str = "src/reentrancy/reentrancy_target_contra
 pub async fn get_attacker_instance(
     wallet: WalletUnlocked,
 ) -> (AttackerContract<WalletUnlocked>, ContractId) {
-    let storage_configuration = StorageConfiguration::load_from(REENTRANCY_ATTACKER_STORAGE);
+    let storage_configuration =
+        StorageConfiguration::default().add_slot_overrides_from_file(REENTRANCY_ATTACKER_STORAGE);
     let id = Contract::load_from(
         REENTRANCY_ATTACKER_BIN,
-        LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
+        LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap()),
     )
     .unwrap()
-    .deploy(&wallet, TxParameters::default())
+    .deploy(&wallet, TxPolicies::default())
     .await
     .unwrap();
 
@@ -43,13 +44,14 @@ pub async fn get_attacker_instance(
 pub async fn get_target_instance(
     wallet: WalletUnlocked,
 ) -> (TargetContract<WalletUnlocked>, ContractId) {
-    let storage_configuration = StorageConfiguration::load_from(REENTRANCY_TARGET_STORAGE);
+    let storage_configuration =
+        StorageConfiguration::default().add_slot_overrides_from_file(REENTRANCY_TARGET_STORAGE);
     let id = Contract::load_from(
         REENTRANCY_TARGET_BIN,
-        LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
+        LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap()),
     )
     .unwrap()
-    .deploy(&wallet, TxParameters::default())
+    .deploy(&wallet, TxPolicies::default())
     .await
     .unwrap();
 
@@ -63,7 +65,7 @@ pub async fn get_attack_helper_id(
 ) -> (AttackHelperContract<WalletUnlocked>, ContractId) {
     let id = Contract::load_from(REENTRANCY_ATTACK_HELPER_BIN, LoadConfiguration::default())
         .unwrap()
-        .deploy(&wallet, TxParameters::default())
+        .deploy(&wallet, TxPolicies::default())
         .await
         .unwrap();
 
@@ -77,14 +79,14 @@ mod success {
 
     #[tokio::test]
     async fn can_detect_reentrancy() {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet).await;
 
         let result = attacker_instance
             .methods()
             .launch_attack(target_id)
-            .set_contracts(&[&instance])
+            .with_contracts(&[&instance])
             .call()
             .await
             .unwrap();
@@ -94,14 +96,14 @@ mod success {
 
     #[tokio::test]
     async fn can_call_guarded_function() {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet).await;
 
         attacker_instance
             .methods()
             .innocent_call(target_id)
-            .set_contracts(&[&instance])
+            .with_contracts(&[&instance])
             .call()
             .await
             .unwrap();
@@ -114,14 +116,14 @@ mod revert {
     #[tokio::test]
     #[should_panic(expected = "NonReentrant")]
     async fn can_block_reentrancy() {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet).await;
 
         attacker_instance
             .methods()
             .launch_thwarted_attack_1(target_id)
-            .set_contracts(&[&instance])
+            .with_contracts(&[&instance])
             .call()
             .await
             .unwrap();
@@ -130,14 +132,14 @@ mod revert {
     #[tokio::test]
     #[should_panic(expected = "NonReentrant")]
     async fn can_block_cross_function_reentrancy() {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet).await;
 
         attacker_instance
             .methods()
             .launch_thwarted_attack_2(target_id)
-            .set_contracts(&[&instance])
+            .with_contracts(&[&instance])
             .call()
             .await
             .unwrap();
@@ -146,7 +148,7 @@ mod revert {
     #[tokio::test]
     #[should_panic(expected = "NonReentrant")]
     async fn can_block_cross_contract_reentrancy() {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
         let (helper_instance, helper_id) = get_attack_helper_id(wallet.clone()).await;
         let (target_instance, target_id) = get_target_instance(wallet).await;
@@ -154,7 +156,7 @@ mod revert {
         attacker_instance
             .methods()
             .launch_thwarted_attack_3(target_id, helper_id)
-            .set_contracts(&[&target_instance, &helper_instance])
+            .with_contracts(&[&target_instance, &helper_instance])
             .call()
             .await
             .unwrap();

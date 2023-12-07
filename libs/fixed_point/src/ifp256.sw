@@ -430,7 +430,7 @@ impl IFP256 {
 
 impl IFP256 {
     /// Returns the nearest integer to `self`. Round half-way cases away from zero.
-    //
+    ///
     /// # Returns
     ///
     /// * [IFP256] - The newly created `IFP256` type.

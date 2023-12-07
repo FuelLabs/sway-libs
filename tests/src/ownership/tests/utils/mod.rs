@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
-        StorageConfiguration, TxParameters, WalletUnlocked, WalletsConfig,
+        StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
     },
     programs::call_response::FuelCallResponse,
     types::Identity,
@@ -79,24 +79,24 @@ pub mod test_helpers {
             None,
             None,
         )
-        .await;
+        .await
+        .unwrap();
 
         // Get the wallets from that provider
         let wallet1 = wallets.pop().unwrap();
         let wallet2 = wallets.pop().unwrap();
         let wallet3 = wallets.pop().unwrap();
 
-        let storage_configuration = StorageConfiguration::load_from(
+        let storage_configuration = StorageConfiguration::default().add_slot_overrides_from_file(
             "src/ownership/out/debug/ownership_test-storage_slots.json",
         );
-        let id = Contract::load_from(
-            "src/ownership/out/debug/ownership_test.bin",
-            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
-        )
-        .unwrap()
-        .deploy(&wallet1, TxParameters::default())
-        .await
-        .unwrap();
+        let configuration =
+            LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap());
+        let id = Contract::load_from("src/ownership/out/debug/ownership_test.bin", configuration)
+            .unwrap()
+            .deploy(&wallet1, TxPolicies::default())
+            .await
+            .unwrap();
 
         let deploy_wallet = Metadata {
             contract: OwnershipLib::new(id.clone(), wallet1.clone()),

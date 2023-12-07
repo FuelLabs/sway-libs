@@ -13,7 +13,7 @@ mod success {
     async fn runs_ifp64_mul_test_script() {
         let path_to_bin = "src/fixed_point/ifp64_mul_test/out/debug/ifp64_mul_test.bin";
 
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = TestIfp64Mul::new(wallet, path_to_bin);
 

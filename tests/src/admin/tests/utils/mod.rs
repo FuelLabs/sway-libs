@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
-        StorageConfiguration, TxParameters, WalletUnlocked, WalletsConfig,
+        StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
     },
     programs::call_response::FuelCallResponse,
     types::Identity,
@@ -69,10 +69,6 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn only_owner(contract: &AdminLib<WalletUnlocked>) -> FuelCallResponse<()> {
-        contract.methods().only_owner().call().await.unwrap()
-    }
-
     pub async fn set_ownership(
         contract: &AdminLib<WalletUnlocked>,
         new_owner: Identity,
@@ -99,7 +95,8 @@ pub mod test_helpers {
             None,
             None,
         )
-        .await;
+        .await
+        .unwrap();
 
         // Get the wallets from that provider
         let wallet1 = wallets.pop().unwrap();
@@ -107,16 +104,15 @@ pub mod test_helpers {
         let wallet3 = wallets.pop().unwrap();
         let wallet4 = wallets.pop().unwrap();
 
-        let storage_configuration =
-            StorageConfiguration::load_from("src/admin/out/debug/admin_test-storage_slots.json");
-        let id = Contract::load_from(
-            "src/admin/out/debug/admin_test.bin",
-            LoadConfiguration::default().set_storage_configuration(storage_configuration.unwrap()),
-        )
-        .unwrap()
-        .deploy(&wallet1, TxParameters::default())
-        .await
-        .unwrap();
+        let storage_configuration = StorageConfiguration::default()
+            .add_slot_overrides_from_file("src/admin/out/debug/admin_test-storage_slots.json");
+        let configuration =
+            LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap());
+        let id = Contract::load_from("src/admin/out/debug/admin_test.bin", configuration)
+            .unwrap()
+            .deploy(&wallet1, TxPolicies::default())
+            .await
+            .unwrap();
 
         let deploy_wallet = Metadata {
             contract: AdminLib::new(id.clone(), wallet1.clone()),

@@ -13,7 +13,7 @@ mod success {
     async fn runs_ifp128_test_script() {
         let path_to_bin = "src/fixed_point/ifp128_test/out/debug/ifp128_test.bin";
 
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = TestIfp128::new(wallet, path_to_bin);
 

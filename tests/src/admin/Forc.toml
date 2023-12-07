@@ -7,4 +7,4 @@ name = "admin_test"
 [dependencies]
 admin = { path = "../../../libs/admin" }
 ownership = { path = "../../../libs/ownership" }
-src_5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.2.0" }
+src_5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.2.2" }

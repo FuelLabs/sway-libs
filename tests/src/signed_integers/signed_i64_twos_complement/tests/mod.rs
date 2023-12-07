@@ -13,7 +13,7 @@ mod success {
     async fn runs_i64_twos_complement_test_script() {
         let path_to_bin =
             "src/signed_integers/signed_i64_twos_complement/out/debug/i64_twos_complement_test.bin";
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = Testi64TwosComplement::new(wallet, path_to_bin);
 
