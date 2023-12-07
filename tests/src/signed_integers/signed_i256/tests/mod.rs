@@ -12,7 +12,7 @@ mod success {
     #[tokio::test]
     async fn runs_i256_test_script() {
         let path_to_bin = "src/signed_integers/signed_i256/out/debug/i256_test.bin";
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = Testi256::new(wallet, path_to_bin);
 

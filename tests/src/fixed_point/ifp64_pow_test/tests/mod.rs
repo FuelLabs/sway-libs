@@ -12,7 +12,7 @@ mod success {
     #[tokio::test]
     async fn runs_ifp64_pow_test_script() {
         let path_to_bin = "src/fixed_point/ifp64_pow_test/out/debug/ifp64_pow_test.bin";
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let instance = TestIfp64Pow::new(wallet, path_to_bin);
 

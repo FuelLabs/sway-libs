@@ -4,7 +4,7 @@ use fuel_merkle::{
 };
 use fuels::{
     prelude::{
-        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxParameters,
+        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies,
         WalletUnlocked,
     },
     types::Bits256,
@@ -243,14 +243,14 @@ pub mod test_helpers {
     }
 
     pub async fn merkle_proof_instance() -> TestMerkleProofLib<WalletUnlocked> {
-        let wallet = launch_provider_and_get_wallet().await;
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let contract_id = Contract::load_from(
             "./src/merkle_proof/out/debug/merkle_proof_test.bin",
             LoadConfiguration::default(),
         )
         .unwrap()
-        .deploy(&wallet, TxParameters::default())
+        .deploy(&wallet, TxPolicies::default())
         .await
         .unwrap();
 

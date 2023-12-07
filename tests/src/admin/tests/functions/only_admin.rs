@@ -40,7 +40,6 @@ mod reverts {
 
         let owner_identity = Identity::Address(owner.wallet.address().into());
         let admin1_identity = Identity::Address(admin1.wallet.address().into());
-        let admin2_identity = Identity::Address(admin2.wallet.address().into());
         set_ownership(&owner.contract, owner_identity.clone()).await;
         add_admin(&owner.contract, admin1_identity.clone()).await;
 
