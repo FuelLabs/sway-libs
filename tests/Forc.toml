@@ -25,6 +25,7 @@ members = [
   "./src/fixed_point/ifp256_div_test",
   "./src/fixed_point/ifp256_test",
   "./src/merkle_proof",
+  "./src/native_asset",
   "./src/pausable",
   "./src/ownership",
   "./src/reentrancy/reentrancy_attacker_abi",
@@ -43,5 +44,4 @@ members = [
   "./src/signed_integers/signed_i16_twos_complement",
   "./src/signed_integers/signed_i32_twos_complement",
   "./src/signed_integers/signed_i64_twos_complement",
-  "./src/token",
 ]

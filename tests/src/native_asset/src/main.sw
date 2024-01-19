@@ -3,7 +3,7 @@ contract;
 use src_20::SRC20;
 use src_3::SRC3;
 use src_7::{Metadata, SRC7};
-use token::{
+use asset::{
     base::{
         _decimals,
         _name,
@@ -13,7 +13,7 @@ use token::{
         _symbol,
         _total_assets,
         _total_supply,
-        SetTokenAttributes,
+        SetAssetAttributes,
     },
     metadata::*,
     mint::{
@@ -86,7 +86,7 @@ impl SRC7 for Contract {
     }
 }
 
-impl SetTokenAttributes for Contract {
+impl SetAssetAttributes for Contract {
     #[storage(write)]
     fn set_name(asset: AssetId, name: String) {
         _set_name(storage.name, asset, name);
@@ -103,7 +103,7 @@ impl SetTokenAttributes for Contract {
     }
 }
 
-impl SetTokenMetadata for Contract {
+impl SetAssetMetadata for Contract {
     #[storage(read, write)]
     fn set_metadata(asset: AssetId, key: String, metadata: Metadata) {
         _set_metadata(storage.metadata, asset, key, metadata);
@@ -155,12 +155,12 @@ fn test_name() {
     use std::constants::ZERO_B256;
 
     let src20_abi = abi(SRC20, CONTRACT_ID);
-    let attributes_abi = abi(SetTokenAttributes, CONTRACT_ID);
+    let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = ZERO_B256;
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
-    let name = String::from_ascii_str("Fuel Token");
+    let name = String::from_ascii_str("Fuel Asset");
 
     assert(src20_abi.name(asset_id).is_none());
 
@@ -179,7 +179,7 @@ fn test_symbol() {
     use std::constants::ZERO_B256;
 
     let src20_abi = abi(SRC20, CONTRACT_ID);
-    let attributes_abi = abi(SetTokenAttributes, CONTRACT_ID);
+    let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = ZERO_B256;
@@ -203,7 +203,7 @@ fn test_decimals() {
     use std::constants::ZERO_B256;
 
     let src20_abi = abi(SRC20, CONTRACT_ID);
-    let attributes_abi = abi(SetTokenAttributes, CONTRACT_ID);
+    let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
     let sub_id = ZERO_B256;
@@ -325,7 +325,7 @@ fn test_set_metadata_b256() {
     let metadata = Metadata::B256(data_b256);
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
     let src7_abi = abi(SRC7, CONTRACT_ID);
-    let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
+    let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
     set_metadata_abi.set_metadata(asset_id, key, metadata);
@@ -343,7 +343,7 @@ fn test_set_metadata_u64() {
     let metadata = Metadata::Int(data_int);
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
     let src7_abi = abi(SRC7, CONTRACT_ID);
-    let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
+    let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
     set_metadata_abi.set_metadata(asset_id, key, metadata);
@@ -361,7 +361,7 @@ fn test_set_metadata_string() {
     let metadata = Metadata::String(data_string);
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
     let src7_abi = abi(SRC7, CONTRACT_ID);
-    let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
+    let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
     set_metadata_abi.set_metadata(asset_id, key, metadata);
@@ -379,7 +379,7 @@ fn test_set_metadata_bytes() {
     let metadata = Metadata::Bytes(data_bytes);
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
     let src7_abi = abi(SRC7, CONTRACT_ID);
-    let set_metadata_abi = abi(SetTokenMetadata, CONTRACT_ID);
+    let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
     set_metadata_abi.set_metadata(asset_id, key, metadata);
