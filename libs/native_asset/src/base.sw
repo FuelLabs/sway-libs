@@ -19,7 +19,7 @@ use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
 /// # Examples
 ///
 /// ```sway
-/// use token::_total_assets;
+/// use asset::_total_assets;
 ///
 /// storage {
 ///     total_assets: u64 = 0,
@@ -35,7 +35,7 @@ pub fn _total_assets(total_assets_key: StorageKey<u64>) -> u64 {
     total_assets_key.try_read().unwrap_or(0)
 }
 
-/// Returns the total supply of tokens for an asset.
+/// Returns the total supply of coins for an asset.
 ///
 /// # Arguments
 ///
@@ -53,7 +53,7 @@ pub fn _total_assets(total_assets_key: StorageKey<u64>) -> u64 {
 /// # Examples
 ///
 /// ```sway
-/// use token::_total_supply;
+/// use asset::_total_supply;
 ///
 /// storage {
 ///     total_supply: StorageMap<AssetId, u64> = StorageMap {},
@@ -90,7 +90,7 @@ pub fn _total_supply(
 /// # Examples
 ///
 /// ```sway
-/// use token::_name;
+/// use asset::_name;
 /// use std::string::String;
 ///
 /// storage {
@@ -127,7 +127,7 @@ pub fn _name(
 /// # Examples
 ///
 /// ```sway
-/// use token::_symbol;
+/// use asset::_symbol;
 /// use std::string::String;
 ///
 /// storage {
@@ -150,7 +150,7 @@ pub fn _symbol(
 ///
 /// # Additional Information
 ///
-/// e.g. 8, means to divide the token amount by 100000000 to get its user representation.
+/// e.g. 8, means to divide the coins amount by 100000000 to get its user representation.
 ///
 /// # Arguments
 ///
@@ -168,7 +168,7 @@ pub fn _symbol(
 /// # Examples
 ///
 /// ```sway
-/// use token::_decimals;
+/// use asset::_decimals;
 ///
 /// storage {
 ///     decimals: StorageMap<AssetId, u8> = StorageMap {},
@@ -205,7 +205,7 @@ pub fn _decimals(
 /// # Examples
 ///
 /// ```sway
-/// use token::{_set_name, _name};
+/// use asset::{_set_name, _name};
 /// use std::string::String;
 ///
 /// storage {
@@ -246,7 +246,7 @@ pub fn _set_name(
 /// # Examples
 ///
 /// ```sway
-/// use token::{_set_symbol, _symbol};
+/// use asset::{_set_symbol, _symbol};
 /// use std::string::String;
 ///
 /// storage {
@@ -287,7 +287,7 @@ pub fn _set_symbol(
 /// # Examples
 ///
 /// ```sway
-/// use token::{_set_decimals, _decimals};
+/// use asset::{_set_decimals, _decimals};
 /// use std::string::String;
 ///
 /// storage {
@@ -308,7 +308,7 @@ pub fn _set_decimals(
 ) {
     decimals_key.insert(asset, decimals);
 }
-abi SetTokenAttributes {
+abi SetAssetAttributes {
     #[storage(write)]
     fn set_name(asset: AssetId, name: String);
     #[storage(write)]

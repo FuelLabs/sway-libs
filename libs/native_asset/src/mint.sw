@@ -20,15 +20,15 @@ use std::{
     },
 };
 
-/// Unconditionally mints new tokens using the `sub_id` sub-identifier.
+/// Unconditionally mints new assets using the `sub_id` sub-identifier.
 ///
 /// # Arguments
 ///
 /// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
 /// * `total_supply_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
-/// * `recipient`: [Identity] - The user to which the newly minted tokens are transferred to.
-/// * `sub_id`: [SubId] - The sub-identifier of the newly minted token.
-/// * `amount`: [u64] - The quantity of tokens to mint.
+/// * `recipient`: [Identity] - The user to which the newly minted asset is transferred to.
+/// * `sub_id`: [SubId] - The sub-identifier of the newly minted asset.
+/// * `amount`: [u64] - The quantity of coins to mint.
 ///
 /// # Returns
 ///
@@ -42,7 +42,7 @@ use std::{
 /// # Examples
 ///
 /// ```sway
-/// use token::_mint;
+/// use asset::mint::_mint;
 /// use std::{constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
@@ -76,21 +76,21 @@ pub fn _mint(
     asset_id
 }
 
-/// Burns tokens with the given `sub_id`.
+/// Burns assets with the given `sub_id`.
 ///
 /// # Additional Information
 ///
-/// **Warning** This function burns tokens unequivocally. It does not check that tokens are sent to the calling contract.
+/// **Warning** This function burns assets unequivocally. It does not check that assets are sent to the calling contract.
 ///
 /// # Arguments
 ///
 /// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
-/// * `sub_id`: [SubId] - The sub-identifier of the token to burn.
-/// * `amount`: [u64] - The quantity of tokens to burn.
+/// * `sub_id`: [SubId] - The sub-identifier of the asset to burn.
+/// * `amount`: [u64] - The quantity of coins to burn.
 ///
 /// # Reverts
 ///
-/// * When the calling contract does not have enough tokens.
+/// * When the calling contract does not have enough assets.
 ///
 /// # Number of Storage Accesses
 ///
@@ -100,7 +100,7 @@ pub fn _mint(
 /// # Examples
 ///
 /// ```sway
-/// use token::_burn;
+/// use asset::mint::_burn;
 /// use std::{call_frames::contract_id, constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
@@ -120,7 +120,7 @@ pub fn _burn(
     amount: u64,
 ) {
     let asset_id = AssetId::new(contract_id(), sub_id);
-    require(this_balance(asset_id) >= amount, BurnError::NotEnoughTokens);
+    require(this_balance(asset_id) >= amount, BurnError::NotEnoughCoins);
     // If we pass the check above, we can assume it is safe to unwrap.
     let supply = _total_supply(total_supply_key, asset_id).unwrap();
     total_supply_key.insert(asset_id, supply - amount);

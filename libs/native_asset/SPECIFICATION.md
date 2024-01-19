@@ -1,12 +1,12 @@
 # Overview
 
-This document provides an overview of the Token library.
+This document provides an overview of the Native Asset Library.
 
 It outlines the use cases, i.e. specification, and describes how to implement the library.
 
 ## Use Cases
 
-The Token library can be used anytime a contract needs a basic implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3) standards.
+The Native Asset Library can be used anytime a contract needs a basic implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_20) and [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3) standards.
 
 ## Public Functions
 
@@ -18,7 +18,7 @@ This function will return the total number of individual assets for a contract.
 
 #### `_total_supply()`
 
-This function will return the total supply of tokens for an asset.
+This function will return the total supply of coins for an asset.
 
 #### `_name()`
 
@@ -48,11 +48,11 @@ This function will unconditionally set the decimals of an asset.
 
 #### `_mint()`
 
-This function will unconditionally mint new tokens using a sub-identifier.
+This function will unconditionally mint new assets using a sub-identifier.
 
 #### `_burn()`
 
-This function will burns tokens with the given sub-identifier.
+This function will burns assets with the given sub-identifier.
 
 ### SRC-7
 
