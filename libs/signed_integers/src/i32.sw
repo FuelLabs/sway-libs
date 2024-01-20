@@ -304,28 +304,28 @@ impl core::ops::Divide for I32 {
         {
             res = Self::from_uint(
                 (self.underlying - Self::indent()) / (divisor
-                    .underlying - Self::indent()) + Self::indent(),
+                        .underlying - Self::indent()) + Self::indent(),
             );
         } else if self.underlying < Self::indent()
             && divisor.underlying < Self::indent()
         {
             res = Self::from_uint(
                 (Self::indent() - self.underlying) / (Self::indent() - divisor
-                    .underlying) + Self::indent(),
+                        .underlying) + Self::indent(),
             );
         } else if self.underlying >= Self::indent()
             && divisor.underlying < Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (self.underlying - Self::indent()) / (Self::indent() - divisor
-                    .underlying),
+                        .underlying),
             );
         } else if self.underlying < Self::indent()
             && divisor.underlying > Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (Self::indent() - self.underlying) / (divisor
-                    .underlying - Self::indent()),
+                        .underlying - Self::indent()),
             );
         }
         res

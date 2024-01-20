@@ -3,6 +3,10 @@ library;
 use ::errors::BurnError;
 use ::base::{_total_assets, _total_supply};
 use std::{
+    asset::{
+        burn,
+        mint_to,
+    },
     call_frames::{
         contract_id,
         msg_asset_id,
@@ -14,10 +18,6 @@ use std::{
     },
     storage::storage_string::*,
     string::String,
-    token::{
-        burn,
-        mint_to,
-    },
 };
 
 /// Unconditionally mints new tokens using the `sub_id` sub-identifier.
