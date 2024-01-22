@@ -141,7 +141,10 @@ impl IFP256 {
 
 impl core::ops::Eq for IFP256 {
     fn eq(self, other: Self) -> bool {
-        self.underlying == other.underlying && (self.underlying == Self::zero().underlying || self.non_negative == other.non_negative)
+        self.underlying == other.underlying
+            && (self.underlying == Self::zero()
+                    .underlying
+                || self.non_negative == other.non_negative)
     }
 }
 

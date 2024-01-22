@@ -180,7 +180,9 @@ impl core::ops::Multiply for UFP32 {
         }
 
         Self {
-            value: asm(ptr: res_u64) { ptr: u32 },
+            value: asm(ptr: res_u64) {
+                ptr: u32
+            },
         }
     }
 }
@@ -207,7 +209,9 @@ impl core::ops::Divide for UFP32 {
             revert(0);
         }
         Self {
-            value: asm(ptr: res_u64) { ptr: u32 },
+            value: asm(ptr: res_u64) {
+                ptr: u32
+            },
         }
     }
 }

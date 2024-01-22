@@ -8,11 +8,9 @@ fn main() -> bool {
     assert(res == I64::from(2u64));
 
     res = I64::from(10u64) - I64::from(11u64);
-    assert(
-        res == I64 {
-            underlying: 9223372036854775807u64,
-        },
-    );
+    assert(res == I64 {
+        underlying: 9223372036854775807u64,
+    });
     res = I64::from(10u64) * I64::neg_from(1);
     assert(res == I64::neg_from(10));
 

@@ -11,39 +11,19 @@ fn main() -> bool {
     assert(res.twos_complement() == I64::from(10));
 
     res = I64::neg_from(5);
-    assert(
-        res
-            .twos_complement()
-            .underlying + res.underlying == u64::max() + 1,
-    );
+    assert(res.twos_complement().underlying + res.underlying == u64::max() + 1);
 
     res = I64::neg_from(27);
-    assert(
-        res
-            .twos_complement()
-            .underlying + res.underlying == u64::max() + 1,
-    );
+    assert(res.twos_complement().underlying + res.underlying == u64::max() + 1);
 
     res = I64::neg_from(110);
-    assert(
-        res
-            .twos_complement()
-            .underlying + res.underlying == u64::max() + 1,
-    );
+    assert(res.twos_complement().underlying + res.underlying == u64::max() + 1);
 
     res = I64::neg_from(93);
-    assert(
-        res
-            .twos_complement()
-            .underlying + res.underlying == u64::max() + 1,
-    );
+    assert(res.twos_complement().underlying + res.underlying == u64::max() + 1);
 
     res = I64::neg_from(78);
-    assert(
-        res
-            .twos_complement()
-            .underlying + res.underlying == u64::max() + 1,
-    );
+    assert(res.twos_complement().underlying + res.underlying == u64::max() + 1);
 
     true
 }
