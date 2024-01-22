@@ -165,13 +165,7 @@ fn test_name() {
     assert(src20_abi.name(asset_id).is_none());
 
     attributes_abi.set_name(asset_id, name);
-    assert(
-        src20_abi
-            .name(asset_id)
-            .unwrap()
-            .as_bytes() == name
-            .as_bytes(),
-    );
+    assert(src20_abi.name(asset_id).unwrap().as_bytes() == name.as_bytes());
 }
 
 #[test]
@@ -189,13 +183,7 @@ fn test_symbol() {
     assert(src20_abi.symbol(asset_id).is_none());
 
     attributes_abi.set_symbol(asset_id, symbol);
-    assert(
-        src20_abi
-            .symbol(asset_id)
-            .unwrap()
-            .as_bytes() == symbol
-            .as_bytes(),
-    );
+    assert(src20_abi.symbol(asset_id).unwrap().as_bytes() == symbol.as_bytes());
 }
 
 #[test]

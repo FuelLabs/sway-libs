@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.47.0" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.47.0-orange" />
+    <a href="https://crates.io/crates/forc/0.49.1" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.49.1-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -104,7 +104,7 @@ forc test && cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.48.1`, `fuels-rs v0.53.0` and `fuel-core 0.20.8`.
+> All projects currently use `forc v0.49.1`, `fuels-rs v0.53.0` and `fuel-core 0.22.0`.
 
 ## Contributing
 

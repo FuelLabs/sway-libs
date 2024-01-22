@@ -44,11 +44,7 @@ impl Attacker for Contract {
     }
 
     fn evil_callback_1() {
-        assert(
-            abi(Attacker, contract_id()
-                .value)
-                .launch_attack(get_msg_sender_id_or_panic()),
-        );
+        assert(abi(Attacker, contract_id().value).launch_attack(get_msg_sender_id_or_panic()));
     }
 
     fn evil_callback_2() {
