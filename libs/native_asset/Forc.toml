@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "asset"
 
 [dependencies]
-src_7 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.2.2" }
+src7 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }

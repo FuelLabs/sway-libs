@@ -1,8 +1,8 @@
 contract;
 
-use src_20::SRC20;
-use src_3::SRC3;
-use src_7::{Metadata, SRC7};
+use src20::SRC20;
+use src3::SRC3;
+use src7::{Metadata, SRC7};
 use asset::{
     base::{
         _decimals,

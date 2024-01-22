@@ -1,6 +1,6 @@
 library;
 
-use src_7::Metadata;
+use src7::Metadata;
 use std::{
     bytes::Bytes,
     hash::{
