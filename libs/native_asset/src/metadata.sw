@@ -1,6 +1,6 @@
 library;
 
-use src_7::Metadata;
+use src7::Metadata;
 use std::{
     bytes::Bytes,
     hash::{
@@ -42,7 +42,7 @@ impl StorageKey<StorageMetadata> {
     ///
     /// ```sway
     /// use src_7::Metadata;
-    /// use token::metdata::*;
+    /// use asset::metadata::*;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -97,7 +97,7 @@ impl StorageKey<StorageMetadata> {
     ///
     /// ```sway
     /// use src_7::Metadata;
-    /// use token::metdata::*;
+    /// use asset::metadata::*;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -149,7 +149,7 @@ impl StorageKey<StorageMetadata> {
 ///
 /// ```sway
 /// use src_7::Metadata;
-/// use token::metdata::*;
+/// use asset::metadata::*;
 ///
 /// storage {
 ///     metadata: StorageMetadata = StorageMetadata {}
@@ -169,7 +169,7 @@ pub fn _set_metadata(
     metadata_key.insert(asset, key, metadata);
 }
 
-abi SetTokenMetadata {
+abi SetAssetMetadata {
     #[storage(read, write)]
     fn set_metadata(asset: AssetId, key: String, metadata: Metadata);
 }
@@ -185,7 +185,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -213,7 +213,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -240,7 +240,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -268,7 +268,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -295,7 +295,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{bytes::Bytes, string::String};
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -323,7 +323,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{bytes::Bytes, string::String};
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -350,7 +350,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{constants::ZERO_B256, string::String};
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
@@ -378,7 +378,7 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use token::src_7::*;
+    /// use asset::metadata::*;
     /// use src_7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {

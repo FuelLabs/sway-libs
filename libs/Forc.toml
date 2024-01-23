@@ -3,10 +3,10 @@ members = [
   "admin",
   "fixed_point",
   "merkle_proof",
+  "native_asset",
   "ownership",
   "pausable",
   "queue",
   "reentrancy",
   "signed_integers",
-  "token",
 ]

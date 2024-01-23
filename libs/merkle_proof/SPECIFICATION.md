@@ -6,7 +6,7 @@ It outlines the use cases, i.e. specification, and describes how to implement th
 
 # Use Cases
 
-A common use case for Merkle Tree verification is airdrops. An airdrop is a method of distribution a set amount of tokens to a specified number of users. These often include a list of addresses and amounts. By posting the root hash, users can provide a proof and claim their airdrop.
+A common use case for Merkle Tree verification is airdrops. An airdrop is a method of distribution a set amount of assets to a specified number of users. These often include a list of addresses and amounts. By posting the root hash, users can provide a proof and claim their airdrop.
 
 ## Public Functions
 
