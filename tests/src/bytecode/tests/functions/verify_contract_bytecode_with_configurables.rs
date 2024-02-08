@@ -1,6 +1,9 @@
 use crate::bytecode::tests::utils::{
     abi_calls::verify_contract_bytecode_with_configurables,
-    test_helpers::{build_configurables, contract_bytecode, defaults, deploy_simple_contract_with_configurables_from_file, test_contract_instance},
+    test_helpers::{
+        build_configurables, contract_bytecode, defaults,
+        deploy_simple_contract_with_configurables_from_file, test_contract_instance,
+    },
 };
 
 mod success {
@@ -18,10 +21,21 @@ mod success {
         // Build the configurable changes
         let my_configurables = build_configurables(contract_offset, config_value);
 
-       // Deploy the new simple contract with the bytecode that contains the changes
-       let (simple_contract_instance, id) = deploy_simple_contract_with_configurables_from_file(wallet.clone(), config_value as u64).await;
+        // Deploy the new simple contract with the bytecode that contains the changes
+        let (simple_contract_instance, id) = deploy_simple_contract_with_configurables_from_file(
+            wallet.clone(),
+            config_value as u64,
+        )
+        .await;
 
-       verify_contract_bytecode_with_configurables(&test_contract_instance, file_bytecode, my_configurables, id, simple_contract_instance).await;
+        verify_contract_bytecode_with_configurables(
+            &test_contract_instance,
+            file_bytecode,
+            my_configurables,
+            id,
+            simple_contract_instance,
+        )
+        .await;
     }
 }
 
@@ -41,9 +55,20 @@ mod revert {
         // Build the configurable changes
         let my_configurables = build_configurables(contract_offset, config_value);
 
-       // Deploy the new simple contract with the bytecode that contains the changes
-       let (simple_contract_instance, id) = deploy_simple_contract_with_configurables_from_file(wallet.clone(), (config_value as u64) + 1).await;
+        // Deploy the new simple contract with the bytecode that contains the changes
+        let (simple_contract_instance, id) = deploy_simple_contract_with_configurables_from_file(
+            wallet.clone(),
+            (config_value as u64) + 1,
+        )
+        .await;
 
-       verify_contract_bytecode_with_configurables(&test_contract_instance, file_bytecode, my_configurables, id, simple_contract_instance).await;
+        verify_contract_bytecode_with_configurables(
+            &test_contract_instance,
+            file_bytecode,
+            my_configurables,
+            id,
+            simple_contract_instance,
+        )
+        .await;
     }
 }

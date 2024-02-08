@@ -15,7 +15,8 @@ mod success {
         let file_bytecode = predicate_bytecode();
 
         // Call the contract and compute the address
-        let result_address = compute_predicate_address(&test_contract_instance, file_bytecode).await;
+        let result_address =
+            compute_predicate_address(&test_contract_instance, file_bytecode).await;
 
         // Create an instance of the predicate
         let predicate_instance = setup_predicate_from_file(wallet.clone()).await;

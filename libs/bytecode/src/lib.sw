@@ -52,11 +52,13 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 ///     assert(bytecode_root != ZERO_B256);
 /// }
 /// ```
-pub fn compute_bytecode_root_with_configurables(bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) -> b256 {
+pub fn compute_bytecode_root_with_configurables(
+    bytecode: Vec<u8>,
+    configurables: Vec<(u64, Vec<u8>)>,
+) -> b256 {
     let result_bytecode = _swap_configurables(bytecode, configurables);
     _compute_bytecode_root(result_bytecode)
 }
-
 
 /// Takes the bytecode of a predicate and computes the address of a predicate.
 ///
@@ -106,7 +108,10 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 ///     assert(predicate_address != Address::from(ZERO_B256));
 /// }
 /// ```
-pub fn compute_predicate_address_with_configurables(bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) -> Address {
+pub fn compute_predicate_address_with_configurables(
+    bytecode: Vec<u8>,
+    configurables: Vec<(u64, Vec<u8>)>,
+) -> Address {
     let result_bytecode = _swap_configurables(bytecode, configurables);
     let bytecode_root = _compute_bytecode_root(result_bytecode);
     _generate_predicate_address(bytecode_root)
@@ -145,11 +150,11 @@ pub fn generate_predicate_address(bytecode_root: b256) -> Address {
 /// * `configurables`: [Vec<(u64, Vec<u8>)] - The configurable values to swap.
 ///
 /// # Returns
-/// 
+///
 /// * [Vec<u8>] - The resulting bytecode containing the new configurable values.
 ///
 /// # Examples
-/// 
+///
 /// ```sway
 /// use bytecode::sway_configurables;
 ///
@@ -172,7 +177,7 @@ pub fn swap_configurables(bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>)
 /// # Reverts
 ///
 /// * When the contract's bytecode root does not match the passed bytecode.
-/// 
+///
 /// # Examples
 ///
 /// ```sway
@@ -201,7 +206,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 /// # Reverts
 ///
 /// * When the contract's bytecode root does not match the passed bytecode.
-/// 
+///
 /// # Examples
 ///
 /// ```sway
@@ -212,7 +217,11 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 ///     // This line will only be reached if the contract's bytecode root and the computed bytecode root match.
 /// }
 /// ```
-pub fn verify_contract_bytecode_with_configurables(contract_id: ContractId, bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
+pub fn verify_contract_bytecode_with_configurables(
+    contract_id: ContractId,
+    bytecode: Vec<u8>,
+    configurables: Vec<(u64, Vec<u8>)>,
+) {
     let root = bytecode_root(contract_id);
     let result_bytecode = _swap_configurables(bytecode, configurables);
     let computed_root = _compute_bytecode_root(result_bytecode);
@@ -230,7 +239,7 @@ pub fn verify_contract_bytecode_with_configurables(contract_id: ContractId, byte
 /// # Reverts
 ///
 /// * When the predicate's address does not match the passed address.
-/// 
+///
 /// # Examples
 ///
 /// ```sway
@@ -259,7 +268,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 /// # Reverts
 ///
 /// * When the predicate's address does not match the passed address.
-/// 
+///
 /// # Examples
 ///
 /// ```sway
@@ -270,7 +279,11 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 ///     // This line will only be reached if the predicates's address and the computed address match.
 /// }
 /// ```
-pub fn verify_predicate_address_with_configurables(predicate_id: Address, bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) {
+pub fn verify_predicate_address_with_configurables(
+    predicate_id: Address,
+    bytecode: Vec<u8>,
+    configurables: Vec<(u64, Vec<u8>)>,
+) {
     let result_bytecode = _swap_configurables(bytecode, configurables);
     let bytecode_root = _compute_bytecode_root(result_bytecode);
     let generated_address = _generate_predicate_address(bytecode_root);
