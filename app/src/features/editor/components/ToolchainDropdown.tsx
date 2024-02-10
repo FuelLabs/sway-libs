@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
 const ToolchainNames = [
+  'beta-5',
   'beta-4',
   'beta-3',
   'beta-2',
