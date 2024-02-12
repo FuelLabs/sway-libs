@@ -99,7 +99,7 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
         let mut iterator = 0;
         while iterator < size - odd {
             let j = iterator << 1;
-            
+
             node_digest(
                 vec_digest
                     .ptr()
