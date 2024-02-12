@@ -44,6 +44,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 #### Cryptography
 
+- [Bytecode](./libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
 - [Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
