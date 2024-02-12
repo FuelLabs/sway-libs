@@ -128,14 +128,14 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
             break;
         }
 
-        odd = (size & 1);
+        odd = size & 1;
         size = (size + 1) >> 1;
     }
 
     vec_digest.ptr().read::<b256>()
 }
 
-/// Swaps out configurable values in a contract or predicate's bytecode.
+/// Swaps out configurable values in a contract's or predicate's bytecode.
 pub fn _swap_configurables(
     ref mut bytecode: raw_slice,
     configurables: Vec<(u64, Vec<u8>)>,

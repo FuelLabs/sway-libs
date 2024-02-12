@@ -121,7 +121,7 @@ pub fn compute_predicate_address_with_configurables(
     _generate_predicate_address(bytecode_root)
 }
 
-/// Takes the bytecode root of predicate generates the address of a predicate.
+/// Takes the bytecode root of a predicate and generates the address of the predicate.
 ///
 /// # Arguments
 ///

@@ -46,7 +46,7 @@ mod success {
         let simple_contract_instance =
             deploy_simple_contract_from_bytecode(wallet, result_bytecode).await;
 
-        // Assert that we get the exected value for the configurable from the deployed simple contract.
+        // Assert that we get the expected value for the configurable from the deployed simple contract.
         let result_u64 = test_function(&simple_contract_instance).await;
         assert!(result_u64 == config_value as u64);
     }
@@ -88,7 +88,7 @@ mod success {
         let complex_contract_instance =
             deploy_complex_contract_from_bytecode(wallet, result_bytecode).await;
 
-        // Assert that we get the exected value for the configurable from the deployed simple contract.
+        // Assert that we get the expected value for the configurable from the deployed simple contract.
         let (result_u64, result_struct, result_enum) =
             return_configurables(&complex_contract_instance).await;
         assert!(result_u64 == config_value as u64);
@@ -131,7 +131,7 @@ mod success {
             setup_predicate_from_bytecode(wallet.clone(), result_bytecode, config_value as u64)
                 .await;
 
-        // Assert that we can spend the predicate with the exected value for the configurable.
+        // Assert that we can spend the predicate with the expected value for the configurable.
         spend_predicate(predicate_instance, wallet).await;
     }
 }
