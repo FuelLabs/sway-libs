@@ -48,6 +48,7 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 /// use bytecode::compute_bytecode_root_with_configurables;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+///     let mut my_bytecode = my_bytecode;
 ///     let bytecode_root = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
 ///     assert(bytecode_root != ZERO_B256);
 /// }
@@ -105,6 +106,7 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 /// use bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+///     let mut my_bytecode = my_bytecode;
 ///     let predicate_address = compute_predicate_address(my_bytecode, my_configurables);
 ///     assert(predicate_address != Address::from(ZERO_B256));
 /// }
@@ -161,6 +163,7 @@ pub fn generate_predicate_address(bytecode_root: b256) -> Address {
 /// use bytecode::sway_configurables;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+///     let mut my_bytecode = my_bytecode;
 ///     let resulting_bytecode = swap_configurables(my_bytecode, my_configurables);
 ///     assert(resulting_bytecode != my_bytecode);
 /// }
@@ -220,6 +223,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 /// use bytecode::verify_contract_bytecode_with_configurables;
 ///
 /// fn foo(my_contract_id: ContractId, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+///     let mut my_bytecode = my_bytecode;
 ///     verify_contract_bytecode_with_configurables(my_contract_id, my_bytecode, my_configurables);
 ///     // This line will only be reached if the contract's bytecode root and the computed bytecode root match.
 /// }
@@ -283,6 +287,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 /// use bytecode::verify_predicate_address_with_configurables;
 ///
 /// fn foo(my_predicate_id: Address, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+///     let mut my_bytecode = my_bytecode;
 ///     verify_predicate_address_with_configurables(my_predicate_id, my_bytecode, my_configurables);
 ///     // This line will only be reached if the predicates's address and the computed address match.
 /// }
