@@ -165,7 +165,10 @@ pub fn generate_predicate_address(bytecode_root: b256) -> Address {
 ///     assert(resulting_bytecode != my_bytecode);
 /// }
 /// ```
-pub fn swap_configurables(ref mut bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) -> Vec<u8> {
+pub fn swap_configurables(
+    ref mut bytecode: Vec<u8>, 
+    configurables: Vec<(u64, Vec<u8>)>
+) -> Vec<u8> {
     let mut bytecode_slice = bytecode.into();
     _swap_configurables(bytecode_slice, configurables);
     bytecode

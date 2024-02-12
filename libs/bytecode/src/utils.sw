@@ -1,9 +1,6 @@
 library;
 
-use std::{
-    alloc::{alloc, realloc_bytes},
-    bytes::Bytes,
-};
+use std::{alloc::{alloc, realloc_bytes}, bytes::Bytes,};
 
 /// Pre-defined number of bytes of a leaf in a bytecode merkle tree.
 const LEAF_SIZE = 16 * 1024;
@@ -28,14 +25,21 @@ pub fn _generate_predicate_address(bytecode_root: b256) -> Address {
     bytes.push(SEED[1]);
     bytes.push(SEED[2]);
     bytes.push(SEED[3]);
-    __addr_of(bytecode_root).copy_bytes_to(bytes.buf.ptr.add_uint_offset(4), 32);
+    __addr_of(bytecode_root)
+        .copy_bytes_to(bytes.buf.ptr.add_uint_offset(4), 32);
 
     // Compute Digest and return predicate address
     let mut result_buffer = b256::min();
-    Address::from(asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: 36) {
-        s256 hash ptr bytes;
-        hash: b256
-    })
+    Address::from(
+        asm(
+            hash: result_buffer, 
+            ptr: bytes.buf.ptr, 
+            bytes: 36
+        ) {
+            s256 hash ptr bytes;
+            hash: b256
+        },
+    )
 }
 
 /// Takes some bytecode and computes the resulting leaves for a merkle tree.
@@ -83,7 +87,6 @@ fn _generate_leaves(bytecode: raw_slice) -> raw_slice {
     leaves_digest
 }
 
-
 /// Takes some bytecode and computes the bytecode root.
 pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
     let mut vec_digest = _generate_leaves(bytecode);
@@ -98,9 +101,15 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
             let j = iterator << 1;
             
             node_digest(
-                vec_digest.ptr().add::<b256>(j), 
-                vec_digest.ptr().add::<b256>(j + 1),
-                vec_digest.ptr().add::<b256>(iterator)
+                vec_digest
+                    .ptr()
+                    .add::<b256>(j), 
+                vec_digest
+                    .ptr()
+                    .add::<b256>(j + 1),
+                vec_digest
+                    .ptr()
+                    .add::<b256>(iterator)
             );
 
             iterator += 1;
@@ -127,15 +136,17 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
 }
 
 /// Swaps out configurable values in a contract or predicate's bytecode.
-pub fn _swap_configurables(ref mut bytecode: raw_slice, configurables: Vec<(u64, Vec<u8>)>) {
+pub fn _swap_configurables(
+    ref mut bytecode: raw_slice, 
+    configurables: Vec<(u64, Vec<u8>)>
+) {
     // Iterate over every configurable
     let mut configurable_iterator = 0;
     while configurable_iterator < configurables.len() {
         let (offset, data) = configurables.get(configurable_iterator).unwrap();
 
         // Overwrite the configurable data into the bytecode
-        data
-            .buf
+        data.buf
             .ptr
             .copy_bytes_to(bytecode.ptr().add::<u8>(offset), data.len());
 
@@ -150,13 +161,15 @@ fn leaf_digest(data: raw_slice, ref mut result_buffer: raw_ptr) {
 
     // Prepend LEAF to the leaf bytes
     bytes.buf.ptr().write_byte(LEAF);
-    data.ptr().copy_bytes_to(bytes.buf.ptr().add_uint_offset(1), number_of_bytes);
+    data
+        .ptr()
+        .copy_bytes_to(bytes.buf.ptr().add_uint_offset(1), number_of_bytes);
     bytes.len = number_of_bytes + 1;
 
     // Compute the digest
     asm(hash: result_buffer, ptr: bytes.buf.ptr, bytes: bytes.len) {
         s256 hash ptr bytes;
-    }
+    };
 }
 
 /// Takes two nodes and creates a new node digest.
@@ -176,4 +189,3 @@ fn node_digest(left: raw_ptr, right: raw_ptr, result_buffer: raw_ptr) {
         s256 hash ptr bytes;
     };
 }
-
