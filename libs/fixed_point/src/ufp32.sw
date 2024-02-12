@@ -9,17 +9,13 @@ use std::math::*;
 /// Represented by an underlying `u32` number.
 pub struct UFP32 {
     /// The underlying value representing the `UFP32` type.
-    value: u32,
+    pub value: u32,
 }
 
 impl From<u32> for UFP32 {
     /// Creates UFP32 from u32. Note that UFP32::from(1) is 1 / 2^32 and not 1.
     fn from(value: u32) -> Self {
         Self { value }
-    }
-
-    fn into(self) -> u32 {
-        self.value
     }
 }
 

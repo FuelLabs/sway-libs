@@ -9,7 +9,7 @@ use std::{math::{Exponent, Power, Root}, u128::U128, u256::U256};
 /// Represented by an underlying `U128` number.
 pub struct UFP128 {
     /// The underlying value representing the `UFP128` type.
-    value: U128,
+    pub value: U128,
 }
 
 impl From<(u64, u64)> for UFP128 {
@@ -17,10 +17,6 @@ impl From<(u64, u64)> for UFP128 {
         Self {
             value: U128::from(int_fract_tuple),
         }
-    }
-
-    fn into(self) -> (u64, u64) {
-        self.value.into()
     }
 }
 

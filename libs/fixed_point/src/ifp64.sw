@@ -10,9 +10,9 @@ use ::ufp32::UFP32;
 /// Represented by an underlying `UFP32` number and a boolean.
 pub struct IFP64 {
     /// The underlying value representing the `IFP64` type.
-    underlying: UFP32,
+    pub underlying: UFP32,
     /// The underlying boolean representing a negative value for the `IFP64` type.
-    non_negative: bool,
+    pub non_negative: bool,
 }
 
 impl From<UFP32> for IFP64 {
@@ -22,10 +22,6 @@ impl From<UFP32> for IFP64 {
             underlying: value,
             non_negative: true,
         }
-    }
-
-    fn into(self) -> UFP32 {
-        self.underlying
     }
 }
 

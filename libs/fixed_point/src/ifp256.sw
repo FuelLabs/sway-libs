@@ -10,9 +10,9 @@ use ::ufp128::UFP128;
 /// Represented by an underlying `UFP128` number and a boolean.
 pub struct IFP256 {
     /// The underlying value representing the `IFP256` type.
-    underlying: UFP128,
+    pub underlying: UFP128,
     /// The underlying boolean representing a negative value for the `IFP256` type.
-    non_negative: bool,
+    pub non_negative: bool,
 }
 
 impl From<UFP128> for IFP256 {
@@ -22,10 +22,6 @@ impl From<UFP128> for IFP256 {
             underlying: value,
             non_negative: true,
         }
-    }
-
-    fn into(self) -> UFP128 {
-        self.underlying
     }
 }
 

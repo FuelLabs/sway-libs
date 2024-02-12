@@ -12,7 +12,7 @@ use ::errors::Error;
 /// Actual value is underlying value minus 2 ^ 255
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
 pub struct I256 {
-    underlying: U256,
+    pub underlying: U256,
 }
 
 impl I256 {
@@ -48,10 +48,6 @@ impl From<U256> for I256 {
         // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
         let underlying = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> U256 {
-        self.underlying - Self::indent()
     }
 }
 

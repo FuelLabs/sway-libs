@@ -9,17 +9,13 @@ use std::{math::{Exponent, Power, Root}, u128::U128};
 /// Represented by an underlying `u64` number.
 pub struct UFP64 {
     /// The underlying value representing the `UFP64` type.
-    value: u64,
+    pub value: u64,
 }
 
 impl From<u64> for UFP64 {
     /// Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.
     fn from(value: u64) -> Self {
         Self { value }
-    }
-
-    fn into(self) -> u64 {
-        self.value
     }
 }
 

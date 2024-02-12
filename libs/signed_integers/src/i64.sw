@@ -12,7 +12,7 @@ use ::errors::Error;
 /// Max value is 2 ^ 63 - 1, min value is - 2 ^ 63
 pub struct I64 {
     /// The underlying unsigned number representing the `I64` type.
-    underlying: u64,
+    pub underlying: u64,
 }
 
 impl I64 {
@@ -42,10 +42,6 @@ impl From<u64> for I64 {
         // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
         let underlying = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> u64 {
-        self.underlying - Self::indent()
     }
 }
 
