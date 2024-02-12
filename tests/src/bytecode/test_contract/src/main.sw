@@ -13,6 +13,8 @@ use bytecode::{
     verify_predicate_address_with_configurables,
 };
 
+use std::alloc::alloc_bytes;
+
 abi TestBytecodeSolver {
     fn generate_predicate_address(bytecode_root: b256) -> Address;
     fn compute_predicate_address(bytecode: Vec<u8>) -> Address;
@@ -52,7 +54,14 @@ impl TestBytecodeSolver for Contract {
         bytecode: Vec<u8>,
         configurables: Vec<(u64, Vec<u8>)>,
     ) -> Address {
-        compute_predicate_address_with_configurables(bytecode, configurables)
+        // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
+        let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
+        bytecode
+            .buf
+            .ptr
+            .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
+        let mut bytecode_vec = Vec::from(bytecode_slice);
+        compute_predicate_address_with_configurables(bytecode_vec, configurables)
     }
 
     fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
@@ -63,11 +72,25 @@ impl TestBytecodeSolver for Contract {
         bytecode: Vec<u8>,
         configurables: Vec<(u64, Vec<u8>)>,
     ) -> b256 {
-        compute_bytecode_root_with_configurables(bytecode, configurables)
+        // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
+        let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
+        bytecode
+            .buf
+            .ptr
+            .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
+        let mut bytecode_vec = Vec::from(bytecode_slice);
+        compute_bytecode_root_with_configurables(bytecode_vec, configurables)
     }
 
     fn swap_configurables(bytecode: Vec<u8>, configurables: Vec<(u64, Vec<u8>)>) -> Vec<u8> {
-        swap_configurables(bytecode, configurables)
+        // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
+        let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
+        bytecode
+            .buf
+            .ptr
+            .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
+        let mut bytecode_vec = Vec::from(bytecode_slice);
+        swap_configurables(bytecode_vec, configurables)
     }
 
     fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
@@ -79,7 +102,14 @@ impl TestBytecodeSolver for Contract {
         bytecode: Vec<u8>,
         configurables: Vec<(u64, Vec<u8>)>,
     ) {
-        verify_contract_bytecode_with_configurables(contract_id, bytecode, configurables);
+        // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
+        let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
+        bytecode
+            .buf
+            .ptr
+            .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
+        let mut bytecode_vec = Vec::from(bytecode_slice);
+        verify_contract_bytecode_with_configurables(contract_id, bytecode_vec, configurables);
     }
 
     fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
@@ -91,6 +121,13 @@ impl TestBytecodeSolver for Contract {
         bytecode: Vec<u8>,
         configurables: Vec<(u64, Vec<u8>)>,
     ) {
-        verify_predicate_address_with_configurables(predicate_id, bytecode, configurables);
+        // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
+        let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
+        bytecode
+            .buf
+            .ptr
+            .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
+        let mut bytecode_vec = Vec::from(bytecode_slice);
+        verify_predicate_address_with_configurables(predicate_id, bytecode_vec, configurables);
     }
 }

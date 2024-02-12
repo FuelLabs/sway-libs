@@ -1,7 +1,7 @@
 use crate::bytecode::tests::utils::{
     abi_calls::verify_predicate_address_with_configurables,
     test_helpers::{
-        build_configurables, defaults, predicate_bytecode,
+        build_simple_configurables, defaults, predicate_bytecode,
         setup_predicate_from_file_with_configurable, test_contract_instance,
     },
 };
@@ -19,7 +19,7 @@ mod success {
         let file_bytecode = predicate_bytecode();
 
         // Build the configurable changes
-        let my_configurables = build_configurables(predicate_offset, config_value);
+        let my_configurables = build_simple_configurables(predicate_offset, config_value);
 
         // Create an instance of the predicate
         let predicate_instance =
@@ -49,7 +49,7 @@ mod revert {
         let file_bytecode = predicate_bytecode();
 
         // Build the configurable changes
-        let my_configurables = build_configurables(predicate_offset, config_value);
+        let my_configurables = build_simple_configurables(predicate_offset, config_value);
 
         // Create an instance of the predicate
         let predicate_instance =

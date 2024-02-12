@@ -1,7 +1,8 @@
 use crate::bytecode::tests::utils::{
     abi_calls::verify_predicate_address,
     test_helpers::{
-        contract_bytecode, predicate_bytecode, setup_predicate_from_file, test_contract_instance,
+        predicate_bytecode, setup_predicate_from_file, simple_contract_bytecode,
+        test_contract_instance,
     },
 };
 
@@ -38,7 +39,7 @@ mod revert {
         let (test_contract_instance, wallet) = test_contract_instance().await;
 
         // Get the bytecode for the predicate
-        let file_bytecode = contract_bytecode();
+        let file_bytecode = simple_contract_bytecode();
 
         // Create an instance of the predicate
         let predicate_instance = setup_predicate_from_file(wallet.clone()).await;
