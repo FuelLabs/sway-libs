@@ -103,13 +103,13 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
             node_digest(
                 vec_digest
                     .ptr()
-                    .add::<b256>(j), 
+                    .add::<b256>(j),
                 vec_digest
                     .ptr()
                     .add::<b256>(j + 1),
                 vec_digest
                     .ptr()
-                    .add::<b256>(iterator)
+                    .add::<b256>(iterator),
             );
 
             iterator += 1;
@@ -137,8 +137,8 @@ pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
 
 /// Swaps out configurable values in a contract or predicate's bytecode.
 pub fn _swap_configurables(
-    ref mut bytecode: raw_slice, 
-    configurables: Vec<(u64, Vec<u8>)>
+    ref mut bytecode: raw_slice,
+    configurables: Vec<(u64, Vec<u8>)>,
 ) {
     // Iterate over every configurable
     let mut configurable_iterator = 0;
