@@ -32,9 +32,9 @@ pub fn _generate_predicate_address(bytecode_root: b256) -> Address {
     let mut result_buffer = b256::min();
     Address::from(
         asm(
-            hash: result_buffer, 
-            ptr: bytes.buf.ptr, 
-            bytes: 36
+            hash: result_buffer,
+            ptr: bytes.buf.ptr,
+            bytes: 36,
         ) {
             s256 hash ptr bytes;
             hash: b256
