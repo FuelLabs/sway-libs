@@ -12,7 +12,7 @@ use ::common::TwosComplement;
 /// Max value is 2 ^ 15 - 1, min value is - 2 ^ 15
 pub struct I16 {
     /// The underlying value representing the signed integer.
-    underlying: u16,
+    pub underlying: u16,
 }
 
 impl I16 {
@@ -43,10 +43,6 @@ impl From<u16> for I16 {
         // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
         let underlying: u16 = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> u16 {
-        self.underlying - Self::indent()
     }
 }
 
