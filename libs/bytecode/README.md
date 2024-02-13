@@ -97,7 +97,7 @@ fn foo(my_predicate: Address, my_bytecode: Vec<u8>) {
 
 fn bar(my_predicate: Address, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
     let mut my_bytecode = my_bytecode;
-    verify_contract_bytecode_with_configurables(my_predicate, my_bytecode, my_configurables);
+    verify_predicate_bytecode_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 ```
