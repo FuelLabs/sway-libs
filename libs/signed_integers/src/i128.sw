@@ -13,7 +13,7 @@ use ::errors::Error;
 /// Max value is 2 ^ 127 - 1, min value is - 2 ^ 127
 pub struct I128 {
     /// The underlying unsigned number representing the `I128` type.
-    underlying: U128,
+    pub underlying: U128,
 }
 
 impl I128 {
@@ -48,10 +48,6 @@ impl From<U128> for I128 {
         // as the minimal value of I128 is -I128::indent() (1 << 63) we should add I128::indent() (1 << 63) 
         let underlying: U128 = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> U128 {
-        self.underlying - Self::indent()
     }
 }
 

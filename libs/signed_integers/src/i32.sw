@@ -12,7 +12,7 @@ use ::errors::Error;
 /// Max value is 2 ^ 31 - 1, min value is - 2 ^ 31
 pub struct I32 {
     /// The underlying u32 type that represent a I32.
-    underlying: u32,
+    pub underlying: u32,
 }
 
 impl I32 {
@@ -42,10 +42,6 @@ impl From<u32> for I32 {
         // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
         let underlying = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> u32 {
-        self.underlying - Self::indent()
     }
 }
 

@@ -12,7 +12,7 @@ use ::common::TwosComplement;
 /// Max value is 2 ^ 7 - 1, min value is - 2 ^ 7
 pub struct I8 {
     /// The underlying unsigned `u8` type that makes up the signed `I8` type.
-    underlying: u8,
+    pub underlying: u8,
 }
 
 impl I8 {
@@ -42,10 +42,6 @@ impl From<u8> for I8 {
         // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7) 
         let underlying: u8 = value + Self::indent();
         Self { underlying }
-    }
-
-    fn into(self) -> u8 {
-        self.underlying
     }
 }
 
