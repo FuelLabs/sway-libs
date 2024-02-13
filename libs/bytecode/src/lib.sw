@@ -27,7 +27,7 @@ use utils::{_compute_bytecode_root, _generate_predicate_address, _swap_configura
 /// }
 /// ```
 pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
-    _compute_bytecode_root(bytecode.into())
+    _compute_bytecode_root(bytecode.as_raw_slice())
 }
 
 /// Takes the bytecode of a contract or predicate and configurables and computes the bytecode root.
@@ -57,7 +57,7 @@ pub fn compute_bytecode_root_with_configurables(
     ref mut bytecode: Vec<u8>,
     configurables: Vec<(u64, Vec<u8>)>,
 ) -> b256 {
-    let mut bytecode_slice = bytecode.into();
+    let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     _compute_bytecode_root(bytecode_slice)
 }
@@ -84,7 +84,7 @@ pub fn compute_bytecode_root_with_configurables(
 /// }
 /// ```
 pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
-    let bytecode_root = _compute_bytecode_root(bytecode.into());
+    let bytecode_root = _compute_bytecode_root(bytecode.as_raw_slice());
     _generate_predicate_address(bytecode_root)
 }
 
@@ -115,7 +115,7 @@ pub fn compute_predicate_address_with_configurables(
     ref mut bytecode: Vec<u8>,
     configurables: Vec<(u64, Vec<u8>)>,
 ) -> Address {
-    let mut bytecode_slice = bytecode.into();
+    let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     let bytecode_root = _compute_bytecode_root(bytecode_slice);
     _generate_predicate_address(bytecode_root)
@@ -172,7 +172,7 @@ pub fn swap_configurables(
     ref mut bytecode: Vec<u8>,
     configurables: Vec<(u64, Vec<u8>)>,
 ) -> Vec<u8> {
-    let mut bytecode_slice = bytecode.into();
+    let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     bytecode
 }
@@ -200,7 +200,7 @@ pub fn swap_configurables(
 /// ```
 pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
     let root = bytecode_root(contract_id);
-    let computed_root = _compute_bytecode_root(bytecode.into());
+    let computed_root = _compute_bytecode_root(bytecode.as_raw_slice());
 
     assert(root == computed_root);
 }
@@ -234,7 +234,7 @@ pub fn verify_contract_bytecode_with_configurables(
     configurables: Vec<(u64, Vec<u8>)>,
 ) {
     let root = bytecode_root(contract_id);
-    let mut bytecode_slice = bytecode.into();
+    let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     let computed_root = _compute_bytecode_root(bytecode_slice);
 
@@ -263,7 +263,7 @@ pub fn verify_contract_bytecode_with_configurables(
 /// }
 /// ```
 pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
-    let bytecode_root = _compute_bytecode_root(bytecode.into());
+    let bytecode_root = _compute_bytecode_root(bytecode.as_raw_slice());
     let generated_address = _generate_predicate_address(bytecode_root);
 
     assert(generated_address == predicate_id);
@@ -297,7 +297,7 @@ pub fn verify_predicate_address_with_configurables(
     ref mut bytecode: Vec<u8>,
     configurables: Vec<(u64, Vec<u8>)>,
 ) {
-    let mut bytecode_slice = bytecode.into();
+    let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     let bytecode_root = _compute_bytecode_root(bytecode_slice);
     let generated_address = _generate_predicate_address(bytecode_root);
