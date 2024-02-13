@@ -31,7 +31,7 @@ Once imported, using the Bytecode Library is as simple as calling the desired fu
 - `compute_bytecode_root_with_configurables()`
 - `compute_predicate_address()`
 - `compute_predicate_address_with_configurables()`
-- `generate_predicate_address()`
+- `predicate_address_from_root()`
 - `swap_configurables()`
 - `verify_contract_bytecode()`
 - `verify_contract_bytecode_with_configurables()`

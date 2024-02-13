@@ -3,7 +3,7 @@ library;
 mod utils;
 
 use std::external::bytecode_root;
-use utils::{_compute_bytecode_root, _generate_predicate_address, _swap_configurables};
+use utils::{_compute_bytecode_root, _predicate_address_from_root, _swap_configurables};
 
 /// Takes the bytecode of a contract or predicate and computes the bytecode root.
 ///
@@ -85,7 +85,7 @@ pub fn compute_bytecode_root_with_configurables(
 /// ```
 pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
     let bytecode_root = _compute_bytecode_root(bytecode.as_raw_slice());
-    _generate_predicate_address(bytecode_root)
+    _predicate_address_from_root(bytecode_root)
 }
 
 /// Takes the bytecode of a predicate and configurables and computes the address of a predicate.
@@ -118,7 +118,7 @@ pub fn compute_predicate_address_with_configurables(
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     let bytecode_root = _compute_bytecode_root(bytecode_slice);
-    _generate_predicate_address(bytecode_root)
+    _predicate_address_from_root(bytecode_root)
 }
 
 /// Takes the bytecode root of a predicate and generates the address of the predicate.
@@ -135,15 +135,15 @@ pub fn compute_predicate_address_with_configurables(
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::generate_predicate_address;
+/// use bytecode::predicate_address_from_root;
 ///
 /// fn foo(predicate_bytecode_root: b256) {
-///     let predicate_address = generate_predicate_address(predicate_bytecode_root);
+///     let predicate_address = predicate_address_from_root(predicate_bytecode_root);
 ///     assert(predicate_address != Address::from(ZERO_B256));
 /// }
 /// ```
-pub fn generate_predicate_address(bytecode_root: b256) -> Address {
-    _generate_predicate_address(bytecode_root)
+pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
+    _predicate_address_from_root(bytecode_root)
 }
 
 /// Swaps out configurable values in a contract or predicate's bytecode.
@@ -264,7 +264,7 @@ pub fn verify_contract_bytecode_with_configurables(
 /// ```
 pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
     let bytecode_root = _compute_bytecode_root(bytecode.as_raw_slice());
-    let generated_address = _generate_predicate_address(bytecode_root);
+    let generated_address = _predicate_address_from_root(bytecode_root);
 
     assert(generated_address == predicate_id);
 }
@@ -300,7 +300,7 @@ pub fn verify_predicate_address_with_configurables(
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     let bytecode_root = _compute_bytecode_root(bytecode_slice);
-    let generated_address = _generate_predicate_address(bytecode_root);
+    let generated_address = _predicate_address_from_root(bytecode_root);
 
     assert(generated_address == predicate_id);
 }

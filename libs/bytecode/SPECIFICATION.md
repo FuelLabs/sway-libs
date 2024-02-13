@@ -26,7 +26,7 @@ Takes the bytecode of a predicate and computes the address of a predicate.
 
 Takes the bytecode of a predicate and configurables and computes the address of a predicate.
 
-### `generate_predicate_address()`
+### `predicate_address_from_root()`
 
 Takes the bytecode root of predicate generates the address of a predicate.
 

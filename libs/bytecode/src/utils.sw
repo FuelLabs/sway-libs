@@ -18,7 +18,7 @@ const NODE = 1u8;
 const SEED = [70u8, 85u8, 69u8, 76u8];
 
 /// Takes the bytecode root of predicate generates the address of a predicate.
-pub fn _generate_predicate_address(bytecode_root: b256) -> Address {
+pub fn _predicate_address_from_root(bytecode_root: b256) -> Address {
     // Prepend the seed to the bytecode root to compute the predicate address
     let mut bytes = Bytes::with_capacity(36);
     bytes.push(SEED[0]);

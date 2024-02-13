@@ -5,7 +5,7 @@ use bytecode::{
     compute_bytecode_root_with_configurables,
     compute_predicate_address,
     compute_predicate_address_with_configurables,
-    generate_predicate_address,
+    predicate_address_from_root,
     swap_configurables,
     verify_contract_bytecode,
     verify_contract_bytecode_with_configurables,
@@ -16,7 +16,7 @@ use bytecode::{
 use std::alloc::alloc_bytes;
 
 abi TestBytecodeSolver {
-    fn generate_predicate_address(bytecode_root: b256) -> Address;
+    fn predicate_address_from_root(bytecode_root: b256) -> Address;
     fn compute_predicate_address(bytecode: Vec<u8>) -> Address;
     fn compute_predicate_address_with_configurables(
         bytecode: Vec<u8>,
@@ -43,8 +43,8 @@ abi TestBytecodeSolver {
 }
 
 impl TestBytecodeSolver for Contract {
-    fn generate_predicate_address(bytecode_root: b256) -> Address {
-        generate_predicate_address(bytecode_root)
+    fn predicate_address_from_root(bytecode_root: b256) -> Address {
+        predicate_address_from_root(bytecode_root)
     }
     fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
         compute_predicate_address(bytecode)

@@ -45,13 +45,13 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn generate_predicate_address(
+    pub async fn predicate_address_from_root(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode_root: Bits256,
     ) -> Address {
         contract
             .methods()
-            .generate_predicate_address(bytecode_root)
+            .predicate_address_from_root(bytecode_root)
             .call()
             .await
             .unwrap()
