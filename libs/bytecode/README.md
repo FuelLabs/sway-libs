@@ -40,7 +40,7 @@ Once imported, using the Bytecode Library is as simple as calling the desired fu
 
 ## Basic Functionality
 
-Please note that if you are passing the bytecode from the SDK and are including configurable values, the `Vec<u8>` bytecode provided must copied to be mutable. The examples below are intended for internal contract calls. 
+Please note that if you are passing the bytecode from the SDK and are including configurable values, the `Vec<u8>` bytecode provided must be copied to be mutable. The examples below are intended for internal contract calls. 
 
 ## Contracts
 
