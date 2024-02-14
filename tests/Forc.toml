@@ -1,6 +1,10 @@
 [workspace]
 members = [
   "./src/admin",
+  "./src/bytecode/test_artifacts/simple_predicate",
+  "./src/bytecode/test_artifacts/simple_contract",
+  "./src/bytecode/test_artifacts/complex_contract",
+  "./src/bytecode/test_contract",
   "./src/fixed_point/ufp32_div_test",
   "./src/fixed_point/ufp32_exp_test",
   "./src/fixed_point/ufp32_mul_test",

@@ -1,6 +1,7 @@
 [workspace]
 members = [
   "admin",
+  "bytecode",
   "fixed_point",
   "merkle_proof",
   "native_asset",
