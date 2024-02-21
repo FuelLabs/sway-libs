@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { DeployState } from '../../../utils/types';
 import {
   DeployContractData,
@@ -6,7 +6,7 @@ import {
 } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useFuel, useNetwork, useProvider } from '@fuel-wallet/react';
+import { useFuel } from '@fuel-wallet/react';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -69,7 +69,7 @@ export function DeploymentButton({
     } else {
       handleError(new Error('Failed to connect to wallet.'));
     }
-  }, [deployContractMutation, setDeployState, updateLog]);
+  }, [deployContractMutation, setDeployState, updateLog, fuel, handleError]);
 
   const { isDisabled, tooltip } = useMemo(() => {
     switch (deployState) {
