@@ -11,13 +11,9 @@ type ProvidersProps = {
 export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <FuelProvider
-          fuelConfig={{
-              devMode: true,
-            }}
-        >
-        {globalCss()()}
-        {children}
+      <FuelProvider>
+      {globalCss()()}
+      {children}
       </FuelProvider>
     </QueryClientProvider>
   );
