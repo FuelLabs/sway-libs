@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
-import { saveAbi, saveBytecode, saveStorageSlots } from '../../../utils/localStorage';
+import {
+  saveAbi,
+  saveBytecode,
+  saveStorageSlots,
+} from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
 
@@ -47,7 +51,7 @@ export function useCompile(
     setResults([<>Compiling...</>]);
 
     // TODO: Determine the URL based on the NODE_ENV.
-    const server_uri = 'https://api.sway-playground.org/compile';
+    const server_uri = 'https://prod-2-api.sway-playground.org/compile';
     // const server_uri = 'http://0.0.0.0:8080/compile';
     const request = new Request(server_uri, {
       method: 'POST',

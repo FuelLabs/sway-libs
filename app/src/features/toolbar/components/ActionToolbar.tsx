@@ -6,7 +6,11 @@ import { DeploymentButton } from './DeploymentButton';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { useFuel } from '@fuel-wallet/react';
-import { loadAbi, loadBytecode, loadStorageSlots } from '../../../utils/localStorage';
+import {
+  loadAbi,
+  loadBytecode,
+  loadStorageSlots,
+} from '../../../utils/localStorage';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -29,7 +33,8 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
-  const { fuel } = useFuel();
+  let { fuel } = useFuel();
+  const fuelInstalled = !!fuel.currentConnector();
 
   return (
     <div
@@ -44,7 +49,7 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      {!fuel ? (
+      {!fuelInstalled ? (
         <SecondaryButton
           header={true}
           onClick={() =>
@@ -80,7 +85,11 @@ function ActionToolbar({
       <SecondaryButton
         header={true}
         onClick={() =>
-          window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer')
+          window.open(
+            'https://docs.fuel.network/docs/sway',
+            '_blank',
+            'noreferrer'
+          )
         }
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}

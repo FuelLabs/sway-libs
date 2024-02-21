@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Editor from './features/editor/components/Editor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
@@ -8,6 +8,7 @@ import { loadCode, saveCode } from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
 import { Toolchain } from './features/editor/components/ToolchainDropdown';
+import { useConnectors, useFuel } from '@fuel-wallet/react';
 
 const DRAWER_WIDTH = '40vw';
 
@@ -37,6 +38,16 @@ function App() {
 
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Select the wallet connector that is installed, if any.
+  const { fuel } = useFuel();
+  const { connectors } = useConnectors();
+  useEffect(() => {
+    const installed = connectors.find((c) => !!c.installed);
+    if (installed && !fuel.currentConnector()) {
+      fuel.selectConnector(installed.name);
+    }
+  }, [fuel, connectors]);
 
   const onCodeChange = useCallback(
     (code: string) => {

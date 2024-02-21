@@ -12,8 +12,8 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <FuelProvider>
-      {globalCss()()}
-      {children}
+        {globalCss()()}
+        {children}
       </FuelProvider>
     </QueryClientProvider>
   );

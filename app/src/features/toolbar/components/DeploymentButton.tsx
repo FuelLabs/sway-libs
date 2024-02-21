@@ -1,9 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { DeployState } from '../../../utils/types';
-import { useDeployContract } from '../hooks/useDeployContract';
+import {
+  DeployContractData,
+  useDeployContract,
+} from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useProvider } from '@fuel-wallet/react';
+import { useFuel, useNetwork, useProvider } from '@fuel-wallet/react';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -28,9 +31,7 @@ export function DeploymentButton({
   setDrawerOpen,
   updateLog,
 }: DeploymentButtonProps) {
-  const { provider } = useProvider();
-
-  const networkUrl = provider?.url;
+  const { fuel } = useFuel();
 
   const handleError = useCallback(
     (error: Error) => {
@@ -41,13 +42,13 @@ export function DeploymentButton({
   );
 
   const handleSuccess = useCallback(
-    (data: any) => {
+    ({ contractId, networkUrl }: DeployContractData) => {
       setDeployState(DeployState.DEPLOYED);
-      setContractId(data);
+      setContractId(contractId);
       setDrawerOpen(true);
       updateLog(`Contract was successfully deployed to ${networkUrl}`);
     },
-    [setContractId, setDeployState, setDrawerOpen, updateLog, networkUrl]
+    [setContractId, setDeployState, setDrawerOpen, updateLog]
   );
 
   const deployContractMutation = useDeployContract(
@@ -56,16 +57,18 @@ export function DeploymentButton({
     storageSlots,
     handleError,
     handleSuccess,
-    updateLog,
-    // Only attempt to fetch the wallet after the deploy button has been clicked. This prevents
-    // the wallet from opening when the page first loads.
-    deployState === DeployState.NOT_DEPLOYED
+    updateLog
   );
 
   const onDeployClick = useCallback(async () => {
-    updateLog(`Deploying contract...`);
-    setDeployState(DeployState.DEPLOYING);
-    deployContractMutation.mutate();
+    const isConnected = await fuel.currentConnector()?.connect();
+    if (isConnected) {
+      updateLog(`Deploying contract...`);
+      setDeployState(DeployState.DEPLOYING);
+      deployContractMutation.mutate();
+    } else {
+      handleError(new Error('Failed to connect to wallet.'));
+    }
   }, [deployContractMutation, setDeployState, updateLog]);
 
   const { isDisabled, tooltip } = useMemo(() => {
