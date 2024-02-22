@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
-import { saveAbi, saveBytecode, saveStorageSlots } from '../../../utils/localStorage';
+import {
+  saveAbi,
+  saveBytecode,
+  saveStorageSlots,
+} from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
 

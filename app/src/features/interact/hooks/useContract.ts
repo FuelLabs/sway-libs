@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useWallet } from '../../toolbar/hooks/useWallet';
+import { useWallet } from '@fuel-wallet/react';
 import { Contract, Interface } from 'fuels';
 import { loadAbi } from '../../../utils/localStorage';
 
