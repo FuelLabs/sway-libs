@@ -6,7 +6,7 @@ import {
 } from '../hooks/useDeployContract';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
-import { useFuel } from '@fuel-wallet/react';
+import { useConnectIfNotAlready } from '../hooks/useConnectIfNotAlready';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -31,7 +31,7 @@ export function DeploymentButton({
   setDrawerOpen,
   updateLog,
 }: DeploymentButtonProps) {
-  const { fuel } = useFuel();
+  const { connectIfNotAlready, isConnected } = useConnectIfNotAlready();
 
   const handleError = useCallback(
     (error: Error) => {
@@ -60,16 +60,29 @@ export function DeploymentButton({
     updateLog
   );
 
+  const handleDeploy = useCallback(async () => {
+    updateLog(`Deploying contract...`);
+    setDeployState(DeployState.DEPLOYING);
+    deployContractMutation.mutate();
+  }, [updateLog, setDeployState, deployContractMutation]);
+
+  const handleConnectionFailed = useCallback(
+    async () => handleError(new Error('Failed to connect to wallet.')),
+    [handleError]
+  );
+
   const onDeployClick = useCallback(async () => {
-    const isConnected = await fuel.currentConnector()?.connect();
-    if (isConnected) {
-      updateLog(`Deploying contract...`);
-      setDeployState(DeployState.DEPLOYING);
-      deployContractMutation.mutate();
-    } else {
-      handleError(new Error('Failed to connect to wallet.'));
+    if (!isConnected) {
+      updateLog(`Connecting to wallet...`);
     }
-  }, [deployContractMutation, setDeployState, updateLog, fuel, handleError]);
+    await connectIfNotAlready(handleDeploy, handleConnectionFailed);
+  }, [
+    isConnected,
+    updateLog,
+    connectIfNotAlready,
+    handleDeploy,
+    handleConnectionFailed,
+  ]);
 
   const { isDisabled, tooltip } = useMemo(() => {
     switch (deployState) {

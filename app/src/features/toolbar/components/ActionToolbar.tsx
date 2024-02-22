@@ -5,7 +5,6 @@ import { DeployState } from '../../../utils/types';
 import { DeploymentButton } from './DeploymentButton';
 import CompileButton from './CompileButton';
 import SecondaryButton from '../../../components/SecondaryButton';
-import { useFuel } from '@fuel-wallet/react';
 import {
   loadAbi,
   loadBytecode,
@@ -33,9 +32,6 @@ function ActionToolbar({
   setDrawerOpen,
   updateLog,
 }: ActionToolbarProps) {
-  let { fuel } = useFuel();
-  const fuelInstalled = !!fuel.currentConnector();
-
   return (
     <div
       style={{
@@ -49,28 +45,17 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      {!fuelInstalled ? (
-        <SecondaryButton
-          header={true}
-          onClick={() =>
-            window.open('https://wallet.fuel.network/docs/install/', '_blank')
-          }
-          text='INSTALL'
-          tooltip={'Install the fuel wallet to deploy contracts'}
-        />
-      ) : (
-        <DeploymentButton
-          abi={loadAbi()}
-          bytecode={loadBytecode()}
-          storageSlots={loadStorageSlots()}
-          isCompiled={isCompiled}
-          setContractId={setContractId}
-          deployState={deployState}
-          setDeployState={setDeployState}
-          setDrawerOpen={setDrawerOpen}
-          updateLog={updateLog}
-        />
-      )}
+      <DeploymentButton
+        abi={loadAbi()}
+        bytecode={loadBytecode()}
+        storageSlots={loadStorageSlots()}
+        isCompiled={isCompiled}
+        setContractId={setContractId}
+        deployState={deployState}
+        setDeployState={setDeployState}
+        setDrawerOpen={setDrawerOpen}
+        updateLog={updateLog}
+      />
       <SecondaryButton
         header={true}
         onClick={() => setDrawerOpen(!drawerOpen)}

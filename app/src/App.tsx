@@ -39,16 +39,6 @@ function App() {
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Select the wallet connector that is installed, if any.
-  const { fuel } = useFuel();
-  const { connectors } = useConnectors();
-  useEffect(() => {
-    const installed = connectors.find((c) => !!c.installed);
-    if (installed && !fuel.currentConnector()) {
-      fuel.selectConnector(installed.name);
-    }
-  }, [fuel, connectors]);
-
   const onCodeChange = useCallback(
     (code: string) => {
       saveCode(code);
