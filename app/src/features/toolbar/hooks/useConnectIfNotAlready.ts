@@ -18,6 +18,8 @@ export function useConnectIfNotAlready() {
 
       if (!isConnected && !isConnecting) {
         connect();
+      } else {
+        connectedCallback();
       }
     },
     [connect, isConnected, isConnecting]
