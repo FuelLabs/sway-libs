@@ -1,6 +1,6 @@
 use rocket::serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Language {
     Solidity,
@@ -26,7 +26,7 @@ pub struct CompileResponse {
 }
 
 /// The transpile request.
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize)]
 pub struct TranspileRequest {
     pub contract: String,
     pub lanaguage: Language,

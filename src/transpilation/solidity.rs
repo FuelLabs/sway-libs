@@ -1,5 +1,8 @@
 use crate::util::spawn_and_wait;
-use std::{path::PathBuf, process::{Command, Output}};
+use std::{
+    path::PathBuf,
+    process::{Command, Output},
+};
 
 const CHARCOAL: &str = "charcoal";
 

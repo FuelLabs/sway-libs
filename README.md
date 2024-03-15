@@ -79,13 +79,13 @@ npm start
 
 This will open http://localhost:3000 in your browser. By default, it will use the production backend endpoint. 
 
-To test against the backend running locally, make this change in `app/src/features/editor/hooks/useCompile.tsx`:
+To test against the backend running locally, make this change in `app/src/constants.ts`:
 
 ```diff
--    const server_uri = 'https://api.sway-playground.org/compile';
--    // const server_uri = 'http://0.0.0.0:8080/compile';
-+    // const server_uri = 'https://api.sway-playground.org/compile';
-+    const server_uri = 'http://0.0.0.0:8080/compile';
+-    export const SERVER_URI = 'https://api.sway-playground.org/compile';
+-    // export const SERVER_URI = 'http://0.0.0.0:8080/compile';
++    // export const SERVER_URI = 'https://api.sway-playground.org/compile';
++    export const SERVER_URI = 'http://0.0.0.0:8080/compile';
 ```
 
 ## Contributing to Sway

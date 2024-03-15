@@ -1,9 +1,8 @@
+use regex::Regex;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use std::process::{Command, Output, Stdio};
-
-use regex::Regex;
 
 /// Check the version of forc.
 pub fn spawn_and_wait(cmd: &mut Command) -> Output {

@@ -12,9 +12,9 @@ mod util;
 use compilation::build_and_destroy_project;
 use cors::Cors;
 use rocket::serde::json::Json;
-use types::{CompileRequest, CompileResponse, TranspileRequest, Language};
+use types::{CompileRequest, CompileResponse, Language, TranspileRequest};
 
-use crate::{types::TranspileResponse, transpilation::solidity_to_sway};
+use crate::{transpilation::solidity_to_sway, types::TranspileResponse};
 
 /// The endpoint to compile a Sway contract.
 #[post("/compile", data = "<request>")]

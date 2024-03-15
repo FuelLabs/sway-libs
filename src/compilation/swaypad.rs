@@ -1,7 +1,6 @@
 use fs_extra::dir::{copy, CopyOptions};
 use nanoid::nanoid;
-use regex::Regex;
-use std::fs::{ remove_dir_all, File, create_dir_all};
+use std::fs::{create_dir_all, remove_dir_all, File};
 use std::io::prelude::*;
 
 const PROJECTS: &str = "projects";

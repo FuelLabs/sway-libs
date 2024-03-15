@@ -1,12 +1,11 @@
 mod solidity;
 
 use self::solidity::run_charcoal;
-use crate::{types::{CompileResponse, TranspileResponse}, util::clean_error_content};
+use crate::{types::TranspileResponse, util::clean_error_content};
 use nanoid::nanoid;
 use regex::Regex;
-use rocket::http::uri::Path;
 use std::{
-    fs::{create_dir_all, remove_file, File, remove_dir_all},
+    fs::{create_dir_all, remove_dir_all, File},
     io::Write,
     path::PathBuf,
 };
@@ -40,7 +39,7 @@ pub fn solidity_to_sway(contract: String) -> TranspileResponse {
                 let re = Regex::new(r"// Translated from.*").unwrap();
                 let replacement = "// Transpiled from Solidity using charcoal. Generated code may be incorrect or unoptimal.";
                 let sway_contract = re.replace_all(result, replacement).into_owned();
-            
+
                 TranspileResponse {
                     sway_contract,
                     error: None,
@@ -48,9 +47,10 @@ pub fn solidity_to_sway(contract: String) -> TranspileResponse {
             } else {
                 TranspileResponse {
                     sway_contract: "".to_string(),
-                    error: Some(format!(
+                    error: Some(
                         "An unknown error occurred while transpiling the Solidity contract."
-                    )),
+                            .to_string(),
+                    ),
                 }
             };
 

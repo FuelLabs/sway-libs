@@ -8,6 +8,7 @@ import {
 } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
+import { SERVER_URI } from '../../../constants';
 
 function toResults(
   prefixedBytecode: string,
@@ -49,10 +50,7 @@ export function useCompile(
     }
     setResults([<>Compiling Sway contract...</>]);
 
-    // TODO: Determine the URL based on the NODE_ENV.
-    // const server_uri = 'https://api.sway-playground.org/compile';
-    const server_uri = 'http://0.0.0.0:8080/compile';
-    const request = new Request(server_uri, {
+    const request = new Request(SERVER_URI, {
       method: 'POST',
       body: JSON.stringify({
         contract: code,
@@ -96,7 +94,6 @@ export function useCompile(
         }
       })
       .catch(() => {
-        console.error('Unexpected error compiling contract.');
         setServerError(true);
       });
     setIsCompiled(true);

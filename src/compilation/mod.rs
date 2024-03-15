@@ -2,10 +2,13 @@ mod swaypad;
 mod tooling;
 
 use self::{
-    swaypad::{ create_project, remove_project, write_main_file},
+    swaypad::{create_project, remove_project, write_main_file},
     tooling::{build_project, check_forc_version, switch_fuel_toolchain},
 };
-use crate::{types::CompileResponse, util::{read_file_contents, clean_error_content}};
+use crate::{
+    types::CompileResponse,
+    util::{clean_error_content, read_file_contents},
+};
 use hex::encode;
 use std::fs::read_to_string;
 

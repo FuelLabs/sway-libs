@@ -1,5 +1,9 @@
 export const FUEL_GREEN = '#00f58c';
 
+// TODO: Determine the URL based on the NODE_ENV.
+export const SERVER_URI = 'https://api.sway-playground.org/compile';
+// export const SERVER_URI = 'http://0.0.0.0:8080/transpile';
+
 export const DEFAULT_SWAY_CONTRACT = `contract;
 
 abi TestContract {
@@ -50,4 +54,3 @@ contract Counter {
         count -= 1;
     }
 }`;
-

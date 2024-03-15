@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
-import {
-  saveAbi,
-  saveBytecode,
-  saveStorageSlots,
-} from '../../../utils/localStorage';
+import { SERVER_URI } from '../../../constants';
 
 export function useTranspile(
   code: string | undefined,
@@ -27,10 +23,7 @@ export function useTranspile(
       </>,
     ]);
 
-    // TODO: Determine the URL based on the NODE_ENV.
-    // const server_uri = 'https://api.sway-playground.org/compile';
-    const server_uri = 'http://0.0.0.0:8080/transpile';
-    const request = new Request(server_uri, {
+    const request = new Request(SERVER_URI, {
       method: 'POST',
       body: JSON.stringify({
         contract: code,
@@ -67,10 +60,9 @@ export function useTranspile(
         }
       })
       .catch(() => {
-        console.error('Unexpected error transpiling contract.');
         setServerError(true);
       });
-  }, [code, setResults]);
+  }, [code, setResults, onSwayCodeChange, setCodeToCompile]);
 
   useEffect(() => {
     if (serverError) {

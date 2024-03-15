@@ -89,12 +89,12 @@ function App() {
 
   const onCompileClick = useCallback(() => {
     if (showSolidity) {
+      // Transpile the Solidity code before compiling.
       setCodeToTranspile(solidityCode);
-    }
-    if (!showSolidity) {
+    } else {
       setCodeToCompile(swayCode);
     }
-  }, [showSolidity, swayCode, setCodeToCompile, updateLog]);
+  }, [showSolidity, swayCode, solidityCode, setCodeToCompile, updateLog]);
 
   useTranspile(codeToTranspile, setCodeToCompile, onSwayCodeChange, setError, updateLog);
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
