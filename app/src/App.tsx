@@ -1,22 +1,40 @@
-import React, { useCallback, useState } from 'react';
-import Editor from './features/editor/components/Editor';
+import React, { useCallback, useEffect, useState } from 'react';
+import SwayEditor from './features/editor/components/SwayEditor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
 import { DeployState } from './utils/types';
-import { loadCode, saveCode } from './utils/localStorage';
+import {
+  loadSolidityCode,
+  loadSwayCode as loadSwayCode,
+  saveSolidityCode,
+  saveSwayCode,
+} from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
 import { Toolchain } from './features/editor/components/ToolchainDropdown';
+import SolidityEditor from './features/editor/components/SolidityEditor';
+import { useTranspile } from './features/editor/hooks/useTranspile';
 
 const DRAWER_WIDTH = '40vw';
 
 function App() {
-  // The current code in the editor.
-  const [code, setCode] = useState(loadCode());
+  // The current sway code in the editor.
+  const [swayCode, setSwayCode] = useState(loadSwayCode());
+
+  // The current solidity code in the editor.
+  const [solidityCode, setSolidityCode] = useState(loadSolidityCode());
+
+  // An error message to display to the user.
+  const [showSolidity, setShowSolidity] = useState(false);
 
   // The most recent code that the user has requested to compile.
   const [codeToCompile, setCodeToCompile] = useState<string | undefined>(
+    undefined
+  );
+
+  // The most recent code that the user has requested to transpile.
+  const [codeToTranspile, setCodeToTranspile] = useState<string | undefined>(
     undefined
   );
 
@@ -38,13 +56,28 @@ function App() {
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const onCodeChange = useCallback(
+  useEffect(() => {
+    if (showSolidity) {
+      setIsCompiled(false);
+    }
+  }, [showSolidity]);
+
+  const onSwayCodeChange = useCallback(
     (code: string) => {
-      saveCode(code);
-      setCode(code);
+      saveSwayCode(code);
+      setSwayCode(code);
       setIsCompiled(false);
     },
-    [setCode]
+    [setSwayCode]
+  );
+
+  const onSolidityCodeChange = useCallback(
+    (code: string) => {
+      saveSolidityCode(code);
+      setSolidityCode(code);
+      setIsCompiled(false);
+    },
+    [setSolidityCode]
   );
 
   const setError = useCallback(
@@ -54,6 +87,16 @@ function App() {
     [updateLog]
   );
 
+  const onCompileClick = useCallback(() => {
+    if (showSolidity) {
+      setCodeToTranspile(solidityCode);
+    }
+    if (!showSolidity) {
+      setCodeToCompile(swayCode);
+    }
+  }, [showSolidity, swayCode, setCodeToCompile, updateLog]);
+
+  useTranspile(codeToTranspile, setCodeToCompile, onSwayCodeChange, setError, updateLog);
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
@@ -66,11 +109,13 @@ function App() {
       <ActionToolbar
         deployState={deployState}
         setContractId={setContractId}
-        onCompile={() => setCodeToCompile(code)}
+        onCompile={onCompileClick}
         isCompiled={isCompiled}
         setDeployState={setDeployState}
         drawerOpen={drawerOpen}
         setDrawerOpen={setDrawerOpen}
+        showSolidity={showSolidity}
+        setShowSolidity={setShowSolidity}
         updateLog={updateLog}
       />
       <div
@@ -81,12 +126,29 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
         }}>
-        <Editor
-          code={code}
-          onChange={onCodeChange}
-          toolchain={toolchain}
-          setToolchain={setToolchain}
-        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            // TODO
+            // resize: 'vertical',
+            // overflow: 'auto'
+          }}>
+          {showSolidity && <div style={{ flex: 1, marginRight: '1rem' }}>
+            <SolidityEditor
+              code={solidityCode}
+              onChange={onSolidityCodeChange}
+            />
+          </div>}
+          <div style={{ flex: 1 }}>
+            <SwayEditor
+              code={swayCode}
+              onChange={onSwayCodeChange}
+              toolchain={toolchain}
+              setToolchain={setToolchain}
+            />
+          </div>
+        </div>
         <LogView results={log} />
       </div>
       <InteractionDrawer

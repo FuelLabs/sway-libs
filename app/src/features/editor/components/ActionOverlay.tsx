@@ -6,8 +6,8 @@ import Tooltip from '@mui/material/Tooltip';
 
 export interface ActionOverlayProps {
   handleReset: () => void;
-  toolchain: Toolchain;
-  setToolchain: (toolchain: Toolchain) => void;
+  toolchain?: Toolchain;
+  setToolchain?: (toolchain: Toolchain) => void;
 }
 
 function ActionOverlay({
@@ -25,7 +25,7 @@ function ActionOverlay({
           zIndex: 1,
           pointerEvents: 'none',
         }}>
-        <ToolchainDropdown
+        {(toolchain && setToolchain) && <ToolchainDropdown
           style={{
             position: 'absolute',
             right: '68px',
@@ -34,7 +34,7 @@ function ActionOverlay({
           }}
           toolchain={toolchain}
           setToolchain={setToolchain}
-        />
+        />}
         <div>
           <Tooltip placement='top' title={'Reset the editor'}>
             <IconButton

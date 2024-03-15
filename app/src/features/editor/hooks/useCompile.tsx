@@ -33,7 +33,7 @@ export function useCompile(
   onError: (error: string | undefined) => void,
   setIsCompiled: (isCompiled: boolean) => void,
   setResults: (entry: React.ReactElement[]) => void,
-  toolchain: Toolchain
+  toolchain: Toolchain,
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
   const [version, setVersion] = useState<string | undefined>();
@@ -47,12 +47,11 @@ export function useCompile(
       setResults([<>Add some code to compile.</>]);
       return;
     }
-
-    setResults([<>Compiling...</>]);
+    setResults([<>Compiling Sway contract...</>]);
 
     // TODO: Determine the URL based on the NODE_ENV.
-    const server_uri = 'https://api.sway-playground.org/compile';
-    // const server_uri = 'http://0.0.0.0:8080/compile';
+    // const server_uri = 'https://api.sway-playground.org/compile';
+    const server_uri = 'http://0.0.0.0:8080/compile';
     const request = new Request(server_uri, {
       method: 'POST',
       body: JSON.stringify({
@@ -71,7 +70,7 @@ export function useCompile(
       })
       .then((response) => {
         const { error, forcVersion } = response;
-        if (error.length) {
+        if (error) {
           // Preserve the ANSI color codes from the compiler output.
           let parsedAnsi = ansicolor.parse(error);
           let results = parsedAnsi.spans.map((span, i) => {

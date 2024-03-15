@@ -1,9 +1,10 @@
-import { DEFAULT_CONTRACT } from '../constants';
+import { DEFAULT_SWAY_CONTRACT, DEFAULT_SOLIDITY_CONTRACT } from '../constants';
 
 const STORAGE_ABI_KEY = 'playground_abi';
 const STORAGE_SLOTS_KEY = 'playground_slots';
 const STORAGE_BYTECODE_KEY = 'playground_bytecode';
 const STORAGE_CONTRACT_KEY = 'playground_contract';
+const STORAGE_SOLIDITY_CONTRACT_KEY = 'playground_solidity_contract';
 
 export function saveAbi(abi: string) {
   localStorage.setItem(STORAGE_ABI_KEY, abi);
@@ -29,10 +30,18 @@ export function loadBytecode() {
   return localStorage.getItem(STORAGE_BYTECODE_KEY) || '';
 }
 
-export function saveCode(code: string) {
+export function saveSwayCode(code: string) {
   localStorage.setItem(STORAGE_CONTRACT_KEY, code);
 }
 
-export function loadCode() {
-  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? DEFAULT_CONTRACT;
+export function saveSolidityCode(code: string) {
+  localStorage.setItem(STORAGE_SOLIDITY_CONTRACT_KEY, code);
+}
+
+export function loadSwayCode() {
+  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? DEFAULT_SWAY_CONTRACT;
+}
+
+export function loadSolidityCode() {
+  return localStorage.getItem(STORAGE_SOLIDITY_CONTRACT_KEY) ?? DEFAULT_SOLIDITY_CONTRACT;
 }

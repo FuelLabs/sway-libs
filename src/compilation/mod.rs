@@ -1,14 +1,15 @@
-use crate::{types::CompileResponse, util::read_file_contents};
+mod swaypad;
+mod tooling;
 
 use self::{
-    swaypad::{clean_error_content, create_project, remove_project, write_main_file},
+    swaypad::{ create_project, remove_project, write_main_file},
     tooling::{build_project, check_forc_version, switch_fuel_toolchain},
 };
+use crate::{types::CompileResponse, util::{read_file_contents, clean_error_content}};
 use hex::encode;
 use std::fs::read_to_string;
 
-pub mod swaypad;
-pub mod tooling;
+const FILE_NAME: &str = "main.sw";
 
 /// Build and destroy a project.
 pub fn build_and_destroy_project(contract: String, toolchain: String) -> CompileResponse {
@@ -18,8 +19,8 @@ pub fn build_and_destroy_project(contract: String, toolchain: String) -> Compile
             abi: "".to_string(),
             bytecode: "".to_string(),
             storage_slots: "".to_string(),
-            error: "No contract.".to_string(),
             forc_version: "".to_string(),
+            error: Some("No contract.".to_string()),
         };
     }
 
@@ -52,11 +53,11 @@ pub fn build_and_destroy_project(contract: String, toolchain: String) -> Compile
 
         // Return the abi, bin, empty error message, and forc version.
         CompileResponse {
-            abi: clean_error_content(abi),
-            bytecode: clean_error_content(encode(bin)),
+            abi: clean_error_content(abi, FILE_NAME),
+            bytecode: clean_error_content(encode(bin), FILE_NAME),
             storage_slots: String::from_utf8_lossy(&storage_slots).into(),
-            error: String::from(""),
             forc_version,
+            error: None,
         }
     } else {
         // Get the error message presented in the console output.
@@ -76,7 +77,7 @@ pub fn build_and_destroy_project(contract: String, toolchain: String) -> Compile
             abi: String::from(""),
             bytecode: String::from(""),
             storage_slots: String::from(""),
-            error: clean_error_content(trunc),
+            error: Some(clean_error_content(trunc, FILE_NAME)),
             forc_version,
         }
     }

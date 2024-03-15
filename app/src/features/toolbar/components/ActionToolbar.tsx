@@ -19,6 +19,8 @@ export interface ActionToolbarProps {
   setDeployState: (state: DeployState) => void;
   drawerOpen: boolean;
   setDrawerOpen: (open: boolean) => void;
+  showSolidity: boolean;
+  setShowSolidity: (open: boolean) => void;
   updateLog: (entry: string) => void;
 }
 
@@ -30,6 +32,8 @@ function ActionToolbar({
   setDeployState,
   drawerOpen,
   setDrawerOpen,
+  showSolidity,
+  setShowSolidity,
   updateLog,
 }: ActionToolbarProps) {
   return (
@@ -65,6 +69,16 @@ function ActionToolbar({
           deployState !== DeployState.DEPLOYED
             ? 'A contract must be deployed to interact with it on-chain'
             : 'Interact with the contract ABI'
+        }
+      />
+      <SecondaryButton
+        header={true}
+        onClick={() => setShowSolidity(!showSolidity)}
+        text='SOLIDITY'
+        tooltip={
+          showSolidity
+            ? 'Hide the Solidity editor'
+            : 'Show the Solidity editor to transpile Solidity to Sway'
         }
       />
       <SecondaryButton

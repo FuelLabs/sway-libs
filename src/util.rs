@@ -3,6 +3,8 @@ use std::io::Read;
 use std::path::Path;
 use std::process::{Command, Output, Stdio};
 
+use regex::Regex;
+
 /// Check the version of forc.
 pub fn spawn_and_wait(cmd: &mut Command) -> Output {
     // Pipe stdin, stdout, and stderr to the child.
@@ -40,4 +42,11 @@ pub fn read_file_contents(file_name: String) -> Vec<u8> {
 
     // Return the file's contents.
     file_content
+}
+
+/// This replaces the full file paths in error messages with just the file name.
+pub fn clean_error_content(content: String, filename: &str) -> std::string::String {
+    let path_pattern = Regex::new(format!(r"(/).*(/{filename})").as_str()).unwrap();
+
+    path_pattern.replace_all(&content, filename).to_string()
 }

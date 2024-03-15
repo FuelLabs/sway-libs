@@ -5,21 +5,21 @@ import 'ace-builds/src-noconflict/mode-rust';
 import 'ace-builds/src-noconflict/theme-chrome';
 import { StyledBorder } from '../../../components/shared';
 import ActionOverlay from './ActionOverlay';
-import { DEFAULT_CONTRACT } from '../../../constants';
+import { DEFAULT_SWAY_CONTRACT } from '../../../constants';
 import { Toolchain } from './ToolchainDropdown';
 
-export interface EditorProps {
+export interface SwayEditorProps {
   code: string;
   onChange: (value: string) => void;
   toolchain: Toolchain;
   setToolchain: (toolchain: Toolchain) => void;
 }
 
-function Editor({ code, onChange, toolchain, setToolchain }: EditorProps) {
+function SwayEditor({ code, onChange, toolchain, setToolchain }: SwayEditorProps) {
   return (
     <div>
       <ActionOverlay
-        handleReset={() => onChange(DEFAULT_CONTRACT)}
+        handleReset={() => onChange(DEFAULT_SWAY_CONTRACT)}
         toolchain={toolchain}
         setToolchain={setToolchain}
       />
@@ -44,4 +44,4 @@ function Editor({ code, onChange, toolchain, setToolchain }: EditorProps) {
   );
 }
 
-export default Editor;
+export default SwayEditor;
