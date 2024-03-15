@@ -15,26 +15,22 @@ export interface SolidityEditorProps {
 
 function SolidityEditor({ code, onChange }: SolidityEditorProps) {
   return (
-    <div>
+    <StyledBorder style={{ flex: 1, marginRight: '1rem' }}>
       <ActionOverlay handleReset={() => onChange(DEFAULT_SOLIDITY_CONTRACT)} />
-      <StyledBorder>
-        <AceEditor
-          style={{
-            width: '100%',
-            resize: 'vertical',
-            minHeight: '10vh',
-            maxHeight: '80vh',
-          }}
-          mode='solidity'
-          theme='chrome'
-          name='editor'
-          fontSize='14px'
-          onChange={onChange}
-          value={code}
-          editorProps={{ $blockScrolling: true }}
-        />
-      </StyledBorder>
-    </div>
+      <AceEditor
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        mode='solidity'
+        theme='chrome'
+        name='editor'
+        fontSize='14px'
+        onChange={onChange}
+        value={code}
+        editorProps={{ $blockScrolling: true }}
+      />
+    </StyledBorder>
   );
 }
 

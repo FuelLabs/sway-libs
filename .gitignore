@@ -6,4 +6,5 @@ target
 build
 node_modules
 tmp
+projects
 .vscode/*

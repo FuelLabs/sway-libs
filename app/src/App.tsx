@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import SwayEditor from './features/editor/components/SwayEditor';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
@@ -13,8 +12,8 @@ import {
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
 import { Toolchain } from './features/editor/components/ToolchainDropdown';
-import SolidityEditor from './features/editor/components/SolidityEditor';
 import { useTranspile } from './features/editor/hooks/useTranspile';
+import EditorView from './features/editor/components/EditorView';
 
 const DRAWER_WIDTH = '40vw';
 
@@ -96,7 +95,13 @@ function App() {
     }
   }, [showSolidity, swayCode, solidityCode, setCodeToCompile, updateLog]);
 
-  useTranspile(codeToTranspile, setCodeToCompile, onSwayCodeChange, setError, updateLog);
+  useTranspile(
+    codeToTranspile,
+    setCodeToCompile,
+    onSwayCodeChange,
+    setError,
+    updateLog
+  );
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
@@ -126,29 +131,15 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
         }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            // TODO
-            // resize: 'vertical',
-            // overflow: 'auto'
-          }}>
-          {showSolidity && <div style={{ flex: 1, marginRight: '1rem' }}>
-            <SolidityEditor
-              code={solidityCode}
-              onChange={onSolidityCodeChange}
-            />
-          </div>}
-          <div style={{ flex: 1 }}>
-            <SwayEditor
-              code={swayCode}
-              onChange={onSwayCodeChange}
-              toolchain={toolchain}
-              setToolchain={setToolchain}
-            />
-          </div>
-        </div>
+        <EditorView
+          swayCode={swayCode}
+          onSwayCodeChange={onSwayCodeChange}
+          solidityCode={solidityCode}
+          onSolidityCodeChange={onSolidityCodeChange}
+          toolchain={toolchain}
+          setToolchain={setToolchain}
+          showSolidity={showSolidity}
+        />
         <LogView results={log} />
       </div>
       <InteractionDrawer

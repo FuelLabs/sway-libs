@@ -15,32 +15,33 @@ export interface SwayEditorProps {
   setToolchain: (toolchain: Toolchain) => void;
 }
 
-function SwayEditor({ code, onChange, toolchain, setToolchain }: SwayEditorProps) {
+function SwayEditor({
+  code,
+  onChange,
+  toolchain,
+  setToolchain,
+}: SwayEditorProps) {
   return (
-    <div>
+    <StyledBorder style={{ flex: 1 }}>
       <ActionOverlay
         handleReset={() => onChange(DEFAULT_SWAY_CONTRACT)}
         toolchain={toolchain}
         setToolchain={setToolchain}
       />
-      <StyledBorder>
-        <AceEditor
-          style={{
-            width: '100%',
-            resize: 'vertical',
-            minHeight: '10vh',
-            maxHeight: '80vh',
-          }}
-          mode='rust'
-          theme='chrome'
-          name='editor'
-          fontSize='14px'
-          onChange={onChange}
-          value={code}
-          editorProps={{ $blockScrolling: true }}
-        />
-      </StyledBorder>
-    </div>
+      <AceEditor
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+        mode='rust'
+        theme='chrome'
+        name='editor'
+        fontSize='14px'
+        onChange={onChange}
+        value={code}
+        editorProps={{ $blockScrolling: true }}
+      />
+    </StyledBorder>
   );
 }
 

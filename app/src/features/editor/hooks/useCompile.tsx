@@ -34,7 +34,7 @@ export function useCompile(
   onError: (error: string | undefined) => void,
   setIsCompiled: (isCompiled: boolean) => void,
   setResults: (entry: React.ReactElement[]) => void,
-  toolchain: Toolchain,
+  toolchain: Toolchain
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
   const [version, setVersion] = useState<string | undefined>();
@@ -50,7 +50,7 @@ export function useCompile(
     }
     setResults([<>Compiling Sway contract...</>]);
 
-    const request = new Request(SERVER_URI, {
+    const request = new Request(`${SERVER_URI}/compile`, {
       method: 'POST',
       body: JSON.stringify({
         contract: code,

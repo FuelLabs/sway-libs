@@ -1,8 +1,8 @@
 export const FUEL_GREEN = '#00f58c';
 
 // TODO: Determine the URL based on the NODE_ENV.
-export const SERVER_URI = 'https://api.sway-playground.org/compile';
-// export const SERVER_URI = 'http://0.0.0.0:8080/transpile';
+// export const SERVER_URI = 'https://api.sway-playground.org';
+export const SERVER_URI = 'http://0.0.0.0:8080';
 
 export const DEFAULT_SWAY_CONTRACT = `contract;
 
@@ -32,14 +32,13 @@ impl TestContract for Contract {
     }
 }`;
 
-export const DEFAULT_SOLIDITY_CONTRACT = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+export const DEFAULT_SOLIDITY_CONTRACT = `pragma solidity ^0.8.24;
 
 contract Counter {
-    uint256 public count;
+    uint64 public count;
 
     // Function to get the current count
-    function get_counter() public view returns (uint256) {
+    function get_counter() public view returns (uint64) {
         return count;
     }
 

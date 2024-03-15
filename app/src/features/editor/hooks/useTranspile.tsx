@@ -23,7 +23,7 @@ export function useTranspile(
       </>,
     ]);
 
-    const request = new Request(SERVER_URI, {
+    const request = new Request(`${SERVER_URI}/transpile`, {
       method: 'POST',
       body: JSON.stringify({
         contract: code,
