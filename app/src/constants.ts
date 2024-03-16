@@ -35,7 +35,7 @@ impl Counter for Contract {
 export const DEFAULT_SOLIDITY_CONTRACT = `pragma solidity ^0.8.24;
 
 contract Counter {
-    uint64 public count;
+    uint64 count;
 
     function get() public view returns (uint64) {
         return count;
