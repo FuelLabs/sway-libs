@@ -64,7 +64,7 @@ cargo run
 Alternatively, it can be run locally with Docker, as it is in the deployed environment.
 
 ```sh
-docker build -f deployment .
+docker build -f deployment/Dockerfile .
 docker run -p 8080:8080 -d <image-sha>
 ```
 

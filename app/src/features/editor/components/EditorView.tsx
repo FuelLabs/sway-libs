@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import SolidityEditor from './SolidityEditor';
 import SwayEditor from './SwayEditor';
 import { Toolchain } from './ToolchainDropdown';

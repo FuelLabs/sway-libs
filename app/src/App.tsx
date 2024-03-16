@@ -5,7 +5,7 @@ import { useCompile } from './features/editor/hooks/useCompile';
 import { DeployState } from './utils/types';
 import {
   loadSolidityCode,
-  loadSwayCode as loadSwayCode,
+  loadSwayCode,
   saveSolidityCode,
   saveSwayCode,
 } from './utils/localStorage';
@@ -93,7 +93,7 @@ function App() {
     } else {
       setCodeToCompile(swayCode);
     }
-  }, [showSolidity, swayCode, solidityCode, setCodeToCompile, updateLog]);
+  }, [showSolidity, swayCode, solidityCode, setCodeToCompile, setCodeToTranspile]);
 
   useTranspile(
     codeToTranspile,
