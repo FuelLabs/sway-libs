@@ -43,8 +43,8 @@ COPY --from=builder /build/Rocket.toml .
 COPY --from=builder /build/projects projects
 
 # Install fuelup
-RUN curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh -s -- --no-modify-path
-ENV PATH="/root/.fuelup/bin:$PATH"
+RUN curl -fsSL https://install.fuel.network/ | sh -s -- --no-modify-path
+ENV PATH="/root/.fuelup/bin:$HOME/.cargo/bin:$PATH"
 
 # Install all fuel toolchains
 RUN fuelup toolchain install latest
@@ -54,6 +54,10 @@ RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
 RUN fuelup toolchain install beta-4
 RUN fuelup toolchain install beta-5
+
+# Install charcoal
+RUN git clone https://github.com/camden-smallwood/charcoal.git
+RUN cargo install --path charcoal
 
 EXPOSE 8080
 
