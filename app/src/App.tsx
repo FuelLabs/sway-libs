@@ -14,7 +14,6 @@ import { useLog } from './features/editor/hooks/useLog';
 import { Toolchain } from './features/editor/components/ToolchainDropdown';
 import { useTranspile } from './features/editor/hooks/useTranspile';
 import EditorView from './features/editor/components/EditorView';
-import { useIsMobile } from './hooks/useIsMobile';
 
 const DRAWER_WIDTH = '40vw';
 
@@ -94,7 +93,13 @@ function App() {
     } else {
       setCodeToCompile(swayCode);
     }
-  }, [showSolidity, swayCode, solidityCode, setCodeToCompile, setCodeToTranspile]);
+  }, [
+    showSolidity,
+    swayCode,
+    solidityCode,
+    setCodeToCompile,
+    setCodeToTranspile,
+  ]);
 
   useTranspile(
     codeToTranspile,
