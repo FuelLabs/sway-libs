@@ -22,7 +22,13 @@ function SecondaryButton({
   header,
 }: SecondaryButtonProps) {
   if (!!header) {
-    style = { ...style, minWidth: '115px', height: '40px', marginLeft: '15px' };
+    style = {
+      ...style,
+      minWidth: '115px',
+      height: '40px',
+      marginRight: '15px',
+      marginBottom: '10px',
+    };
   }
   return (
     <Tooltip title={tooltip}>

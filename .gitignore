@@ -5,3 +5,5 @@ target
 /certs/*
 build
 node_modules
+tmp
+.vscode/*

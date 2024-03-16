@@ -1,7 +1,8 @@
 # Stage 1: Build
-FROM lukemathwalker/cargo-chef:latest-rust-1.70 as chef
+FROM lukemathwalker/cargo-chef:latest-rust-1.76 as chef
 WORKDIR /build/
 # hadolint ignore=DL3008
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     lld \
@@ -10,12 +11,17 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Build sway-playground
 FROM chef as planner
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef as builder
+
+# Install charcoal
+RUN cargo install --git https://github.com/camden-smallwood/charcoal.git --rev f6338bf318500dd6977af813c37f66c504925c44
+
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 COPY --from=planner /build/recipe.json recipe.json
 # Build our project dependecies, not our application!
@@ -41,9 +47,10 @@ COPY --from=builder /build/target/debug/sway-playground .
 COPY --from=builder /build/target/debug/sway-playground.d .
 COPY --from=builder /build/Rocket.toml .
 COPY --from=builder /build/projects projects
+COPY --from=builder /usr/local/cargo/bin/charcoal /bin
 
 # Install fuelup
-RUN curl --proto '=https' --tlsv1.2 -sSf https://install.fuel.network/fuelup-init.sh | sh -s -- --no-modify-path
+RUN curl -fsSL https://install.fuel.network/ | sh -s -- --no-modify-path
 ENV PATH="/root/.fuelup/bin:$PATH"
 
 # Install all fuel toolchains

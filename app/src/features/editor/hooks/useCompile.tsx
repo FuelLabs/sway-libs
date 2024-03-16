@@ -8,6 +8,7 @@ import {
 } from '../../../utils/localStorage';
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
+import { SERVER_URI } from '../../../constants';
 
 function toResults(
   prefixedBytecode: string,
@@ -47,13 +48,9 @@ export function useCompile(
       setResults([<>Add some code to compile.</>]);
       return;
     }
+    setResults([<>Compiling Sway contract...</>]);
 
-    setResults([<>Compiling...</>]);
-
-    // TODO: Determine the URL based on the NODE_ENV.
-    const server_uri = 'https://api.sway-playground.org/compile';
-    // const server_uri = 'http://0.0.0.0:8080/compile';
-    const request = new Request(server_uri, {
+    const request = new Request(`${SERVER_URI}/compile`, {
       method: 'POST',
       body: JSON.stringify({
         contract: code,
@@ -71,7 +68,7 @@ export function useCompile(
       })
       .then((response) => {
         const { error, forcVersion } = response;
-        if (error.length) {
+        if (error) {
           // Preserve the ANSI color codes from the compiler output.
           let parsedAnsi = ansicolor.parse(error);
           let results = parsedAnsi.spans.map((span, i) => {
@@ -97,7 +94,6 @@ export function useCompile(
         }
       })
       .catch(() => {
-        console.error('Unexpected error compiling contract.');
         setServerError(true);
       });
     setIsCompiled(true);
