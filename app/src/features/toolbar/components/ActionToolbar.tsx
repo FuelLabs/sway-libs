@@ -68,17 +68,19 @@ function ActionToolbar({
           updateLog={updateLog}
         />
       )}
-      <SecondaryButton
-        header={true}
-        onClick={() => setDrawerOpen(!drawerOpen)}
-        text='INTERACT'
-        disabled={deployState !== DeployState.DEPLOYED}
-        tooltip={
-          deployState !== DeployState.DEPLOYED
-            ? 'A contract must be deployed to interact with it on-chain'
-            : 'Interact with the contract ABI'
-        }
-      />
+      {!isMobile && (
+        <SecondaryButton
+          header={true}
+          onClick={() => setDrawerOpen(!drawerOpen)}
+          text='INTERACT'
+          disabled={deployState !== DeployState.DEPLOYED}
+          tooltip={
+            deployState !== DeployState.DEPLOYED
+              ? 'A contract must be deployed to interact with it on-chain'
+              : 'Interact with the contract ABI'
+          }
+        />
+      )}
       <SecondaryButton
         header={true}
         onClick={() => setShowSolidity(!showSolidity)}
