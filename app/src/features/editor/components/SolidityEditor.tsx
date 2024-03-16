@@ -7,6 +7,7 @@ import { StyledBorder } from '../../../components/shared';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import ActionOverlay from './ActionOverlay';
 import { DEFAULT_SOLIDITY_CONTRACT } from '../../../constants';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 export interface SolidityEditorProps {
   code: string;
@@ -14,8 +15,15 @@ export interface SolidityEditorProps {
 }
 
 function SolidityEditor({ code, onChange }: SolidityEditorProps) {
+  const isMobile = useIsMobile();
+
   return (
-    <StyledBorder style={{ flex: 1, marginRight: '1rem' }}>
+    <StyledBorder
+      style={{
+        flex: 1,
+        marginRight: isMobile ? 0 : '1rem',
+        marginBottom: isMobile ? '1rem' : 0,
+      }}>
       <ActionOverlay handleReset={() => onChange(DEFAULT_SOLIDITY_CONTRACT)} />
       <AceEditor
         style={{

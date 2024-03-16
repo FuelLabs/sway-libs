@@ -2,6 +2,7 @@ import React from 'react';
 import SolidityEditor from './SolidityEditor';
 import SwayEditor from './SwayEditor';
 import { Toolchain } from './ToolchainDropdown';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 export interface EditorViewProps {
   swayCode: string;
@@ -22,16 +23,18 @@ function EditorView({
   setToolchain,
   showSolidity,
 }: EditorViewProps) {
+  const isMobile = useIsMobile();
+
   return (
     <div
       style={{
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: isMobile ? 'column' : 'row',
         height: '50vh',
         minHeight: '10vh',
         maxHeight: '80vh',
         position: 'relative',
-        resize: 'vertical',
+        resize: isMobile ? 'none' : 'vertical',
         overflow: 'auto',
       }}>
       {showSolidity && (

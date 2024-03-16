@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
@@ -10,6 +10,7 @@ import {
   loadBytecode,
   loadStorageSlots,
 } from '../../../utils/localStorage';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -36,11 +37,16 @@ function ActionToolbar({
   setShowSolidity,
   updateLog,
 }: ActionToolbarProps) {
+  const isMobile = useIsMobile();
+  const onDocsClick = useCallback(() => {
+    window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer');
+  }, []);
+
   return (
     <div
       style={{
-        margin: '5px 0 15px',
-        display: 'flex',
+        margin: '5px 0 10px',
+        display: isMobile ? 'inline-table' : 'flex',
       }}>
       <CompileButton
         onClick={onCompile}
@@ -49,17 +55,19 @@ function ActionToolbar({
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
         tooltip='Compile sway code'
       />
-      <DeploymentButton
-        abi={loadAbi()}
-        bytecode={loadBytecode()}
-        storageSlots={loadStorageSlots()}
-        isCompiled={isCompiled}
-        setContractId={setContractId}
-        deployState={deployState}
-        setDeployState={setDeployState}
-        setDrawerOpen={setDrawerOpen}
-        updateLog={updateLog}
-      />
+      {!isMobile && (
+        <DeploymentButton
+          abi={loadAbi()}
+          bytecode={loadBytecode()}
+          storageSlots={loadStorageSlots()}
+          isCompiled={isCompiled}
+          setContractId={setContractId}
+          deployState={deployState}
+          setDeployState={setDeployState}
+          setDrawerOpen={setDrawerOpen}
+          updateLog={updateLog}
+        />
+      )}
       <SecondaryButton
         header={true}
         onClick={() => setDrawerOpen(!drawerOpen)}
@@ -83,13 +91,7 @@ function ActionToolbar({
       />
       <SecondaryButton
         header={true}
-        onClick={() =>
-          window.open(
-            'https://docs.fuel.network/docs/sway',
-            '_blank',
-            'noreferrer'
-          )
-        }
+        onClick={onDocsClick}
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}
         endIcon={<OpenInNew style={{ fontSize: '16px' }} />}

@@ -26,6 +26,9 @@ function CompileButton({
           sx={{
             ...style,
             height: '40px',
+            marginRight: '15px',
+            width: '115px',
+            marginBottom: '10px',
             background: lightColors.scalesGreen7,
             borderColor: darkColors.gray6,
             color: darkColors.gray6,
