@@ -20,6 +20,8 @@ export function useTranspile(
       <>
         Transpiling Solidity code with{' '}
         <a href='https://github.com/camden-smallwood/charcoal'>charcoal</a>...
+        <br />
+        WARNING: no support for delegatecall, this, ASM, strings. Coming soon in future releases.
       </>,
     ]);
 
