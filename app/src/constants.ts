@@ -92,7 +92,8 @@ impl Counter for Contract {
     }
 }`;
 
-export const EXAMPLE_SOLIDITY_CONTRACT_COUNTER = `pragma solidity ^0.8.24;
+export const EXAMPLE_SOLIDITY_CONTRACT_COUNTER = `// no support for delegatecall, this, strings & ASM blocks.
+pragma solidity ^0.8.24;
 
 contract Counter {
     uint64 count;
@@ -106,7 +107,7 @@ contract Counter {
     }
 }`;
 
-export const EXAMPLE_SOLIDITY_CONTRACT_ERC20_TOKEN = `pragma solidity ^0.8.24;
+export const EXAMPLE_SOLIDITY_CONTRACT_ERC20 = `pragma solidity ^0.8.24;
 /// token.sol -- ERC20 implementation with minting and burning.
 /// Based on DSToken contract with many modifications.
 
@@ -209,30 +210,41 @@ contract ERC20 {
     }
 }`;
 
-export const EXAMPLE_SOLIDITY_CONTRACT_3 = `pragma solidity ^0.8.24;
+export const EXAMPLE_SOLIDITY_CONTRACT_VOTING = `pragma solidity ^0.8.24;
 
-contract Counter {
-    uint64 count;
-
-    function get() public view returns (uint64) {
-        return count;
+contract Voting {
+    uint64 public numVoters;
+    mapping(bytes32 => uint256) public votes;
+    mapping(address =>  mapping(bytes32 => bool)) public hasVoted;
+    mapping(address => bool) public voters;
+    
+    constructor(address[] memory voters_) public {
+        for (numVoters = 0; numVoters < voters_.length; numVoters++) {
+            voters[voters_[numVoters]] = true;
+        }
     }
+    
+    function vote(bytes32 topic) public returns (bool) {
+        require(voters[msg.sender], "is-voter");
+        require(hasVoted[msg.sender][topic] == false, "has-voted");
+        
+        votes[topic] += 1;
+        hasVoted[msg.sender][topic] = true;
 
-    function increment() public {
-        count += 1;
+        return true;
     }
 }`;
 
 export const EXAMPLE_SWAY_CONTRACTS: ExampleMenuItem[] = [
-  { label: 'Counter', code: EXAMPLE_SWAY_CONTRACT_COUNTER },
+  { label: 'counter.sw', code: EXAMPLE_SWAY_CONTRACT_COUNTER },
   { label: 'Example 2', code: EXAMPLE_SWAY_CONTRACT_2 },
   { label: 'Example 3', code: EXAMPLE_SWAY_CONTRACT_3 },
 ];
 
 export const EXAMPLE_SOLIDITY_CONTRACTS: ExampleMenuItem[] = [
-  { label: 'Counter', code: EXAMPLE_SOLIDITY_CONTRACT_COUNTER },
-  { label: 'ERC20 Token', code: EXAMPLE_SOLIDITY_CONTRACT_ERC20_TOKEN },
-  { label: 'Example 3', code: EXAMPLE_SOLIDITY_CONTRACT_3 },
+  { label: 'Counter.sol', code: EXAMPLE_SOLIDITY_CONTRACT_COUNTER },
+  { label: 'ERC20.sol', code: EXAMPLE_SOLIDITY_CONTRACT_ERC20 },
+  { label: 'Voting.sol', code: EXAMPLE_SOLIDITY_CONTRACT_VOTING },
 ];
 
 export const EXAMPLE_CONTRACTS: Record<EditorLanguage, ExampleMenuItem[]> = {
