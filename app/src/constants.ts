@@ -1,8 +1,8 @@
 export const FUEL_GREEN = '#00f58c';
 
-// TODO: Determine the URL based on the NODE_ENV.
-export const SERVER_URI = 'https://api.sway-playground.org';
-// export const SERVER_URI = 'http://0.0.0.0:8080';
+export const SERVER_URI = process.env.REACT_APP_LOCAL_SERVER
+  ? 'http://0.0.0.0:8080'
+  : 'https://api.sway-playground.org';
 
 export const DEFAULT_SWAY_CONTRACT = `contract;
 
