@@ -1,19 +1,22 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Delete from '@mui/icons-material/Delete';
 import ToolchainDropdown, { Toolchain } from './ToolchainDropdown';
-import Tooltip from '@mui/material/Tooltip';
+import ExampleDropdown from './ExampleDropdown';
+import { EXAMPLE_CONTRACTS } from '../../../constants';
+
+export type EditorLanguage = 'sway' | 'solidity';
 
 export interface ActionOverlayProps {
-  handleReset: () => void;
+  handleSelectExample: (example: string) => void;
   toolchain?: Toolchain;
   setToolchain?: (toolchain: Toolchain) => void;
+  editorLanguage: EditorLanguage;
 }
 
 function ActionOverlay({
-  handleReset,
+  handleSelectExample,
   toolchain,
   setToolchain,
+  editorLanguage
 }: ActionOverlayProps) {
   return (
     <div style={{ position: 'relative' }}>
@@ -35,21 +38,7 @@ function ActionOverlay({
           toolchain={toolchain}
           setToolchain={setToolchain}
         />}
-        <div>
-          <Tooltip placement='top' title={'Reset the editor'}>
-            <IconButton
-              style={{
-                position: 'absolute',
-                right: '18px',
-                top: '18px',
-                pointerEvents: 'all',
-              }}
-              onClick={handleReset}
-              aria-label='reset the editor'>
-              <Delete />
-            </IconButton>
-          </Tooltip>
-        </div>
+        <ExampleDropdown handleSelect={handleSelectExample} examples={EXAMPLE_CONTRACTS[editorLanguage]} />
       </div>
     </div>
   );

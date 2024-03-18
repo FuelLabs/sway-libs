@@ -5,7 +5,6 @@ import 'ace-builds/src-noconflict/mode-rust';
 import 'ace-builds/src-noconflict/theme-chrome';
 import { StyledBorder } from '../../../components/shared';
 import ActionOverlay from './ActionOverlay';
-import { DEFAULT_SWAY_CONTRACT } from '../../../constants';
 import { Toolchain } from './ToolchainDropdown';
 
 export interface SwayEditorProps {
@@ -24,9 +23,10 @@ function SwayEditor({
   return (
     <StyledBorder style={{ flex: 1 }}>
       <ActionOverlay
-        handleReset={() => onChange(DEFAULT_SWAY_CONTRACT)}
+        handleSelectExample={onChange}
         toolchain={toolchain}
         setToolchain={setToolchain}
+        editorLanguage='sway'
       />
       <AceEditor
         style={{

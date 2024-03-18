@@ -79,13 +79,10 @@ npm start
 
 This will open http://localhost:3000 in your browser. By default, it will use the production backend endpoint. 
 
-To test against the backend running locally, make this change in `app/src/constants.ts`:
+To test against the backend running locally, you can use the environment variable `REACT_APP_LOCAL_SERVER` when you start the app, like this:
 
-```diff
--    export const SERVER_URI = 'https://api.sway-playground.org';
--    // export const SERVER_URI = 'http://0.0.0.0:8080';
-+    // export const SERVER_URI = 'https://api.sway-playground.org';
-+    export const SERVER_URI = 'http://0.0.0.0:8080';
+```sh
+REACT_APP_LOCAL_SERVER=true npm start
 ```
 
 ## Contributing to Sway
