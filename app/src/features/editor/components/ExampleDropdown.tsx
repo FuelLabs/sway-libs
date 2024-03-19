@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
@@ -17,56 +17,56 @@ export interface ExampleDropdownProps {
   style?: React.CSSProperties;
 }
 
-function ExampleDropdown({ handleSelect, examples, style }: ExampleDropdownProps) {
+function ExampleDropdown({
+  handleSelect,
+  examples,
+  style,
+}: ExampleDropdownProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const onButtonClick = (event: any ) => { // todo
-    console.log('click', event.target);
+  const onButtonClick = useCallback((event: any) => {
     setAnchorEl(event.target);
-  };
+  }, [setAnchorEl]);
 
-  const onItemClick = (code: string) => { // todo
-    console.log(code);
-    // console.log('item click', event.target.value);
-    handleClose();
-    // handleSelect(event.target.value);
-    handleSelect(code);
-  };
-
-
-  const handleClose = () => {
-    console.log('close');
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  }
+  }, [setAnchorEl]);
+
+  const onItemClick = useCallback((code: string) => {
+    handleClose();
+    handleSelect(code);
+  }, [handleSelect, handleClose]);
 
   return (
     <div style={{ ...style }}>
-       
-
-        <Dropdown 
-          >
-                  <Tooltip placement='top' title={'Select an example'}>
-
-            <IconButton
-          style={{
-            position: 'absolute',
-            right: '18px',
-            top: '18px',
-            pointerEvents: 'all',
-          }}
-          onClick={onButtonClick}
-          aria-label='select an example'>
-          <FileOpen />
-        </IconButton>
+      <Dropdown>
+        <Tooltip placement='top' title={'Select an example'}>
+          <IconButton
+            style={{
+              position: 'absolute',
+              right: '18px',
+              top: '18px',
+              pointerEvents: 'all',
+            }}
+            onClick={onButtonClick}
+            aria-label='select an example'>
+            <FileOpen />
+          </IconButton>
         </Tooltip>
 
-          <Menu keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} >
-            {examples.map(({label, code}: ExampleMenuItem, index) => (<MenuItem key={`${label}-${index}`} onClick={() => onItemClick(code)} >{label}</MenuItem>)) }
-            {/* <MenuItem onClick={onItemClick} value={0}>Profile</MenuItem>
-            <MenuItem onClick={onItemClick} value={1} >Language settings</MenuItem>
-            <MenuItem onClick={onItemClick} value={2}>Log out</MenuItem> */}
-          </Menu>
-        </Dropdown>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}>
+          {examples.map(({ label, code }: ExampleMenuItem, index) => (
+            <MenuItem
+              key={`${label}-${index}`}
+              onClick={() => onItemClick(code)}>
+              {label}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Dropdown>
     </div>
   );
 }

@@ -1,13 +1,33 @@
 [[package]]
 name = "core"
-source = "path+from-root-63B5D95B29B128A3"
+source = "path+from-root-4F1FAAE4510FEB23"
+
+[[package]]
+name = "src20"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.3.3#4198b4b07449ad16104cc8a0501f3013670fdcfd"
+dependencies = ["std"]
+
+[[package]]
+name = "src3"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.3.3#4198b4b07449ad16104cc8a0501f3013670fdcfd"
+dependencies = ["std"]
+
+[[package]]
+name = "src5"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.3.3#4198b4b07449ad16104cc8a0501f3013670fdcfd"
+dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.45.0#92dc9f361a9508a940c0d0708130f26fa044f6b3"
+source = "git+https://github.com/fuellabs/sway?tag=v0.51.1#d1e8f019c1da46273c3d3a72b385ce356ba2bc20"
 dependencies = ["core"]
 
 [[package]]
 name = "swaypad"
 source = "member"
-dependencies = ["std"]
+dependencies = [
+    "src20",
+    "src3",
+    "src5",
+    "std",
+]
