@@ -120,14 +120,6 @@ impl SRC20 for Contract {
     }
 }
 
-#[storage(read)]
-fn is_owner() {
-    require(
-        storage.owner.read() == State::Initialized(msg_sender().unwrap()),
-        AccessError::NotOwner,
-    );
-}
-
 impl Constructor for Contract {
     #[storage(read, write)]
     fn constructor(owner_: Identity) {
