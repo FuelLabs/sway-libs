@@ -8,7 +8,9 @@ on:
       - v*
 
 env:
-  RUST_VERSION: 1.63.0
+  RUST_VERSION: 1.75.0
+  FORC_VERSION: 0.50.0
+  CORE_VERSION: 0.22.0
 
 jobs:
   deploy-contributing:
