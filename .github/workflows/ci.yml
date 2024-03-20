@@ -67,7 +67,6 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.RUST_VERSION }}
-          components: rustfmt
 
       - name: Init cache
         uses: Swatinem/rust-cache@v2
@@ -139,7 +138,6 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.RUST_VERSION }}
-          components: rustfmt
 
       - name: Init cache
         uses: Swatinem/rust-cache@v2
