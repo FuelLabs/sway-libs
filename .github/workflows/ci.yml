@@ -23,7 +23,6 @@ env:
 jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
-      
       steps:
         - name: Checkout repository
           uses: actions/checkout@v2
@@ -103,11 +102,9 @@ jobs:
 
   contributing-book:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         project: [".docs/contributing-book/src/code"]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -136,3 +133,37 @@ jobs:
 
       - name: Build Sway
         run: forc build --path ${{ matrix.project }}
+
+  build-forc-doc-sway-libs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          [
+            "admin",
+            "bytecode",
+            "fixed_point",
+            "merkle_proof",
+            "native_asset",
+            "ownership",
+            "pausable",
+            "queue",
+            "reentrancy",
+            "signed_integers",
+          ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Forc
+        run: cargo install --locked --debug --path ./forc
+      - name: Install Forc plugins
+        run: |
+          cargo install --locked --debug --path ./forc-plugins/forc-doc
+      - name: Build sway-libs docs
+        run: |
+          cd libs/${{ matrix.project }}
+          forc doc
