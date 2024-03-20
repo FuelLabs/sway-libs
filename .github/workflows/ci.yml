@@ -18,37 +18,22 @@ env:
   RUST_VERSION: 1.75.0
   FORC_VERSION: 0.50.0
   CORE_VERSION: 0.22.0
-  PATH_TO_SCRIPTS: .github/scripts
 
 jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
 
         - name: Install Rust toolchain
-          uses: actions-rs/toolchain@v1
+          uses: dtolnay/rust-toolchain@master
           with:
-            profile: minimal
             toolchain: ${{ env.RUST_VERSION }}
-            override: true
+            components: rustfmt
 
         - name: Init cache
-          uses: Swatinem/rust-cache@v1
-
-        - name: Install a modern linker (mold)
-          uses: rui314/setup-mold@v1
-
-        - name: Force Rust to use mold globally for compilation
-          run: |
-            touch ~/.cargo/config.toml
-            echo "[target.x86_64-unknown-linux-gnu]" > ~/.cargo/config.toml
-            echo 'linker = "clang"' >> ~/.cargo/config.toml
-            echo 'rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/mold"]' >> ~/.cargo/config.toml
-
-        - name: Install rustfmt
-          run: rustup component add rustfmt
+          uses: Swatinem/rust-cache@v2
 
         - name: Install Fuel toolchain
           uses: FuelLabs/action-fuel-toolchain@v0.6.0
@@ -76,17 +61,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
-          profile: minimal
           toolchain: ${{ env.RUST_VERSION }}
-          override: true
+          components: rustfmt
 
       - name: Init cache
-        uses: Swatinem/rust-cache@v1
+        uses: Swatinem/rust-cache@v2
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0
@@ -107,20 +91,16 @@ jobs:
         project: [".docs/contributing-book/src/code"]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
-          profile: minimal
           toolchain: ${{ env.RUST_VERSION }}
-          override: true
+          components: rustfmt
 
       - name: Init cache
-        uses: Swatinem/rust-cache@v1
-
-      - name: Install rustfmt
-        run: rustup component add rustfmt
+        uses: Swatinem/rust-cache@v2
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0
@@ -152,17 +132,24 @@ jobs:
             "signed_integers",
           ]
     steps:
-      - uses: actions/checkout@v3
-      - name: Install toolchain
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.RUST_VERSION }}
-      - uses: Swatinem/rust-cache@v2
-      - name: Install Forc
-        run: cargo install --locked --debug --path ./forc
-      - name: Install Forc plugins
-        run: |
-          cargo install --locked --debug --path ./forc-plugins/forc-doc
+          components: rustfmt
+
+      - name: Init cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Fuel toolchain
+        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        with:
+          name: my-toolchain
+          components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
       - name: Build sway-libs docs
         run: |
           cd libs/${{ matrix.project }}

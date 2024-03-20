@@ -48,20 +48,24 @@ jobs:
             "signed_integers",
           ]
     steps:
-      - uses: actions/checkout@v3
-      - name: Install toolchain
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ env.RUST_VERSION }}
-      
-      - uses: Swatinem/rust-cache@v2 
-      - name: Install Forc
-        run: cargo install --locked --debug --path ./forc
-      
-      - name: Install Forc plugins
-        run: |
-          cargo install --locked --debug --path ./forc-plugins/forc-doc
-      
+          components: rustfmt
+
+      - name: Init cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Fuel toolchain
+        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        with:
+          name: my-toolchain
+          components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
       - name: Build sway-libs docs
         run: |
           cd libs/${{ matrix.project }}
