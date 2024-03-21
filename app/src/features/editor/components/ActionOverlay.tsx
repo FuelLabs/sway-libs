@@ -1,7 +1,7 @@
 import React from 'react';
 import ToolchainDropdown, { Toolchain } from './ToolchainDropdown';
 import ExampleDropdown from './ExampleDropdown';
-import { EXAMPLE_CONTRACTS } from '../../../constants';
+import { EXAMPLE_CONTRACTS } from '../examples';
 
 export type EditorLanguage = 'sway' | 'solidity';
 

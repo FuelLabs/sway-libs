@@ -5,6 +5,7 @@ license = "Apache-2.0"
 name = "swaypad"
 
 [dependencies]
+ownership = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.19.0" }
 src3 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
 src5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
 src20 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
