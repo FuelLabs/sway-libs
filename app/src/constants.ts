@@ -1,6 +1,3 @@
-import { EditorLanguage } from './features/editor/components/ActionOverlay';
-import { ExampleMenuItem } from './features/editor/components/ExampleDropdown';
-
 export const FUEL_GREEN = '#00f58c';
 
 export const SERVER_URI = process.env.REACT_APP_LOCAL_SERVER
