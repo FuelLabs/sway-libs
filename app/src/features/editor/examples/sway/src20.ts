@@ -1,8 +1,7 @@
 export const EXAMPLE_SWAY_CONTRACT_SRC20 = `contract;
 
-use ownership;
 use src3::SRC3;
-use src5::SRC5;
+use src5::{SRC5, State, AccessError};
 use src20::SRC20;
 use std::{
     asset::{
@@ -10,6 +9,7 @@ use std::{
         mint_to,
     },
     call_frames::{
+        contract_id,
         msg_asset_id,
     },
     constants::DEFAULT_SUB_ID,
@@ -17,12 +17,9 @@ use std::{
     string::String,
 };
 
-abi NativeAsset {
+abi Constructor {
     #[storage(read, write)]
     fn constructor(owner_: Identity);
-
-    #[storage(read, write)]
-    fn transferOwnership(owner_: Identity);
 }
 
 configurable {
@@ -37,6 +34,9 @@ configurable {
 storage {
     /// The total supply of the asset minted by this contract.
     total_supply: u64 = 0,
+    
+    /// Owner.
+    owner: State = State::Uninitialized,
 }
 
 impl SRC20 for Contract {
@@ -82,23 +82,26 @@ impl SRC20 for Contract {
     }
 }
 
-impl NativeAsset for Contract {
+#[storage(read)]
+fn is_owner() {
+    require(
+        storage.owner.read() == State::Initialized(msg_sender().unwrap()),
+        AccessError::NotOwner,
+    );
+}
+
+impl Constructor for Contract {
     #[storage(read, write)]
     fn constructor(owner_: Identity) {
         require(storage.owner.read() == State::Uninitialized, "owner-initialized");
-        ownership::initialize_ownership(owner_);
-    }
-
-    #[storage(read, write)]
-    fn transferOwner(owner_: Identity) {
-        ownership::transfer_ownership(owner_);
+        storage.owner.write(State::Initialized(owner_));
     }
 }
 
 impl SRC5 for Contract {
     #[storage(read)]
     fn owner() -> State {
-        _owner()
+        storage.owner.read()
     }
 }
 
@@ -106,7 +109,7 @@ impl SRC3 for Contract {
     #[storage(read, write)]
     fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
         require(sub_id == DEFAULT_SUB_ID, "Incorrect Sub Id");
-        ownership::only_owner();
+        is_owner();
 
         // Increment total supply of the asset and mint to the recipient.
         storage
@@ -123,7 +126,7 @@ impl SRC3 for Contract {
             msg_asset_id() == AssetId::default(),
             "Incorrect asset provided",
         );
-        ownership::only_owner();
+        is_owner();
 
         // Decrement total supply of the asset and burn.
         storage
