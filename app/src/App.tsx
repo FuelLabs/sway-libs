@@ -133,7 +133,7 @@ function App() {
         style={{
           marginRight: drawerOpen ? DRAWER_WIDTH : 0,
           transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-          height: 'calc(100vh - 90px)',
+          height: 'calc(100vh - 95px)',
           display: 'flex',
           flexDirection: 'column',
         }}>

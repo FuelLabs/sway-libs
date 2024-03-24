@@ -35,7 +35,7 @@ RUN cargo build
 FROM ubuntu:22.04 as run
 
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends ca-certificates curl git \
+    && apt-get install -y --no-install-recommends ca-certificates curl git pkg-config libssl-dev \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
@@ -61,6 +61,10 @@ RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
 RUN fuelup toolchain install beta-4
 RUN fuelup toolchain install beta-5
+
+# Install the forc dependencies
+RUN fuelup default beta-5
+RUN forc build --path projects/swaypad
 
 EXPOSE 8080
 

@@ -67,7 +67,7 @@ pub fn build_and_destroy_project(contract: String, toolchain: String) -> Compile
         let error = std::str::from_utf8(&output.stderr).unwrap();
 
         // Get the index of the main file.
-        let main_index = error.find("/main.sw:").unwrap();
+        let main_index = error.find("/main.sw:").unwrap_or_default();
 
         // Truncate the error message to only include the relevant content.
         let trunc = String::from(error).split_off(main_index);

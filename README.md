@@ -64,7 +64,8 @@ cargo run
 Alternatively, it can be run locally with Docker, as it is in the deployed environment.
 
 ```sh
-docker build -f deployment/Dockerfile .
+# forc is not fully supported on arm linux, see https://github.com/FuelLabs/sway/issues/5760
+docker buildx build --platform linux/amd64 -f deployment/Dockerfile .
 docker run -p 8080:8080 -d <image-sha>
 ```
 

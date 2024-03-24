@@ -1,4 +1,5 @@
-import { DEFAULT_SWAY_CONTRACT, DEFAULT_SOLIDITY_CONTRACT } from '../constants';
+import { EXAMPLE_SOLIDITY_CONTRACTS } from "../features/editor/examples/solidity";
+import { EXAMPLE_SWAY_CONTRACTS } from "../features/editor/examples/sway";
 
 const STORAGE_ABI_KEY = 'playground_abi';
 const STORAGE_SLOTS_KEY = 'playground_slots';
@@ -39,9 +40,9 @@ export function saveSolidityCode(code: string) {
 }
 
 export function loadSwayCode() {
-  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? DEFAULT_SWAY_CONTRACT;
+  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? EXAMPLE_SWAY_CONTRACTS[0].code;
 }
 
 export function loadSolidityCode() {
-  return localStorage.getItem(STORAGE_SOLIDITY_CONTRACT_KEY) ?? DEFAULT_SOLIDITY_CONTRACT;
+  return localStorage.getItem(STORAGE_SOLIDITY_CONTRACT_KEY) ?? EXAMPLE_SOLIDITY_CONTRACTS[0].code;
 }
