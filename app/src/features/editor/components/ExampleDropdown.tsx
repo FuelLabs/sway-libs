@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import FileOpen from '@mui/icons-material/FileOpen';
-import { Dropdown } from '@mui/base/Dropdown/Dropdown';
-import Menu from '@mui/material/Menu/Menu';
+import FormControl from '@mui/material/FormControl/FormControl';
+import Select from '@mui/material/Select/Select';
+import InputLabel from '@mui/material/InputLabel/InputLabel';
 
 export interface ExampleMenuItem {
   label: string;
@@ -22,52 +21,43 @@ function ExampleDropdown({
   examples,
   style,
 }: ExampleDropdownProps) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [currentExample, setCurrentExample] =
+    React.useState<ExampleMenuItem | null>(null);
 
-  const onButtonClick = useCallback((event: any) => {
-    setAnchorEl(event.target);
-  }, [setAnchorEl]);
-
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
-
-  const onItemClick = useCallback((code: string) => {
-    handleClose();
-    handleSelect(code);
-  }, [handleSelect, handleClose]);
+  const onChange = useCallback(
+    (event: any) => {
+      const index = event.target.value as number;
+      const example = examples[index];
+      if (example) {
+        setCurrentExample(example);
+        handleSelect(example.code);
+      }
+    },
+    [handleSelect, setCurrentExample, examples]
+  );
 
   return (
-    <div style={{ ...style }}>
-      <Dropdown>
-        <Tooltip placement='top' title={'Select an example'}>
-          <IconButton
-            style={{
-              position: 'absolute',
-              right: '18px',
-              top: '18px',
-              pointerEvents: 'all',
-            }}
-            onClick={onButtonClick}
-            aria-label='select an example'>
-            <FileOpen />
-          </IconButton>
-        </Tooltip>
-
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}>
-          {examples.map(({ label, code }: ExampleMenuItem, index) => (
-            <MenuItem
-              key={`${label}-${index}`}
-              onClick={() => onItemClick(code)}>
-              {label}
-            </MenuItem>
-          ))}
-        </Menu>
-      </Dropdown>
-    </div>
+    <FormControl style={{ ...style }} size='small'>
+      <InputLabel id='example-select-label'>Example</InputLabel>
+      <Tooltip placement='top' title={'Load an example contract'}>
+        <span>
+          <Select
+            id='example-select'
+            labelId='example-select-label'
+            label='Example'
+            variant='outlined'
+            style={{ minWidth: '110px', background: 'white' }}
+            value={currentExample?.label}
+            onChange={onChange}>
+            {examples.map(({ label }: ExampleMenuItem, index) => (
+              <MenuItem key={`${label}-${index}`} value={index}>
+                {label}
+              </MenuItem>
+            ))}
+          </Select>
+        </span>
+      </Tooltip>
+    </FormControl>
   );
 }
 

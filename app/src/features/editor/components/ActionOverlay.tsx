@@ -16,7 +16,7 @@ function ActionOverlay({
   handleSelectExample,
   toolchain,
   setToolchain,
-  editorLanguage
+  editorLanguage,
 }: ActionOverlayProps) {
   return (
     <div style={{ position: 'relative' }}>
@@ -28,17 +28,25 @@ function ActionOverlay({
           zIndex: 1,
           pointerEvents: 'none',
         }}>
-        {(toolchain && setToolchain) && <ToolchainDropdown
+        <div
           style={{
             position: 'absolute',
-            right: '68px',
-            top: '18px',
+            right: '22px',
+            top: '22px',
             pointerEvents: 'all',
-          }}
-          toolchain={toolchain}
-          setToolchain={setToolchain}
-        />}
-        <ExampleDropdown handleSelect={handleSelectExample} examples={EXAMPLE_CONTRACTS[editorLanguage]} />
+          }}>
+          {toolchain && setToolchain && (
+            <ToolchainDropdown
+              style={{ marginRight: '18px' }}
+              toolchain={toolchain}
+              setToolchain={setToolchain}
+            />
+          )}
+          <ExampleDropdown
+            handleSelect={handleSelectExample}
+            examples={EXAMPLE_CONTRACTS[editorLanguage]}
+          />
+        </div>
       </div>
     </div>
   );
