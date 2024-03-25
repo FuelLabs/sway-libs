@@ -33,7 +33,7 @@ function ExampleDropdown({
         handleSelect(example.code);
       }
     },
-    [handleSelect, setCurrentExample]
+    [handleSelect, setCurrentExample, examples]
   );
 
   return (
