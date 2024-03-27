@@ -1,4 +1,5 @@
-export const EXAMPLE_SWAY_CONTRACT_MULTIASSET = `contract;
+export const EXAMPLE_SWAY_CONTRACT_MULTIASSET = `// ERC1155 equivalent in Sway.
+contract;
 
 use src5::{SRC5, State, AccessError};
 use src20::SRC20;
