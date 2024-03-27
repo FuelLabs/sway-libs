@@ -1,4 +1,5 @@
-export const EXAMPLE_SWAY_CONTRACT_SINGLEASSET = `contract;
+export const EXAMPLE_SWAY_CONTRACT_SINGLEASSET = `// ERC20 equivalent in Sway.
+contract;
 
 use src3::SRC3;
 use src5::{SRC5, State, AccessError};
