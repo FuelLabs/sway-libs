@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "pausable_test"
 
 [dependencies]
-pausable = { path = "../../../libs/pausable" }
+libraries = { path = "../../../libs" }

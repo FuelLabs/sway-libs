@@ -5,7 +5,7 @@ license = "Apache-2.0"
 name = "asset_test"
 
 [dependencies]
-asset = { path = "../../../libs/native_asset" }
+libraries = { path = "../../../libs" }
 src20 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
 src3 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
 src7 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }

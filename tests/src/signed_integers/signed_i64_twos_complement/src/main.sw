@@ -1,6 +1,6 @@
 script;
 
-use signed_integers::i64::I64;
+use libraries::signed_integers::i64::I64;
 
 fn main() -> bool {
     let one = I64::from(1);

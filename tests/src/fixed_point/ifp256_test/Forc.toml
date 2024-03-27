@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "ifp256_test"
 
 [dependencies]
-fixed_point = { path = "../../../../libs/fixed_point" }
+libraries = { path = "../../../../libs" }

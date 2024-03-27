@@ -1,7 +1,6 @@
 script;
 
-use fixed_point::ifp256::IFP256;
-use fixed_point::ufp128::UFP128;
+use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128};
 
 fn main() -> bool {
     let zero = IFP256::from(UFP128::from((0, 0)));

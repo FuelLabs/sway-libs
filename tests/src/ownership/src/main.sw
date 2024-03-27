@@ -1,7 +1,7 @@
 contract;
 
-use ownership::*;
-use src_5::{SRC5, State};
+use libraries::ownership::{_owner, only_owner, renounce_ownership, initialize_ownership, transfer_ownership};
+use src5::{SRC5, State};
 
 abi OwnableTest {
     #[storage(read)]

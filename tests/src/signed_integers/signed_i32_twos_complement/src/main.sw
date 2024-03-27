@@ -1,6 +1,6 @@
 script;
 
-use signed_integers::i32::I32;
+use libraries::signed_integers::i32::I32;
 
 fn main() -> bool {
     let one = I32::from(1u32);
