@@ -1,63 +1,57 @@
 library;
 
-use std::u256::U256;
-use ::common::TwosComplement;
-use ::errors::Error;
+use ::signed_integers::errors::Error;
+use ::signed_integers::common::TwosComplement;
 
-/// The 256-bit signed integer type.
+/// The 8-bit signed integer type.
 ///
 /// # Additional Information
 ///
-/// Represented as an underlying U256 value.
-/// Actual value is underlying value minus 2 ^ 255
-/// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
-pub struct I256 {
-    pub underlying: U256,
+/// Represented as an underlying u8 value.
+/// Actual value is underlying value minus 2 ^ 7
+/// Max value is 2 ^ 7 - 1, min value is - 2 ^ 7
+pub struct I8 {
+    /// The underlying unsigned `u8` type that makes up the signed `I8` type.
+    pub underlying: u8,
 }
 
-impl I256 {
+impl I8 {
     /// The underlying value that corresponds to zero value.
     ///
     /// # Returns
     ///
-    /// * [U256] - The unsigned integer value representing a zero value.
+    /// * [u8] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let zero = I256::indent();
-    ///     assert(zero == U256 { a: 0, b: 1, c: 0, d: 0 } );
+    ///     let zero = I8::indent();
+    ///     assert(zero == 128u8);
     /// }
     /// ```
-    pub fn indent() -> U256 {
-        U256 {
-            a: 0,
-            b: 1,
-            c: 0,
-            d: 0,
-        }
+    pub fn indent() -> u8 {
+        128u8
     }
 }
 
-impl From<U256> for I256 {
-    fn from(value: U256) -> Self {
-        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
-        let underlying = value + Self::indent();
+impl From<u8> for I8 {
+    fn from(value: u8) -> Self {
+        // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7) 
+        let underlying: u8 = value + Self::indent();
         Self { underlying }
     }
 }
 
-impl core::ops::Eq for I256 {
+impl core::ops::Eq for I8 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I256 {
+impl core::ops::Ord for I8 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -67,50 +61,49 @@ impl core::ops::Ord for I256 {
     }
 }
 
-impl I256 {
+impl I8 {
     /// The size of this type in bits.
     ///
     /// # Returns
     ///
-    /// [u64] - The defined size of the `I256` type.
-    ///
-    /// # Examples
-    ///
-    /// ``sway
-    /// use signed_integers::I256;
-    ///
-    /// fn foo() {
-    ///     let bits = I256::bits();
-    ///     assert(bits == 128);
-    /// }
-    /// ```
-    pub fn bits() -> u64 {
-        128
-    }
-
-    /// Helper function to get a signed number from with an underlying.
-    ///
-    /// # Arguments
-    ///
-    /// * `underlying`: [U256] - The unsigned number to become the underlying value for the `I256`.
-    ///
-    /// # Returns
-    ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [u64] - The number of bits.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let underlying = U256::from(0,0, 0, 1);
-    ///     let i256 = I256::from_uint(underlying);
-    ///     assert(256.underlying == underlying);
+    ///     let bits = I8::bits();
+    ///     assert(bits == 8);
     /// }
     /// ```
-    pub fn from_uint(underlying: U256) -> Self {
+    pub fn bits() -> u64 {
+        8
+    }
+
+    /// Helper function to get a signed `I8` from an underlying `u8`.
+    ///
+    /// # Arguments
+    ///
+    /// * `underlying`: [u8] - The `u8` that will represent the `I8`.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use libraries::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let underlying = 1u8;
+    ///     let i8 = I8::from_uint(underlying);
+    ///     assert(i8.underlying == underlying);
+    /// }
+    /// ```
+    pub fn from_uint(underlying: u8) -> Self {
         Self { underlying }
     }
 
@@ -118,22 +111,21 @@ impl I256 {
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [I8] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let i256 = I256::max();
-    ///     assert(i256.underlying == U256::max());
+    ///     let i8 = I8::max();
+    ///     assert(i8.underlying == u8::max());
     /// }
     /// ```
     pub fn max() -> Self {
         Self {
-            underlying: U256::max(),
+            underlying: u8::max(),
         }
     }
 
@@ -141,22 +133,21 @@ impl I256 {
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` type.
+    /// * [I8] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let i256 = I256::min();
-    ///     assert(i256.underlying == U256::min());
+    ///     let i8 = I8::new();
+    ///     assert(i8.underlying == u8::min());
     /// }
     /// ```
     pub fn min() -> Self {
         Self {
-            underlying: U256::min(),
+            underlying: u8::min(),
         }
     }
 
@@ -164,49 +155,47 @@ impl I256 {
     ///
     /// # Arguments
     ///
-    /// * `value`: [U256] - The unsigned number to negate.
+    /// * `value`: [u8] - The unsigned number to negate.
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [I8] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let underlying = U256::from(0, 1, 0, 0);
-    ///     let i256 = I256::neg_from(underlying);
-    ///     assert(i256.underlying == U256::from(0, 0, 0, 0));
+    ///     let underlying = 1u8;
+    ///     let i8 = I8::neg_from(underlying);
+    ///     assert(i8.underlying == 127u8);
     /// }
     /// ```
-    pub fn neg_from(value: U256) -> Self {
+    pub fn neg_from(value: u8) -> Self {
         Self {
             underlying: Self::indent() - value,
         }
     }
 
-    /// Initializes a new, zeroed I256.
+    /// Initializes a new, zeroed I8.
     ///
     /// # Additional Information
     ///
-    /// The zero value of I256 is U256 { a: 0, b: 1, c: 0, d: 0 }.
+    /// The zero value for I8 is 128u8.
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [I8] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I256;
-    /// use std::U256::*;
+    /// use libraries::signed_integers::i8::I8;
     ///
     /// fn foo() {
-    ///     let i256 = I256::new();
-    ///     assert(i256.underlying == U256 { a: 0, b: 1, c: 0, d: 0 } );
+    ///     let i8 = I8::new();
+    ///     assert(i8.underlying == 128u8);
     /// }
     /// ```
     pub fn new() -> Self {
@@ -216,20 +205,18 @@ impl I256 {
     }
 }
 
-impl core::ops::Add for I256 {
-    /// Add a I256 to a I256. Panics on overflow.
+impl core::ops::Add for I8 {
+    /// Add a I8 to a I8. Panics on overflow.
     fn add(self, other: Self) -> Self {
-        // subtract 1 << 63 to avoid double move
         let mut res = Self::new();
-        if (self.underlying > Self::indent() || self.underlying == Self::indent()) {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 31 to avoid double move
+        if self.underlying >= Self::indent() {
+            res = Self::from_uint(self.underlying - Self::indent() + other.underlying) // subtract 1 << 7 to avoid double move
         } else if self.underlying < Self::indent()
             && other.underlying < Self::indent()
         {
             res = Self::from_uint(self.underlying + other.underlying - Self::indent());
         } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(other.underlying - Self::indent() + self.underlying);
         }
@@ -237,14 +224,14 @@ impl core::ops::Add for I256 {
     }
 }
 
-impl core::ops::Divide for I256 {
-    /// Divide a I256 by a I256. Panics if divisor is zero.
+impl core::ops::Divide for I8 {
+    /// Divide a I8 by a I8. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
         let mut res = Self::new();
-        let self_ge_indent = self.underlying > Self::indent() || self.underlying == Self::indent();
-        let divisor_gt_indent = divisor.underlying > Self::indent();
-        if self_ge_indent && divisor_gt_indent {
+        if self.underlying >= Self::indent()
+            && divisor.underlying > Self::indent()
+        {
             res = Self::from_uint(
                 (self.underlying - Self::indent()) / (divisor
                         .underlying - Self::indent()) + Self::indent(),
@@ -256,8 +243,7 @@ impl core::ops::Divide for I256 {
                 (Self::indent() - self.underlying) / (Self::indent() - divisor
                         .underlying) + Self::indent(),
             );
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
+        } else if self.underlying >= Self::indent()
             && divisor.underlying < Self::indent()
         {
             res = Self::from_uint(
@@ -276,14 +262,12 @@ impl core::ops::Divide for I256 {
     }
 }
 
-impl core::ops::Multiply for I256 {
-    /// Multiply a I256 with a I256. Panics of overflow.
+impl core::ops::Multiply for I8 {
+    /// Multiply a I8 with a I8. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-                || self.underlying == Self::indent())
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 (self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent(),
@@ -294,16 +278,14 @@ impl core::ops::Multiply for I256 {
             res = Self::from_uint(
                 (Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent(),
             );
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
+        } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying),
             );
         } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying),
@@ -313,29 +295,24 @@ impl core::ops::Multiply for I256 {
     }
 }
 
-impl core::ops::Subtract for I256 {
-    /// Subtract a I256 from a I256. Panics of overflow.
+impl core::ops::Subtract for I8 {
+    /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-                || self.underlying == Self::indent())
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                let q = other.underlying - Self::indent();
-                res = Self::from_uint(self.underlying - q);
+                res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
+        } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
             res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
         } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
         } else if self.underlying < Self::indent()
@@ -351,20 +328,12 @@ impl core::ops::Subtract for I256 {
     }
 }
 
-impl TwosComplement for I256 {
+impl TwosComplement for I8 {
     fn twos_complement(self) -> Self {
-        if self.underlying == Self::indent()
-            || self.underlying > Self::indent()
-        {
+        if self.underlying >= Self::indent() {
             return self;
         }
-        let u_one = U256 {
-            a: 0,
-            b: 0,
-            c: 0,
-            d: 1,
-        };
-        let res = I256::from_uint(!self.underlying + u_one);
+        let res = Self::from_uint(!self.underlying + 1u8);
         res
     }
 }

@@ -1,7 +1,7 @@
 library;
 
-use ::common::TwosComplement;
-use ::errors::Error;
+use ::signed_integers::common::TwosComplement;
+use ::signed_integers::errors::Error;
 
 /// The 32-bit signed integer type.
 ///
@@ -25,7 +25,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let zero = I32::indent();
@@ -71,7 +71,7 @@ impl I32 {
     /// # Examples
     ///
     /// ``sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let bits = I32::bits();
@@ -95,7 +95,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let underlying = 1u32;
@@ -116,7 +116,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let i32 = I32::max();
@@ -138,7 +138,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let i32 = I32::min();
@@ -164,7 +164,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let underlying = 1u32;
@@ -191,7 +191,7 @@ impl I32 {
     /// # Examples
     ///
     /// ```sway
-    /// use signed_integers::I32;
+    /// use libraries::signed_integers::i32::I32;
     ///
     /// fn foo() {
     ///     let i32 = I32::new();
