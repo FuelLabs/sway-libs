@@ -1,4 +1,4 @@
-export const EXAMPLE_SWAY_CONTRACT_SRC20 = `contract;
+export const EXAMPLE_SWAY_CONTRACT_SINGLEASSET = `contract;
 
 use src3::SRC3;
 use src5::{SRC5, State, AccessError};
@@ -17,7 +17,7 @@ use std::{
     string::String,
 };
 
-abi Constructor {
+abi SingleAsset {
     #[storage(read, write)]
     fn constructor(owner_: Identity);
 }
@@ -78,14 +78,14 @@ impl SRC20 for Contract {
 }
 
 #[storage(read)]
-fn is_owner() {
+fn require_access_owner() {
     require(
         storage.owner.read() == State::Initialized(msg_sender().unwrap()),
         AccessError::NotOwner,
     );
 }
 
-impl Constructor for Contract {
+impl SingleAsset for Contract {
     #[storage(read, write)]
     fn constructor(owner_: Identity) {
         require(storage.owner.read() == State::Uninitialized, "owner-initialized");
@@ -103,8 +103,8 @@ impl SRC5 for Contract {
 impl SRC3 for Contract {
     #[storage(read, write)]
     fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
-        require(sub_id == DEFAULT_SUB_ID, "Incorrect Sub Id");
-        is_owner();
+        require(sub_id == DEFAULT_SUB_ID, "incorrect-sub-id");
+        require_access_owner();
 
         storage
             .total_supply
@@ -114,13 +114,13 @@ impl SRC3 for Contract {
 
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
-        require(sub_id == DEFAULT_SUB_ID, "Incorrect Sub Id");
-        require(msg_amount() >= amount, "Incorrect amount provided");
+        require(sub_id == DEFAULT_SUB_ID, "incorrect-sub-id");
+        require(msg_amount() >= amount, "incorrect-amount-provided");
         require(
             msg_asset_id() == AssetId::default(),
-            "Incorrect asset provided",
+            "incorrect-asset-provided",
         );
-        is_owner();
+        require_access_owner();
 
         storage
             .total_supply
