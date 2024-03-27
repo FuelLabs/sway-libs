@@ -68,12 +68,11 @@ function ActionToolbar({
           updateLog={updateLog}
         />
       )}
-      {!isMobile && (
+      {!isMobile && deployState === DeployState.DEPLOYED && (
         <SecondaryButton
           header={true}
           onClick={() => setDrawerOpen(!drawerOpen)}
           text='INTERACT'
-          disabled={deployState !== DeployState.DEPLOYED}
           tooltip={
             deployState !== DeployState.DEPLOYED
               ? 'A contract must be deployed to interact with it on-chain'
