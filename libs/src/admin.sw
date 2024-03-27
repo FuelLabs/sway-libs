@@ -1,10 +1,11 @@
 library;
 
-mod errors;
+// TODO: Make this private when https://github.com/FuelLabs/sway/issues/5765 is resolved.
+pub mod errors;
 
-use errors::AdminError;
-use ownership::{_owner, only_owner};
-use src_5::State;
+use ::admin::errors::AdminError;
+use ::ownership::{_owner, only_owner};
+use src5::State;
 use std::{auth::msg_sender, storage::storage_api::clear,};
 
 // Sets a new administrator.
@@ -25,7 +26,7 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 /// # Examples
 ///
 /// ```sway
-/// use admin::{add_admin, is_admin};
+/// use libraries::admin::{add_admin, is_admin};
 ///
 /// fn foo(new_admin: Identity) {
 ///     add_admin(new_admin);
@@ -43,7 +44,7 @@ pub fn add_admin(new_admin: Identity) {
     admin_key.write(new_admin);
 }
 
-// Removes an administrator.
+/// Removes an administrator.
 ///
 /// # Arguments
 ///
@@ -61,7 +62,7 @@ pub fn add_admin(new_admin: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use admin::{revoke_admin, is_admin};
+/// use libraries::admin::{revoke_admin, is_admin};
 ///
 /// fn foo(old_admin: Identity) {
 ///     revoke_admin(old_admin);
@@ -81,7 +82,7 @@ pub fn revoke_admin(old_admin: Identity) {
     let _ = clear::<Identity>(admin_key.slot, admin_key.offset);
 }
 
-// Returns whether `admin` is an administrator.
+/// Returns whether `admin` is an administrator.
 ///
 /// # Arguments
 ///
@@ -98,7 +99,7 @@ pub fn revoke_admin(old_admin: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use admin::{is_admin};
+/// use libraries::admin::{is_admin};
 ///
 /// fn foo(admin: Identity) {
 ///     assert(is_admin(admin));
@@ -121,7 +122,7 @@ pub fn is_admin(admin: Identity) -> bool {
     }
 }
 
-// Ensures that the sender is an administrator.
+/// Ensures that the sender is an administrator.
 ///
 /// # Additional Information
 ///
@@ -138,7 +139,7 @@ pub fn is_admin(admin: Identity) -> bool {
 /// # Examples
 ///
 /// ```sway
-/// use admin::{only_admin};
+/// use libraries::admin::{only_admin};
 ///
 /// fn foo() {
 ///     only_admin();
@@ -150,7 +151,7 @@ pub fn only_admin() {
     require(is_admin(msg_sender().unwrap()), AdminError::NotAdmin);
 }
 
-// Ensures that the sender is an owner or administrator.
+/// Ensures that the sender is an owner or administrator.
 ///
 /// # Reverts
 ///
@@ -163,7 +164,7 @@ pub fn only_admin() {
 /// # Examples
 ///
 /// ```sway
-/// use admin::{only_owner_or_admin};
+/// use libraries::admin::{only_owner_or_admin};
 ///
 /// fn foo() {
 ///     only_owner_or_admin();
