@@ -23,19 +23,14 @@ abi Constructor {
 }
 
 configurable {
-    /// The decimals of the asset minted by this contract.
     DECIMALS: u8 = 9u8,
-    /// The name of the asset minted by this contract.
     NAME: str[7] = __to_str_array("MyAsset"),
-    /// The symbol of the asset minted by this contract.
     SYMBOL: str[5] = __to_str_array("MYTKN"),
 }
 
 storage {
-    /// The total supply of the asset minted by this contract.
     total_supply: u64 = 0,
-    
-    /// Owner.
+
     owner: State = State::Uninitialized,
 }
 
@@ -111,7 +106,6 @@ impl SRC3 for Contract {
         require(sub_id == DEFAULT_SUB_ID, "Incorrect Sub Id");
         is_owner();
 
-        // Increment total supply of the asset and mint to the recipient.
         storage
             .total_supply
             .write(amount + storage.total_supply.read());
@@ -128,7 +122,6 @@ impl SRC3 for Contract {
         );
         is_owner();
 
-        // Decrement total supply of the asset and burn.
         storage
             .total_supply
             .write(storage.total_supply.read() - amount);
