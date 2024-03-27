@@ -1,6 +1,7 @@
 library;
 
 use std::{bytes::Bytes, hash::{Hash, sha256}};
+use ::merkle::utils::{starting_bit, path_length_from_key};
 
 pub enum ProofError {
     InvalidKey: (),
@@ -27,7 +28,7 @@ pub const NODE = 1u8;
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::binary_merkle_proof::leaf_digest;
+/// use libraries::merkle::binary_proof::leaf_digest;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -61,7 +62,7 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::binary_merkle_proof::node_digest;
+/// use libraries::merkle::binary_proof::node_digest;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -82,50 +83,6 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
     bytes.len = 65;
 
     sha256(bytes)
-}
-
-/// Calculates the length of the path to a leaf
-///
-/// # Arguments
-///
-/// * `key`: [u64] - The key or index of the leaf.
-/// * `num_leaves`: [u64] - The total number of leaves in the Merkle Tree.
-///
-/// # Returns
-///
-/// * [u64] - The length from the leaf to a root.
-fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
-    let mut total_length = 0;
-    let mut num_leaves = num_leaves;
-    let mut key = key;
-
-    while true {
-        // The height of the left subtree is equal to the offset of the starting bit of the path
-        let path_length = starting_bit(num_leaves);
-        // Determine the number of leaves in the left subtree
-        let num_leaves_left_sub_tree = (1 << (path_length - 1));
-
-        if key <= (num_leaves_left_sub_tree - 1) {
-            // If the leaf is in the left subtreee, path length is full height of the left subtree
-            total_length = total_length + path_length;
-            break;
-        } else if num_leaves_left_sub_tree == 1 {
-            // If the left sub tree has only one leaf, path has one additional step
-            total_length = total_length + 1;
-            break;
-        } else if (num_leaves - num_leaves_left_sub_tree) <= 1 {
-            // If the right sub tree only has one leaf, path has one additonal step
-            total_length = total_length + 1;
-            break;
-        } else {
-            // Otherwise add 1 to height and loop
-            total_length = total_length + 1;
-            key = key - num_leaves_left_sub_tree;
-            num_leaves = num_leaves - num_leaves_left_sub_tree;
-        }
-    }
-
-    total_length
 }
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
@@ -151,7 +108,7 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::binary_merkle_proof::process_proof;
+/// use libraries::merkle::binary_proof::process_proof;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -227,25 +184,6 @@ pub fn process_proof(
     digest
 }
 
-/// Calculates the starting bit of the path to a leaf
-///
-/// # Arguments
-///
-/// * `num_leaves`: [u64] - The number of leaves in the Merkle Tree.
-///
-/// # Returns
-///
-/// * [u64] - The starting bit.
-fn starting_bit(num_leaves: u64) -> u64 {
-    let mut starting_bit = 0;
-
-    while (1 << starting_bit) < num_leaves {
-        starting_bit = starting_bit + 1;
-    }
-
-    starting_bit
-}
-
 /// This function will take a Merkle leaf and proof and return whether the corresponding root
 /// matches the root given.
 ///
@@ -271,7 +209,7 @@ fn starting_bit(num_leaves: u64) -> u64 {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::binary_merkle_proof::process_proof;
+/// use libraries::merkle::binary_proof::process_proof;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
