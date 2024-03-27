@@ -19,7 +19,7 @@ use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
 /// # Examples
 ///
 /// ```sway
-/// use asset::_total_assets;
+/// use libraries::asset::base::_total_assets;
 ///
 /// storage {
 ///     total_assets: u64 = 0,
@@ -53,7 +53,7 @@ pub fn _total_assets(total_assets_key: StorageKey<u64>) -> u64 {
 /// # Examples
 ///
 /// ```sway
-/// use asset::_total_supply;
+/// use libraries::asset::base::_total_supply;
 ///
 /// storage {
 ///     total_supply: StorageMap<AssetId, u64> = StorageMap {},
@@ -90,7 +90,7 @@ pub fn _total_supply(
 /// # Examples
 ///
 /// ```sway
-/// use asset::_name;
+/// use libraries::asset::base::_name;
 /// use std::string::String;
 ///
 /// storage {
@@ -109,6 +109,7 @@ pub fn _name(
 ) -> Option<String> {
     name_key.get(asset).read_slice()
 }
+
 /// Returns the symbol of the asset, such as “ETH”.
 ///
 /// # Arguments
@@ -127,7 +128,7 @@ pub fn _name(
 /// # Examples
 ///
 /// ```sway
-/// use asset::_symbol;
+/// use libraries::asset::base::_symbol;
 /// use std::string::String;
 ///
 /// storage {
@@ -146,6 +147,7 @@ pub fn _symbol(
 ) -> Option<String> {
     symbol_key.get(asset).read_slice()
 }
+
 /// Returns the number of decimals the asset uses.
 ///
 /// # Additional Information
@@ -168,7 +170,7 @@ pub fn _symbol(
 /// # Examples
 ///
 /// ```sway
-/// use asset::_decimals;
+/// use libraries::asset::base::_decimals;
 ///
 /// storage {
 ///     decimals: StorageMap<AssetId, u8> = StorageMap {},
@@ -186,6 +188,7 @@ pub fn _decimals(
 ) -> Option<u8> {
     decimals_key.get(asset).try_read()
 }
+
 /// Unconditionally sets the name of an asset.
 ///
 /// # Additional Information
@@ -205,7 +208,7 @@ pub fn _decimals(
 /// # Examples
 ///
 /// ```sway
-/// use asset::{_set_name, _name};
+/// use libraries::asset::base::{_set_name, _name};
 /// use std::string::String;
 ///
 /// storage {
@@ -227,6 +230,7 @@ pub fn _set_name(
     name_key.insert(asset, StorageString {});
     name_key.get(asset).write_slice(name);
 }
+
 /// Unconditionally sets the symbol of an asset.
 ///
 /// # Additional Information
@@ -246,7 +250,7 @@ pub fn _set_name(
 /// # Examples
 ///
 /// ```sway
-/// use asset::{_set_symbol, _symbol};
+/// use libraries::asset::base::{_set_symbol, _symbol};
 /// use std::string::String;
 ///
 /// storage {
@@ -268,6 +272,7 @@ pub fn _set_symbol(
     symbol_key.insert(asset, StorageString {});
     symbol_key.get(asset).write_slice(symbol);
 }
+
 /// Unconditionally sets the decimals of an asset.
 ///
 /// # Additional Information
@@ -287,7 +292,7 @@ pub fn _set_symbol(
 /// # Examples
 ///
 /// ```sway
-/// use asset::{_set_decimals, _decimals};
+/// use libraries::asset::base::{_set_decimals, _decimals};
 /// use std::string::String;
 ///
 /// storage {
@@ -308,6 +313,7 @@ pub fn _set_decimals(
 ) {
     decimals_key.insert(asset, decimals);
 }
+
 abi SetAssetAttributes {
     #[storage(write)]
     fn set_name(asset: AssetId, name: String);

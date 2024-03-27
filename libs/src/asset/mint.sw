@@ -1,7 +1,7 @@
 library;
 
-use ::errors::BurnError;
-use ::base::{_total_assets, _total_supply};
+use ::asset::errors::BurnError;
+use ::asset::base::{_total_assets, _total_supply};
 use std::{
     asset::{
         burn,
@@ -42,7 +42,7 @@ use std::{
 /// # Examples
 ///
 /// ```sway
-/// use asset::mint::_mint;
+/// use libraries::asset::mint::_mint;
 /// use std::{constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
@@ -100,7 +100,7 @@ pub fn _mint(
 /// # Examples
 ///
 /// ```sway
-/// use asset::mint::_burn;
+/// use libraries::asset::mint::_burn;
 /// use std::{call_frames::contract_id, constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
