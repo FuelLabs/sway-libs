@@ -1,9 +1,10 @@
 library;
 
-mod utils;
+// TODO: Make this private when https://github.com/FuelLabs/sway/issues/5765 is resolved.
+pub mod utils;
 
 use std::external::bytecode_root;
-use utils::{_compute_bytecode_root, _predicate_address_from_root, _swap_configurables};
+use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _swap_configurables};
 
 /// Takes the bytecode of a contract or predicate and computes the bytecode root.
 ///
