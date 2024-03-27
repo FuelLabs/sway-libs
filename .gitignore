@@ -2,8 +2,8 @@
 out
 target
 .vercel
-/certs/*
 build
 node_modules
 tmp
 .vscode/*
+.DS_Store
