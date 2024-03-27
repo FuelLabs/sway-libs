@@ -376,3 +376,33 @@ fn test_set_metadata_bytes() {
     assert(returned_metadata.is_some());
     assert(returned_metadata.unwrap() == metadata);
 }
+
+#[test]
+fn total_assets_only_incremented_once() {
+    use std::context::balance_of;
+    use std::constants::ZERO_B256;
+
+    let src3_abi = abi(SRC3, CONTRACT_ID);
+    let src20_abi = abi(SRC20, CONTRACT_ID);
+
+    let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
+    let sub_id = ZERO_B256;
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
+
+    assert(src20_abi.total_assets() == 0);
+
+    src3_abi.mint(recipient, sub_id, 10);
+    assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
+
+    assert(src20_abi.total_assets() == 1);
+
+    src3_abi.burn(sub_id, 10);
+    assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 0);
+
+    assert(src20_abi.total_assets() == 1);
+
+    src3_abi.mint(recipient, sub_id, 10);
+    assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
+
+    assert(src20_abi.total_assets() == 1);
+}
