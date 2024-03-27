@@ -30,7 +30,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::zero();
@@ -52,7 +52,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     /// use std::u128::U128;
     ///
     /// fn foo() {
@@ -75,7 +75,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     /// use std::u128::U128;
     ///
     /// fn foo() {
@@ -98,7 +98,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ``sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let bits = UFP128::bits();
@@ -124,7 +124,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     /// use std::u128::U128;
     ///
     /// fn foo() {
@@ -233,7 +233,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp64 = UFP128::from_uint(128);
@@ -256,7 +256,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::from_uint(128);
@@ -277,7 +277,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::from_uint(128);
@@ -305,7 +305,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::from_uint(128);
@@ -338,7 +338,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::from_uint(128);
@@ -359,7 +359,7 @@ impl UFP128 {
     /// # Examples
     ///
     /// ```sway
-    /// use fixed_point::UFP128;
+    /// use libraries::fixed_point::ufp128::UFP128;
     ///
     /// fn foo() {
     ///     let ufp128 = UFP128::from_uint(128);
