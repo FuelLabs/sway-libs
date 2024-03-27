@@ -1,4 +1,5 @@
 library;
+
 /// The `Queue` type corresponds to the same called data structure.
 ///
 /// # Additional Information
@@ -20,7 +21,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let queue = Queue::new::<u64>();
@@ -42,7 +43,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let queue = Queue::new::<u64>();
@@ -62,7 +63,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -84,7 +85,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -105,7 +106,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -132,7 +133,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use queue::Queue;
+    /// use libraries::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
