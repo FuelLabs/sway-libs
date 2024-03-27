@@ -1,6 +1,12 @@
 contract;
 
-use libraries::ownership::{_owner, only_owner, renounce_ownership, initialize_ownership, transfer_ownership};
+use libraries::ownership::{
+    _owner,
+    initialize_ownership,
+    only_owner,
+    renounce_ownership,
+    transfer_ownership,
+};
 use src5::{SRC5, State};
 
 abi OwnableTest {

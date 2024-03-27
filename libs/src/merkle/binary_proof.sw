@@ -1,7 +1,7 @@
 library;
 
 use std::{bytes::Bytes, hash::{Hash, sha256}};
-use ::merkle::utils::{starting_bit, path_length_from_key};
+use ::merkle::utils::{path_length_from_key, starting_bit};
 
 pub enum ProofError {
     InvalidKey: (),
