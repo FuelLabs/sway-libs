@@ -1,15 +1,11 @@
 library;
 
+pub mod errors;
+
+use ::pausable::errors::PauseError;
+
 // Precomputed hash of sha256("pausable")
 const PAUSABLE = 0xd987cda398e9af257cbcf8a8995c5dccb19833cadc727ba56b0fec60ccf8944c;
-
-/// Error emitted upon the opposite of the desired pause state.
-pub enum PauseError {
-    /// Emitted when the contract is paused.
-    Paused: (),
-    /// Emitted when the contract is not paused.
-    NotPaused: (),
-}
 
 abi Pausable {
     /// Pauses the contract.
@@ -26,7 +22,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use pausable::Pausable;
+    /// use libraries::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -50,7 +46,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use pausable::Pausable;
+    /// use libraries::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -74,7 +70,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use pausable::Pausable;
+    /// use libraries::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -95,7 +91,7 @@ abi Pausable {
 /// # Examples
 ///
 /// ```sway
-/// use pausable::{_pause, _is_paused};
+/// use libraries::pausable::{_pause, _is_paused};
 ///
 /// fn foo() {
 ///     _pause();
@@ -117,7 +113,7 @@ pub fn _pause() {
 /// # Examples
 ///
 /// ```sway
-/// use pausable::{_unpause, _is_paused};
+/// use libraries::pausable::{_unpause, _is_paused};
 ///
 /// fn foo() {
 ///     _unpause();
@@ -143,7 +139,7 @@ pub fn _unpause() {
 /// # Examples
 ///
 /// ```sway
-/// use pausable::_is_paused;
+/// use libraries::pausable::_is_paused;
 ///
 /// fn foo() {
 ///     assert(!_is_paused());
@@ -168,7 +164,7 @@ pub fn _is_paused() -> bool {
 /// # Examples
 ///
 /// ```sway
-/// use pausable::{_pause, require_paused};
+/// use libraries::pausable::{_pause, require_paused};
 ///
 /// fn foo() {
 ///     _pause();
@@ -200,7 +196,7 @@ pub fn require_paused() {
 /// # Examples
 ///
 /// ```sway
-/// use pausable::{_unpause, require_not_paused};
+/// use libraries::pausable::{_unpause, require_not_paused};
 ///
 /// fn foo() {
 ///     _unpause();
