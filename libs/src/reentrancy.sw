@@ -1,16 +1,13 @@
 library;
-// This has been moved due to https://github.com/FuelLabs/sway/issues/4160
 //! A reentrancy check for use in Sway contracts.
 //! Note that this only works in internal contexts.
 //! to prevent reentrancy: `assert(!is_reentrant());`
+
+pub mod errors;
+
+use ::reentrancy::errors::ReentrancyError;
 use std::call_frames::*;
 use std::registers::frame_ptr;
-
-/// Error log for when reentrancy has been detected
-pub enum ReentrancyError {
-    /// Emitted when the caller is a reentrant.
-    NonReentrant: (),
-}
 
 /// Reverts if the reentrancy pattern is detected in the contract in which this is called.
 ///
@@ -24,7 +21,7 @@ pub enum ReentrancyError {
 /// # Examples
 ///
 /// ```sway
-/// use reentrancy::reentrancy_guard;
+/// use libraries::reentrancy::reentrancy_guard;
 ///
 /// fn foo() {
 ///     reentrancy_guard();
@@ -49,7 +46,7 @@ pub fn reentrancy_guard() {
 /// # Examples
 ///
 /// ```sway
-/// use reentrancy::is_reentrant;
+/// use libraries::reentrancy::is_reentrant;
 ///
 /// fn foo() {
 ///     assert(is_reentrant() == false);
