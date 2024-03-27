@@ -3,10 +3,10 @@ library;
 pub mod errors;
 pub mod events;
 
-use errors::InitializationError;
-use events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
+use ::ownership::errors::InitializationError;
+use ::ownership::events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
-use src_5::{AccessError, State};
+use src5::{AccessError, State};
 
 // Pre-computed hash digest of sha256("owner")
 const OWNER = 0x4c1029697ee358715d3a14a2add817c4b01651440de808371f78165ac90dc581;
@@ -24,7 +24,7 @@ const OWNER = 0x4c1029697ee358715d3a14a2add817c4b01651440de808371f78165ac90dc581
 /// # Examples
 ///
 /// ```sway
-/// use ownable::*;
+/// use libraries::ownership::_owner;
 ///
 /// fn foo() {
 ///     let stored_owner = _owner();
@@ -49,7 +49,7 @@ pub fn _owner() -> State {
 /// # Examples
 ///
 /// ```sway
-/// use ownable::*;
+/// use libraries::ownership::only_owner;
 ///
 /// fn foo() {
 ///     only_owner();
@@ -78,12 +78,12 @@ pub fn only_owner() {
 /// # Examples
 ///
 /// ```sway
-/// use ownable::{_owner, renounce_ownership};
+/// use libraries::ownership::{_owner, renounce_ownership};
 ///
 /// fn foo() {
-///     assert(owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
+///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
 ///     renounce_ownership();
-///     assert(owner() == State::Revoked);
+///     assert(_owner() == State::Revoked);
 /// }
 /// ```
 #[storage(read, write)]
@@ -116,7 +116,7 @@ pub fn renounce_ownership() {
 /// # Examples
 ///
 /// ```sway
-/// use ownable::{_owner, initialize_ownership};
+/// use libraries::ownership::{_owner, initialize_ownership};
 ///
 /// fn foo(owner: Identity) {
 ///     assert(_owner() == State::Uninitialized);
@@ -155,7 +155,7 @@ pub fn initialize_ownership(new_owner: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use ownable::{_owner, transfer_ownership};
+/// use libraries::ownership::{_owner, transfer_ownership};
 ///
 /// fn foo(new_owner: Identity) {
 ///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
