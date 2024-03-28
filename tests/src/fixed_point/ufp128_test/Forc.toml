@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "ufp128_test"
 
 [dependencies]
-fixed_point = { path = "../../../../libs/fixed_point" }
+sway_libs = { path = "../../../../libs" }

@@ -1,6 +1,6 @@
 script;
 
-use fixed_point::ufp64::UFP64;
+use sway_libs::fixed_point::ufp64::UFP64;
 use std::assert::assert;
 
 fn main() -> bool {

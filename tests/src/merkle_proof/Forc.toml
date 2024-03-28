@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "merkle_proof_test"
 
 [dependencies]
-merkle_proof = { path = "../../../libs/merkle_proof" }
+sway_libs = { path = "../../../libs" }

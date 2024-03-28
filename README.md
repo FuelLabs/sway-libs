@@ -33,35 +33,35 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 #### Assets
 
-- [Native Asset](./libs/native_asset/) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset), [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3), and [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7) standards.
+- [Native Asset](./libs/src/asset/) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset), [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_3), and [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_7) standards.
 
 #### Access Control and Security
 
-- [Ownership](./libs/ownership/) is used to apply restrictions on functions such that only a **single** user may call them.
-- [Admin](./libs/admin/) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
-- [Pausable](./libs/pausable/) allows contracts to implement an emergency stop mechanism.
-- [Reentrancy](./libs/reentrancy) is used to detect and prevent reentrancy attacks.
+- [Ownership](./libs/src/ownership/) is used to apply restrictions on functions such that only a **single** user may call them.
+- [Admin](./libs/src/admin/) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
+- [Pausable](./libs/src/pausable/) allows contracts to implement an emergency stop mechanism.
+- [Reentrancy](./libs/src/reentrancy) is used to detect and prevent reentrancy attacks.
 
 #### Cryptography
 
-- [Bytecode](./libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
-- [Merkle Proof](./libs/merkle_proof/) is used to verify Binary Merkle Trees computed off-chain.
+- [Bytecode](./libs/src/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
+- [Merkle Proof](./libs/src/merkle/) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
 
-- [Fixed Point Number](./libs/fixed_point/) is an interface to implement fixed-point numbers.
-- [Signed Integers](./libs/signed_integers/) is an interface to implement signed integers.
+- [Fixed Point Number](./libs/src/fixed_point/) is an interface to implement fixed-point numbers.
+- [Signed Integers](./libs/src/signed_integers/) is an interface to implement signed integers.
 
 #### Data Structures
 
-- [Queue](./libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Queue](./libs/src/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 
 ## Using a library
 
-To import a library, a dependency should be added to the project's `Forc.toml` file under `[dependencies]`. The following shows adding the Merkle Proof Library.
+To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 > **NOTE:** 
@@ -70,13 +70,13 @@ merkle_proof = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 You may then import your desired library in your Sway Smart Contract as so:
 
 ```sway
-use merkle_proof::<library_function>;
+use sway_libs::<library>::<library_function>;
 ```
 
-For example, to import the `verify_proof()` function use the following statement:
+For example, to import the `only_owner()` function use the following statement:
 
 ```sway
-use merkle_proof::binary_merkle_proof::verify_proof;
+use sway_libs::ownership::only_owner;
 ```
 
 ## Running Tests
@@ -105,7 +105,7 @@ forc test && cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.49.1`, `fuels-rs v0.53.0` and `fuel-core 0.22.0`.
+> All projects currently use `forc v0.50.0`, `fuels-rs v0.53.0` and `fuel-core 0.22.0`.
 
 ## Contributing
 

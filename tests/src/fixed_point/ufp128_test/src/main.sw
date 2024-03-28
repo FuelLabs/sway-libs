@@ -1,6 +1,6 @@
 script;
 
-use fixed_point::ufp128::UFP128;
+use sway_libs::fixed_point::ufp128::UFP128;
 use std::u128::U128;
 
 fn main() -> bool {
