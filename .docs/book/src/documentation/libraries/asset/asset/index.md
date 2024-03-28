@@ -1,0 +1,20 @@
+# Asset Library
+
+The Asset Library provides basic helper functions for the [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset), [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn), and the [SRC-7; Arbitrary Asset Metadata Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata). It is intended to make develpment of Native Assets using Sway quick and easy while following the standard's specifications.
+
+# Using the Library
+
+## [SRC-20 Functionality](./base.md)
+
+The Base or core of any Asset on the Fuel Network must follow the [SRC-20; Native Asset Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset). The Asset Library's [Base](./base.md) section supports the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset)'s implementation.
+
+## [SRC-3 Functionaltity](supply.md)
+
+The [SRC-3; Mint and Burn Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn) prescribes an ABI for how Native Assets on the Fuel Network are minted and burned. The Asset Library's [suppy](./supply.md) section supports the [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn)'s implementation.
+
+## [SRC-7 Functionaltity](./metadata.md)
+
+The [SRC-7; Arbitrary Asset Metadata Standard](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) prescribes an ABI for metadat associated with Native Assets on the Fuel Network. The Asset Library's [metadata](./metadata.md) section supports the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata)'s implementation.
+
+
+For more information please see the [specification](../../../../../../../libs/native_asset/2/SPECIFICATION.md).

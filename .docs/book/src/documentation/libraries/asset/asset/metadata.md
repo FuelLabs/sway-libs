@@ -1,0 +1,162 @@
+# Metadata Functionality
+
+## Importing the Asset Library Metadata Functionality
+
+To import the Asset Library Base Functionality and [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) Standard to your Sway Smart Contract, add the following to your Sway file:
+
+```sway
+use sway_libs::asset::metadata::*;
+use standards::src7::*;
+```
+
+## Integration with the SRC-7 Standard
+
+The [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) definition states that the following abi implementation is required for any Native Asset on Fuel:
+
+```sway
+abi SRC7 {
+    #[storage(read)]
+    fn metadata(asset: AssetId, key: String) -> Option<Metadata>;
+}
+```
+
+The Asset Library has the following complimentary data type for the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) standard:
+
+- `StorageMetadata`
+
+The following additional functionality for the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata)'s `Metadata` type is provided:
+
+- `as_string()`
+- `is_string()`
+- `as_u64()`
+- `is_u64()`
+- `as_bytes()`
+- `is_bytes()`
+- `as_b256()`
+- `is_b256()`
+
+## Setting Up Storage
+
+Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) standard.
+
+```sway
+storage {
+    metadata: StorageMetadata = StorageMetadata {},
+}
+```
+
+## Using the `StorageMetadata` Type
+
+### Setting Metadata
+
+To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://github.com/FuelLabs/sway-standards/tree/master/standards/src9-metadata-keys) standard for your `key`. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
+
+```sway
+use sway_libs::asset::metadata::*;
+
+storage {
+    metadata: StorageMetadata = StorageMetadata {},
+}
+
+impl SetAssetMetadata for Contract {
+    #[storage(read, write)]
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata) {
+        _set_metadata(storage.metadata, asset, key, metadata);
+    }
+}
+```
+
+> **NOTE** The `_set_metadata()` function will set the metdata of an asset *unconditionally*. External checks should be applied to restrict the setting of metadata.
+
+### Implementing the SRC-7 Standard with StorageMetadata
+
+To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId`. The example below shows the implementation of the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) standard in combination with the Asset Library's `StorageMetadata` type with no user defined restrictions or custom functionality. 
+
+```sway
+use sway_libs::asset::metadata::*;
+use standards::src7::SRC7;
+
+storage {
+    metadata: StorageMetadata = StorageMetadata {},
+}
+
+// Implement the SRC-7 Standard for this contract
+impl SRC7 for Contract {
+    #[storage(read)]
+    fn metadata(asset: AssetId, key: String) -> Option<Metadata> {
+        // Return the stored metadata
+        storage.metadata.get(asset, key)
+    }
+}
+```
+
+## Using the `Metadata` Extensions
+
+The `Metadata` type defined by the [SRC-7](https://github.com/FuelLabs/sway-standards/tree/master/standards/src7-metadata) standard can be one of 4 states:
+
+```sway
+pub enum Metadata {
+    B256: b256,
+    Bytes: Bytes,
+    Int: u64,
+    String: String,
+}
+```
+
+The Asset Library enables the following functionality for the `Metadata` type:
+
+### `is_b256()` and `as_b256()`
+
+The `is_b256()` check enables checking whether the `Metadata` type is a `b256`.
+The `as_b256()` returns the `b256` of the `Metadata` type.
+
+
+```sway
+fn b256_type(my_metadata: Metadata) {
+    assert(my_metadata.is_b256());
+
+    let my_b256: b256 = my_metadata.as_b256();
+}
+```
+
+### `is_bytes()` and `as_bytes()`
+
+The `is_bytes()` check enables checking whether the `Metadata` type is a `Bytes`.
+The `as_bytes()` returns the `Bytes` of the `Metadata` type.
+
+
+```sway
+fn bytes_type(my_metadata: Metadata) {
+    assert(my_metadata.is_bytes());
+
+    let my_bytes: Bytes = my_metadata.as_bytes();
+}
+```
+
+### `is_u64()` and `as_u64()`
+
+The `is_u64()` check enables checking whether the `Metadata` type is a `u64`.
+The `as_u64()` returns the `u64` of the `Metadata` type.
+
+
+```sway
+fn u64_type(my_metadata: Metadata) {
+    assert(my_metadata.is_u64());
+
+    let my_u64: u64 = my_metadata.as_u64();
+}
+```
+
+### `is_string()` and `as_string()`
+
+The `is_string()` check enables checking whether the `Metadata` type is a `String`.
+The `as_string()` returns the `String` of the `Metadata` type.
+
+
+```sway
+fn string_type(my_metadata: Metadata) {
+    assert(my_metadata.is_string());
+
+    let my_string: String = my_metadata.as_string();
+}
+```
