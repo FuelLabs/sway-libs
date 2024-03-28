@@ -22,7 +22,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::pausable::Pausable;
+    /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -46,7 +46,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::pausable::Pausable;
+    /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -70,7 +70,7 @@ abi Pausable {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::pausable::Pausable;
+    /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let pausable_abi = abi(Pauseable, contract_id);
@@ -91,7 +91,7 @@ abi Pausable {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::pausable::{_pause, _is_paused};
+/// use sway_libs::pausable::{_pause, _is_paused};
 ///
 /// fn foo() {
 ///     _pause();
@@ -113,7 +113,7 @@ pub fn _pause() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::pausable::{_unpause, _is_paused};
+/// use sway_libs::pausable::{_unpause, _is_paused};
 ///
 /// fn foo() {
 ///     _unpause();
@@ -139,7 +139,7 @@ pub fn _unpause() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::pausable::_is_paused;
+/// use sway_libs::pausable::_is_paused;
 ///
 /// fn foo() {
 ///     assert(!_is_paused());
@@ -164,7 +164,7 @@ pub fn _is_paused() -> bool {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::pausable::{_pause, require_paused};
+/// use sway_libs::pausable::{_pause, require_paused};
 ///
 /// fn foo() {
 ///     _pause();
@@ -196,7 +196,7 @@ pub fn require_paused() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::pausable::{_unpause, require_not_paused};
+/// use sway_libs::pausable::{_unpause, require_not_paused};
 ///
 /// fn foo() {
 ///     _unpause();

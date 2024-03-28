@@ -1,6 +1,6 @@
 script;
 
-use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128};
+use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128};
 
 fn main() -> bool {
     // arithmetic

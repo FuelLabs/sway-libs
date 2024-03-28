@@ -1,7 +1,7 @@
 contract;
 
 use std::{auth::*, call_frames::contract_id};
-use libraries::reentrancy::*;
+use sway_libs::reentrancy::*;
 
 use reentrancy_attacker_abi::Attacker;
 use reentrancy_target_abi::Target;

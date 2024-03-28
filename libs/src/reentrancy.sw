@@ -21,7 +21,7 @@ use std::registers::frame_ptr;
 /// # Examples
 ///
 /// ```sway
-/// use libraries::reentrancy::reentrancy_guard;
+/// use sway_libs::reentrancy::reentrancy_guard;
 ///
 /// fn foo() {
 ///     reentrancy_guard();
@@ -46,7 +46,7 @@ pub fn reentrancy_guard() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::reentrancy::is_reentrant;
+/// use sway_libs::reentrancy::is_reentrant;
 ///
 /// fn foo() {
 ///     assert(is_reentrant() == false);

@@ -61,7 +61,7 @@ These libraries contain helper functions and other tools valuable to blockchain 
 To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-libraries = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 > **NOTE:** 
@@ -70,13 +70,13 @@ libraries = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 You may then import your desired library in your Sway Smart Contract as so:
 
 ```sway
-use libraries::ownership::<library_function>;
+use sway_libs::<library>::<library_function>;
 ```
 
 For example, to import the `only_owner()` function use the following statement:
 
 ```sway
-use libraries::ownership::only_owner;
+use sway_libs::ownership::only_owner;
 ```
 
 ## Running Tests

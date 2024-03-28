@@ -21,7 +21,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let queue = Queue::new::<u64>();
@@ -43,7 +43,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let queue = Queue::new::<u64>();
@@ -63,7 +63,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -85,7 +85,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -106,7 +106,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();
@@ -133,7 +133,7 @@ impl<T> Queue<T> {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::queue::Queue;
+    /// use sway_libs::queue::Queue;
     ///
     /// fn foo() {
     ///     let mut queue = Queue::new::<u64>();

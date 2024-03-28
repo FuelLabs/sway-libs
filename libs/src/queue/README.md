@@ -16,15 +16,17 @@ For more information about implementation and specifications, please see the [SP
 
 ## Getting Started
 
-To use the Queue library, you need to add it to the Forc.toml file and then import it into your Sway project. For more details on how to add Sway-libs as a dependency to your Forc.toml, refer to the [README.md](../../README.md).
+In order to use the Queue library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
-```rust
-use queue::Queue;
+You may then import the Queue library's functionalities like so:
+
+```sway
+use sway_libs::queue::Queue;
 ```
 
 Once the `Queue` has been imported, you can create a new queue instance by calling the `new` function.
 
-```rust
+```sway
 let mut queue = Queue::new();
 ```
 
@@ -32,28 +34,28 @@ let mut queue = Queue::new();
 
 Adding elements to the `Queue` can be done using the `enqueue` function.
 
-```rust
+```sway
 // Enqueue an element to the queue
 queue.enqueue(10u8);
 ```
 
 To remove elements from the `Queue`, the `dequeue` function is used. This function follows the FIFO principle.
 
-```rust
+```sway
 // Dequeue the first element and unwrap the value
 let first_item = queue.dequeue().unwrap();
 ```
 
 To retrieve the element at the head of the `Queue` without removing it, you can use the `peek` function.
 
-```rust
+```sway
 // Peek at the head of the queue
 let head_item = queue.peek();
 ```
 
 The `is_empty` and `len` functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.
 
-```rust
+```sway
 // Checks if queue is empty (returns True or False)
 let is_queue_empty = queue.is_empty();
 

@@ -1,6 +1,6 @@
 contract;
 
-use libraries::ownership::{
+use sway_libs::ownership::{
     _owner,
     initialize_ownership,
     only_owner,

@@ -1,6 +1,6 @@
 script;
 
-use libraries::fixed_point::{ifp128::IFP128, ufp64::UFP64};
+use sway_libs::fixed_point::{ifp128::IFP128, ufp64::UFP64};
 
 fn main() -> bool {
     let zero = IFP128::from(UFP64::from_uint(0));

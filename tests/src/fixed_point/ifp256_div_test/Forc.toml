@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "ifp256_div_test"
 
 [dependencies]
-libraries = { path = "../../../../libs" }
+sway_libs = { path = "../../../../libs" }

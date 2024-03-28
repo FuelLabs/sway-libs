@@ -18,6 +18,16 @@ attacks, it WILL NOT PREVENT a cross-contract reentrancy attack.
 
 ## Using the Library
 
+## Getting Started
+
+In order to use the Reentrancy library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+
+You may then import the Reentrancy library's functionalities like so:
+
+```sway
+use sway_libs::reentrancy::*;
+```
+
 ### Using the Reentrancy Guard
 
 Once imported, using the Reentrancy Library can be done by calling one of the two functions. For
@@ -30,8 +40,8 @@ The `reentrancy_guard` function asserts `is_reentrant()` returns false.
 
 ## Example
 
-```rust
-use reentrancy::reentrancy_guard;
+```sway
+use sway_libs::reentrancy::reentrancy_guard;
 
 abi MyContract {
     fn my_non_reentrant_function();

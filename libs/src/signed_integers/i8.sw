@@ -25,7 +25,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let zero = I8::indent();
@@ -71,7 +71,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let bits = I8::bits();
@@ -95,7 +95,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let underlying = 1u8;
@@ -116,7 +116,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let i8 = I8::max();
@@ -138,7 +138,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let i8 = I8::new();
@@ -164,7 +164,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let underlying = 1u8;
@@ -191,7 +191,7 @@ impl I8 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i8::I8;
+    /// use sway_libs::signed_integers::i8::I8;
     ///
     /// fn foo() {
     ///     let i8 = I8::new();

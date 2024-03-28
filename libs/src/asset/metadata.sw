@@ -41,8 +41,8 @@ impl StorageKey<StorageMetadata> {
     /// # Example
     ///
     /// ```sway
-    /// use src7::Metadata;
-    /// use libraries::asset::metadata::*;
+    /// use standards::src7::Metadata;
+    /// use sway_libs::asset::metadata::*;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -96,8 +96,8 @@ impl StorageKey<StorageMetadata> {
     /// # Example
     ///
     /// ```sway
-    /// use src7::Metadata;
-    /// use libraries::asset::metadata::*;
+    /// use standards::src7::Metadata;
+    /// use sway_libs::asset::metadata::*;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -148,8 +148,8 @@ impl StorageKey<StorageMetadata> {
 /// # Example
 ///
 /// ```sway
-/// use src7::Metadata;
-/// use libraries::asset::metadata::*;
+/// use standards::src7::Metadata;
+/// use sway_libs::asset::metadata::*;
 ///
 /// storage {
 ///     metadata: StorageMetadata = StorageMetadata {}
@@ -185,8 +185,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -213,8 +213,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -240,8 +240,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -268,8 +268,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -295,8 +295,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{bytes::Bytes, string::String};
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -323,8 +323,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{bytes::Bytes, string::String};
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -350,8 +350,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::{constants::ZERO_B256, string::String};
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);
@@ -378,8 +378,8 @@ impl Metadata {
     ///
     /// ```sway
     /// use std::string::String;
-    /// use libraries::asset::metadata::*;
-    /// use src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use standards::src7::{SRC7, Metadata};
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
     ///     let metadata_abi = abi(SRC7, contract_id);

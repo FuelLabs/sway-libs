@@ -15,14 +15,14 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the Ownership library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+In order to use the Ownership library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 > **NOTE** Until [Issue #5025](https://github.com/FuelLabs/sway/issues/5025) is resolved, in order to use the Ownership Library you must also add the [SRC-5](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_5) standard as a dependencies.
 
 You may import the Ownership library's functionalities like so:
 
 ```sway
-use ownership::*;
+use sway_libs::ownership::*;
 ```
 
 Once imported, the Ownership library's functions will be available. To use them initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor method.
@@ -54,8 +54,8 @@ let owner: State = _owner();
 To implement the SRC-5 standard with the Ownership library, be sure to add the [SRC-5](https://github.com/FuelLabs/sway-standards/tree/master/standards/src_5) abi to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.
 
 ```sway
-use ownership::_owner;
-use src_5::{State, SRC5};
+use sway_libs::ownership::_owner;
+use standards::src_5::{State, SRC5};
 
 impl SRC5 for Contract {
     #[storage(read)]

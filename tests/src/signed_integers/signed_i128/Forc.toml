@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "i128_test"
 
 [dependencies]
-libraries = { path = "../../../../libs" }
+sway_libs = { path = "../../../../libs" }

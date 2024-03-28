@@ -26,7 +26,7 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 /// # Examples
 ///
 /// ```sway
-/// use libraries::admin::{add_admin, is_admin};
+/// use sway_libs::admin::{add_admin, is_admin};
 ///
 /// fn foo(new_admin: Identity) {
 ///     add_admin(new_admin);
@@ -62,7 +62,7 @@ pub fn add_admin(new_admin: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::admin::{revoke_admin, is_admin};
+/// use sway_libs::admin::{revoke_admin, is_admin};
 ///
 /// fn foo(old_admin: Identity) {
 ///     revoke_admin(old_admin);
@@ -99,7 +99,7 @@ pub fn revoke_admin(old_admin: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::admin::{is_admin};
+/// use sway_libs::admin::{is_admin};
 ///
 /// fn foo(admin: Identity) {
 ///     assert(is_admin(admin));
@@ -139,7 +139,7 @@ pub fn is_admin(admin: Identity) -> bool {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::admin::{only_admin};
+/// use sway_libs::admin::{only_admin};
 ///
 /// fn foo() {
 ///     only_admin();
@@ -164,7 +164,7 @@ pub fn only_admin() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::admin::{only_owner_or_admin};
+/// use sway_libs::admin::{only_owner_or_admin};
 ///
 /// fn foo() {
 ///     only_owner_or_admin();

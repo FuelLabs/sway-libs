@@ -25,7 +25,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {
@@ -77,7 +77,7 @@ impl I256 {
     /// # Examples
     ///
     /// ``sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     ///
     /// fn foo() {
     ///     let bits = I256::bits();
@@ -101,7 +101,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {
@@ -123,7 +123,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {
@@ -146,7 +146,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {
@@ -173,7 +173,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {
@@ -201,7 +201,7 @@ impl I256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i256::I256;
+    /// use sway_libs::signed_integers::i256::I256;
     /// use std::U256::*;
     ///
     /// fn foo() {

@@ -1,6 +1,6 @@
 contract;
 
-use libraries::merkle::binary_proof::{leaf_digest, node_digest, process_proof, verify_proof};
+use sway_libs::merkle::binary_proof::{leaf_digest, node_digest, process_proof, verify_proof};
 
 abi MerkleProofTest {
     fn leaf_digest(data: b256) -> b256;

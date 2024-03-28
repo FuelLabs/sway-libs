@@ -24,7 +24,7 @@ const OWNER = 0x4c1029697ee358715d3a14a2add817c4b01651440de808371f78165ac90dc581
 /// # Examples
 ///
 /// ```sway
-/// use libraries::ownership::_owner;
+/// use sway_libs::ownership::_owner;
 ///
 /// fn foo() {
 ///     let stored_owner = _owner();
@@ -49,7 +49,7 @@ pub fn _owner() -> State {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::ownership::only_owner;
+/// use sway_libs::ownership::only_owner;
 ///
 /// fn foo() {
 ///     only_owner();
@@ -78,7 +78,7 @@ pub fn only_owner() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::ownership::{_owner, renounce_ownership};
+/// use sway_libs::ownership::{_owner, renounce_ownership};
 ///
 /// fn foo() {
 ///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
@@ -116,7 +116,7 @@ pub fn renounce_ownership() {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::ownership::{_owner, initialize_ownership};
+/// use sway_libs::ownership::{_owner, initialize_ownership};
 ///
 /// fn foo(owner: Identity) {
 ///     assert(_owner() == State::Uninitialized);
@@ -155,7 +155,7 @@ pub fn initialize_ownership(new_owner: Identity) {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::ownership::{_owner, transfer_ownership};
+/// use sway_libs::ownership::{_owner, transfer_ownership};
 ///
 /// fn foo(new_owner: Identity) {
 ///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));

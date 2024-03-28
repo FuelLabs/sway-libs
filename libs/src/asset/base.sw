@@ -19,7 +19,7 @@ use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::_total_assets;
+/// use sway_libs::asset::base::_total_assets;
 ///
 /// storage {
 ///     total_assets: u64 = 0,
@@ -53,7 +53,7 @@ pub fn _total_assets(total_assets_key: StorageKey<u64>) -> u64 {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::_total_supply;
+/// use sway_libs::asset::base::_total_supply;
 ///
 /// storage {
 ///     total_supply: StorageMap<AssetId, u64> = StorageMap {},
@@ -90,7 +90,7 @@ pub fn _total_supply(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::_name;
+/// use sway_libs::asset::base::_name;
 /// use std::string::String;
 ///
 /// storage {
@@ -128,7 +128,7 @@ pub fn _name(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::_symbol;
+/// use sway_libs::asset::base::_symbol;
 /// use std::string::String;
 ///
 /// storage {
@@ -170,7 +170,7 @@ pub fn _symbol(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::_decimals;
+/// use sway_libs::asset::base::_decimals;
 ///
 /// storage {
 ///     decimals: StorageMap<AssetId, u8> = StorageMap {},
@@ -208,7 +208,7 @@ pub fn _decimals(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::{_set_name, _name};
+/// use sway_libs::asset::base::{_set_name, _name};
 /// use std::string::String;
 ///
 /// storage {
@@ -250,7 +250,7 @@ pub fn _set_name(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::{_set_symbol, _symbol};
+/// use sway_libs::asset::base::{_set_symbol, _symbol};
 /// use std::string::String;
 ///
 /// storage {
@@ -292,7 +292,7 @@ pub fn _set_symbol(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::asset::base::{_set_decimals, _decimals};
+/// use sway_libs::asset::base::{_set_decimals, _decimals};
 /// use std::string::String;
 ///
 /// storage {

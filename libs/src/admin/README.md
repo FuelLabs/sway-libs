@@ -17,12 +17,12 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the Admin library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+In order to use the Admin library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 You may import the Admin library's functionalities like so:
 
 ```sway
-use admin::*;
+use sway_libs::admin::*;
 ```
 
 Once imported, the Admin library's functions will be available. To use them, the contract's owner must add a user as an admin with the `add_admin()` function. There is no limit to the number of admins a contract may have.
@@ -68,8 +68,7 @@ fn check_if_admin(admin: Identity) {
 To implement the Ownership library with the Admin library, be sure to set a contract owner for your contract. The following demonstrates the integration of the Ownership library with the Admin library.
 
 ```sway
-use ownership::initialize_ownership;
-use admin::add_admin;
+use sway_libs::{admin::add_admin, ownership::initialize_ownership};
 
 #[storage(read, write)]
 fn my_constructor(new_owner: Identity) {

@@ -15,12 +15,12 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the Native Asset Library it must be added to the Forc.toml file and then imported into your Sway project. To add Sway-libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
+In order to use the Native Asset Library, Sway Libs must be added to the Forc.toml file and then imported into your Sway project. To add Sway Libs as a dependency to the Forc.toml file in your project please see the [README.md](../../README.md).
 
 You may import the Native Asset Library's functionalities like so:
 
 ```rust
-use asset::*;
+use sway_libs::asset::*;
 ```
 
 Once imported, the Native Asset Library's functions should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset) standard.
@@ -40,14 +40,14 @@ storage {
 To use a function, simply pass the `StorageKey` from the prescribed storage block above. The example below shows the implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/tree/master/standards/src20-native-asset) standard in combination with the Native Asset Library with no user defined restrictions or custom functionality.
 
 ```rust
-use asset::base::{
+use  admin::add_admin::asset::base::{
     _total_assets, 
     _total_supply,
     _name,
     _symbol,
     _decimals
 };
-use src_20::SRC20;
+use standards::src_20::SRC20;
 use std::{hash::Hash, string::String, storage::storage_string::*};
 
 storage {

@@ -1,6 +1,6 @@
 script;
 
-use libraries::signed_integers::i128::I128;
+use sway_libs::signed_integers::i128::I128;
 use std::u128::U128;
 
 fn main() -> bool {

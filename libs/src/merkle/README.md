@@ -15,6 +15,14 @@ More information can be found in the [specification](./SPECIFICATION.md).
 
 ## Using the Merkle Proof Library In Sway
 
+In order to use the Merkle library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+
+You may import the Merkle library's functionalities like so:
+
+```sway
+use sway_libs::merkle::binary_proof::*;
+```
+
 Once imported, using the Merkle Proof library is as simple as calling the desired function. Here is a list of function definitions that you may use. For more information please see the [specification](./SPECIFICATION.md).
 
 - `leaf_digest(data: b256) -> b256`

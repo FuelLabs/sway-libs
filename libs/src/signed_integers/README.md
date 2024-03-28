@@ -17,16 +17,12 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the `Signed Integers` type it must be added to the Forc.toml file.
+In order to use the Signed Integers library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
-```toml
-signed_integers = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
-```
-
-Then we can import types like so:
+You may then import the Signed Integers library's functionalities like so:
 
 ```rust
-use signed_integers::i8::I8;
+use sway_libs::signed_integers::i8::I8;
 ```
 
 Once imported, a `Signed Integer` type can be instantiated defining a new variable and calling the `new` function.

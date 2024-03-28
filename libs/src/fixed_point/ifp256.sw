@@ -35,7 +35,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ``sway
-    /// use libraries::fixed_point::ifp256::IFP256;
+    /// use sway_libs::fixed_point::ifp256::IFP256;
     ///
     /// fn foo() {
     ///     let bits = IFP256::bits();
@@ -55,7 +55,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::max();
@@ -75,7 +75,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::min();
@@ -98,7 +98,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::zero();
@@ -118,7 +118,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::ifp256::IFP256;
+    /// use sway_libs::fixed_point::ifp256::IFP256;
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::zero();
@@ -259,7 +259,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(1);
@@ -285,7 +285,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
@@ -313,7 +313,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
@@ -339,7 +339,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
@@ -369,7 +369,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
@@ -395,7 +395,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
@@ -437,7 +437,7 @@ impl IFP256 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::fixed_point::{ifp256::IFP256, ufp128::UFP128}
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128}
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);

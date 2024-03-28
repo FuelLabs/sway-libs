@@ -25,7 +25,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let zero = I16::indent();
@@ -72,7 +72,7 @@ impl I16 {
     /// # Examples
     ///
     /// ``sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let bits = I16::bits();
@@ -96,7 +96,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let underlying = 1u16;
@@ -117,7 +117,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let i16 = I16::max();
@@ -139,7 +139,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let i16 = I16::min();
@@ -165,7 +165,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let underlying = 1u16;
@@ -192,7 +192,7 @@ impl I16 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i16::I16;
+    /// use sway_libs::signed_integers::i16::I16;
     ///
     /// fn foo() {
     ///     let i16 = I16::new();

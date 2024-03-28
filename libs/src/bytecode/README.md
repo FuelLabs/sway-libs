@@ -17,12 +17,12 @@ More information can be found in the [specification](./SPECIFICATION.md).
 
 ## Using the Bytecode Library In Sway
 
-In order to use the Bytecode Library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+In order to use the Bytecode Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway-libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 You may import the Bytecode Library's functionalities like so:
 
 ```sway
-use bytecode::*;
+use sway_libs::bytecode::*;
 ```
 
 Once imported, using the Bytecode Library is as simple as calling the desired function. Here is a list of function definitions that you may use. For more information please see the [specification](./SPECIFICATION.md).

@@ -28,7 +28,7 @@ pub const NODE = 1u8;
 /// # Examples
 ///
 /// ```sway
-/// use libraries::merkle::binary_proof::leaf_digest;
+/// use sway_libs::merkle::binary_proof::leaf_digest;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -62,7 +62,7 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::merkle::binary_proof::node_digest;
+/// use sway_libs::merkle::binary_proof::node_digest;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -108,7 +108,7 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use libraries::merkle::binary_proof::process_proof;
+/// use sway_libs::merkle::binary_proof::process_proof;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
@@ -209,7 +209,7 @@ pub fn process_proof(
 /// # Examples
 ///
 /// ```sway
-/// use libraries::merkle::binary_proof::process_proof;
+/// use sway_libs::merkle::binary_proof::process_proof;
 /// use std::contants::ZERO_B256;
 ///
 /// fn foo() {

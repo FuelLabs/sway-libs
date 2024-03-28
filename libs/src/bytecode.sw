@@ -20,7 +20,7 @@ use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _s
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::compute_bytecode_root;
+/// use sway_libs::bytecode::compute_bytecode_root;
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
 ///     let bytecode_root = compute_bytecode_root(my_bytecode);
@@ -46,7 +46,7 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::compute_bytecode_root_with_configurables;
+/// use sway_libs::bytecode::compute_bytecode_root_with_configurables;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
@@ -77,7 +77,7 @@ pub fn compute_bytecode_root_with_configurables(
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::compute_predicate_address;
+/// use sway_libs::bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
 ///     let predicate_address = compute_predicate_address(my_bytecode);
@@ -104,7 +104,7 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::compute_predicate_address;
+/// use sway_libs::bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
@@ -136,7 +136,7 @@ pub fn compute_predicate_address_with_configurables(
 ///
 /// ```sway
 /// use std::constants::ZERO_B256;
-/// use bytecode::predicate_address_from_root;
+/// use sway_libs::bytecode::predicate_address_from_root;
 ///
 /// fn foo(predicate_bytecode_root: b256) {
 ///     let predicate_address = predicate_address_from_root(predicate_bytecode_root);
@@ -161,7 +161,7 @@ pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
 /// # Examples
 ///
 /// ```sway
-/// use bytecode::sway_configurables;
+/// use sway_libs::bytecode::sway_configurables;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
@@ -192,7 +192,7 @@ pub fn swap_configurables(
 /// # Examples
 ///
 /// ```sway
-/// use bytecode::verify_contract_bytecode;
+/// use sway_libs::bytecode::verify_contract_bytecode;
 ///
 /// fn foo(my_contract_id: ContractId, my_bytecode: Vec<u8>) {
 ///     verify_contract_bytecode(my_contract_id, my_bytecode);
@@ -221,7 +221,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 /// # Examples
 ///
 /// ```sway
-/// use bytecode::verify_contract_bytecode_with_configurables;
+/// use sway_libs::bytecode::verify_contract_bytecode_with_configurables;
 ///
 /// fn foo(my_contract_id: ContractId, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
@@ -256,7 +256,7 @@ pub fn verify_contract_bytecode_with_configurables(
 /// # Examples
 ///
 /// ```sway
-/// use bytecode::verify_predicate_address;
+/// use sway_libs::bytecode::verify_predicate_address;
 ///
 /// fn foo(my_predicate_id: Address, my_bytecode: Vec<u8>) {
 ///     verify_predicate_address(my_predicate_id, my_bytecode);
@@ -285,7 +285,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 /// # Examples
 ///
 /// ```sway
-/// use bytecode::verify_predicate_address_with_configurables;
+/// use sway_libs::bytecode::verify_predicate_address_with_configurables;
 ///
 /// fn foo(my_predicate_id: Address, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;

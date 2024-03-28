@@ -25,7 +25,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let zero = I64::indent();
@@ -71,7 +71,7 @@ impl I64 {
     /// # Examples
     ///
     /// ``sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let bits = I64::bits();
@@ -95,7 +95,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let underlying = 1u64;
@@ -116,7 +116,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let i64 = I64::max();
@@ -138,7 +138,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let i64 = I64::min();
@@ -164,7 +164,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let underlying = 1u64;
@@ -191,7 +191,7 @@ impl I64 {
     /// # Examples
     ///
     /// ```sway
-    /// use libraries::signed_integers::i64::I64;
+    /// use sway_libs::signed_integers::i64::I64;
     ///
     /// fn foo() {
     ///     let i64 = I64::new();

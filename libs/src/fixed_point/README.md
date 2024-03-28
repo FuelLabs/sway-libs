@@ -17,23 +17,17 @@ For more information please see the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-First, add the `fixed_point` library as a dependency in your Forc.toml like so:
-
-```toml
-fixed_point = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
-```
+In order to use the Fixed Point library, Sway Libs it must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 In order to use the `UFP32`, `UFP64` or `UFP128` types, import them into your Sway project like so.
 
-```rust
-use fixed_point::ufp32::UFP32;
-use fixed_point::ufp64::UFP64;
-use fixed_point::ufp128::UFP128;
+```sway
+use sway_libs::fixed_point::{ufp32::UFP32, ufp64::UFP64, ufp128::UFP128};
 ```
 
 Once imported, a `UFP64` or `UFP128` type can be instantiated by defining a new variable and calling the `from` function.
 
-```rust
+```sway
 let mut ufp32_value = UFP32::from(0);
 let mut ufp64_value = UFP64::from(0);
 let mut ufp128_value = UFP128::from(0);
@@ -43,7 +37,7 @@ let mut ufp128_value = UFP128::from(0);
 
 Basic arithmetic operations are working as usual
 
-```rust
+```sway
 // Add 2 signed values
 let ufp_value_3 = ufp_value_1 + ufp_value_2;
 
@@ -54,19 +48,19 @@ let ufp_value_3 = ufp_value_1 - ufp_value_2;
 Mathematical functions
 
 Exponential Function
-```rust
+```sway
 let ten = UFP64::from_uint(10);
 let res = UFP64::exp(ten);
 ```
 
 Square Root function
-```rust
+```sway
 let ufp64_169 = UFP64::from_uint(169);
 let res = UFP64::sqrt(ufp64_169);
 ```
 
 Power Function
-```rust
+```sway
 let three = UFP64::from_uint(3);
 let five = UFP64::from_uint(5);
 let res = five.pow(three);

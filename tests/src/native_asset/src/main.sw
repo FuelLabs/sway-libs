@@ -3,7 +3,7 @@ contract;
 use src20::SRC20;
 use src3::SRC3;
 use src7::{Metadata, SRC7};
-use libraries::asset::{
+use sway_libs::asset::{
     base::{
         _decimals,
         _name,

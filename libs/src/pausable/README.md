@@ -17,12 +17,12 @@ More information can be found in the [specification](./SPECIFICATION.md).
 
 ## Getting Started
 
-In order to use the Pausable library it must be added to the `Forc.toml` file and then imported into your Sway project. To add Pausable as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
+In order to use the Pausable library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [README.md](../../README.md).
 
 You may import the Pausable library's functionalities like so:
 
 ```sway
-use pausable::*;
+use sway_libs::pausable::*;
 ```
 
 ## Basic Functionality
@@ -37,7 +37,7 @@ The Pausable Library has two states:
 By default, your contract will start in the `Unpaused` state. To pause your contract, you may call the `_pause()` function. The example below provides a basic pausable contract using the Pausable Library's `Pausable` abi without any restrictions such as an administrator.
 
 ```sway
-use pausable::{_is_paused, _pause, _unpause, Pausable};
+use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
 
 impl Pausable for Contract {
     #[storage(write)]
@@ -62,7 +62,7 @@ impl Pausable for Contract {
 When developing a contract, you may want to lock functions down to a specific state. To do this, you may call either of the `require_paused()` or `require_not_paused()` functions. The example below shows these functions in use.
 
 ```sway
-use pausable::{require_not_paused, require_paused};
+use sway_libs::pausable::{require_not_paused, require_paused};
 
 abi MyAbi {
     #[storage(read)]
