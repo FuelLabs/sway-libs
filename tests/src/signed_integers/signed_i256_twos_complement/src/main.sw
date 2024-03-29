@@ -1,6 +1,6 @@
 script;
 
-use signed_integers::i256::I256;
+use sway_libs::signed_integers::i256::I256;
 use std::u256::U256;
 
 fn main() -> bool {

@@ -1,7 +1,13 @@
 contract;
 
-use ownership::*;
-use src_5::{SRC5, State};
+use sway_libs::ownership::{
+    _owner,
+    initialize_ownership,
+    only_owner,
+    renounce_ownership,
+    transfer_ownership,
+};
+use src5::{SRC5, State};
 
 abi OwnableTest {
     #[storage(read)]

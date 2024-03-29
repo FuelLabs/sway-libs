@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "bytecode_test"
 
 [dependencies]
-bytecode = { path = "../../../../libs/bytecode" }
+sway_libs = { path = "../../../../libs" }
