@@ -1,6 +1,6 @@
 script;
 
-use signed_integers::i8::I8;
+use sway_libs::signed_integers::i8::I8;
 
 fn main() -> bool {
     let one = I8::from(1u8);

@@ -1,6 +1,6 @@
 script;
 
-use fixed_point::ufp32::UFP32;
+use sway_libs::fixed_point::ufp32::UFP32;
 use std::assert::assert;
 
 fn main() -> bool {

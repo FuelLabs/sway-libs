@@ -115,21 +115,6 @@ jobs:
 
   build-forc-doc-sway-libs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project:
-          [
-            "admin",
-            "bytecode",
-            "fixed_point",
-            "merkle_proof",
-            "native_asset",
-            "ownership",
-            "pausable",
-            "queue",
-            "reentrancy",
-            "signed_integers",
-          ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -150,5 +135,4 @@ jobs:
 
       - name: Build sway-libs docs
         run: |
-          cd libs/${{ matrix.project }}
-          forc doc
+          forc doc --manifest-path libs
