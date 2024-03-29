@@ -30,7 +30,7 @@ use sway_libs::signed_integers::i8::I8;
 
 Once imported, a `Signed Integer` type can be instantiated defining a new variable and calling the `new` function.
 
-```rust
+```sway
 let mut i8_value = I8::new();
 ```
 

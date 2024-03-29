@@ -39,7 +39,7 @@ queue.enqueue(10u8);
 
 To remove elements from the `Queue`, the `dequeue` function is used. This function follows the FIFO principle.
 
-```rust
+```sway
 // Dequeue the first element and unwrap the value
 let first_item = queue.dequeue().unwrap();
 ```
@@ -48,7 +48,7 @@ let first_item = queue.dequeue().unwrap();
 
 To retrieve the element at the head of the `Queue` without removing it, you can use the `peek` function.
 
-```rust
+```sway
 // Peek at the head of the queue
 let head_item = queue.peek();
 ```
@@ -57,7 +57,7 @@ let head_item = queue.peek();
 
 The `is_empty` and `len` functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.
 
-```rust
+```sway
 // Checks if queue is empty (returns True or False)
 let is_queue_empty = queue.is_empty();
 
