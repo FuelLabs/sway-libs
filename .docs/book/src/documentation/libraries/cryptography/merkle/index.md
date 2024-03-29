@@ -2,7 +2,7 @@
 
 Merkle trees allow for on-chain verification of off-chain data. With the merkle root posted on-chain, the generation of proofs off-chain can provide verifibly true data. 
 
-More information can be found in the [specification](../../../../../../../libs/merkle_proof/SPECIFICATION.md).
+For implementation details on the Merkle Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/index.html).
 
 # Using the Library
 

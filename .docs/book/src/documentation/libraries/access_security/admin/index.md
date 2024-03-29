@@ -4,6 +4,8 @@ The Admin library provides a way to block users without an "adimistrative status
 
 This library extends the [Ownership Library](../ownership/index.md). The Ownership library must be imported and used to enable the Admin library. Only the contract's owner may add and remove administrative users. 
 
+For implementation details on the Admin Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/admin/index.html).
+
 # Using the Library
 
 ## Importing the Admin Library
@@ -99,5 +101,3 @@ fn check_if_admin(admin: Identity) {
     assert(status);
 }
 ```
-
-For more information please see the [specification](../../../../../../../libs/admin/SPECIFICATION.md).

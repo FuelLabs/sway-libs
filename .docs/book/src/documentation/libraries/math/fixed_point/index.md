@@ -4,7 +4,7 @@ The Fixed Point Number Library provides a library to use fixed-point numbers in 
 
 This type is stored as a `u32`, `u64` or `U128` under the hood. Therefore the size can be known at compile time and the length is static. 
 
-For more information please see the [specification](../../../../../../../libs/fixed_point/SPECIFICATION.md).
+For implementation details on the Fixed Point Number Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/fixed_point/index.html).
 
 # Using the Library
 

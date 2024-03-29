@@ -1,8 +1,10 @@
 # Supply Functionality
 
+Forimplementation details on the Asset Library supply functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/supply/index.html).
+
 ## Importing the Asset Library Supply Functionality
 
-To import the Asset Library Supply Functionality and [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn) Standard to your Sway Smart Contract, add the following to your Sway file:
+To import the Asset Library Supply Functionality and [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 use sway_libs::asset::supply::*;
@@ -11,7 +13,7 @@ use standards::src3::*;
 
 ## Integration with the SRC-3 Standard
 
-The [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn) definition states that the following abi implementation is required for any Native Asset on Fuel which mints and burns tokens:
+The [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) definition states that the following abi implementation is required for any Native Asset on Fuel which mints and burns tokens:
 
 ```sway
 abi SRC3 {
@@ -31,7 +33,7 @@ The Asset Library has the following complimentary functions for each function in
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's supply functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn) standard.
+Once imported, the Asset Library's supply functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) standard.
 
 ```sway
 storage {
@@ -42,7 +44,7 @@ storage {
 
 ## Implementing the SRC-3 Standard with the Asset Library
 
-To use a base function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://github.com/FuelLabs/sway-standards/tree/master/standards/src3-mint-burn) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
+To use a base function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
 
 
 ```sway

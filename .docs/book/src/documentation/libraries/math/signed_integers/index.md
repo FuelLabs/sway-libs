@@ -1,10 +1,10 @@
-# Overview
+# Signed Integers Library
 
 The Signed Integers library provides a library to use signed numbers in Sway. It has 6 distinct types: `I8`, `I16`, `I32`, `I64`, `I128`, `I256`. These types are stack allocated.
 
 These types are stored as unsigned integers, therefore either `u64` or a number of them. Therefore the size can be known at compile time and the length is static. 
 
-For more information please see the [specification](./SPECIFICATION.md).
+For implementation details on the Signed Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/signed_integers/index.html).
 
 # Using the Library
 

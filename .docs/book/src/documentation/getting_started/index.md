@@ -4,13 +4,13 @@
 
 To import any library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
-```rust
+```sway
 sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 ```
 
 For reference, here is a complete `Forc.toml` file:
 
-```rust
+```sway
 [project]
 authors = ["Fuel Labs <contact@fuel.sh>"]
 entry = "main.sw"
@@ -25,13 +25,13 @@ sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
 
 ## Importing Sway Libs to Your Project
 
-Once Sway Libs is a dependency to your project, you may then import your desired library in your Sway Smart Contract as so:
+Once Sway Libs is a dependency to your project, you may then import a library in your Sway Smart Contract as so:
 
 ```sway
 use sway_libs::<library>::<library_function>;
 ```
 
-For example, to import the `only_owner()` from the Ownership Library function use the following statement at the top of your Sway file:
+For example, to import the `only_owner()` from the Ownership Library, use the following statement at the top of your Sway file:
 
 ```sway
 use sway_libs::ownership::only_owner;
@@ -69,3 +69,5 @@ impl Pausable for Contract {
 ```
 
 Any instructions related to using a specific library should be found within the README.md of that library.
+
+For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).

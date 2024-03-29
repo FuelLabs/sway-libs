@@ -1,6 +1,5 @@
 # Summary
 
-- [Welcome](./documentation/welcome.md)
 - [Getting Started](./documentation/getting_started/index.md)
   - [Running Tests](./documentation/getting_started/running_tests.md)
 - [Libraries](./documentation/libraries/index.md)
