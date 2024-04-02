@@ -16,6 +16,6 @@ This type of specification is simple so that any layperson can follow the basic 
 
 A technical specification is aimed at users that may be regarded as experts / knowledgeable in the area. This type of specification typically assumes the reader understands the basic concepts and dives into the technical aspects of how something works, step-by-step.
 
-<br> 
+<br>
 
 > **Note:** Diagrams are a fantastic visual aid no matter the level of detail

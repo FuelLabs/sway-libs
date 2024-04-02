@@ -1,6 +1,6 @@
 # Naming Components
 
-Documenting the interface and adding comments is important however the holy grail is writing code that is self-documenting. 
+Documenting the interface and adding comments is important however the holy grail is writing code that is self-documenting.
 
 Self-documenting code refers to code that written in such a way that a regular user who has never seen a line of code before could interpret what it is doing.
 
@@ -47,7 +47,7 @@ When choosing a name, the name should be a statement from the developer and not 
 For example:
 
 - `can_change` -> `authorized`
-  - The "can" can be read as a question or a statement. 
+  - The "can" can be read as a question or a statement.
   - Is the developer asking the reader whether something can change or are they asserting that something either is or is not authorized to change?
 - `is_on` -> `enabled`
   - "is" can also be read as a question posed to the reader rather than a simple declaration.

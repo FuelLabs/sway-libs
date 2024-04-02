@@ -21,7 +21,7 @@ Depending on the account permissions and where the pull request is being made, t
 
 There are at least five sections to consider when creating a pull request:
 
-<!-- no toc --> 
+<!-- no toc -->
 - [The Title](#the-title)
 - [The Description](#the-description)
 - [The Reviewers](#the-reviewers)
@@ -41,7 +41,7 @@ Some ideas for sections are:
 
 - The changes that have been made and the motivation behind them
 - Limitations
-- Assumptions 
+- Assumptions
 - Future work if the pull request is part of an epic (set of tasks / issues)
 
 ### The Reviewers

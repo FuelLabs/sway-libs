@@ -1,10 +1,10 @@
 # Library Structure
 
-In order to navigate through a library easily, there needs to be a structure that compartmentalizes concepts. This means that code is grouped together based on some concept. 
+In order to navigate through a library easily, there needs to be a structure that compartmentalizes concepts. This means that code is grouped together based on some concept.
 
 Here is an example structure that we follow for `Sway` files in the `src` directory.
 
-```
+```sway
 src/
 ├── lib.sw
 └── my_library/

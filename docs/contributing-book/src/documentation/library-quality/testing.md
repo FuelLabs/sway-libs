@@ -6,7 +6,7 @@ Testing is a large topic to cover therefore this section will only cover some po
 
 There are three components to the tests and they have the following structure.
 
-```
+```sway
 tests/
 └── src/
     └── my_library/
@@ -19,7 +19,7 @@ tests/
 
 ### `functions`
 
-The `functions` directory contains 1 file per function declared in the `ABI` and all **test cases** (not utility / helper functions) for that function are contained within that module. 
+The `functions` directory contains 1 file per function declared in the `ABI` and all **test cases** (not utility / helper functions) for that function are contained within that module.
 
 There are two possibilities with any function call and either the call succeeds or it reverts. For this reason each file is split into two sections:
 

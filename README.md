@@ -110,7 +110,7 @@ forc test && cargo test
 ```
 
 > **NOTE:**
-> This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, indiviual test projects may be built on their own to save time.
+> This may take a while depending on your hardware, future improvements to Sway will decrease build times. After this has been run once, individual test projects may be built on their own to save time.
 
 Any instructions related to using a specific library should be found within the README.md of that library.
 

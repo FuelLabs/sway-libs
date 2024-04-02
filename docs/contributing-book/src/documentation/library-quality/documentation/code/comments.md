@@ -2,7 +2,7 @@
 
 Comments are used by developers for themselves or other developers to provide insight into some functionality.
 
-There are many ways to achieve the same outcome for a line of code however there are implementation tradeoffs to consider and a developer might be interested in knowing why the current approach has been chosen. 
+There are many ways to achieve the same outcome for a line of code however there are implementation tradeoffs to consider and a developer might be interested in knowing why the current approach has been chosen.
 
 Moreover, it may not be immediately clear why, or what, some line of code is doing so it may be a good idea to add a comment summarizing the intent behind the implementation.
 

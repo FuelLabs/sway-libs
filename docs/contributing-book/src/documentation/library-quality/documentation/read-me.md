@@ -14,8 +14,7 @@ The quickstart should inform the user where the library is supported (e.g. the o
 
 A user should be able to easily install, use, and potentially remove your library to create a good experience.
 
-
-## Miscellaneous 
+## Miscellaneous
 
 This "section" can be a number of sections which the authors of the library think the user may be interested in.
 

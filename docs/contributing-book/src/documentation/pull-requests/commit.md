@@ -25,7 +25,7 @@ Similarly, small commits should be avoided because:
 
 Categorizing commits into issues being resolved allows us to easily scope the amount of work per commit. With appropriate categories the likelihood of too much, or not enough, work being committed is reduced.
 
-An example could be a failing test suite which includes multiple functions that were re-written. In this instance it may be a good idea to fix a test, or a test suite, for one specific function and committing that work before moving onto the next. 
+An example could be a failing test suite which includes multiple functions that were re-written. In this instance it may be a good idea to fix a test, or a test suite, for one specific function and committing that work before moving onto the next.
 
 This creates a clear separation within the task of fixing the test suites by fixing one suite in one commit and another in another commit.
 
@@ -35,7 +35,7 @@ Once the issue has been resolved it's time to write a message that will distingu
 
 The commit message should be a concise and accurate summary of the work done:
 
-- `Good commit message:` 
+- `Good commit message:`
   - Fixed precondition in `withdraw()` which allowed draining to occur
 - `Bad commit message:`
   - Fix

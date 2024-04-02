@@ -8,7 +8,7 @@ Under the `Label` tab you can select any number of labels and any issue that mat
 
 <br>
 
-After clicking on the `Lib: Cryptography` label the issues have been filtered to show only the issues that have `Lib: Cryptography` added to them. 
+After clicking on the `Lib: Cryptography` label the issues have been filtered to show only the issues that have `Lib: Cryptography` added to them.
 
 Notice that `Lib: Cryptography` is not the only label in the image below. If you wish to further reduce the number of presented issues then additional labels can be added in the same way.
 

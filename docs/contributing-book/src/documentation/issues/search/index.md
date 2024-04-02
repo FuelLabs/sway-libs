@@ -17,5 +17,4 @@ Once the issues are filtered a task can be selected if another user is not curre
 
 ## [Issue summary](./summary.md)
 
-Each issue should have a description which provides context into the problem and what may be done to resolve it. 
-
+Each issue should have a description which provides context into the problem and what may be done to resolve it.

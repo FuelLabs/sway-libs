@@ -4,7 +4,7 @@ Documenting code is an important skill to have because it conveys information to
 
 In the following sections we'll take a look at three ways of documenting code and a code style guide.
 
-<!-- no toc --> 
+<!-- no toc -->
 - [ABI Documentation](abi.md)
 - [Comments](comments.md)
 - [Naming Components](naming-components.md)
