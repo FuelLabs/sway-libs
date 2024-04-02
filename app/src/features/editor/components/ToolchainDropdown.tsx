@@ -3,6 +3,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel/InputLabel';
 
 const ToolchainNames = [
   'beta-5',
@@ -26,29 +27,27 @@ function ToolchainDropdown({
   style,
 }: ToolchainDropdownProps) {
   return (
-    <div style={{ ...style }}>
-      <FormControl sx={{ minWidth: '70px' }} size='small'>
-        <Tooltip
-          placement='top'
-          title={'The Fuel toolchain to use for compilation'}>
-          <span>
-            <Select
-              sx={{ backgroundColor: 'white', fontSize: '16px' }}
-              variant='outlined'
-              value={toolchain}
-              onChange={(event) =>
-                setToolchain(event.target.value as Toolchain)
-              }>
-              {ToolchainNames.map((toolchain) => (
-                <MenuItem key={toolchain} value={toolchain}>
-                  {toolchain}
-                </MenuItem>
-              ))}
-            </Select>
-          </span>
-        </Tooltip>
-      </FormControl>
-    </div>
+    <FormControl style={{ ...style }} size='small'>
+      <InputLabel id='toolchain-select-label'>Toolchain</InputLabel>
+      <Tooltip placement='top' title={'Fuel toolchain to use for compilation'}>
+        <span>
+          <Select
+            id='toolchain-select'
+            labelId='toolchain-select-label'
+            label='Toolchain'
+            style={{ minWidth: '70px', background: 'white' }}
+            variant='outlined'
+            value={toolchain}
+            onChange={(event) => setToolchain(event.target.value as Toolchain)}>
+            {ToolchainNames.map((toolchain) => (
+              <MenuItem key={toolchain} value={toolchain}>
+                {toolchain}
+              </MenuItem>
+            ))}
+          </Select>
+        </span>
+      </Tooltip>
+    </FormControl>
   );
 }
 

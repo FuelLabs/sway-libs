@@ -1,4 +1,4 @@
-name: Backend CI
+name: CI
 on:
   push:
     branches:
@@ -10,6 +10,7 @@ env:
   RUSTFLAGS: -D warnings
   REGISTRY: ghcr.io
   RUST_VERSION: 1.70.0
+  NODE_VERSION: '16'
 
 jobs:
   cancel-previous-runs:
@@ -88,6 +89,8 @@ jobs:
       - cargo-check
       - cargo-test
     runs-on: ubuntu-latest
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -123,6 +126,25 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  frontend-build-and-test:
+    if: github.ref != 'refs/heads/master'
+    needs:
+      - build-and-publish-image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: NPM build
+        env:
+          CI: true
+        run: |
+          cd app && npm ci && npm run build
+      - name: Run the service in docker
+        run: |
+          docker run -d -p 8080:8080 ${{ needs.build-and-publish-image.outputs.tags }}
+      - name: NPM test
+        run: |
+          cd app && npm run test
 
   deploy:
     if: github.ref == 'refs/heads/master'

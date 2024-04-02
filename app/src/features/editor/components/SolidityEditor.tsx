@@ -6,7 +6,6 @@ import 'ace-builds/src-noconflict/theme-chrome';
 import { StyledBorder } from '../../../components/shared';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import ActionOverlay from './ActionOverlay';
-import { DEFAULT_SOLIDITY_CONTRACT } from '../../../constants';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 
 export interface SolidityEditorProps {
@@ -24,7 +23,7 @@ function SolidityEditor({ code, onChange }: SolidityEditorProps) {
         marginRight: isMobile ? 0 : '1rem',
         marginBottom: isMobile ? '1rem' : 0,
       }}>
-      <ActionOverlay handleReset={() => onChange(DEFAULT_SOLIDITY_CONTRACT)} />
+      <ActionOverlay handleSelectExample={onChange} editorLanguage='solidity'/>
       <AceEditor
         style={{
           width: '100%',
