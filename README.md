@@ -41,28 +41,28 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Assets
 
-- [Native Asset](https://fuellabs.github.io/sway-libs/book/documentation/libraries/asset/asset/index.html) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
+- [Native Asset](https://fuellabs.github.io/sway-libs/book/documentation/libraries/asset/index.html) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
 
 #### Access Control and Security
 
-- [Ownership](https://fuellabs.github.io/sway-libs/book/documentation/libraries/access_security/ownership/index.html) is used to apply restrictions on functions such that only a **single** user may call them.
-- [Admin](https://fuellabs.github.io/sway-libs/book/documentation/libraries/access_security/admin/index.html) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
-- [Pausable](https://fuellabs.github.io/sway-libs/book/documentation/libraries/access_security/pausable/index.html) allows contracts to implement an emergency stop mechanism.
-- [Reentrancy](https://fuellabs.github.io/sway-libs/book/documentation/libraries/access_security/reentrancy/index.html) is used to detect and prevent reentrancy attacks.
+- [Ownership](https://fuellabs.github.io/sway-libs/book/documentation/libraries/ownership/index.html) is used to apply restrictions on functions such that only a **single** user may call them.
+- [Admin](https://fuellabs.github.io/sway-libs/book/documentation/libraries/admin/index.html) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
+- [Pausable](https://fuellabs.github.io/sway-libs/book/documentation/libraries/pausable/index.html) allows contracts to implement an emergency stop mechanism.
+- [Reentrancy](https://fuellabs.github.io/sway-libs/book/documentation/libraries/reentrancy/index.html) is used to detect and prevent reentrancy attacks.
 
 #### Cryptography
 
-- [Bytecode](https://fuellabs.github.io/sway-libs/book/documentation/libraries/cryptography/bytecode/index.html) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
-- [Merkle Proof](https://fuellabs.github.io/sway-libs/book/documentation/libraries/cryptography/merkle/index.html) is used to verify Binary Merkle Trees computed off-chain.
+- [Bytecode](https://fuellabs.github.io/sway-libs/book/documentation/libraries/bytecode/index.html) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
+- [Merkle Proof](https://fuellabs.github.io/sway-libs/book/documentation/libraries/merkle/index.html) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
 
-- [Fixed Point Number](https://fuellabs.github.io/sway-libs/book/documentation/libraries/math/fixed_point/index.html) is an interface to implement fixed-point numbers.
-- [Signed Integers](https://fuellabs.github.io/sway-libs/book/documentation/libraries/math/signed_integers/index.html) is an interface to implement signed integers.
+- [Fixed Point Number](https://fuellabs.github.io/sway-libs/book/documentation/libraries/fixed_point/index.html) is an interface to implement fixed-point numbers.
+- [Signed Integers](https://fuellabs.github.io/sway-libs/book/documentation/libraries/signed_integers/index.html) is an interface to implement signed integers.
 
 #### Data Structures
 
-- [Queue](https://fuellabs.github.io/sway-libs/book/documentation/libraries/data_structures/queue/index.html) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Queue](https://fuellabs.github.io/sway-libs/book/documentation/libraries/queue/index.html) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 
 ## Using a library
 
