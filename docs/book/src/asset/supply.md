@@ -46,7 +46,6 @@ storage {
 
 To use a base function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
 
-
 ```sway
 use sway_libs::asset::supply::{_mint, _burn};
 use standards::src3::SRC3;
