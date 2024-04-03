@@ -36,11 +36,8 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 #[storage(read, write)]
 pub fn add_admin(new_admin: Identity) {
     only_owner();
-    let admin_value = match new_admin {
-        Identity::Address(addr) => addr.value,
-        Identity::ContractId(contr) => contr.value,
-    };
-    let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
+
+    let admin_key = StorageKey::<Identity>::new(new_admin.bits(), 0, new_admin.bits());
     admin_key.write(new_admin);
 }
 
@@ -72,14 +69,9 @@ pub fn add_admin(new_admin: Identity) {
 #[storage(read, write)]
 pub fn revoke_admin(old_admin: Identity) {
     only_owner();
-    let admin_value = match old_admin {
-        Identity::Address(addr) => addr.value,
-        Identity::ContractId(contr) => contr.value,
-    };
-    let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
-    // TODO: Update to use StorageKey::clear() on next release
-    // https://github.com/FuelLabs/sway/pull/5284
-    let _ = clear::<Identity>(admin_key.slot, admin_key.offset);
+    
+    let admin_key = StorageKey::<Identity>::new(old_admin.bits(), 0, old_admin.bits());
+    let _ = admin_key.clear();
 }
 
 /// Returns whether `admin` is an administrator.
@@ -107,11 +99,7 @@ pub fn revoke_admin(old_admin: Identity) {
 /// ```
 #[storage(read)]
 pub fn is_admin(admin: Identity) -> bool {
-    let admin_value = match admin {
-        Identity::Address(addr) => addr.value,
-        Identity::ContractId(contr) => contr.value,
-    };
-    let admin_key = StorageKey::<Identity>::new(admin_value, 0, admin_value);
+    let admin_key = StorageKey::<Identity>::new(admin.bits(), 0, admin.bits());
     match admin_key.try_read() {
         Some(identity) => {
             admin == identity

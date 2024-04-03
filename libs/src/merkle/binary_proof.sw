@@ -1,6 +1,6 @@
 library;
 
-use std::{bytes::Bytes, hash::{Hash, sha256}};
+use std::{alloc::alloc_bytes, bytes::Bytes, hash::{Hash, sha256}};
 use ::merkle::utils::{path_length_from_key, starting_bit};
 
 pub enum ProofError {
@@ -38,14 +38,12 @@ pub const NODE = 1u8;
 /// }
 /// ```
 pub fn leaf_digest(data: b256) -> b256 {
-    let mut bytes = Bytes::with_capacity(33);
-    let new_ptr = bytes.buf.ptr().add_uint_offset(1);
+    let ptr = alloc_bytes(33); 
 
-    bytes.buf.ptr().write_byte(LEAF);
-    __addr_of(data).copy_bytes_to(new_ptr, 32);
-    bytes.len = 33;
+    ptr.write_byte(LEAF);
+    __addr_of(data).copy_bytes_to(ptr.add_uint_offset(1), 32);
 
-    sha256(bytes)
+    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 33)))
 }
 
 /// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
@@ -73,16 +71,13 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// }
 /// ```
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    let mut bytes = Bytes::with_capacity(65);
-    let new_ptr_left = bytes.buf.ptr().add_uint_offset(1);
-    let new_ptr_right = bytes.buf.ptr().add_uint_offset(33);
+    let ptr = alloc_bytes(65); 
 
-    bytes.buf.ptr().write_byte(NODE);
-    __addr_of(left).copy_bytes_to(new_ptr_left, 32);
-    __addr_of(right).copy_bytes_to(new_ptr_right, 32);
-    bytes.len = 65;
+    ptr.write_byte(NODE);
+    __addr_of(left).copy_bytes_to(ptr.add_uint_offset(1), 32);
+    __addr_of(right).copy_bytes_to(ptr.add_uint_offset(33), 32);
 
-    sha256(bytes)
+    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 65)))
 }
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.

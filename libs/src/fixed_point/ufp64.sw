@@ -170,13 +170,13 @@ impl core::ops::Multiply for UFP64 {
 
         let self_multiply_other = self_u128 * other_u128;
         let res_u128 = self_multiply_other >> 32;
-        if res_u128.upper != 0 {
+        if res_u128.upper() != 0 {
             // panic on overflow
             revert(0);
         }
 
         Self {
-            value: res_u128.lower,
+            value: res_u128.lower(),
         }
     }
 }
@@ -198,12 +198,12 @@ impl core::ops::Divide for UFP64 {
         // Multiply by denominator to ensure accuracy 
         let res_u128 = self_u128 * denominator / divisor_u128;
 
-        if res_u128.upper != 0 {
+        if res_u128.upper() != 0 {
             // panic on overflow
             revert(0);
         }
         Self {
-            value: res_u128.lower,
+            value: res_u128.lower(),
         }
     }
 }
@@ -451,12 +451,12 @@ impl Power for UFP64 {
         // - 1 is the formula is due to denominator need to stay 2 ^ 32
         let nominator = nominator_pow >> demoninator_power * (exponent.as_u64() - 1);
 
-        if nominator.upper != 0 {
+        if nominator.upper() != 0 {
             // panic on overflow
             revert(0);
         }
         Self {
-            value: nominator.lower,
+            value: nominator.lower(),
         }
     }
 }

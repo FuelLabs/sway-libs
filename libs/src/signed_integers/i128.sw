@@ -31,14 +31,11 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let zero = I128::indent();
-    ///     assert(zero == U128 { upper: 1, lower: 0 } );
+    ///     assert(zero == U128::from((1, 0)));
     /// }
     /// ```
     pub fn indent() -> U128 {
-        U128 {
-            upper: 1,
-            lower: 0,
-        }
+        U128::from((1, 0))
     }
 }
 
@@ -105,7 +102,7 @@ impl I128 {
     /// use std::U128::*;
     ///
     /// fn foo() {
-    ///     let underlying = U128::from(0, 1);
+    ///     let underlying = U128::from((0, 1));
     ///     let i128 = I128::from_uint(underlying);
     ///     assert(i128.underlying == underlying);
     /// }
@@ -177,9 +174,9 @@ impl I128 {
     /// use std::U128::*;
     ///
     /// fn foo() {
-    ///     let underlying = U128::from(1, 0);
+    ///     let underlying = U128::from((1, 0));
     ///     let i128 = I128::neg_from(underlying);
-    ///     assert(i128.underlying == U128::from(0, 0));
+    ///     assert(i128.underlying == U128::from((0, 0)));
     /// }
     /// ```
     pub fn neg_from(value: U128) -> Self {
@@ -192,7 +189,7 @@ impl I128 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I128 is U128 { upper: 1, lower: 0 }.
+    /// The zero value of I128 is U128::from((1, 0)).
     ///
     /// # Returns
     ///
@@ -206,7 +203,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::new();
-    ///     assert(i128.underlying == U128 { upper: 1, lower: 0 });
+    ///     assert(i128.underlying == U128::from(1, 0));
     /// }
     /// ```
     pub fn new() -> Self {
@@ -358,10 +355,7 @@ impl TwosComplement for I128 {
         {
             return self;
         }
-        let u_one = U128 {
-            upper: 0,
-            lower: 1,
-        };
+        let u_one = U128::from((0, 1));
         let res = I128::from_uint(!self.underlying + u_one);
         res
     }

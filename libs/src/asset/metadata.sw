@@ -59,21 +59,21 @@ impl StorageKey<StorageMetadata> {
         match metadata {
             Metadata::Int(data) => {
                 write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot)), 0, 0);
+                write(sha256((hashed_key, self.slot())), 0, 0);
             },
             Metadata::B256(data) => {
                 write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot)), 0, 1);
+                write(sha256((hashed_key, self.slot())), 0, 1);
             },
             Metadata::String(data) => {
                 let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
                 storage_string.write_slice(data);
-                write(sha256((hashed_key, self.slot)), 0, 2);
+                write(sha256((hashed_key, self.slot())), 0, 2);
             },
             Metadata::Bytes(data) => {
                 let storage_bytes: StorageKey<StorageBytes> = StorageKey::new(hashed_key, 0, hashed_key);
                 storage_bytes.write_slice(data);
-                write(sha256((hashed_key, self.slot)), 0, 3);
+                write(sha256((hashed_key, self.slot())), 0, 3);
             }
         }
     }
@@ -112,7 +112,7 @@ impl StorageKey<StorageMetadata> {
     pub fn get(self, asset: AssetId, key: String) -> Option<Metadata> {
         let hashed_key = sha256((asset, key));
 
-        match read::<u64>(sha256((hashed_key, self.slot)), 0) {
+        match read::<u64>(sha256((hashed_key, self.slot())), 0) {
             Option::Some(0) => {
                 Option::Some(Metadata::Int(read::<u64>(hashed_key, 0).unwrap()))
             },
