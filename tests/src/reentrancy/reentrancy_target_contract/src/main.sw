@@ -21,7 +21,7 @@ impl Target for Contract {
         } else {
             // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
             abi(Attacker, get_msg_sender_id_or_panic()
-                .value)
+                .bits())
                 .evil_callback_1();
             false
         }
@@ -33,7 +33,7 @@ impl Target for Contract {
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
         abi(Attacker, get_msg_sender_id_or_panic()
-            .value)
+            .bits())
             .evil_callback_2();
     }
 
@@ -43,13 +43,13 @@ impl Target for Contract {
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
         abi(Attacker, get_msg_sender_id_or_panic()
-            .value)
+            .bits())
             .evil_callback_3();
     }
 
     fn intra_contract_call() {
         abi(Target, contract_id()
-            .value)
+            .bits())
             .cross_function_reentrance_denied();
     }
 
@@ -63,7 +63,7 @@ impl Target for Contract {
         reentrancy_guard();
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
         abi(Attacker, get_msg_sender_id_or_panic()
-            .value)
+            .bits())
             .evil_callback_4();
     }
 }
