@@ -10,7 +10,7 @@ We encourage the use of the provided templates because they guide a user into an
 
 <br>
 
-![Using issue templates image](../../images/issue-templates.png)
+![Using issue templates image](../images/issue-templates.png)
 
 <br>
 

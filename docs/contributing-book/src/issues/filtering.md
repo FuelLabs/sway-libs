@@ -4,7 +4,7 @@ The default issues tab shows all of the issues that are currently open. GitHub a
 
 Under the `Label` tab you can select any number of labels and any issue that matches those labels will be shown while the other issues will be hidden.
 
-![Filter by label image](../../../images/filter-dropdown.png)
+![Filter by label image](../images/filter-dropdown.png)
 
 <br>
 
@@ -12,4 +12,4 @@ After clicking on the `Lib: Cryptography` label the issues have been filtered to
 
 Notice that `Lib: Cryptography` is not the only label in the image below. If you wish to further reduce the number of presented issues then additional labels can be added in the same way.
 
-![Filtering issues by an app label image](../../../images/app-filter.png)
+![Filtering issues by an app label image](../images/app-filter.png)
