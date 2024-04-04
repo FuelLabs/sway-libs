@@ -15,7 +15,7 @@ While this can protect against both single-function reentrancy and cross-functio
 
 ## Importing the Reentrancy Guard Library
 
-In order to use the Reentrancy Guard library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md).
+In order to use the Reentrancy Guard library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
 
 To import the Reentrancy Guard Library to your Sway Smart Contract, add the following to your Sway file:
 

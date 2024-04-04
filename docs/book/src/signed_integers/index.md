@@ -8,7 +8,7 @@ For implementation details on the Signed Integers Library please see the [Sway L
 
 ## Importing the Signed Integer Library
 
-In order to use the Signed Integer Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md).
+In order to use the Signed Integer Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
 
 To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
 

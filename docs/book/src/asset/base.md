@@ -4,6 +4,8 @@ For implementation details on the Asset Library base functionality please see th
 
 ## Importing the Asset Library Base Functionality
 
+In order to use the Asset Library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
+
 To import the Asset Library Base Functionality and [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
@@ -131,7 +133,7 @@ impl SRC20 for Contract {
 
 ## Setting an Asset's SRC-20 Attributes
 
-To set some the asset attributes for an Asset, use the `SetAssetAttributes` ABI provided by the Asset Library. The example below shows the implementation of the `SetAssetAttributes` ABI with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the `SetAssetAttributes` ABI to ensure only a single user has permissions to set an Asset's attributes.
+To set some the asset attributes for an Asset, use the `SetAssetAttributes` ABI provided by the Asset Library. The example below shows the implementation of the `SetAssetAttributes` ABI with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetAttributes` ABI to ensure only a single user has permissions to set an Asset's attributes.
 
 ```sway
 use sway_libs::asset::base::*;

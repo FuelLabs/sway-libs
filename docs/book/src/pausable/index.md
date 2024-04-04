@@ -8,7 +8,7 @@ For implementation details on the Pausable Library please see the [Sway Libs Doc
 
 ## Importing the Pausable Library
 
-In order to use the Pausable library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md).
+In order to use the Pausable library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
 
 To import the Pausable Library to your Sway Smart Contract, add the following to your Sway file:
 

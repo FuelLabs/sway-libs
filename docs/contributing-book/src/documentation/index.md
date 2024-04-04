@@ -8,7 +8,7 @@ In the following sections we will take a look at how to document the:
 
 - [Read me](read-me.md)
   - The first document a user will see which includes content such as installation instructions
-- [Code](./code.md)
+- [Code](../code_docs/index.md)
   - Documenting the code itself such that contributors know how to interact with it
-- [Specification](specification.md)
+- [Specification](../code_docs/specification.md)
   - Presenting technical (or non-technical) information about your project

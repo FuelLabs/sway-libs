@@ -4,6 +4,8 @@ For implementation details on the Asset Library metadata functionality please se
 
 ## Importing the Asset Library Metadata Functionality
 
+In order to use the Asset Library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
+
 To import the Asset Library Base Functionality and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
@@ -51,7 +53,7 @@ storage {
 
 ### Setting Metadata
 
-To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md) standard for your `key`. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
+To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md) standard for your `key`. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
 
 ```sway
 use sway_libs::asset::metadata::*;

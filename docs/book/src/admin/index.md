@@ -8,7 +8,7 @@ For implementation details on the Admin Library please see the [Sway Libs Docs](
 
 ## Importing the Admin Library
 
-In order to use the Admin Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md).
+In order to use the Admin Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
 
 To import the Admin Library, be sure to include both the Admin and Ownership Libraries in your import statements.
 

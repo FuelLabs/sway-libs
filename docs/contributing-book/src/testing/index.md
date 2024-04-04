@@ -46,7 +46,7 @@ The `harness` file is the entry point for the tests, and thus it contains the `f
 
 Here are some tips on how to approach testing:
 
-- Similar to [code structure](code-structure.md) content, each file should be ordered alphabetically, with one exception, so that it's easy to navigate
+- Similar to [code structure](../library-quality/code-structure.md) content, each file should be ordered alphabetically, with one exception, so that it's easy to navigate
   - Test conditions in the order in which they may occur
     - If a test has multiple assertions then the first assertion should be tested first, second assertion second etc.
 - Check the code coverage

@@ -8,7 +8,7 @@ For implementation details on the Fixed Point Number Library please see the [Swa
 
 ## Importing the Fixed Point Number Library
 
-In order to use the Fixed Point Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md).
+In order to use the Fixed Point Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
 
 To import the Fixed Point Number Library to your Sway Smart Contract, add the following to your Sway file:
 

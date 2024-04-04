@@ -1,8 +1,8 @@
 # Summary
 
-- [Welcome](./welcome.md)
+- [Welcome](./index.md)
 - [GitHub Issues](./issues/index.md)
-  - [Searching for Issues](./issues/search.md.md)
+  - [Searching for Issues](./issues/search.md)
   - [Filtering by label](./issues/filtering.md)
   - [Checking for available issues](./issues/assignment.md)
   - [Issue summary](./issues/summary.md)

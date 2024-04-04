@@ -4,6 +4,8 @@ For implementation details on the Asset Library supply functionality please see 
 
 ## Importing the Asset Library Supply Functionality
 
+In order to use the Asset Library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
+
 To import the Asset Library Supply Functionality and [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
@@ -44,7 +46,7 @@ storage {
 
 ## Implementing the SRC-3 Standard with the Asset Library
 
-To use a base function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../../access_security/ownership/) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
+To use a base function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
 
 ```sway
 use sway_libs::asset::supply::{_mint, _burn};

@@ -8,9 +8,9 @@ In the following sections we will take a look at:
   - The file structure and how easily a library may be navigated
 - [Code Structure](code-structure.md)
   - How to structure the code inside a file
-- [Documentation](documentation/index.md)
+- [Documentation](../documentation/index.md)
   - How to present information about your library
-- [Testing](testing.md)
+- [Testing](../testing/index.md)
   - The file structure and tips for testing
 
 If the library is well structured, tested and documented then the developer experience will be good.

@@ -6,7 +6,7 @@ For implementation details on the Ownership Library please see the [Sway Libs Do
 
 ## Importing the Ownership Library
 
-In order to use the Ownership library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../../../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
+In order to use the Ownership library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
 
 To import the Ownership Library and [SRC-5](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
