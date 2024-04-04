@@ -42,7 +42,7 @@ use std::{
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::asset::mint::_mint;
+/// use sway_libs::asset::supply::_mint;
 /// use std::{constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
@@ -100,7 +100,7 @@ pub fn _mint(
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::asset::mint::_burn;
+/// use sway_libs::asset::supply::_burn;
 /// use std::{call_frames::contract_id, constants::ZERO_B256, context::balance_of};
 ///
 /// storage {
