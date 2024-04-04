@@ -69,7 +69,7 @@ pub fn add_admin(new_admin: Identity) {
 #[storage(read, write)]
 pub fn revoke_admin(old_admin: Identity) {
     only_owner();
-    
+
     let admin_key = StorageKey::<Identity>::new(old_admin.bits(), 0, old_admin.bits());
     let _ = admin_key.clear();
 }

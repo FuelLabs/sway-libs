@@ -181,13 +181,19 @@ impl core::ops::Multiply for UFP128 {
     fn multiply(self, other: Self) -> Self {
         let self_u64 = (0, 0, self.value.upper(), self.value.lower());
         let other_u64 = (0, 0, other.value.upper(), other.value.lower());
-        let self_u256 = asm (r1: self_u64) { r1: u256 };
-        let other_u256 = asm (r1: other_u64) { r1: u256 };
+        let self_u256 = asm(r1: self_u64) {
+            r1: u256
+        };
+        let other_u256 = asm(r1: other_u64) {
+            r1: u256
+        };
 
         let self_multiply_other = self_u256 * other_u256;
         let res_u256 = self_multiply_other >> 64;
 
-        let (a, b, c, d) = asm (r1: res_u256) { r1: (u64, u64, u64, u64) };
+        let (a, b, c, d) = asm(r1: res_u256) {
+            r1: (u64, u64, u64, u64)
+        };
         if a != 0 || b != 0 {
             // panic on overflow
             revert(0);
@@ -211,12 +217,18 @@ impl core::ops::Divide for UFP128 {
         // all cases
         let self_u64 = (0, 0, self.value.upper(), self.value.lower());
         let divisor_u64 = (0, 0, divisor.value.upper(), divisor.value.lower());
-        let self_u256 = asm (r1: self_u64) { r1: u256 };
-        let divisor_u256 = asm (r1: divisor_u64) { r1: u256 };
+        let self_u256 = asm(r1: self_u64) {
+            r1: u256
+        };
+        let divisor_u256 = asm(r1: divisor_u64) {
+            r1: u256
+        };
 
         // Multiply by denominator to ensure accuracy 
         let res_u256 = (self_u256 << 64) / divisor_u256;
-        let (a, b, c, d) = asm (r1: res_u256) { r1: (u64, u64, u64, u64) };
+        let (a, b, c, d) = asm(r1: res_u256) {
+            r1: (u64, u64, u64, u64)
+        };
 
         if a != 0 || b != 0 {
             // panic on overflow

@@ -38,8 +38,7 @@ pub const NODE = 1u8;
 /// }
 /// ```
 pub fn leaf_digest(data: b256) -> b256 {
-    let ptr = alloc_bytes(33); 
-
+    let ptr = alloc_bytes(33);
     ptr.write_byte(LEAF);
     __addr_of(data).copy_bytes_to(ptr.add_uint_offset(1), 32);
 
@@ -71,8 +70,7 @@ pub fn leaf_digest(data: b256) -> b256 {
 /// }
 /// ```
 pub fn node_digest(left: b256, right: b256) -> b256 {
-    let ptr = alloc_bytes(65); 
-
+    let ptr = alloc_bytes(65);
     ptr.write_byte(NODE);
     __addr_of(left).copy_bytes_to(ptr.add_uint_offset(1), 32);
     __addr_of(right).copy_bytes_to(ptr.add_uint_offset(33), 32);

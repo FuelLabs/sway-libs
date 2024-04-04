@@ -37,7 +37,9 @@ impl I256 {
     /// ```
     pub fn indent() -> u256 {
         let parts = (0, 1, 0, 0);
-        asm (r1: parts) { r1: u256 }
+        asm(r1: parts) {
+            r1: u256
+        }
     }
 }
 
