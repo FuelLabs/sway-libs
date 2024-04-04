@@ -36,7 +36,9 @@ impl Attacker for Contract {
     fn launch_thwarted_attack_3(target: ContractId, helper: ContractId) {
         storage.target_id.write(target);
         storage.helper.write(helper);
-        abi(Target, target.bits()).cross_contract_reentrancy_denied();
+        abi(Target, target
+            .bits())
+            .cross_contract_reentrancy_denied();
     }
 
     fn innocent_call(target: ContractId) {

@@ -275,7 +275,7 @@ fn test_metadata_is_u64() {
 
 #[test]
 fn test_metadata_as_bytes() {
-    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
     let metadata = Metadata::Bytes(data_bytes);
 
     assert(data_bytes == metadata.as_bytes().unwrap());
@@ -283,7 +283,7 @@ fn test_metadata_as_bytes() {
 
 #[test]
 fn test_metadata_is_bytes() {
-    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
     let metadata = Metadata::Bytes(data_bytes);
 
     assert(metadata.is_bytes());
@@ -363,7 +363,7 @@ fn test_set_metadata_string() {
 fn test_set_metadata_bytes() {
     use std::constants::ZERO_B256;
 
-    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").bytes;
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
     let metadata = Metadata::Bytes(data_bytes);
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
     let src7_abi = abi(SRC7, CONTRACT_ID);
