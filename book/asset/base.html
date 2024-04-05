@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Base - Sway Libraries</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Sway Libraries</a></li><li class="chapter-item expanded "><a href="../getting_started/index.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting_started/running_tests.html"><strong aria-hidden="true">1.1.</strong> Running Tests</a></li></ol></li><li class="chapter-item expanded "><a href="../libraries.html"><strong aria-hidden="true">2.</strong> Libraries Overview</a></li><li class="chapter-item expanded "><a href="../asset/index.html"><strong aria-hidden="true">3.</strong> Asset Library</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../asset/base.html" class="active"><strong aria-hidden="true">3.1.</strong> Base</a></li><li class="chapter-item expanded "><a href="../asset/supply.html"><strong aria-hidden="true">3.2.</strong> Supply</a></li><li class="chapter-item expanded "><a href="../asset/metadata.html"><strong aria-hidden="true">3.3.</strong> Metadata</a></li></ol></li><li class="chapter-item expanded "><a href="../admin/index.html"><strong aria-hidden="true">4.</strong> Admin Library</a></li><li class="chapter-item expanded "><a href="../ownership/index.html"><strong aria-hidden="true">5.</strong> Ownership Library</a></li><li class="chapter-item expanded "><a href="../pausable/index.html"><strong aria-hidden="true">6.</strong> Pausable Library</a></li><li class="chapter-item expanded "><a href="../reentrancy/index.html"><strong aria-hidden="true">7.</strong> Reentrancy Guard Library</a></li><li class="chapter-item expanded "><a href="../bytecode/index.html"><strong aria-hidden="true">8.</strong> Bytecode Library</a></li><li class="chapter-item expanded "><a href="../merkle/index.html"><strong aria-hidden="true">9.</strong> Merkle Library</a></li><li class="chapter-item expanded "><a href="../fixed_point/index.html"><strong aria-hidden="true">10.</strong> Fixed Point Number Library</a></li><li class="chapter-item expanded "><a href="../signed_integers/index.html"><strong aria-hidden="true">11.</strong> Signed Integers Library</a></li><li class="chapter-item expanded "><a href="../queue/index.html"><strong aria-hidden="true">12.</strong> Queue Library</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sway Libraries</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/FuelLabs/sway-libs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="base-functionality"><a class="header" href="#base-functionality">Base Functionality</a></h1>
+<p>For implementation details on the Asset Library base functionality please see the <a href="https://fuellabs.github.io/sway-libs/master/sway_libs/asset/base/index.html">Sway Libs Docs</a>.</p>
+<h2 id="importing-the-asset-library-base-functionality"><a class="header" href="#importing-the-asset-library-base-functionality">Importing the Asset Library Base Functionality</a></h2>
+<p>In order to use the Asset Library, Sway Libs and <a href="https://github.com/FuelLabs/sway-standards">Sway Standards</a> must be added to the <code>Forc.toml</code> file and then imported into your Sway project. To add Sway Libs as a dependency to the <code>Forc.toml</code> file in your project please see the <a href="../getting_started/index.html">Getting Started</a>. To add Sway Standards as a dependency please see the <a href="https://github.com/FuelLabs/sway-standards">Sway Standards Book</a>.</p>
+<p>To import the Asset Library Base Functionality and <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> Standard to your Sway Smart Contract, add the following to your Sway file:</p>
+<pre><code class="language-sway">use sway_libs::asset::base::*;
+use standards::src20::*;
+</code></pre>
+<h2 id="integration-with-the-src-20-standard"><a class="header" href="#integration-with-the-src-20-standard">Integration with the SRC-20 Standard</a></h2>
+<p>The <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> definition states that the following abi implementation is required for any Native Asset on Fuel:</p>
+<pre><code class="language-sway">abi SRC20 {
+    #[storage(read)]
+    fn total_assets() -&gt; u64;
+    #[storage(read)]
+    fn total_supply(asset: AssetId) -&gt; Option&lt;u64&gt;;
+    #[storage(read)]
+    fn name(asset: AssetId) -&gt; Option&lt;String&gt;;
+    #[storage(read)]
+    fn symbol(asset: AssetId) -&gt; Option&lt;String&gt;;
+    #[storage(read)]
+    fn decimals(asset: AssetId) -&gt; Option&lt;u8&gt;;
+}
+</code></pre>
+<p>The Asset Library has the following complimentary functions for each function in the <code>SRC20</code> abi:</p>
+<ul>
+<li><code>_total_assets()</code></li>
+<li><code>_total_supply()</code></li>
+<li><code>_name()</code></li>
+<li><code>_symbol()</code></li>
+<li><code>_decimals()</code></li>
+</ul>
+<p>The following ABI and functions are also provided to set your <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> standard storage values:</p>
+<pre><code class="language-sway">abi SetAssetAttributes {
+    #[storage(write)]
+    fn set_name(asset: AssetId, name: String);
+    #[storage(write)]
+    fn set_symbol(asset: AssetId, symbol: String);
+    #[storage(write)]
+    fn set_decimals(asset: AssetId, decimals: u8);
+}
+</code></pre>
+<ul>
+<li><code>_set_name()</code></li>
+<li><code>_set_symbol()</code></li>
+<li><code>_set_decimals()</code></li>
+</ul>
+<blockquote>
+<p><strong>NOTE</strong> The <code>_set_name()</code>, <code>_set_symbol()</code>, and <code>_set_decimals()</code> functions will set the attributes of an asset <em>unconditionally</em>. External checks should be applied to restrict the setting of attributes.</p>
+</blockquote>
+<h2 id="setting-up-storage"><a class="header" href="#setting-up-storage">Setting Up Storage</a></h2>
+<p>Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> standard.</p>
+<pre><code class="language-sway">storage {
+    total_assets: u64 = 0,
+    total_supply: StorageMap&lt;AssetId, u64&gt; = StorageMap {},
+    name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    symbol: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    decimals: StorageMap&lt;AssetId, u8&gt; = StorageMap {},
+}
+</code></pre>
+<h2 id="implementing-the-src-20-standard-with-the-asset-library"><a class="header" href="#implementing-the-src-20-standard-with-the-asset-library">Implementing the SRC-20 Standard with the Asset Library</a></h2>
+<p>To use the Asset Library's base functionly, simply pass the <code>StorageKey</code> from the prescribed storage block. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> standard in combination with the Asset Library with no user defined restrictions or custom functionality.</p>
+<pre><code class="language-sway">use sway_libs::asset::base::{
+    _total_assets, 
+    _total_supply,
+    _name,
+    _symbol,
+    _decimals
+};
+use standards::src20::SRC20;
+use std::{string::String, storage::storage_string::*};
+
+// The SRC-20 storage block
+storage {
+    total_assets: u64 = 0,
+    total_supply: StorageMap&lt;AssetId, u64&gt; = StorageMap {},
+    name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    symbol: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    decimals: StorageMap&lt;AssetId, u8&gt; = StorageMap {},
+}
+
+// Implement the SRC-20 Standard for this contract
+impl SRC20 for Contract {
+    #[storage(read)]
+    fn total_assets() -&gt; u64 {
+        // Pass the `total_assets` StorageKey to `_total_assets()` from the Asset Library.
+        _total_assets(storage.total_assets)
+    }
+
+    #[storage(read)]
+    fn total_supply(asset: AssetId) -&gt; Option&lt;u64&gt; {
+        // Pass the `total_supply` StorageKey to `_total_supply()` from the Asset Library.
+        _total_supply(storage.total_supply, asset)
+    }
+
+    #[storage(read)]
+    fn name(asset: AssetId) -&gt; Option&lt;String&gt; {
+        // Pass the `name` StorageKey to `_name_()` from the Asset Library.
+        _name(storage.name, asset)
+    }
+
+    #[storage(read)]
+    fn symbol(asset: AssetId) -&gt; Option&lt;String&gt; {
+        // Pass the `symbol` StorageKey to `_symbol_()` function from the Asset Library.
+        _symbol(storage.symbol, asset)
+    }
+
+    #[storage(read)]
+    fn decimals(asset: AssetId) -&gt; Option&lt;u8&gt; {
+        // Pass the `decimals` StorageKey to `_decimals_()` function from the Asset Library.
+        _decimals(storage.decimals, asset)
+    }
+}
+</code></pre>
+<h2 id="setting-an-assets-src-20-attributes"><a class="header" href="#setting-an-assets-src-20-attributes">Setting an Asset's SRC-20 Attributes</a></h2>
+<p>To set some the asset attributes for an Asset, use the <code>SetAssetAttributes</code> ABI provided by the Asset Library. The example below shows the implementation of the <code>SetAssetAttributes</code> ABI with no user defined restrictions or custom functionality. It is recommended that the <a href="../ownership/index.html">Ownership Library</a> is used in conjunction with the <code>SetAssetAttributes</code> ABI to ensure only a single user has permissions to set an Asset's attributes.</p>
+<pre><code class="language-sway">use sway_libs::asset::base::*;
+use std::{string::String, storage::storage_string::*};
+
+storage {
+    name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    symbol: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
+    decimals: StorageMap&lt;AssetId, u8&gt; = StorageMap {},
+}
+
+impl SetAssetAttributes for Contract {
+    #[storage(write)]
+    fn set_name(asset: AssetId, name: String) {
+        _set_name(storage.name, asset, name);
+    }
+
+    #[storage(write)]
+    fn set_symbol(asset: AssetId, symbol: String) {
+        _set_symbol(storage.symbol, asset, symbol);
+    }
+
+    #[storage(write)]
+    fn set_decimals(asset: AssetId, decimals: u8) {
+        _set_decimals(storage.decimals, asset, decimals);
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong> The <code>_set_name()</code>, <code>_set_symbol()</code>, and <code>_set_decimals()</code> functions will set the attributes of an asset <em>unconditionally</em>. External checks should be applied to restrict the setting of attributes.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../asset/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../asset/supply.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../asset/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../asset/supply.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
