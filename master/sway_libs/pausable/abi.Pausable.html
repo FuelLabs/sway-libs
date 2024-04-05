@@ -16,7 +16,7 @@
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     pausable_abi.pause();
     ///     assert(pausable_abi.is_paused());
     /// }
@@ -39,7 +39,7 @@
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     assert(!pausable_abi.is_paused());
     /// }
     /// ```
@@ -62,7 +62,7 @@
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     pausable_abi.unpause();
     ///     assert(!pausable_abi.is_paused());
     /// }
@@ -81,7 +81,7 @@ function to a single administrative user.</p>
 <pre><code class="language-sway">use sway_libs::pausable::Pausable;
 
 fn foo(contract_id: ContractId) {
-    let pausable_abi = abi(Pauseable, contract_id);
+    let pausable_abi = abi(Pausable, contract_id);
     pausable_abi.pause();
     assert(pausable_abi.is_paused());
 }
@@ -99,7 +99,7 @@ fn foo(contract_id: ContractId) {
 <pre><code class="language-sway">use sway_libs::pausable::Pausable;
 
 fn foo(contract_id: ContractId) {
-    let pausable_abi = abi(Pauseable, contract_id);
+    let pausable_abi = abi(Pausable, contract_id);
     assert(!pausable_abi.is_paused());
 }
 </code></pre>
@@ -115,7 +115,7 @@ function to a single administrative user.</p>
 <pre><code class="language-sway">use sway_libs::pausable::Pausable;
 
 fn foo(contract_id: ContractId) {
-    let pausable_abi = abi(Pauseable, contract_id);
+    let pausable_abi = abi(Pausable, contract_id);
     pausable_abi.unpause();
     assert(!pausable_abi.is_paused());
 }
