@@ -43,7 +43,7 @@ fn foo(not_mutable_bytecode: Vec<u8>) {
         .ptr()
         .copy_bytes_to(bytecode_slice.ptr(), not_mutable_bytecode.len());
     let mut bytecode_vec = Vec::from(bytecode_slice);
-    // You may not used `bytecode_vec` in your computation and verification function calls
+    // You may now use `bytecode_vec` in your computation and verification function calls
 }
 ```
 
