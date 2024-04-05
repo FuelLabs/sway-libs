@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [".docs/contributing-book/src/code"]
+        project: ["docs/contributing-book/src/code"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
