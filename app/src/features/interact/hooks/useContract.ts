@@ -13,7 +13,6 @@ export function useContract(contractId: string) {
   } = useQuery({
     enabled: !isLoading && !isError && !!wallet && !!contractId.length,
     queryKey: ['contract'],
-    //    },
     queryFn: async () => {
       const cachedAbi = loadAbi();
       if (!!wallet && !!cachedAbi.length && !!contractId.length) {
@@ -21,9 +20,6 @@ export function useContract(contractId: string) {
         return new Contract(contractId, abi, wallet);
       }
     },
-    // {
-    //   enabled: !isLoading && !isError && !!wallet && !!contractId.length,
-    // }
   });
 
   return { contract, isLoading: isContractLoading, isError: isContractError };
