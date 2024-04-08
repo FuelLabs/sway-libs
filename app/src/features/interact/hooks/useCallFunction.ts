@@ -23,8 +23,12 @@ export function useCallFunction({
 }: CallFunctionProps) {
   const { contract } = useContract(contractId);
 
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    onSuccess: (data) => {
+      handleSuccess(data);
+    },
+    onError: handleError,
+    mutationFn: async () => {
       updateLog(
         `Calling ${functionName} with parameters ${JSON.stringify(parameters)}${
           callType === 'dryrun' ? ' (DRY RUN)' : ''
@@ -38,13 +42,7 @@ export function useCallFunction({
       );
       const transactionResult = callType === 'dryrun' ? await functionCaller.dryRun() : await functionCaller.call();
       return transactionResult;
-    },
-    {
-      onSuccess: (data) => {
-        handleSuccess(data);
-      },
-      onError: handleError,
-    }
+    }},
   );
 
   function handleError(error: any) {
