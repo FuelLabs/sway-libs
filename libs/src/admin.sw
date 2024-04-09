@@ -5,7 +5,7 @@ pub mod errors;
 
 use ::admin::errors::AdminError;
 use ::ownership::{_owner, only_owner};
-use src5::State;
+use standards::src5::State;
 use std::{auth::msg_sender, storage::storage_api::clear,};
 
 // Sets a new administrator.
