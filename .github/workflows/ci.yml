@@ -128,6 +128,7 @@ jobs:
 
   frontend-build-and-test:
     if: github.ref != 'refs/heads/master'
+    needs: cancel-previous-runs
     runs-on: ubuntu-latest
     # Local docker image registry
     services:
@@ -162,18 +163,18 @@ jobs:
           push: true
           tags: ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
 
-      - name: NPM build
-        env:
-          CI: true
-        run: |
-          cd app && npm ci && npm run build
-
       - name: Run the service in docker
         run: |
           docker run -d -p 8080:8080 ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
-      - name: NPM test
+
+      - name: NPM build and test
+        env:
+          CI: true
         run: |
-          cd app && npm run test
+          cd app
+          npm ci
+          npm run build
+          npm run test
 
   deploy:
     if: github.ref == 'refs/heads/master'
