@@ -116,6 +116,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: echo '${{ toJSON(steps.meta.outputs) }}' 
+      - run: docker images
+
       - name: Build and push the image to ghcr.io
         uses: docker/build-push-action@v2
         with:
