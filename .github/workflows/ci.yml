@@ -83,14 +83,13 @@ jobs:
           args: --verbose --all --all-features
 
   build-and-publish-image:
+    if: github.ref == 'refs/heads/master'
     needs:
       - cargo-fmt-check
       - cargo-clippy
       - cargo-check
       - cargo-test
     runs-on: ubuntu-latest
-    outputs:
-      tags: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -121,31 +120,55 @@ jobs:
         with:
           context: .
           file: deployment/Dockerfile
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - run: echo '${{ toJSON(steps.meta.outputs) }}' 
-      - run: docker images          
-
   frontend-build-and-test:
     if: github.ref != 'refs/heads/master'
-    needs:
-      - build-and-publish-image
     runs-on: ubuntu-latest
+    # Local docker image registry
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    env:
+      LOCAL_REGISTRY: localhost:5000
+      LOCAL_TAG: sway-playground:local
     steps:
-      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: network=host
+
+      - name: Log in to the local registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.LOCAL_REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image and push to local registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: deployment/Dockerfile
+          push: true
+          tags: ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
+
       - name: NPM build
+        uses: actions/checkout@v2      
         env:
           CI: true
         run: |
           cd app && npm ci && npm run build
-      - run: docker images
+
       - name: Run the service in docker
         run: |
-          docker run -d -p 8080:8080 ${{ needs.build-and-publish-image.outputs.tags }}
+          docker run -d -p 8080:8080 ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
       - name: NPM test
         run: |
           cd app && npm run test
