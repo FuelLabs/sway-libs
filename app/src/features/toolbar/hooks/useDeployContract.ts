@@ -1,6 +1,6 @@
 import { ContractFactory, JsonAbi, StorageSlot } from 'fuels';
 import { useMutation } from '@tanstack/react-query';
-import { useFuel, useWallet } from '@fuel-wallet/react';
+import { useFuel, useWallet } from '@fuels/react';
 
 const DEPLOYMENT_TIMEOUT_MS = 120000;
 
@@ -20,8 +20,12 @@ export function useDeployContract(
   const { wallet, isLoading: walletIsLoading } = useWallet();
   const { fuel } = useFuel();
 
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    // Retry once if the wallet is still loading.
+    retry: walletIsLoading && !wallet ? 1 : 0,
+    onSuccess: onSuccess,
+    onError: onError,
+    mutationFn: async () => {
       const network = await fuel.currentNetwork();
       if (!wallet) {
         if (walletIsLoading) {
@@ -69,13 +73,7 @@ export function useDeployContract(
 
       return await Promise.race([resultPromise, timeoutPromise]);
     },
-    {
-      // Retry once if the wallet is still loading.
-      retry: walletIsLoading && !wallet ? 1 : 0,
-      onSuccess: onSuccess,
-      onError: onError,
-    }
-  );
+  });
 
   return mutation;
 }

@@ -1,4 +1,4 @@
-import { useConnectUI, useWallet } from '@fuel-wallet/react';
+import { useConnectUI, useWallet } from '@fuels/react';
 import { useCallback, useMemo, useEffect, useRef } from 'react';
 
 export function useConnectIfNotAlready() {
