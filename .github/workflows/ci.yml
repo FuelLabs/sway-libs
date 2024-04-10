@@ -139,6 +139,9 @@ jobs:
       LOCAL_REGISTRY: localhost:5000
       LOCAL_TAG: sway-playground:local
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
@@ -159,7 +162,6 @@ jobs:
           push: true
           tags: ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
 
-      - uses: actions/checkout@v2
       - name: NPM build
         env:
           CI: true
