@@ -121,7 +121,7 @@ jobs:
         with:
           context: .
           file: deployment/Dockerfile
-          push: true
+          push: github.ref == 'refs/heads/master'
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
