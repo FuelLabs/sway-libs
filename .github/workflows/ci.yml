@@ -159,8 +159,8 @@ jobs:
           push: true
           tags: ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
 
+      - uses: actions/checkout@v2
       - name: NPM build
-        uses: actions/checkout@v2      
         env:
           CI: true
         run: |
