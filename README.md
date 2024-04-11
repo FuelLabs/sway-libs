@@ -90,7 +90,7 @@ REACT_APP_LOCAL_SERVER=true npm start
 
 We welcome contributions to Sway Playground, for general contributing guidelines please consult the Sway Contributing Documentation for now.
 
-Please see the [Contributing To Sway](https://fuellabs.github.io/sway/master/reference/contributing_to_sway.html) section of the Sway book for guidelines and instructions to help you get started.
+Please see the [Contributing To Sway](https://docs.fuel.network/docs/sway/reference/contributing_to_sway/) section of the Sway book for guidelines and instructions to help you get started.
 
 ## Todo
 
