@@ -25,7 +25,7 @@ abi Pausable {
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     pausable_abi.pause();
     ///     assert(pausable_abi.is_paused());
     /// }
@@ -49,7 +49,7 @@ abi Pausable {
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     assert(!pausable_abi.is_paused());
     /// }
     /// ```
@@ -73,7 +73,7 @@ abi Pausable {
     /// use sway_libs::pausable::Pausable;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let pausable_abi = abi(Pauseable, contract_id);
+    ///     let pausable_abi = abi(Pausable, contract_id);
     ///     pausable_abi.unpause();
     ///     assert(!pausable_abi.is_paused());
     /// }
