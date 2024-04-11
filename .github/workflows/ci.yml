@@ -83,14 +83,13 @@ jobs:
           args: --verbose --all --all-features
 
   build-and-publish-image:
+    if: github.ref == 'refs/heads/master'
     needs:
       - cargo-fmt-check
       - cargo-clippy
       - cargo-check
       - cargo-test
     runs-on: ubuntu-latest
-    outputs:
-      tags: ${{ steps.meta.outputs.tags }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -129,22 +128,53 @@ jobs:
 
   frontend-build-and-test:
     if: github.ref != 'refs/heads/master'
-    needs:
-      - build-and-publish-image
+    needs: cancel-previous-runs
     runs-on: ubuntu-latest
+    # Local docker image registry
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    env:
+      LOCAL_REGISTRY: localhost:5000
+      LOCAL_TAG: sway-playground:local
     steps:
-      - uses: actions/checkout@v2
-      - name: NPM build
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: network=host
+
+      - name: Log in to the local registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.LOCAL_REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image and push to local registry
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: deployment/Dockerfile
+          push: true
+          tags: ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
+
+      - name: Run the service in docker
+        run: |
+          docker run -d -p 8080:8080 ${{ env.LOCAL_REGISTRY }}/${{ env.LOCAL_TAG }}
+
+      - name: NPM build and test
         env:
           CI: true
         run: |
-          cd app && npm ci && npm run build
-      - name: Run the service in docker
-        run: |
-          docker run -d -p 8080:8080 ${{ needs.build-and-publish-image.outputs.tags }}
-      - name: NPM test
-        run: |
-          cd app && npm run test
+          cd app
+          npm ci
+          npm run build
+          npm run test
 
   deploy:
     if: github.ref == 'refs/heads/master'
