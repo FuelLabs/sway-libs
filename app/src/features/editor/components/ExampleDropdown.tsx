@@ -21,8 +21,10 @@ function ExampleDropdown({
   examples,
   style,
 }: ExampleDropdownProps) {
-  const [currentExample, setCurrentExample] =
-    React.useState<ExampleMenuItem | null>(null);
+  const [currentExample, setCurrentExample] = React.useState<ExampleMenuItem>({
+    label: '',
+    code: '',
+  });
 
   const onChange = useCallback(
     (event: any) => {
@@ -47,7 +49,7 @@ function ExampleDropdown({
             label='Example'
             variant='outlined'
             style={{ minWidth: '110px', background: 'white' }}
-            value={currentExample?.label}
+            value={currentExample.label}
             onChange={onChange}>
             {examples.map(({ label }: ExampleMenuItem, index) => (
               <MenuItem key={`${label}-${index}`} value={index}>

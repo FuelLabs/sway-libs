@@ -9,6 +9,7 @@ import {
 import { CopyableHex } from '../../../components/shared';
 import { Toolchain } from '../components/ToolchainDropdown';
 import { SERVER_URI } from '../../../constants';
+import { track } from '@vercel/analytics/react';
 
 function toResults(
   prefixedBytecode: string,
@@ -63,6 +64,10 @@ export function useCompile(
         if (response.status < 400) {
           return response.json();
         } else {
+          track('Compile Error', {
+            source: 'network',
+            status: response.status,
+          });
           setServerError(true);
         }
       })
@@ -94,6 +99,7 @@ export function useCompile(
         }
       })
       .catch(() => {
+        track('Compile Error', { source: 'network' });
         setServerError(true);
       });
     setIsCompiled(true);

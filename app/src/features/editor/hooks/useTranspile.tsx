@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import ansicolor from 'ansicolor';
 import React, { useState, useEffect } from 'react';
 import { SERVER_URI } from '../../../constants';
+import { track } from '@vercel/analytics/react';
 
 export function useTranspile(
   code: string | undefined,
@@ -40,6 +41,10 @@ export function useTranspile(
         if (response.status < 400) {
           return response.json();
         } else {
+          track('Transpile Error', {
+            source: 'network',
+            status: response.status,
+          });
           setServerError(true);
         }
       })
@@ -64,6 +69,7 @@ export function useTranspile(
         }
       })
       .catch(() => {
+        track('Transpile Error', { source: 'network' });
         setServerError(true);
       });
   }, [code, setResults, onSwayCodeChange, setCodeToCompile]);

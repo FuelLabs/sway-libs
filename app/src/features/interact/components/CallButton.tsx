@@ -2,6 +2,8 @@ import { useCallFunction } from '../hooks/useCallFunction';
 import { CallType } from '../../../utils/types';
 import { CallableParamValue } from './FunctionParameters';
 import SecondaryButton from '../../../components/SecondaryButton';
+import { track } from '@vercel/analytics/react';
+import { useCallback } from 'react';
 
 interface CallButtonProps {
   contractId: string;
@@ -29,10 +31,11 @@ export function CallButton({
     updateLog,
   });
 
-  function onFunctionClick() {
+  const onFunctionClick = useCallback(() => {
+    track('Function Call Click', { callType });
     setResponse('');
     functionMutation.mutate();
-  }
+  }, [callType, functionMutation, setResponse]);
 
   return (
     <SecondaryButton
