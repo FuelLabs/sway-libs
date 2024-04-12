@@ -22,6 +22,10 @@ use std::{
 
 /// Unconditionally mints new assets using the `sub_id` sub-identifier.
 ///
+/// # Additional Information
+///
+/// **Warning** This function increases the total supply by the number of coins minted.
+///
 /// # Arguments
 ///
 /// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
@@ -66,12 +70,15 @@ pub fn _mint(
 ) -> AssetId {
     let asset_id = AssetId::new(contract_id(), sub_id);
     let supply = _total_supply(total_supply_key, asset_id);
+
     // Only increment the number of assets minted by this contract if it hasn't been minted before.
     if supply.is_none() {
         total_assets_key.write(_total_assets(total_assets_key) + 1);
     }
+
     let current_supply = supply.unwrap_or(0);
     total_supply_key.insert(asset_id, current_supply + amount);
+
     mint_to(recipient, sub_id, amount);
     asset_id
 }
@@ -81,6 +88,7 @@ pub fn _mint(
 /// # Additional Information
 ///
 /// **Warning** This function burns assets unequivocally. It does not check that assets are sent to the calling contract.
+/// **Warning** This function reduces the total supply by the number of coins burned. Using this value when minting may cause unintended consequences.
 ///
 /// # Arguments
 ///
@@ -120,9 +128,12 @@ pub fn _burn(
     amount: u64,
 ) {
     let asset_id = AssetId::new(contract_id(), sub_id);
+
     require(this_balance(asset_id) >= amount, BurnError::NotEnoughCoins);
+
     // If we pass the check above, we can assume it is safe to unwrap.
     let supply = _total_supply(total_supply_key, asset_id).unwrap();
     total_supply_key.insert(asset_id, supply - amount);
+
     burn(sub_id, amount);
 }

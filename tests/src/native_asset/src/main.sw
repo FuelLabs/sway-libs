@@ -1,8 +1,6 @@
 contract;
 
-use src20::SRC20;
-use src3::SRC3;
-use src7::{Metadata, SRC7};
+use standards::{src20::SRC20, src3::SRC3, src7::{Metadata, SRC7}};
 use sway_libs::asset::{
     base::{
         _decimals,
@@ -73,6 +71,7 @@ impl SRC3 for Contract {
         );
     }
 
+    #[payable]
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
         _burn(storage.total_supply, sub_id, amount);

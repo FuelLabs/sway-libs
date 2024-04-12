@@ -7,7 +7,7 @@ use sway_libs::ownership::{
     renounce_ownership,
     transfer_ownership,
 };
-use src5::{SRC5, State};
+use standards::src5::{SRC5, State};
 
 abi OwnableTest {
     #[storage(read)]

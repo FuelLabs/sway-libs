@@ -1,7 +1,7 @@
 contract;
 
 use sway_libs::{admin::*, ownership::*};
-use src5::{SRC5, State};
+use standards::src5::{SRC5, State};
 
 abi AdminTest {
     #[storage(read, write)]

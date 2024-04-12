@@ -5,5 +5,5 @@ license = "Apache-2.0"
 name = "ownership_test"
 
 [dependencies]
-src5 = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.3.3" }
+standards = { git = "https://github.com/FuelLabs/sway-standards", branch = "bitzoic-bump-v0.53.0" }
 sway_libs = { path = "../../../libs" }
