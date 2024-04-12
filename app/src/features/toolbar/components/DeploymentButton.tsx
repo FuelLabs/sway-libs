@@ -7,6 +7,7 @@ import {
 import SecondaryButton from '../../../components/SecondaryButton';
 import { ButtonSpinner } from '../../../components/shared';
 import { useConnectIfNotAlready } from '../hooks/useConnectIfNotAlready';
+import { track } from '@vercel/analytics/react';
 
 interface DeploymentButtonProps {
   abi: string;
@@ -72,6 +73,7 @@ export function DeploymentButton({
   );
 
   const onDeployClick = useCallback(async () => {
+    track('Deploy Click');
     if (!isConnected) {
       updateLog(`Connecting to wallet...`);
     }

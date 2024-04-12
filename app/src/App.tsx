@@ -14,7 +14,7 @@ import { useLog } from './features/editor/hooks/useLog';
 import { Toolchain } from './features/editor/components/ToolchainDropdown';
 import { useTranspile } from './features/editor/hooks/useTranspile';
 import EditorView from './features/editor/components/EditorView';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics, track } from '@vercel/analytics/react';
 
 const DRAWER_WIDTH = '40vw';
 
@@ -88,8 +88,10 @@ function App() {
   );
 
   const onCompileClick = useCallback(() => {
+    track('Compile Click', { toolchain });
     if (showSolidity) {
       // Transpile the Solidity code before compiling.
+      track('Transpile');
       setCodeToTranspile(solidityCode);
     } else {
       setCodeToCompile(swayCode);
@@ -100,6 +102,7 @@ function App() {
     solidityCode,
     setCodeToCompile,
     setCodeToTranspile,
+    toolchain,
   ]);
 
   useTranspile(
