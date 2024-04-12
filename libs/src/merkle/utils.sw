@@ -2,7 +2,7 @@ library;
 
 /// Calculates the starting bit of the path to a leaf
 ///
-/// # Additional Informaiton
+/// # Additional Information
 ///
 /// **WARNING:** This function will be private when https://github.com/FuelLabs/sway/issues/5765 is resolved.
 ///
@@ -25,7 +25,7 @@ pub fn starting_bit(num_leaves: u64) -> u64 {
 
 /// Calculates the length of the path to a leaf
 ///
-/// # Additional Informaiton
+/// # Additional Information
 ///
 /// **WARNING:** This function will be private when https://github.com/FuelLabs/sway/issues/5765 is resolved.
 ///
