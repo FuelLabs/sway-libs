@@ -43,4 +43,16 @@ mod reverts {
 
         renounce_ownership(&owner2.contract).await;
     }
+
+    #[tokio::test]
+    #[should_panic(expected = "NotOwner")]
+    async fn when_revoked_twice() {
+        let (_deployer, owner1, _owner2) = setup().await;
+
+        let owner1_identity = Identity::Address(owner1.wallet.address().into());
+        set_ownership(&owner1.contract, owner1_identity).await;
+
+        renounce_ownership(&owner1.contract).await;
+        renounce_ownership(&owner1.contract).await;
+    }
 }
