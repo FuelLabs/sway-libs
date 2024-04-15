@@ -12,7 +12,7 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 ///
 /// # Arguments
 ///
-/// * `new_admin`: [Identity] - The `Identity` which is to recieve administrator status.
+/// * `new_admin`: [Identity] - The `Identity` which is to receive administrator status.
 ///
 /// # Reverts
 ///
