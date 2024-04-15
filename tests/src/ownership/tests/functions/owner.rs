@@ -10,7 +10,17 @@ mod success {
     use super::*;
 
     #[tokio::test]
-    async fn returns_owner() {
+    async fn returns_no_owner_on_initalization() {
+        let (_deployer, owner1, _owner2) = setup().await;
+
+        assert!(matches!(
+            owner(&owner1.contract).await,
+            State::Uninitialized
+        ));
+    }
+
+    #[tokio::test]
+    async fn returns_owner_on_state_change() {
         let (_deployer, owner1, _owner2) = setup().await;
 
         assert!(matches!(
