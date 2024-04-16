@@ -39,13 +39,7 @@ export function useDeployContract(
     retry: walletIsLoading && !wallet ? 1 : 0,
     onSuccess,
     onError: (error) => {
-      // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-      if ((error as any)['code'] === 0) {
-        track('Deploy Error', { ...metricMetadata, source: 'user-rejected' });
-      } else {
-        console.error(`Deployment failed: `, error);
-        track('Deploy Error', toMetricProperties(error, metricMetadata));
-      }
+      track('Deploy Error', toMetricProperties(error, metricMetadata));
       onError(error);
     },
     mutationFn: async () => {
@@ -75,8 +69,10 @@ export function useDeployContract(
               contractId: contract.id.toB256(),
               networkUrl: contract.provider.url,
             });
-          } catch (error) {
-            (error as Error).cause = { source: 'sdk' };
+          } catch (error: any) {
+            // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+            const source = error.code === 0 ? 'user' : 'sdk';
+            error.cause = { source };
             reject(error);
           }
         }
