@@ -7,7 +7,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function isAllowedEntry(
   entry: [string, unknown]
 ): entry is [string, AllowedProperty] {
-  const [_key, value] = entry;
+  const [_, value] = entry;
   return (
     typeof value === 'string' ||
     typeof value === 'number' ||
