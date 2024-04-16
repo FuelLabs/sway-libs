@@ -57,8 +57,7 @@ impl TestBytecodeSolver for Contract {
         // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
         let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
         bytecode
-            .buf
-            .ptr
+            .ptr()
             .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
         let mut bytecode_vec = Vec::from(bytecode_slice);
         compute_predicate_address_with_configurables(bytecode_vec, configurables)
@@ -75,8 +74,7 @@ impl TestBytecodeSolver for Contract {
         // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
         let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
         bytecode
-            .buf
-            .ptr
+            .ptr()
             .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
         let mut bytecode_vec = Vec::from(bytecode_slice);
         compute_bytecode_root_with_configurables(bytecode_vec, configurables)
@@ -86,8 +84,7 @@ impl TestBytecodeSolver for Contract {
         // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
         let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
         bytecode
-            .buf
-            .ptr
+            .ptr()
             .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
         let mut bytecode_vec = Vec::from(bytecode_slice);
         swap_configurables(bytecode_vec, configurables)
@@ -105,8 +102,7 @@ impl TestBytecodeSolver for Contract {
         // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
         let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
         bytecode
-            .buf
-            .ptr
+            .ptr()
             .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
         let mut bytecode_vec = Vec::from(bytecode_slice);
         verify_contract_bytecode_with_configurables(contract_id, bytecode_vec, configurables);
@@ -124,8 +120,7 @@ impl TestBytecodeSolver for Contract {
         // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
         let mut bytecode_slice = raw_slice::from_parts::<u8>(alloc_bytes(bytecode.len()), bytecode.len());
         bytecode
-            .buf
-            .ptr
+            .ptr()
             .copy_bytes_to(bytecode_slice.ptr(), bytecode.len());
         let mut bytecode_vec = Vec::from(bytecode_slice);
         verify_predicate_address_with_configurables(predicate_id, bytecode_vec, configurables);

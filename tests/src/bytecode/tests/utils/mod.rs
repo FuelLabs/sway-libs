@@ -248,7 +248,7 @@ pub mod test_helpers {
 
     pub fn defaults() -> (u64, u64, u8) {
         let contract_offset = 68;
-        let predicate_offset = 188;
+        let predicate_offset = 156;
         let config_value = 119;
 
         (contract_offset, predicate_offset, config_value)
@@ -627,7 +627,7 @@ pub mod test_helpers {
 
         let mut data1: Vec<u8> = Vec::new();
         data1.extend_from_slice(&[0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, config_value]);
-        my_configurables.push((238016, data1));
+        my_configurables.push((231496, data1));
 
         let mut data2: Vec<u8> = Vec::new();
         data2.extend_from_slice(&[
@@ -642,7 +642,7 @@ pub mod test_helpers {
         ]);
         let bits1 = *Bytes32::from_str(HEX_STR_1).expect("failed to create Bytes32 from string");
         data2.extend_from_slice(&bits1);
-        my_configurables.push((238024, data2));
+        my_configurables.push((231504, data2));
 
         let mut data3: Vec<u8> = Vec::new();
         data3.extend_from_slice(&[0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 2u8]);
@@ -650,7 +650,7 @@ pub mod test_helpers {
         let bits3 = *Bytes32::from_str(HEX_STR_3).expect("failed to create Bytes32 from string");
         data3.extend_from_slice(&bits2);
         data3.extend_from_slice(&bits3);
-        my_configurables.push((238064, data3));
+        my_configurables.push((231544, data3));
 
         my_configurables
     }

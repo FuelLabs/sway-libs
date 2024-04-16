@@ -1,6 +1,5 @@
 library;
 
-use std::u256::U256;
 use ::signed_integers::common::TwosComplement;
 use ::signed_integers::errors::Error;
 
@@ -8,43 +7,44 @@ use ::signed_integers::errors::Error;
 ///
 /// # Additional Information
 ///
-/// Represented as an underlying U256 value.
+/// Represented as an underlying u256 value.
 /// Actual value is underlying value minus 2 ^ 255
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
 pub struct I256 {
-    pub underlying: U256,
+    pub underlying: u256,
 }
 
 impl I256 {
     /// The underlying value that corresponds to zero value.
     ///
+    /// # Additional Information
+    ///
+    /// The zero value for I256 is 0x0000000000000000000000000000001000000000000000000000000000000000u256.
+    ///
     /// # Returns
     ///
-    /// * [U256] - The unsigned integer value representing a zero value.
+    /// * [u256] - The unsigned integer value representing a zero value.
     ///
     /// # Examples
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
     ///     let zero = I256::indent();
-    ///     assert(zero == U256 { a: 0, b: 1, c: 0, d: 0 } );
+    ///     assert(zero == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
     /// }
     /// ```
-    pub fn indent() -> U256 {
-        U256 {
-            a: 0,
-            b: 1,
-            c: 0,
-            d: 0,
+    pub fn indent() -> u256 {
+        let parts = (0, 1, 0, 0);
+        asm(r1: parts) {
+            r1: u256
         }
     }
 }
 
-impl From<U256> for I256 {
-    fn from(value: U256) -> Self {
+impl From<u256> for I256 {
+    fn from(value: u256) -> Self {
         // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
         let underlying = value + Self::indent();
         Self { underlying }
@@ -92,7 +92,7 @@ impl I256 {
     ///
     /// # Arguments
     ///
-    /// * `underlying`: [U256] - The unsigned number to become the underlying value for the `I256`.
+    /// * `underlying`: [u256] - The unsigned number to become the underlying value for the `I256`.
     ///
     /// # Returns
     ///
@@ -102,15 +102,14 @@ impl I256 {
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
-    ///     let underlying = U256::from(0,0, 0, 1);
+    ///     let underlying = 0x0000000000000000000000000000000000000000000000000000000000000001u256;
     ///     let i256 = I256::from_uint(underlying);
     ///     assert(256.underlying == underlying);
     /// }
     /// ```
-    pub fn from_uint(underlying: U256) -> Self {
+    pub fn from_uint(underlying: u256) -> Self {
         Self { underlying }
     }
 
@@ -124,16 +123,15 @@ impl I256 {
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
     ///     let i256 = I256::max();
-    ///     assert(i256.underlying == U256::max());
+    ///     assert(i256.underlying == u256::max());
     /// }
     /// ```
     pub fn max() -> Self {
         Self {
-            underlying: U256::max(),
+            underlying: u256::max(),
         }
     }
 
@@ -147,16 +145,15 @@ impl I256 {
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
     ///     let i256 = I256::min();
-    ///     assert(i256.underlying == U256::min());
+    ///     assert(i256.underlying == u256::min());
     /// }
     /// ```
     pub fn min() -> Self {
         Self {
-            underlying: U256::min(),
+            underlying: u256::min(),
         }
     }
 
@@ -164,7 +161,7 @@ impl I256 {
     ///
     /// # Arguments
     ///
-    /// * `value`: [U256] - The unsigned number to negate.
+    /// * `value`: [u256] - The unsigned number to negate.
     ///
     /// # Returns
     ///
@@ -174,15 +171,14 @@ impl I256 {
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
-    ///     let underlying = U256::from(0, 1, 0, 0);
+    ///     let underlying = 0x0000000000000000000000000000001000000000000000000000000000000000u256;
     ///     let i256 = I256::neg_from(underlying);
-    ///     assert(i256.underlying == U256::from(0, 0, 0, 0));
+    ///     assert(i256.underlying == 0x0000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
-    pub fn neg_from(value: U256) -> Self {
+    pub fn neg_from(value: u256) -> Self {
         Self {
             underlying: Self::indent() - value,
         }
@@ -192,7 +188,7 @@ impl I256 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I256 is U256 { a: 0, b: 1, c: 0, d: 0 }.
+    /// The zero value of I256 is 0x0000000000000000000000000000001000000000000000000000000000000000u256.
     ///
     /// # Returns
     ///
@@ -202,11 +198,10 @@ impl I256 {
     ///
     /// ```sway
     /// use sway_libs::signed_integers::i256::I256;
-    /// use std::U256::*;
     ///
     /// fn foo() {
     ///     let i256 = I256::new();
-    ///     assert(i256.underlying == U256 { a: 0, b: 1, c: 0, d: 0 } );
+    ///     assert(i256.underlying == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn new() -> Self {
@@ -358,12 +353,7 @@ impl TwosComplement for I256 {
         {
             return self;
         }
-        let u_one = U256 {
-            a: 0,
-            b: 0,
-            c: 0,
-            d: 1,
-        };
+        let u_one = 0x0000000000000000000000000000000000000000000000000000000000000001u256;
         let res = I256::from_uint(!self.underlying + u_one);
         res
     }
