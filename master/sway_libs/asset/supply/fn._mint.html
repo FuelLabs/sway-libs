@@ -5,6 +5,8 @@
     sub_id: SubId,
     amount: u64,
 ) -&gt; AssetId </code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Unconditionally mints new assets using the <code>sub_id</code> sub-identifier.</p>
+<h1>Additional Information</h1>
+<p><strong>Warning</strong> This function increases the total supply by the number of coins minted.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>total_assets_key</code>: [StorageKey<!-- raw HTML omitted -->] - The location in storage that the <code>u64</code> which represents the total assets is stored.</li>

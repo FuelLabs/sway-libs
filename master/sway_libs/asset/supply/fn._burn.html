@@ -4,7 +4,8 @@
     amount: u64,
 ) </code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Burns assets with the given <code>sub_id</code>.</p>
 <h1>Additional Information</h1>
-<p><strong>Warning</strong> This function burns assets unequivocally. It does not check that assets are sent to the calling contract.</p>
+<p><strong>Warning</strong> This function burns assets unequivocally. It does not check that assets are sent to the calling contract.<br />
+<strong>Warning</strong> This function reduces the total supply by the number of coins burned. Using this value when minting may cause unintended consequences.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>total_assets_key</code>: [StorageKey<!-- raw HTML omitted -->] - The location in storage that the <code>u64</code> which represents the total assets is stored.</li>
