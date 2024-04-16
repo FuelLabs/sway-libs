@@ -1,8 +1,9 @@
 import { ContractFactory, JsonAbi, StorageSlot } from 'fuels';
 import { useMutation } from '@tanstack/react-query';
-import { useConnectors, useFuel, useWallet } from '@fuels/react';
+import { useFuel, useWallet } from '@fuels/react';
 import { track } from '@vercel/analytics/react';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
+import { toMetricProperties } from '../../../utils/metrics';
 
 const DEPLOYMENT_TIMEOUT_MS = 120000;
 
@@ -21,30 +22,34 @@ export function useDeployContract(
 ) {
   const { wallet, isLoading: walletIsLoading } = useWallet();
   const { fuel } = useFuel();
-  const { connectors } = useConnectors();
+  const [metricMetadata, setMetricMetadata] = useState({});
 
-  const walletName = useMemo(() => {
-    const currentConnector = connectors.find(
-      (connector) => connector.connected
-    );
-    return !!wallet && !!currentConnector ? currentConnector.name : 'none';
-  }, [connectors, wallet]);
+  useEffect(() => {
+    const waitForMetadata = async () => {
+      const name = fuel.currentConnector()?.name ?? 'none';
+      const networkUrl = wallet?.provider.url ?? 'none';
+      const version = (await wallet?.provider.getVersion()) ?? 'none';
+      setMetricMetadata({ name, version, networkUrl });
+    };
+    waitForMetadata();
+  }, [wallet, fuel]);
 
   const mutation = useMutation({
     // Retry once if the wallet is still loading.
     retry: walletIsLoading && !wallet ? 1 : 0,
     onSuccess,
     onError: (error) => {
-      track('Deploy Error', { source: error.name, walletName });
+      track('Deploy Error', toMetricProperties(error, metricMetadata));
       onError(error);
     },
     mutationFn: async () => {
-      const { url: networkUrl } = await fuel.currentNetwork();
       if (!wallet) {
         if (walletIsLoading) {
           updateLog('Connecting to wallet...');
         } else {
-          throw new Error('Failed to connect to wallet');
+          throw new Error('Failed to connect to wallet', {
+            cause: { source: 'wallet' },
+          });
         }
       }
 
@@ -62,10 +67,12 @@ export function useDeployContract(
             });
             resolve({
               contractId: contract.id.toB256(),
-              networkUrl,
+              networkUrl: contract.provider.url,
             });
-          } catch (error) {
-            track('Deploy Error', { source: 'sdk', networkUrl, walletName });
+          } catch (error: any) {
+            // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+            const source = error.code === 0 ? 'user' : 'sdk';
+            error.cause = { source };
             reject(error);
           }
         }
@@ -73,10 +80,10 @@ export function useDeployContract(
 
       const timeoutPromise = new Promise((_resolve, reject) =>
         setTimeout(() => {
-          track('Deploy Error', { source: 'timeout', networkUrl, walletName });
           reject(
             new Error(
-              `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`
+              `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
+              { cause: { source: 'timeout' } }
             )
           );
         }, DEPLOYMENT_TIMEOUT_MS)
