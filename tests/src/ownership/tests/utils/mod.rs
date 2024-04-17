@@ -10,7 +10,7 @@ use fuels::{
 // Load abi from json
 abigen!(Contract(
     name = "OwnershipLib",
-    abi = "src/ownership/out/debug/ownership_test-abi.json"
+    abi = "src/ownership/out/release/ownership_test-abi.json"
 ));
 
 pub struct Metadata {
@@ -88,11 +88,11 @@ pub mod test_helpers {
         let wallet3 = wallets.pop().unwrap();
 
         let storage_configuration = StorageConfiguration::default().add_slot_overrides_from_file(
-            "src/ownership/out/debug/ownership_test-storage_slots.json",
+            "src/ownership/out/release/ownership_test-storage_slots.json",
         );
         let configuration =
             LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap());
-        let id = Contract::load_from("src/ownership/out/debug/ownership_test.bin", configuration)
+        let id = Contract::load_from("src/ownership/out/release/ownership_test.bin", configuration)
             .unwrap()
             .deploy(&wallet1, TxPolicies::default())
             .await

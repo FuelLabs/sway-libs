@@ -10,7 +10,7 @@ use fuels::{
 // Load abi from json
 abigen!(Contract(
     name = "AdminLib",
-    abi = "src/admin/out/debug/admin_test-abi.json"
+    abi = "src/admin/out/release/admin_test-abi.json"
 ));
 
 pub struct Metadata {
@@ -105,10 +105,10 @@ pub mod test_helpers {
         let wallet4 = wallets.pop().unwrap();
 
         let storage_configuration = StorageConfiguration::default()
-            .add_slot_overrides_from_file("src/admin/out/debug/admin_test-storage_slots.json");
+            .add_slot_overrides_from_file("src/admin/out/release/admin_test-storage_slots.json");
         let configuration =
             LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap());
-        let id = Contract::load_from("src/admin/out/debug/admin_test.bin", configuration)
+        let id = Contract::load_from("src/admin/out/release/admin_test.bin", configuration)
             .unwrap()
             .deploy(&wallet1, TxPolicies::default())
             .await

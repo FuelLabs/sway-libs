@@ -2,7 +2,7 @@ use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
 abigen!(Script(
     name = "TestIfp64Div",
-    abi = "src/fixed_point/ifp64_div_test/out/debug/ifp64_div_test-abi.json"
+    abi = "src/fixed_point/ifp64_div_test/out/release/ifp64_div_test-abi.json"
 ),);
 
 mod success {
@@ -11,7 +11,7 @@ mod success {
 
     #[tokio::test]
     async fn runs_ifp64_div_test_script() {
-        let path_to_bin = "src/fixed_point/ifp64_div_test/out/debug/ifp64_div_test.bin";
+        let path_to_bin = "src/fixed_point/ifp64_div_test/out/release/ifp64_div_test.bin";
 
         let wallet = launch_provider_and_get_wallet().await.unwrap();
 
