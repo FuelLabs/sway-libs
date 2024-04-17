@@ -92,11 +92,14 @@ pub mod test_helpers {
         );
         let configuration =
             LoadConfiguration::default().with_storage_configuration(storage_configuration.unwrap());
-        let id = Contract::load_from("src/ownership/out/release/ownership_test.bin", configuration)
-            .unwrap()
-            .deploy(&wallet1, TxPolicies::default())
-            .await
-            .unwrap();
+        let id = Contract::load_from(
+            "src/ownership/out/release/ownership_test.bin",
+            configuration,
+        )
+        .unwrap()
+        .deploy(&wallet1, TxPolicies::default())
+        .await
+        .unwrap();
 
         let deploy_wallet = Metadata {
             contract: OwnershipLib::new(id.clone(), wallet1.clone()),

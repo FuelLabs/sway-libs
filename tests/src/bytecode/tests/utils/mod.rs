@@ -44,7 +44,7 @@ const SIMPLE_PREDICATE_OFFSET: u64 = 100;
 const SIMPLE_CONTRACT_OFFSET: u64 = 68;
 const COMPLEX_CONTRACT_OFFSET_1: u64 = 18268;
 const COMPLEX_CONTRACT_OFFSET_2: u64 = 18276;
-const COMPLEX_CONTRACT_OFFSET_3 : u64= 18316;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 18316;
 
 pub mod abi_calls {
 
@@ -254,7 +254,11 @@ pub mod test_helpers {
     pub fn defaults() -> (u64, u64, u8) {
         let config_value = 119;
 
-        (SIMPLE_CONTRACT_OFFSET, SIMPLE_PREDICATE_OFFSET, config_value)
+        (
+            SIMPLE_CONTRACT_OFFSET,
+            SIMPLE_PREDICATE_OFFSET,
+            config_value,
+        )
     }
 
     pub fn complex_defaults() -> (SimpleStruct, SimpleEnum) {
