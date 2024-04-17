@@ -1,0 +1,159 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `SRC10` abi in `src10`."><meta name="keywords" content="sway, swaylang, sway-lang, SRC10"><link rel="icon" href="../../static.files/sway-logo.svg"><title>SRC10 in src10 - Sway</title><link rel="stylesheet" type="text/css" href="../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../static.files/ayu.css"><link rel="stylesheet" href="../../static.files/ayu.min.css"></head><body class="swaydoc abi"><nav class="sidebar"><a class="sidebar-logo" href="../../standards/index.html"><div class="logo-container"><img class="sway-logo" src="../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Abi SRC10</h2><div class="sidebar-elems"><section><div class="block"><ul><li><a href="#required-methods">Required Methods</a></li></ul></div></section></div></nav><main><div class="width-limiter"><script src="../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){searchForm.dispatchEvent(new Event('submit'))});searchbar.addEventListener("search",function(event){searchForm.dispatchEvent(new Event('submit'))});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=[...item.module_info,formattedName].join("::");const path=["../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Abi <a class="mod" href="../index.html">standards</a><span>::</span><a class="mod" href="index.html">src10</a><span>::</span><a class="abi" href="#">SRC10</a></span></h1></div><div class="docblock item-decl"><pre class="sway abi"><code>abi SRC10 {
+    /// Compiles a message to be sent back to the canonical chain.
+    ///
+    /// # Additional Information
+    ///
+    /// * The `gateway` contract on the canonical chain receives the `token_address` ID in the message such that when assets are deposited they are reported to prevent loss of funds.
+    ///
+    /// # Arguments
+    ///
+    /// * `token_address`: [b256] - The token's address on the canonical chain.
+    /// * `gateway_contract`: [b256] - The contract that accepts deposits on the canonical chain.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use src10::SRC10;
+    ///
+    /// fn foo(gateway_contract: b256, token_address: b256, bridge: ContractId) {
+    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     bridge_abi.register_token(token_address, gateway_contract);
+    /// }
+    /// ```
+    #[storage(read, write)]
+    fn register_token(token_address: b256, gateway_contract: b256);
+    /// Accepts incoming deposit messages from the canonical chain and issues the corresponding bridged asset.
+    ///
+    /// # Arguments
+    ///
+    /// * `message_index`: [u64] - The index of the message to parse.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use src10::SRC10;
+    ///
+    /// fn foo(message_index: u64, bridge: ContractId) {
+    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     bridge_abi.process_message(message_index);
+    /// }
+    /// ```
+    #[storage(read, write)]
+    fn process_message(message_index: u64);
+    /// Accepts and burns a bridged asset and sends a messages to the canonical chain to release the original deposited token.
+    ///
+    /// # Arguments
+    ///
+    /// * `to_address`: [b256] - The address on the canonical chain to send the released tokens to.
+    /// * `sub_id`: [SubId] - The SubId of the asset sent in the transaction.
+    /// * `gateway_contract`: [b256] - The contract that holds the deposited tokens on the canonical chain.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use src10::SRC10;
+    ///
+    /// fn foo(to_address: b256, asset_sub_id: SubId, gateway_contract: b256, bridge: ContractId, bridged_asset: AssetId) {
+    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     bridge_abi {
+    ///         gas: 10000,
+    ///         coins: 100,
+    ///         asset_id: bridged_asset,
+    ///     }.withdraw(to_address, asset_sub_id, gateway_contract);
+    /// }
+    /// ```
+    #[storage(read, write)]
+    fn withdraw(to_address: b256, sub_id: SubId, gateway_contract: b256);
+    /// Returns a refund on the canonical chain if an error occurs while bridging.
+    ///
+    /// # Arguments
+    ///
+    /// * `to_address`: [b256] - The address on the canonical chain to send the refunded tokens to.
+    /// * `token_address`: [b256] - The token on the canonical chain to be refunded.
+    /// * `token_id`: [b256] - The token id of the token on the canonical chain to be refunded.
+    /// * `gateway_contract`: [b256] - The contract that holds the deposited tokens on the canonical chain.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use src10::SRC10;
+    ///
+    /// fn foo(to_address: b256, token_address: b256, token_id: b256, gateway_contract: b256, bridge: ContractId) {
+    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     bridge_abi.claim_refund(to_address, token_address, token_id, gateway_contract);
+    /// }
+    /// ```
+    #[storage(read, write)]
+    fn claim_refund(
+        to_address: b256,
+        token_address: b256,
+        token_id: b256,
+        gateway_contract: b256,
+    );
+}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.register_token" class="method has-srclink"><a href="#tymethod.register_token" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.register_token">register_token</a>(<br>    token_address: b256,<br>    gateway_contract: b256,<br>)</h4></div></summary><div class="docblock"><p>Compiles a message to be sent back to the canonical chain.</p>
+<h1>Additional Information</h1>
+<ul>
+<li>The <code>gateway</code> contract on the canonical chain receives the <code>token_address</code> ID in the message such that when assets are deposited they are reported to prevent loss of funds.</li>
+</ul>
+<h1>Arguments</h1>
+<ul>
+<li><code>token_address</code>: [b256] - The token’s address on the canonical chain.</li>
+<li><code>gateway_contract</code>: [b256] - The contract that accepts deposits on the canonical chain.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use src10::SRC10;
+
+fn foo(gateway_contract: b256, token_address: b256, bridge: ContractId) {
+    let bridge_abi = abi(SRC10, bridge.value);
+    bridge_abi.register_token(token_address, gateway_contract);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.process_message" class="method has-srclink"><a href="#tymethod.process_message" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.process_message">process_message</a>(<br>    message_index: u64,<br>)</h4></div></summary><div class="docblock"><p>Accepts incoming deposit messages from the canonical chain and issues the corresponding bridged asset.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>message_index</code>: [u64] - The index of the message to parse.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use src10::SRC10;
+
+fn foo(message_index: u64, bridge: ContractId) {
+    let bridge_abi = abi(SRC10, bridge.value);
+    bridge_abi.process_message(message_index);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.withdraw" class="method has-srclink"><a href="#tymethod.withdraw" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.withdraw">withdraw</a>(<br>    to_address: b256,<br>    sub_id: SubId,<br>    gateway_contract: b256,<br>)</h4></div></summary><div class="docblock"><p>Accepts and burns a bridged asset and sends a messages to the canonical chain to release the original deposited token.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>to_address</code>: [b256] - The address on the canonical chain to send the released tokens to.</li>
+<li><code>sub_id</code>: [SubId] - The SubId of the asset sent in the transaction.</li>
+<li><code>gateway_contract</code>: [b256] - The contract that holds the deposited tokens on the canonical chain.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use src10::SRC10;
+
+fn foo(to_address: b256, asset_sub_id: SubId, gateway_contract: b256, bridge: ContractId, bridged_asset: AssetId) {
+    let bridge_abi = abi(SRC10, bridge.value);
+    bridge_abi {
+        gas: 10000,
+        coins: 100,
+        asset_id: bridged_asset,
+    }.withdraw(to_address, asset_sub_id, gateway_contract);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.claim_refund" class="method has-srclink"><a href="#tymethod.claim_refund" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.claim_refund">claim_refund</a>(<br>    to_address: b256,<br>    token_address: b256,<br>    token_id: b256,<br>    gateway_contract: b256,<br>)</h4></div></summary><div class="docblock"><p>Returns a refund on the canonical chain if an error occurs while bridging.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>to_address</code>: [b256] - The address on the canonical chain to send the refunded tokens to.</li>
+<li><code>token_address</code>: [b256] - The token on the canonical chain to be refunded.</li>
+<li><code>token_id</code>: [b256] - The token id of the token on the canonical chain to be refunded.</li>
+<li><code>gateway_contract</code>: [b256] - The contract that holds the deposited tokens on the canonical chain.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use src10::SRC10;
+
+fn foo(to_address: b256, token_address: b256, token_id: b256, gateway_contract: b256, bridge: ContractId) {
+    let bridge_abi = abi(SRC10, bridge.value);
+    bridge_abi.claim_refund(to_address, token_address, token_id, gateway_contract);
+}
+</code></pre>
+</div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>
