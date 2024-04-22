@@ -1,0 +1,18 @@
+[project]
+name = "sdk-examples"
+version = "0.0.0"
+authors = ["Fuel Labs <contact@fuel.sh>"]
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+# ANCHOR: dependencies
+fuel-merkle = { version = "0.33.0" }
+# ANCHOR_END: dependencies
+sha2 = { version = "0.10" }
+fuels = { version = "0.53.0", features = ["fuel-core-lib"] }
+
+[[test]]
+harness = true
+name = "sdk-examples"
+path = "harness.rs"
