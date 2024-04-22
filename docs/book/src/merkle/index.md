@@ -11,7 +11,7 @@ In order to use the Merkle Library, Sway Libs must be added to the `Forc.toml` f
 To import the Merkle Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-use sway_libs::merkle::binary_proof::*;
+{{#include ../../../../examples/merkle/src/main.sw:import}}
 ```
 
 ## Using the Merkle Proof Library In Sway
@@ -32,17 +32,13 @@ The Binary Proof currently allows for you to compute leaves and nodes of a merkl
 To compute a leaf use the `leaf_digest()` function:
 
 ```sway
-fn foo(hashed_data: b256) {
-    let leaf: b256 = leaf_digest(hashed_data);
-}
+{{#include ../../../../examples/merkle/src/main.sw:leaf_digest}}
 ```
 
 To compute a node given two leaves, use the `node_digest()` function:
 
 ```sway
-fn foo(leaf_a: b256, leaf_b: b256) {
-    let node: b256 = node_digest(leaf_a, leaf_b);
-}
+{{#include ../../../../examples/merkle/src/main.sw:node_digest}}
 ```
 
 > **NOTE** Order matters when computing a node.
@@ -52,9 +48,7 @@ fn foo(leaf_a: b256, leaf_b: b256) {
 To compute a Merkle root given a proof, use the `process_proof()` function.
 
 ```sway
-fn foo(key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) {
-    let merkle_root: b256 = process_proof(key, leaf, num_leaves, proof);
-}
+{{#include ../../../../examples/merkle/src/main.sw:process_proof}}
 ```
 
 ### Verifying a Proof
@@ -62,9 +56,7 @@ fn foo(key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) {
 To verify a proof against a merkle root, use the `verify_proof()` function.
 
 ```sway
-fn foo(merkle_roof: b256, key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) {
-    assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
-}
+{{#include ../../../../examples/merkle/src/main.sw:verify_proof}}
 ```
 
 ## Using the Merkle Proof Library with Fuels-rs
@@ -75,19 +67,16 @@ To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, 
 
 The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
-```rust
-fuel-merkle = { version = "0.33.0" }
+```sway
+{{#include ../../../../examples/Cargo.toml:dependencies}}
 ```
 
 ### Importing Into Your Rust File
 
 The following should be added to your Rust file to use the Fuel-Merkle crate.
 
-```rust
-use fuel_merkle::{
-    binary::in_memory::MerkleTree,
-    common::Bytes32,
-};
+```sway
+{{#include ../../../../examples/merkle/mod.rs:import}}
 ```
 
 ### Using Fuel-Merkle
@@ -96,30 +85,20 @@ use fuel_merkle::{
 
 To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order.
 
-```rust
-let mut tree = MerkleTree::new();
-let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
-for datum in leaves.iter() {
-    let mut hasher = Sha256::new();
-    hasher.update(&datum);
-    let hash: Bytes32 = hasher.finalize().try_into().unwrap();
-    tree.push(hash);
-}
+```sway
+{{#include ../../../../examples/merkle/mod.rs:generating_a_tree}}
 ```
 
 #### Generating And Verifying A Proof
 
 To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:
 
-```rust
-let mut proof = tree.prove(key).unwrap();
+```sway
+{{#include ../../../../examples/merkle/mod.rs:generating_proof}}
 ```
 
 Once the proof has been generated, you may call the Sway Smart Contract's `verify_proof` function:
 
-```rust
-let merkle_root = proof.0;
-let merkle_leaf = proof.1[0];
-proof.1.remove(0);
-contract_instance.verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof.1).call().await;
+```sway
+{{#include ../../../../examples/merkle/mod.rs:verify_proof}}
 ```

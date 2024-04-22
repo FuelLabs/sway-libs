@@ -11,8 +11,7 @@ In order to use the Ownership library, Sway Libs and [Sway Standards](https://gi
 To import the Ownership Library and [SRC-5](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-use sway_libs::ownership::*;
-use standards::src5::*;
+{{#include ../../../../examples/ownership/src/main.sw:import}}
 ```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
@@ -20,15 +19,7 @@ use standards::src5::*;
 To implement the [SRC-5](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md) standard with the Ownership library, be sure to add the Sway Standards dependency to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.
 
 ```sway
-use sway_libs::ownership::_owner;
-use standards::src_5::{State, SRC5};
-
-impl SRC5 for Contract {
-    #[storage(read)]
-    fn owner() -> State {
-        _owner()
-    }
-}
+{{#include ../../../../examples/ownership/src/main.sw:integrate_with_src5}}
 ```
 
 > **NOTE** A constructor method must be implemented to initialize the owner.
@@ -40,10 +31,7 @@ impl SRC5 for Contract {
 Once imported, the Ownership Library's functions will be available. To use them initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor method.
 
 ```sway
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
+{{#include ../../../../examples/ownership/src/main.sw:initialize}}
 ```
 
 ### Applying Restrictions
@@ -51,11 +39,7 @@ fn my_constructor(new_owner: Identity) {
 To restrict a function to only the owner, call the `only_owner()` function.
 
 ```sway
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
+{{#include ../../../../examples/ownership/src/main.sw:only_owner}}
 ```
 
 ### Checking the Ownership Status
@@ -63,8 +47,5 @@ fn only_owner_may_call() {
 To return the ownership state from storage, call the `_owner()` function.
 
 ```sway
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
-}
+{{#include ../../../../examples/ownership/src/main.sw:state}}
 ```
