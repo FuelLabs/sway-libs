@@ -5,15 +5,26 @@ use sway_libs::merkle::binary_proof::*;
 // ANCHOR_END: import
 
 abi MerkleExample {
-    fn verify(merkle_root: b256, key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) -> bool;
+    fn verify(
+        merkle_root: b256,
+        key: u64,
+        leaf: b256,
+        num_leaves: u64,
+        proof: Vec<b256>,
+    ) -> bool;
 }
 
 impl MerkleExample for Contract {
-    fn verify(merkle_root: b256, key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) -> bool {
+    fn verify(
+        merkle_root: b256,
+        key: u64,
+        leaf: b256,
+        num_leaves: u64,
+        proof: Vec<b256>,
+    ) -> bool {
         verify_proof(key, leaf, merkle_root, num_leaves, proof)
     }
 }
-
 
 // ANCHOR: leaf_digest
 fn compute_leaf(hashed_data: b256) {
