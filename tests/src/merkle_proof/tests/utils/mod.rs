@@ -13,7 +13,7 @@ use sha2::{Digest, Sha256};
 
 abigen!(Contract(
     name = "TestMerkleProofLib",
-    abi = "src/merkle_proof/out/debug/merkle_proof_test-abi.json"
+    abi = "src/merkle_proof/out/release/merkle_proof_test-abi.json"
 ));
 
 pub const NODE: u8 = 0x01;
@@ -246,7 +246,7 @@ pub mod test_helpers {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let contract_id = Contract::load_from(
-            "./src/merkle_proof/out/debug/merkle_proof_test.bin",
+            "./src/merkle_proof/out/release/merkle_proof_test.bin",
             LoadConfiguration::default(),
         )
         .unwrap()
