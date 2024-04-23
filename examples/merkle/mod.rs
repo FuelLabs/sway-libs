@@ -1,13 +1,13 @@
 // ANCHOR: import
 use fuel_merkle::{binary::in_memory::MerkleTree, common::Bytes32};
 // ANCHOR_END: import
-use fuels::prelude::*;
+use fuels::{prelude::*, types::Bits256};
 use sha2::{Digest, Sha256};
 
 // Load abi from json
 abigen!(Contract(
     name = "MerkleExample",
-    abi = "out/release/merkle_proof_test-abi.json"
+    abi = "merkle/out/release/merkle_examples-abi.json"
 ));
 
 async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlocked) {
@@ -26,7 +26,7 @@ async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlock
     let wallet = wallets.pop().unwrap();
 
     let id = Contract::load_from(
-        "./out/release/merkle_proof_test.bin",
+        "./merkle/out/release/merkle_examples.bin",
         LoadConfiguration::default(),
     )
     .unwrap()
@@ -39,7 +39,8 @@ async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlock
     (instance, wallet)
 }
 
-fn rust_setup_example() {
+#[tokio::test]
+async fn rust_setup_example() {
     let (contract_instance, _id) = get_contract_instance().await;
 
     // ANCHOR: generating_a_tree
@@ -57,16 +58,25 @@ fn rust_setup_example() {
     let num_leaves = 3;
 
     // ANCHOR: generating_proof
-    let mut proof = tree.prove(key).unwrap();
+    let proof = tree.prove(key).unwrap();
+    let mut bits256_proof: Vec<Bits256> = Vec::new();
+    for itterator in &proof.1 {
+        bits256_proof.push(Bits256(itterator.clone()));
+    }
     // ANCHOR_END: generating_proof
 
     // ANCHOR: verify_proof
     let merkle_root = proof.0;
-    let merkle_leaf = proof.1[0];
-    proof.1.remove(0);
-    contract_instance
-        .verify(key, merkle_leaf, merkle_root, num_leaves, proof.1)
+    let merkle_leaf = proof.1[key as usize];
+    bits256_proof.remove(key as usize);
+
+    let result: bool = contract_instance
+        .methods()
+        .verify(Bits256(merkle_root), key, Bits256(merkle_leaf), num_leaves, bits256_proof)
         .call()
-        .await;
+        .await
+        .unwrap()
+        .value;
+    assert!(result);
     // ANCHOR_END: verify_proof
 }
