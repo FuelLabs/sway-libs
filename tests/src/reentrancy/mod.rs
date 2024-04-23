@@ -7,20 +7,20 @@ use fuels::{
 };
 
 abigen!(
-    Contract(name="AttackerContract", abi="src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-abi.json"),
-    Contract(name="TargetContract", abi="src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract-abi.json"),
-    Contract(name="AttackHelperContract", abi="src/reentrancy/reentrancy_attack_helper_contract/out/debug/reentrancy_attack_helper_contract-abi.json"),
+    Contract(name="AttackerContract", abi="src/reentrancy/reentrancy_attacker_contract/out/release/reentrancy_attacker_contract-abi.json"),
+    Contract(name="TargetContract", abi="src/reentrancy/reentrancy_target_contract/out/release/reentrancy_target_contract-abi.json"),
+    Contract(name="AttackHelperContract", abi="src/reentrancy/reentrancy_attack_helper_contract/out/release/reentrancy_attack_helper_contract-abi.json"),
 );
 
 const REENTRANCY_ATTACKER_BIN: &str =
-    "src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract.bin";
+    "src/reentrancy/reentrancy_attacker_contract/out/release/reentrancy_attacker_contract.bin";
 const REENTRANCY_ATTACK_HELPER_BIN: &str =
-    "src/reentrancy/reentrancy_attack_helper_contract/out/debug/reentrancy_attack_helper_contract.bin";
-const REENTRANCY_ATTACKER_STORAGE: &str = "src/reentrancy/reentrancy_attacker_contract/out/debug/reentrancy_attacker_contract-storage_slots.json";
+    "src/reentrancy/reentrancy_attack_helper_contract/out/release/reentrancy_attack_helper_contract.bin";
+const REENTRANCY_ATTACKER_STORAGE: &str = "src/reentrancy/reentrancy_attacker_contract/out/release/reentrancy_attacker_contract-storage_slots.json";
 
 const REENTRANCY_TARGET_BIN: &str =
-    "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract.bin";
-const REENTRANCY_TARGET_STORAGE: &str = "src/reentrancy/reentrancy_target_contract/out/debug/reentrancy_target_contract-storage_slots.json";
+    "src/reentrancy/reentrancy_target_contract/out/release/reentrancy_target_contract.bin";
+const REENTRANCY_TARGET_STORAGE: &str = "src/reentrancy/reentrancy_target_contract/out/release/reentrancy_target_contract-storage_slots.json";
 
 pub async fn get_attacker_instance(
     wallet: WalletUnlocked,

@@ -11,11 +11,11 @@ use sha2::{Digest, Sha256};
 
 abigen!(Contract(
     name = "AssetLib",
-    abi = "src/native_asset/out/debug/native_asset_lib-abi.json"
+    abi = "src/native_asset/out/release/native_asset_lib-abi.json"
 ),);
 
 const NATIVE_ASSET_TEST_CONTRACT_BINARY_PATH: &str =
-    "./src/native_asset/out/debug/native_asset_lib.bin";
+    "./src/native_asset/out/release/native_asset_lib.bin";
 
 pub(crate) fn defaults(
     contract_id: ContractId,

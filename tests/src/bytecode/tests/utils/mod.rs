@@ -13,33 +13,38 @@ use std::{fs, str::FromStr};
 abigen!(
     Contract(
         name = "SimpleContract",
-        abi = "src/bytecode/test_artifacts/simple_contract/out/debug/simple_contract-abi.json"
+        abi = "src/bytecode/test_artifacts/simple_contract/out/release/simple_contract-abi.json"
     ),
     Contract(
         name = "ComplexContract",
-        abi = "src/bytecode/test_artifacts/complex_contract/out/debug/complex_contract-abi.json"
+        abi = "src/bytecode/test_artifacts/complex_contract/out/release/complex_contract-abi.json"
     ),
     Contract(
         name = "BytecodeTestContract",
-        abi = "src/bytecode/test_contract/out/debug/bytecode_test-abi.json"
+        abi = "src/bytecode/test_contract/out/release/bytecode_test-abi.json"
     ),
     Predicate(
         name = "SimplePredicate",
-        abi = "src/bytecode/test_artifacts/simple_predicate/out/debug/simple_predicate-abi.json"
+        abi = "src/bytecode/test_artifacts/simple_predicate/out/release/simple_predicate-abi.json"
     ),
 );
 
 const SIMPLE_CONTRACT_BYTECODE_PATH: &str =
-    "src/bytecode/test_artifacts/simple_contract/out/debug/simple_contract.bin";
+    "src/bytecode/test_artifacts/simple_contract/out/release/simple_contract.bin";
 const COMPLEX_CONTRACT_BYTECODE_PATH: &str =
-    "src/bytecode/test_artifacts/complex_contract/out/debug/complex_contract.bin";
+    "src/bytecode/test_artifacts/complex_contract/out/release/complex_contract.bin";
 const PREDICATE_BYTECODE_PATH: &str =
-    "src/bytecode/test_artifacts/simple_predicate/out/debug/simple_predicate.bin";
+    "src/bytecode/test_artifacts/simple_predicate/out/release/simple_predicate.bin";
 const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 
 const HEX_STR_1: &str = "0xacbe4bfc77e55c071db31f2e37c824d75794867d88499107dc8318cb22aceea5";
 const HEX_STR_2: &str = "0x0b1af92ac5a3e8cfeafede9586a1f853a9e0258e7cdccae5e5181edac081f2c1b";
 const HEX_STR_3: &str = "0x0345c74edfb0ce0820409176d0cbc2c44eac1e5e4c7382ee7e7c38d611d9ba767";
+const SIMPLE_PREDICATE_OFFSET: u64 = 100;
+const SIMPLE_CONTRACT_OFFSET: u64 = 68;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 18268;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 18276;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 18316;
 
 pub mod abi_calls {
 
@@ -247,11 +252,13 @@ pub mod test_helpers {
     use super::*;
 
     pub fn defaults() -> (u64, u64, u8) {
-        let contract_offset = 68;
-        let predicate_offset = 156;
         let config_value = 119;
 
-        (contract_offset, predicate_offset, config_value)
+        (
+            SIMPLE_CONTRACT_OFFSET,
+            SIMPLE_PREDICATE_OFFSET,
+            config_value,
+        )
     }
 
     pub fn complex_defaults() -> (SimpleStruct, SimpleEnum) {
@@ -288,7 +295,7 @@ pub mod test_helpers {
         let wallet = wallets.pop().unwrap();
 
         let id = Contract::load_from(
-            "src/bytecode/test_contract/out/debug/bytecode_test.bin",
+            "src/bytecode/test_contract/out/release/bytecode_test.bin",
             LoadConfiguration::default(),
         )
         .unwrap()
@@ -627,7 +634,7 @@ pub mod test_helpers {
 
         let mut data1: Vec<u8> = Vec::new();
         data1.extend_from_slice(&[0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, config_value]);
-        my_configurables.push((231496, data1));
+        my_configurables.push((COMPLEX_CONTRACT_OFFSET_1, data1));
 
         let mut data2: Vec<u8> = Vec::new();
         data2.extend_from_slice(&[
@@ -642,7 +649,7 @@ pub mod test_helpers {
         ]);
         let bits1 = *Bytes32::from_str(HEX_STR_1).expect("failed to create Bytes32 from string");
         data2.extend_from_slice(&bits1);
-        my_configurables.push((231504, data2));
+        my_configurables.push((COMPLEX_CONTRACT_OFFSET_2, data2));
 
         let mut data3: Vec<u8> = Vec::new();
         data3.extend_from_slice(&[0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 2u8]);
@@ -650,7 +657,7 @@ pub mod test_helpers {
         let bits3 = *Bytes32::from_str(HEX_STR_3).expect("failed to create Bytes32 from string");
         data3.extend_from_slice(&bits2);
         data3.extend_from_slice(&bits3);
-        my_configurables.push((231544, data3));
+        my_configurables.push((COMPLEX_CONTRACT_OFFSET_3, data3));
 
         my_configurables
     }
