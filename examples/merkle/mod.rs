@@ -72,7 +72,13 @@ async fn rust_setup_example() {
 
     let result: bool = contract_instance
         .methods()
-        .verify(Bits256(merkle_root), key, Bits256(merkle_leaf), num_leaves, bits256_proof)
+        .verify(
+            Bits256(merkle_root),
+            key,
+            Bits256(merkle_leaf),
+            num_leaves,
+            bits256_proof,
+        )
         .call()
         .await
         .unwrap()
