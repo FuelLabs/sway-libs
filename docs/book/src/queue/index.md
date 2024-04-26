@@ -11,7 +11,7 @@ In order to use the Queue Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Queue Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-use sway_libs::queue::*;
+{{#include ../../../../examples/queue/src/main.sw:import}}
 ```
 
 ## Basic Functionality
@@ -21,7 +21,7 @@ use sway_libs::queue::*;
 Once the `Queue` has been imported, you can create a new queue instance by calling the `new` function.
 
 ```sway
-let mut queue = Queue::new();
+{{#include ../../../../examples/queue/src/main.sw:instantiate}}
 ```
 
 ## Enqueuing elements
@@ -29,8 +29,7 @@ let mut queue = Queue::new();
 Adding elements to the `Queue` can be done using the `enqueue` function.
 
 ```sway
-// Enqueue an element to the queue
-queue.enqueue(10u8);
+{{#include ../../../../examples/queue/src/main.sw:enqueue}}
 ```
 
 ### Dequeuing Elements
@@ -38,8 +37,7 @@ queue.enqueue(10u8);
 To remove elements from the `Queue`, the `dequeue` function is used. This function follows the FIFO principle.
 
 ```sway
-// Dequeue the first element and unwrap the value
-let first_item = queue.dequeue().unwrap();
+{{#include ../../../../examples/queue/src/main.sw:dequeue}}
 ```
 
 ### Fetching the Head Element
@@ -47,8 +45,7 @@ let first_item = queue.dequeue().unwrap();
 To retrieve the element at the head of the `Queue` without removing it, you can use the `peek` function.
 
 ```sway
-// Peek at the head of the queue
-let head_item = queue.peek();
+{{#include ../../../../examples/queue/src/main.sw:peek}}
 ```
 
 ### Checking the Queue's Length
@@ -56,9 +53,5 @@ let head_item = queue.peek();
 The `is_empty` and `len` functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.
 
 ```sway
-// Checks if queue is empty (returns True or False)
-let is_queue_empty = queue.is_empty();
-
-// Returns length of queue
-let queue_length = queue.len();
+{{#include ../../../../examples/queue/src/main.sw:length}}
 ```

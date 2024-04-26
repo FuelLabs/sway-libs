@@ -13,13 +13,13 @@ In order to use the Signed Integer Number Library, Sway Libs must be added to th
 To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-use sway_libs::signed_integer::*;
+{{#include ../../../../examples/signed_integers/src/main.sw:import}}
 ```
 
 In order to use the any of the Signed Integer types, import them into your Sway project like so:
 
 ```sway
-use sway_libs::signed_integers::i8::I8;
+{{#include ../../../../examples/signed_integers/src/main.sw:import_i8}}
 ```
 
 ## Basic Functionality
@@ -29,29 +29,15 @@ use sway_libs::signed_integers::i8::I8;
 Once imported, a `Signed Integer` type can be instantiated defining a new variable and calling the `new` function.
 
 ```sway
-let mut i8_value = I8::new();
+{{#include ../../../../examples/signed_integers/src/main.sw:initialize}}
 ```
 
-### Basic mathematical Functions
+### Basic Mathematical Functions
 
 Basic arithmetic operations are working as usual.
 
 ```sway
-fn add_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 + val2;
-}
-
-fn subtract_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 - val2;
-}
-
-fn multiply_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 * val2;
-}
-
-fn divide_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 / val2;
-}
+{{#include ../../../../examples/signed_integers/src/main.sw:mathematical_ops}}
 ```
 
 ## Known Issues

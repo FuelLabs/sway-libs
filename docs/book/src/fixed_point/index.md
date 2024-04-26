@@ -13,7 +13,7 @@ In order to use the Fixed Point Number Library, Sway Libs must be added to the `
 To import the Fixed Point Number Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
-use sway_libs::fixed_point::*;
+{{#include ../../../../examples/fixed_point/src/main.sw:import}}
 ```
 
 ## Supported Fixed Point Numbers
@@ -29,11 +29,7 @@ We currently support the following signed Fixed Point numbers:
 In order to use the `IFP64`, `IFP128` or `IFP256` types, import them into your Sway project like so:
 
 ```sway
-use sway_libs::fixed_point::{
-    ifp64::IFP64,
-    ifp128::IFP128,
-    ifp256::IFP256,
-};
+{{#include ../../../../examples/fixed_point/src/main.sw:import_ifp}}
 ```
 
 ### Unsigned Fixed Point Numbers
@@ -47,11 +43,7 @@ We currently support the following unsigned Fixed Point numbers:
 In order to use the `UFP32`, `UFP64` or `UFP128` types, import them into your Sway project like so:
 
 ```sway
-use sway_libs::fixed_point::{
-    ufp32::UFP32,
-    ufp64::UFP64,
-    ufp128::UFP128,
-};
+{{#include ../../../../examples/fixed_point/src/main.sw:import_ufp}}
 ```
 
 ## Basic Functionality
@@ -61,9 +53,7 @@ use sway_libs::fixed_point::{
 Once imported, any signed or unsigned Fixed Point number type can be instantiated by defining a new variable and calling the `from` function.
 
 ```sway
-let mut ufp32_value = UFP32::from(0);
-let mut ufp64_value = UFP64::from(0);
-let mut ufp128_value = UFP128::from(0);
+{{#include ../../../../examples/fixed_point/src/main.sw:instantiating_ufp}}
 ```
 
 ### Basic mathematical Functions
@@ -71,21 +61,7 @@ let mut ufp128_value = UFP128::from(0);
 Basic arithmetic operations are working as usual.
 
 ```sway
-fn add_ufp(val1: UFP64, val2: UFP64) {
-    let result: UFP64 = val1 + val2;
-}
-
-fn subtract_ufp(val1: UFP64, val2: UFP64) {
-    let result: UFP64 = val1 - val2;
-}
-
-fn multiply_ufp(val1: UFP64, val2: UFP64) {
-    let result: UFP64 = val1 * val2;
-}
-
-fn divide_ufp(val1: UFP64, val2: UFP64) {
-    let result: UFP64 = val1 / val2;
-}
+{{#include ../../../../examples/fixed_point/src/main.sw:mathematical_ops}}
 ```
 
 ### Advanced mathematical Functions Supported
@@ -95,21 +71,17 @@ We currently support the following advanced mathematical functions:
 #### Exponential
 
 ```sway
-let ten = UFP64::from_uint(10);
-let res = UFP64::exp(ten);
+{{#include ../../../../examples/fixed_point/src/main.sw:exponential}}
 ```
 
 #### Square Root
 
 ```sway
-let ufp64_169 = UFP64::from_uint(169);
-let res = UFP64::sqrt(ufp64_169);
+{{#include ../../../../examples/fixed_point/src/main.sw:square_root}}
 ```
 
 #### Power
 
 ```sway
-let three = UFP64::from_uint(3);
-let five = UFP64::from_uint(5);
-let res = five.pow(three);
+{{#include ../../../../examples/fixed_point/src/main.sw:power}}
 ```

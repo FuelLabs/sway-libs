@@ -13,7 +13,7 @@ In order to use the Admin Library, Sway Libs must be added to the `Forc.toml` fi
 To import the Admin Library, be sure to include both the Admin and Ownership Libraries in your import statements.
 
 ```sway
-use sway_libs::{admin::*, ownership::*};
+{{#include ../../../../examples/admin/src/main.sw:import}}
 ```
 
 ## Integrating the Admin Library into the Ownership Library
@@ -21,18 +21,7 @@ use sway_libs::{admin::*, ownership::*};
 To use the Admin library, be sure to set a contract owner for your contract. The following demonstrates setting a contract owner using the [Ownership Library](../ownership/).
 
 ```sway
-use sway_libs::{admin::add_admin, ownership::initialize_ownership};
-
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
-}
-
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner set in the constructor above.
-    add_admin(new_admin);
-}
+{{#include ../../../../examples/admin/src/owner_integration.sw:ownership_integration}}
 ```
 
 ## Basic Functionality
@@ -42,25 +31,17 @@ fn add_a_admin(new_admin: Identity) {
 To add a new admin to a contract, call the `add_admin()` function.
 
 ```sway
-#[storage(read, write)]
-fn add_a_admin(new_admin: Identity) {
-    // Can only be called by contract's owner.
-    add_admin(new_admin);
-}
+{{#include ../../../../examples/admin/src/main.sw:add_admin}}
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
 
 ### Removing an Admin
 
-To remove an admin from a contract, call the `remove_admin()` function.
+To remove an admin from a contract, call the `revoke_admin()` function.
 
 ```sway
-#[storage(read, write)]
-fn remove_a_admin(old_admin: Identity) {
-    // Can only be called by contract's owner.
-    remove_admin(old_admin);
-}
+{{#include ../../../../examples/admin/src/main.sw:remove_admin}}
 ```
 
 > **NOTE** Only the contract's owner may call this function. Please see the example above to set a contract owner.
@@ -70,11 +51,7 @@ fn remove_a_admin(old_admin: Identity) {
 To restrict a function to only an admin, call the `only_admin()` function.
 
 ```sway
-#[storage(read)]
-fn only_owner_may call() {
-    only_admin();
-    // Only an admin may reach this line.
-}
+{{#include ../../../../examples/admin/src/main.sw:only_admin}}
 ```
 
 > **NOTE:** Admins and the contract's owner are independent of one another. `only_admin()` will revert if called by the contract's owner.
@@ -82,11 +59,7 @@ fn only_owner_may call() {
 To restrict a function to only an admin or the contract's owner, call the `only_owner_or_admin()` function.
 
 ```sway
-#[storage(read)]
-fn both_owner_or_admin_may_call() {
-    only_owner_or_admin();
-    // Only an admin may reach this line.
-}
+{{#include ../../../../examples/admin/src/main.sw:both_admin}}
 ```
 
 ### Checking Admin Status
@@ -94,9 +67,5 @@ fn both_owner_or_admin_may_call() {
 To check the administrative privileges of a user, call the `is_admin()` function.
 
 ```sway
-#[storage(read)]
-fn check_if_admin(admin: Identity) {
-    let status = is_admin(admin);
-    assert(status);
-}
+{{#include ../../../../examples/admin/src/main.sw:check_admin}}
 ```

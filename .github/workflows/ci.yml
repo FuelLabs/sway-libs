@@ -136,3 +136,37 @@ jobs:
       - name: Build sway-libs docs
         run: |
           forc doc --manifest-path libs
+
+  build-examples:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Install Rust toolchain
+          uses: dtolnay/rust-toolchain@master
+          with:
+            toolchain: ${{ env.RUST_VERSION }}
+            components: rustfmt
+
+        - name: Init cache
+          uses: Swatinem/rust-cache@v2
+
+        - name: Install Fuel toolchain
+          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          with:
+            name: my-toolchain
+            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
+        - name: Check Sway formatting
+          run: forc fmt --path examples --check
+
+        - name: Check Rust formatting
+          run: cargo fmt --manifest-path examples/Cargo.toml --verbose --check
+
+        - name: Build All Examples
+          run: forc build --path examples --release
+
+        - name: Cargo Test Examples
+          run: |
+            cargo test --manifest-path examples/Cargo.toml
