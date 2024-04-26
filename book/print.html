@@ -316,15 +316,9 @@ use standards::src20::*;
 </code></pre>
 <h2 id="implementing-the-src-20-standard-with-the-asset-library"><a class="header" href="#implementing-the-src-20-standard-with-the-asset-library">Implementing the SRC-20 Standard with the Asset Library</a></h2>
 <p>To use the Asset Library's base functionly, simply pass the <code>StorageKey</code> from the prescribed storage block. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> standard in combination with the Asset Library with no user defined restrictions or custom functionality.</p>
-<pre><code class="language-sway">use sway_libs::asset::base::{
-    _total_assets, 
-    _total_supply,
-    _name,
-    _symbol,
-    _decimals
-};
+<pre><code class="language-sway">use sway_libs::asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
 use standards::src20::SRC20;
-use std::{string::String, storage::storage_string::*};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 // The SRC-20 storage block
 storage {
@@ -371,7 +365,7 @@ impl SRC20 for Contract {
 <h2 id="setting-an-assets-src-20-attributes"><a class="header" href="#setting-an-assets-src-20-attributes">Setting an Asset's SRC-20 Attributes</a></h2>
 <p>To set some the asset attributes for an Asset, use the <code>SetAssetAttributes</code> ABI provided by the Asset Library. The example below shows the implementation of the <code>SetAssetAttributes</code> ABI with no user defined restrictions or custom functionality. It is recommended that the <a href="asset/../ownership/index.html">Ownership Library</a> is used in conjunction with the <code>SetAssetAttributes</code> ABI to ensure only a single user has permissions to set an Asset's attributes.</p>
 <pre><code class="language-sway">use sway_libs::asset::base::*;
-use std::{string::String, storage::storage_string::*};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 storage {
     name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},
@@ -400,7 +394,7 @@ impl SetAssetAttributes for Contract {
 <p><strong>NOTE</strong> The <code>_set_name()</code>, <code>_set_symbol()</code>, and <code>_set_decimals()</code> functions will set the attributes of an asset <em>unconditionally</em>. External checks should be applied to restrict the setting of attributes.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="supply-functionality"><a class="header" href="#supply-functionality">Supply Functionality</a></h1>
-<p>For implementation details on the Asset Library supply functionality please see the <a href="https://fuellabs.github.io/sway-libs/master/sway_libs/asset/mint/index.html">Sway Libs Docs</a>.</p>
+<p>For implementation details on the Asset Library supply functionality please see the <a href="https://fuellabs.github.io/sway-libs/master/sway_libs/asset/supply/index.html">Sway Libs Docs</a>.</p>
 <h2 id="importing-the-asset-library-supply-functionality"><a class="header" href="#importing-the-asset-library-supply-functionality">Importing the Asset Library Supply Functionality</a></h2>
 <p>In order to use the Asset Library, Sway Libs and <a href="https://github.com/FuelLabs/sway-standards">Sway Standards</a> must be added to the <code>Forc.toml</code> file and then imported into your Sway project. To add Sway Libs as a dependency to the <code>Forc.toml</code> file in your project please see the <a href="asset/../getting_started/index.html">Getting Started</a>. To add Sway Standards as a dependency please see the <a href="https://github.com/FuelLabs/sway-standards">Sway Standards Book</a>.</p>
 <p>To import the Asset Library Supply Functionality and <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md">SRC-3</a> Standard to your Sway Smart Contract, add the following to your Sway file:</p>
@@ -412,6 +406,7 @@ use standards::src3::*;
 <pre><code class="language-sway">abi SRC3 {
     #[storage(read, write)]
     fn mint(recipient: Identity, vault_sub_id: SubId, amount: u64);
+    #[payable]
     #[storage(read, write)]
     fn burn(vault_sub_id: SubId, amount: u64);
 }
@@ -433,7 +428,7 @@ use standards::src3::*;
 </code></pre>
 <h2 id="implementing-the-src-3-standard-with-the-asset-library"><a class="header" href="#implementing-the-src-3-standard-with-the-asset-library">Implementing the SRC-3 Standard with the Asset Library</a></h2>
 <p>To use a base function, simply pass the <code>StorageKey</code> from the prescribed storage block. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md">SRC-3</a> standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the <a href="asset/../ownership/index.html">Ownership Library</a> is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.</p>
-<pre><code class="language-sway">use sway_libs::asset::supply::{_mint, _burn};
+<pre><code class="language-sway">use sway_libs::asset::supply::{_burn, _mint};
 use standards::src3::SRC3;
 
 storage {
@@ -447,8 +442,10 @@ impl SRC3 for Contract {
     fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
         // Pass the StorageKeys to the `_mint()` function from the Asset Library.
         _mint(
-            storage.total_assets,
-            storage.total_supply,
+            storage
+                .total_assets,
+            storage
+                .total_supply,
             recipient,
             sub_id,
             amount,
@@ -456,6 +453,7 @@ impl SRC3 for Contract {
     }
 
     // Pass the StorageKeys to the `_burn_()` function from the Asset Library.
+    #[payable]
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
         _burn(storage.total_supply, sub_id, amount);
@@ -505,6 +503,7 @@ use standards::src7::*;
 <h3 id="setting-metadata"><a class="header" href="#setting-metadata">Setting Metadata</a></h3>
 <p>To set some metadata for an Asset, use the <code>SetAssetMetadata</code> ABI provided by the Asset Library. Be sure to follow the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md">SRC-9</a> standard for your <code>key</code>. It is recommended that the <a href="asset/../ownership/index.html">Ownership Library</a> is used in conjunction with the <code>SetAssetMetadata</code> ABI to ensure only a single user has permissions to set an Asset's metadata.</p>
 <pre><code class="language-sway">use sway_libs::asset::metadata::*;
+use standards::src7::Metadata;
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},
@@ -523,7 +522,7 @@ impl SetAssetMetadata for Contract {
 <h3 id="implementing-the-src-7-standard-with-storagemetadata"><a class="header" href="#implementing-the-src-7-standard-with-storagemetadata">Implementing the SRC-7 Standard with StorageMetadata</a></h3>
 <p>To use the <code>StorageMetadata</code> type, simply get the stored metadata with the associated <code>key</code> and <code>AssetId</code>. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md">SRC-7</a> standard in combination with the Asset Library's <code>StorageMetadata</code> type with no user defined restrictions or custom functionality.</p>
 <pre><code class="language-sway">use sway_libs::asset::metadata::*;
-use standards::src7::SRC7;
+use standards::src7::{Metadata, SRC7};
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},
@@ -554,7 +553,7 @@ The <code>as_b256()</code> returns the <code>b256</code> of the <code>Metadata</
 <pre><code class="language-sway">fn b256_type(my_metadata: Metadata) {
     assert(my_metadata.is_b256());
 
-    let my_b256: b256 = my_metadata.as_b256();
+    let my_b256: b256 = my_metadata.as_b256().unwrap();
 }
 </code></pre>
 <h3 id="is_bytes-and-as_bytes"><a class="header" href="#is_bytes-and-as_bytes"><code>is_bytes()</code> and <code>as_bytes()</code></a></h3>
@@ -563,7 +562,7 @@ The <code>as_bytes()</code> returns the <code>Bytes</code> of the <code>Metadata
 <pre><code class="language-sway">fn bytes_type(my_metadata: Metadata) {
     assert(my_metadata.is_bytes());
 
-    let my_bytes: Bytes = my_metadata.as_bytes();
+    let my_bytes: Bytes = my_metadata.as_bytes().unwrap();
 }
 </code></pre>
 <h3 id="is_u64-and-as_u64"><a class="header" href="#is_u64-and-as_u64"><code>is_u64()</code> and <code>as_u64()</code></a></h3>
@@ -572,7 +571,7 @@ The <code>as_u64()</code> returns the <code>u64</code> of the <code>Metadata</co
 <pre><code class="language-sway">fn u64_type(my_metadata: Metadata) {
     assert(my_metadata.is_u64());
 
-    let my_u64: u64 = my_metadata.as_u64();
+    let my_u64: u64 = my_metadata.as_u64().unwrap();
 }
 </code></pre>
 <h3 id="is_string-and-as_string"><a class="header" href="#is_string-and-as_string"><code>is_string()</code> and <code>as_string()</code></a></h3>
@@ -581,7 +580,7 @@ The <code>as_string()</code> returns the <code>String</code> of the <code>Metada
 <pre><code class="language-sway">fn string_type(my_metadata: Metadata) {
     assert(my_metadata.is_string());
 
-    let my_string: String = my_metadata.as_string();
+    let my_string: String = my_metadata.as_string().unwrap();
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="admin-library-1"><a class="header" href="#admin-library-1">Admin Library</a></h1>
@@ -621,11 +620,11 @@ fn add_a_admin(new_admin: Identity) {
 <p><strong>NOTE</strong> Only the contract's owner may call this function. Please see the example above to set a contract owner.</p>
 </blockquote>
 <h3 id="removing-an-admin"><a class="header" href="#removing-an-admin">Removing an Admin</a></h3>
-<p>To remove an admin from a contract, call the <code>remove_admin()</code> function.</p>
+<p>To remove an admin from a contract, call the <code>revoke_admin()</code> function.</p>
 <pre><code class="language-sway">#[storage(read, write)]
-fn remove_a_admin(old_admin: Identity) {
+fn remove_an_admin(old_admin: Identity) {
     // Can only be called by contract's owner.
-    remove_admin(old_admin);
+    revoke_admin(old_admin);
 }
 </code></pre>
 <blockquote>
@@ -634,7 +633,7 @@ fn remove_a_admin(old_admin: Identity) {
 <h3 id="applying-restrictions"><a class="header" href="#applying-restrictions">Applying Restrictions</a></h3>
 <p>To restrict a function to only an admin, call the <code>only_admin()</code> function.</p>
 <pre><code class="language-sway">#[storage(read)]
-fn only_owner_may call() {
+fn only_owner_may_call() {
     only_admin();
     // Only an admin may reach this line.
 }
@@ -669,7 +668,7 @@ use standards::src5::*;
 <h2 id="integrating-the-ownership-library-into-the-src-5-standard"><a class="header" href="#integrating-the-ownership-library-into-the-src-5-standard">Integrating the Ownership Library into the SRC-5 Standard</a></h2>
 <p>To implement the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md">SRC-5</a> standard with the Ownership library, be sure to add the Sway Standards dependency to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.</p>
 <pre><code class="language-sway">use sway_libs::ownership::_owner;
-use standards::src_5::{State, SRC5};
+use standards::src5::{SRC5, State};
 
 impl SRC5 for Contract {
     #[storage(read)]
@@ -762,8 +761,16 @@ fn require_not_paused_state() {
 <p>It is highly recommended to integrate the <a href="pausable/../ownership/index.html">Ownership Library</a> with the Pausable Library and apply restrictions the <code>pause()</code> and <code>unpause()</code> functions. This will ensure that only a single user may pause and unpause a contract in cause of emergency. Failure to apply this restriction will allow any user to obstruct a contract's functionality.</p>
 <p>The follow example implements the <code>Pausable</code> abi and applies restrictions to it's pause/unpause functions. The owner of the contract must be set in an constructor defined by <code>MyConstructor</code> in this example.</p>
 <pre><code class="language-sway">use sway_libs::{
-    pausable::{_is_paused, _pause, _unpause, Pausable}, 
-    ownership::{initialize_ownership, only_owner}
+    ownership::{
+        initialize_ownership,
+        only_owner,
+    },
+    pausable::{
+        _is_paused,
+        _pause,
+        _unpause,
+        Pausable,
+    },
 };
 
 abi MyConstructor {
@@ -782,7 +789,7 @@ impl Pausable for Contract {
     #[storage(write)]
     fn pause() {
         // Add the `only_owner()` check to ensure only the owner may unpause this contract.
-        only_owner(); 
+        only_owner();
         _pause();
     }
 
@@ -820,19 +827,7 @@ once in the current call stack.</p>
 </ul>
 <h3 id="using-the-reentrancy-guard"><a class="header" href="#using-the-reentrancy-guard">Using the Reentrancy Guard</a></h3>
 <p>Once imported, using the Reentrancy Guard Library can be used by calling the <code>reentrancy_guard()</code> in your Sway Smart Contract. The following shows a Sway Smart Contract that applies the Reentrancy Guard Library:</p>
-<pre><code class="language-sway">use sway_libs::reentrancy::reentrancy_guard;
-
-abi MyContract {
-    fn my_non_reentrant_function();
-}
-
-impl MyContract for Contract {
-    fn my_non_reentrant_function() {
-        reentrancy_guard();
-
-        // my code here
-    }
-}
+<pre><code class="language-sway">
 </code></pre>
 <h3 id="checking-reentrancy-status"><a class="header" href="#checking-reentrancy-status">Checking Reentrancy Status</a></h3>
 <p>To check if the current caller is a reentrant, you may call the <code>is_reentrant()</code> function.</p>
@@ -867,9 +862,13 @@ fn check_if_reentrant() {
 </ul>
 <h2 id="known-issues-1"><a class="header" href="#known-issues-1">Known Issues</a></h2>
 <p>Please note that if you are passing the bytecode from the SDK and are including configurable values, the <code>Vec&lt;u8&gt;</code> bytecode provided must be copied to be mutable. The following can be added to make your bytecode mutable:</p>
-<pre><code class="language-sway">fn foo(not_mutable_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn make_mutable(not_mutable_bytecode: Vec&lt;u8&gt;) {
     // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
-    let mut bytecode_slice = raw_slice::from_parts::&lt;u8&gt;(alloc_bytes(not_mutable_bytecode.len()), not_mutable_bytecode.len());
+    let mut bytecode_slice = raw_slice::from_parts::&lt;u8&gt;(
+        alloc_bytes(not_mutable_bytecode.len()),
+        not_mutable_bytecode
+            .len(),
+    );
     not_mutable_bytecode
         .ptr()
         .copy_bytes_to(bytecode_slice.ptr(), not_mutable_bytecode.len());
@@ -881,7 +880,7 @@ fn check_if_reentrant() {
 <p>The examples below are intended for internal contract calls. If you are passing bytecode from the SDK, please follow the steps listed above in known issues to avoid the memory ownership error.</p>
 <h2 id="swapping-configurables"><a class="header" href="#swapping-configurables">Swapping Configurables</a></h2>
 <p>Given some bytecode, you may swap the configurables of both Contracts and Predicates by calling the <code>swap_configurables()</code> function.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+<pre><code class="language-sway">fn swap(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let resulting_bytecode: Vec&lt;u8&gt; = swap_configurables(my_bytecode, my_configurables);
 }
@@ -889,23 +888,27 @@ fn check_if_reentrant() {
 <h2 id="contracts"><a class="header" href="#contracts">Contracts</a></h2>
 <h3 id="computing-the-bytecode-root"><a class="header" href="#computing-the-bytecode-root">Computing the Bytecode Root</a></h3>
 <p>To compute a contract's bytecode root you may call the <code>compute_bytecode_root()</code> or <code>compute_bytecode_root_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn compute_bytecode(my_bytecode: Vec&lt;u8&gt;) {
     let root: b256 = compute_bytecode_root(my_bytecode);
 }
 
-fn bar(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn compute_bytecode_configurables(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let root: b256 = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
 }
 </code></pre>
 <h3 id="verifying-a-contracts-bytecode-root"><a class="header" href="#verifying-a-contracts-bytecode-root">Verifying a Contract's Bytecode Root</a></h3>
 <p>To verify a contract's bytecode root you may call <code>verify_bytecode_root()</code> or <code>verify_contract_bytecode_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn verify_contract(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;) {
     verify_contract_bytecode(my_contract, my_bytecode);
     // By reaching this line the contract has been verified to match the bytecode provided.
 }
 
-fn bar(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn verify_contract_configurables(
+    my_contract: ContractId,
+    my_bytecode: Vec&lt;u8&gt;,
+    my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;,
+) {
     let mut my_bytecode = my_bytecode;
     verify_contract_bytecode_with_configurables(my_contract, my_bytecode, my_configurables);
     // By reaching this line the contract has been verified to match the bytecode provided.
@@ -914,31 +917,35 @@ fn bar(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;, my_configurables: Ve
 <h2 id="predicates"><a class="header" href="#predicates">Predicates</a></h2>
 <h3 id="computing-the-address-from-bytecode"><a class="header" href="#computing-the-address-from-bytecode">Computing the Address from Bytecode</a></h3>
 <p>To compute a predicates's address you may call the <code>compute_predicate_address()</code> or <code>compute_predicate_address_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn compute_predicate(my_bytecode: Vec&lt;u8&gt;) {
     let address: Address = compute_predicate_address(my_bytecode);
 }
 
-fn bar(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn compute_predicate_configurables(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let address: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
 }
 </code></pre>
 <h3 id="computing-the-address-from-a-root"><a class="header" href="#computing-the-address-from-a-root">Computing the Address from a Root</a></h3>
 <p>If you have the root of a predicate, you may compute it's corresponding predicate address by calling the <code>predicate_address_from_root()</code> function.</p>
-<pre><code class="language-sway">fn foo(my_root: b256) {
+<pre><code class="language-sway">fn predicate_address(my_root: b256) {
     let address: Address = predicate_address_from_root(my_root);
 }
 </code></pre>
 <h3 id="verifying-the-address"><a class="header" href="#verifying-the-address">Verifying the Address</a></h3>
 <p>To verify a predicates's address you may call <code>verify_predicate_address()</code> or <code>verify_predicate_address_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn verify_predicate(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;) {
     verify_predicate_address(my_predicate, my_bytecode);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 
-fn bar(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn verify_predicate_configurables(
+    my_predicate: Address,
+    my_bytecode: Vec&lt;u8&gt;,
+    my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;,
+) {
     let mut my_bytecode = my_bytecode;
-    verify_predicate_bytecode_with_configurables(my_predicate, my_bytecode, my_configurables);
+    verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 </code></pre>
@@ -962,12 +969,12 @@ fn bar(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&
 <h3 id="computing-leaves-and-nodes"><a class="header" href="#computing-leaves-and-nodes">Computing Leaves and Nodes</a></h3>
 <p>The Binary Proof currently allows for you to compute leaves and nodes of a merkle tree given the appropriate hash digest.</p>
 <p>To compute a leaf use the <code>leaf_digest()</code> function:</p>
-<pre><code class="language-sway">fn foo(hashed_data: b256) {
+<pre><code class="language-sway">fn compute_leaf(hashed_data: b256) {
     let leaf: b256 = leaf_digest(hashed_data);
 }
 </code></pre>
 <p>To compute a node given two leaves, use the <code>node_digest()</code> function:</p>
-<pre><code class="language-sway">fn foo(leaf_a: b256, leaf_b: b256) {
+<pre><code class="language-sway">fn compute_node(leaf_a: b256, leaf_b: b256) {
     let node: b256 = node_digest(leaf_a, leaf_b);
 }
 </code></pre>
@@ -976,13 +983,19 @@ fn bar(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&
 </blockquote>
 <h3 id="computing-the-merkle-root"><a class="header" href="#computing-the-merkle-root">Computing the Merkle Root</a></h3>
 <p>To compute a Merkle root given a proof, use the <code>process_proof()</code> function.</p>
-<pre><code class="language-sway">fn foo(key: u64, leaf: b256, num_leaves: u64, proof: Vec&lt;b256&gt;) {
+<pre><code class="language-sway">fn process(key: u64, leaf: b256, num_leaves: u64, proof: Vec&lt;b256&gt;) {
     let merkle_root: b256 = process_proof(key, leaf, num_leaves, proof);
 }
 </code></pre>
 <h3 id="verifying-a-proof"><a class="header" href="#verifying-a-proof">Verifying a Proof</a></h3>
 <p>To verify a proof against a merkle root, use the <code>verify_proof()</code> function.</p>
-<pre><code class="language-sway">fn foo(merkle_roof: b256, key: u64, leaf: b256, num_leaves: u64, proof: Vec&lt;b256&gt;) {
+<pre><code class="language-sway">fn verify(
+    merkle_root: b256,
+    key: u64,
+    leaf: b256,
+    num_leaves: u64,
+    proof: Vec&lt;b256&gt;,
+) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
 </code></pre>
@@ -990,57 +1003,55 @@ fn bar(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&
 <p>To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, use the <a href="https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle">Fuel-Merkle</a> crate.</p>
 <h3 id="importing-into-your-project"><a class="header" href="#importing-into-your-project">Importing Into Your Project</a></h3>
 <p>The import the Fuel-Merkle crate, the following should be added to the project's <code>Cargo.toml</code> file under <code>[dependencies]</code>:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fuel-merkle = { version = &quot;0.33.0&quot; }
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-sway">fuel-merkle = { version = &quot;0.33.0&quot; }
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong> Make sure to use the latest version of the <a href="https://crates.io/crates/fuel-merkle">fuel-merkle</a> crate.</p>
+</blockquote>
 <h3 id="importing-into-your-rust-file"><a class="header" href="#importing-into-your-rust-file">Importing Into Your Rust File</a></h3>
 <p>The following should be added to your Rust file to use the Fuel-Merkle crate.</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use fuel_merkle::{
-    binary::in_memory::MerkleTree,
-    common::Bytes32,
-};
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-sway">use fuel_merkle::{binary::in_memory::MerkleTree, common::Bytes32};
+</code></pre>
 <h3 id="using-fuel-merkle"><a class="header" href="#using-fuel-merkle">Using Fuel-Merkle</a></h3>
 <h4 id="generating-a-tree"><a class="header" href="#generating-a-tree">Generating A Tree</a></h4>
 <p>To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order.</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut tree = MerkleTree::new();
-let leaves = [&quot;A&quot;.as_bytes(), &quot;B&quot;.as_bytes(), &quot;C&quot;.as_bytes()].to_vec();
-for datum in leaves.iter() {
-    let mut hasher = Sha256::new();
-    hasher.update(&amp;datum);
-    let hash: Bytes32 = hasher.finalize().try_into().unwrap();
-    tree.push(hash);
-}
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-sway">    let mut tree = MerkleTree::new();
+    let leaves = [&quot;A&quot;.as_bytes(), &quot;B&quot;.as_bytes(), &quot;C&quot;.as_bytes()].to_vec();
+    for datum in leaves.iter() {
+        let mut hasher = Sha256::new();
+        hasher.update(&amp;datum);
+        let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+        tree.push(&amp;hash);
+    }
+</code></pre>
 <h4 id="generating-and-verifying-a-proof"><a class="header" href="#generating-and-verifying-a-proof">Generating And Verifying A Proof</a></h4>
 <p>To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut proof = tree.prove(key).unwrap();
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-sway">    let proof = tree.prove(key).unwrap();
+    let mut bits256_proof: Vec&lt;Bits256&gt; = Vec::new();
+    for itterator in &amp;proof.1 {
+        bits256_proof.push(Bits256(itterator.clone()));
+    }
+</code></pre>
 <p>Once the proof has been generated, you may call the Sway Smart Contract's <code>verify_proof</code> function:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let merkle_root = proof.0;
-let merkle_leaf = proof.1[0];
-proof.1.remove(0);
-contract_instance.verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof.1).call().await;
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-sway">    let merkle_root = proof.0;
+    let merkle_leaf = proof.1[key as usize];
+    bits256_proof.remove(key as usize);
+
+    let result: bool = contract_instance
+        .methods()
+        .verify(
+            Bits256(merkle_root),
+            key,
+            Bits256(merkle_leaf),
+            num_leaves,
+            bits256_proof,
+        )
+        .call()
+        .await
+        .unwrap()
+        .value;
+    assert!(result);
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fixed-point-number-library-1"><a class="header" href="#fixed-point-number-library-1">Fixed Point Number Library</a></h1>
 <p>The Fixed Point Number Library provides a library to use fixed-point numbers in Sway. It has 3 distinct unsigned types: <code>UFP32</code>, <code>UFP64</code> and <code>UFP128</code> as well as 3 signed types <code>IFP64</code>, <code>IFP128</code> and <code>IFP256</code>. These types are stack allocated.</p>
 <p>This type is stored as a <code>u32</code>, <code>u64</code> or <code>U128</code> under the hood. Therefore the size can be known at compile time and the length is static.</p>
@@ -1059,11 +1070,7 @@ contract_instance.verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof.
 <li><code>IFP256</code></li>
 </ul>
 <p>In order to use the <code>IFP64</code>, <code>IFP128</code> or <code>IFP256</code> types, import them into your Sway project like so:</p>
-<pre><code class="language-sway">use sway_libs::fixed_point::{
-    ifp64::IFP64,
-    ifp128::IFP128,
-    ifp256::IFP256,
-};
+<pre><code class="language-sway">use sway_libs::fixed_point::{ifp128::IFP128, ifp256::IFP256, ifp64::IFP64,};
 </code></pre>
 <h3 id="unsigned-fixed-point-numbers"><a class="header" href="#unsigned-fixed-point-numbers">Unsigned Fixed Point Numbers</a></h3>
 <p>We currently support the following unsigned Fixed Point numbers:</p>
@@ -1073,18 +1080,14 @@ contract_instance.verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof.
 <li><code>UFP128</code></li>
 </ul>
 <p>In order to use the <code>UFP32</code>, <code>UFP64</code> or <code>UFP128</code> types, import them into your Sway project like so:</p>
-<pre><code class="language-sway">use sway_libs::fixed_point::{
-    ufp32::UFP32,
-    ufp64::UFP64,
-    ufp128::UFP128,
-};
+<pre><code class="language-sway">use sway_libs::fixed_point::{ufp128::UFP128, ufp32::UFP32, ufp64::UFP64,};
 </code></pre>
 <h2 id="basic-functionality-6"><a class="header" href="#basic-functionality-6">Basic Functionality</a></h2>
 <h3 id="instantiating-a-new-fixed-point-number"><a class="header" href="#instantiating-a-new-fixed-point-number">Instantiating a New Fixed Point Number</a></h3>
 <p>Once imported, any signed or unsigned Fixed Point number type can be instantiated by defining a new variable and calling the <code>from</code> function.</p>
-<pre><code class="language-sway">let mut ufp32_value = UFP32::from(0);
-let mut ufp64_value = UFP64::from(0);
-let mut ufp128_value = UFP128::from(0);
+<pre><code class="language-sway">    let mut ufp32_value = UFP32::from(0u32);
+    let mut ufp64_value = UFP64::from(0u64);
+    let mut ufp128_value = UFP128::from((0u64, 0u64));
 </code></pre>
 <h3 id="basic-mathematical-functions"><a class="header" href="#basic-mathematical-functions">Basic mathematical Functions</a></h3>
 <p>Basic arithmetic operations are working as usual.</p>
@@ -1107,17 +1110,16 @@ fn divide_ufp(val1: UFP64, val2: UFP64) {
 <h3 id="advanced-mathematical-functions-supported"><a class="header" href="#advanced-mathematical-functions-supported">Advanced mathematical Functions Supported</a></h3>
 <p>We currently support the following advanced mathematical functions:</p>
 <h4 id="exponential"><a class="header" href="#exponential">Exponential</a></h4>
-<pre><code class="language-sway">let ten = UFP64::from_uint(10);
-let res = UFP64::exp(ten);
+<pre><code class="language-sway">    let ten = UFP64::from_uint(10);
+    let res = UFP64::exp(ten);
 </code></pre>
 <h4 id="square-root"><a class="header" href="#square-root">Square Root</a></h4>
-<pre><code class="language-sway">let ufp64_169 = UFP64::from_uint(169);
-let res = UFP64::sqrt(ufp64_169);
+<pre><code class="language-sway">    let ufp64_169 = UFP64::from_uint(169);
+    let res = UFP64::sqrt(ufp64_169);
 </code></pre>
 <h4 id="power"><a class="header" href="#power">Power</a></h4>
-<pre><code class="language-sway">let three = UFP64::from_uint(3);
-let five = UFP64::from_uint(5);
-let res = five.pow(three);
+<pre><code class="language-sway">    let five = UFP64::from_uint(5);
+    let res = five.pow(3u32);
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="signed-integers-library"><a class="header" href="#signed-integers-library">Signed Integers Library</a></h1>
 <p>The Signed Integers library provides a library to use signed numbers in Sway. It has 6 distinct types: <code>I8</code>, <code>I16</code>, <code>I32</code>, <code>I64</code>, <code>I128</code>, <code>I256</code>. These types are stack allocated.</p>
@@ -1126,32 +1128,32 @@ let res = five.pow(three);
 <h2 id="importing-the-signed-integer-library"><a class="header" href="#importing-the-signed-integer-library">Importing the Signed Integer Library</a></h2>
 <p>In order to use the Signed Integer Number Library, Sway Libs must be added to the <code>Forc.toml</code> file and then imported into your Sway project. To add Sway Libs as a dependency to the <code>Forc.toml</code> file in your project please see the <a href="signed_integers/../getting_started/index.html">Getting Started</a>.</p>
 <p>To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:</p>
-<pre><code class="language-sway">use sway_libs::signed_integer::*;
+<pre><code class="language-sway">use sway_libs::signed_integers::*;
 </code></pre>
 <p>In order to use the any of the Signed Integer types, import them into your Sway project like so:</p>
-<pre><code class="language-sway">use sway_libs::signed_integers::i8::I8;
+<pre><code class="language-sway">
 </code></pre>
 <h2 id="basic-functionality-7"><a class="header" href="#basic-functionality-7">Basic Functionality</a></h2>
 <h3 id="instantiating-a-new-fixed-point-number-1"><a class="header" href="#instantiating-a-new-fixed-point-number-1">Instantiating a New Fixed Point Number</a></h3>
 <p>Once imported, a <code>Signed Integer</code> type can be instantiated defining a new variable and calling the <code>new</code> function.</p>
-<pre><code class="language-sway">let mut i8_value = I8::new();
+<pre><code class="language-sway">    let mut i8_value = I8::new();
 </code></pre>
-<h3 id="basic-mathematical-functions-1"><a class="header" href="#basic-mathematical-functions-1">Basic mathematical Functions</a></h3>
+<h3 id="basic-mathematical-functions-1"><a class="header" href="#basic-mathematical-functions-1">Basic Mathematical Functions</a></h3>
 <p>Basic arithmetic operations are working as usual.</p>
-<pre><code class="language-sway">fn add_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 + val2;
+<pre><code class="language-sway">fn add_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 + val2;
 }
 
-fn subtract_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 - val2;
+fn subtract_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 - val2;
 }
 
-fn multiply_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 * val2;
+fn multiply_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 * val2;
 }
 
-fn divide_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 / val2;
+fn divide_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 / val2;
 }
 </code></pre>
 <h2 id="known-issues-2"><a class="header" href="#known-issues-2">Known Issues</a></h2>
@@ -1167,30 +1169,30 @@ fn divide_signed_int(val1: i8, val2: i8) {
 <h2 id="basic-functionality-8"><a class="header" href="#basic-functionality-8">Basic Functionality</a></h2>
 <h3 id="instantiating-a-new-queue"><a class="header" href="#instantiating-a-new-queue">Instantiating a New Queue</a></h3>
 <p>Once the <code>Queue</code> has been imported, you can create a new queue instance by calling the <code>new</code> function.</p>
-<pre><code class="language-sway">let mut queue = Queue::new();
+<pre><code class="language-sway">    let mut queue = Queue::new();
 </code></pre>
 <h2 id="enqueuing-elements"><a class="header" href="#enqueuing-elements">Enqueuing elements</a></h2>
 <p>Adding elements to the <code>Queue</code> can be done using the <code>enqueue</code> function.</p>
-<pre><code class="language-sway">// Enqueue an element to the queue
-queue.enqueue(10u8);
+<pre><code class="language-sway">    // Enqueue an element to the queue
+    queue.enqueue(10u8);
 </code></pre>
 <h3 id="dequeuing-elements"><a class="header" href="#dequeuing-elements">Dequeuing Elements</a></h3>
 <p>To remove elements from the <code>Queue</code>, the <code>dequeue</code> function is used. This function follows the FIFO principle.</p>
-<pre><code class="language-sway">// Dequeue the first element and unwrap the value
-let first_item = queue.dequeue().unwrap();
+<pre><code class="language-sway">    // Dequeue the first element and unwrap the value
+    let first_item = queue.dequeue().unwrap();
 </code></pre>
 <h3 id="fetching-the-head-element"><a class="header" href="#fetching-the-head-element">Fetching the Head Element</a></h3>
 <p>To retrieve the element at the head of the <code>Queue</code> without removing it, you can use the <code>peek</code> function.</p>
-<pre><code class="language-sway">// Peek at the head of the queue
-let head_item = queue.peek();
+<pre><code class="language-sway">    // Peek at the head of the queue
+    let head_item = queue.peek();
 </code></pre>
 <h3 id="checking-the-queues-length"><a class="header" href="#checking-the-queues-length">Checking the Queue's Length</a></h3>
 <p>The <code>is_empty</code> and <code>len</code> functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.</p>
-<pre><code class="language-sway">// Checks if queue is empty (returns True or False)
-let is_queue_empty = queue.is_empty();
+<pre><code class="language-sway">    // Checks if queue is empty (returns True or False)
+    let is_queue_empty = queue.is_empty();
 
-// Returns length of queue
-let queue_length = queue.len();
+    // Returns length of queue
+    let queue_length = queue.len();
 </code></pre>
 
                     </main>

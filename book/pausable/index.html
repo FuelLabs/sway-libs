@@ -195,8 +195,16 @@ fn require_not_paused_state() {
 <p>It is highly recommended to integrate the <a href="../ownership/index.html">Ownership Library</a> with the Pausable Library and apply restrictions the <code>pause()</code> and <code>unpause()</code> functions. This will ensure that only a single user may pause and unpause a contract in cause of emergency. Failure to apply this restriction will allow any user to obstruct a contract's functionality.</p>
 <p>The follow example implements the <code>Pausable</code> abi and applies restrictions to it's pause/unpause functions. The owner of the contract must be set in an constructor defined by <code>MyConstructor</code> in this example.</p>
 <pre><code class="language-sway">use sway_libs::{
-    pausable::{_is_paused, _pause, _unpause, Pausable}, 
-    ownership::{initialize_ownership, only_owner}
+    ownership::{
+        initialize_ownership,
+        only_owner,
+    },
+    pausable::{
+        _is_paused,
+        _pause,
+        _unpause,
+        Pausable,
+    },
 };
 
 abi MyConstructor {
@@ -215,7 +223,7 @@ impl Pausable for Contract {
     #[storage(write)]
     fn pause() {
         // Add the `only_owner()` check to ensure only the owner may unpause this contract.
-        only_owner(); 
+        only_owner();
         _pause();
     }
 

@@ -148,30 +148,30 @@
 <h2 id="basic-functionality"><a class="header" href="#basic-functionality">Basic Functionality</a></h2>
 <h3 id="instantiating-a-new-queue"><a class="header" href="#instantiating-a-new-queue">Instantiating a New Queue</a></h3>
 <p>Once the <code>Queue</code> has been imported, you can create a new queue instance by calling the <code>new</code> function.</p>
-<pre><code class="language-sway">let mut queue = Queue::new();
+<pre><code class="language-sway">    let mut queue = Queue::new();
 </code></pre>
 <h2 id="enqueuing-elements"><a class="header" href="#enqueuing-elements">Enqueuing elements</a></h2>
 <p>Adding elements to the <code>Queue</code> can be done using the <code>enqueue</code> function.</p>
-<pre><code class="language-sway">// Enqueue an element to the queue
-queue.enqueue(10u8);
+<pre><code class="language-sway">    // Enqueue an element to the queue
+    queue.enqueue(10u8);
 </code></pre>
 <h3 id="dequeuing-elements"><a class="header" href="#dequeuing-elements">Dequeuing Elements</a></h3>
 <p>To remove elements from the <code>Queue</code>, the <code>dequeue</code> function is used. This function follows the FIFO principle.</p>
-<pre><code class="language-sway">// Dequeue the first element and unwrap the value
-let first_item = queue.dequeue().unwrap();
+<pre><code class="language-sway">    // Dequeue the first element and unwrap the value
+    let first_item = queue.dequeue().unwrap();
 </code></pre>
 <h3 id="fetching-the-head-element"><a class="header" href="#fetching-the-head-element">Fetching the Head Element</a></h3>
 <p>To retrieve the element at the head of the <code>Queue</code> without removing it, you can use the <code>peek</code> function.</p>
-<pre><code class="language-sway">// Peek at the head of the queue
-let head_item = queue.peek();
+<pre><code class="language-sway">    // Peek at the head of the queue
+    let head_item = queue.peek();
 </code></pre>
 <h3 id="checking-the-queues-length"><a class="header" href="#checking-the-queues-length">Checking the Queue's Length</a></h3>
 <p>The <code>is_empty</code> and <code>len</code> functions can be used to check if the queue is empty and to get the number of elements in the queue respectively.</p>
-<pre><code class="language-sway">// Checks if queue is empty (returns True or False)
-let is_queue_empty = queue.is_empty();
+<pre><code class="language-sway">    // Checks if queue is empty (returns True or False)
+    let is_queue_empty = queue.is_empty();
 
-// Returns length of queue
-let queue_length = queue.len();
+    // Returns length of queue
+    let queue_length = queue.len();
 </code></pre>
 
                     </main>

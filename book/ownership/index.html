@@ -149,7 +149,7 @@ use standards::src5::*;
 <h2 id="integrating-the-ownership-library-into-the-src-5-standard"><a class="header" href="#integrating-the-ownership-library-into-the-src-5-standard">Integrating the Ownership Library into the SRC-5 Standard</a></h2>
 <p>To implement the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-5.md">SRC-5</a> standard with the Ownership library, be sure to add the Sway Standards dependency to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.</p>
 <pre><code class="language-sway">use sway_libs::ownership::_owner;
-use standards::src_5::{State, SRC5};
+use standards::src5::{SRC5, State};
 
 impl SRC5 for Contract {
     #[storage(read)]

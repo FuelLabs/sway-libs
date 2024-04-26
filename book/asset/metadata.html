@@ -177,6 +177,7 @@ use standards::src7::*;
 <h3 id="setting-metadata"><a class="header" href="#setting-metadata">Setting Metadata</a></h3>
 <p>To set some metadata for an Asset, use the <code>SetAssetMetadata</code> ABI provided by the Asset Library. Be sure to follow the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md">SRC-9</a> standard for your <code>key</code>. It is recommended that the <a href="../ownership/index.html">Ownership Library</a> is used in conjunction with the <code>SetAssetMetadata</code> ABI to ensure only a single user has permissions to set an Asset's metadata.</p>
 <pre><code class="language-sway">use sway_libs::asset::metadata::*;
+use standards::src7::Metadata;
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},
@@ -195,7 +196,7 @@ impl SetAssetMetadata for Contract {
 <h3 id="implementing-the-src-7-standard-with-storagemetadata"><a class="header" href="#implementing-the-src-7-standard-with-storagemetadata">Implementing the SRC-7 Standard with StorageMetadata</a></h3>
 <p>To use the <code>StorageMetadata</code> type, simply get the stored metadata with the associated <code>key</code> and <code>AssetId</code>. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md">SRC-7</a> standard in combination with the Asset Library's <code>StorageMetadata</code> type with no user defined restrictions or custom functionality.</p>
 <pre><code class="language-sway">use sway_libs::asset::metadata::*;
-use standards::src7::SRC7;
+use standards::src7::{Metadata, SRC7};
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},
@@ -226,7 +227,7 @@ The <code>as_b256()</code> returns the <code>b256</code> of the <code>Metadata</
 <pre><code class="language-sway">fn b256_type(my_metadata: Metadata) {
     assert(my_metadata.is_b256());
 
-    let my_b256: b256 = my_metadata.as_b256();
+    let my_b256: b256 = my_metadata.as_b256().unwrap();
 }
 </code></pre>
 <h3 id="is_bytes-and-as_bytes"><a class="header" href="#is_bytes-and-as_bytes"><code>is_bytes()</code> and <code>as_bytes()</code></a></h3>
@@ -235,7 +236,7 @@ The <code>as_bytes()</code> returns the <code>Bytes</code> of the <code>Metadata
 <pre><code class="language-sway">fn bytes_type(my_metadata: Metadata) {
     assert(my_metadata.is_bytes());
 
-    let my_bytes: Bytes = my_metadata.as_bytes();
+    let my_bytes: Bytes = my_metadata.as_bytes().unwrap();
 }
 </code></pre>
 <h3 id="is_u64-and-as_u64"><a class="header" href="#is_u64-and-as_u64"><code>is_u64()</code> and <code>as_u64()</code></a></h3>
@@ -244,7 +245,7 @@ The <code>as_u64()</code> returns the <code>u64</code> of the <code>Metadata</co
 <pre><code class="language-sway">fn u64_type(my_metadata: Metadata) {
     assert(my_metadata.is_u64());
 
-    let my_u64: u64 = my_metadata.as_u64();
+    let my_u64: u64 = my_metadata.as_u64().unwrap();
 }
 </code></pre>
 <h3 id="is_string-and-as_string"><a class="header" href="#is_string-and-as_string"><code>is_string()</code> and <code>as_string()</code></a></h3>
@@ -253,7 +254,7 @@ The <code>as_string()</code> returns the <code>String</code> of the <code>Metada
 <pre><code class="language-sway">fn string_type(my_metadata: Metadata) {
     assert(my_metadata.is_string());
 
-    let my_string: String = my_metadata.as_string();
+    let my_string: String = my_metadata.as_string().unwrap();
 }
 </code></pre>
 

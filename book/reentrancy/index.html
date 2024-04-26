@@ -158,19 +158,7 @@ once in the current call stack.</p>
 </ul>
 <h3 id="using-the-reentrancy-guard"><a class="header" href="#using-the-reentrancy-guard">Using the Reentrancy Guard</a></h3>
 <p>Once imported, using the Reentrancy Guard Library can be used by calling the <code>reentrancy_guard()</code> in your Sway Smart Contract. The following shows a Sway Smart Contract that applies the Reentrancy Guard Library:</p>
-<pre><code class="language-sway">use sway_libs::reentrancy::reentrancy_guard;
-
-abi MyContract {
-    fn my_non_reentrant_function();
-}
-
-impl MyContract for Contract {
-    fn my_non_reentrant_function() {
-        reentrancy_guard();
-
-        // my code here
-    }
-}
+<pre><code class="language-sway">
 </code></pre>
 <h3 id="checking-reentrancy-status"><a class="header" href="#checking-reentrancy-status">Checking Reentrancy Status</a></h3>
 <p>To check if the current caller is a reentrant, you may call the <code>is_reentrant()</code> function.</p>

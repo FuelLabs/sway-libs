@@ -138,7 +138,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="supply-functionality"><a class="header" href="#supply-functionality">Supply Functionality</a></h1>
-<p>For implementation details on the Asset Library supply functionality please see the <a href="https://fuellabs.github.io/sway-libs/master/sway_libs/asset/mint/index.html">Sway Libs Docs</a>.</p>
+<p>For implementation details on the Asset Library supply functionality please see the <a href="https://fuellabs.github.io/sway-libs/master/sway_libs/asset/supply/index.html">Sway Libs Docs</a>.</p>
 <h2 id="importing-the-asset-library-supply-functionality"><a class="header" href="#importing-the-asset-library-supply-functionality">Importing the Asset Library Supply Functionality</a></h2>
 <p>In order to use the Asset Library, Sway Libs and <a href="https://github.com/FuelLabs/sway-standards">Sway Standards</a> must be added to the <code>Forc.toml</code> file and then imported into your Sway project. To add Sway Libs as a dependency to the <code>Forc.toml</code> file in your project please see the <a href="../getting_started/index.html">Getting Started</a>. To add Sway Standards as a dependency please see the <a href="https://github.com/FuelLabs/sway-standards">Sway Standards Book</a>.</p>
 <p>To import the Asset Library Supply Functionality and <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md">SRC-3</a> Standard to your Sway Smart Contract, add the following to your Sway file:</p>
@@ -150,6 +150,7 @@ use standards::src3::*;
 <pre><code class="language-sway">abi SRC3 {
     #[storage(read, write)]
     fn mint(recipient: Identity, vault_sub_id: SubId, amount: u64);
+    #[payable]
     #[storage(read, write)]
     fn burn(vault_sub_id: SubId, amount: u64);
 }
@@ -171,7 +172,7 @@ use standards::src3::*;
 </code></pre>
 <h2 id="implementing-the-src-3-standard-with-the-asset-library"><a class="header" href="#implementing-the-src-3-standard-with-the-asset-library">Implementing the SRC-3 Standard with the Asset Library</a></h2>
 <p>To use a base function, simply pass the <code>StorageKey</code> from the prescribed storage block. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md">SRC-3</a> standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the <a href="../ownership/index.html">Ownership Library</a> is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.</p>
-<pre><code class="language-sway">use sway_libs::asset::supply::{_mint, _burn};
+<pre><code class="language-sway">use sway_libs::asset::supply::{_burn, _mint};
 use standards::src3::SRC3;
 
 storage {
@@ -185,8 +186,10 @@ impl SRC3 for Contract {
     fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
         // Pass the StorageKeys to the `_mint()` function from the Asset Library.
         _mint(
-            storage.total_assets,
-            storage.total_supply,
+            storage
+                .total_assets,
+            storage
+                .total_supply,
             recipient,
             sub_id,
             amount,
@@ -194,6 +197,7 @@ impl SRC3 for Contract {
     }
 
     // Pass the StorageKeys to the `_burn_()` function from the Asset Library.
+    #[payable]
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
         _burn(storage.total_supply, sub_id, amount);

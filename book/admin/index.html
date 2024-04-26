@@ -174,11 +174,11 @@ fn add_a_admin(new_admin: Identity) {
 <p><strong>NOTE</strong> Only the contract's owner may call this function. Please see the example above to set a contract owner.</p>
 </blockquote>
 <h3 id="removing-an-admin"><a class="header" href="#removing-an-admin">Removing an Admin</a></h3>
-<p>To remove an admin from a contract, call the <code>remove_admin()</code> function.</p>
+<p>To remove an admin from a contract, call the <code>revoke_admin()</code> function.</p>
 <pre><code class="language-sway">#[storage(read, write)]
-fn remove_a_admin(old_admin: Identity) {
+fn remove_an_admin(old_admin: Identity) {
     // Can only be called by contract's owner.
-    remove_admin(old_admin);
+    revoke_admin(old_admin);
 }
 </code></pre>
 <blockquote>
@@ -187,7 +187,7 @@ fn remove_a_admin(old_admin: Identity) {
 <h3 id="applying-restrictions"><a class="header" href="#applying-restrictions">Applying Restrictions</a></h3>
 <p>To restrict a function to only an admin, call the <code>only_admin()</code> function.</p>
 <pre><code class="language-sway">#[storage(read)]
-fn only_owner_may call() {
+fn only_owner_may_call() {
     only_admin();
     // Only an admin may reach this line.
 }

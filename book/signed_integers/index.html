@@ -144,32 +144,32 @@
 <h2 id="importing-the-signed-integer-library"><a class="header" href="#importing-the-signed-integer-library">Importing the Signed Integer Library</a></h2>
 <p>In order to use the Signed Integer Number Library, Sway Libs must be added to the <code>Forc.toml</code> file and then imported into your Sway project. To add Sway Libs as a dependency to the <code>Forc.toml</code> file in your project please see the <a href="../getting_started/index.html">Getting Started</a>.</p>
 <p>To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:</p>
-<pre><code class="language-sway">use sway_libs::signed_integer::*;
+<pre><code class="language-sway">use sway_libs::signed_integers::*;
 </code></pre>
 <p>In order to use the any of the Signed Integer types, import them into your Sway project like so:</p>
-<pre><code class="language-sway">use sway_libs::signed_integers::i8::I8;
+<pre><code class="language-sway">
 </code></pre>
 <h2 id="basic-functionality"><a class="header" href="#basic-functionality">Basic Functionality</a></h2>
 <h3 id="instantiating-a-new-fixed-point-number"><a class="header" href="#instantiating-a-new-fixed-point-number">Instantiating a New Fixed Point Number</a></h3>
 <p>Once imported, a <code>Signed Integer</code> type can be instantiated defining a new variable and calling the <code>new</code> function.</p>
-<pre><code class="language-sway">let mut i8_value = I8::new();
+<pre><code class="language-sway">    let mut i8_value = I8::new();
 </code></pre>
-<h3 id="basic-mathematical-functions"><a class="header" href="#basic-mathematical-functions">Basic mathematical Functions</a></h3>
+<h3 id="basic-mathematical-functions"><a class="header" href="#basic-mathematical-functions">Basic Mathematical Functions</a></h3>
 <p>Basic arithmetic operations are working as usual.</p>
-<pre><code class="language-sway">fn add_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 + val2;
+<pre><code class="language-sway">fn add_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 + val2;
 }
 
-fn subtract_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 - val2;
+fn subtract_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 - val2;
 }
 
-fn multiply_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 * val2;
+fn multiply_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 * val2;
 }
 
-fn divide_signed_int(val1: i8, val2: i8) {
-    let result: i8 = val1 / val2;
+fn divide_signed_int(val1: I8, val2: I8) {
+    let result: I8 = val1 / val2;
 }
 </code></pre>
 <h2 id="known-issues"><a class="header" href="#known-issues">Known Issues</a></h2>

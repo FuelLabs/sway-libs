@@ -198,15 +198,9 @@ use standards::src20::*;
 </code></pre>
 <h2 id="implementing-the-src-20-standard-with-the-asset-library"><a class="header" href="#implementing-the-src-20-standard-with-the-asset-library">Implementing the SRC-20 Standard with the Asset Library</a></h2>
 <p>To use the Asset Library's base functionly, simply pass the <code>StorageKey</code> from the prescribed storage block. The example below shows the implementation of the <a href="https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md">SRC-20</a> standard in combination with the Asset Library with no user defined restrictions or custom functionality.</p>
-<pre><code class="language-sway">use sway_libs::asset::base::{
-    _total_assets, 
-    _total_supply,
-    _name,
-    _symbol,
-    _decimals
-};
+<pre><code class="language-sway">use sway_libs::asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
 use standards::src20::SRC20;
-use std::{string::String, storage::storage_string::*};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 // The SRC-20 storage block
 storage {
@@ -253,7 +247,7 @@ impl SRC20 for Contract {
 <h2 id="setting-an-assets-src-20-attributes"><a class="header" href="#setting-an-assets-src-20-attributes">Setting an Asset's SRC-20 Attributes</a></h2>
 <p>To set some the asset attributes for an Asset, use the <code>SetAssetAttributes</code> ABI provided by the Asset Library. The example below shows the implementation of the <code>SetAssetAttributes</code> ABI with no user defined restrictions or custom functionality. It is recommended that the <a href="../ownership/index.html">Ownership Library</a> is used in conjunction with the <code>SetAssetAttributes</code> ABI to ensure only a single user has permissions to set an Asset's attributes.</p>
 <pre><code class="language-sway">use sway_libs::asset::base::*;
-use std::{string::String, storage::storage_string::*};
+use std::{hash::Hash, storage::storage_string::*, string::String};
 
 storage {
     name: StorageMap&lt;AssetId, StorageString&gt; = StorageMap {},

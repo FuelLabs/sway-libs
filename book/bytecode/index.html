@@ -162,9 +162,13 @@
 </ul>
 <h2 id="known-issues"><a class="header" href="#known-issues">Known Issues</a></h2>
 <p>Please note that if you are passing the bytecode from the SDK and are including configurable values, the <code>Vec&lt;u8&gt;</code> bytecode provided must be copied to be mutable. The following can be added to make your bytecode mutable:</p>
-<pre><code class="language-sway">fn foo(not_mutable_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn make_mutable(not_mutable_bytecode: Vec&lt;u8&gt;) {
     // Copy the bytecode to a newly allocated memory to avoid memory ownership error.
-    let mut bytecode_slice = raw_slice::from_parts::&lt;u8&gt;(alloc_bytes(not_mutable_bytecode.len()), not_mutable_bytecode.len());
+    let mut bytecode_slice = raw_slice::from_parts::&lt;u8&gt;(
+        alloc_bytes(not_mutable_bytecode.len()),
+        not_mutable_bytecode
+            .len(),
+    );
     not_mutable_bytecode
         .ptr()
         .copy_bytes_to(bytecode_slice.ptr(), not_mutable_bytecode.len());
@@ -176,7 +180,7 @@
 <p>The examples below are intended for internal contract calls. If you are passing bytecode from the SDK, please follow the steps listed above in known issues to avoid the memory ownership error.</p>
 <h2 id="swapping-configurables"><a class="header" href="#swapping-configurables">Swapping Configurables</a></h2>
 <p>Given some bytecode, you may swap the configurables of both Contracts and Predicates by calling the <code>swap_configurables()</code> function.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+<pre><code class="language-sway">fn swap(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let resulting_bytecode: Vec&lt;u8&gt; = swap_configurables(my_bytecode, my_configurables);
 }
@@ -184,23 +188,27 @@
 <h2 id="contracts"><a class="header" href="#contracts">Contracts</a></h2>
 <h3 id="computing-the-bytecode-root"><a class="header" href="#computing-the-bytecode-root">Computing the Bytecode Root</a></h3>
 <p>To compute a contract's bytecode root you may call the <code>compute_bytecode_root()</code> or <code>compute_bytecode_root_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn compute_bytecode(my_bytecode: Vec&lt;u8&gt;) {
     let root: b256 = compute_bytecode_root(my_bytecode);
 }
 
-fn bar(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn compute_bytecode_configurables(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let root: b256 = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
 }
 </code></pre>
 <h3 id="verifying-a-contracts-bytecode-root"><a class="header" href="#verifying-a-contracts-bytecode-root">Verifying a Contract's Bytecode Root</a></h3>
 <p>To verify a contract's bytecode root you may call <code>verify_bytecode_root()</code> or <code>verify_contract_bytecode_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn verify_contract(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;) {
     verify_contract_bytecode(my_contract, my_bytecode);
     // By reaching this line the contract has been verified to match the bytecode provided.
 }
 
-fn bar(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn verify_contract_configurables(
+    my_contract: ContractId,
+    my_bytecode: Vec&lt;u8&gt;,
+    my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;,
+) {
     let mut my_bytecode = my_bytecode;
     verify_contract_bytecode_with_configurables(my_contract, my_bytecode, my_configurables);
     // By reaching this line the contract has been verified to match the bytecode provided.
@@ -209,31 +217,35 @@ fn bar(my_contract: ContractId, my_bytecode: Vec&lt;u8&gt;, my_configurables: Ve
 <h2 id="predicates"><a class="header" href="#predicates">Predicates</a></h2>
 <h3 id="computing-the-address-from-bytecode"><a class="header" href="#computing-the-address-from-bytecode">Computing the Address from Bytecode</a></h3>
 <p>To compute a predicates's address you may call the <code>compute_predicate_address()</code> or <code>compute_predicate_address_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn compute_predicate(my_bytecode: Vec&lt;u8&gt;) {
     let address: Address = compute_predicate_address(my_bytecode);
 }
 
-fn bar(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn compute_predicate_configurables(my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
     let mut my_bytecode = my_bytecode;
     let address: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
 }
 </code></pre>
 <h3 id="computing-the-address-from-a-root"><a class="header" href="#computing-the-address-from-a-root">Computing the Address from a Root</a></h3>
 <p>If you have the root of a predicate, you may compute it's corresponding predicate address by calling the <code>predicate_address_from_root()</code> function.</p>
-<pre><code class="language-sway">fn foo(my_root: b256) {
+<pre><code class="language-sway">fn predicate_address(my_root: b256) {
     let address: Address = predicate_address_from_root(my_root);
 }
 </code></pre>
 <h3 id="verifying-the-address"><a class="header" href="#verifying-the-address">Verifying the Address</a></h3>
 <p>To verify a predicates's address you may call <code>verify_predicate_address()</code> or <code>verify_predicate_address_with_configurables()</code> functions.</p>
-<pre><code class="language-sway">fn foo(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;) {
+<pre><code class="language-sway">fn verify_predicate(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;) {
     verify_predicate_address(my_predicate, my_bytecode);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 
-fn bar(my_predicate: Address, my_bytecode: Vec&lt;u8&gt;, my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;) {
+fn verify_predicate_configurables(
+    my_predicate: Address,
+    my_bytecode: Vec&lt;u8&gt;,
+    my_configurables: Vec&lt;(u64, Vec&lt;u8&gt;)&gt;,
+) {
     let mut my_bytecode = my_bytecode;
-    verify_predicate_bytecode_with_configurables(my_predicate, my_bytecode, my_configurables);
+    verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 </code></pre>
