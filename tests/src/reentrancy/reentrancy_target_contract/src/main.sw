@@ -1,6 +1,6 @@
 contract;
 
-use std::{auth::*, call_frames::contract_id};
+use std::auth::*;
 use sway_libs::reentrancy::*;
 
 use reentrancy_attacker_abi::Attacker;
@@ -48,7 +48,7 @@ impl Target for Contract {
     }
 
     fn intra_contract_call() {
-        abi(Target, contract_id()
+        abi(Target, ContractId::this()
             .bits())
             .cross_function_reentrance_denied();
     }

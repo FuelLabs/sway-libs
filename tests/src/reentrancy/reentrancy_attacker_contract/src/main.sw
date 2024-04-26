@@ -1,6 +1,6 @@
 contract;
 
-use std::{auth::*, call_frames::contract_id, constants::ZERO_B256};
+use std::{auth::*, constants::ZERO_B256};
 
 use reentrancy_target_abi::Target;
 use reentrancy_attacker_abi::Attacker;
@@ -46,17 +46,17 @@ impl Attacker for Contract {
     }
 
     fn evil_callback_1() {
-        assert(abi(Attacker, contract_id().bits()).launch_attack(get_msg_sender_id_or_panic()));
+        assert(abi(Attacker, ContractId::this().bits()).launch_attack(get_msg_sender_id_or_panic()));
     }
 
     fn evil_callback_2() {
-        abi(Attacker, contract_id()
+        abi(Attacker, ContractId::this()
             .bits())
             .launch_thwarted_attack_1(get_msg_sender_id_or_panic());
     }
 
     fn evil_callback_3() {
-        abi(Attacker, contract_id()
+        abi(Attacker, ContractId::this()
             .bits())
             .launch_thwarted_attack_2(get_msg_sender_id_or_panic());
     }
