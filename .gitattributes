@@ -1,2 +1,2 @@
 # Syntax highlighting of sway files as rust
-*.sw linguist-language=Rust
+*.sw linguist-language=Sway
