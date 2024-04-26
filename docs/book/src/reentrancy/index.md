@@ -35,7 +35,7 @@ Once imported, using the Reentrancy Library can be done by calling one of the tw
 Once imported, using the Reentrancy Guard Library can be used by calling the `reentrancy_guard()` in your Sway Smart Contract. The following shows a Sway Smart Contract that applies the Reentrancy Guard Library:
 
 ```sway
-{{#include ../../../../examples/reentrancy/src/main.sw:reentrancy}}
+{{#include ../../../../examples/reentrancy/src/main.sw:reentrancy_guard}}
 ```
 
 ### Checking Reentrancy Status

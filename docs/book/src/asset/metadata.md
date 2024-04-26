@@ -68,7 +68,12 @@ To use the `StorageMetadata` type, simply get the stored metadata with the assoc
 The `Metadata` type defined by the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standard can be one of 4 states:
 
 ```sway
-{{#include ../../../../examples/asset/metadata_docs/src/main.sw:metadata_enum}}
+pub enum Metadata {
+    B256: b256,
+    Bytes: Bytes,
+    Int: u64,
+    String: String,
+}
 ```
 
 The Asset Library enables the following functionality for the `Metadata` type:
