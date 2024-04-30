@@ -7,10 +7,7 @@ use std::{
         burn,
         mint_to,
     },
-    call_frames::{
-        contract_id,
-        msg_asset_id,
-    },
+    call_frames::msg_asset_id,
     context::this_balance,
     hash::{
         Hash,
@@ -68,7 +65,7 @@ pub fn _mint(
     sub_id: SubId,
     amount: u64,
 ) -> AssetId {
-    let asset_id = AssetId::new(contract_id(), sub_id);
+    let asset_id = AssetId::new(ContractId::this(), sub_id);
     let supply = _total_supply(total_supply_key, asset_id);
 
     // Only increment the number of assets minted by this contract if it hasn't been minted before.
@@ -127,7 +124,7 @@ pub fn _burn(
     sub_id: SubId,
     amount: u64,
 ) {
-    let asset_id = AssetId::new(contract_id(), sub_id);
+    let asset_id = AssetId::new(ContractId::this(), sub_id);
 
     require(this_balance(asset_id) >= amount, BurnError::NotEnoughCoins);
 

@@ -20,15 +20,6 @@ storage {
 }
 // ANCHOR_END: src7_storage
 
-// ANCHOR: metadata_enum
-pub enum Metadata {
-    B256: b256,
-    Bytes: Bytes,
-    Int: u64,
-    String: String,
-}
-// ANCHOR_END: metadata_enum
-
 // ANCHOR: as_b256
 fn b256_type(my_metadata: Metadata) {
     assert(my_metadata.is_b256());

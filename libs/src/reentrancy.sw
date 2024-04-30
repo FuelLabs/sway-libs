@@ -55,7 +55,7 @@ pub fn reentrancy_guard() {
 /// ```
 pub fn is_reentrant() -> bool {
     // Get our current contract ID
-    let this_id = contract_id();
+    let this_id = ContractId::this();
 
     // Reentrancy cannot occur in an external context. If not detected by the time we get to the
     // bottom of the call_frame stack, then no reentrancy has occured.
