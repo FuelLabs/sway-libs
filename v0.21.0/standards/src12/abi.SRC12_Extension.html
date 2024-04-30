@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `SRC12_Extension` abi in `src12`."><meta name="keywords" content="sway, swaylang, sway-lang, SRC12_Extension"><link rel="icon" href="../../static.files/sway-logo.svg"><title>SRC12_Extension in src12 - Sway</title><link rel="stylesheet" type="text/css" href="../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../static.files/ayu.css"><link rel="stylesheet" href="../../static.files/ayu.min.css"></head><body class="swaydoc abi"><nav class="sidebar"><a class="sidebar-logo" href="../../standards/index.html"><div class="logo-container"><img class="sway-logo" src="../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Abi SRC12_Extension</h2><div class="sidebar-elems"><section><div class="block"><ul><li><a href="#required-methods">Required Methods</a></li></ul></div></section></div></nav><main><div class="width-limiter"><script src="../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){searchForm.dispatchEvent(new Event('submit'))});searchbar.addEventListener("search",function(event){searchForm.dispatchEvent(new Event('submit'))});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=[...item.module_info,formattedName].join("::");const path=["../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Abi <a class="mod" href="../index.html">standards</a><span>::</span><a class="mod" href="index.html">src12</a><span>::</span><a class="abi" href="#">SRC12_Extension</a></span></h1></div><div class="docblock item-decl"><pre class="sway abi"><code>abi SRC12_Extension {
+    /// Return a registered contract factory child contract with specific implementation details specified by it's configurables.
+    ///
+    /// # Arguments
+    ///
+    /// * `configurables`: [Option&lt;ContractConfigurables&gt;] - The configurables value set for the `child_contract`.
+    ///
+    /// # Returns
+    ///
+    /// * [Option&lt;ContractId&gt;] - The id of the contract which has registered with the specified configurables.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use src12::SRC12;
+    ///
+    /// fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    ///     let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
+    ///     src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    ///     let result_contract_id = src_12_contract_abi.get_contract_id(my_configurables);
+    ///     assert(result_contract_id.unwrap() == my_deployed_contract);
+    /// }
+    /// ```
+    #[storage(read)]
+    fn get_contract_id(configurables: Option&lt;ContractConfigurables&gt;) -&gt; Option&lt;ContractId&gt;;
+}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.get_contract_id" class="method has-srclink"><a href="#tymethod.get_contract_id" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.get_contract_id">get_contract_id</a>(<br>    configurables: Option&lt;ContractConfigurables&gt;,<br>) -&gt; Option&lt;ContractId&gt;</h4></div></summary><div class="docblock"><p>Return a registered contract factory child contract with specific implementation details specified by it’s configurables.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>configurables</code>: [Option<!-- raw HTML omitted -->] - The configurables value set for the <code>child_contract</code>.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[Option<!-- raw HTML omitted -->] - The id of the contract which has registered with the specified configurables.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use src12::SRC12;
+
+fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
+    src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    let result_contract_id = src_12_contract_abi.get_contract_id(my_configurables);
+    assert(result_contract_id.unwrap() == my_deployed_contract);
+}
+</code></pre>
+</div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>
