@@ -447,7 +447,6 @@ impl IFP128 {
     /// ```
     pub fn round(self) -> Self {
         let mut underlying = self.underlying;
-        let mut non_negative = self.non_negative;
 
         if self.non_negative {
             underlying = self.underlying.round();
@@ -456,11 +455,6 @@ impl IFP128 {
             let ceil = self.underlying.ceil();
             let diff_self_floor = self.underlying - floor;
             let diff_ceil_self = ceil - self.underlying;
-            let underlying = if diff_self_floor > diff_ceil_self {
-                floor
-            } else {
-                ceil
-            };
         }
         Self {
             underlying: underlying,
