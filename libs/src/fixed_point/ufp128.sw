@@ -205,7 +205,6 @@ impl core::ops::Multiply for UFP128 {
 impl core::ops::Divide for UFP128 {
     /// Divide a UFP128 by a UFP128. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        let mut s = self;
         let zero = UFP128::zero();
         let u128_max = U128::max();
 
