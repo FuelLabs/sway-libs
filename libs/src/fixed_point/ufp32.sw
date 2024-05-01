@@ -447,7 +447,6 @@ impl Exponent for UFP32 {
 impl Power for UFP32 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: u32) -> Self {
-        let demoninator_power = UFP32::denominator();
         let nominator_pow = self.value.pow(exponent);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 16
