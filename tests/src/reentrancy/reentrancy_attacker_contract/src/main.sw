@@ -45,8 +45,8 @@ impl Attacker for Contract {
         abi(Target, target.bits()).guarded_function_is_callable();
     }
 
-    fn evil_callback_1() {
-        assert(abi(Attacker, ContractId::this().bits()).launch_attack(get_msg_sender_id_or_panic()));
+    fn evil_callback_1() -> bool {
+        abi(Attacker, ContractId::this().bits()).launch_attack(get_msg_sender_id_or_panic())
     }
 
     fn evil_callback_2() {
