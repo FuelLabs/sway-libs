@@ -93,7 +93,10 @@ mod success {
 mod revert {
 
     use super::*;
-    use fuels::{prelude::{CallParameters, TxPolicies}, types::AssetId};
+    use fuels::{
+        prelude::{CallParameters, TxPolicies},
+        types::AssetId,
+    };
 
     #[tokio::test]
     #[should_panic(expected = "NotEnoughCoins")]

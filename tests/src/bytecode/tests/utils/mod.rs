@@ -278,7 +278,7 @@ pub mod abi_calls {
 }
 
 pub mod test_helpers {
-    
+
     use super::*;
 
     pub fn defaults() -> (u64, u64, u8) {
@@ -373,7 +373,9 @@ pub mod test_helpers {
         wallet: WalletUnlocked,
         config_value: u64,
     ) -> (SimpleContract<WalletUnlocked>, ContractId) {
-        let configurables = SimpleContractConfigurables::default().with_VALUE(config_value).unwrap();
+        let configurables = SimpleContractConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
 
         let id = Contract::load_from(
             SIMPLE_CONTRACT_BYTECODE_PATH,
@@ -406,7 +408,9 @@ pub mod test_helpers {
         let configurables = SimpleContractConfigurables::new(EncoderConfig {
             max_tokens: 10_000_000,
             ..Default::default()
-        }).with_VALUE(config_value).unwrap();
+        })
+        .with_VALUE(config_value)
+        .unwrap();
 
         // Fetch the bytecode root
         let root = Contract::load_from(
@@ -457,15 +461,15 @@ pub mod test_helpers {
         config_enum: SimpleEnum,
     ) -> (ComplexContract<WalletUnlocked>, ContractId) {
         let configurables = ComplexContractConfigurables::new(EncoderConfig {
-                max_tokens: 10_000_000,
-                ..Default::default()
-            })
-            .with_VALUE(config_value)
-            .unwrap()
-            .with_STRUCT(config_struct)
-            .unwrap()
-            .with_ENUM(config_enum)
-            .unwrap();
+            max_tokens: 10_000_000,
+            ..Default::default()
+        })
+        .with_VALUE(config_value)
+        .unwrap()
+        .with_STRUCT(config_struct)
+        .unwrap()
+        .with_ENUM(config_enum)
+        .unwrap();
 
         let id = Contract::load_from(
             COMPLEX_CONTRACT_BYTECODE_PATH,
@@ -499,15 +503,15 @@ pub mod test_helpers {
         config_enum: SimpleEnum,
     ) -> Bits256 {
         let configurables = ComplexContractConfigurables::new(EncoderConfig {
-                max_tokens: 10_000_000,
-                ..Default::default()
-            })
-            .with_VALUE(config_value)
-            .unwrap()
-            .with_STRUCT(config_struct)
-            .unwrap()
-            .with_ENUM(config_enum)
-            .unwrap();
+            max_tokens: 10_000_000,
+            ..Default::default()
+        })
+        .with_VALUE(config_value)
+        .unwrap()
+        .with_STRUCT(config_struct)
+        .unwrap()
+        .with_ENUM(config_enum)
+        .unwrap();
 
         // Fetch the bytecode root
         let root = Contract::load_from(
@@ -526,7 +530,9 @@ pub mod test_helpers {
         config_value: u64,
     ) -> Predicate {
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::default().encode_data(config_value).unwrap();
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
         let result_instance = Predicate::from_code(bytecode)
             .with_provider(provider.clone())
             .with_data(predicate_data);
@@ -582,8 +588,12 @@ pub mod test_helpers {
         config_value: u64,
     ) -> Predicate {
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::default().encode_data(config_value).unwrap();
-        let configurables = SimplePredicateConfigurables::default().with_VALUE(config_value).unwrap();
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
+        let configurables = SimplePredicateConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
         let result_instance = Predicate::load_from(PREDICATE_BYTECODE_PATH)
             .unwrap()
             .with_provider(provider.clone())
@@ -627,8 +637,12 @@ pub mod test_helpers {
         let predicate_bytecode = predicate_bytecode();
 
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::default().encode_data(config_value).unwrap();
-        let configurables = SimplePredicateConfigurables::default().with_VALUE(config_value).unwrap();
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
+        let configurables = SimplePredicateConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
         let result_instance = Predicate::from_code(predicate_bytecode)
             .with_configurables(configurables)
             .with_provider(provider.clone())
@@ -639,7 +653,12 @@ pub mod test_helpers {
 
     pub async fn spend_predicate(predicate_instance: Predicate, wallet: WalletUnlocked) {
         predicate_instance
-            .transfer(wallet.address(), 1, *wallet.provider().unwrap().base_asset_id(), TxPolicies::default())
+            .transfer(
+                wallet.address(),
+                1,
+                *wallet.provider().unwrap().base_asset_id(),
+                TxPolicies::default(),
+            )
             .await
             .unwrap();
     }
