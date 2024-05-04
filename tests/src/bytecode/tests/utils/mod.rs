@@ -1,11 +1,11 @@
 use fuels::{
     accounts::predicate::Predicate,
+    core::codec::{DecoderConfig, EncoderConfig},
     prelude::*,
     programs::call_response::FuelCallResponse,
-    tx::{Bytes32, StorageSlot},
-    types::Bits256,
+    tx::StorageSlot,
+    types::{Bits256, Bytes32},
 };
-use fuels_core::codec::DecoderConfig;
 use rand::prelude::{Rng, SeedableRng, StdRng};
 use std::{fs, str::FromStr};
 
@@ -40,11 +40,11 @@ const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 const HEX_STR_1: &str = "0xacbe4bfc77e55c071db31f2e37c824d75794867d88499107dc8318cb22aceea5";
 const HEX_STR_2: &str = "0x0b1af92ac5a3e8cfeafede9586a1f853a9e0258e7cdccae5e5181edac081f2c1b";
 const HEX_STR_3: &str = "0x0345c74edfb0ce0820409176d0cbc2c44eac1e5e4c7382ee7e7c38d611d9ba767";
-const SIMPLE_PREDICATE_OFFSET: u64 = 100;
-const SIMPLE_CONTRACT_OFFSET: u64 = 68;
-const COMPLEX_CONTRACT_OFFSET_1: u64 = 18268;
-const COMPLEX_CONTRACT_OFFSET_2: u64 = 18276;
-const COMPLEX_CONTRACT_OFFSET_3: u64 = 18316;
+const SIMPLE_PREDICATE_OFFSET: u64 = 116;
+const SIMPLE_CONTRACT_OFFSET: u64 = 936;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 28008;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 28016;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 28056;
 
 pub mod abi_calls {
 
@@ -95,6 +95,12 @@ pub mod abi_calls {
         bytecode: Vec<u8>,
     ) -> Bits256 {
         contract
+            .clone()
+            .with_encoder_config(EncoderConfig {
+                max_depth: 10,
+                max_tokens: 100_000,
+                max_total_enum_width: 10_000,
+            })
             .methods()
             .compute_bytecode_root(bytecode)
             .call()
@@ -109,6 +115,12 @@ pub mod abi_calls {
         configurables: Vec<(u64, Vec<u8>)>,
     ) -> Bits256 {
         contract
+            .clone()
+            .with_encoder_config(EncoderConfig {
+                max_depth: 10,
+                max_tokens: 100_000,
+                max_total_enum_width: 10_000,
+            })
             .methods()
             .compute_bytecode_root_with_configurables(bytecode, configurables)
             .call()
@@ -135,10 +147,16 @@ pub mod abi_calls {
         configurables: Vec<(u64, Vec<u8>)>,
     ) -> Vec<u8> {
         contract
+            .clone()
+            .with_encoder_config(EncoderConfig {
+                max_depth: 10,
+                max_tokens: 100_000,
+                max_total_enum_width: 10_000,
+            })
             .methods()
             .swap_configurables(bytecode, configurables)
             .with_decoder_config(DecoderConfig {
-                max_tokens: 1_000_000,
+                max_tokens: 10_000_000,
                 ..Default::default()
             })
             .call()
@@ -179,6 +197,12 @@ pub mod abi_calls {
         complex_contract_instance: ComplexContract<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
         contract
+            .clone()
+            .with_encoder_config(EncoderConfig {
+                max_depth: 10,
+                max_tokens: 100_000,
+                max_total_enum_width: 10_000,
+            })
             .methods()
             .verify_contract_bytecode(contract_id, bytecode)
             .with_contracts(&[&complex_contract_instance])
@@ -211,6 +235,12 @@ pub mod abi_calls {
         complex_contract_instance: ComplexContract<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
         contract
+            .clone()
+            .with_encoder_config(EncoderConfig {
+                max_depth: 10,
+                max_tokens: 100_000,
+                max_total_enum_width: 10_000,
+            })
             .methods()
             .verify_contract_bytecode_with_configurables(contract_id, bytecode, configurables)
             .with_contracts(&[&complex_contract_instance])
@@ -343,11 +373,13 @@ pub mod test_helpers {
         wallet: WalletUnlocked,
         config_value: u64,
     ) -> (SimpleContract<WalletUnlocked>, ContractId) {
-        let configurables = SimpleContractConfigurables::new().with_VALUE(config_value);
+        let configurables = SimpleContractConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
 
         let id = Contract::load_from(
             SIMPLE_CONTRACT_BYTECODE_PATH,
-            LoadConfiguration::default().with_configurables(configurables.clone()),
+            LoadConfiguration::default().with_configurables(configurables),
         )
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
@@ -373,7 +405,12 @@ pub mod test_helpers {
     pub async fn simple_contract_bytecode_root_with_configurables_from_file(
         config_value: u64,
     ) -> Bits256 {
-        let configurables = SimpleContractConfigurables::new().with_VALUE(config_value);
+        let configurables = SimpleContractConfigurables::new(EncoderConfig {
+            max_tokens: 10_000_000,
+            ..Default::default()
+        })
+        .with_VALUE(config_value)
+        .unwrap();
 
         // Fetch the bytecode root
         let root = Contract::load_from(
@@ -423,10 +460,16 @@ pub mod test_helpers {
         config_struct: SimpleStruct,
         config_enum: SimpleEnum,
     ) -> (ComplexContract<WalletUnlocked>, ContractId) {
-        let configurables = ComplexContractConfigurables::new()
-            .with_VALUE(config_value)
-            .with_STRUCT(config_struct)
-            .with_ENUM(config_enum);
+        let configurables = ComplexContractConfigurables::new(EncoderConfig {
+            max_tokens: 10_000_000,
+            ..Default::default()
+        })
+        .with_VALUE(config_value)
+        .unwrap()
+        .with_STRUCT(config_struct)
+        .unwrap()
+        .with_ENUM(config_enum)
+        .unwrap();
 
         let id = Contract::load_from(
             COMPLEX_CONTRACT_BYTECODE_PATH,
@@ -459,10 +502,16 @@ pub mod test_helpers {
         config_struct: SimpleStruct,
         config_enum: SimpleEnum,
     ) -> Bits256 {
-        let configurables = ComplexContractConfigurables::new()
-            .with_VALUE(config_value)
-            .with_STRUCT(config_struct)
-            .with_ENUM(config_enum);
+        let configurables = ComplexContractConfigurables::new(EncoderConfig {
+            max_tokens: 10_000_000,
+            ..Default::default()
+        })
+        .with_VALUE(config_value)
+        .unwrap()
+        .with_STRUCT(config_struct)
+        .unwrap()
+        .with_ENUM(config_enum)
+        .unwrap();
 
         // Fetch the bytecode root
         let root = Contract::load_from(
@@ -481,7 +530,9 @@ pub mod test_helpers {
         config_value: u64,
     ) -> Predicate {
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::encode_data(config_value);
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
         let result_instance = Predicate::from_code(bytecode)
             .with_provider(provider.clone())
             .with_data(predicate_data);
@@ -491,14 +542,14 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                BASE_ASSET_ID,
+                *wallet.provider().unwrap().base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&BASE_ASSET_ID)
+            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -517,14 +568,14 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                BASE_ASSET_ID,
+                *wallet.provider().unwrap().base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&BASE_ASSET_ID)
+            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -537,8 +588,12 @@ pub mod test_helpers {
         config_value: u64,
     ) -> Predicate {
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::encode_data(config_value);
-        let configurables = SimplePredicateConfigurables::new().with_VALUE(config_value);
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
+        let configurables = SimplePredicateConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
         let result_instance = Predicate::load_from(PREDICATE_BYTECODE_PATH)
             .unwrap()
             .with_provider(provider.clone())
@@ -550,14 +605,14 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                BASE_ASSET_ID,
+                *wallet.provider().unwrap().base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&BASE_ASSET_ID)
+            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -582,8 +637,12 @@ pub mod test_helpers {
         let predicate_bytecode = predicate_bytecode();
 
         let provider = wallet.try_provider().unwrap();
-        let predicate_data = SimplePredicateEncoder::encode_data(config_value);
-        let configurables = SimplePredicateConfigurables::new().with_VALUE(config_value);
+        let predicate_data = SimplePredicateEncoder::default()
+            .encode_data(config_value)
+            .unwrap();
+        let configurables = SimplePredicateConfigurables::default()
+            .with_VALUE(config_value)
+            .unwrap();
         let result_instance = Predicate::from_code(predicate_bytecode)
             .with_configurables(configurables)
             .with_provider(provider.clone())
@@ -594,7 +653,12 @@ pub mod test_helpers {
 
     pub async fn spend_predicate(predicate_instance: Predicate, wallet: WalletUnlocked) {
         predicate_instance
-            .transfer(wallet.address(), 1, BASE_ASSET_ID, TxPolicies::default())
+            .transfer(
+                wallet.address(),
+                1,
+                *wallet.provider().unwrap().base_asset_id(),
+                TxPolicies::default(),
+            )
             .await
             .unwrap();
     }
