@@ -1,4 +1,5 @@
 use fuel_merkle::binary::in_memory::MerkleTree;
+use fuel_tx::Bytes32;
 use fuels::{
     prelude::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies,
@@ -6,7 +7,6 @@ use fuels::{
     },
     types::Bits256,
 };
-use fuel_tx::Bytes32;
 use sha2::{Digest, Sha256};
 
 abigen!(Contract(
@@ -262,10 +262,10 @@ pub mod test_helpers {
 
     pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
         let mut hash = Sha256::new();
-    
+
         hash.update(&[LEAF]);
         hash.update(data);
-    
+
         hash.finalize().into()
     }
 }
