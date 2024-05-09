@@ -16,6 +16,11 @@ const ToolchainNames = [
 ] as const;
 export type Toolchain = (typeof ToolchainNames)[number];
 
+export function isToolchain(value: string | null): value is Toolchain {
+  const found = ToolchainNames.find(name => name === value);
+  return !!value && found !== undefined;
+}
+
 export interface ToolchainDropdownProps {
   toolchain: Toolchain;
   setToolchain: (toolchain: Toolchain) => void;

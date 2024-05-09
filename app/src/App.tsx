@@ -11,19 +11,25 @@ import {
 } from './utils/localStorage';
 import InteractionDrawer from './features/interact/components/InteractionDrawer';
 import { useLog } from './features/editor/hooks/useLog';
-import { Toolchain } from './features/editor/components/ToolchainDropdown';
+import {
+  Toolchain,
+  isToolchain,
+} from './features/editor/components/ToolchainDropdown';
 import { useTranspile } from './features/editor/hooks/useTranspile';
 import EditorView from './features/editor/components/EditorView';
 import { Analytics, track } from '@vercel/analytics/react';
+import { useGist } from './features/editor/hooks/useGist';
+import { useSearchParams } from 'react-router-dom';
+import Copyable from './components/Copyable';
 
 const DRAWER_WIDTH = '40vw';
 
 function App() {
   // The current sway code in the editor.
-  const [swayCode, setSwayCode] = useState(loadSwayCode());
+  const [swayCode, setSwayCode] = useState<string>(loadSwayCode());
 
   // The current solidity code in the editor.
-  const [solidityCode, setSolidityCode] = useState(loadSolidityCode());
+  const [solidityCode, setSolidityCode] = useState<string>(loadSolidityCode());
 
   // An error message to display to the user.
   const [showSolidity, setShowSolidity] = useState(false);
@@ -56,11 +62,27 @@ function App() {
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // The query parameters for the current URL.
+  const [searchParams] = useSearchParams();
+
+  // If showSolidity is toggled on, reset the compiled state.
   useEffect(() => {
     if (showSolidity) {
       setIsCompiled(false);
     }
   }, [showSolidity]);
+
+  // Load the query parameters from the URL and set the state accordingly. Gists are loaded in useGist.
+  useEffect(() => {
+    if (searchParams.get('transpile') === 'true') {
+      setShowSolidity(true);
+    }
+    let toolchainParam = searchParams.get('toolchain');
+
+    if (isToolchain(toolchainParam)) {
+      setToolchain(toolchainParam);
+    }
+  }, [searchParams, setShowSolidity, setToolchain]);
 
   const onSwayCodeChange = useCallback(
     (code: string) => {
@@ -80,12 +102,48 @@ function App() {
     [setSolidityCode]
   );
 
+  // Loading shared code by query parameter and get a function for creating sharable permalinks.
+  const { newGist } = useGist(onSwayCodeChange, onSolidityCodeChange);
+
   const setError = useCallback(
     (error: string | undefined) => {
       updateLog(error);
     },
     [updateLog]
   );
+
+  const onShareClick = useCallback(async () => {
+    track('Share Click', { toolchain });
+    const response = await newGist(swayCode, {
+      contract: solidityCode,
+      language: 'solidity',
+    });
+    if (!!response) {
+      const permalink = `${window.location.origin}/?toolchain=${toolchain}&transpile=${showSolidity}&gist=${response.id}`;
+      console.log('permalink: ', permalink);
+      updateLog([
+        <Copyable
+          href
+          value={permalink}
+          tooltip='permalink to your code'
+          label='Permalink to Playground'
+        />,
+        <Copyable
+          href
+          value={response?.url}
+          tooltip='link to gist'
+          label='Link to Gist'
+        />,
+      ]);
+    }
+  }, [
+    newGist,
+    swayCode,
+    solidityCode,
+    updateLog,
+    toolchain,
+    showSolidity,
+  ]);
 
   const onCompileClick = useCallback(() => {
     track('Compile Click', { toolchain });
@@ -124,6 +182,7 @@ function App() {
       <ActionToolbar
         deployState={deployState}
         setContractId={setContractId}
+        onShareClick={onShareClick}
         onCompile={onCompileClick}
         isCompiled={isCompiled}
         setDeployState={setDeployState}

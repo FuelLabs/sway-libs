@@ -24,7 +24,7 @@ function SecondaryButton({
   if (!!header) {
     style = {
       ...style,
-      minWidth: '115px',
+      minWidth: '105px',
       height: '40px',
       marginRight: '15px',
       marginBottom: '10px',

@@ -15,6 +15,7 @@ import { useIsMobile } from '../../../hooks/useIsMobile';
 export interface ActionToolbarProps {
   deployState: DeployState;
   setContractId: (contractId: string) => void;
+  onShareClick: () => void;
   onCompile: () => void;
   isCompiled: boolean;
   setDeployState: (state: DeployState) => void;
@@ -28,6 +29,7 @@ export interface ActionToolbarProps {
 function ActionToolbar({
   deployState,
   setContractId,
+  onShareClick,
   onCompile,
   isCompiled,
   setDeployState,
@@ -38,6 +40,7 @@ function ActionToolbar({
   updateLog,
 }: ActionToolbarProps) {
   const isMobile = useIsMobile();
+
   const onDocsClick = useCallback(() => {
     window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer');
   }, []);
@@ -96,6 +99,12 @@ function ActionToolbar({
         text='DOCS'
         tooltip={'Open documentation for Sway in a new tab'}
         endIcon={<OpenInNew style={{ fontSize: '16px' }} />}
+      />
+      <SecondaryButton
+        header={true}
+        onClick={onShareClick}
+        text='SHARE'
+        tooltip={'Get a shareable link to your code'}
       />
     </div>
   );

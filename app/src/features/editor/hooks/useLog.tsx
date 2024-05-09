@@ -4,7 +4,7 @@ import { darkColors } from '@fuel-ui/css';
 
 const RESULT_LINE_LIMIT = 500;
 
-export function useLog() {
+export function useLog(): [React.ReactElement[], (entry?: string | React.ReactElement[]) => void] {
   // The complete results to show in the compilation output section.
   const [results, setResults] = useState<React.ReactElement[]>([]);
 
@@ -44,5 +44,5 @@ export function useLog() {
     }
   }, [results, resultsToAdd, resultsToAddRef, setResults]);
 
-  return [results, updateLog] as const;
+  return [results, updateLog] ;
 }

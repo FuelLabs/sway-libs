@@ -5,6 +5,7 @@ import { queryClient } from '../utils/queryClient';
 import { FuelProvider } from '@fuels/react';
 import { defaultConnectors } from '@fuels/connectors';
 
+
 type ProvidersProps = {
   children: ReactNode;
 };

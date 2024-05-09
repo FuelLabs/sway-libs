@@ -1,7 +1,7 @@
 use rocket::serde::{Deserialize, Serialize};
 use std::fmt::{self};
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum Language {
     Solidity,
@@ -50,18 +50,59 @@ pub struct CompileResponse {
     pub error: Option<String>,
 }
 
+/// A contract's code and its language. Used for contracts in languages other than Sway that can be transpiled.
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ContractCode {
+    pub contract: String,
+    pub language: Language,
+}
+
 /// The transpile request.
 #[derive(Deserialize)]
 pub struct TranspileRequest {
-    pub contract: String,
-    pub lanaguage: Language,
+    #[serde(flatten)]
+    pub contract_code: ContractCode,
 }
 
-/// The response to a compile request.
+/// The response to a transpile request.
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TranspileResponse {
     pub sway_contract: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub error: Option<String>,
+}
+
+/// The new gist request.
+#[derive(Deserialize)]
+pub struct NewGistRequest {
+    pub sway_contract: String,
+    pub transpile_contract: ContractCode,
+}
+
+/// Information about a gist.
+#[derive(Serialize, Deserialize)]
+pub struct GistMeta {
+    pub id: String,
+    pub url: String,
+}
+
+/// The response to a new gist request.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NewGistResponse {
+    pub gist: GistMeta,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub error: Option<String>,
+}
+
+/// The response to a gist request.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GistResponse {
+    pub gist: GistMeta,
+    pub sway_contract: String,
+    pub transpile_contract: ContractCode,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub error: Option<String>,
 }

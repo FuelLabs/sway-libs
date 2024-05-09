@@ -17,7 +17,7 @@ describe(`test examples`, () => {
         method: 'POST',
         body: JSON.stringify({
           contract: code,
-          lanaguage: 'solidity',
+          language: 'solidity',
         }),
       });
 
