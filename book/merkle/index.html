@@ -203,28 +203,43 @@
 <h3 id="using-fuel-merkle"><a class="header" href="#using-fuel-merkle">Using Fuel-Merkle</a></h3>
 <h4 id="generating-a-tree"><a class="header" href="#generating-a-tree">Generating A Tree</a></h4>
 <p>To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order.</p>
-<pre><code class="language-sway">    let mut tree = MerkleTree::new();
+<pre><code class="language-sway">    // Create a new Merkle Tree and define leaves
+    let mut tree = MerkleTree::new();
     let leaves = [&quot;A&quot;.as_bytes(), &quot;B&quot;.as_bytes(), &quot;C&quot;.as_bytes()].to_vec();
+
+    // Hash the leaves and then push to the merkle tree
     for datum in leaves.iter() {
         let mut hasher = Sha256::new();
         hasher.update(&amp;datum);
-        let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+        let hash = hasher.finalize();
         tree.push(&amp;hash);
     }
 </code></pre>
 <h4 id="generating-and-verifying-a-proof"><a class="header" href="#generating-and-verifying-a-proof">Generating And Verifying A Proof</a></h4>
 <p>To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:</p>
-<pre><code class="language-sway">    let proof = tree.prove(key).unwrap();
+<pre><code class="language-sway">    // Define the key or index of the leaf you want to prove and the number of leaves
+    let key: u64 = 0;
+
+    // Get the merkle root and proof set
+    let (merkle_root, proof_set) = tree.prove(key).unwrap();
+
+    // Convert the proof set from Vec&lt;Bytes32&gt; to Vec&lt;Bits256&gt;
     let mut bits256_proof: Vec&lt;Bits256&gt; = Vec::new();
-    for itterator in &amp;proof.1 {
+    for itterator in proof_set {
         bits256_proof.push(Bits256(itterator.clone()));
     }
 </code></pre>
 <p>Once the proof has been generated, you may call the Sway Smart Contract's <code>verify_proof</code> function:</p>
-<pre><code class="language-sway">    let merkle_root = proof.0;
-    let merkle_leaf = proof.1[key as usize];
-    bits256_proof.remove(key as usize);
+<pre><code class="language-sway">    // Create the merkle leaf
+    let mut leaf_hasher = Sha256::new();
+    leaf_hasher.update(&amp;leaves[key as usize]);
+    let hashed_leaf_data = leaf_hasher.finalize();
+    let merkle_leaf = leaf_sum(&amp;hashed_leaf_data);
 
+    // Get the number of leaves or data points
+    let num_leaves: u64 = leaves.len() as u64;
+
+    // Call the Sway contract to verify the generated merkle proof
     let result: bool = contract_instance
         .methods()
         .verify(
