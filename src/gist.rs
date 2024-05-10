@@ -14,7 +14,9 @@ pub struct GistClient {
 
 impl GistClient {
     pub fn default() -> Self {
-        let gh_token = std::env::var("GITHUB_API_TOKEN").expect("GITHUB_API_TOKEN must be set");
+        // Do not throw an error if the token is not set. It is only needed in production and for testing
+        // the "Share" feature.
+        let gh_token = std::env::var("GITHUB_API_TOKEN").unwrap_or_default();
         let octocrab = Octocrab::builder()
             .personal_token(gh_token)
             .build()
