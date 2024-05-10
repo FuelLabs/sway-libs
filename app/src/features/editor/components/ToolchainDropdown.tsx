@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
+import { ThemeContext } from '../../../theme/themeContext';
+import { DarkThemeStyling } from '../../../components/shared';
 
 const ToolchainNames = [
   'beta-5',
@@ -31,16 +33,29 @@ function ToolchainDropdown({
   setToolchain,
   style,
 }: ToolchainDropdownProps) {
+  // Import theme state
+  const theme = useContext(ThemeContext)?.theme;
+
+  const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkDropdown : {};
+  
   return (
-    <FormControl style={{ ...style }} size='small'>
+    <FormControl sx={{ ...style, ...dropdownStyling }} size='small'>
       <InputLabel id='toolchain-select-label'>Toolchain</InputLabel>
       <Tooltip placement='top' title={'Fuel toolchain to use for compilation'}>
         <span>
           <Select
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  background: theme === 'light' ? 'white' : '#181818',
+                  color: theme === 'light' ? '#181818' : 'white',
+                },
+              },
+            }}
             id='toolchain-select'
             labelId='toolchain-select-label'
             label='Toolchain'
-            style={{ minWidth: '70px', background: 'white' }}
+            style={{ minWidth: '70px' }}
             variant='outlined'
             value={toolchain}
             onChange={(event) => setToolchain(event.target.value as Toolchain)}>

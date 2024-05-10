@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { ParamTypeLiteral } from './FunctionParameters';
+import { darkColors } from '@fuel-ui/css';
+import { ThemeContext } from '../../../theme/themeContext';
 
 interface ResponseCardProps {
   response?: string | Error;
@@ -29,6 +31,9 @@ export function ResponseCard({
     }
   }, [outputType, response]);
 
+  // Import theme state
+  const theme = useContext(ThemeContext)?.theme;
+
   return (
     <Card
       style={{
@@ -38,10 +43,10 @@ export function ResponseCard({
       }}>
       <CardContent
         style={{
-          color: 'black',
+          color: theme === 'light' ? darkColors.gray6 : '#E0FFFF',
           fontSize: '14px',
           fontFamily: 'monospace',
-          backgroundColor: 'lightgrey',
+          background: theme === 'light' ? 'lightgrey': '#1F1F1F',
           padding: '2px 18px 2px',
           minHeight: '44px',
         }}>

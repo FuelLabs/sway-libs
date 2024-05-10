@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -7,6 +7,8 @@ import FormLabel from '@mui/material/FormLabel';
 import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
 import { ResponseCard } from './ResponseCard';
+import { darkColors ,lightColors} from '@fuel-ui/css';
+import { ThemeContext } from '../../../theme/themeContext';
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -27,10 +29,13 @@ export function FunctionCallAccordion({
   setResponse,
   updateLog,
 }: FunctionCallAccordionProps) {
+  // Import theme state
+  const theme = useContext(ThemeContext)?.theme;
+
   return (
-    <Accordion key={contractId + functionName}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <FormLabel style={{ fontFamily: 'monospace', color: '#00000099' }}>
+    <Accordion key={contractId + functionName} sx={[theme !== 'light' && {background: '#181818', border: `1px solid ${darkColors.gray6}`}]}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={[theme !== 'light' && {color: lightColors.scalesGreen7}]} />}>
+        <FormLabel style={{ fontFamily: 'monospace', color: theme === 'light' ? '#00000099' : lightColors.scalesGreen3 }}>
           {functionName}
         </FormLabel>
       </AccordionSummary>

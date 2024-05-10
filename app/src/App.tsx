@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import {Theme,ThemeContext} from './theme/themeContext'
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
@@ -25,6 +26,8 @@ import Copyable from './components/Copyable';
 const DRAWER_WIDTH = '40vw';
 
 function App() {
+  // Current theme state
+  const [theme,setTheme]=useState<Theme>('light');
   // The current sway code in the editor.
   const [swayCode, setSwayCode] = useState<string>(loadSwayCode());
 
@@ -173,52 +176,54 @@ function App() {
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
-    <div
-      style={{
-        padding: '15px',
-        margin: '0px',
-        background: '#F1F1F1',
-      }}>
-      <ActionToolbar
-        deployState={deployState}
-        setContractId={setContractId}
-        onShareClick={onShareClick}
-        onCompile={onCompileClick}
-        isCompiled={isCompiled}
-        setDeployState={setDeployState}
-        drawerOpen={drawerOpen}
-        setDrawerOpen={setDrawerOpen}
-        showSolidity={showSolidity}
-        setShowSolidity={setShowSolidity}
-        updateLog={updateLog}
-      />
+    <ThemeContext.Provider value={{setTheme,theme}}>
       <div
         style={{
-          marginRight: drawerOpen ? DRAWER_WIDTH : 0,
-          transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-          height: 'calc(100vh - 95px)',
-          display: 'flex',
-          flexDirection: 'column',
+          padding: '15px',
+          margin: '0px',
+          background: theme==='light' ? '#F1F1F1': 'black',
         }}>
-        <EditorView
-          swayCode={swayCode}
-          onSwayCodeChange={onSwayCodeChange}
-          solidityCode={solidityCode}
-          onSolidityCodeChange={onSolidityCodeChange}
-          toolchain={toolchain}
-          setToolchain={setToolchain}
+        <ActionToolbar
+          deployState={deployState}
+          setContractId={setContractId}
+          onShareClick={onShareClick}
+          onCompile={onCompileClick}
+          isCompiled={isCompiled}
+          setDeployState={setDeployState}
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
           showSolidity={showSolidity}
+          setShowSolidity={setShowSolidity}
+          updateLog={updateLog}
         />
-        <LogView results={log} />
+        <div
+          style={{
+            marginRight: drawerOpen ? DRAWER_WIDTH : 0,
+            transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+            height: 'calc(100vh - 95px)',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+          <EditorView
+            swayCode={swayCode}
+            onSwayCodeChange={onSwayCodeChange}
+            solidityCode={solidityCode}
+            onSolidityCodeChange={onSolidityCodeChange}
+            toolchain={toolchain}
+            setToolchain={setToolchain}
+            showSolidity={showSolidity}
+          />
+          <LogView results={log} />
+        </div>
+        <InteractionDrawer
+          isOpen={drawerOpen}
+          width={DRAWER_WIDTH}
+          contractId={contractId}
+          updateLog={updateLog}
+        />
+        <Analytics />
       </div>
-      <InteractionDrawer
-        isOpen={drawerOpen}
-        width={DRAWER_WIDTH}
-        contractId={contractId}
-        updateLog={updateLog}
-      />
-      <Analytics />
-    </div>
+    </ThemeContext.Provider>
   );
 }
 

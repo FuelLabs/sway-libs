@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { InputInstance, SimpleParamValue } from './FunctionParameters';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ComplexParameterInput from './ComplexParameterInput';
+import { ThemeContext } from "../../../theme/themeContext";
+import { DarkThemeStyling } from "../../../components/shared";
 
 export interface ParameterInputProps {
   input: InputInstance;
@@ -12,6 +14,11 @@ export interface ParameterInputProps {
 }
 
 function ParameterInput({ input, value, onChange }: ParameterInputProps) {
+  // Import theme state
+  const theme = useContext(ThemeContext)?.theme;
+
+  const inputStyling = theme !== 'light' ? DarkThemeStyling.darkInput : {};
+
   switch (input.type.literal) {
     case 'string':
       return (
@@ -20,6 +27,7 @@ function ParameterInput({ input, value, onChange }: ParameterInputProps) {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             onChange(event.target.value);
           }}
+          sx={{...inputStyling}}
         />
       );
     case 'number':
@@ -30,6 +38,7 @@ function ParameterInput({ input, value, onChange }: ParameterInputProps) {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             onChange(Number.parseFloat(event.target.value));
           }}
+          sx={{...inputStyling}}
         />
       );
     case 'bool':
