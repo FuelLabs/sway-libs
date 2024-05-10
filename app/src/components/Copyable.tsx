@@ -8,20 +8,21 @@ export interface CopyableProps {
   value: string;
   label: string;
   tooltip: string;
+  href?: boolean;
 }
 
 async function handleCopy(value: string) {
   await navigator.clipboard.writeText(value);
 }
 
-function Copyable({ value, label, tooltip }: CopyableProps) {
+function Copyable({ value, label, tooltip, href }: CopyableProps) {
   return (
     <div
       style={{ cursor: 'pointer', color: darkColors.gray6 }}
       onClick={() => handleCopy(value)}>
       <Tooltip title={`Click to copy ${tooltip}`}>
         <span>
-          <span style={{ padding: '8px 0 8px' }}>{label}</span>
+          {href ? (<a href={value} target='_blank' rel='noreferrer'>{label}</a>) : (<span style={{ padding: '8px 0 8px' }}>{label}</span>)}
           <IconButton disableRipple aria-label='copy'>
             <ContentCopyIcon style={{ fontSize: '14px' }} />
           </IconButton>

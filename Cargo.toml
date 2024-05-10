@@ -12,3 +12,5 @@ serde_json = "1.0.91"
 regex = "1.7.0"
 rocket = { version = "0.5.0-rc.2", features = ["tls", "json"] }
 serde = { version = "1.0", features = ["derive"] }
+octocrab = "0.38.0"
+thiserror = "1.0.60"

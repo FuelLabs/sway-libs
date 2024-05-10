@@ -32,7 +32,7 @@ export function useTranspile(
       method: 'POST',
       body: JSON.stringify({
         contract: code,
-        lanaguage: 'solidity',
+        language: 'solidity',
       }),
     });
 
