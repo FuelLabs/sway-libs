@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { InputInstance, SimpleParamValue } from './FunctionParameters';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ComplexParameterInput from './ComplexParameterInput';
-import { ThemeContext } from "../../../theme/themeContext";
+import { useThemeContext } from "../../../theme/themeContext";
 import { DarkThemeStyling } from "../../../components/shared";
 
 export interface ParameterInputProps {
@@ -15,7 +15,7 @@ export interface ParameterInputProps {
 
 function ParameterInput({ input, value, onChange }: ParameterInputProps) {
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   const inputStyling = theme !== 'light' ? DarkThemeStyling.darkInput : {};
 

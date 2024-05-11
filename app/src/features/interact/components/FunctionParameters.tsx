@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useContext } from 'react';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import Table, { TableProps } from '@mui/material/Table';
@@ -10,7 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import ParameterInput from './ParameterInput';
 import { TypeInfo } from '../utils/getTypeInfo';
 import { styled } from '@mui/material/styles';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 import { lightColors } from '@fuel-ui/css';
 
 
@@ -54,11 +53,11 @@ export function FunctionParameters({
 }: FunctionParametersProps) {
 
   // Import theme state
-  const theme = useContext(ThemeContext);
+  const theme = useThemeContext().theme;
 
   // Created custom Table component
   const TableCellComponent = styled(TableCell)<TableProps>(() => ({
-    color: theme?.theme === 'light' ? '' : lightColors.scalesGreen3,
+    color: theme === 'light' ? '' : lightColors.scalesGreen3,
   }));
 
   const setParamAtIndex = React.useCallback(
@@ -75,7 +74,7 @@ export function FunctionParameters({
   }
 
   return (
-    <TableContainer component={Paper} style={{ background: theme?.theme === 'light' ? '' : '#1F1F1F' }}>
+    <TableContainer component={Paper} style={{ background: theme === 'light' ? '' : '#1F1F1F' }}>
       <Table aria-label='function parameter table'>
         <TableHead>
           <TableRow>

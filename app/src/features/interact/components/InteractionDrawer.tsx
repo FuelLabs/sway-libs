@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import { ContractInterface } from './ContractInterface';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 import { darkColors, lightColors } from '@fuel-ui/css';
 
 export interface InteractionDrawerProps {
@@ -19,8 +19,7 @@ function InteractionDrawer({
 }: InteractionDrawerProps) {
 
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
-
+  const theme = useThemeContext().theme;
   return (
     <Drawer
       PaperProps={{

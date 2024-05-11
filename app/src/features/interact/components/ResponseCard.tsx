@@ -1,9 +1,9 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { ParamTypeLiteral } from './FunctionParameters';
 import { darkColors } from '@fuel-ui/css';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 
 interface ResponseCardProps {
   response?: string | Error;
@@ -32,7 +32,7 @@ export function ResponseCard({
   }, [outputType, response]);
 
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   return (
     <Card

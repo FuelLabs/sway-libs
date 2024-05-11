@@ -1,10 +1,10 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl/FormControl';
 import Select from '@mui/material/Select/Select';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 import { DarkThemeStyling } from '../../../components/shared';
 
 export interface ExampleMenuItem {
@@ -41,7 +41,7 @@ function ExampleDropdown({
   );
 
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkDropdown : {};
   return (

@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useContext} from 'react';
+import React, {useMemo, useState } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-rust';
@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow_night_bright';
 import { StyledBorder } from '../../../components/shared';
 import ActionOverlay from './ActionOverlay';
 import { Toolchain } from './ToolchainDropdown';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 
 export interface SwayEditorProps {
   code: string;
@@ -24,9 +24,9 @@ function SwayEditor({
 }: SwayEditorProps) {
   //set theme of editor once theme changes
   const [themeStyle,setThemeStyle] = useState('chrome')
-  const theme = useContext(ThemeContext);
+  const theme = useThemeContext().theme;
   useMemo(()=>{
-    if(String(theme?.theme) !== 'light'){
+    if(String(theme) !== 'light'){
       setThemeStyle('tomorrow_night_bright')
     } else{
       setThemeStyle('chrome')

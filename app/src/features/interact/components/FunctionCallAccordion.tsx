@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -8,7 +8,7 @@ import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
 import { ResponseCard } from './ResponseCard';
 import { darkColors ,lightColors} from '@fuel-ui/css';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -30,7 +30,7 @@ export function FunctionCallAccordion({
   updateLog,
 }: FunctionCallAccordionProps) {
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   return (
     <Accordion key={contractId + functionName} sx={[theme !== 'light' && {background: '#181818', border: `1px solid ${darkColors.gray6}`}]}>

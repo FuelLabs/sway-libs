@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import CircularProgress from '@mui/material/CircularProgress';
 import Copyable from './Copyable';
 import { lightColors, darkColors} from '@fuel-ui/css';
-import { ThemeContext } from '../theme/themeContext';
+import { useThemeContext } from '../theme/themeContext';
 
 const BorderColor = () => {
-  const theme = useContext(ThemeContext);
-  const borderColor = theme?.theme === 'light' ? 'lightgrey' : '#181818';
+  const theme = useThemeContext().theme;
+  const borderColor = theme === 'light' ? 'lightgrey' : '#181818';
   return borderColor;
 };
 

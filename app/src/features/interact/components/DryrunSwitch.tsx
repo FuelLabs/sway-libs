@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { lightColors } from '@fuel-ui/css';
-import { ThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../theme/themeContext';
 
 export interface DryrunSwitchProps {
   dryrun: boolean;
@@ -11,7 +11,7 @@ export interface DryrunSwitchProps {
 
 function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   return (
     <FormControlLabel

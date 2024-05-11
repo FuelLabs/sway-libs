@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { darkColors } from '@fuel-ui/css';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { ThemeContext } from "../theme/themeContext";
+import { useThemeContext } from "../theme/themeContext";
 
 export interface CopyableProps {
   value: string;
@@ -18,7 +18,7 @@ async function handleCopy(value: string) {
 
 function Copyable({ value, label, tooltip, href }: CopyableProps) {
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   return (
     <div

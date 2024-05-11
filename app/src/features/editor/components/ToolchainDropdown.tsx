@@ -4,7 +4,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
-import { ThemeContext } from '../../../theme/themeContext';
+import { ThemeContext, useThemeContext } from '../../../theme/themeContext';
 import { DarkThemeStyling } from '../../../components/shared';
 
 const ToolchainNames = [
@@ -34,7 +34,7 @@ function ToolchainDropdown({
   style,
 }: ToolchainDropdownProps) {
   // Import theme state
-  const theme = useContext(ThemeContext)?.theme;
+  const theme = useThemeContext().theme;
 
   const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkDropdown : {};
   
