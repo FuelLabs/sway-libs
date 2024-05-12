@@ -21,7 +21,7 @@ function SolidityEditor({ code, onChange }: SolidityEditorProps) {
   const [themeStyle,setThemeStyle] = useState('chrome')
   const theme = useThemeContext().theme;
   useMemo(()=>{
-    if(String(theme) !== 'light'){
+    if(theme !== 'light'){
       setThemeStyle('tomorrow_night_bright')
     } else{
       setThemeStyle('chrome')

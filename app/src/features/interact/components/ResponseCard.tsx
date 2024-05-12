@@ -40,6 +40,7 @@ export function ResponseCard({
         right: '0',
         left: '0',
         ...style,
+        background: theme === 'light' ? '' : 'transparent'
       }}>
       <CardContent
         style={{
