@@ -455,6 +455,11 @@ impl IFP64 {
             let ceil = self.underlying.ceil();
             let diff_self_floor = self.underlying - floor;
             let diff_ceil_self = ceil - self.underlying;
+            underlying = if diff_self_floor > diff_ceil_self {
+                floor
+            } else {
+                ceil
+            };
         }
         Self {
             underlying: underlying,
