@@ -1,7 +1,5 @@
-use fuel_merkle::{
-    binary::in_memory::MerkleTree,
-    common::{empty_sum_sha256, Bytes32},
-};
+use fuel_merkle::binary::in_memory::MerkleTree;
+use fuel_tx::Bytes32;
 use fuels::{
     prelude::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies,
@@ -96,9 +94,9 @@ pub mod test_helpers {
     }
 
     impl Node {
-        pub fn new(hash: Bytes32) -> Self {
+        pub fn new(hash: [u8; 32]) -> Self {
             Node {
-                hash,
+                hash: hash.into(),
                 left: None,
                 right: None,
             }
@@ -121,23 +119,26 @@ pub mod test_helpers {
     ) -> (MerkleTree, Bits256, Bits256, Vec<Bits256>) {
         let mut tree = MerkleTree::new();
         let num_leaves = leaves.len();
+        let mut leaf_hash = [0u8; 32];
 
         for n in 0..num_leaves {
             let mut hasher = Sha256::new();
             hasher.update(&leaves[n]);
-            let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+            let hash = hasher.finalize();
+
+            if n == key as usize {
+                leaf_hash = hash.into();
+            }
 
             let _ = tree.push(&hash);
         }
 
-        let merkle_root = tree.root();
-        let mut proof = tree.prove(key).unwrap();
-        let merkle_leaf = proof.1[0];
-        proof.1.remove(0);
+        let (merkle_root, proof) = tree.prove(key).unwrap();
+        let merkle_leaf = leaf_sum(&leaf_hash);
 
         let mut final_proof: Vec<Bits256> = Vec::new();
 
-        for itterator in proof.1 {
+        for itterator in proof {
             final_proof.push(Bits256(itterator.clone()));
         }
 
@@ -156,7 +157,7 @@ pub mod test_helpers {
     ) -> (Bits256, Vec<Bits256>, Bits256) {
         let num_leaves = leaves.len();
         let mut nodes: Vec<Node> = Vec::new();
-        let mut leaf_hash: Bytes32 = *empty_sum_sha256();
+        let mut leaf_hash = [0u8; 32];
         let mut proof: Vec<Bits256> = Vec::new();
 
         assert!(key <= num_leaves);
@@ -166,12 +167,12 @@ pub mod test_helpers {
             let mut hasher = Sha256::new();
             hasher.update(&[LEAF]);
             hasher.update(&leaves[n]);
-            let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+            let hash = hasher.finalize();
 
-            let new_node = Node::new(hash);
+            let new_node = Node::new(hash.into());
             nodes.push(new_node);
             if n == key {
-                leaf_hash = hash.clone();
+                leaf_hash = hash.into();
             }
         }
 
@@ -186,7 +187,7 @@ pub mod test_helpers {
                 hasher.update(&[NODE]);
                 hasher.update(&nodes[itterator].hash);
                 hasher.update(&nodes[itterator + 1].hash);
-                let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+                let hash = hasher.finalize().into();
 
                 let new_node = Node::new(hash).left(itterator).right(itterator + 1);
                 nodes.push(new_node);
@@ -210,12 +211,12 @@ pub mod test_helpers {
                 // Go left
                 index = node.left.unwrap();
                 let proof_node = node.right.unwrap();
-                proof.push(Bits256(nodes[proof_node].hash));
+                proof.push(Bits256(*nodes[proof_node].hash));
             } else {
                 // Go right
                 index = node.right.unwrap();
                 let proof_node = node.left.unwrap();
-                proof.push(Bits256(nodes[proof_node].hash));
+                proof.push(Bits256(*nodes[proof_node].hash));
 
                 key = key - number_subtree_elements;
             }
@@ -226,7 +227,7 @@ pub mod test_helpers {
         (
             Bits256(leaf_hash),
             proof,
-            Bits256(nodes.last().unwrap().hash),
+            Bits256(*nodes.last().unwrap().hash),
         )
     }
 
@@ -257,5 +258,14 @@ pub mod test_helpers {
         let instance = TestMerkleProofLib::new(contract_id.clone(), wallet.clone());
 
         instance
+    }
+
+    pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
+        let mut hash = Sha256::new();
+
+        hash.update(&[LEAF]);
+        hash.update(data);
+
+        hash.finalize().into()
     }
 }

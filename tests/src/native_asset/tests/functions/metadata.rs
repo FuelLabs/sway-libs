@@ -2,7 +2,7 @@ use crate::native_asset::tests::utils::{
     interface::{metadata, set_metadata},
     setup::{defaults, get_asset_id, setup, Metadata},
 };
-use fuels::{tx::Bytes32, types::Bytes};
+use fuels::types::{Bytes, Bytes32};
 
 mod success {
 

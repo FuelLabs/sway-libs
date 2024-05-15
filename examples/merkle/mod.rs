@@ -4,6 +4,8 @@ use fuel_merkle::{binary::in_memory::MerkleTree, common::Bytes32};
 use fuels::{prelude::*, types::Bits256};
 use sha2::{Digest, Sha256};
 
+pub const LEAF: u8 = 0x00;
+
 // Load abi from json
 abigen!(Contract(
     name = "MerkleExample",
@@ -44,32 +46,44 @@ async fn rust_setup_example() {
     let (contract_instance, _id) = get_contract_instance().await;
 
     // ANCHOR: generating_a_tree
+    // Create a new Merkle Tree and define leaves
     let mut tree = MerkleTree::new();
     let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
+
+    // Hash the leaves and then push to the merkle tree
     for datum in leaves.iter() {
         let mut hasher = Sha256::new();
         hasher.update(&datum);
-        let hash: Bytes32 = hasher.finalize().try_into().unwrap();
+        let hash = hasher.finalize();
         tree.push(&hash);
     }
     // ANCHOR_END: generating_a_tree
 
-    let key = 0;
-    let num_leaves = 3;
-
     // ANCHOR: generating_proof
-    let proof = tree.prove(key).unwrap();
+    // Define the key or index of the leaf you want to prove and the number of leaves
+    let key: u64 = 0;
+
+    // Get the merkle root and proof set
+    let (merkle_root, proof_set) = tree.prove(key).unwrap();
+
+    // Convert the proof set from Vec<Bytes32> to Vec<Bits256>
     let mut bits256_proof: Vec<Bits256> = Vec::new();
-    for itterator in &proof.1 {
+    for itterator in proof_set {
         bits256_proof.push(Bits256(itterator.clone()));
     }
     // ANCHOR_END: generating_proof
 
     // ANCHOR: verify_proof
-    let merkle_root = proof.0;
-    let merkle_leaf = proof.1[key as usize];
-    bits256_proof.remove(key as usize);
+    // Create the merkle leaf
+    let mut leaf_hasher = Sha256::new();
+    leaf_hasher.update(&leaves[key as usize]);
+    let hashed_leaf_data = leaf_hasher.finalize();
+    let merkle_leaf = leaf_sum(&hashed_leaf_data);
 
+    // Get the number of leaves or data points
+    let num_leaves: u64 = leaves.len() as u64;
+
+    // Call the Sway contract to verify the generated merkle proof
     let result: bool = contract_instance
         .methods()
         .verify(
@@ -85,4 +99,13 @@ async fn rust_setup_example() {
         .value;
     assert!(result);
     // ANCHOR_END: verify_proof
+}
+
+pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
+    let mut hash = Sha256::new();
+
+    hash.update(&[LEAF]);
+    hash.update(data);
+
+    hash.finalize().into()
 }
