@@ -205,9 +205,7 @@ impl core::ops::Multiply for UFP128 {
 impl core::ops::Divide for UFP128 {
     /// Divide a UFP128 by a UFP128. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        let mut s = self;
         let zero = UFP128::zero();
-        let u128_max = U128::max();
 
         assert(divisor != zero);
 
@@ -430,8 +428,7 @@ impl Exponent for UFP128 {
         let p7 = one / UFP128::from((5040, 0));
 
         // common technique to counter losing sugnifucant numbers in usual approximation
-        let res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
-        let res = res_minus_1 + one;
+        let _res_minus_1 = exponent + exponent * exponent * (p2 + exponent * (p3 + exponent * (p4 + exponent * (p5 + exponent * (p6 + exponent * p7)))));
         let res = one;
         res
     }
