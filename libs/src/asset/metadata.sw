@@ -349,7 +349,7 @@ impl Metadata {
     /// # Examples
     ///
     /// ```sway
-    /// use std::{constants::ZERO_B256, string::String};
+    /// use std::string::String;
     /// use sway_libs::asset::metadata::*;
     /// use standards::src7::{SRC7, Metadata};
     ///
@@ -358,7 +358,7 @@ impl Metadata {
     ///     let metadata = metadata_abi.metadata(asset, key);
     ///
     ///     let val = metadata.unwrap().as_b256();
-    ///     assert(val != ZERO_B256);
+    ///     assert(val != b256::zero());
     /// }
     /// ```
     pub fn as_b256(self) -> Option<b256> {

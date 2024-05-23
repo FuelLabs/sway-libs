@@ -10,9 +10,9 @@ use ::fixed_point::ufp32::UFP32;
 /// Represented by an underlying `UFP32` number and a boolean.
 pub struct IFP64 {
     /// The underlying value representing the `IFP64` type.
-    pub underlying: UFP32,
+    underlying: UFP32,
     /// The underlying boolean representing a negative value for the `IFP64` type.
-    pub non_negative: bool,
+    non_negative: bool,
 }
 
 impl From<UFP32> for IFP64 {
@@ -59,7 +59,7 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::max();
-    ///     assert(ifp64.underlying == UFP32::max());
+    ///     assert(ifp64.underlying() == UFP32::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -79,7 +79,7 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::min();
-    ///     assert(ifp64.underlying == UFP32::min());
+    ///     assert(ifp64.underlying() == UFP32::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -102,11 +102,31 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::zero();
-    ///     assert(ifp64.underlying == UFP32::zero());
+    ///     assert(ifp64.underlying() == UFP32::zero());
     /// }
     /// ```
     pub fn zero() -> Self {
         Self::from(UFP32::zero())
+    }
+
+    /// Returns whether a `IFP64` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `IFP64` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ifp64::IFP64;
+    ///
+    /// fn foo() {
+    ///     let ifp64 = IFP64::zero();
+    ///     assert(ifp64.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == UFP32::zero()
     }
 
     /// Inverts the sign for this type.
@@ -122,9 +142,9 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::zero();
-    ///     assert(ifp64.non_negative);
+    ///     assert(ifp64.non_negative());
     ///     let reverse = ifp64.sign_inverse();
-    ///     assert(!reverse.non_negative);
+    ///     assert(!reverse.non_negative());
     /// }
     /// ```
     fn sign_reverse(self) -> Self {
@@ -132,6 +152,46 @@ impl IFP64 {
             underlying: self.underlying,
             non_negative: !self.non_negative,
         }
+    }
+
+    /// Returns the underlying `UFP32` representing the `IFP64`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP32] - The `UFP32` representing the `IFP64`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::{ifp64::IFP64, ufp32::UFP32};
+    ///
+    /// fn foo() {
+    ///     let ifp64 = IFP64::zero();
+    ///     assert(ifp64.underlying() == UFP32::zero());
+    /// }
+    /// ```
+    pub fn underlying(self) -> UFP32 {
+        self.underlying
+    }
+
+    /// Returns the underlying bool representing the postive or negative state of the IFP64.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] - The `bool` representing whether the `IFP64` is non-negative or not.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ifp64::IFP64;
+    ///
+    /// fn foo() {
+    ///     let ifp64 = IFP64::zero();
+    ///     assert(ifp64.non_negative() == false);
+    /// }
+    /// ```
+    pub fn non_negative(self) -> bool {
+        self.non_negative
     }
 }
 
@@ -263,7 +323,7 @@ impl IFP64 {
     ///
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(1u32);
-    ///     assert(ifp64.underlying == UFP32::from_uint(1u32));
+    ///     assert(ifp64.underlying() == UFP32::from_uint(1u32));
     /// }
     /// ```
     pub fn from_uint(uint: u32) -> Self {
@@ -290,7 +350,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128u32);
     ///     let recip = IFP64::recip(ifp64);
-    ///     assert(recip.underlying == UFP32::recip(UFP32::from(128u32)));
+    ///     assert(recip.underlying() == UFP32::recip(UFP32::from(128u32)));
     /// }
     /// ```
     pub fn recip(number: IFP64) -> Self {
@@ -318,7 +378,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128u32);
     ///     let trunc = ifp64.trunc();
-    ///     assert(trunc.underlying == UFP32::from(128u32).trunc());
+    ///     assert(trunc.underlying() == UFP32::from(128u32).trunc());
     /// }
     /// ```
     pub fn trunc(self) -> Self {
@@ -344,7 +404,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128u32);
     ///     let floor = ifp64.floor();
-    ///     assert(floor.underlying == UFP32::from(128u32).trunc().underlying);
+    ///     assert(floor.underlying() == UFP32::from(128u32).trunc().underlying());
     /// }
     /// ```
     pub fn floor(self) -> Self {
@@ -374,7 +434,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128u32);
     ///     let fract = ifp64.fract();
-    ///     assert(fract.underlying == UFP32::from(128u32).fract());
+    ///     assert(fract.underlying() == UFP32::from(128u32).fract());
     /// }
     /// ```
     pub fn fract(self) -> Self {
@@ -400,7 +460,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128u32);
     ///     let ceil = ifp64.ceil();
-    ///     assert(ceil.underlying = UFP32::from(128u32).ceil());
+    ///     assert(ceil.underlying() = UFP32::from(128u32).ceil());
     /// }
     /// ```
     pub fn ceil(self) -> Self {
@@ -442,7 +502,7 @@ impl IFP64 {
     /// fn foo() {
     ///     let ifp64 = IFP64::from_uint(128_u32);
     ///     let round = ifp64.round();
-    ///     assert(round.underlying == UFP32::from(128u32).round());
+    ///     assert(round.underlying() == UFP32::from(128u32).round());
     /// }
     /// ```
     pub fn round(self) -> Self {

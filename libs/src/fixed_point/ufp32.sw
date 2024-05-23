@@ -9,13 +9,13 @@ use std::math::*;
 /// Represented by an underlying `u32` number.
 pub struct UFP32 {
     /// The underlying value representing the `UFP32` type.
-    pub value: u32,
+    underlying: u32,
 }
 
 impl From<u32> for UFP32 {
     /// Creates UFP32 from u32. Note that UFP32::from(1) is 1 / 2^32 and not 1.
-    fn from(value: u32) -> Self {
-        Self { value }
+    fn from(underlying: u32) -> Self {
+        Self { underlying }
     }
 }
 
@@ -73,12 +73,12 @@ impl UFP32 {
     ///
     /// fn foo() {
     ///     let ufp32 = UFP32::max();
-    ///     assert(ufp32.value == u32::max());
+    ///     assert(ufp32.underlying() == u32::max());
     /// }
     /// ```
     pub fn max() -> Self {
         Self {
-            value: u32::max(),
+            underlying: u32::max(),
         }
     }
 
@@ -95,12 +95,12 @@ impl UFP32 {
     ///
     /// fn foo() {
     ///     let ufp32 = UFP32::min();
-    ///     assert(ufp32.underlying == u32::min());
+    ///     assert(ufp32.underlying() == u32::min());
     /// }
     /// ```
     pub fn min() -> Self {
         Self {
-            value: u32::min(),
+            underlying: u32::min(),
         }
     }
 
@@ -117,27 +117,67 @@ impl UFP32 {
     ///
     /// fn foo() {
     ///     let ufp32 = UFP32::zero();
-    ///     assert(ufp32.underlying == 0u32);
+    ///     assert(ufp32.underlying() == 0u32);
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { value: 0u32 }
+        Self { underlying: 0u32 }
+    }
+
+    /// Returns whether a `UFP32` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `UFP32` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ufp32::UFP32;
+    ///
+    /// fn foo() {
+    ///     let ufp32 = UFP32::zero();
+    ///     assert(ufp32.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == 0u32
+    }
+
+    /// Returns the underlying `u32` representing the `UFP32`.
+    ///
+    /// # Returns
+    ///
+    /// * [u32] - The `u32` representing the `UFP32`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ufp32::UFP32;
+    ///
+    /// fn foo() {
+    ///     let ufp32 = UFP32::zero();
+    ///     assert(ufp32.underlying() == 0u32);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u32 {
+        self.underlying
     }
 }
 
 impl core::ops::Eq for UFP32 {
     fn eq(self, other: Self) -> bool {
-        self.value == other.value
+        self.underlying == other.underlying
     }
 }
 
 impl core::ops::Ord for UFP32 {
     fn gt(self, other: Self) -> bool {
-        self.value > other.value
+        self.underlying > other.underlying
     }
 
     fn lt(self, other: Self) -> bool {
-        self.value < other.value
+        self.underlying < other.underlying
     }
 }
 
@@ -145,7 +185,7 @@ impl core::ops::Add for UFP32 {
     /// Add a UFP32 to a UFP32. Panics on overflow.
     fn add(self, other: Self) -> Self {
         Self {
-            value: self.value + other.value,
+            underlying: self.underlying + other.underlying,
         }
     }
 }
@@ -154,10 +194,10 @@ impl core::ops::Subtract for UFP32 {
     /// Subtract a UFP32 from a UFP32. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         // If trying to subtract a larger number, panic.
-        assert(self.value >= other.value);
+        assert(self.underlying >= other.underlying);
 
         Self {
-            value: self.value - other.value,
+            underlying: self.underlying - other.underlying,
         }
     }
 }
@@ -165,8 +205,8 @@ impl core::ops::Subtract for UFP32 {
 impl core::ops::Multiply for UFP32 {
     /// Multiply a UFP32 with a UFP32. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-        let self_u64: u64 = self.value.as_u64();
-        let other_u64: u64 = other.value.as_u64();
+        let self_u64: u64 = self.underlying.as_u64();
+        let other_u64: u64 = other.underlying.as_u64();
 
         let self_multiply_other = self_u64 * other_u64;
         let res_u64 = self_multiply_other >> 16;
@@ -176,7 +216,7 @@ impl core::ops::Multiply for UFP32 {
         }
 
         Self {
-            value: asm(ptr: res_u64) {
+            underlying: asm(ptr: res_u64) {
                 ptr: u32
             },
         }
@@ -194,8 +234,8 @@ impl core::ops::Divide for UFP32 {
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
-        let self_u64: u64 = self.value.as_u64();
-        let divisor_u64: u64 = divisor.value.as_u64();
+        let self_u64: u64 = self.underlying.as_u64();
+        let divisor_u64: u64 = divisor.underlying.as_u64();
 
         // Multiply by denominator to ensure accuracy 
         let res_u64 = self_u64 * denominator / divisor_u64;
@@ -205,7 +245,7 @@ impl core::ops::Divide for UFP32 {
             revert(0);
         }
         Self {
-            value: asm(ptr: res_u64) {
+            underlying: asm(ptr: res_u64) {
                 ptr: u32
             },
         }
@@ -230,12 +270,12 @@ impl UFP32 {
     ///
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(1u32);
-    ///     assert(ufp32.underlying == 65536u32);
+    ///     assert(ufp32.underlying() == 65536u32);
     /// }
     /// ```
     pub fn from_uint(uint: u32) -> Self {
         Self {
-            value: Self::denominator() * uint,
+            underlying: Self::denominator() * uint,
         }
     }
 }
@@ -259,7 +299,7 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128u32);
     ///     let recip = UFP32::recip(ufp32);
-    ///     assert(recip.underlying == 512u32);
+    ///     assert(recip.underlying() == 512u32);
     /// }
     /// ```
     pub fn recip(number: UFP32) -> Self {
@@ -287,7 +327,7 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128u32);
     ///     let trunc = ufp32.trunc();
-    ///     assert(trunc.underlying == 0);
+    ///     assert(trunc.underlying() == 0);
     /// }
     /// ```
     pub fn trunc(self) -> Self {
@@ -296,7 +336,7 @@ impl UFP32 {
             // to get rid of fractional part, than move to the
             // left (multiply by the denominator), to ensure 
             // fixed-point structure
-            value: (self.value >> 16) << 16,
+            underlying: (self.underlying >> 16) << 16,
         }
     }
 }
@@ -316,7 +356,7 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128u32);
     ///     let floor = ufp32.floor();
-    ///     assert(floor.underlying == 0);
+    ///     assert(floor.underlying() == 0);
     /// }
     /// ```
     pub fn floor(self) -> Self {
@@ -337,7 +377,7 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128u32);
     ///     let fract = ufp32.fract();
-    ///     assert(fract.underlying == 0);
+    ///     assert(fract.underlying() == 0);
     /// }
     /// ```
     pub fn fract(self) -> Self {
@@ -346,7 +386,7 @@ impl UFP32 {
             // to get rid of integer part, than move to the
             // right (divide by the denominator), to ensure 
             // fixed-point structure
-            value: ((self.value << 16) - u32::max() - 1u32) >> 16,
+            underlying: ((self.underlying << 16) - u32::max() - 1u32) >> 16,
         }
     }
 }
@@ -366,11 +406,11 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128u32);
     ///     let ceil = ufp32.ceil();
-    ///     assert(ceil.underlying = 65536u32);
+    ///     assert(ceil.underlying() = 65536u32);
     /// }
     /// ```
     pub fn ceil(self) -> Self {
-        if self.fract().value != 0u32 {
+        if self.fract().underlying != 0u32 {
             let res = self.trunc() + UFP32::from_uint(1u32);
             return res;
         }
@@ -393,7 +433,7 @@ impl UFP32 {
     /// fn foo() {
     ///     let ufp32 = UFP32::from_uint(128_u32);
     ///     let round = ufp32.round();
-    ///     assert(round.underlying == 0);
+    ///     assert(round.underlying() == 0);
     /// }
     /// ```
     pub fn round(self) -> Self {
@@ -414,12 +454,12 @@ impl UFP32 {
 impl Root for UFP32 {
     /// Sqaure root for UFP32
     fn sqrt(self) -> Self {
-        let nominator_root = self.value.sqrt();
+        let nominator_root = self.underlying.sqrt();
         // Need to multiply over 2 ^ 16, as the square root of the denominator 
         // is also taken and we need to ensure that the denominator is constant
         let nominator = nominator_root << 16;
         Self {
-            value: nominator,
+            underlying: nominator,
         }
     }
 }
@@ -447,7 +487,7 @@ impl Exponent for UFP32 {
 impl Power for UFP32 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: u32) -> Self {
-        let nominator_pow = self.value.pow(exponent);
+        let nominator_pow = self.underlying.pow(exponent);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 16
         // we need to divide the nominator by 2 ^ (16 * exponent - 1)
@@ -459,7 +499,7 @@ impl Power for UFP32 {
             revert(0);
         }
         Self {
-            value: nominator,
+            underlying: nominator,
         }
     }
 }

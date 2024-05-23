@@ -9,13 +9,13 @@ use std::{math::{Exponent, Power, Root}, u128::U128};
 /// Represented by an underlying `u64` number.
 pub struct UFP64 {
     /// The underlying value representing the `UFP64` type.
-    pub value: u64,
+    underlying: u64,
 }
 
 impl From<u64> for UFP64 {
     /// Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.
-    fn from(value: u64) -> Self {
-        Self { value }
+    fn from(underlying: u64) -> Self {
+        Self { underlying }
     }
 }
 
@@ -73,12 +73,12 @@ impl UFP64 {
     ///
     /// fn foo() {
     ///     let ufp64 = UFP64::max();
-    ///     assert(ufp64.value == u64::max());
+    ///     assert(ufp64.underlying() == u64::max());
     /// }
     /// ```
     pub fn max() -> Self {
         Self {
-            value: u64::max(),
+            underlying: u64::max(),
         }
     }
 
@@ -95,12 +95,12 @@ impl UFP64 {
     ///
     /// fn foo() {
     ///     let ufp64 = UFP64::min();
-    ///     assert(ufp64.underlying == u64::min());
+    ///     assert(ufp64.underlying() == u64::min());
     /// }
     /// ```
     pub fn min() -> Self {
         Self {
-            value: u64::min(),
+            underlying: u64::min(),
         }
     }
 
@@ -117,27 +117,67 @@ impl UFP64 {
     ///
     /// fn foo() {
     ///     let ufp64 = UFP64::zero();
-    ///     assert(ufp64.underlying == 0);
+    ///     assert(ufp64.underlying() == 0);
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { value: 0 }
+        Self { underlying: 0 }
+    }
+
+    /// Returns whether a `UFP64` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `UFP64` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ufp64::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::zero();
+    ///     assert(ufp64.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == 0
+    }
+
+    /// Returns the underlying `u64` representing the `UFP64`.
+    ///
+    /// # Returns
+    ///
+    /// * [u64] - The `u64` representing the `UFP64`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ufp64::UFP64;
+    ///
+    /// fn foo() {
+    ///     let ufp64 = UFP64::zero();
+    ///     assert(ufp64.underlying() == 0);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u64 {
+        self.underlying
     }
 }
 
 impl core::ops::Eq for UFP64 {
     fn eq(self, other: Self) -> bool {
-        self.value == other.value
+        self.underlying == other.underlying
     }
 }
 
 impl core::ops::Ord for UFP64 {
     fn gt(self, other: Self) -> bool {
-        self.value > other.value
+        self.underlying > other.underlying
     }
 
     fn lt(self, other: Self) -> bool {
-        self.value < other.value
+        self.underlying < other.underlying
     }
 }
 
@@ -145,7 +185,7 @@ impl core::ops::Add for UFP64 {
     /// Add a UFP64 to a UFP64. Panics on overflow.
     fn add(self, other: Self) -> Self {
         Self {
-            value: self.value + other.value,
+            underlying: self.underlying + other.underlying,
         }
     }
 }
@@ -154,10 +194,10 @@ impl core::ops::Subtract for UFP64 {
     /// Subtract a UFP64 from a UFP64. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         // If trying to subtract a larger number, panic.
-        assert(self.value >= other.value);
+        assert(self.underlying >= other.underlying);
 
         Self {
-            value: self.value - other.value,
+            underlying: self.underlying - other.underlying,
         }
     }
 }
@@ -165,8 +205,8 @@ impl core::ops::Subtract for UFP64 {
 impl core::ops::Multiply for UFP64 {
     /// Multiply a UFP64 with a UFP64. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
-        let self_u128 = U128::from((0, self.value));
-        let other_u128 = U128::from((0, other.value));
+        let self_u128 = U128::from((0, self.underlying));
+        let other_u128 = U128::from((0, other.underlying));
 
         let self_multiply_other = self_u128 * other_u128;
         let res_u128 = self_multiply_other >> 32;
@@ -176,7 +216,7 @@ impl core::ops::Multiply for UFP64 {
         }
 
         Self {
-            value: res_u128.lower(),
+            underlying: res_u128.lower(),
         }
     }
 }
@@ -192,8 +232,8 @@ impl core::ops::Divide for UFP64 {
         // and maximal precision is avaliable
         // as it makes possible to multiply by the denominator in 
         // all cases
-        let self_u128 = U128::from((0, self.value));
-        let divisor_u128 = U128::from((0, divisor.value));
+        let self_u128 = U128::from((0, self.underlying));
+        let divisor_u128 = U128::from((0, divisor.underlying));
 
         // Multiply by denominator to ensure accuracy 
         let res_u128 = self_u128 * denominator / divisor_u128;
@@ -203,7 +243,7 @@ impl core::ops::Divide for UFP64 {
             revert(0);
         }
         Self {
-            value: res_u128.lower(),
+            underlying: res_u128.lower(),
         }
     }
 }
@@ -226,12 +266,12 @@ impl UFP64 {
     ///
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(1);
-    ///     assert(ufp64.underlying == 4294967296);
+    ///     assert(ufp64.underlying() == 4294967296);
     /// }
     /// ```
     pub fn from_uint(uint: u64) -> Self {
         Self {
-            value: Self::denominator() * uint,
+            underlying: Self::denominator() * uint,
         }
     }
 }
@@ -255,7 +295,7 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let recip = UFP64::recip(ufp64);
-    ///     assert(recip.underlying == 33554432);
+    ///     assert(recip.underlying() == 33554432);
     /// }
     /// ```
     pub fn recip(number: UFP64) -> Self {
@@ -283,7 +323,7 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let trunc = ufp64.trunc();
-    ///     assert(trunc.underlying == 0);
+    ///     assert(trunc.underlying() == 0);
     /// }
     /// ```
     pub fn trunc(self) -> Self {
@@ -292,7 +332,7 @@ impl UFP64 {
             // to get rid of fractional part, than move to the
             // left (multiply by the denominator), to ensure 
             // fixed-point structure
-            value: (self.value >> 32) << 32,
+            underlying: (self.underlying >> 32) << 32,
         }
     }
 }
@@ -312,7 +352,7 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let floor = ufp64.floor();
-    ///     assert(floor.underlying == 0);
+    ///     assert(floor.underlying() == 0);
     /// }
     /// ```
     pub fn floor(self) -> Self {
@@ -333,7 +373,7 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let fract = ufp64.fract();
-    ///     assert(fract.underlying == 0);
+    ///     assert(fract.underlying() == 0);
     /// }
     /// ```
     pub fn fract(self) -> Self {
@@ -342,7 +382,7 @@ impl UFP64 {
             // to get rid of integer part, than move to the
             // right (divide by the denominator), to ensure 
             // fixed-point structure
-            value: (self.value << 32) >> 32,
+            underlying: (self.underlying << 32) >> 32,
         }
     }
 }
@@ -362,11 +402,11 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let ceil = ufp64.ceil();
-    ///     assert(ceil.underlying = 4294967296);
+    ///     assert(ceil.underlying() = 4294967296);
     /// }
     /// ```
     pub fn ceil(self) -> Self {
-        if self.fract().value != 0 {
+        if self.fract().underlying != 0 {
             let res = self.trunc() + UFP64::from_uint(1);
             return res;
         }
@@ -389,7 +429,7 @@ impl UFP64 {
     /// fn foo() {
     ///     let ufp64 = UFP64::from_uint(128);
     ///     let round = ufp64.round();
-    ///     assert(round.underlying == 0);
+    ///     assert(round.underlying() == 0);
     /// }
     /// ```
     pub fn round(self) -> Self {
@@ -410,12 +450,12 @@ impl UFP64 {
 impl Root for UFP64 {
     /// Sqaure root for UFP64
     fn sqrt(self) -> Self {
-        let nominator_root = self.value.sqrt();
+        let nominator_root = self.underlying.sqrt();
         // Need to multiply over 2 ^ 16, as the square root of the denominator 
         // is also taken and we need to ensure that the denominator is constant
         let nominator = nominator_root << 16;
         Self {
-            value: nominator,
+            underlying: nominator,
         }
     }
 }
@@ -444,7 +484,7 @@ impl Power for UFP64 {
     /// Power function. x ^ exponent
     fn pow(self, exponent: u32) -> Self {
         let demoninator_power = UFP64::denominator();
-        let nominator_pow = U128::from((0, self.value)).pow(exponent);
+        let nominator_pow = U128::from((0, self.underlying)).pow(exponent);
         // As we need to ensure the fixed point structure 
         // which means that the denominator is always 2 ^ 32
         // we need to delete the nominator by 2 ^ (32 * exponent - 1)
@@ -456,7 +496,7 @@ impl Power for UFP64 {
             revert(0);
         }
         Self {
-            value: nominator.lower(),
+            underlying: nominator.lower(),
         }
     }
 }

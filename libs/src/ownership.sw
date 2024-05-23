@@ -81,7 +81,7 @@ pub fn only_owner() {
 /// use sway_libs::ownership::{_owner, renounce_ownership};
 ///
 /// fn foo() {
-///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
+///     assert(_owner() == State::Initialized(Identity::Address(Address::zero()));
 ///     renounce_ownership();
 ///     assert(_owner() == State::Revoked);
 /// }
@@ -158,7 +158,7 @@ pub fn initialize_ownership(new_owner: Identity) {
 /// use sway_libs::ownership::{_owner, transfer_ownership};
 ///
 /// fn foo(new_owner: Identity) {
-///     assert(_owner() == State::Initialized(Identity::Address(Address::from(ZERO_B256)));
+///     assert(_owner() == State::Initialized(Identity::Address(Address::zero()));
 ///     transfer_ownership(new_owner);
 ///     assert(_owner() == State::Initialized(new_owner));
 /// }

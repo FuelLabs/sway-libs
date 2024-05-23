@@ -12,7 +12,7 @@ use ::signed_integers::errors::Error;
 /// Max value is 2 ^ 63 - 1, min value is - 2 ^ 63
 pub struct I64 {
     /// The underlying unsigned number representing the `I64` type.
-    pub underlying: u64,
+    underlying: u64,
 }
 
 impl I64 {
@@ -100,7 +100,7 @@ impl I64 {
     /// fn foo() {
     ///     let underlying = 1u64;
     ///     let i64 = I64::from_uint(underlying);
-    ///     assert(i64.underlying == underlying);
+    ///     assert(i64.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: u64) -> Self {
@@ -120,7 +120,7 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let i64 = I64::max();
-    ///     assert(i64.underlying == u64::max());
+    ///     assert(i64.underlying() == u64::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -142,7 +142,7 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let i64 = I64::min();
-    ///     assert(i64.underlying == u64::min());
+    ///     assert(i64.underlying() == u64::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -169,7 +169,7 @@ impl I64 {
     /// fn foo() {
     ///     let underlying = 1u64;
     ///     let i64 = I64::neg_from(underlying);
-    ///     assert(i64.underlying == 9223372036854775807u64);
+    ///     assert(i64.underlying() == 9223372036854775807u64);
     /// }
     /// ```
     pub fn neg_from(value: u64) -> Self {
@@ -195,13 +195,73 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let i64 = I64::new();
-    ///     assert(i64.underlying == 9223372036854775808);
+    ///     assert(i64.underlying() == 9223372036854775808);
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I64`.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::zero();
+    ///     assert(i64.underlying() == 9223372036854775808);
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self { underlying: Self::indent() }
+    }
+
+    /// Returns whether a `I64` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I64` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::zero();
+    ///     assert(i64.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u64` representing the `I64`.
+    ///
+    /// # Returns
+    ///
+    /// * [u64] - The `u64` representing the `I64`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::zero();
+    ///     assert(i64.underlying() == 9223372036854775808);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u64 {
+        self.underlying
     }
 }
 

@@ -12,7 +12,7 @@ use ::signed_integers::errors::Error;
 /// Max value is 2 ^ 31 - 1, min value is - 2 ^ 31
 pub struct I32 {
     /// The underlying u32 type that represent a I32.
-    pub underlying: u32,
+    underlying: u32,
 }
 
 impl I32 {
@@ -100,7 +100,7 @@ impl I32 {
     /// fn foo() {
     ///     let underlying = 1u32;
     ///     let i32 = I32::from_uint(underlying);
-    ///     assert(i32.underlying == underlying);
+    ///     assert(i32.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: u32) -> Self {
@@ -120,7 +120,7 @@ impl I32 {
     ///
     /// fn foo() {
     ///     let i32 = I32::max();
-    ///     assert(i32.underlying == u32::max());
+    ///     assert(i32.underlying() == u32::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -142,7 +142,7 @@ impl I32 {
     ///
     /// fn foo() {
     ///     let i32 = I32::min();
-    ///     assert(i32.underlying == u32::min());
+    ///     assert(i32.underlying() == u32::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -169,7 +169,7 @@ impl I32 {
     /// fn foo() {
     ///     let underlying = 1u32;
     ///     let i32 = I32::neg_from(underlying);
-    ///     assert(i32.underlying == 2147483647u32)
+    ///     assert(i32.underlying() == 2147483647u32)
     /// }
     /// ```
     pub fn neg_from(value: u32) -> Self {
@@ -195,13 +195,73 @@ impl I32 {
     ///
     /// fn foo() {
     ///     let i32 = I32::new();
-    ///     assert(i32.underlying == 2147483648u32);
+    ///     assert(i32.underlying() == 2147483648u32);
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I32`.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i32::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::zero();
+    ///     assert(i32.underlying() == 2147483648u32);
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self { underlying: Self::indent() }
+    }
+
+    /// Returns whether a `I32` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I32` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i32::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::zero();
+    ///     assert(i32.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u32` representing the `I32`.
+    ///
+    /// # Returns
+    ///
+    /// * [u32] - The `u32` representing the `I32`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i32::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::zero();
+    ///     assert(i32.underlying() == 2147483648u32);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u32 {
+        self.underlying
     }
 }
 

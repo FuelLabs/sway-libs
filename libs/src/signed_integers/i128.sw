@@ -13,7 +13,7 @@ use ::signed_integers::errors::Error;
 /// Max value is 2 ^ 127 - 1, min value is - 2 ^ 127
 pub struct I128 {
     /// The underlying unsigned number representing the `I128` type.
-    pub underlying: U128,
+    underlying: U128,
 }
 
 impl I128 {
@@ -104,7 +104,7 @@ impl I128 {
     /// fn foo() {
     ///     let underlying = U128::from((0, 1));
     ///     let i128 = I128::from_uint(underlying);
-    ///     assert(i128.underlying == underlying);
+    ///     assert(i128.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: U128) -> Self {
@@ -125,7 +125,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::max();
-    ///     assert(i128.underlying == U128::max());
+    ///     assert(i128.underlying() == U128::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -148,7 +148,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::min();
-    ///     assert(i128.underlying == U128::min());
+    ///     assert(i128.underlying() == U128::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -176,7 +176,7 @@ impl I128 {
     /// fn foo() {
     ///     let underlying = U128::from((1, 0));
     ///     let i128 = I128::neg_from(underlying);
-    ///     assert(i128.underlying == U128::from((0, 0)));
+    ///     assert(i128.underlying() == U128::from((0, 0)));
     /// }
     /// ```
     pub fn neg_from(value: U128) -> Self {
@@ -203,13 +203,75 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::new();
-    ///     assert(i128.underlying == U128::from(1, 0));
+    ///     assert(i128.underlying() == U128::from(1, 0));
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I128`.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i128::I128;
+    /// use std::u128::U128;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::zero();
+    ///     assert(i128.underlying() == U128::from((1, 0)));
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self { underlying: Self::indent() }
+    }
+
+    /// Returns whether a `I128` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I128` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i128::I128;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::zero();
+    ///     assert(i128.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u128` representing the `I128`.
+    ///
+    /// # Returns
+    ///
+    /// * [u128] - The `u128` representing the `I128`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i128::I128;
+    /// use std::u128::U128;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::zero();
+    ///     assert(i128.underlying() == U128::from((1, 0)));
+    /// }
+    /// ```
+    pub fn underlying(self) -> U128 {
+        self.underlying
     }
 }
 

@@ -44,7 +44,7 @@ use std::{
 ///
 /// ```sway
 /// use sway_libs::asset::supply::_mint;
-/// use std::{constants::ZERO_B256, context::balance_of};
+/// use std::context::balance_of;
 ///
 /// storage {
 ///     total_assets: u64 = 0,
@@ -52,8 +52,8 @@ use std::{
 /// }
 ///
 /// fn foo(recipient: Identity) {
-///     let recipient = Identity::ContractId(ContractId::from(ZERO_B256));
-///     let asset_id = _mint(storage.total_assets, storage.total_supply, recipient, ZERO_B256, 100);
+///     let recipient = Identity::ContractId(ContractId::zero());
+///     let asset_id = _mint(storage.total_assets, storage.total_supply, recipient, SubId::zero(), 100);
 ///     assert(balance_of(recipient.as_contract_id(), asset_id), 100);
 /// }
 /// ```
@@ -106,7 +106,7 @@ pub fn _mint(
 ///
 /// ```sway
 /// use sway_libs::asset::supply::_burn;
-/// use std::{call_frames::contract_id, constants::ZERO_B256, context::balance_of};
+/// use std::{call_frames::contract_id, context::balance_of};
 ///
 /// storage {
 ///     total_supply: StorageMap<AssetId, u64> = StorageMap {},
@@ -114,7 +114,7 @@ pub fn _mint(
 ///
 /// fn foo(asset_id: AssetId) {
 ///     assert(balance_of(contract_id(), asset_id) == 100);
-///     _burn(storage.total_supply, ZERO_B256, 100);
+///     _burn(storage.total_supply, SubId::zero(), 100);
 ///     assert(balance_of(contract_id(), asset_id) == 0);
 /// }
 /// ```
