@@ -221,7 +221,9 @@ impl I64 {
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { underlying: Self::indent() }
+        Self {
+            underlying: Self::indent(),
+        }
     }
 
     /// Returns whether a `I64` is set to zero.

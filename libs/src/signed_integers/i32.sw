@@ -221,7 +221,9 @@ impl I32 {
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { underlying: Self::indent() }
+        Self {
+            underlying: Self::indent(),
+        }
     }
 
     /// Returns whether a `I32` is set to zero.

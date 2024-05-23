@@ -227,7 +227,9 @@ impl I256 {
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { underlying: Self::indent() }
+        Self {
+            underlying: Self::indent(),
+        }
     }
 
     /// Returns whether a `I256` is set to zero.

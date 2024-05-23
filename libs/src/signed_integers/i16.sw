@@ -222,7 +222,9 @@ impl I16 {
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { underlying: Self::indent() }
+        Self {
+            underlying: Self::indent(),
+        }
     }
 
     /// Returns whether a `I16` is set to zero.

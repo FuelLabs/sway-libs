@@ -121,7 +121,9 @@ impl UFP32 {
     /// }
     /// ```
     pub fn zero() -> Self {
-        Self { underlying: 0u32 }
+        Self {
+            underlying: 0u32,
+        }
     }
 
     /// Returns whether a `UFP32` is set to zero.
