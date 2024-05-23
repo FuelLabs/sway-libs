@@ -1,6 +1,6 @@
 contract;
 
-use std::{auth::*, constants::ZERO_B256};
+use std::auth::*;
 
 use reentrancy_target_abi::Target;
 use reentrancy_attacker_abi::Attacker;
@@ -15,8 +15,8 @@ fn get_msg_sender_id_or_panic() -> ContractId {
 }
 
 storage {
-    target_id: ContractId = ContractId::from(ZERO_B256),
-    helper: ContractId = ContractId::from(ZERO_B256),
+    target_id: ContractId = ContractId::zero(),
+    helper: ContractId = ContractId::zero(),
 }
 
 impl Attacker for Contract {

@@ -48,9 +48,7 @@ fn main() -> bool {
         r1: u256
     };
 
-    res = I256::from(u128_10) / I256 {
-        underlying: u128_lower_max_u64,
-    };
+    res = I256::from(u128_10) / I256::from(u128_lower_max_u64);
     assert(res == I256::neg_from(u128_10));
 
     let parts_5 = (0, 0, 0, 5);

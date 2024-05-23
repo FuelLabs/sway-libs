@@ -111,8 +111,6 @@ impl SetAssetMetadata for Contract {
 
 #[test]
 fn test_total_assets() {
-    use std::constants::ZERO_B256;
-
     let src3_abi = abi(SRC3, CONTRACT_ID);
     let src20_abi = abi(SRC20, CONTRACT_ID);
 
@@ -131,13 +129,11 @@ fn test_total_assets() {
 
 #[test]
 fn test_total_supply() {
-    use std::constants::ZERO_B256;
-
     let src3_abi = abi(SRC3, CONTRACT_ID);
     let src20_abi = abi(SRC20, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     assert(src20_abi.total_supply(asset_id).is_none());
@@ -151,13 +147,11 @@ fn test_total_supply() {
 
 #[test]
 fn test_name() {
-    use std::constants::ZERO_B256;
-
     let src20_abi = abi(SRC20, CONTRACT_ID);
     let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let name = String::from_ascii_str("Fuel Asset");
 
@@ -169,13 +163,11 @@ fn test_name() {
 
 #[test]
 fn test_symbol() {
-    use std::constants::ZERO_B256;
-
     let src20_abi = abi(SRC20, CONTRACT_ID);
     let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let symbol = String::from_ascii_str("FUEL");
 
@@ -187,13 +179,11 @@ fn test_symbol() {
 
 #[test]
 fn test_decimals() {
-    use std::constants::ZERO_B256;
-
     let src20_abi = abi(SRC20, CONTRACT_ID);
     let attributes_abi = abi(SetAssetAttributes, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
     let decimals = 8u8;
 
@@ -206,13 +196,12 @@ fn test_decimals() {
 #[test]
 fn test_mint() {
     use std::context::balance_of;
-    use std::constants::ZERO_B256;
 
     let src3_abi = abi(SRC3, CONTRACT_ID);
     let src20_abi = abi(SRC20, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 0);
@@ -224,13 +213,12 @@ fn test_mint() {
 #[test]
 fn test_burn() {
     use std::context::balance_of;
-    use std::constants::ZERO_B256;
 
     let src3_abi = abi(SRC3, CONTRACT_ID);
     let src20_abi = abi(SRC20, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     src3_abi.mint(recipient, sub_id, 10);
@@ -306,11 +294,9 @@ fn test_metadata_is_b256() {
 
 #[test]
 fn test_set_metadata_b256() {
-    use std::constants::ZERO_B256;
-
     let data_b256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
     let metadata = Metadata::B256(data_b256);
-    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), SubId::zero());
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
@@ -324,11 +310,9 @@ fn test_set_metadata_b256() {
 
 #[test]
 fn test_set_metadata_u64() {
-    use std::constants::ZERO_B256;
-
     let data_int = 1;
     let metadata = Metadata::Int(data_int);
-    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), SubId::zero());
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
@@ -342,11 +326,9 @@ fn test_set_metadata_u64() {
 
 #[test]
 fn test_set_metadata_string() {
-    use std::constants::ZERO_B256;
-
     let data_string = String::from_ascii_str("Fuel is blazingly fast");
     let metadata = Metadata::String(data_string);
-    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), SubId::zero());
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
@@ -360,11 +342,9 @@ fn test_set_metadata_string() {
 
 #[test]
 fn test_set_metadata_bytes() {
-    use std::constants::ZERO_B256;
-
     let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
     let metadata = Metadata::Bytes(data_bytes);
-    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), ZERO_B256);
+    let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), SubId::zero());
     let src7_abi = abi(SRC7, CONTRACT_ID);
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
@@ -379,13 +359,12 @@ fn test_set_metadata_bytes() {
 #[test]
 fn total_assets_only_incremented_once() {
     use std::context::balance_of;
-    use std::constants::ZERO_B256;
 
     let src3_abi = abi(SRC3, CONTRACT_ID);
     let src20_abi = abi(SRC20, CONTRACT_ID);
 
     let recipient = Identity::ContractId(ContractId::from(CONTRACT_ID));
-    let sub_id = ZERO_B256;
+    let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
     assert(src20_abi.total_assets() == 0);

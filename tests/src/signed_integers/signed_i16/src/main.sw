@@ -8,9 +8,7 @@ fn main() -> bool {
     assert(res == I16::from(2u16));
 
     res = I16::from(10u16) - I16::from(11u16);
-    assert(res == I16 {
-        underlying: 32767u16,
-    });
+    assert(res == I16::from(32767u16));
 
     res = I16::from(10u16) * I16::neg_from(1u16);
     assert(res == I16::neg_from(10u16));
