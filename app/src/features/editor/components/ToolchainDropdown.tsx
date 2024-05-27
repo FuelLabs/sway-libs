@@ -4,7 +4,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
-import { ThemeContext, useThemeContext } from '../../../context/theme';
+import { useThemeContext } from '../../../context/theme';
 import { DarkThemeStyling } from '../../../components/shared';
 
 const ToolchainNames = [

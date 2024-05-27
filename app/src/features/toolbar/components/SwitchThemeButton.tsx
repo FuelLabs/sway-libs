@@ -10,7 +10,7 @@ function SwitchThemeButton () {
         <IconButton 
         aria-label='swithThemes'
         onClick={()=>setTheme(theme === 'light' ? 'dark' : 'light')}
-        sx={{marginRight: '15px', marginBottom: '10px', position: "absolute", right: '0px' , top: '20px'}}
+        sx={{marginRight: '15px', marginBottom: '10px', position: "absolute", right: '0px' , top: '20px', zIndex: 1300}}
         >
             {theme === 'light' && <LightModeIcon sx={{color: darkColors.gray7}}/>}
             {theme !== 'light' && <DarkModeIcon sx={{color: lightColors.scalesGreen7}}/>}
