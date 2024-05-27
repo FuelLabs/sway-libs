@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { ParamTypeLiteral } from './FunctionParameters';
 import { darkColors } from '@fuel-ui/css';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 interface ResponseCardProps {
   response?: string | Error;

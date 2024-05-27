@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl/FormControl';
 import Select from '@mui/material/Select/Select';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 import { DarkThemeStyling } from '../../../components/shared';
 
 export interface ExampleMenuItem {

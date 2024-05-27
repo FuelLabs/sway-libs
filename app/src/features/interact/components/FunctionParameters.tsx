@@ -9,7 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import ParameterInput from './ParameterInput';
 import { TypeInfo } from '../utils/getTypeInfo';
 import { styled } from '@mui/material/styles';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 import { lightColors } from '@fuel-ui/css';
 
 

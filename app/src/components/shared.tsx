@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import CircularProgress from '@mui/material/CircularProgress';
 import Copyable from './Copyable';
 import { lightColors, darkColors} from '@fuel-ui/css';
-import { useThemeContext } from '../theme/themeContext';
+import { useThemeContext } from '../context/theme';
 
 const BorderColor = () => {
   const theme = useThemeContext().theme;

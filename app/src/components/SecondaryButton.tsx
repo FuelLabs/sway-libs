@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { darkColors, lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../theme/themeContext';
+import { useThemeContext } from '../context/theme';
 
 export interface SecondaryButtonProps {
   onClick: () => void;

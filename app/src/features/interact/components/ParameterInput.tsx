@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ComplexParameterInput from './ComplexParameterInput';
-import { useThemeContext } from "../../../theme/themeContext";
+import { useThemeContext } from "../../../context/theme";
 import { DarkThemeStyling } from "../../../components/shared";
 
 export interface ParameterInputProps {

@@ -2,7 +2,7 @@ import React from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 export interface DryrunSwitchProps {
   dryrun: boolean;

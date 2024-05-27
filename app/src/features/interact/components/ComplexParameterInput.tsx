@@ -4,7 +4,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-chrome';
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 import { StyledBorder } from '../../../components/shared';
 import {
   CallableParamValue,

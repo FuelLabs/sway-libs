@@ -1,7 +1,7 @@
 import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import { ContractInterface } from './ContractInterface';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 import { darkColors, lightColors } from '@fuel-ui/css';
 
 export interface InteractionDrawerProps {

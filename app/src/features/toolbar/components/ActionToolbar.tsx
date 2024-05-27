@@ -12,7 +12,7 @@ import {
 } from '../../../utils/localStorage';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import SwitchThemeButton from './SwitchThemeButton'
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 export interface ActionToolbarProps {
   deployState: DeployState;

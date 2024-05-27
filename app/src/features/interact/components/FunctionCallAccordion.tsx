@@ -8,7 +8,7 @@ import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
 import { ResponseCard } from './ResponseCard';
 import { darkColors ,lightColors} from '@fuel-ui/css';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 export interface FunctionCallAccordionProps {
   contractId: string;

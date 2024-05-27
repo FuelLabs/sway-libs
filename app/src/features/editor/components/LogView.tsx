@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 import { StyledBorder } from '../../../components/shared';
 export interface LogViewProps {
   results: React.ReactElement[];

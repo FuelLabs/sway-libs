@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import DryrunSwitch from './DryrunSwitch';
 import { CallableParamValue } from './FunctionParameters';
 import { lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 interface FunctionToolbarProps {
   contractId: string;

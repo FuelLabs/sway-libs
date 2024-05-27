@@ -7,7 +7,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow_night_bright';
 import { StyledBorder } from '../../../components/shared';
 import ActionOverlay from './ActionOverlay';
 import { Toolchain } from './ToolchainDropdown';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 export interface SwayEditorProps {
   code: string;

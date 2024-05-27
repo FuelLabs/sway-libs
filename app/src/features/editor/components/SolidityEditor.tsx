@@ -8,7 +8,7 @@ import { StyledBorder } from '../../../components/shared';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import ActionOverlay from './ActionOverlay';
 import { useIsMobile } from '../../../hooks/useIsMobile';
-import { useThemeContext } from '../../../theme/themeContext';
+import { useThemeContext } from '../../../context/theme';
 
 export interface SolidityEditorProps {
   code: string;
