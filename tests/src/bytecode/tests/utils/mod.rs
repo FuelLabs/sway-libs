@@ -40,11 +40,11 @@ const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 const HEX_STR_1: &str = "0xacbe4bfc77e55c071db31f2e37c824d75794867d88499107dc8318cb22aceea5";
 const HEX_STR_2: &str = "0x0b1af92ac5a3e8cfeafede9586a1f853a9e0258e7cdccae5e5181edac081f2c1b";
 const HEX_STR_3: &str = "0x0345c74edfb0ce0820409176d0cbc2c44eac1e5e4c7382ee7e7c38d611d9ba767";
-const SIMPLE_PREDICATE_OFFSET: u64 = 116;
-const SIMPLE_CONTRACT_OFFSET: u64 = 936;
-const COMPLEX_CONTRACT_OFFSET_1: u64 = 28008;
-const COMPLEX_CONTRACT_OFFSET_2: u64 = 28016;
-const COMPLEX_CONTRACT_OFFSET_3: u64 = 28056;
+const SIMPLE_PREDICATE_OFFSET: u64 = 408;
+const SIMPLE_CONTRACT_OFFSET: u64 = 1432;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 23344;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 23360;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 23400;
 
 pub mod abi_calls {
 
@@ -99,7 +99,6 @@ pub mod abi_calls {
             .with_encoder_config(EncoderConfig {
                 max_depth: 10,
                 max_tokens: 100_000,
-                max_total_enum_width: 10_000,
             })
             .methods()
             .compute_bytecode_root(bytecode)
@@ -119,7 +118,6 @@ pub mod abi_calls {
             .with_encoder_config(EncoderConfig {
                 max_depth: 10,
                 max_tokens: 100_000,
-                max_total_enum_width: 10_000,
             })
             .methods()
             .compute_bytecode_root_with_configurables(bytecode, configurables)
@@ -151,7 +149,6 @@ pub mod abi_calls {
             .with_encoder_config(EncoderConfig {
                 max_depth: 10,
                 max_tokens: 100_000,
-                max_total_enum_width: 10_000,
             })
             .methods()
             .swap_configurables(bytecode, configurables)
@@ -201,7 +198,6 @@ pub mod abi_calls {
             .with_encoder_config(EncoderConfig {
                 max_depth: 10,
                 max_tokens: 100_000,
-                max_total_enum_width: 10_000,
             })
             .methods()
             .verify_contract_bytecode(contract_id, bytecode)
@@ -239,7 +235,6 @@ pub mod abi_calls {
             .with_encoder_config(EncoderConfig {
                 max_depth: 10,
                 max_tokens: 100_000,
-                max_total_enum_width: 10_000,
             })
             .methods()
             .verify_contract_bytecode_with_configurables(contract_id, bytecode, configurables)
@@ -701,16 +696,7 @@ pub mod test_helpers {
         my_configurables.push((COMPLEX_CONTRACT_OFFSET_1, data1));
 
         let mut data2: Vec<u8> = Vec::new();
-        data2.extend_from_slice(&[
-            0u8,
-            0u8,
-            0u8,
-            0u8,
-            0u8,
-            0u8,
-            0u8,
-            config_struct.x.try_into().unwrap(),
-        ]);
+        data2.extend_from_slice(&[0u8, 0u8, 0u8, config_struct.x.try_into().unwrap()]);
         let bits1 = *Bytes32::from_str(HEX_STR_1).expect("failed to create Bytes32 from string");
         data2.extend_from_slice(&bits1);
         my_configurables.push((COMPLEX_CONTRACT_OFFSET_2, data2));
