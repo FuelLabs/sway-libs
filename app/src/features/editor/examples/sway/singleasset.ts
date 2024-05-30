@@ -1,16 +1,15 @@
 export const EXAMPLE_SWAY_CONTRACT_SINGLEASSET = `// ERC20 equivalent in Sway.
 contract;
 
-use src3::SRC3;
-use src5::{SRC5, State, AccessError};
-use src20::SRC20;
+use standards::src3::SRC3;
+use standards::src5::{AccessError, SRC5, State};
+use standards::src20::SRC20;
 use std::{
     asset::{
         burn,
         mint_to,
     },
     call_frames::{
-        contract_id,
         msg_asset_id,
     },
     constants::DEFAULT_SUB_ID,
@@ -31,7 +30,6 @@ configurable {
 
 storage {
     total_supply: u64 = 0,
-
     owner: State = State::Uninitialized,
 }
 
@@ -81,7 +79,9 @@ impl SRC20 for Contract {
 #[storage(read)]
 fn require_access_owner() {
     require(
-        storage.owner.read() == State::Initialized(msg_sender().unwrap()),
+        storage
+            .owner
+            .read() == State::Initialized(msg_sender().unwrap()),
         AccessError::NotOwner,
     );
 }
@@ -89,7 +89,12 @@ fn require_access_owner() {
 impl SingleAsset for Contract {
     #[storage(read, write)]
     fn constructor(owner_: Identity) {
-        require(storage.owner.read() == State::Uninitialized, "owner-initialized");
+        require(
+            storage
+                .owner
+                .read() == State::Uninitialized,
+            "owner-initialized",
+        );
         storage.owner.write(State::Initialized(owner_));
     }
 }
@@ -113,6 +118,7 @@ impl SRC3 for Contract {
         mint_to(recipient, DEFAULT_SUB_ID, amount);
     }
 
+    #[payable]
     #[storage(read, write)]
     fn burn(sub_id: SubId, amount: u64) {
         require(sub_id == DEFAULT_SUB_ID, "incorrect-sub-id");
@@ -128,4 +134,5 @@ impl SRC3 for Contract {
             .write(storage.total_supply.read() - amount);
         burn(DEFAULT_SUB_ID, amount);
     }
-}`;
+}
+`;

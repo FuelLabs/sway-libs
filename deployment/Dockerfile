@@ -61,9 +61,10 @@ RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
 RUN fuelup toolchain install beta-4
 RUN fuelup toolchain install beta-5
+RUN fuelup toolchain install testnet
 
 # Install the forc dependencies
-RUN fuelup default beta-5
+RUN fuelup default testnet
 RUN forc build --path projects/swaypad
 
 EXPOSE 8080
