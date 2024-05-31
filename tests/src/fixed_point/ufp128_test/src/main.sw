@@ -25,45 +25,31 @@ fn main() -> bool {
     assert(UFP128::from((156, 0)) == res);
 
     // recip
-    let mut value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    let mut value = UFP128::from(U128::from((1, 3)));
     res = UFP128::recip(value);
-    assert(UFP128 {
-        value: U128::from((0, 18446744073709551613)),
-    } == res);
+    assert(UFP128::from(U128::from((0, 18446744073709551613))) == res);
 
     // trunc
-    let mut value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    let mut value = UFP128::from(U128::from((1, 3)));
     res = value.trunc();
     assert(UFP128::from_uint(1) == res);
 
     // floor
-    value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    value = UFP128::from(U128::from((1, 3)));
     res = value.floor();
     assert(UFP128::from_uint(1) == res);
 
     // fract
-    value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    value = UFP128::from(U128::from((1, 3)));
     res = value.fract();
-    assert(UFP128 {
-        value: U128::from((0, 3)),
-    } == res);
+    assert(UFP128::from(U128::from((0, 3))) == res);
 
     value = UFP128::from_uint(1);
     res = value.fract();
     assert(UFP128::from_uint(0) == res);
 
     // ceil
-    value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    value = UFP128::from(U128::from((1, 3)));
     res = value.ceil();
     assert(UFP128::from_uint(2) == res);
 
@@ -72,15 +58,11 @@ fn main() -> bool {
     assert(UFP128::from_uint(1) == res);
 
     // round
-    value = UFP128 {
-        value: U128::from((1, 3)),
-    };
+    value = UFP128::from(U128::from((1, 3)));
     res = value.round();
     assert(UFP128::from_uint(1) == res);
 
-    value = UFP128 {
-        value: U128::from((1, (1 << 63) + 1)),
-    };
+    value = UFP128::from(U128::from((1, (1 << 63) + 1)));
     res = value.round();
     assert(UFP128::from_uint(2) == res);
 

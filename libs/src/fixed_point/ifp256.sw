@@ -10,9 +10,9 @@ use ::fixed_point::ufp128::UFP128;
 /// Represented by an underlying `UFP128` number and a boolean.
 pub struct IFP256 {
     /// The underlying value representing the `IFP256` type.
-    pub underlying: UFP128,
+    underlying: UFP128,
     /// The underlying boolean representing a negative value for the `IFP256` type.
-    pub non_negative: bool,
+    non_negative: bool,
 }
 
 impl From<UFP128> for IFP256 {
@@ -59,7 +59,7 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::max();
-    ///     assert(ifp256.underlying == UFP128::max());
+    ///     assert(ifp256.underlying() == UFP128::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -79,7 +79,7 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::min();
-    ///     assert(ifp256.underlying == UFP128::min());
+    ///     assert(ifp256.underlying() == UFP128::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -102,7 +102,7 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::zero();
-    ///     assert(ifp256.underlying == UFP128::zero());
+    ///     assert(ifp256.underlying() == UFP128::zero());
     /// }
     /// ```
     pub fn zero() -> Self {
@@ -122,9 +122,9 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::zero();
-    ///     assert(ifp256.non_negative);
+    ///     assert(ifp256.non_negative());
     ///     let reverse = ifp256.sign_inverse();
-    ///     assert(!reverse.non_negative);
+    ///     assert(!reverse.non_negative());
     /// }
     /// ```
     pub fn sign_reverse(self) -> Self {
@@ -132,6 +132,66 @@ impl IFP256 {
             underlying: self.underlying,
             non_negative: !self.non_negative,
         }
+    }
+
+    /// Returns whether a `IFP256` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `IFP256` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ifp256::IFP256;
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::zero();
+    ///     assert(ifp256.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == UFP128::zero()
+    }
+
+    /// Returns the underlying `UFP128` representing the `IFP256`.
+    ///
+    /// # Returns
+    ///
+    /// * [UFP128] - The `UFP128` representing the `IFP256`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::{ifp256::IFP256, ufp128::UFP128};
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::zero();
+    ///     assert(ifp256.underlying() == UFP128::zero());
+    /// }
+    /// ```
+    pub fn underlying(self) -> UFP128 {
+        self.underlying
+    }
+
+    /// Returns the underlying bool representing the postive or negative state of the IFP256.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] - The `bool` representing whether the `IFP256` is non-negative or not.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::fixed_point::ifp256::IFP256;
+    ///
+    /// fn foo() {
+    ///     let ifp256 = IFP256::zero();
+    ///     assert(ifp256.non_negative() == false);
+    /// }
+    /// ```
+    pub fn non_negative(self) -> bool {
+        self.non_negative
     }
 }
 
@@ -263,7 +323,7 @@ impl IFP256 {
     ///
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(1);
-    ///     assert(ifp256.underlying == UFP128::from_uint(1));
+    ///     assert(ifp256.underlying() == UFP128::from_uint(1));
     /// }
     /// ```
     pub fn from_uint(uint: u64) -> Self {
@@ -290,7 +350,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let recip = IFP256::recip(ifp256);
-    ///     assert(recip.underlying == UFP128::recip(UFP128::from(128)));
+    ///     assert(recip.underlying() == UFP128::recip(UFP128::from(128)));
     /// }
     /// ```
     pub fn recip(number: IFP256) -> Self {
@@ -318,7 +378,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let trunc = ifp256.trunc();
-    ///     assert(trunc.underlying == UFP128::from(128).trunc());
+    ///     assert(trunc.underlying() == UFP128::from(128).trunc());
     /// }
     /// ```
     pub fn trunc(self) -> Self {
@@ -344,7 +404,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let floor = ifp256.floor();
-    ///     assert(floor.underlying == UFP128::from(128).floor());
+    ///     assert(floor.underlying() == UFP128::from(128).floor());
     /// }
     /// ```
     pub fn floor(self) -> Self {
@@ -374,7 +434,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let fract = ifp256.fract();
-    ///     assert(fract.underlying == UFP128::from(128).fract());
+    ///     assert(fract.underlying() == UFP128::from(128).fract());
     /// }
     /// ```
     pub fn fract(self) -> Self {
@@ -400,7 +460,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let ceil = ifp256.ceil();
-    ///     assert(ceil.underlying = UFP128::from(128).ceil().underlying);
+    ///     assert(ceil.underlying() = UFP128::from(128).ceil().underlying());
     /// }
     /// ```
     pub fn ceil(self) -> Self {
@@ -442,7 +502,7 @@ impl IFP256 {
     /// fn foo() {
     ///     let ifp256 = IFP256::from_uint(128);
     ///     let round = ifp256.round();
-    ///     assert(round.underlying == UFP128::from(128).round().underlying);
+    ///     assert(round.underlying() == UFP128::from(128).round().underlying());
     /// }
     /// ```
     pub fn round(self) -> Self {

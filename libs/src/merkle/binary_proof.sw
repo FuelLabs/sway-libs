@@ -29,10 +29,9 @@ pub const NODE = 1u8;
 ///
 /// ```sway
 /// use sway_libs::merkle::binary_proof::leaf_digest;
-/// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
-///     let data = ZERO_B256;
+///     let data = b256::zero();
 ///     let digest = leaf_digest(data);
 ///     assert(digest == 0x54f05a87f5b881780cdc40e3fddfebf72e3ba7e5f65405ab121c7f22d9849ab4);
 /// }
@@ -60,11 +59,10 @@ pub fn leaf_digest(data: b256) -> b256 {
 ///
 /// ```sway
 /// use sway_libs::merkle::binary_proof::node_digest;
-/// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
-///     let leaf_1 = ZERO_B256;
-///     let leaf_2 = ZERO_B256;
+///     let leaf_1 = b256::zero();
+///     let leaf_2 = b256::zero();
 ///     let digest = node_digest(leaf_1, leaf_2);
 ///     assert(digest == 0xee510d4daf24756c7b56b56b838212b193d9265c85c4a3b2c74f5a3189477c80);
 /// }
@@ -102,11 +100,10 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 ///
 /// ```sway
 /// use sway_libs::merkle::binary_proof::process_proof;
-/// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
 ///     let key = 0;
-///     let leaf = ZERO_B256;
+///     let leaf = b256::zero();
 ///     let num_leaves = 3;
 ///     let mut proof = Vec::new();
 ///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);
@@ -203,11 +200,10 @@ pub fn process_proof(
 ///
 /// ```sway
 /// use sway_libs::merkle::binary_proof::process_proof;
-/// use std::contants::ZERO_B256;
 ///
 /// fn foo() {
 ///     let key = 0;
-///     let leaf = ZERO_B256;
+///     let leaf = b256::zero();
 ///     let num_leaves = 3;
 ///     let mut proof = Vec::new();
 ///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);

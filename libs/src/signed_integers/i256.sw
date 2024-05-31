@@ -11,7 +11,7 @@ use ::signed_integers::errors::Error;
 /// Actual value is underlying value minus 2 ^ 255
 /// Max value is 2 ^ 255 - 1, min value is - 2 ^ 255
 pub struct I256 {
-    pub underlying: u256,
+    underlying: u256,
 }
 
 impl I256 {
@@ -106,7 +106,7 @@ impl I256 {
     /// fn foo() {
     ///     let underlying = 0x0000000000000000000000000000000000000000000000000000000000000001u256;
     ///     let i256 = I256::from_uint(underlying);
-    ///     assert(256.underlying == underlying);
+    ///     assert(i256.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: u256) -> Self {
@@ -126,7 +126,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::max();
-    ///     assert(i256.underlying == u256::max());
+    ///     assert(i256.underlying() == u256::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -148,7 +148,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::min();
-    ///     assert(i256.underlying == u256::min());
+    ///     assert(i256.underlying() == u256::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -175,7 +175,7 @@ impl I256 {
     /// fn foo() {
     ///     let underlying = 0x0000000000000000000000000000001000000000000000000000000000000000u256;
     ///     let i256 = I256::neg_from(underlying);
-    ///     assert(i256.underlying == 0x0000000000000000000000000000000000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x0000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn neg_from(value: u256) -> Self {
@@ -201,13 +201,75 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::new();
-    ///     assert(i256.underlying == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I256`.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i256::I256;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::zero();
+    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self {
+            underlying: Self::indent(),
+        }
+    }
+
+    /// Returns whether a `I256` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I256` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i256::I256;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::zero();
+    ///     assert(i256.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u256` representing the `I256`.
+    ///
+    /// # Returns
+    ///
+    /// * [u256] - The `u256` representing the `I256`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i256::I256;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::zero();
+    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u256 {
+        self.underlying
     }
 }
 

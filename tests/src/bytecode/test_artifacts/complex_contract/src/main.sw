@@ -1,6 +1,6 @@
 contract;
 
-use std::{constants::ZERO_B256, hash::*, math::*, storage::storage_vec::*,};
+use std::{hash::*, math::*, storage::storage_vec::*,};
 
 struct SimpleStruct {
     x: u32,
@@ -17,7 +17,7 @@ configurable {
     VALUE: u64 = 1,
     STRUCT: SimpleStruct = SimpleStruct {
         x: 0u32,
-        y: ZERO_B256,
+        y: b256::zero(),
     },
     ENUM: SimpleEnum = SimpleEnum::X,
 }

@@ -19,12 +19,11 @@ use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _s
 /// # Examples
 ///
 /// ```sway
-/// use std::constants::ZERO_B256;
 /// use sway_libs::bytecode::compute_bytecode_root;
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
 ///     let bytecode_root = compute_bytecode_root(my_bytecode);
-///     assert(bytecode_root != ZERO_B256);
+///     assert(bytecode_root != b256::zero());
 /// }
 /// ```
 pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
@@ -45,13 +44,12 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use std::constants::ZERO_B256;
 /// use sway_libs::bytecode::compute_bytecode_root_with_configurables;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
 ///     let bytecode_root = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
-///     assert(bytecode_root != ZERO_B256);
+///     assert(bytecode_root != b256::zero());
 /// }
 /// ```
 pub fn compute_bytecode_root_with_configurables(
@@ -76,12 +74,11 @@ pub fn compute_bytecode_root_with_configurables(
 /// # Examples
 ///
 /// ```sway
-/// use std::constants::ZERO_B256;
 /// use sway_libs::bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
 ///     let predicate_address = compute_predicate_address(my_bytecode);
-///     assert(predicate_address != Address::from(ZERO_B256));
+///     assert(predicate_address != Address::zero());
 /// }
 /// ```
 pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
@@ -103,13 +100,12 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 /// # Examples
 ///
 /// ```sway
-/// use std::constants::ZERO_B256;
 /// use sway_libs::bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
 ///     let mut my_bytecode = my_bytecode;
 ///     let predicate_address = compute_predicate_address(my_bytecode, my_configurables);
-///     assert(predicate_address != Address::from(ZERO_B256));
+///     assert(predicate_address != Address::zero());
 /// }
 /// ```
 pub fn compute_predicate_address_with_configurables(
@@ -135,12 +131,11 @@ pub fn compute_predicate_address_with_configurables(
 /// # Examples
 ///
 /// ```sway
-/// use std::constants::ZERO_B256;
 /// use sway_libs::bytecode::predicate_address_from_root;
 ///
 /// fn foo(predicate_bytecode_root: b256) {
 ///     let predicate_address = predicate_address_from_root(predicate_bytecode_root);
-///     assert(predicate_address != Address::from(ZERO_B256));
+///     assert(predicate_address != Address::zero());
 /// }
 /// ```
 pub fn predicate_address_from_root(bytecode_root: b256) -> Address {

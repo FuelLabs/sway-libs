@@ -20,9 +20,7 @@ impl Target for Contract {
             true
         } else {
             // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-            abi(Attacker, get_msg_sender_id_or_panic()
-                .bits())
-                .evil_callback_1()
+            abi(Attacker, get_msg_sender_id_or_panic().bits()).evil_callback_1()
         }
     }
 

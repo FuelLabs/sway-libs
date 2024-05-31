@@ -1,5 +1,5 @@
 // ANCHOR: import
-use fuel_merkle::{binary::in_memory::MerkleTree, common::Bytes32};
+use fuel_merkle::binary::in_memory::MerkleTree;
 // ANCHOR_END: import
 use fuels::{prelude::*, types::Bits256};
 use sha2::{Digest, Sha256};

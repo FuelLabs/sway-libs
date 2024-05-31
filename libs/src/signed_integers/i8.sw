@@ -12,7 +12,7 @@ use ::signed_integers::common::TwosComplement;
 /// Max value is 2 ^ 7 - 1, min value is - 2 ^ 7
 pub struct I8 {
     /// The underlying unsigned `u8` type that makes up the signed `I8` type.
-    pub underlying: u8,
+    underlying: u8,
 }
 
 impl I8 {
@@ -100,7 +100,7 @@ impl I8 {
     /// fn foo() {
     ///     let underlying = 1u8;
     ///     let i8 = I8::from_uint(underlying);
-    ///     assert(i8.underlying == underlying);
+    ///     assert(i8.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: u8) -> Self {
@@ -120,7 +120,7 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let i8 = I8::max();
-    ///     assert(i8.underlying == u8::max());
+    ///     assert(i8.underlying() == u8::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -142,7 +142,7 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let i8 = I8::new();
-    ///     assert(i8.underlying == u8::min());
+    ///     assert(i8.underlying() == u8::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -169,7 +169,7 @@ impl I8 {
     /// fn foo() {
     ///     let underlying = 1u8;
     ///     let i8 = I8::neg_from(underlying);
-    ///     assert(i8.underlying == 127u8);
+    ///     assert(i8.underlying() == 127u8);
     /// }
     /// ```
     pub fn neg_from(value: u8) -> Self {
@@ -195,13 +195,75 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let i8 = I8::new();
-    ///     assert(i8.underlying == 128u8);
+    ///     assert(i8.underlying() == 128u8);
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I8`.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::zero();
+    ///     assert(i8.underlying() == 128u8);
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self {
+            underlying: Self::indent(),
+        }
+    }
+
+    /// Returns whether a `I8` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I8` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::zero();
+    ///     assert(i8.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u8` representing the `I8`.
+    ///
+    /// # Returns
+    ///
+    /// * [u8] - The `u8` representing the `I8`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::zero();
+    ///     assert(i8.underlying() == 128u8);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u8 {
+        self.underlying
     }
 }
 

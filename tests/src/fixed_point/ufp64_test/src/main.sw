@@ -25,43 +25,31 @@ fn main() -> bool {
     assert(UFP64::from_uint(156) == res);
 
     // recip
-    let mut value = UFP64 {
-        value: 1 << 32 + 3,
-    };
+    let mut value = UFP64::from(1 << 32 + 3);
     res = UFP64::recip(value);
-    assert(UFP64 {
-        value: 536870912,
-    } == res);
+    assert(UFP64::from(536870912) == res);
 
     // trunc
-    value = UFP64 {
-        value: (1 << 32) + 3,
-    };
+    value = UFP64::from((1 << 32) + 3);
     res = value.trunc();
     assert(UFP64::from_uint(1) == res);
 
     // floor
-    value = UFP64 {
-        value: (1 << 32) + 3,
-    };
+    value = UFP64::from((1 << 32) + 3);
     res = value.floor();
     assert(UFP64::from_uint(1) == res);
 
     // fract
-    value = UFP64 {
-        value: (1 << 32) + 3,
-    };
+    value = UFP64::from((1 << 32) + 3);
     res = value.fract();
-    assert(UFP64 { value: 3 } == res);
+    assert(UFP64::from(3) == res);
 
     value = UFP64::from_uint(1);
     res = value.fract();
     assert(UFP64::from_uint(0) == res);
 
     // ceil
-    value = UFP64 {
-        value: (1 << 32) + 3,
-    };
+    value = UFP64::from((1 << 32) + 3);
     res = value.ceil();
     assert(UFP64::from_uint(2) == res);
 
@@ -70,15 +58,11 @@ fn main() -> bool {
     assert(UFP64::from_uint(1) == res);
 
     // round
-    value = UFP64 {
-        value: (1 << 32) + 3,
-    };
+    value = UFP64::from((1 << 32) + 3);
     res = value.round();
     assert(UFP64::from_uint(1) == res);
 
-    value = UFP64 {
-        value: (1 << 32) + (1 << 31) + 1,
-    };
+    value = UFP64::from((1 << 32) + (1 << 31) + 1);
     res = value.round();
     assert(UFP64::from_uint(2) == res);
 

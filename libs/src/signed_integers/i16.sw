@@ -12,7 +12,7 @@ use ::signed_integers::common::TwosComplement;
 /// Max value is 2 ^ 15 - 1, min value is - 2 ^ 15
 pub struct I16 {
     /// The underlying value representing the signed integer.
-    pub underlying: u16,
+    underlying: u16,
 }
 
 impl I16 {
@@ -101,7 +101,7 @@ impl I16 {
     /// fn foo() {
     ///     let underlying = 1u16;
     ///     let i16 = I16::from_uint(underlying);
-    ///     assert(i16.underlying == underlying);
+    ///     assert(i16.underlying() == underlying);
     /// }
     /// ```
     pub fn from_uint(underlying: u16) -> Self {
@@ -121,7 +121,7 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let i16 = I16::max();
-    ///     assert(i16.underlying == u16::max());
+    ///     assert(i16.underlying() == u16::max());
     /// }
     /// ```
     pub fn max() -> Self {
@@ -143,7 +143,7 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let i16 = I16::min();
-    ///     assert(i16.underlying == u16::min());
+    ///     assert(i16.underlying() == u16::min());
     /// }
     /// ```
     pub fn min() -> Self {
@@ -170,7 +170,7 @@ impl I16 {
     /// fn foo() {
     ///     let underlying = 1u16;
     ///     let i16 = I16::neg_from(underlying);
-    ///     assert(i16.underlying == 32767u16)
+    ///     assert(i16.underlying() == 32767u16)
     /// }
     /// ```
     pub fn neg_from(value: u16) -> Self {
@@ -196,13 +196,75 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let i16 = I16::new();
-    ///     assert(i16.underlying == 32768u16);
+    ///     assert(i16.underlying() == 32768u16);
     /// }
     /// ```
     pub fn new() -> Self {
         Self {
             underlying: Self::indent(),
         }
+    }
+
+    /// The zero value `I16`.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::zero();
+    ///     assert(i16.underlying() == 32768u16);
+    /// }
+    /// ```
+    pub fn zero() -> Self {
+        Self {
+            underlying: Self::indent(),
+        }
+    }
+
+    /// Returns whether a `I16` is set to zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] -> True if the `I16` is zero, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::zero();
+    ///     assert(i16.is_zero());
+    /// }
+    /// ```
+    pub fn is_zero(self) -> bool {
+        self.underlying == Self::indent()
+    }
+
+    /// Returns the underlying `u16` representing the `I16`.
+    ///
+    /// # Returns
+    ///
+    /// * [u16] - The `u16` representing the `I16`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::zero();
+    ///     assert(i16.underlying() == 32768u16);
+    /// }
+    /// ```
+    pub fn underlying(self) -> u16 {
+        self.underlying
     }
 }
 

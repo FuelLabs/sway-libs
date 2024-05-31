@@ -25,51 +25,39 @@ fn main() -> bool {
     assert(IFP64::from_uint(156u32) == res);
 
     // recip
-    let mut u_value = UFP32 {
-        value: 1u32 << 16 + 3,
-    };
+    let mut u_value = UFP32::from(1u32 << 16 + 3);
     let mut value = IFP64::from(u_value);
 
     res = IFP64::recip(value);
-    assert(IFP64::from(UFP32 {
-        value: 8192u32,
-    }) == res);
+    assert(IFP64::from(UFP32::from(8192u32)) == res);
 
     // trunc
-    u_value = UFP32 {
-        value: (1u32 << 16) + 3u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + 3u32);
     value = IFP64::from(u_value);
 
     res = value.trunc();
     assert(IFP64::from_uint(1u32) == res);
 
     // floor
-    u_value = UFP32 {
-        value: (1u32 << 16) + 3u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + 3u32);
     value = IFP64::from(u_value);
 
     res = value.floor();
     assert(IFP64::from_uint(1u32) == res);
 
     // fract
-    u_value = UFP32 {
-        value: (1u32 << 16) + 3u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + 3u32);
     value = IFP64::from(u_value);
 
     res = value.fract();
-    assert(IFP64::from(UFP32 { value: 3u32 }) == res);
+    assert(IFP64::from(UFP32::from(3u32)) == res);
 
     value = IFP64::from_uint(1u32);
     res = value.fract();
     assert(IFP64::from_uint(0u32) == res);
 
     // ceil
-    u_value = UFP32 {
-        value: (1u32 << 16) + 3u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + 3u32);
     value = IFP64::from(u_value);
 
     res = value.ceil();
@@ -80,17 +68,13 @@ fn main() -> bool {
     assert(IFP64::from_uint(1u32) == res);
 
     // round
-    u_value = UFP32 {
-        value: (1u32 << 16) + 3u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + 3u32);
     value = IFP64::from(u_value);
 
     res = value.round();
     assert(IFP64::from_uint(1u32) == res);
 
-    u_value = UFP32 {
-        value: (1u32 << 16) + (1u32 << 15) + 1u32,
-    };
+    u_value = UFP32::from((1u32 << 16) + (1u32 << 15) + 1u32);
     value = IFP64::from(u_value);
 
     res = value.round();

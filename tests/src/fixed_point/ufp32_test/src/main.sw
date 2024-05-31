@@ -25,33 +25,31 @@ fn main() -> bool {
     assert(UFP32::from_uint(156) == res);
 
     // recip
-    let mut value = UFP32 { value: 3u32 };
+    let mut value = UFP32::from(3u32);
     res = UFP32::recip(value);
-    assert(UFP32 {
-        value: 536870912,
-    } == res);
+    assert(UFP32::from(536870912) == res);
 
     // trunc
-    value = UFP32 { value: 3u32 };
+    value = UFP32::from(3u32);
     res = value.trunc();
     assert(UFP32::from_uint(1) == res);
 
     // floor
-    value = UFP32 { value: 3u32 };
+    value = UFP32::from(3u32);
     res = value.floor();
     assert(UFP32::from_uint(1) == res);
 
     // fract
-    value = UFP32 { value: 3u32 };
+    value = UFP32::from(3u32);
     res = value.fract();
-    assert(UFP32 { value: 3 } == res);
+    assert(UFP32::from(3) == res);
 
     value = UFP32::from_uint(1);
     res = value.fract();
     assert(UFP32::from_uint(0) == res);
 
     // ceil
-    value = UFP32 { value: 3u32 };
+    value = UFP32::from(3u32);
     res = value.ceil();
     assert(UFP32::from_uint(2) == res);
 
@@ -60,13 +58,11 @@ fn main() -> bool {
     assert(UFP32::from_uint(1) == res);
 
     // round
-    value = UFP32 { value: 3u32 };
+    value = UFP32::from(3u32);
     res = value.round();
     assert(UFP32::from_uint(1) == res);
 
-    value = UFP32 {
-        value: 2147483649u32,
-    };
+    value = UFP32::from(2147483649u32);
     res = value.round();
     assert(UFP32::from_uint(2) == res);
 

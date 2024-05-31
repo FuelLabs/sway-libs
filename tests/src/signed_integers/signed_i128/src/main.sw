@@ -13,7 +13,7 @@ fn main() -> bool {
     let u128_10 = U128::from((0, 10));
     let u128_11 = U128::from((0, 11));
     res = I128::from(u128_10) - I128::from(u128_11);
-    assert(res.underlying.lower() == u64::max());
+    assert(res.underlying().lower() == u64::max());
 
     res = I128::from(u128_10) * I128::neg_from(u128_one);
     assert(res == I128::neg_from(u128_10));
@@ -24,9 +24,7 @@ fn main() -> bool {
 
     let u128_lower_max_u64 = U128::from((0, u64::max()));
 
-    res = I128::from(u128_10) / I128 {
-        underlying: u128_lower_max_u64,
-    };
+    res = I128::from(u128_10) / I128::from(u128_lower_max_u64);
     assert(res == I128::neg_from(u128_10));
 
     let u128_5 = U128::from((0, 5));
