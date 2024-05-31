@@ -8,6 +8,7 @@ import { useThemeContext } from '../../../context/theme';
 import { DarkThemeStyling } from '../../../components/shared';
 
 const ToolchainNames = [
+  'testnet',
   'beta-5',
   'beta-4',
   'beta-3',

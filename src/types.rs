@@ -22,6 +22,7 @@ pub enum Toolchain {
     Beta1,
     Latest,
     Nightly,
+    Testnet,
 }
 
 impl fmt::Display for Toolchain {

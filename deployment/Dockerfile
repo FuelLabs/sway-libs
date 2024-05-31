@@ -20,7 +20,7 @@ RUN cargo chef prepare --recipe-path recipe.json
 FROM chef as builder
 
 # Install charcoal
-RUN cargo install --git https://github.com/camden-smallwood/charcoal.git --rev 60088853e9ecf9bcd23b017b662d2b46477a410e
+RUN cargo install --git https://github.com/camden-smallwood/charcoal.git --rev 2ff426711f290186f166d424934988a6a9bb02d4
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 COPY --from=planner /build/recipe.json recipe.json
@@ -61,9 +61,10 @@ RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
 RUN fuelup toolchain install beta-4
 RUN fuelup toolchain install beta-5
+RUN fuelup toolchain install testnet
 
 # Install the forc dependencies
-RUN fuelup default beta-5
+RUN fuelup default testnet
 RUN forc build --path projects/swaypad
 
 EXPOSE 8080

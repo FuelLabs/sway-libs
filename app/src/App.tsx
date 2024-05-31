@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {Theme,ThemeContext} from './context/theme'
+import { useCallback, useEffect, useState } from 'react';
 import ActionToolbar from './features/toolbar/components/ActionToolbar';
 import LogView from './features/editor/components/LogView';
 import { useCompile } from './features/editor/hooks/useCompile';
@@ -22,6 +21,7 @@ import { Analytics, track } from '@vercel/analytics/react';
 import { useGist } from './features/editor/hooks/useGist';
 import { useSearchParams } from 'react-router-dom';
 import Copyable from './components/Copyable';
+import {Theme,ThemeContext} from './context/theme'
 
 const DRAWER_WIDTH = '40vw';
 
@@ -51,7 +51,7 @@ function App() {
   const [isCompiled, setIsCompiled] = useState(false);
 
   // The toolchain to use for compilation.
-  const [toolchain, setToolchain] = useState<Toolchain>('beta-5');
+  const [toolchain, setToolchain] = useState<Toolchain>('testnet');
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
@@ -123,7 +123,6 @@ function App() {
     });
     if (!!response) {
       const permalink = `${window.location.origin}/?toolchain=${toolchain}&transpile=${showSolidity}&gist=${response.id}`;
-      console.log('permalink: ', permalink);
       updateLog([
         <Copyable
           href

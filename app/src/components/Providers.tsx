@@ -15,7 +15,7 @@ export function Providers({ children }: ProvidersProps) {
     <QueryClientProvider client={queryClient}>
       <FuelProvider
         fuelConfig={{
-          connectors: defaultConnectors(),
+          connectors: defaultConnectors({ devMode: true }),
         }}>
         {globalCss()()}
         {children}

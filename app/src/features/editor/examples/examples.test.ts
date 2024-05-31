@@ -43,7 +43,7 @@ describe(`test examples`, () => {
         method: 'POST',
         body: JSON.stringify({
           contract: code,
-          toolchain: 'beta-5'
+          toolchain: 'testnet'
         }),
       });
 
