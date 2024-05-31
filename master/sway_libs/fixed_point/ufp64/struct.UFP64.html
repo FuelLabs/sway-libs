@@ -1,12 +1,208 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `UFP64` struct in `ufp64`."><meta name="keywords" content="sway, swaylang, sway-lang, UFP64"><link rel="icon" href="../../../static.files/sway-logo.svg"><title>UFP64 in ufp64 - Sway</title><link rel="stylesheet" type="text/css" href="../../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../static.files/ayu.css"><link rel="stylesheet" href="../../../static.files/ayu.min.css"></head><body class="swaydoc struct"><nav class="sidebar"><a class="sidebar-logo" href="../../../sway_libs/index.html"><div class="logo-container"><img class="sway-logo" src="../../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Struct UFP64</h2><div class="sidebar-elems"><section><div class="block"><ul><li><a href="#fields">Fields</a></li></ul></div></section></div></nav><main><div class="width-limiter"><script src="../../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){searchForm.dispatchEvent(new Event('submit'))});searchbar.addEventListener("search",function(event){searchForm.dispatchEvent(new Event('submit'))});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=[...item.module_info,formattedName].join("::");const path=["../../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Struct <a class="mod" href="../../index.html">sway_libs</a><span>::</span><a class="mod" href="../index.html">fixed_point</a><span>::</span><a class="mod" href="index.html">ufp64</a><span>::</span><a class="struct" href="#">UFP64</a></span></h1></div><div class="docblock item-decl"><pre class="sway struct"><code>pub struct UFP64 {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `UFP64` struct in `ufp64`."><meta name="keywords" content="sway, swaylang, sway-lang, UFP64"><link rel="icon" href="../../../static.files/sway-logo.svg"><title>UFP64 in ufp64 - Sway</title><link rel="stylesheet" type="text/css" href="../../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../static.files/ayu.css"><link rel="stylesheet" href="../../../static.files/ayu.min.css"></head><body class="swaydoc struct"><nav class="sidebar"><a class="sidebar-logo" href="../../../sway_libs/index.html"><div class="logo-container"><img class="sway-logo" src="../../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Struct UFP64</h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block method"><li><a href="#structfield.underlying">underlying</a></li></ul></section><section><h3><a href="#methods">Methods</a></h3><ul class="block method"><li><a href="#method.bits">bits</a></li><li><a href="#method.denominator">denominator</a></li><li><a href="#method.max">max</a></li><li><a href="#method.min">min</a></li><li><a href="#method.zero">zero</a></li><li><a href="#method.is_zero">is_zero</a></li><li><a href="#method.underlying">underlying</a></li><li><a href="#method.from_uint">from_uint</a></li><li><a href="#method.recip">recip</a></li><li><a href="#method.trunc">trunc</a></li><li><a href="#method.floor">floor</a></li><li><a href="#method.fract">fract</a></li><li><a href="#method.ceil">ceil</a></li><li><a href="#method.round">round</a></li></ul></section><section><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block method"><li><a href="#impl-From">From</a></li><li><a href="#impl-Eq">Eq</a></li><li><a href="#impl-Ord">Ord</a></li><li><a href="#impl-Add">Add</a></li><li><a href="#impl-Subtract">Subtract</a></li><li><a href="#impl-Multiply">Multiply</a></li><li><a href="#impl-Divide">Divide</a></li><li><a href="#impl-Root">Root</a></li><li><a href="#impl-Exponent">Exponent</a></li><li><a href="#impl-Power">Power</a></li></ul></section></div></nav><main><div class="width-limiter"><script src="../../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){searchForm.dispatchEvent(new Event('submit'))});searchbar.addEventListener("search",function(event){searchForm.dispatchEvent(new Event('submit'))});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=[...item.module_info,formattedName].join("::");const path=["../../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Struct <a class="mod" href="../../index.html">sway_libs</a><span>::</span><a class="mod" href="../index.html">fixed_point</a><span>::</span><a class="mod" href="index.html">ufp64</a><span>::</span><a class="struct" href="#">UFP64</a></span></h1></div><div class="docblock item-decl"><pre class="sway struct"><code>pub struct UFP64 {
     /// The underlying value representing the `UFP64` type.
-    pub value: u64,
+    underlying: u64,
 }</code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The 64-bit unsigned fixed point number type.</p>
 <h1>Additional Information</h1>
 <p>Represented by an underlying <code>u64</code> number.</p>
-</div></details><h2 id="fields" class="fields small-section-header">Fields<a class="anchor" href="#fields"></a></h2><span id="structfield.value" class="structfield small-section-header"><a class="anchor field" href="#structfield.value"></a><code>value: u64</code></span><div class="docblock"><p>The underlying value representing the <code>UFP64</code> type.</p>
-</div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-From" class="impl has-srclink"><a href="#impl-From" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../std/convert/trait.From.html">From</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.from">from</a>(value: u64) -&gt; Self</h4></div></summary><div class="doc-block"><p>Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Eq" class="impl has-srclink"><a href="#impl-Eq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Eq.html">Eq</a> for UFP64</h3></div></summary><div class="impl-items"><div id="method.eq" class="method trait-impl"><a href="#method.eq" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.eq">eq</a>(self, other: Self) -&gt; bool</h4></div><details class="swaydoc-toggle method-toggle" open><summary><div id="method.neq" class="method trait-impl"><a href="#method.neq" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.neq">neq</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="doc-block"><p>Evaluates if two values of the same type are not equal.</p>
+</div></details><h2 id="fields" class="fields small-section-header">Fields<a class="anchor" href="#fields"></a></h2><span id="structfield.underlying" class="structfield small-section-header"><a class="anchor field" href="#structfield.underlying"></a><code>underlying: u64</code></span><div class="docblock"><p>The underlying value representing the <code>UFP64</code> type.</p>
+</div><h2 id="methods" class="small-section-header">Implementations<a href="#methods" class="anchor"></a></h2><div id="methods-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.bits" class="method trait-impl"><a href="#method.bits" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.bits">bits</a>() -&gt; u64</h4></div></summary><div class="docblock"><p>The size of this type in bits.</p>
+<h1>Returns</h1>
+<p>[u64] - The defined size of the <code>UFP64</code> type.</p>
+<h1>Examples</h1>
+<p>``sway<br />
+use libraries::fixed_point::ufp64::UFP64;</p>
+<p>fn foo() {<br />
+let bits = UFP64::bits();<br />
+assert(bits == 64);<br />
+}</p>
+<pre><code class="language-sway"></code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.denominator" class="method trait-impl"><a href="#method.denominator" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.denominator">denominator</a>() -&gt; u64</h4></div></summary><div class="docblock"><p>Convenience function to know the denominator.</p>
+<h1>Returns</h1>
+<ul>
+<li>[u64] - The value of the denominator for the <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let denominator = UFP64::denominator();
+    assert(denominator == 4294967296);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.max" class="method trait-impl"><a href="#method.max" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.max">max</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>The largest value that can be represented by this type.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> struct.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use v::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::max();
+    assert(ufp64.underlying() == u64::max());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.min" class="method trait-impl"><a href="#method.min" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.min">min</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>The smallest value that can be represented by this type.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::min();
+    assert(ufp64.underlying() == u64::min());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.zero" class="method trait-impl"><a href="#method.zero" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.zero">zero</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>The zero value of this type.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::zero();
+    assert(ufp64.underlying() == 0);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.is_zero" class="method trait-impl"><a href="#method.is_zero" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.is_zero">is_zero</a>(self) -&gt; bool</h4></div></summary><div class="docblock"><p>Returns whether a <code>UFP64</code> is set to zero.</p>
+<h1>Returns</h1>
+<ul>
+<li>[bool] -&gt; True if the <code>UFP64</code> is zero, otherwise false.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::zero();
+    assert(ufp64.is_zero());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.underlying" class="method trait-impl"><a href="#method.underlying" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.underlying">underlying</a>(self) -&gt; u64</h4></div></summary><div class="docblock"><p>Returns the underlying <code>u64</code> representing the <code>UFP64</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[u64] - The <code>u64</code> representing the <code>UFP64</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::zero();
+    assert(ufp64.underlying() == 0);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.from_uint" class="method trait-impl"><a href="#method.from_uint" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.from_uint">from_uint</a>(uint: u64) -&gt; Self</h4></div></summary><div class="docblock"><p>Creates UFP64 that corresponds to a unsigned integer.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>uint</code>: [u64] - The unsigned number to become the underlying value for the <code>UFP64</code>.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(1);
+    assert(ufp64.underlying() == 4294967296);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.recip" class="method trait-impl"><a href="#method.recip" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.recip">recip</a>(number: UFP64) -&gt; Self</h4></div></summary><div class="docblock"><p>Takes the reciprocal (inverse) of a number, <code>1/x</code>.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>number</code>: [UFP64] - The value to create the reciprocal from.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let recip = UFP64::recip(ufp64);
+    assert(recip.underlying() == 33554432);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.trunc" class="method trait-impl"><a href="#method.trunc" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.trunc">trunc</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns the integer part of <code>self</code>.</p>
+<h1>Additional Information</h1>
+<p>This means that non-integer numbers are always truncated towards zero.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let trunc = ufp64.trunc();
+    assert(trunc.underlying() == 0);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.floor" class="method trait-impl"><a href="#method.floor" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.floor">floor</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns the largest integer less than or equal to <code>self</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let floor = ufp64.floor();
+    assert(floor.underlying() == 0);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.fract" class="method trait-impl"><a href="#method.fract" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.fract">fract</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns the fractional part of <code>self</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - the newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let fract = ufp64.fract();
+    assert(fract.underlying() == 0);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.ceil" class="method trait-impl"><a href="#method.ceil" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.ceil">ceil</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns the smallest integer greater than or equal to <code>self</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let ceil = ufp64.ceil();
+    assert(ceil.underlying() = 4294967296);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-UFP64" class="impl has-srclink"><a href="#impl-UFP64" class="anchor"></a><h3 class="code-header in-band">impl UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.round" class="method trait-impl"><a href="#method.round" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.round">round</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns the nearest integer to <code>self</code>. Round half-way cases away from zero.</p>
+<h1>Returns</h1>
+<ul>
+<li>[UFP64] - The newly created <code>UFP64</code> type.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use libraries::fixed_point::ufp64::UFP64;
+
+fn foo() {
+    let ufp64 = UFP64::from_uint(128);
+    let round = ufp64.round();
+    assert(round.underlying() == 0);
+}
+</code></pre>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From" class="impl has-srclink"><a href="#impl-From" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../std/convert/trait.From.html">From</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.from">from</a>(underlying: u64) -&gt; Self</h4></div></summary><div class="docblock"><p>Creates UFP64 from u64. Note that UFP64::from(1) is 1 / 2^32 and not 1.</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Eq" class="impl has-srclink"><a href="#impl-Eq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Eq.html">Eq</a> for UFP64</h3></div></summary><div class="impl-items"><div id="method.eq" class="method trait-impl"><a href="#method.eq" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.eq">eq</a>(self, other: Self) -&gt; bool</h4></div><details class="swaydoc-toggle method-toggle" open><summary><div id="method.neq" class="method trait-impl"><a href="#method.neq" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.neq">neq</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="docblock"><p>Evaluates if two values of the same type are not equal.</p>
 <h1>Additional Information</h1>
 <p>This function is inherited when <code>eq()</code> is implemented.</p>
 <h1>Arguments</h1>
@@ -35,11 +231,11 @@ fn foo() {
     assert(result);
 }
 </code></pre>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Ord" class="impl has-srclink"><a href="#impl-Ord" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Ord.html">Ord</a> for UFP64</h3></div></summary><div class="impl-items"><div id="method.gt" class="method trait-impl"><a href="#method.gt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.gt">gt</a>(self, other: Self) -&gt; bool</h4></div><div id="method.lt" class="method trait-impl"><a href="#method.lt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.lt">lt</a>(self, other: Self) -&gt; bool</h4></div></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Add" class="impl has-srclink"><a href="#impl-Add" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Add.html">Add</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.add" class="method trait-impl"><a href="#method.add" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.add">add</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Add a UFP64 to a UFP64. Panics on overflow.</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Subtract" class="impl has-srclink"><a href="#impl-Subtract" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Subtract.html">Subtract</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.subtract" class="method trait-impl"><a href="#method.subtract" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.subtract">subtract</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Subtract a UFP64 from a UFP64. Panics of overflow.</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Multiply" class="impl has-srclink"><a href="#impl-Multiply" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Multiply.html">Multiply</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.multiply" class="method trait-impl"><a href="#method.multiply" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.multiply">multiply</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Multiply a UFP64 with a UFP64. Panics of overflow.</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Divide" class="impl has-srclink"><a href="#impl-Divide" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Divide.html">Divide</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.divide" class="method trait-impl"><a href="#method.divide" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.divide">divide</a>(self, divisor: Self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Divide a UFP64 by a UFP64. Panics if divisor is zero.</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Root" class="impl has-srclink"><a href="#impl-Root" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../..//trait.Root.html">Root</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.sqrt" class="method trait-impl"><a href="#method.sqrt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.sqrt">sqrt</a>(self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Sqaure root for UFP64</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Exponent" class="impl has-srclink"><a href="#impl-Exponent" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../..//trait.Exponent.html">Exponent</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.exp" class="method trait-impl"><a href="#method.exp" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.exp">exp</a>(exponent: Self) -&gt; Self</h4></div></summary><div class="doc-block"><p>Exponent function. e ^ x</p>
-</div></details></div></details><details class="swaydoc-toggle implementors-toggle"><summary><div id="impl-Power" class="impl has-srclink"><a href="#impl-Power" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../..//trait.Power.html">Power</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.pow" class="method trait-impl"><a href="#method.pow" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.pow">pow</a>(self, exponent: u32) -&gt; Self</h4></div></summary><div class="doc-block"><p>Power function. x ^ exponent</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Ord" class="impl has-srclink"><a href="#impl-Ord" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Ord.html">Ord</a> for UFP64</h3></div></summary><div class="impl-items"><div id="method.gt" class="method trait-impl"><a href="#method.gt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.gt">gt</a>(self, other: Self) -&gt; bool</h4></div><div id="method.lt" class="method trait-impl"><a href="#method.lt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.lt">lt</a>(self, other: Self) -&gt; bool</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Add" class="impl has-srclink"><a href="#impl-Add" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Add.html">Add</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.add" class="method trait-impl"><a href="#method.add" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.add">add</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="docblock"><p>Add a UFP64 to a UFP64. Panics on overflow.</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Subtract" class="impl has-srclink"><a href="#impl-Subtract" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Subtract.html">Subtract</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.subtract" class="method trait-impl"><a href="#method.subtract" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.subtract">subtract</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="docblock"><p>Subtract a UFP64 from a UFP64. Panics of overflow.</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Multiply" class="impl has-srclink"><a href="#impl-Multiply" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Multiply.html">Multiply</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.multiply" class="method trait-impl"><a href="#method.multiply" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.multiply">multiply</a>(self, other: Self) -&gt; Self</h4></div></summary><div class="docblock"><p>Multiply a UFP64 with a UFP64. Panics of overflow.</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Divide" class="impl has-srclink"><a href="#impl-Divide" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../core/ops/trait.Divide.html">Divide</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.divide" class="method trait-impl"><a href="#method.divide" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.divide">divide</a>(self, divisor: Self) -&gt; Self</h4></div></summary><div class="docblock"><p>Divide a UFP64 by a UFP64. Panics if divisor is zero.</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Root" class="impl has-srclink"><a href="#impl-Root" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../std/math/trait.Root.html">Root</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.sqrt" class="method trait-impl"><a href="#method.sqrt" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.sqrt">sqrt</a>(self) -&gt; Self</h4></div></summary><div class="docblock"><p>Sqaure root for UFP64</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Exponent" class="impl has-srclink"><a href="#impl-Exponent" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../std/math/trait.Exponent.html">Exponent</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.exp" class="method trait-impl"><a href="#method.exp" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.exp">exp</a>(exponent: Self) -&gt; Self</h4></div></summary><div class="docblock"><p>Exponent function. e ^ x</p>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Power" class="impl has-srclink"><a href="#impl-Power" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../../std/math/trait.Power.html">Power</a> for UFP64</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.pow" class="method trait-impl"><a href="#method.pow" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#method.pow">pow</a>(self, exponent: u32) -&gt; Self</h4></div></summary><div class="docblock"><p>Power function. x ^ exponent</p>
 </div></details></div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>
