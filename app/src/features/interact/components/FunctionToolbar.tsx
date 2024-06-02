@@ -4,8 +4,7 @@ import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import DryrunSwitch from './DryrunSwitch';
 import { CallableParamValue } from './FunctionParameters';
-import { lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
 
 interface FunctionToolbarProps {
   contractId: string;
@@ -26,12 +25,11 @@ function FunctionToolbar({
 
   const title = parameters.length ? 'Parameters' : 'No Parameters';
 
-  // Import theme state
-  const theme = useThemeContext().theme;
+  const { themeColor } = useTheme();
 
   return (
     <Toolbar style={{ padding: '0 2px 0', justifyContent: 'space-between' }}>
-      <div style={{ float: 'left', color: theme === 'light' ? '' : lightColors.scalesGreen7 }}>{title}</div>
+      <div style={{ float: 'left', color: themeColor('black1') }}>{title}</div>
       <FormGroup
         style={{
           marginLeft: '15px',

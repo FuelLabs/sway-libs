@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PlayArrow from '@mui/icons-material/PlayArrow';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { DeployState } from '../../../utils/types';
@@ -12,7 +12,6 @@ import {
 } from '../../../utils/localStorage';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import SwitchThemeButton from './SwitchThemeButton'
-import { useThemeContext } from '../../../context/theme';
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -45,16 +44,6 @@ function ActionToolbar({
 
   const onDocsClick = useCallback(() => {
     window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer');
-  }, []);
-  //import setTheme to set be able to set the theme on page load
-  const setTheme = useThemeContext().setTheme;
-  // On page load check theme preferences
-  useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
   }, []);
 
   return (

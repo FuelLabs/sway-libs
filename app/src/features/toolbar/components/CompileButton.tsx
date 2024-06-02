@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import { darkColors, lightColors } from '@fuel-ui/css';
-
+import useTheme from '../../../context/theme';
 export interface CompileButtonProps {
   onClick: () => void;
   text: string;
@@ -19,6 +19,9 @@ function CompileButton({
   tooltip,
   style,
 }: CompileButtonProps) {
+
+  const { themeColor } = useTheme();
+  
   return (
     <Tooltip title={tooltip}>
       <span>
@@ -38,7 +41,8 @@ function CompileButton({
               borderColor: darkColors.gray6,
             },
             ':disabled': {
-              background: lightColors.scalesGreen4,
+              background: themeColor('disabled2'),
+              color: themeColor('disabled3'),
             },
           }}
           variant='outlined'

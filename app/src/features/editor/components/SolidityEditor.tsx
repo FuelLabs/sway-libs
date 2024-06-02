@@ -1,4 +1,4 @@
-import React, {useMemo, useState } from 'react';
+import React from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-rust';
@@ -8,7 +8,7 @@ import { StyledBorder } from '../../../components/shared';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import ActionOverlay from './ActionOverlay';
 import { useIsMobile } from '../../../hooks/useIsMobile';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
 
 export interface SolidityEditorProps {
   code: string;
@@ -17,17 +17,9 @@ export interface SolidityEditorProps {
 
 function SolidityEditor({ code, onChange }: SolidityEditorProps) {
   const isMobile = useIsMobile();
-  //set theme of editor once theme changes
-  const [themeStyle,setThemeStyle] = useState('chrome')
-  const theme = useThemeContext().theme;
-  useMemo(()=>{
-    if(theme !== 'light'){
-      setThemeStyle('tomorrow_night_bright')
-    } else{
-      setThemeStyle('chrome')
-    }
-  }, [theme])
-  
+
+  const { themeColor } = useTheme();
+
   return (
     <StyledBorder
       style={{
@@ -42,7 +34,7 @@ function SolidityEditor({ code, onChange }: SolidityEditorProps) {
           height: '100%',
         }}
         mode='solidity'
-        theme={themeStyle}
+        theme={themeColor('chrome')}
         name='editor'
         fontSize='14px'
         onChange={onChange}

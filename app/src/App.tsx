@@ -21,13 +21,13 @@ import { Analytics, track } from '@vercel/analytics/react';
 import { useGist } from './features/editor/hooks/useGist';
 import { useSearchParams } from 'react-router-dom';
 import Copyable from './components/Copyable';
-import {Theme,ThemeContext} from './context/theme'
+import useTheme from './context/theme';
 
 const DRAWER_WIDTH = '40vw';
 
 function App() {
-  // Current theme state
-  const [theme,setTheme]=useState<Theme>('light');
+
+  const { themeColor,setTheme } = useTheme();
   // The current sway code in the editor.
   const [swayCode, setSwayCode] = useState<string>(loadSwayCode());
 
@@ -86,6 +86,15 @@ function App() {
       setToolchain(toolchainParam);
     }
   }, [searchParams, setShowSolidity, setToolchain]);
+
+  // Set theme based on the user system preferences.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }, []);
 
   const onSwayCodeChange = useCallback(
     (code: string) => {
@@ -175,12 +184,11 @@ function App() {
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
-    <ThemeContext.Provider value={{setTheme,theme}}>
       <div
         style={{
           padding: '15px',
           margin: '0px',
-          background: theme==='light' ? '#F1F1F1': 'black',
+          background: themeColor('white4'),
         }}>
         <ActionToolbar
           deployState={deployState}
@@ -222,7 +230,6 @@ function App() {
         />
         <Analytics />
       </div>
-    </ThemeContext.Provider>
   );
 }
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { darkColors, lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../context/theme';
+import useTheme from '../context/theme';
 
 export interface SecondaryButtonProps {
   onClick: () => void;
@@ -32,8 +31,7 @@ function SecondaryButton({
     };
   }
 
-  // Import theme state
-  const theme = useThemeContext().theme;
+  const { themeColor } = useTheme();
 
   return (
     <Tooltip title={tooltip}>
@@ -41,12 +39,15 @@ function SecondaryButton({
         <Button
           sx={{
             ...style,
-            color: theme === 'light' ? darkColors.gray6 : lightColors.scalesGreen7,
-            bgcolor: theme === 'light' ? '': '#1F1F1F',
-            borderColor: darkColors.gray6,
+            color: themeColor('gray2'),
+            borderColor: themeColor('gray2'),
             ':hover': {
-              bgcolor: theme === 'light' ? lightColors.scalesGreen3 : darkColors.gray7,
-              borderColor: darkColors.gray6,
+              bgcolor:  themeColor('sgreen1'),
+              borderColor: themeColor('gray2'),
+            },
+            ':disabled': {
+              borderColor: themeColor('disabled1'),
+              color: themeColor('disabled1'),
             },
           }}
           variant='outlined'

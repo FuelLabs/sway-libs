@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import CircularProgress from '@mui/material/CircularProgress';
 import Copyable from './Copyable';
 import { lightColors, darkColors} from '@fuel-ui/css';
-import { useThemeContext } from '../context/theme';
+import useTheme from '../context/theme';
 
 const BorderColor = () => {
-  const theme = useThemeContext().theme;
-  const borderColor = theme === 'light' ? 'lightgrey' : '#181818';
+  const { themeColor } = useTheme();
+  const borderColor = themeColor('gray6');
   return borderColor;
 };
 
@@ -47,20 +47,19 @@ export const DarkThemeStyling = {
     },
     '.MuiInputBase-root': {
       bgcolor: darkColors.gray1,
-      color: lightColors.scalesGreen7,
-      borderBottom: `1px solid ${lightColors.scalesGreen7}`,
-      borderRight:`1px solid ${lightColors.scalesGreen7}`,
+      color: lightColors.gray1,
+      outline: `1px solid ${darkColors.gray8}`,
       '&:hover': {
-        background: 'black',
+        background: 'transparent',
       },
     },
     //color of dropdown label
     '.MuiFormLabel-root': {
-      color: '#E0FFFF',
+      color: 'white',
     },
     //color of dropdown svg icon
     '.MuiSvgIcon-root': {
-      color: lightColors.scalesGreen7,
+      color: lightColors.gray8,
     },
   },
   darkInput:{
@@ -70,7 +69,11 @@ export const DarkThemeStyling = {
     '.MuiInputBase-root': {
       border: '1px solid rgba(224, 255, 255, 0.6)',
       bgcolor: 'transparent',
-      color: '#E0FFFF',
+      color: 'white',
     },    
-  }  
+  },
+  darkAccordion: {
+    background: darkColors.scalesGray1,
+    border: `1px solid ${darkColors.gray6}`
+  }
 } as const;

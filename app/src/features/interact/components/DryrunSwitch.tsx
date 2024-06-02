@@ -1,8 +1,7 @@
 import React from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { lightColors } from '@fuel-ui/css';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
 
 export interface DryrunSwitchProps {
   dryrun: boolean;
@@ -10,8 +9,8 @@ export interface DryrunSwitchProps {
 }
 
 function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
-  // Import theme state
-  const theme = useThemeContext().theme;
+  
+  const { themeColor } = useTheme();
 
   return (
     <FormControlLabel
@@ -21,12 +20,12 @@ function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
         <div
           style={{
             fontSize: '12px',
-            color: theme === 'light' ? '#00000099' : lightColors.scalesGreen7,
+            color: themeColor('white3'),
           }}>
           {dryrun ? 'DRY RUN' : 'LIVE'}
         </div>
       }
-      control={<Switch onChange={onChange} style={{color: theme === 'light' ? '' : lightColors.scalesGreen7,}}/>}
+      control={<Switch onChange={onChange} />}
     />
   );
 }

@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
 import { StyledBorder } from '../../../components/shared';
+
 export interface LogViewProps {
   results: React.ReactElement[];
 }
 
 function LogView({ results }: LogViewProps) {
-  // Import theme state
-  const theme = useThemeContext().theme;
+  
+  const { themeColor } = useTheme();
+  
   const scrollRef = useRef<null | HTMLDivElement>(null);
 
   // Scroll to the bottom of the results when they change.
@@ -20,7 +22,7 @@ function LogView({ results }: LogViewProps) {
   return (
     <StyledBorder
       style={{
-        color: theme === 'light' ? 'black' : '#E0FFFF',
+        color: themeColor('gray5'),
         padding: '15px',
         overflow: 'auto',
         marginTop: '15px',
@@ -38,3 +40,4 @@ function LogView({ results }: LogViewProps) {
 }
 
 export default LogView;
+

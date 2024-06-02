@@ -9,8 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import ParameterInput from './ParameterInput';
 import { TypeInfo } from '../utils/getTypeInfo';
 import { styled } from '@mui/material/styles';
-import { useThemeContext } from '../../../context/theme';
-import { lightColors } from '@fuel-ui/css';
+import useTheme from '../../../context/theme';
 
 
 export type ParamTypeLiteral =
@@ -52,12 +51,10 @@ export function FunctionParameters({
   setParamValues,
 }: FunctionParametersProps) {
 
-  // Import theme state
-  const theme = useThemeContext().theme;
-
-  // Created custom Table component
+  const { themeColor } = useTheme();
+  // Custom Table component
   const TableCellComponent = styled(TableCell)<TableProps>(() => ({
-    color: theme === 'light' ? '' : lightColors.scalesGreen3,
+    color: themeColor('black1'),
   }));
 
   const setParamAtIndex = React.useCallback(
@@ -74,7 +71,7 @@ export function FunctionParameters({
   }
 
   return (
-    <TableContainer component={Paper} style={{ background: theme === 'light' ? '' : '#1F1F1F' }}>
+    <TableContainer component={Paper} style={{ background: themeColor('gray7') }}>
       <Table aria-label='function parameter table'>
         <TableHead>
           <TableRow>

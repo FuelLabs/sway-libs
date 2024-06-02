@@ -7,8 +7,8 @@ import FormLabel from '@mui/material/FormLabel';
 import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
 import { FunctionForm } from './FunctionForm';
 import { ResponseCard } from './ResponseCard';
-import { darkColors ,lightColors} from '@fuel-ui/css';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
+import { DarkThemeStyling } from '../../../components/shared';
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -29,13 +29,13 @@ export function FunctionCallAccordion({
   setResponse,
   updateLog,
 }: FunctionCallAccordionProps) {
-  // Import theme state
-  const theme = useThemeContext().theme;
 
+  const { theme, themeColor } = useTheme();
+  const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkAccordion : {};
   return (
-    <Accordion key={contractId + functionName} sx={[theme !== 'light' && {background: '#181818', border: `1px solid ${darkColors.gray6}`}]}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={[theme !== 'light' && {color: lightColors.scalesGreen7}]} />}>
-        <FormLabel style={{ fontFamily: 'monospace', color: theme === 'light' ? '#00000099' : lightColors.scalesGreen3 }}>
+    <Accordion key={contractId + functionName} sx={{ ...dropdownStyling }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color: themeColor('gray4')}} />}>
+        <FormLabel style={{ fontFamily: 'monospace', color: themeColor('white3') }}>
           {functionName}
         </FormLabel>
       </AccordionSummary>

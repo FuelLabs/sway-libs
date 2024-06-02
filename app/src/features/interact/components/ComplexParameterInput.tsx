@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-chrome';
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright';
-import { useThemeContext } from '../../../context/theme';
+import useTheme from '../../../context/theme';
 import { StyledBorder } from '../../../components/shared';
 import {
   CallableParamValue,
@@ -71,16 +71,8 @@ function ComplexParameterInput({
     () => (value ? value.split('\n').length + 1 : 2),
     [value]
   );
-  //set theme of editor once theme changes
-  const [themeStyle,setThemeStyle] = useState('chrome')
-  const theme = useThemeContext().theme;
-  useMemo(()=>{
-    if(String(theme) !== 'light'){
-      setThemeStyle('tomorrow_night_bright')
-    } else{
-      setThemeStyle('chrome')
-    }
-  },[theme])
+
+  const { themeColor } = useTheme();
 
   return (
     <StyledBorder>
@@ -89,7 +81,7 @@ function ComplexParameterInput({
         minLines={lines}
         maxLines={lines}
         mode='json'
-        theme={themeStyle}
+        theme={themeColor('chrome')}
         name='editor'
         fontSize='14px'
         onChange={onChange}

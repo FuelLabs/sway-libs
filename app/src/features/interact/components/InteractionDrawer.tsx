@@ -1,8 +1,7 @@
 import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import { ContractInterface } from './ContractInterface';
-import { useThemeContext } from '../../../context/theme';
-import { darkColors, lightColors } from '@fuel-ui/css';
+import useTheme from '../../../context/theme';
 
 export interface InteractionDrawerProps {
   isOpen: boolean;
@@ -18,14 +17,13 @@ function InteractionDrawer({
   updateLog,
 }: InteractionDrawerProps) {
 
-  // Import theme state
-  const theme = useThemeContext().theme;
+  const { themeColor } = useTheme();
   return (
     <Drawer
       PaperProps={{
         sx: {
-          color: theme === 'light' ? darkColors.gray1 : lightColors.scalesGreen7,
-          background: theme === 'light' ? '#FFFFFFF': darkColors.gray1,
+          color: themeColor('black1'),
+          background: themeColor('white2'),
         },
       }}
       sx={{
