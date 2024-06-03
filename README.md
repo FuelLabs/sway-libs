@@ -69,7 +69,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.1.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
 ```
 
 > **NOTE:** 
