@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import { darkColors } from '@fuel-ui/css';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import useTheme from "../context/theme";
+import useTheme from '../context/theme';
 
 export interface CopyableProps {
   value: string;
