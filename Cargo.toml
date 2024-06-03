@@ -1,0 +1,4 @@
+[package]
+name = "sway-libs"
+version = "0.21.0"
+edition = "2021"
