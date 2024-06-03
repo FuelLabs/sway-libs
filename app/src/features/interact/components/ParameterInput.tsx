@@ -5,7 +5,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ComplexParameterInput from './ComplexParameterInput';
 import useTheme from '../../../context/theme';
-import { DarkThemeStyling } from "../../../components/shared";
+import { DarkThemeStyling } from '../../../components/shared';
 
 export interface ParameterInputProps {
   input: InputInstance;
