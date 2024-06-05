@@ -62,7 +62,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Data Structures
 
-- [Queue](https://fuellabs.github.io/sway-libs/book/queue/index.html) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
 
 ## Using a library
 
