@@ -20,7 +20,7 @@ RUN cargo chef prepare --recipe-path recipe.json
 FROM chef as builder
 
 # Install charcoal
-RUN cargo install --git https://github.com/camden-smallwood/charcoal.git --rev 7c2fd7d1539d15304616269f11dbe20c1bd5d6ca
+RUN cargo install --git https://github.com/ourovoros-io/charcoal.git --rev 77954dd00e9097ace2ee794759a098898f446e1e
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 COPY --from=planner /build/recipe.json recipe.json
