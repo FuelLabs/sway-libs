@@ -1,8 +1,8 @@
-import React from 'react';
-import SolidityEditor from './SolidityEditor';
-import SwayEditor from './SwayEditor';
-import { Toolchain } from './ToolchainDropdown';
-import { useIsMobile } from '../../../hooks/useIsMobile';
+import React from "react";
+import SolidityEditor from "./SolidityEditor";
+import SwayEditor from "./SwayEditor";
+import { Toolchain } from "./ToolchainDropdown";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 export interface EditorViewProps {
   swayCode: string;
@@ -28,15 +28,16 @@ function EditorView({
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        height: '50vh',
-        minHeight: '10vh',
-        maxHeight: '80vh',
-        position: 'relative',
-        resize: isMobile ? 'none' : 'vertical',
-        overflow: 'auto',
-      }}>
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        height: "50vh",
+        minHeight: "10vh",
+        maxHeight: "80vh",
+        position: "relative",
+        resize: isMobile ? "none" : "vertical",
+        overflow: "auto",
+      }}
+    >
       {showSolidity && (
         <SolidityEditor code={solidityCode} onChange={onSolidityCodeChange} />
       )}

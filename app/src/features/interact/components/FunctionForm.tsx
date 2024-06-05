@@ -1,11 +1,11 @@
-import FunctionToolbar from './FunctionToolbar';
+import FunctionToolbar from "./FunctionToolbar";
 import {
   CallableParamValue,
   FunctionParameters,
   InputInstance,
   SimpleParamValue,
-} from './FunctionParameters';
-import React, { useMemo, useState } from 'react';
+} from "./FunctionParameters";
+import React, { useMemo, useState } from "react";
 
 interface FunctionFormProps {
   contractId: string;
@@ -23,7 +23,7 @@ export function FunctionForm({
   updateLog,
 }: FunctionFormProps) {
   const [paramValues, setParamValues] = useState(
-    Array<SimpleParamValue>(inputInstances.length)
+    Array<SimpleParamValue>(inputInstances.length),
   );
 
   // Parse complex parameters stored as strings.
@@ -32,15 +32,15 @@ export function FunctionForm({
       const input = inputInstances[index];
       const literal = input.type.literal;
       if (
-        typeof paramValue === 'string' &&
-        ['vector', 'object', 'option', 'enum'].includes(literal)
+        typeof paramValue === "string" &&
+        ["vector", "object", "option", "enum"].includes(literal)
       ) {
         try {
           const parsed = JSON.parse(paramValue);
 
           // For Options, SDK expects to receive the value of "Some" or undefined for "None".
-          if (literal === 'option') {
-            return parsed['Some'];
+          if (literal === "option") {
+            return parsed["Some"];
           }
           return parsed;
         } catch (e) {

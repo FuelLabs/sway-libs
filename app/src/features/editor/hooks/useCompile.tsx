@@ -1,28 +1,28 @@
-import styled from '@emotion/styled';
-import ansicolor from 'ansicolor';
-import React, { useState, useEffect } from 'react';
+import styled from "@emotion/styled";
+import ansicolor from "ansicolor";
+import React, { useState, useEffect } from "react";
 import {
   saveAbi,
   saveBytecode,
   saveStorageSlots,
-} from '../../../utils/localStorage';
-import { CopyableHex } from '../../../components/shared';
-import { Toolchain } from '../components/ToolchainDropdown';
-import { SERVER_URI } from '../../../constants';
-import { track } from '@vercel/analytics/react';
+} from "../../../utils/localStorage";
+import { CopyableHex } from "../../../components/shared";
+import { Toolchain } from "../components/ToolchainDropdown";
+import { SERVER_URI } from "../../../constants";
+import { track } from "@vercel/analytics/react";
 
 function toResults(
   prefixedBytecode: string,
-  abi: string
+  abi: string,
 ): React.ReactElement[] {
   return [
-    <div key={'bytecode'}>
+    <div key={"bytecode"}>
       <b>Bytecode</b>:<br />
-      <CopyableHex hex={prefixedBytecode} tooltip='bytecode' />
+      <CopyableHex hex={prefixedBytecode} tooltip="bytecode" />
       <br />
       <br />
     </div>,
-    <div key={'abi'}>
+    <div key={"abi"}>
       <b>ABI:</b>
       <br />
       {abi}
@@ -35,7 +35,7 @@ export function useCompile(
   onError: (error: string | undefined) => void,
   setIsCompiled: (isCompiled: boolean) => void,
   setResults: (entry: React.ReactElement[]) => void,
-  toolchain: Toolchain
+  toolchain: Toolchain,
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
   const [version, setVersion] = useState<string | undefined>();
@@ -52,7 +52,7 @@ export function useCompile(
     setResults([<>Compiling Sway contract...</>]);
 
     const request = new Request(`${SERVER_URI}/compile`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         contract: code,
         toolchain,
@@ -64,8 +64,8 @@ export function useCompile(
         if (response.status < 400) {
           return response.json();
         } else {
-          track('Compile Error', {
-            source: 'network',
+          track("Compile Error", {
+            source: "network",
             status: response.status,
           });
           setServerError(true);
@@ -75,8 +75,8 @@ export function useCompile(
         const { error, forcVersion } = response;
         if (error) {
           // Preserve the ANSI color codes from the compiler output.
-          let parsedAnsi = ansicolor.parse(error);
-          let results = parsedAnsi.spans.map((span, i) => {
+          const parsedAnsi = ansicolor.parse(error);
+          const results = parsedAnsi.spans.map((span, i) => {
             const { text, css } = span;
             const Span = styled.span`
               ${css}
@@ -85,9 +85,9 @@ export function useCompile(
           });
           setResults(results);
           setVersion(forcVersion);
-          saveAbi('');
-          saveBytecode('');
-          saveStorageSlots('');
+          saveAbi("");
+          saveBytecode("");
+          saveStorageSlots("");
         } else {
           const { abi, bytecode, storageSlots, forcVersion } = response;
           const prefixedBytecode = `0x${bytecode}`;
@@ -99,7 +99,7 @@ export function useCompile(
         }
       })
       .catch(() => {
-        track('Compile Error', { source: 'network' });
+        track("Compile Error", { source: "network" });
         setServerError(true);
       });
     setIsCompiled(true);
@@ -108,7 +108,7 @@ export function useCompile(
   useEffect(() => {
     if (serverError) {
       onError(
-        'There was an unexpected error compiling your contract. Please try again.'
+        "There was an unexpected error compiling your contract. Please try again.",
       );
     }
   }, [serverError, onError]);

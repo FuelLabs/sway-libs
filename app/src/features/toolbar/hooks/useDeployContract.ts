@@ -1,9 +1,10 @@
-import { ContractFactory, JsonAbi, StorageSlot } from 'fuels';
-import { useMutation } from '@tanstack/react-query';
-import { useFuel, useWallet } from '@fuels/react';
-import { track } from '@vercel/analytics/react';
-import { useEffect, useState } from 'react';
-import { toMetricProperties } from '../../../utils/metrics';
+import { ContractFactory, JsonAbi, StorageSlot } from "fuels";
+import { useMutation } from "@tanstack/react-query";
+import { useFuel, useWallet } from "@fuels/react";
+import { track } from "@vercel/analytics/react";
+import { useEffect, useState } from "react";
+import { toMetricProperties } from "../../../utils/metrics";
+import Timeout from "await-timeout";
 
 const DEPLOYMENT_TIMEOUT_MS = 120000;
 
@@ -16,9 +17,9 @@ export function useDeployContract(
   abi: string,
   bytecode: string,
   storageSlots: string,
-  onError: (error: any) => void,
-  onSuccess: (data: any) => void,
-  updateLog: (entry: string) => void
+  onError: (error: Error) => void,
+  onSuccess: (data: DeployContractData) => void,
+  updateLog: (entry: string) => void,
 ) {
   const { wallet, isLoading: walletIsLoading } = useWallet();
   const { fuel } = useFuel();
@@ -26,9 +27,9 @@ export function useDeployContract(
 
   useEffect(() => {
     const waitForMetadata = async () => {
-      const name = fuel.currentConnector()?.name ?? 'none';
-      const networkUrl = wallet?.provider.url ?? 'none';
-      const version = (await wallet?.provider.getVersion()) ?? 'none';
+      const name = fuel.currentConnector()?.name ?? "none";
+      const networkUrl = wallet?.provider.url ?? "none";
+      const version = (await wallet?.provider.getVersion()) ?? "none";
       setMetricMetadata({ name, version, networkUrl });
     };
     waitForMetadata();
@@ -39,57 +40,52 @@ export function useDeployContract(
     retry: walletIsLoading && !wallet ? 1 : 0,
     onSuccess,
     onError: (error) => {
-      track('Deploy Error', toMetricProperties(error, metricMetadata));
+      track("Deploy Error", toMetricProperties(error, metricMetadata));
       onError(error);
     },
-    mutationFn: async () => {
+    mutationFn: async (): Promise<DeployContractData> => {
       if (!wallet) {
         if (walletIsLoading) {
-          updateLog('Connecting to wallet...');
+          updateLog("Connecting to wallet...");
         } else {
-          throw new Error('Failed to connect to wallet', {
-            cause: { source: 'wallet' },
+          throw new Error("Failed to connect to wallet", {
+            cause: { source: "wallet" },
           });
         }
       }
 
       const resultPromise = new Promise(
-        async (resolve: (data: DeployContractData) => void, reject) => {
+        (resolve: (data: DeployContractData) => void, reject) => {
           const contractFactory = new ContractFactory(
             bytecode,
             JSON.parse(abi) as JsonAbi,
-            wallet
+            wallet,
           );
 
-          try {
-            const contract = await contractFactory.deployContract({
+          contractFactory
+            .deployContract({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
+            })
+            .then((contract) => {
+              resolve({
+                contractId: contract.id.toB256(),
+                networkUrl: contract.provider.url,
+              });
+            })
+            .catch((error) => {
+              // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+              const source = error?.code === 0 ? "user" : "sdk";
+              error.cause = { source };
+              reject(error);
             });
-            resolve({
-              contractId: contract.id.toB256(),
-              networkUrl: contract.provider.url,
-            });
-          } catch (error: any) {
-            // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-            const source = error.code === 0 ? 'user' : 'sdk';
-            error.cause = { source };
-            reject(error);
-          }
-        }
+        },
       );
 
-      const timeoutPromise = new Promise((_resolve, reject) =>
-        setTimeout(() => {
-          reject(
-            new Error(
-              `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
-              { cause: { source: 'timeout' } }
-            )
-          );
-        }, DEPLOYMENT_TIMEOUT_MS)
+      return Timeout.wrap(
+        resultPromise,
+        DEPLOYMENT_TIMEOUT_MS,
+        `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
       );
-
-      return await Promise.race([resultPromise, timeoutPromise]);
     },
   });
 

@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
-import AceEditor from 'react-ace';
-import 'ace-builds/webpack-resolver';
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-chrome';
-import { StyledBorder } from '../../../components/shared';
+import React, { useEffect, useMemo } from "react";
+import AceEditor from "react-ace";
+import "ace-builds/webpack-resolver";
+import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/theme-chrome";
+import { StyledBorder } from "../../../components/shared";
 import {
   CallableParamValue,
   InputInstance,
   ObjectParamValue,
   VectorParamValue,
-} from './FunctionParameters';
+} from "./FunctionParameters";
 
 export interface ComplexParameterInputProps {
   value: string;
@@ -25,11 +25,11 @@ function ComplexParameterInput({
   // Construct the default object based to show in the JSON editor.
   const defaultObjectOrVector = useMemo(() => {
     const getDefaultObject = (input: InputInstance): ObjectParamValue => {
-      return !!input.components
+      return input.components
         ? Object.fromEntries(
             input.components.map((nested: InputInstance) => {
               return [nested.name, getDefaultValue(nested)];
-            })
+            }),
           )
         : {};
     };
@@ -40,17 +40,17 @@ function ComplexParameterInput({
 
     const getDefaultValue = (input: InputInstance): CallableParamValue => {
       switch (input.type.literal) {
-        case 'string':
-          return '';
-        case 'number':
+        case "string":
+          return "";
+        case "number":
           return 0;
-        case 'bool':
+        case "bool":
           return false;
-        case 'enum':
-        case 'option':
-        case 'object':
+        case "enum":
+        case "option":
+        case "object":
           return getDefaultObject(input);
-        case 'vector':
+        case "vector":
           return getDefaultVector(input);
       }
     };
@@ -66,20 +66,20 @@ function ComplexParameterInput({
   }, [defaultObjectOrVector, onChange, value]);
 
   const lines = useMemo(
-    () => (value ? value.split('\n').length + 1 : 2),
-    [value]
+    () => (value ? value.split("\n").length + 1 : 2),
+    [value],
   );
 
   return (
     <StyledBorder>
       <AceEditor
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
         minLines={lines}
         maxLines={lines}
-        mode='json'
-        theme='chrome'
-        name='editor'
-        fontSize='14px'
+        mode="json"
+        theme="chrome"
+        name="editor"
+        fontSize="14px"
         onChange={onChange}
         value={value}
         editorProps={{ $blockScrolling: true }}

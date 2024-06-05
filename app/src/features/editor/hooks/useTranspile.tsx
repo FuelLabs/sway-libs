@@ -1,15 +1,15 @@
-import styled from '@emotion/styled';
-import ansicolor from 'ansicolor';
-import React, { useState, useEffect } from 'react';
-import { SERVER_URI } from '../../../constants';
-import { track } from '@vercel/analytics/react';
+import styled from "@emotion/styled";
+import ansicolor from "ansicolor";
+import React, { useState, useEffect } from "react";
+import { SERVER_URI } from "../../../constants";
+import { track } from "@vercel/analytics/react";
 
 export function useTranspile(
   code: string | undefined,
   setCodeToCompile: (code: string | undefined) => void,
   onSwayCodeChange: (code: string) => void,
   onError: (error: string | undefined) => void,
-  setResults: (entry: React.ReactElement[]) => void
+  setResults: (entry: React.ReactElement[]) => void,
 ) {
   const [serverError, setServerError] = useState<boolean>(false);
 
@@ -19,8 +19,8 @@ export function useTranspile(
     }
     setResults([
       <>
-        Transpiling Solidity code with{' '}
-        <a href='https://github.com/camden-smallwood/charcoal'>charcoal</a>...
+        Transpiling Solidity code with{" "}
+        <a href="https://github.com/camden-smallwood/charcoal">charcoal</a>...
       </>,
       <>
         WARNING: no support for delegatecall, this, ASM, strings. Coming soon in
@@ -29,10 +29,10 @@ export function useTranspile(
     ]);
 
     const request = new Request(`${SERVER_URI}/transpile`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         contract: code,
-        language: 'solidity',
+        language: "solidity",
       }),
     });
 
@@ -41,8 +41,8 @@ export function useTranspile(
         if (response.status < 400) {
           return response.json();
         } else {
-          track('Transpile Error', {
-            source: 'network',
+          track("Transpile Error", {
+            source: "network",
             status: response.status,
           });
           setServerError(true);
@@ -52,8 +52,8 @@ export function useTranspile(
         const { error, swayContract } = response;
         if (error) {
           // Preserve the ANSI color codes from the compiler output.
-          let parsedAnsi = ansicolor.parse(error);
-          let results = parsedAnsi.spans.map((span, i) => {
+          const parsedAnsi = ansicolor.parse(error);
+          const results = parsedAnsi.spans.map((span, i) => {
             const { text, css } = span;
             const Span = styled.span`
               ${css}
@@ -69,7 +69,7 @@ export function useTranspile(
         }
       })
       .catch(() => {
-        track('Transpile Error', { source: 'network' });
+        track("Transpile Error", { source: "network" });
         setServerError(true);
       });
   }, [code, setResults, onSwayCodeChange, setCodeToCompile]);
@@ -77,7 +77,7 @@ export function useTranspile(
   useEffect(() => {
     if (serverError) {
       onError(
-        'There was an unexpected error transpiling your contract. Please try again.'
+        "There was an unexpected error transpiling your contract. Please try again.",
       );
     }
   }, [serverError, onError]);

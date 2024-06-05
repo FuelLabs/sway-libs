@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { useWallet } from '@fuels/react';
-import { Contract, Interface } from 'fuels';
-import { loadAbi } from '../../../utils/localStorage';
+import { useQuery } from "@tanstack/react-query";
+import { useWallet } from "@fuels/react";
+import { Contract, Interface } from "fuels";
+import { loadAbi } from "../../../utils/localStorage";
 
 export function useContract(contractId: string) {
   const { wallet, isLoading, isError } = useWallet();
@@ -12,7 +12,7 @@ export function useContract(contractId: string) {
     isError: isContractError,
   } = useQuery({
     enabled: !isLoading && !isError && !!wallet && !!contractId.length,
-    queryKey: ['contract'],
+    queryKey: ["contract"],
     queryFn: async () => {
       const cachedAbi = loadAbi();
       if (!!wallet && !!cachedAbi.length && !!contractId.length) {

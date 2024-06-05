@@ -1,5 +1,5 @@
-import { useConnectUI, useWallet } from '@fuels/react';
-import { useCallback, useMemo, useEffect, useRef } from 'react';
+import { useConnectUI, useWallet } from "@fuels/react";
+import { useCallback, useMemo, useEffect, useRef } from "react";
 
 export function useConnectIfNotAlready() {
   const connectedCallbackRef = useRef<(() => Promise<void>) | null>(null);
@@ -11,7 +11,7 @@ export function useConnectIfNotAlready() {
   const connectIfNotAlready = useCallback(
     (
       connectedCallback: () => Promise<void>,
-      failedCallback: () => Promise<void>
+      failedCallback: () => Promise<void>,
     ) => {
       connectedCallbackRef.current = connectedCallback;
       failedCallbackRef.current = failedCallback;
@@ -22,7 +22,7 @@ export function useConnectIfNotAlready() {
         connectedCallback();
       }
     },
-    [connect, isConnected, isConnecting]
+    [connect, isConnected, isConnecting],
   );
 
   useEffect(() => {

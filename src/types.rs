@@ -27,8 +27,18 @@ pub enum Toolchain {
 
 impl fmt::Display for Toolchain {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        let se = serde_json::to_string(self).map_err(|_| fmt::Error)?;
-        write!(formatter, "{}", se)
+        let s = match self {
+            Toolchain::Beta5 => "beta-5",
+            Toolchain::Beta4 => "beta-4",
+            Toolchain::Beta3 => "beta-3",
+            Toolchain::Beta2 => "beta-2",
+            Toolchain::Beta1 => "beta-1",
+            Toolchain::Latest => "latest",
+            Toolchain::Nightly => "nightly",
+            Toolchain::Testnet => "testnet",
+        };
+
+        write!(formatter, "{}", s)
     }
 }
 
