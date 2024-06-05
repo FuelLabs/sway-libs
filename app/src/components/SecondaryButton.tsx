@@ -21,7 +21,7 @@ function SecondaryButton({
   style,
   header,
 }: SecondaryButtonProps) {
-  if (!!header) {
+  if (header) {
     style = {
       ...style,
       minWidth: "105px",

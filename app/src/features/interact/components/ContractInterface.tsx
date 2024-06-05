@@ -34,12 +34,12 @@ export function ContractInterface({
     return !!item;
   }
 
-  let functionFragments: FunctionFragment[] = functionNames
+  const functionFragments: FunctionFragment[] = functionNames
     .slice(0, FUNCTION_COUNT_LIMIT)
     .map((functionName) => contract?.interface.functions[functionName])
     .filter(isType<FunctionFragment>);
 
-  let functionInterfaces = useMemo(
+  const functionInterfaces = useMemo(
     () =>
       functionFragments.map((functionFragment, index) => (
         <div key={`${index}`} style={{ marginBottom: "15px" }}>

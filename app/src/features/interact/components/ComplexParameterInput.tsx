@@ -25,7 +25,7 @@ function ComplexParameterInput({
   // Construct the default object based to show in the JSON editor.
   const defaultObjectOrVector = useMemo(() => {
     const getDefaultObject = (input: InputInstance): ObjectParamValue => {
-      return !!input.components
+      return input.components
         ? Object.fromEntries(
             input.components.map((nested: InputInstance) => {
               return [nested.name, getDefaultValue(nested)];

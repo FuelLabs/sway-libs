@@ -77,7 +77,7 @@ function App() {
     if (searchParams.get("transpile") === "true") {
       setShowSolidity(true);
     }
-    let toolchainParam = searchParams.get("toolchain");
+    const toolchainParam = searchParams.get("toolchain");
 
     if (isToolchain(toolchainParam)) {
       setToolchain(toolchainParam);
@@ -118,7 +118,7 @@ function App() {
       contract: solidityCode,
       language: "solidity",
     });
-    if (!!response) {
+    if (response) {
       const permalink = `${window.location.origin}/?toolchain=${toolchain}&transpile=${showSolidity}&gist=${response.id}`;
       updateLog([
         <Copyable

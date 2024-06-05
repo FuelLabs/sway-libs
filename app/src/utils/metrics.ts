@@ -24,7 +24,7 @@ export function toMetricProperties(
   if (isRecord(error.cause)) {
     Object.assign(combined, error.cause);
   }
-  if (!!Object.keys(combined).length) {
+  if (Object.keys(combined).length) {
     return Object.entries(combined)
       .filter(isAllowedEntry)
       .reduce((acc: Record<string, AllowedProperty>, [key, value]) => {

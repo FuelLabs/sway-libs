@@ -17,7 +17,7 @@ export function useLog(): [
 
   const updateLog = useCallback(
     (entry?: string | React.ReactElement[]) => {
-      if (!!entry) {
+      if (entry) {
         setResultsToAdd(
           typeof entry === "string" ? [<div>{entry}</div>] : entry,
         );

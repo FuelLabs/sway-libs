@@ -75,8 +75,8 @@ export function useCompile(
         const { error, forcVersion } = response;
         if (error) {
           // Preserve the ANSI color codes from the compiler output.
-          let parsedAnsi = ansicolor.parse(error);
-          let results = parsedAnsi.spans.map((span, i) => {
+          const parsedAnsi = ansicolor.parse(error);
+          const results = parsedAnsi.spans.map((span, i) => {
             const { text, css } = span;
             const Span = styled.span`
               ${css}

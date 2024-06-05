@@ -47,7 +47,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "eslint --fix 'src/**/*.{ts,tsx}'",
+    "lint-check": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "format-check": "prettier --check 'src/**/*.{ts,tsx}'"
   },
@@ -59,9 +60,7 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended"  
+      "plugin:@typescript-eslint/recommended"
     ]
   },
   "browserslist": {

@@ -36,7 +36,7 @@ export function useGist(
 
   useEffect(() => {
     const gist_id = searchParams.get("gist");
-    if (!!gist_id) {
+    if (gist_id) {
       const request = new Request(`${SERVER_URI}/gist/${gist_id}`, {
         method: "GET",
       });
@@ -68,7 +68,7 @@ export function useGist(
 
   // Update the editor code when the gist is loaded.
   useEffect(() => {
-    if (!!gist) {
+    if (gist) {
       onSwayCodeChange(gist.swayContract);
       onSolidityCodeChange(gist.transpileContract.contract);
     }
