@@ -65,4 +65,3 @@ Data Structure Libraries are libraries which provide complex data structures whi
 ### [Queue](./queue/index.md)
 
 The [Queue](./queue/index.md) Library is a linear data structure that provides First-In-First-Out (FIFO) operations.
-
