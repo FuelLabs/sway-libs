@@ -4,6 +4,7 @@ import { useFuel, useWallet } from "@fuels/react";
 import { track } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";
 import { toMetricProperties } from "../../../utils/metrics";
+import Timeout from "await-timeout";
 
 const DEPLOYMENT_TIMEOUT_MS = 120000;
 
@@ -17,7 +18,7 @@ export function useDeployContract(
   bytecode: string,
   storageSlots: string,
   onError: (error: Error) => void,
-  onSuccess: (data: unknown) => void,
+  onSuccess: (data: DeployContractData) => void,
   updateLog: (entry: string) => void,
 ) {
   const { wallet, isLoading: walletIsLoading } = useWallet();
@@ -42,7 +43,7 @@ export function useDeployContract(
       track("Deploy Error", toMetricProperties(error, metricMetadata));
       onError(error);
     },
-    mutationFn: async () => {
+    mutationFn: async (): Promise<DeployContractData> => {
       if (!wallet) {
         if (walletIsLoading) {
           updateLog("Connecting to wallet...");
@@ -80,18 +81,11 @@ export function useDeployContract(
         },
       );
 
-      const timeoutPromise = new Promise((_resolve, reject) =>
-        setTimeout(() => {
-          reject(
-            new Error(
-              `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
-              { cause: { source: "timeout" } },
-            ),
-          );
-        }, DEPLOYMENT_TIMEOUT_MS),
+      return Timeout.wrap(
+        resultPromise,
+        DEPLOYMENT_TIMEOUT_MS,
+        `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
       );
-
-      return await Promise.race([resultPromise, timeoutPromise]);
     },
   });
 
