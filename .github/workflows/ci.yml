@@ -126,6 +126,26 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  run-eslint:
+    needs: cancel-previous-runs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run eslint
+        run: |
+          cd app
+          npm run lint
+
+  run-prettier:
+    needs: cancel-previous-runs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run prettier
+        run: |
+          cd app
+          npm run format
+
   frontend-build-and-test:
     if: github.ref != 'refs/heads/master'
     needs: cancel-previous-runs
