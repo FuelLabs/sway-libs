@@ -1,22 +1,22 @@
-import * as React from 'react';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import Table from '@mui/material/Table';
-import Paper from '@mui/material/Paper';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableBody from '@mui/material/TableBody';
-import ParameterInput from './ParameterInput';
-import { TypeInfo } from '../utils/getTypeInfo';
+import * as React from "react";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import Table from "@mui/material/Table";
+import Paper from "@mui/material/Paper";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import ParameterInput from "./ParameterInput";
+import { TypeInfo } from "../utils/getTypeInfo";
 
 export type ParamTypeLiteral =
-  | 'number'
-  | 'bool'
-  | 'string'
-  | 'object'
-  | 'option'
-  | 'enum'
-  | 'vector';
+  | "number"
+  | "bool"
+  | "string"
+  | "object"
+  | "option"
+  | "enum"
+  | "vector";
 export type SimpleParamValue = number | boolean | string;
 export type ObjectParamValue = Record<
   string,
@@ -53,7 +53,7 @@ export function FunctionParameters({
       newParamValues[index] = value;
       setParamValues(newParamValues);
     },
-    [paramValues, setParamValues]
+    [paramValues, setParamValues],
   );
 
   if (!inputInstances.length) {
@@ -62,7 +62,7 @@ export function FunctionParameters({
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label='function parameter table'>
+      <Table aria-label="function parameter table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -74,12 +74,13 @@ export function FunctionParameters({
           {inputInstances.map((input, index) => (
             <TableRow
               key={functionName + input.name + index}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row'>
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
                 {input.name}
               </TableCell>
               <TableCell>{input.type.swayType}</TableCell>
-              <TableCell style={{ width: '100%' }}>
+              <TableCell style={{ width: "100%" }}>
                 <ParameterInput
                   input={input}
                   value={paramValues[index]}

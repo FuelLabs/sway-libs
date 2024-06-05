@@ -1,12 +1,12 @@
-import React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import FormLabel from '@mui/material/FormLabel';
-import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
-import { FunctionForm } from './FunctionForm';
-import { ResponseCard } from './ResponseCard';
+import React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import FormLabel from "@mui/material/FormLabel";
+import { InputInstance, ParamTypeLiteral } from "./FunctionParameters";
+import { FunctionForm } from "./FunctionForm";
+import { ResponseCard } from "./ResponseCard";
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -30,7 +30,7 @@ export function FunctionCallAccordion({
   return (
     <Accordion key={contractId + functionName}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <FormLabel style={{ fontFamily: 'monospace', color: '#00000099' }}>
+        <FormLabel style={{ fontFamily: "monospace", color: "#00000099" }}>
           {functionName}
         </FormLabel>
       </AccordionSummary>
@@ -43,7 +43,7 @@ export function FunctionCallAccordion({
           updateLog={updateLog}
         />
         <ResponseCard
-          style={{ marginTop: '15px' }}
+          style={{ marginTop: "15px" }}
           outputType={outputType}
           response={response}
         />

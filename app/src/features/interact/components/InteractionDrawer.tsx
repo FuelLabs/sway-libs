@@ -1,6 +1,6 @@
-import React from 'react';
-import Drawer from '@mui/material/Drawer';
-import { ContractInterface } from './ContractInterface';
+import React from "react";
+import Drawer from "@mui/material/Drawer";
+import { ContractInterface } from "./ContractInterface";
 
 export interface InteractionDrawerProps {
   isOpen: boolean;
@@ -19,23 +19,25 @@ function InteractionDrawer({
     <Drawer
       PaperProps={{
         sx: {
-          background: '#F1F1F1',
+          background: "#F1F1F1",
         },
       }}
       sx={{
         width: width,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
+        "& .MuiDrawer-paper": {
           width: width,
         },
       }}
-      variant='persistent'
-      anchor='right'
-      open={isOpen}>
+      variant="persistent"
+      anchor="right"
+      open={isOpen}
+    >
       <div
         style={{
-          width: '100%',
-        }}>
+          width: "100%",
+        }}
+      >
         {isOpen && (
           <ContractInterface contractId={contractId} updateLog={updateLog} />
         )}

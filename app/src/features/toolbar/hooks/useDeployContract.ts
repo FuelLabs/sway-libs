@@ -1,9 +1,9 @@
-import { ContractFactory, JsonAbi, StorageSlot } from 'fuels';
-import { useMutation } from '@tanstack/react-query';
-import { useFuel, useWallet } from '@fuels/react';
-import { track } from '@vercel/analytics/react';
-import { useEffect, useState } from 'react';
-import { toMetricProperties } from '../../../utils/metrics';
+import { ContractFactory, JsonAbi, StorageSlot } from "fuels";
+import { useMutation } from "@tanstack/react-query";
+import { useFuel, useWallet } from "@fuels/react";
+import { track } from "@vercel/analytics/react";
+import { useEffect, useState } from "react";
+import { toMetricProperties } from "../../../utils/metrics";
 
 const DEPLOYMENT_TIMEOUT_MS = 120000;
 
@@ -18,7 +18,7 @@ export function useDeployContract(
   storageSlots: string,
   onError: (error: any) => void,
   onSuccess: (data: any) => void,
-  updateLog: (entry: string) => void
+  updateLog: (entry: string) => void,
 ) {
   const { wallet, isLoading: walletIsLoading } = useWallet();
   const { fuel } = useFuel();
@@ -26,9 +26,9 @@ export function useDeployContract(
 
   useEffect(() => {
     const waitForMetadata = async () => {
-      const name = fuel.currentConnector()?.name ?? 'none';
-      const networkUrl = wallet?.provider.url ?? 'none';
-      const version = (await wallet?.provider.getVersion()) ?? 'none';
+      const name = fuel.currentConnector()?.name ?? "none";
+      const networkUrl = wallet?.provider.url ?? "none";
+      const version = (await wallet?.provider.getVersion()) ?? "none";
       setMetricMetadata({ name, version, networkUrl });
     };
     waitForMetadata();
@@ -39,16 +39,16 @@ export function useDeployContract(
     retry: walletIsLoading && !wallet ? 1 : 0,
     onSuccess,
     onError: (error) => {
-      track('Deploy Error', toMetricProperties(error, metricMetadata));
+      track("Deploy Error", toMetricProperties(error, metricMetadata));
       onError(error);
     },
     mutationFn: async () => {
       if (!wallet) {
         if (walletIsLoading) {
-          updateLog('Connecting to wallet...');
+          updateLog("Connecting to wallet...");
         } else {
-          throw new Error('Failed to connect to wallet', {
-            cause: { source: 'wallet' },
+          throw new Error("Failed to connect to wallet", {
+            cause: { source: "wallet" },
           });
         }
       }
@@ -58,7 +58,7 @@ export function useDeployContract(
           const contractFactory = new ContractFactory(
             bytecode,
             JSON.parse(abi) as JsonAbi,
-            wallet
+            wallet,
           );
 
           try {
@@ -71,11 +71,11 @@ export function useDeployContract(
             });
           } catch (error: any) {
             // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-            const source = error.code === 0 ? 'user' : 'sdk';
+            const source = error.code === 0 ? "user" : "sdk";
             error.cause = { source };
             reject(error);
           }
-        }
+        },
       );
 
       const timeoutPromise = new Promise((_resolve, reject) =>
@@ -83,10 +83,10 @@ export function useDeployContract(
           reject(
             new Error(
               `Request timed out after ${DEPLOYMENT_TIMEOUT_MS / 1000} seconds`,
-              { cause: { source: 'timeout' } }
-            )
+              { cause: { source: "timeout" } },
+            ),
           );
-        }, DEPLOYMENT_TIMEOUT_MS)
+        }, DEPLOYMENT_TIMEOUT_MS),
       );
 
       return await Promise.race([resultPromise, timeoutPromise]);

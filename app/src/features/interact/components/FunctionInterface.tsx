@@ -1,10 +1,10 @@
-import { FunctionFragment } from 'fuels';
-import { useCallback, useMemo } from 'react';
-import { InputInstance } from './FunctionParameters';
-import { FunctionCallAccordion } from './FunctionCallAccordion';
-import { getTypeInfo } from '../utils/getTypeInfo';
-import { AbiTypeMap } from './ContractInterface';
-import React from 'react';
+import { FunctionFragment } from "fuels";
+import { useCallback, useMemo } from "react";
+import { InputInstance } from "./FunctionParameters";
+import { FunctionCallAccordion } from "./FunctionCallAccordion";
+import { getTypeInfo } from "../utils/getTypeInfo";
+import { AbiTypeMap } from "./ContractInterface";
+import React from "react";
 
 export interface SdkJsonAbiArgument {
   readonly type: number;
@@ -38,46 +38,55 @@ export function FunctionInterface({
   setResponse,
   updateLog,
 }: FunctionInterfaceProps) {
-
-  const toInputInstance = useCallback((typeId: number ,name: string): InputInstance => {
-    const input = typeMap?.get(typeId);
-    if (!input) {
-      return {
-        name,
-        type: {
-          literal: 'string',
-          swayType: 'Unknown',
-        },
-      };
-    }
-    const typeInfo = getTypeInfo(input, typeMap);
-    switch (typeInfo.literal) {
-      case 'vector':
+  const toInputInstance = useCallback(
+    (typeId: number, name: string): InputInstance => {
+      const input = typeMap?.get(typeId);
+      if (!input) {
         return {
           name,
-          type: typeInfo,
-          components: [toInputInstance(input.typeParameters![0], '')],
+          type: {
+            literal: "string",
+            swayType: "Unknown",
+          },
         };
-      case 'object':
-        return {
-          name,
-          type: typeInfo,
-          components: input.components?.map(c => toInputInstance(c.type, c.name)),
-        };
-      case 'option':
-      case 'enum':
-        return {
-          name,
-          type: typeInfo,
-          components: [toInputInstance(input.components![0].type, input.components![0].name)],
-        };
-      default:
-        return {
-          name,
-          type: typeInfo,
-        };
-    }
-  }, [typeMap]);
+      }
+      const typeInfo = getTypeInfo(input, typeMap);
+      switch (typeInfo.literal) {
+        case "vector":
+          return {
+            name,
+            type: typeInfo,
+            components: [toInputInstance(input.typeParameters![0], "")],
+          };
+        case "object":
+          return {
+            name,
+            type: typeInfo,
+            components: input.components?.map((c) =>
+              toInputInstance(c.type, c.name),
+            ),
+          };
+        case "option":
+        case "enum":
+          return {
+            name,
+            type: typeInfo,
+            components: [
+              toInputInstance(
+                input.components![0].type,
+                input.components![0].name,
+              ),
+            ],
+          };
+        default:
+          return {
+            name,
+            type: typeInfo,
+          };
+      }
+    },
+    [typeMap],
+  );
 
   const outputType = useMemo(() => {
     const outputTypeId = functionFragment?.jsonFn.output?.type;
@@ -85,17 +94,16 @@ export function FunctionInterface({
       const sdkType = typeMap.get(outputTypeId);
       return sdkType ? getTypeInfo(sdkType, typeMap).literal : undefined;
     }
-    
   }, [functionFragment?.jsonFn.output, typeMap]);
 
   const inputInstances: InputInstance[] = useMemo(
     () =>
       functionFragment?.jsonFn.inputs.map((input) =>
-        toInputInstance(input.type, input.name)
+        toInputInstance(input.type, input.name),
       ) ?? [],
-    [functionFragment?.jsonFn.inputs, toInputInstance]
+    [functionFragment?.jsonFn.inputs, toInputInstance],
   );
-  
+
   return (
     <FunctionCallAccordion
       contractId={contractId}

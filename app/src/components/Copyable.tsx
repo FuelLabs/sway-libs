@@ -1,8 +1,8 @@
-import React from 'react';
-import { darkColors } from '@fuel-ui/css';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import React from "react";
+import { darkColors } from "@fuel-ui/css";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 export interface CopyableProps {
   value: string;
@@ -18,13 +18,20 @@ async function handleCopy(value: string) {
 function Copyable({ value, label, tooltip, href }: CopyableProps) {
   return (
     <div
-      style={{ cursor: 'pointer', color: darkColors.gray6 }}
-      onClick={() => handleCopy(value)}>
+      style={{ cursor: "pointer", color: darkColors.gray6 }}
+      onClick={() => handleCopy(value)}
+    >
       <Tooltip title={`Click to copy ${tooltip}`}>
         <span>
-          {href ? (<a href={value} target='_blank' rel='noreferrer'>{label}</a>) : (<span style={{ padding: '8px 0 8px' }}>{label}</span>)}
-          <IconButton disableRipple aria-label='copy'>
-            <ContentCopyIcon style={{ fontSize: '14px' }} />
+          {href ? (
+            <a href={value} target="_blank" rel="noreferrer">
+              {label}
+            </a>
+          ) : (
+            <span style={{ padding: "8px 0 8px" }}>{label}</span>
+          )}
+          <IconButton disableRipple aria-label="copy">
+            <ContentCopyIcon style={{ fontSize: "14px" }} />
           </IconButton>
         </span>
       </Tooltip>

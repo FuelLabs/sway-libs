@@ -1,7 +1,7 @@
-import React from 'react';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import { darkColors, lightColors } from '@fuel-ui/css';
+import React from "react";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import { darkColors, lightColors } from "@fuel-ui/css";
 
 export interface SecondaryButtonProps {
   onClick: () => void;
@@ -24,10 +24,10 @@ function SecondaryButton({
   if (!!header) {
     style = {
       ...style,
-      minWidth: '105px',
-      height: '40px',
-      marginRight: '15px',
-      marginBottom: '10px',
+      minWidth: "105px",
+      height: "40px",
+      marginRight: "15px",
+      marginBottom: "10px",
     };
   }
   return (
@@ -38,15 +38,16 @@ function SecondaryButton({
             ...style,
             color: darkColors.gray6,
             borderColor: darkColors.gray6,
-            ':hover': {
+            ":hover": {
               bgcolor: lightColors.scalesGreen3,
               borderColor: darkColors.gray6,
             },
           }}
-          variant='outlined'
+          variant="outlined"
           onClick={onClick}
           disabled={disabled}
-          endIcon={endIcon}>
+          endIcon={endIcon}
+        >
           {text}
         </Button>
       </span>

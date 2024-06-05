@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { SERVER_URI } from '../../../constants';
-import { track } from '@vercel/analytics/react';
-import { EditorLanguage } from '../components/ActionOverlay';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect, useCallback } from "react";
+import { SERVER_URI } from "../../../constants";
+import { track } from "@vercel/analytics/react";
+import { EditorLanguage } from "../components/ActionOverlay";
+import { useSearchParams } from "react-router-dom";
 
 interface GistMeta {
   url: string;
@@ -23,11 +23,11 @@ interface GistResponse {
 
 export function useGist(
   onSwayCodeChange: (swayCode: string) => void,
-  onSolidityCodeChange: (solidityCode: string) => void
+  onSolidityCodeChange: (solidityCode: string) => void,
 ): {
   newGist: (
     swayContract: string,
-    transpileContract: ContractCode
+    transpileContract: ContractCode,
   ) => Promise<GistMeta | undefined>;
 } {
   // The search parameters for the current URL.
@@ -35,10 +35,10 @@ export function useGist(
   const [gist, setGist] = useState<GistResponse | null>(null);
 
   useEffect(() => {
-    const gist_id = searchParams.get('gist');
+    const gist_id = searchParams.get("gist");
     if (!!gist_id) {
       const request = new Request(`${SERVER_URI}/gist/${gist_id}`, {
-        method: 'GET',
+        method: "GET",
       });
 
       fetch(request)
@@ -46,8 +46,8 @@ export function useGist(
           if (response.status < 400) {
             return response.json();
           } else {
-            track('Get Gist Error', {
-              source: 'network',
+            track("Get Gist Error", {
+              source: "network",
               status: response.status,
             });
           }
@@ -55,13 +55,13 @@ export function useGist(
         .then((response: GistResponse) => {
           const { error } = response;
           if (error) {
-            track('Get Gist Error', { source: 'server' });
+            track("Get Gist Error", { source: "server" });
           } else {
             setGist(response);
           }
         })
         .catch(() => {
-          track('Get Gist Error', { source: 'network' });
+          track("Get Gist Error", { source: "network" });
         });
     }
   }, [searchParams, setGist]);
@@ -77,7 +77,7 @@ export function useGist(
   const newGist = useCallback(
     async (sway_contract: string, transpile_contract: ContractCode) => {
       const request = new Request(`${SERVER_URI}/gist`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({
           sway_contract,
           transpile_contract,
@@ -89,8 +89,8 @@ export function useGist(
           if (response.status < 400) {
             return response.json();
           } else {
-            track('New Gist Error', {
-              source: 'network',
+            track("New Gist Error", {
+              source: "network",
               status: response.status,
             });
           }
@@ -98,18 +98,18 @@ export function useGist(
         .then((response: { gist: GistMeta; error: string | undefined }) => {
           const { error, gist } = response;
           if (error) {
-            track('New Gist Error', { source: 'server' });
+            track("New Gist Error", { source: "server" });
           } else {
             return gist;
           }
         })
         .catch(() => {
-          track('New Gist Error', { source: 'network' });
+          track("New Gist Error", { source: "network" });
         });
 
       return res ?? undefined;
     },
-    []
+    [],
   );
 
   return { newGist };

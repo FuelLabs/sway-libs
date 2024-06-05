@@ -1,18 +1,18 @@
 import { EXAMPLE_SOLIDITY_CONTRACTS } from "../features/editor/examples/solidity";
 import { EXAMPLE_SWAY_CONTRACTS } from "../features/editor/examples/sway";
 
-const STORAGE_ABI_KEY = 'playground_abi';
-const STORAGE_SLOTS_KEY = 'playground_slots';
-const STORAGE_BYTECODE_KEY = 'playground_bytecode';
-const STORAGE_CONTRACT_KEY = 'playground_contract';
-const STORAGE_SOLIDITY_CONTRACT_KEY = 'playground_solidity_contract';
+const STORAGE_ABI_KEY = "playground_abi";
+const STORAGE_SLOTS_KEY = "playground_slots";
+const STORAGE_BYTECODE_KEY = "playground_bytecode";
+const STORAGE_CONTRACT_KEY = "playground_contract";
+const STORAGE_SOLIDITY_CONTRACT_KEY = "playground_solidity_contract";
 
 export function saveAbi(abi: string) {
   localStorage.setItem(STORAGE_ABI_KEY, abi);
 }
 
 export function loadAbi() {
-  return localStorage.getItem(STORAGE_ABI_KEY) || '';
+  return localStorage.getItem(STORAGE_ABI_KEY) || "";
 }
 
 export function saveStorageSlots(slots: string) {
@@ -20,7 +20,7 @@ export function saveStorageSlots(slots: string) {
 }
 
 export function loadStorageSlots() {
-  return localStorage.getItem(STORAGE_SLOTS_KEY) || '';
+  return localStorage.getItem(STORAGE_SLOTS_KEY) || "";
 }
 
 export function saveBytecode(bytecode: string) {
@@ -28,7 +28,7 @@ export function saveBytecode(bytecode: string) {
 }
 
 export function loadBytecode() {
-  return localStorage.getItem(STORAGE_BYTECODE_KEY) || '';
+  return localStorage.getItem(STORAGE_BYTECODE_KEY) || "";
 }
 
 export function saveSwayCode(code: string) {
@@ -40,9 +40,14 @@ export function saveSolidityCode(code: string) {
 }
 
 export function loadSwayCode() {
-  return localStorage.getItem(STORAGE_CONTRACT_KEY) ?? EXAMPLE_SWAY_CONTRACTS[0].code;
+  return (
+    localStorage.getItem(STORAGE_CONTRACT_KEY) ?? EXAMPLE_SWAY_CONTRACTS[0].code
+  );
 }
 
 export function loadSolidityCode() {
-  return localStorage.getItem(STORAGE_SOLIDITY_CONTRACT_KEY) ?? EXAMPLE_SOLIDITY_CONTRACTS[0].code;
+  return (
+    localStorage.getItem(STORAGE_SOLIDITY_CONTRACT_KEY) ??
+    EXAMPLE_SOLIDITY_CONTRACTS[0].code
+  );
 }
