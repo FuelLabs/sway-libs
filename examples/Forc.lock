@@ -1,0 +1,175 @@
+[[package]]
+name = "admin_examples"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "base_docs"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "basic_src20"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "basic_src3"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "basic_src7"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "bytecode_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "core"
+source = "path+from-root-E19CE48B3E858B72"
+
+[[package]]
+name = "fixed_point_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "merkle_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "metadata_docs"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ownership_examples"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "pausable_example"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "pausable_with_ownership_example"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "queue_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "reentrancy_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "setting_src20_attributes"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "setting_src7_attributes"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "signed_integers_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.60.0#2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6"
+dependencies = ["core"]
+
+[[package]]
+name = "supply_docs"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "sway_libs"
+source = "path+from-root-9E88A97493D252A9"
+dependencies = [
+    "standards",
+    "std",
+]
