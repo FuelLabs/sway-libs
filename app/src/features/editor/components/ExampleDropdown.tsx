@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl/FormControl";
-import Select from "@mui/material/Select/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select/Select";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 
 export interface ExampleMenuItem {
@@ -27,8 +27,8 @@ function ExampleDropdown({
   });
 
   const onChange = useCallback(
-    (event: any) => {
-      const index = event.target.value as number;
+    (event: SelectChangeEvent<string>) => {
+      const index = event.target.value as unknown as number;
       const example = examples[index];
       if (example) {
         setCurrentExample(example);

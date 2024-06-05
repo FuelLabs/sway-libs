@@ -16,8 +16,8 @@ export function useDeployContract(
   abi: string,
   bytecode: string,
   storageSlots: string,
-  onError: (error: any) => void,
-  onSuccess: (data: any) => void,
+  onError: (error: Error) => void,
+  onSuccess: (data: unknown) => void,
   updateLog: (entry: string) => void,
 ) {
   const { wallet, isLoading: walletIsLoading } = useWallet();
@@ -54,27 +54,29 @@ export function useDeployContract(
       }
 
       const resultPromise = new Promise(
-        async (resolve: (data: DeployContractData) => void, reject) => {
+        (resolve: (data: DeployContractData) => void, reject) => {
           const contractFactory = new ContractFactory(
             bytecode,
             JSON.parse(abi) as JsonAbi,
             wallet,
           );
 
-          try {
-            const contract = await contractFactory.deployContract({
+          contractFactory
+            .deployContract({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
+            })
+            .then((contract) => {
+              resolve({
+                contractId: contract.id.toB256(),
+                networkUrl: contract.provider.url,
+              });
+            })
+            .catch((error) => {
+              // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+              const source = error?.code === 0 ? "user" : "sdk";
+              error.cause = { source };
+              reject(error);
             });
-            resolve({
-              contractId: contract.id.toB256(),
-              networkUrl: contract.provider.url,
-            });
-          } catch (error: any) {
-            // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-            const source = error.code === 0 ? "user" : "sdk";
-            error.cause = { source };
-            reject(error);
-          }
         },
       );
 

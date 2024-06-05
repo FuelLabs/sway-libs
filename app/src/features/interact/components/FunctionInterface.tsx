@@ -56,7 +56,7 @@ export function FunctionInterface({
           return {
             name,
             type: typeInfo,
-            components: [toInputInstance(input.typeParameters![0], "")],
+            components: [toInputInstance(input.typeParameters?.at(0) ?? 0, "")],
           };
         case "object":
           return {
@@ -73,8 +73,8 @@ export function FunctionInterface({
             type: typeInfo,
             components: [
               toInputInstance(
-                input.components![0].type,
-                input.components![0].name,
+                input.components?.at(0)?.type ?? 0,
+                input.components?.at(0)?.name ?? "",
               ),
             ],
           };

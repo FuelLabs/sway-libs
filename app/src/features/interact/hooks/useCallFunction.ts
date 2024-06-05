@@ -3,6 +3,7 @@ import { useContract } from "./useContract";
 import { modifyJsonStringify } from "../utils/modifyJsonStringify";
 import { CallType } from "../../../utils/types";
 import { CallableParamValue } from "../components/FunctionParameters";
+import { FunctionInvocationResult, InvocationCallResult } from "fuels";
 
 interface CallFunctionProps {
   parameters: CallableParamValue[];
@@ -46,12 +47,16 @@ export function useCallFunction({
     },
   });
 
-  function handleError(error: any) {
+  function handleError(error: Error) {
     updateLog(`Function call failed. Error: ${error?.message}`);
     setResponse(new Error(error?.message));
   }
 
-  function handleSuccess(data: any) {
+  function handleSuccess(
+    data:
+      | InvocationCallResult<unknown>
+      | FunctionInvocationResult<unknown, void>,
+  ) {
     setResponse(JSON.stringify(data.value, modifyJsonStringify, 2));
   }
 

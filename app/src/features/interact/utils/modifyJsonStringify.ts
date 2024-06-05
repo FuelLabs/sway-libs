@@ -1,4 +1,4 @@
-export function modifyJsonStringify(key: any, value: any) {
+export function modifyJsonStringify(key: unknown, value: unknown) {
   // JSON.stringify omits the key when value === undefined
   if (value === undefined) {
     return "undefined";

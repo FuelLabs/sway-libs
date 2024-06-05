@@ -20,7 +20,7 @@ export type ParamTypeLiteral =
 export type SimpleParamValue = number | boolean | string;
 export type ObjectParamValue = Record<
   string,
-  SimpleParamValue | Record<string, any> | VectorParamValue
+  SimpleParamValue | Record<string, unknown> | VectorParamValue
 >;
 export type VectorParamValue = Array<CallableParamValue>;
 export type CallableParamValue =
