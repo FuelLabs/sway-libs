@@ -1,26 +1,26 @@
-import React from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel/InputLabel';
-import useTheme from '../../../context/theme';
-import { DarkThemeStyling } from '../../../components/shared';
+import React from "react";
+import Tooltip from "@mui/material/Tooltip";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel/InputLabel";
+import useTheme from "../../../context/theme";
+import { DarkThemeStyling } from "../../../components/shared";
 
 const ToolchainNames = [
-  'testnet',
-  'beta-5',
-  'beta-4',
-  'beta-3',
-  'beta-2',
-  'beta-1',
-  'latest',
-  'nightly',
+  "testnet",
+  "beta-5",
+  "beta-4",
+  "beta-3",
+  "beta-2",
+  "beta-1",
+  "latest",
+  "nightly",
 ] as const;
 export type Toolchain = (typeof ToolchainNames)[number];
 
 export function isToolchain(value: string | null): value is Toolchain {
-  const found = ToolchainNames.find(name => name === value);
+  const found = ToolchainNames.find((name) => name === value);
   return !!value && found !== undefined;
 }
 
@@ -34,32 +34,33 @@ function ToolchainDropdown({
   setToolchain,
   style,
 }: ToolchainDropdownProps) {
+  const { themeColor, theme } = useTheme();
 
-  const { themeColor,theme } = useTheme();
+  const dropdownStyling =
+    theme !== "light" ? DarkThemeStyling.darkDropdown : {};
 
-  const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkDropdown : {};
-  
   return (
-    <FormControl sx={{ ...style, ...dropdownStyling }} size='small'>
-      <InputLabel id='toolchain-select-label'>Toolchain</InputLabel>
-      <Tooltip placement='top' title={'Fuel toolchain to use for compilation'}>
+    <FormControl style={{ ...style, ...dropdownStyling }} size="small">
+      <InputLabel id="toolchain-select-label">Toolchain</InputLabel>
+      <Tooltip placement="top" title={"Fuel toolchain to use for compilation"}>
         <span>
           <Select
             MenuProps={{
               PaperProps: {
                 style: {
-                  background: themeColor('white2'),
-                  color: themeColor('gray5'),
+                  background: themeColor("white2"),
+                  color: themeColor("gray5"),
                 },
               },
             }}
-            id='toolchain-select'
-            labelId='toolchain-select-label'
-            label='Toolchain'
-            style={{ minWidth: '70px' }}
-            variant='outlined'
+            id="toolchain-select"
+            labelId="toolchain-select-label"
+            label="Toolchain"
+            style={{ minWidth: "70px", background: "white" }}
+            variant="outlined"
             value={toolchain}
-            onChange={(event) => setToolchain(event.target.value as Toolchain)}>
+            onChange={(event) => setToolchain(event.target.value as Toolchain)}
+          >
             {ToolchainNames.map((toolchain) => (
               <MenuItem key={toolchain} value={toolchain}>
                 {toolchain}

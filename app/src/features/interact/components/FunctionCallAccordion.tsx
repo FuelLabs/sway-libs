@@ -1,14 +1,14 @@
-import React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import FormLabel from '@mui/material/FormLabel';
-import { InputInstance, ParamTypeLiteral } from './FunctionParameters';
-import { FunctionForm } from './FunctionForm';
-import { ResponseCard } from './ResponseCard';
-import useTheme from '../../../context/theme';
-import { DarkThemeStyling } from '../../../components/shared';
+import React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import FormLabel from "@mui/material/FormLabel";
+import { InputInstance, ParamTypeLiteral } from "./FunctionParameters";
+import { FunctionForm } from "./FunctionForm";
+import { ResponseCard } from "./ResponseCard";
+import useTheme from "../../../context/theme";
+import { DarkThemeStyling } from "../../../components/shared";
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -29,13 +29,17 @@ export function FunctionCallAccordion({
   setResponse,
   updateLog,
 }: FunctionCallAccordionProps) {
-
   const { theme, themeColor } = useTheme();
-  const dropdownStyling = theme !== 'light' ? DarkThemeStyling.darkAccordion : {};
+  const dropdownStyling =
+    theme !== "light" ? DarkThemeStyling.darkAccordion : {};
   return (
     <Accordion key={contractId + functionName} sx={{ ...dropdownStyling }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color: themeColor('gray4')}} />}>
-        <FormLabel style={{ fontFamily: 'monospace', color: themeColor('white3') }}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: themeColor("gray4") }} />}
+      >
+        <FormLabel
+          style={{ fontFamily: "monospace", color: themeColor("white3") }}
+        >
           {functionName}
         </FormLabel>
       </AccordionSummary>
@@ -48,7 +52,7 @@ export function FunctionCallAccordion({
           updateLog={updateLog}
         />
         <ResponseCard
-          style={{ marginTop: '15px' }}
+          style={{ marginTop: "15px" }}
           outputType={outputType}
           response={response}
         />

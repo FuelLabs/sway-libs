@@ -1,13 +1,13 @@
-import React from 'react';
-import AceEditor from 'react-ace';
-import 'ace-builds/webpack-resolver';
-import 'ace-builds/src-noconflict/mode-rust';
-import 'ace-builds/src-noconflict/theme-chrome';
-import 'ace-builds/src-noconflict/theme-tomorrow_night_bright';
-import { StyledBorder } from '../../../components/shared';
-import ActionOverlay from './ActionOverlay';
-import { Toolchain } from './ToolchainDropdown';
-import useTheme from '../../../context/theme';
+import React from "react";
+import AceEditor from "react-ace";
+import "ace-builds/webpack-resolver";
+import "ace-builds/src-noconflict/mode-rust";
+import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
+import { StyledBorder } from "../../../components/shared";
+import ActionOverlay from "./ActionOverlay";
+import { Toolchain } from "./ToolchainDropdown";
+import useTheme from "../../../context/theme";
 
 export interface SwayEditorProps {
   code: string;
@@ -22,26 +22,25 @@ function SwayEditor({
   toolchain,
   setToolchain,
 }: SwayEditorProps) {
-  
   const { themeColor } = useTheme();
-  
+
   return (
     <StyledBorder style={{ flex: 1 }}>
       <ActionOverlay
         handleSelectExample={onChange}
         toolchain={toolchain}
         setToolchain={setToolchain}
-        editorLanguage='sway'
+        editorLanguage="sway"
       />
       <AceEditor
         style={{
-          width: '100%',
-          height: '100%',
+          width: "100%",
+          height: "100%",
         }}
-        mode='rust'
-        theme={themeColor('chrome')}
-        name='editor'
-        fontSize='14px'
+        mode="rust"
+        theme={themeColor("chrome")}
+        name="editor"
+        fontSize="14px"
         onChange={onChange}
         value={code}
         editorProps={{ $blockScrolling: true }}

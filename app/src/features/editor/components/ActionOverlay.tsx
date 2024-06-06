@@ -1,9 +1,9 @@
-import React from 'react';
-import ToolchainDropdown, { Toolchain } from './ToolchainDropdown';
-import ExampleDropdown from './ExampleDropdown';
-import { EXAMPLE_CONTRACTS } from '../examples';
+import React from "react";
+import ToolchainDropdown, { Toolchain } from "./ToolchainDropdown";
+import ExampleDropdown from "./ExampleDropdown";
+import { EXAMPLE_CONTRACTS } from "../examples";
 
-export type EditorLanguage = 'sway' | 'solidity';
+export type EditorLanguage = "sway" | "solidity";
 
 export interface ActionOverlayProps {
   handleSelectExample: (example: string) => void;
@@ -19,25 +19,27 @@ function ActionOverlay({
   editorLanguage,
 }: ActionOverlayProps) {
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: "relative" }}>
       <div
         style={{
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
+          position: "absolute",
+          height: "100%",
+          width: "100%",
           zIndex: 1,
-          pointerEvents: 'none',
-        }}>
+          pointerEvents: "none",
+        }}
+      >
         <div
           style={{
-            position: 'absolute',
-            right: '22px',
-            top: '22px',
-            pointerEvents: 'all',
-          }}>
+            position: "absolute",
+            right: "22px",
+            top: "22px",
+            pointerEvents: "all",
+          }}
+        >
           {toolchain && setToolchain && (
             <ToolchainDropdown
-              style={{ marginRight: '18px' }}
+              style={{ marginRight: "18px" }}
               toolchain={toolchain}
               setToolchain={setToolchain}
             />

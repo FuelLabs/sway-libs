@@ -4,7 +4,6 @@ import { EXAMPLE_SOLIDITY_CONTRACTS } from "./solidity";
 import { EXAMPLE_SWAY_CONTRACTS } from "./sway";
 
 export const EXAMPLE_CONTRACTS: Record<EditorLanguage, ExampleMenuItem[]> = {
-    sway: EXAMPLE_SWAY_CONTRACTS,
-    solidity: EXAMPLE_SOLIDITY_CONTRACTS,
-  };
-  
+  sway: EXAMPLE_SWAY_CONTRACTS,
+  solidity: EXAMPLE_SOLIDITY_CONTRACTS,
+};

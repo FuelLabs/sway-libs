@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { useContract } from './useContract';
-import { Contract } from 'fuels';
+import { useQuery } from "@tanstack/react-query";
+import { useContract } from "./useContract";
+import { Contract } from "fuels";
 
 export function useContractFunctions(contractId: string): {
   contract: Contract | undefined;
@@ -10,9 +10,9 @@ export function useContractFunctions(contractId: string): {
 
   const { data: functions } = useQuery({
     enabled: !!contract,
-    queryKey: ['contractFunctions'],
+    queryKey: ["contractFunctions"],
     queryFn: async () => {
-      if (!contract) throw new Error('Contract not connected');
+      if (!contract) throw new Error("Contract not connected");
       return contract.interface.functions;
     },
   });

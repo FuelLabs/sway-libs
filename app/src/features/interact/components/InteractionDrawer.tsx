@@ -1,7 +1,7 @@
-import React from 'react';
-import Drawer from '@mui/material/Drawer';
-import { ContractInterface } from './ContractInterface';
-import useTheme from '../../../context/theme';
+import React from "react";
+import Drawer from "@mui/material/Drawer";
+import { ContractInterface } from "./ContractInterface";
+import useTheme from "../../../context/theme";
 
 export interface InteractionDrawerProps {
   isOpen: boolean;
@@ -16,30 +16,31 @@ function InteractionDrawer({
   contractId,
   updateLog,
 }: InteractionDrawerProps) {
-
   const { themeColor } = useTheme();
   return (
     <Drawer
       PaperProps={{
         sx: {
-          color: themeColor('black1'),
-          background: themeColor('white2'),
+          color: themeColor("black1"),
+          background: themeColor("white2"),
         },
       }}
       sx={{
         width: width,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
+        "& .MuiDrawer-paper": {
           width: width,
         },
       }}
-      variant='persistent'
-      anchor='right'
-      open={isOpen}>
+      variant="persistent"
+      anchor="right"
+      open={isOpen}
+    >
       <div
         style={{
-          width: '100%',
-        }}>
+          width: "100%",
+        }}
+      >
         {isOpen && (
           <ContractInterface contractId={contractId} updateLog={updateLog} />
         )}

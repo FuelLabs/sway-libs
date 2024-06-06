@@ -1,17 +1,17 @@
-import React, { useCallback } from 'react';
-import PlayArrow from '@mui/icons-material/PlayArrow';
-import OpenInNew from '@mui/icons-material/OpenInNew';
-import { DeployState } from '../../../utils/types';
-import { DeploymentButton } from './DeploymentButton';
-import CompileButton from './CompileButton';
-import SecondaryButton from '../../../components/SecondaryButton';
+import React, { useCallback } from "react";
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import OpenInNew from "@mui/icons-material/OpenInNew";
+import { DeployState } from "../../../utils/types";
+import { DeploymentButton } from "./DeploymentButton";
+import CompileButton from "./CompileButton";
+import SecondaryButton from "../../../components/SecondaryButton";
 import {
   loadAbi,
   loadBytecode,
   loadStorageSlots,
-} from '../../../utils/localStorage';
-import { useIsMobile } from '../../../hooks/useIsMobile';
-import SwitchThemeButton from './SwitchThemeButton'
+} from "../../../utils/localStorage";
+import { useIsMobile } from "../../../hooks/useIsMobile";
+import SwitchThemeButton from "./SwitchThemeButton";
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -43,21 +43,22 @@ function ActionToolbar({
   const isMobile = useIsMobile();
 
   const onDocsClick = useCallback(() => {
-    window.open('https://docs.fuel.network/docs/sway', '_blank', 'noreferrer');
+    window.open("https://docs.fuel.network/docs/sway", "_blank", "noreferrer");
   }, []);
 
   return (
     <div
       style={{
-        margin: '5px 0 10px',
-        display: isMobile ? 'inline-table' : 'flex',
-      }}>
+        margin: "5px 0 10px",
+        display: isMobile ? "inline-table" : "flex",
+      }}
+    >
       <CompileButton
         onClick={onCompile}
-        text='COMPILE'
-        endIcon={<PlayArrow style={{ fontSize: '18px' }} />}
+        text="COMPILE"
+        endIcon={<PlayArrow style={{ fontSize: "18px" }} />}
         disabled={isCompiled === true || deployState === DeployState.DEPLOYING}
-        tooltip='Compile sway code'
+        tooltip="Compile sway code"
       />
       {!isMobile && (
         <DeploymentButton
@@ -76,36 +77,36 @@ function ActionToolbar({
         <SecondaryButton
           header={true}
           onClick={() => setDrawerOpen(!drawerOpen)}
-          text='INTERACT'
+          text="INTERACT"
           tooltip={
             deployState !== DeployState.DEPLOYED
-              ? 'A contract must be deployed to interact with it on-chain'
-              : 'Interact with the contract ABI'
+              ? "A contract must be deployed to interact with it on-chain"
+              : "Interact with the contract ABI"
           }
         />
       )}
       <SecondaryButton
         header={true}
         onClick={() => setShowSolidity(!showSolidity)}
-        text='SOLIDITY'
+        text="SOLIDITY"
         tooltip={
           showSolidity
-            ? 'Hide the Solidity editor'
-            : 'Show the Solidity editor to transpile Solidity to Sway'
+            ? "Hide the Solidity editor"
+            : "Show the Solidity editor to transpile Solidity to Sway"
         }
       />
       <SecondaryButton
         header={true}
         onClick={onDocsClick}
-        text='DOCS'
-        tooltip={'Open documentation for Sway in a new tab'}
-        endIcon={<OpenInNew style={{ fontSize: '16px' }} />}
+        text="DOCS"
+        tooltip={"Open documentation for Sway in a new tab"}
+        endIcon={<OpenInNew style={{ fontSize: "16px" }} />}
       />
       <SecondaryButton
         header={true}
         onClick={onShareClick}
-        text='SHARE'
-        tooltip={'Get a shareable link to your code'}
+        text="SHARE"
+        tooltip={"Get a shareable link to your code"}
       />
       {!isMobile && <SwitchThemeButton />}
     </div>

@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
-import { DeployState } from '../../../utils/types';
+import React, { useCallback, useMemo } from "react";
+import { DeployState } from "../../../utils/types";
 import {
   DeployContractData,
   useDeployContract,
-} from '../hooks/useDeployContract';
-import SecondaryButton from '../../../components/SecondaryButton';
-import { ButtonSpinner } from '../../../components/shared';
-import { useConnectIfNotAlready } from '../hooks/useConnectIfNotAlready';
-import { track } from '@vercel/analytics/react';
+} from "../hooks/useDeployContract";
+import SecondaryButton from "../../../components/SecondaryButton";
+import { ButtonSpinner } from "../../../components/shared";
+import { useConnectIfNotAlready } from "../hooks/useConnectIfNotAlready";
+import { track } from "@vercel/analytics/react";
 
 interface DeploymentButtonProps {
   abi: string;
@@ -39,7 +39,7 @@ export function DeploymentButton({
       setDeployState(DeployState.NOT_DEPLOYED);
       updateLog(`Deployment failed: ${error.message}`);
     },
-    [setDeployState, updateLog]
+    [setDeployState, updateLog],
   );
 
   const handleSuccess = useCallback(
@@ -49,7 +49,7 @@ export function DeploymentButton({
       setDrawerOpen(true);
       updateLog(`Contract was successfully deployed to ${networkUrl}`);
     },
-    [setContractId, setDeployState, setDrawerOpen, updateLog]
+    [setContractId, setDeployState, setDrawerOpen, updateLog],
   );
 
   const deployContractMutation = useDeployContract(
@@ -58,7 +58,7 @@ export function DeploymentButton({
     storageSlots,
     handleError,
     handleSuccess,
-    updateLog
+    updateLog,
   );
 
   const handleDeploy = useCallback(async () => {
@@ -68,12 +68,12 @@ export function DeploymentButton({
   }, [updateLog, setDeployState, deployContractMutation]);
 
   const handleConnectionFailed = useCallback(
-    async () => handleError(new Error('Failed to connect to wallet.')),
-    [handleError]
+    async () => handleError(new Error("Failed to connect to wallet.")),
+    [handleError],
   );
 
   const onDeployClick = useCallback(async () => {
-    track('Deploy Click');
+    track("Deploy Click");
     if (!isConnected) {
       updateLog(`Connecting to wallet...`);
     }
@@ -96,13 +96,13 @@ export function DeploymentButton({
       case DeployState.NOT_DEPLOYED:
         return {
           isDisabled: !abi || !bytecode || !isCompiled,
-          tooltip: 'Deploy a contract to interact with it on-chain',
+          tooltip: "Deploy a contract to interact with it on-chain",
         };
       case DeployState.DEPLOYED:
         return {
           isDisabled: false,
           tooltip:
-            'Contract is deployed. You can interact with the deployed contract or re-compile and deploy a new contract.',
+            "Contract is deployed. You can interact with the deployed contract or re-compile and deploy a new contract.",
         };
     }
   }, [abi, bytecode, deployState, isCompiled]);
@@ -111,7 +111,7 @@ export function DeploymentButton({
     <SecondaryButton
       header={true}
       onClick={onDeployClick}
-      text='DEPLOY'
+      text="DEPLOY"
       disabled={isDisabled}
       endIcon={
         deployState === DeployState.DEPLOYING ? <ButtonSpinner /> : undefined

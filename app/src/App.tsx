@@ -1,33 +1,32 @@
-import { useCallback, useEffect, useState } from 'react';
-import ActionToolbar from './features/toolbar/components/ActionToolbar';
-import LogView from './features/editor/components/LogView';
-import { useCompile } from './features/editor/hooks/useCompile';
-import { DeployState } from './utils/types';
+import { useCallback, useEffect, useState } from "react";
+import ActionToolbar from "./features/toolbar/components/ActionToolbar";
+import LogView from "./features/editor/components/LogView";
+import { useCompile } from "./features/editor/hooks/useCompile";
+import { DeployState } from "./utils/types";
 import {
   loadSolidityCode,
   loadSwayCode,
   saveSolidityCode,
   saveSwayCode,
-} from './utils/localStorage';
-import InteractionDrawer from './features/interact/components/InteractionDrawer';
-import { useLog } from './features/editor/hooks/useLog';
+} from "./utils/localStorage";
+import InteractionDrawer from "./features/interact/components/InteractionDrawer";
+import { useLog } from "./features/editor/hooks/useLog";
 import {
   Toolchain,
   isToolchain,
-} from './features/editor/components/ToolchainDropdown';
-import { useTranspile } from './features/editor/hooks/useTranspile';
-import EditorView from './features/editor/components/EditorView';
-import { Analytics, track } from '@vercel/analytics/react';
-import { useGist } from './features/editor/hooks/useGist';
-import { useSearchParams } from 'react-router-dom';
-import Copyable from './components/Copyable';
-import useTheme from './context/theme';
+} from "./features/editor/components/ToolchainDropdown";
+import { useTranspile } from "./features/editor/hooks/useTranspile";
+import EditorView from "./features/editor/components/EditorView";
+import { Analytics, track } from "@vercel/analytics/react";
+import { useGist } from "./features/editor/hooks/useGist";
+import { useSearchParams } from "react-router-dom";
+import Copyable from "./components/Copyable";
+import useTheme from "./context/theme";
 
-const DRAWER_WIDTH = '40vw';
+const DRAWER_WIDTH = "40vw";
 
 function App() {
-
-  const { themeColor,setTheme } = useTheme();
+  const { themeColor, setTheme } = useTheme();
   // The current sway code in the editor.
   const [swayCode, setSwayCode] = useState<string>(loadSwayCode());
 
@@ -39,19 +38,19 @@ function App() {
 
   // The most recent code that the user has requested to compile.
   const [codeToCompile, setCodeToCompile] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   // The most recent code that the user has requested to transpile.
   const [codeToTranspile, setCodeToTranspile] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   // Whether or not the current code in the editor has been compiled.
   const [isCompiled, setIsCompiled] = useState(false);
 
   // The toolchain to use for compilation.
-  const [toolchain, setToolchain] = useState<Toolchain>('testnet');
+  const [toolchain, setToolchain] = useState<Toolchain>("testnet");
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
@@ -60,7 +59,7 @@ function App() {
   const [log, updateLog] = useLog();
 
   // The contract ID of the deployed contract.
-  const [contractId, setContractId] = useState('');
+  const [contractId, setContractId] = useState("");
 
   // An error message to display to the user.
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -77,10 +76,10 @@ function App() {
 
   // Load the query parameters from the URL and set the state accordingly. Gists are loaded in useGist.
   useEffect(() => {
-    if (searchParams.get('transpile') === 'true') {
+    if (searchParams.get("transpile") === "true") {
       setShowSolidity(true);
     }
-    let toolchainParam = searchParams.get('toolchain');
+    const toolchainParam = searchParams.get("toolchain");
 
     if (isToolchain(toolchainParam)) {
       setToolchain(toolchainParam);
@@ -89,10 +88,10 @@ function App() {
 
   // Set theme based on the user system preferences.
   useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
     } else {
-      setTheme('light');
+      setTheme("light");
     }
   }, []);
 
@@ -102,7 +101,7 @@ function App() {
       setSwayCode(code);
       setIsCompiled(false);
     },
-    [setSwayCode]
+    [setSwayCode],
   );
 
   const onSolidityCodeChange = useCallback(
@@ -111,7 +110,7 @@ function App() {
       setSolidityCode(code);
       setIsCompiled(false);
     },
-    [setSolidityCode]
+    [setSolidityCode],
   );
 
   // Loading shared code by query parameter and get a function for creating sharable permalinks.
@@ -121,46 +120,39 @@ function App() {
     (error: string | undefined) => {
       updateLog(error);
     },
-    [updateLog]
+    [updateLog],
   );
 
   const onShareClick = useCallback(async () => {
-    track('Share Click', { toolchain });
+    track("Share Click", { toolchain });
     const response = await newGist(swayCode, {
       contract: solidityCode,
-      language: 'solidity',
+      language: "solidity",
     });
-    if (!!response) {
+    if (response) {
       const permalink = `${window.location.origin}/?toolchain=${toolchain}&transpile=${showSolidity}&gist=${response.id}`;
       updateLog([
         <Copyable
           href
           value={permalink}
-          tooltip='permalink to your code'
-          label='Permalink to Playground'
+          tooltip="permalink to your code"
+          label="Permalink to Playground"
         />,
         <Copyable
           href
           value={response?.url}
-          tooltip='link to gist'
-          label='Link to Gist'
+          tooltip="link to gist"
+          label="Link to Gist"
         />,
       ]);
     }
-  }, [
-    newGist,
-    swayCode,
-    solidityCode,
-    updateLog,
-    toolchain,
-    showSolidity,
-  ]);
+  }, [newGist, swayCode, solidityCode, updateLog, toolchain, showSolidity]);
 
   const onCompileClick = useCallback(() => {
-    track('Compile Click', { toolchain });
+    track("Compile Click", { toolchain });
     if (showSolidity) {
       // Transpile the Solidity code before compiling.
-      track('Transpile');
+      track("Transpile");
       setCodeToTranspile(solidityCode);
     } else {
       setCodeToCompile(swayCode);
@@ -179,57 +171,59 @@ function App() {
     setCodeToCompile,
     onSwayCodeChange,
     setError,
-    updateLog
+    updateLog,
   );
   useCompile(codeToCompile, setError, setIsCompiled, updateLog, toolchain);
 
   return (
+    <div
+      style={{
+        padding: "15px",
+        margin: "0px",
+        background: themeColor("white4"),
+      }}
+    >
+      <ActionToolbar
+        deployState={deployState}
+        setContractId={setContractId}
+        onShareClick={onShareClick}
+        onCompile={onCompileClick}
+        isCompiled={isCompiled}
+        setDeployState={setDeployState}
+        drawerOpen={drawerOpen}
+        setDrawerOpen={setDrawerOpen}
+        showSolidity={showSolidity}
+        setShowSolidity={setShowSolidity}
+        updateLog={updateLog}
+      />
       <div
         style={{
-          padding: '15px',
-          margin: '0px',
-          background: themeColor('white4'),
-        }}>
-        <ActionToolbar
-          deployState={deployState}
-          setContractId={setContractId}
-          onShareClick={onShareClick}
-          onCompile={onCompileClick}
-          isCompiled={isCompiled}
-          setDeployState={setDeployState}
-          drawerOpen={drawerOpen}
-          setDrawerOpen={setDrawerOpen}
+          marginRight: drawerOpen ? DRAWER_WIDTH : 0,
+          transition: "margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+          height: "calc(100vh - 95px)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <EditorView
+          swayCode={swayCode}
+          onSwayCodeChange={onSwayCodeChange}
+          solidityCode={solidityCode}
+          onSolidityCodeChange={onSolidityCodeChange}
+          toolchain={toolchain}
+          setToolchain={setToolchain}
           showSolidity={showSolidity}
-          setShowSolidity={setShowSolidity}
-          updateLog={updateLog}
         />
-        <div
-          style={{
-            marginRight: drawerOpen ? DRAWER_WIDTH : 0,
-            transition: 'margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-            height: 'calc(100vh - 95px)',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
-          <EditorView
-            swayCode={swayCode}
-            onSwayCodeChange={onSwayCodeChange}
-            solidityCode={solidityCode}
-            onSolidityCodeChange={onSolidityCodeChange}
-            toolchain={toolchain}
-            setToolchain={setToolchain}
-            showSolidity={showSolidity}
-          />
-          <LogView results={log} />
-        </div>
-        <InteractionDrawer
-          isOpen={drawerOpen}
-          width={DRAWER_WIDTH}
-          contractId={contractId}
-          updateLog={updateLog}
-        />
-        <Analytics />
+        <LogView results={log} />
       </div>
+      <InteractionDrawer
+        isOpen={drawerOpen}
+        width={DRAWER_WIDTH}
+        contractId={contractId}
+        updateLog={updateLog}
+      />
+      <Analytics />
+    </div>
   );
 }
 
