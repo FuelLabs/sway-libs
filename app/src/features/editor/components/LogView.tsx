@@ -20,6 +20,7 @@ function LogView({ results }: LogViewProps) {
 
   return (
     <StyledBorder
+      themeColor={themeColor}
       style={{
         color: themeColor("gray5"),
         padding: "15px",

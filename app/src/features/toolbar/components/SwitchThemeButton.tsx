@@ -25,8 +25,11 @@ function SwitchThemeButton() {
         zIndex: 1300,
       }}
     >
-      {theme === "light" && <LightModeIcon sx={{ color: darkColors.gray7 }} />}
-      {theme !== "light" && <DarkModeIcon sx={{ color: lightColors.gray1 }} />}
+      {theme === "light" ? (
+        <LightModeIcon sx={{ color: darkColors.gray7 }} />
+      ) : (
+        <DarkModeIcon sx={{ color: lightColors.gray1 }} />
+      )}
     </IconButton>
   );
 }

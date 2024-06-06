@@ -93,7 +93,7 @@ function App() {
     } else {
       setTheme("light");
     }
-  }, []);
+  }, [setTheme]);
 
   const onSwayCodeChange = useCallback(
     (code: string) => {

@@ -5,7 +5,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ComplexParameterInput from "./ComplexParameterInput";
 import useTheme from "../../../context/theme";
-import { DarkThemeStyling } from "../../../components/shared";
+import styled from "@emotion/styled";
 
 export interface ParameterInputProps {
   input: InputInstance;
@@ -13,31 +13,44 @@ export interface ParameterInputProps {
   onChange: (value: SimpleParamValue) => void;
 }
 
+const StyledTextField = styled(TextField)<{ theme: string }>`
+  ${(props) =>
+    props.theme === "dark" &&
+    `
+    & fieldset {
+      border: none;
+    }
+    .MuiInputBase-root {
+      border: 1px solid rgba(224, 255, 255, 0.6);
+      background-color: transparent;
+      color: white;
+    }    
+  `}
+`;
+
 function ParameterInput({ input, value, onChange }: ParameterInputProps) {
   const { theme } = useTheme();
-
-  const inputStyling = theme !== "light" ? DarkThemeStyling.darkInput : {};
 
   switch (input.type.literal) {
     case "string":
       return (
-        <TextField
+        <StyledTextField
           size="small"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             onChange(event.target.value);
           }}
-          sx={{ ...inputStyling }}
+          theme={theme}
         />
       );
     case "number":
       return (
-        <TextField
+        <StyledTextField
           size="small"
           type="number"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             onChange(Number.parseFloat(event.target.value));
           }}
-          sx={{ ...inputStyling }}
+          theme={theme}
         />
       );
     case "bool":

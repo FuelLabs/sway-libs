@@ -25,7 +25,7 @@ function SwayEditor({
   const { themeColor } = useTheme();
 
   return (
-    <StyledBorder style={{ flex: 1 }}>
+    <StyledBorder style={{ flex: 1 }} themeColor={themeColor}>
       <ActionOverlay
         handleSelectExample={onChange}
         toolchain={toolchain}

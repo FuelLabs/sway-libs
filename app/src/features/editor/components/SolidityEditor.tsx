@@ -22,6 +22,7 @@ function SolidityEditor({ code, onChange }: SolidityEditorProps) {
 
   return (
     <StyledBorder
+      themeColor={themeColor}
       style={{
         flex: 1,
         marginRight: isMobile ? 0 : "1rem",

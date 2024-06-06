@@ -6,7 +6,7 @@ interface ColorMapping {
   light: string;
   dark: string;
 }
-type ColorName =
+export type ColorName =
   | "chrome"
   | "black1"
   | "white1"
@@ -93,7 +93,7 @@ const COLORS: Record<ColorName, ColorMapping> = {
   },
   disabled2: {
     light: lightColors.scalesGreen4,
-    dark: darkColors.gray8,
+    dark: darkColors.scalesGreen3,
   },
   disabled3: {
     light: "",

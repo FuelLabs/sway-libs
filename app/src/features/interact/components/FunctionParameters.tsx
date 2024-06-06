@@ -1,7 +1,7 @@
 import * as React from "react";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import Table, { TableProps } from "@mui/material/Table";
+import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -51,9 +51,9 @@ export function FunctionParameters({
 }: FunctionParametersProps) {
   const { themeColor } = useTheme();
   // Custom Table component
-  const TableCellComponent = styled(TableCell)<TableProps>(() => ({
-    color: themeColor("black1"),
-  }));
+  const StyledTableCell = styled(TableCell)`
+    color: ${themeColor("black1")};
+  `;
 
   const setParamAtIndex = React.useCallback(
     (index: number, value: SimpleParamValue) => {
@@ -76,9 +76,9 @@ export function FunctionParameters({
       <Table aria-label="function parameter table">
         <TableHead>
           <TableRow>
-            <TableCellComponent>Name</TableCellComponent>
-            <TableCellComponent>Type</TableCellComponent>
-            <TableCellComponent>Value</TableCellComponent>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Type</StyledTableCell>
+            <StyledTableCell>Value</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -87,11 +87,11 @@ export function FunctionParameters({
               key={functionName + input.name + index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCellComponent component="th" scope="row">
+              <StyledTableCell component="th" scope="row">
                 {input.name}
-              </TableCellComponent>
-              <TableCellComponent>{input.type.swayType}</TableCellComponent>
-              <TableCellComponent style={{ width: "100%" }}>
+              </StyledTableCell>
+              <StyledTableCell>{input.type.swayType}</StyledTableCell>
+              <TableCell style={{ width: "100%" }}>
                 <ParameterInput
                   input={input}
                   value={paramValues[index]}
@@ -99,7 +99,7 @@ export function FunctionParameters({
                     setParamAtIndex(index, value)
                   }
                 />
-              </TableCellComponent>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

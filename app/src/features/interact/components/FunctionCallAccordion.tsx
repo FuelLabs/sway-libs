@@ -8,7 +8,8 @@ import { InputInstance, ParamTypeLiteral } from "./FunctionParameters";
 import { FunctionForm } from "./FunctionForm";
 import { ResponseCard } from "./ResponseCard";
 import useTheme from "../../../context/theme";
-import { DarkThemeStyling } from "../../../components/shared";
+import { darkColors } from "@fuel-ui/css";
+import styled from "@emotion/styled";
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -20,6 +21,16 @@ export interface FunctionCallAccordionProps {
   updateLog: (entry: string) => void;
 }
 
+const StyledAccordion = styled(Accordion)<{ theme: string }>`
+  ${(props) =>
+    props.theme === "dark"
+      ? `
+    background: ${darkColors.scalesGray1};
+    border: 1px solid ${darkColors.gray6};
+  `
+      : ""};
+`;
+
 export function FunctionCallAccordion({
   contractId,
   functionName,
@@ -30,10 +41,9 @@ export function FunctionCallAccordion({
   updateLog,
 }: FunctionCallAccordionProps) {
   const { theme, themeColor } = useTheme();
-  const dropdownStyling =
-    theme !== "light" ? DarkThemeStyling.darkAccordion : {};
+
   return (
-    <Accordion key={contractId + functionName} sx={{ ...dropdownStyling }}>
+    <StyledAccordion key={contractId + functionName} theme={theme}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon sx={{ color: themeColor("gray4") }} />}
       >
@@ -57,6 +67,6 @@ export function FunctionCallAccordion({
           response={response}
         />
       </AccordionDetails>
-    </Accordion>
+    </StyledAccordion>
   );
 }

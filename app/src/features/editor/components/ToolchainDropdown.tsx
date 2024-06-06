@@ -5,7 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 import useTheme from "../../../context/theme";
-import { DarkThemeStyling } from "../../../components/shared";
+import styled from "@emotion/styled";
+import { lightColors, darkColors } from "@fuel-ui/css";
 
 const ToolchainNames = [
   "testnet",
@@ -29,6 +30,31 @@ export interface ToolchainDropdownProps {
   setToolchain: (toolchain: Toolchain) => void;
   style?: React.CSSProperties;
 }
+
+const StyledFormControl = styled(FormControl)<{ theme: string }>`
+  ${(props) =>
+    props.theme === "dark" &&
+    `
+    & fieldset {
+      border: none;
+    }
+    .MuiInputBase-root {
+      background-color: ${darkColors.gray1};
+      color: ${lightColors.gray1};
+      outline: 1px solid ${darkColors.gray8};
+      &:hover {
+        background: transparent;
+      }
+    }
+    .MuiFormLabel-root {
+      color: white;
+    }
+    .MuiSvgIcon-root {
+      color: ${lightColors.gray8};
+    }
+  `}
+`;
+
 function ToolchainDropdown({
   toolchain,
   setToolchain,
@@ -36,11 +62,8 @@ function ToolchainDropdown({
 }: ToolchainDropdownProps) {
   const { themeColor, theme } = useTheme();
 
-  const dropdownStyling =
-    theme !== "light" ? DarkThemeStyling.darkDropdown : {};
-
   return (
-    <FormControl style={{ ...style, ...dropdownStyling }} size="small">
+    <StyledFormControl style={{ ...style }} size="small" theme={theme}>
       <InputLabel id="toolchain-select-label">Toolchain</InputLabel>
       <Tooltip placement="top" title={"Fuel toolchain to use for compilation"}>
         <span>
@@ -56,7 +79,7 @@ function ToolchainDropdown({
             id="toolchain-select"
             labelId="toolchain-select-label"
             label="Toolchain"
-            style={{ minWidth: "70px", background: "white" }}
+            style={{ minWidth: "70px" }}
             variant="outlined"
             value={toolchain}
             onChange={(event) => setToolchain(event.target.value as Toolchain)}
@@ -69,7 +92,7 @@ function ToolchainDropdown({
           </Select>
         </span>
       </Tooltip>
-    </FormControl>
+    </StyledFormControl>
   );
 }
 

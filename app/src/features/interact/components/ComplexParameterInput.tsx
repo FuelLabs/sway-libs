@@ -75,7 +75,7 @@ function ComplexParameterInput({
   const { themeColor } = useTheme();
 
   return (
-    <StyledBorder>
+    <StyledBorder themeColor={themeColor}>
       <AceEditor
         style={{ width: "100%" }}
         minLines={lines}

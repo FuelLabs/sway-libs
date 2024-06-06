@@ -33,7 +33,7 @@ export function useLog(): [
       const newResults = [...results];
       if (newResults.length > 0) {
         newResults.push(
-          <Divider style={{ margin: "10px 0 10px", color: darkColors.gray6 }}>
+          <Divider style={{ margin: "10px 0 10px", color: darkColors.gray9 }}>
             {new Date().toLocaleString()}
           </Divider>,
         );
