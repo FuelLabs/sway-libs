@@ -34,7 +34,7 @@ export function useLog(): [
       if (newResults.length > 0) {
         newResults.push(
           <StyledDivider
-            style={{ margin: "10px 0 10px", color: darkColors.gray9 }}
+            style={{ margin: "10px 0 10px", color: darkColors.gray6 }}
           >
             {new Date().toLocaleString()}
           </StyledDivider>,
