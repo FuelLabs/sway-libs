@@ -27,7 +27,12 @@ function Copyable({ value, label, tooltip, href }: CopyableProps) {
       <Tooltip title={`Click to copy ${tooltip}`}>
         <span>
           {href ? (
-            <a href={value} target="_blank" rel="noreferrer">
+            <a
+              href={value}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: themeColor("gray3") }}
+            >
               {label}
             </a>
           ) : (
