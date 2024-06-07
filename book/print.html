@@ -148,7 +148,7 @@ Sway is a language under heavy development therefore the libraries may not be th
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <h2 id="adding-sway-libs-as-a-dependency"><a class="header" href="#adding-sway-libs-as-a-dependency">Adding Sway Libs as a Dependency</a></h2>
 <p>To import any library, the following dependency should be added to the project's <code>Forc.toml</code> file under <code>[dependencies]</code>.</p>
-<pre><code class="language-sway">sway_libs = { git = &quot;https://github.com/FuelLabs/sway-libs&quot;, tag = &quot;v0.1.0&quot; }
+<pre><code class="language-sway">sway_libs = { git = &quot;https://github.com/FuelLabs/sway-libs&quot;, tag = &quot;v0.22.0&quot; }
 </code></pre>
 <p>For reference, here is a complete <code>Forc.toml</code> file:</p>
 <pre><code class="language-sway">[project]
@@ -158,7 +158,7 @@ license = &quot;Apache-2.0&quot;
 name = &quot;MyProject&quot;
 
 [dependencies]
-sway_libs = { git = &quot;https://github.com/FuelLabs/sway-libs&quot;, tag = &quot;v0.1.0&quot; }
+sway_libs = { git = &quot;https://github.com/FuelLabs/sway-libs&quot;, tag = &quot;v0.22.0&quot; }
 </code></pre>
 <blockquote>
 <p><strong>NOTE:</strong> Be sure to set the tag to the latest release.</p>
@@ -1015,7 +1015,7 @@ fn verify_predicate_configurables(
 <p>To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, use the <a href="https://github.com/FuelLabs/fuel-vm/tree/master/fuel-merkle">Fuel-Merkle</a> crate.</p>
 <h3 id="importing-into-your-project"><a class="header" href="#importing-into-your-project">Importing Into Your Project</a></h3>
 <p>The import the Fuel-Merkle crate, the following should be added to the project's <code>Cargo.toml</code> file under <code>[dependencies]</code>:</p>
-<pre><code class="language-sway">fuel-merkle = { version = &quot;0.33.0&quot; }
+<pre><code class="language-sway">fuel-merkle = { version = &quot;0.50.0&quot; }
 </code></pre>
 <blockquote>
 <p><strong>NOTE</strong> Make sure to use the latest version of the <a href="https://crates.io/crates/fuel-merkle">fuel-merkle</a> crate.</p>
