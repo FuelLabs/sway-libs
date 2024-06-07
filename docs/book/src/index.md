@@ -12,7 +12,7 @@ Asset Libraries are any libraries that use [Native Assets](https://docs.fuel.net
 
 ### [Asset Library](./asset/index.md)
 
-The [Asset](./asset/index.md) Library provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
+The [Asset](./asset/index.md) Library provides helper functions for the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/), [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/), and [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standards.
 
 ## Access Control and Security Libraries
 
