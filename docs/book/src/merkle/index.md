@@ -68,7 +68,7 @@ To generate a Merkle Tree and corresponding proof for your Sway Smart Contract, 
 The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
 ```sway
-fuel-merkle = { version = "0.33.0" }
+fuel-merkle = { version = "0.50.0" }
 ```
 
 > **NOTE** Make sure to use the latest version of the [fuel-merkle](https://crates.io/crates/fuel-merkle) crate.
