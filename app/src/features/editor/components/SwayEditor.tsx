@@ -22,7 +22,7 @@ function SwayEditor({
   toolchain,
   setToolchain,
 }: SwayEditorProps) {
-  const { themeColor } = useTheme();
+  const { editorTheme, themeColor } = useTheme();
 
   return (
     <StyledBorder style={{ flex: 1 }} themeColor={themeColor}>
@@ -38,7 +38,7 @@ function SwayEditor({
           height: "100%",
         }}
         mode="rust"
-        theme={themeColor("chrome")}
+        theme={editorTheme}
         name="editor"
         fontSize="14px"
         onChange={onChange}

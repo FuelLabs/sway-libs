@@ -71,7 +71,7 @@ export function FunctionParameters({
   return (
     <TableContainer
       component={Paper}
-      style={{ background: themeColor("gray7") }}
+      style={{ background: themeColor("gray5") }}
     >
       <Table aria-label="function parameter table">
         <TableHead>

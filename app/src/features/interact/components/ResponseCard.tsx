@@ -46,7 +46,7 @@ export function ResponseCard({
           color: themeColor("gray1"),
           fontSize: "14px",
           fontFamily: "monospace",
-          background: themeColor("gray8"),
+          background: themeColor("gray6"),
           padding: "2px 18px 2px",
           minHeight: "44px",
         }}

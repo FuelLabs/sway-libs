@@ -18,7 +18,7 @@ export interface SolidityEditorProps {
 function SolidityEditor({ code, onChange }: SolidityEditorProps) {
   const isMobile = useIsMobile();
 
-  const { themeColor } = useTheme();
+  const { editorTheme, themeColor } = useTheme();
 
   return (
     <StyledBorder
@@ -36,7 +36,7 @@ function SolidityEditor({ code, onChange }: SolidityEditorProps) {
           height: "100%",
         }}
         mode="solidity"
-        theme={themeColor("chrome")}
+        theme={editorTheme}
         name="editor"
         fontSize="14px"
         onChange={onChange}

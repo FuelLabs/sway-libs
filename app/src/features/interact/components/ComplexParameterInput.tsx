@@ -72,7 +72,7 @@ function ComplexParameterInput({
     [value],
   );
 
-  const { themeColor } = useTheme();
+  const { editorTheme, themeColor } = useTheme();
 
   return (
     <StyledBorder themeColor={themeColor}>
@@ -81,7 +81,7 @@ function ComplexParameterInput({
         minLines={lines}
         maxLines={lines}
         mode="json"
-        theme={themeColor("chrome")}
+        theme={editorTheme}
         name="editor"
         fontSize="14px"
         onChange={onChange}

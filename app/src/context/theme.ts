@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { darkColors, lightColors } from "@fuel-ui/css";
 import { useFuelTheme } from "@fuel-ui/react";
 
@@ -7,7 +7,6 @@ interface ColorMapping {
   dark: string;
 }
 export type ColorName =
-  | "chrome"
   | "black1"
   | "white1"
   | "white2"
@@ -19,18 +18,12 @@ export type ColorName =
   | "gray4"
   | "gray5"
   | "gray6"
-  | "gray7"
-  | "gray8"
   | "sgreen1"
   | "disabled1"
   | "disabled2"
   | "disabled3";
 
 const COLORS: Record<ColorName, ColorMapping> = {
-  chrome: {
-    light: "chrome",
-    dark: "tomorrow_night_bright",
-  },
   black1: {
     light: darkColors.black,
     dark: lightColors.gray4,
@@ -53,33 +46,25 @@ const COLORS: Record<ColorName, ColorMapping> = {
   },
   gray1: {
     light: darkColors.gray6,
-    dark: lightColors.white,
-  },
-  gray2: {
-    light: darkColors.gray6,
     dark: darkColors.gray11,
   },
-  gray3: {
-    light: darkColors.gray6,
-    dark: darkColors.gray12,
-  },
-  gray4: {
+  gray2: {
     light: darkColors.gray10,
     dark: lightColors.gray10,
   },
-  gray5: {
+  gray3: {
     light: darkColors.scalesGray1,
     dark: lightColors.white,
   },
-  gray6: {
+  gray4: {
     light: lightColors.gray7,
     dark: darkColors.scalesGray1,
   },
-  gray7: {
+  gray5: {
     light: lightColors.gray1,
     dark: darkColors.scalesGray2,
   },
-  gray8: {
+  gray6: {
     light: "lightgrey",
     dark: darkColors.gray3,
   },
@@ -107,8 +92,13 @@ export default function useTheme() {
     (name: ColorName) => COLORS[name][currentTheme as "light" | "dark"],
     [currentTheme],
   );
+  const editorTheme = useMemo(
+    () => (currentTheme === "light" ? "chrome" : "tomorrow_night_bright"),
+    [currentTheme],
+  );
   return {
     theme: currentTheme,
+    editorTheme,
     setTheme,
     themeColor,
   };

@@ -45,7 +45,7 @@ export function FunctionCallAccordion({
   return (
     <StyledAccordion key={contractId + functionName} theme={theme}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon sx={{ color: themeColor("gray4") }} />}
+        expandIcon={<ExpandMoreIcon sx={{ color: themeColor("gray2") }} />}
       >
         <FormLabel
           style={{ fontFamily: "monospace", color: themeColor("white3") }}

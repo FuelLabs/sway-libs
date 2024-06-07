@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Divider from "@mui/material/Divider";
 import { darkColors } from "@fuel-ui/css";
+import StyledDivider from "../../../components/shared";
 
 const RESULT_LINE_LIMIT = 500;
 
@@ -33,9 +33,11 @@ export function useLog(): [
       const newResults = [...results];
       if (newResults.length > 0) {
         newResults.push(
-          <Divider style={{ margin: "10px 0 10px", color: darkColors.gray9 }}>
+          <StyledDivider
+            style={{ margin: "10px 0 10px", color: darkColors.gray9 }}
+          >
             {new Date().toLocaleString()}
-          </Divider>,
+          </StyledDivider>,
         );
       }
       newResults.push(...resultsToAdd);

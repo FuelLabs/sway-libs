@@ -21,7 +21,7 @@ function Copyable({ value, label, tooltip, href }: CopyableProps) {
 
   return (
     <div
-      style={{ cursor: "pointer", color: themeColor("gray3") }}
+      style={{ cursor: "pointer", color: themeColor("gray1") }}
       onClick={() => handleCopy(value)}
     >
       <Tooltip title={`Click to copy ${tooltip}`}>

@@ -17,7 +17,7 @@ function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
         color: themeColor("white3"),
         marginRight: "10px",
         ".MuiSwitch-track": {
-          background: themeColor("gray2"),
+          background: themeColor("gray1"),
         },
       }}
       labelPlacement="start"

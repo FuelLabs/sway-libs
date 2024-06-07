@@ -72,7 +72,7 @@ function ToolchainDropdown({
               PaperProps: {
                 style: {
                   background: themeColor("white2"),
-                  color: themeColor("gray5"),
+                  color: themeColor("gray3"),
                 },
               },
             }}

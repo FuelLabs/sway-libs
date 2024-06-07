@@ -22,7 +22,7 @@ function LogView({ results }: LogViewProps) {
     <StyledBorder
       themeColor={themeColor}
       style={{
-        color: themeColor("gray5"),
+        color: themeColor("gray3"),
         padding: "15px",
         overflow: "auto",
         marginTop: "15px",

@@ -39,11 +39,11 @@ function SecondaryButton({
         <Button
           sx={{
             ...style,
-            color: themeColor("gray2"),
-            borderColor: themeColor("gray2"),
+            color: themeColor("gray1"),
+            borderColor: themeColor("gray1"),
             ":hover": {
               bgcolor: themeColor("sgreen1"),
-              borderColor: themeColor("gray2"),
+              borderColor: themeColor("gray1"),
             },
             ":disabled": {
               borderColor: themeColor("disabled1"),
