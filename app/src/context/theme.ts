@@ -74,7 +74,7 @@ const COLORS: Record<ColorName, ColorMapping> = {
   },
   disabled1: {
     light: "",
-    dark: darkColors.gray6,
+    dark: darkColors.gray8,
   },
   disabled2: {
     light: lightColors.scalesGreen4,
@@ -93,7 +93,7 @@ export default function useTheme() {
     [currentTheme],
   );
   const editorTheme = useMemo(
-    () => (currentTheme === "light" ? "chrome" : "tomorrow_night_bright"),
+    () => (currentTheme === "light" ? "chrome" : "tomorrow_night"),
     [currentTheme],
   );
   return {
