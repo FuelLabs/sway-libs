@@ -3,9 +3,11 @@ import AceEditor from "react-ace";
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-rust";
 import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
 import { StyledBorder } from "../../../components/shared";
 import ActionOverlay from "./ActionOverlay";
 import { Toolchain } from "./ToolchainDropdown";
+import useTheme from "../../../context/theme";
 
 export interface SwayEditorProps {
   code: string;
@@ -20,8 +22,10 @@ function SwayEditor({
   toolchain,
   setToolchain,
 }: SwayEditorProps) {
+  const { editorTheme, themeColor } = useTheme();
+
   return (
-    <StyledBorder style={{ flex: 1 }}>
+    <StyledBorder style={{ flex: 1 }} themeColor={themeColor}>
       <ActionOverlay
         handleSelectExample={onChange}
         toolchain={toolchain}
@@ -34,7 +38,7 @@ function SwayEditor({
           height: "100%",
         }}
         mode="rust"
-        theme="chrome"
+        theme={editorTheme}
         name="editor"
         fontSize="14px"
         onChange={onChange}

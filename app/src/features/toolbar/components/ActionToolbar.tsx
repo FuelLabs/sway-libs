@@ -11,6 +11,7 @@ import {
   loadStorageSlots,
 } from "../../../utils/localStorage";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import SwitchThemeButton from "./SwitchThemeButton";
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -107,6 +108,7 @@ function ActionToolbar({
         text="SHARE"
         tooltip={"Get a shareable link to your code"}
       />
+      {!isMobile && <SwitchThemeButton />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
 import { ContractInterface } from "./ContractInterface";
+import useTheme from "../../../context/theme";
 
 export interface InteractionDrawerProps {
   isOpen: boolean;
@@ -15,11 +16,13 @@ function InteractionDrawer({
   contractId,
   updateLog,
 }: InteractionDrawerProps) {
+  const { themeColor } = useTheme();
   return (
     <Drawer
       PaperProps={{
         sx: {
-          background: "#F1F1F1",
+          color: themeColor("black1"),
+          background: themeColor("white2"),
         },
       }}
       sx={{

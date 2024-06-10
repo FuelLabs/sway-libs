@@ -7,6 +7,9 @@ import FormLabel from "@mui/material/FormLabel";
 import { InputInstance, ParamTypeLiteral } from "./FunctionParameters";
 import { FunctionForm } from "./FunctionForm";
 import { ResponseCard } from "./ResponseCard";
+import useTheme from "../../../context/theme";
+import { darkColors } from "@fuel-ui/css";
+import styled from "@emotion/styled";
 
 export interface FunctionCallAccordionProps {
   contractId: string;
@@ -18,6 +21,16 @@ export interface FunctionCallAccordionProps {
   updateLog: (entry: string) => void;
 }
 
+const StyledAccordion = styled(Accordion)<{ theme: string }>`
+  ${(props) =>
+    props.theme === "dark"
+      ? `
+    background: ${darkColors.scalesGray1};
+    border: 1px solid ${darkColors.gray6};
+  `
+      : ""};
+`;
+
 export function FunctionCallAccordion({
   contractId,
   functionName,
@@ -27,10 +40,16 @@ export function FunctionCallAccordion({
   setResponse,
   updateLog,
 }: FunctionCallAccordionProps) {
+  const { theme, themeColor } = useTheme();
+
   return (
-    <Accordion key={contractId + functionName}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <FormLabel style={{ fontFamily: "monospace", color: "#00000099" }}>
+    <StyledAccordion key={contractId + functionName} theme={theme}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: themeColor("gray2") }} />}
+      >
+        <FormLabel
+          style={{ fontFamily: "monospace", color: themeColor("white3") }}
+        >
           {functionName}
         </FormLabel>
       </AccordionSummary>
@@ -48,6 +67,6 @@ export function FunctionCallAccordion({
           response={response}
         />
       </AccordionDetails>
-    </Accordion>
+    </StyledAccordion>
   );
 }

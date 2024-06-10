@@ -4,6 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select/Select";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
+import useTheme from "../../../context/theme";
+import styled from "@emotion/styled";
+import { lightColors, darkColors } from "@fuel-ui/css";
 
 export interface ExampleMenuItem {
   label: string;
@@ -15,6 +18,30 @@ export interface ExampleDropdownProps {
   examples: ExampleMenuItem[];
   style?: React.CSSProperties;
 }
+
+const StyledFormControl = styled(FormControl)<{ theme: string }>`
+  ${(props) =>
+    props.theme === "dark" &&
+    `
+    & fieldset {
+      border: none;
+    }
+    .MuiInputBase-root {
+      background-color: ${darkColors.gray1};
+      color: ${lightColors.gray1};
+      outline: 1px solid ${darkColors.gray8};
+      &:hover {
+        background: transparent;
+      }
+    }
+    .MuiFormLabel-root {
+      color: white;
+    }
+    .MuiSvgIcon-root {
+      color: ${lightColors.gray8};
+    }
+  `}
+`;
 
 function ExampleDropdown({
   handleSelect,
@@ -38,17 +65,27 @@ function ExampleDropdown({
     [handleSelect, setCurrentExample, examples],
   );
 
+  const { themeColor, theme } = useTheme();
+
   return (
-    <FormControl style={{ ...style }} size="small">
+    <StyledFormControl style={{ ...style }} size="small" theme={theme}>
       <InputLabel id="example-select-label">Example</InputLabel>
       <Tooltip placement="top" title={"Load an example contract"}>
         <span>
           <Select
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  background: themeColor("white2"),
+                  color: themeColor("gray3"),
+                },
+              },
+            }}
             id="example-select"
             labelId="example-select-label"
             label="Example"
             variant="outlined"
-            style={{ minWidth: "110px", background: "white" }}
+            style={{ minWidth: "110px" }}
             value={currentExample.label}
             onChange={onChange}
           >
@@ -60,7 +97,7 @@ function ExampleDropdown({
           </Select>
         </span>
       </Tooltip>
-    </FormControl>
+    </StyledFormControl>
   );
 }
 

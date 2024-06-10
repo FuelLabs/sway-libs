@@ -1,11 +1,14 @@
 import React, { useEffect, useRef } from "react";
-
+import useTheme from "../../../context/theme";
 import { StyledBorder } from "../../../components/shared";
+
 export interface LogViewProps {
   results: React.ReactElement[];
 }
 
 function LogView({ results }: LogViewProps) {
+  const { themeColor } = useTheme();
+
   const scrollRef = useRef<null | HTMLDivElement>(null);
 
   // Scroll to the bottom of the results when they change.
@@ -17,9 +20,9 @@ function LogView({ results }: LogViewProps) {
 
   return (
     <StyledBorder
+      themeColor={themeColor}
       style={{
-        background: "white",
-        color: "black",
+        color: themeColor("gray3"),
         padding: "15px",
         overflow: "auto",
         marginTop: "15px",

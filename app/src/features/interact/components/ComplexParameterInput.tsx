@@ -3,6 +3,8 @@ import AceEditor from "react-ace";
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
+import useTheme from "../../../context/theme";
 import { StyledBorder } from "../../../components/shared";
 import {
   CallableParamValue,
@@ -70,14 +72,16 @@ function ComplexParameterInput({
     [value],
   );
 
+  const { editorTheme, themeColor } = useTheme();
+
   return (
-    <StyledBorder>
+    <StyledBorder themeColor={themeColor}>
       <AceEditor
         style={{ width: "100%" }}
         minLines={lines}
         maxLines={lines}
         mode="json"
-        theme="chrome"
+        theme={editorTheme}
         name="editor"
         fontSize="14px"
         onChange={onChange}

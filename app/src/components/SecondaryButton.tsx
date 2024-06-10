@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { darkColors, lightColors } from "@fuel-ui/css";
+import useTheme from "../context/theme";
 
 export interface SecondaryButtonProps {
   onClick: () => void;
@@ -30,17 +30,24 @@ function SecondaryButton({
       marginBottom: "10px",
     };
   }
+
+  const { themeColor } = useTheme();
+
   return (
     <Tooltip title={tooltip}>
       <span>
         <Button
           sx={{
             ...style,
-            color: darkColors.gray6,
-            borderColor: darkColors.gray6,
+            color: themeColor("gray1"),
+            borderColor: themeColor("gray1"),
             ":hover": {
-              bgcolor: lightColors.scalesGreen3,
-              borderColor: darkColors.gray6,
+              bgcolor: themeColor("sgreen1"),
+              borderColor: themeColor("gray1"),
+            },
+            ":disabled": {
+              borderColor: themeColor("disabled1"),
+              color: themeColor("disabled1"),
             },
           }}
           variant="outlined"

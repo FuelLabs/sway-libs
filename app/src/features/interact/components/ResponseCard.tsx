@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { ParamTypeLiteral } from "./FunctionParameters";
+import useTheme from "../../../context/theme";
 
 interface ResponseCardProps {
   response?: string | Error;
@@ -29,20 +30,23 @@ export function ResponseCard({
     }
   }, [outputType, response]);
 
+  const { themeColor } = useTheme();
+
   return (
     <Card
       style={{
         right: "0",
         left: "0",
         ...style,
+        background: "transparent",
       }}
     >
       <CardContent
         style={{
-          color: "black",
+          color: themeColor("gray1"),
           fontSize: "14px",
           fontFamily: "monospace",
-          backgroundColor: "lightgrey",
+          background: themeColor("gray6"),
           padding: "2px 18px 2px",
           minHeight: "44px",
         }}
