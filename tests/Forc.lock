@@ -1,0 +1,395 @@
+[[package]]
+name = "admin_test"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "bytecode_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "complex_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "core"
+source = "path+from-root-E19CE48B3E858B72"
+
+[[package]]
+name = "i128_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i16_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i16_twos_complement_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i256_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i32_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i32_twos_complement_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i64_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i64_twos_complement_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i8_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i8_twos_complement_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp128_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp128_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp256_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp256_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp64_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp64_exp_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp64_mul_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp64_pow_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ifp64_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "merkle_proof_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "native_asset_lib"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ownership_test"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "pausable_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "reentrancy_attack_helper_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attack_helper_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_attacker_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attacker_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_attacker_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_target_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_target_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attacker_abi",
+    "reentrancy_target_abi",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "simple_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "simple_predicate"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.60.0#2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6"
+dependencies = ["core"]
+
+[[package]]
+name = "sway_libs"
+source = "path+from-root-8E8363697A2C7D80"
+dependencies = [
+    "standards",
+    "std",
+]
+
+[[package]]
+name = "ufp128_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp128_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_exp_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_mul_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_pow_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_root_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp32_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_div_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_exp_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_mul_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_pow_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_root_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ufp64_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
