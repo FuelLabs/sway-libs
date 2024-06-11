@@ -4,9 +4,9 @@ For implementation details on the Asset Library base functionality please see th
 
 ## Importing the Asset Library Base Functionality
 
-In order to use the Asset Library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
+In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.fuel.network/docs/sway-standards/) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard).
 
-To import the Asset Library Base Functionality and [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) Standard to your Sway Smart Contract, add the following to your Sway file:
+To import the Asset Library Base Functionality and [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:import}}
@@ -14,7 +14,7 @@ To import the Asset Library Base Functionality and [SRC-20](https://github.com/F
 
 ## Integration with the SRC-20 Standard
 
-The [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) definition states that the following abi implementation is required for any Native Asset on Fuel:
+The [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) definition states that the following abi implementation is required for any Native Asset on Fuel:
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:src20_abi}}
@@ -28,7 +28,7 @@ The Asset Library has the following complimentary functions for each function in
 - `_symbol()`
 - `_decimals()`
 
-The following ABI and functions are also provided to set your [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) standard storage values:
+The following ABI and functions are also provided to set your [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard storage values:
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:set_attributes}}
@@ -42,7 +42,7 @@ The following ABI and functions are also provided to set your [SRC-20](https://g
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) standard.
+Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:src20_storage}}
@@ -50,7 +50,7 @@ Once imported, the Asset Library's base functionality should be available. To us
 
 ## Implementing the SRC-20 Standard with the Asset Library
 
-To use the Asset Library's base functionly, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md) standard in combination with the Asset Library with no user defined restrictions or custom functionality.
+To use the Asset Library's base functionly, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard in combination with the Asset Library with no user defined restrictions or custom functionality.
 
 ```sway
 {{#include ../../../../examples/asset/basic_src20/src/main.sw:basic_src20}}
