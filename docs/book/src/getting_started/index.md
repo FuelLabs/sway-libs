@@ -68,6 +68,6 @@ impl Pausable for Contract {
 }
 ```
 
-Any instructions related to using a specific library should be found within the [libraries](../libraries.md) section of the Sway Libs Book.
+Any instructions related to using a specific library should be found within the [libraries](../index.md) section of the Sway Libs Book.
 
 For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).

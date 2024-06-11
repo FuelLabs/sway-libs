@@ -4,9 +4,9 @@ For implementation details on the Asset Library metadata functionality please se
 
 ## Importing the Asset Library Metadata Functionality
 
-In order to use the Asset Library, Sway Libs and [Sway Standards](https://github.com/FuelLabs/sway-standards) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://github.com/FuelLabs/sway-standards).
+In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.fuel.network/docs/sway-standards/) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard).
 
-To import the Asset Library Base Functionality and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) Standard to your Sway Smart Contract, add the following to your Sway file:
+To import the Asset Library Base Functionality and [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:import}}
@@ -14,17 +14,17 @@ To import the Asset Library Base Functionality and [SRC-7](https://github.com/Fu
 
 ## Integration with the SRC-7 Standard
 
-The [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) definition states that the following abi implementation is required for any Native Asset on Fuel:
+The [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) definition states that the following abi implementation is required for any Native Asset on Fuel:
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:src7_abi}}
 ```
 
-The Asset Library has the following complimentary data type for the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standard:
+The Asset Library has the following complimentary data type for the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard:
 
 - `StorageMetadata`
 
-The following additional functionality for the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md)'s `Metadata` type is provided:
+The following additional functionality for the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/)'s `Metadata` type is provided:
 
 - `as_string()`
 - `is_string()`
@@ -37,7 +37,7 @@ The following additional functionality for the [SRC-7](https://github.com/FuelLa
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standard.
+Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:src7_storage}}
@@ -47,7 +47,7 @@ Once imported, the Asset Library's metadata functionality should be available. T
 
 ### Setting Metadata
 
-To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-9.md) standard for your `key`. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
+To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://docs.fuel.network/docs/sway-standards/src-9-metadata-keys/) standard for your `key`. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
 
 ```sway
 {{#include ../../../../examples/asset/setting_src7_attributes/src/main.sw:setting_src7_attributes}}
@@ -57,7 +57,7 @@ To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by th
 
 ### Implementing the SRC-7 Standard with StorageMetadata
 
-To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId`. The example below shows the implementation of the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standard in combination with the Asset Library's `StorageMetadata` type with no user defined restrictions or custom functionality.
+To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId`. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type with no user defined restrictions or custom functionality.
 
 ```sway
 {{#include ../../../../examples/asset/basic_src7/src/main.sw:basic_src7}}
@@ -65,7 +65,7 @@ To use the `StorageMetadata` type, simply get the stored metadata with the assoc
 
 ## Using the `Metadata` Extensions
 
-The `Metadata` type defined by the [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standard can be one of 4 states:
+The `Metadata` type defined by the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard can be one of 4 states:
 
 ```sway
 pub enum Metadata {

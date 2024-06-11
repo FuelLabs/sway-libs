@@ -4,7 +4,6 @@
 
 - [Getting Started](./getting_started/index.md)
   - [Running Tests](./getting_started/running_tests.md)
-- [Libraries Overview](./libraries.md)
 - [Asset Library](./asset/index.md)
   - [Base](./asset/base.md)
   - [Supply](./asset/supply.md)
