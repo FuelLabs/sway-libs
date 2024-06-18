@@ -91,22 +91,20 @@ For more information about implementation please refer to the [Sway Libs Docs Hu
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what verison you are using by running the `fuelup show` command.
 
-In order to run the inline tests, make sure you are in the `libs/` folder of this repository `sway-libs/libs/<you are here>`.
+Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
-Run the tests:
+Run the inline tests:
 
 ```bash
-forc test
+forc test --path libs --release --locked
 ```
 
-Once these tests have passed, make sure you are in the `tests/` folder of this repository `sway-libs/tests/<you are here>`.
-
-Run the tests:
+Once these tests have passed, run the sdk-harness tests:
 
 ```bash
-forc test && cargo test
+forc test --path tests --release --locked && cargo test --manifest-path tests/Cargo.toml
 ```
 
 > **NOTE:**
@@ -115,7 +113,7 @@ forc test && cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core 0.26.0`.
+> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core v0.26.0`.
 
 ## Contributing
 
