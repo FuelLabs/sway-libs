@@ -21,8 +21,7 @@ Description of the upcoming release here.
 
 ### Fixed
 
-- Some fix here 1
-- Some fix here 2
+- [#258](https://github.com/FuelLabs/sway-libs/pull/258) Fixes incorrect intructions on how to run tests in README and docs hub.
 
 #### Breaking
 
