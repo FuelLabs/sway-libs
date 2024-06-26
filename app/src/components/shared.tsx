@@ -1,37 +1,8 @@
 import styled from "@emotion/styled";
 import CircularProgress from "@mui/material/CircularProgress";
 import Copyable from "./Copyable";
-import { darkColors, lightColors } from "@fuel-ui/css";
+import { lightColors } from "@fuel-ui/css";
 import { ColorName } from "../context/theme";
-import useTheme from "../context/theme";
-import { Divider } from "@mui/material";
-
-interface StyledDividerProps {
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
-}
-
-export default function StyledDivider({ children, style }: StyledDividerProps) {
-  const { theme } = useTheme();
-  const StyledCustomDivider = styled(Divider)<{ theme: string }>`
-    ${(props) =>
-      props.theme === "dark" &&
-      `
-    .MuiDivider-wrapper {
-      color: ${darkColors.gray11};
-    }
-    &::before,
-    &::after {
-      background: ${darkColors.gray3};
-    }
-  `}
-  `;
-  return (
-    <StyledCustomDivider style={style} theme={theme}>
-      {children}
-    </StyledCustomDivider>
-  );
-}
 
 export const StyledBorder = styled.div<{
   themeColor: (name: ColorName) => string;

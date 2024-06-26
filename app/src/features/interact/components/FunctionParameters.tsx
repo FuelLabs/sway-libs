@@ -8,8 +8,6 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import ParameterInput from "./ParameterInput";
 import { TypeInfo } from "../utils/getTypeInfo";
-import { styled } from "@mui/material/styles";
-import useTheme from "../../../context/theme";
 
 export type ParamTypeLiteral =
   | "number"
@@ -49,12 +47,6 @@ export function FunctionParameters({
   paramValues,
   setParamValues,
 }: FunctionParametersProps) {
-  const { themeColor } = useTheme();
-  // Custom Table component
-  const StyledTableCell = styled(TableCell)`
-    color: ${themeColor("black1")};
-  `;
-
   const setParamAtIndex = React.useCallback(
     (index: number, value: SimpleParamValue) => {
       const newParamValues = [...paramValues];
@@ -69,16 +61,13 @@ export function FunctionParameters({
   }
 
   return (
-    <TableContainer
-      component={Paper}
-      style={{ background: themeColor("gray5") }}
-    >
+    <TableContainer component={Paper}>
       <Table aria-label="function parameter table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell>Type</StyledTableCell>
-            <StyledTableCell>Value</StyledTableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell>Value</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -87,10 +76,10 @@ export function FunctionParameters({
               key={functionName + input.name + index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <StyledTableCell component="th" scope="row">
+              <TableCell component="th" scope="row">
                 {input.name}
-              </StyledTableCell>
-              <StyledTableCell>{input.type.swayType}</StyledTableCell>
+              </TableCell>
+              <TableCell>{input.type.swayType}</TableCell>
               <TableCell style={{ width: "100%" }}>
                 <ParameterInput
                   input={input}

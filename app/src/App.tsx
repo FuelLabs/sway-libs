@@ -26,7 +26,6 @@ import useTheme from "./context/theme";
 const DRAWER_WIDTH = "40vw";
 
 function App() {
-  const { themeColor, setTheme } = useTheme();
   // The current sway code in the editor.
   const [swayCode, setSwayCode] = useState<string>(loadSwayCode());
 
@@ -67,6 +66,9 @@ function App() {
   // The query parameters for the current URL.
   const [searchParams] = useSearchParams();
 
+  // The theme color for the app.
+  const { themeColor } = useTheme();
+
   // If showSolidity is toggled on, reset the compiled state.
   useEffect(() => {
     if (showSolidity) {
@@ -85,15 +87,6 @@ function App() {
       setToolchain(toolchainParam);
     }
   }, [searchParams, setShowSolidity, setToolchain]);
-
-  // Set theme based on the user system preferences.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, [setTheme]);
 
   const onSwayCodeChange = useCallback(
     (code: string) => {

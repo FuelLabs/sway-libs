@@ -14,17 +14,14 @@ function DryrunSwitch({ dryrun, onChange }: DryrunSwitchProps) {
   return (
     <FormControlLabel
       sx={{
-        color: themeColor("white3"),
         marginRight: "10px",
-        ".MuiSwitch-track": {
-          background: themeColor("gray1"),
-        },
       }}
       labelPlacement="start"
       label={
         <div
           style={{
             fontSize: "12px",
+            color: themeColor("gray1"),
           }}
         >
           {dryrun ? "DRY RUN" : "LIVE"}
