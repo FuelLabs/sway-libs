@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { darkColors } from "@fuel-ui/css";
-import StyledDivider from "../../../components/shared";
+import { Divider } from "@mui/material";
+import useTheme from "../../../context/theme";
 
 const RESULT_LINE_LIMIT = 500;
 
@@ -14,6 +14,8 @@ export function useLog(): [
   // The most recent results to add to the compilation output section.
   const [resultsToAdd, setResultsToAdd] = useState<React.ReactElement[]>();
   const resultsToAddRef = React.useRef<React.ReactElement[]>();
+
+  const { themeColor } = useTheme();
 
   const updateLog = useCallback(
     (entry?: string | React.ReactElement[]) => {
@@ -33,11 +35,11 @@ export function useLog(): [
       const newResults = [...results];
       if (newResults.length > 0) {
         newResults.push(
-          <StyledDivider
-            style={{ margin: "10px 0 10px", color: darkColors.gray6 }}
+          <Divider
+            style={{ margin: "10px 0 10px", color: themeColor("gray1") }}
           >
             {new Date().toLocaleString()}
-          </StyledDivider>,
+          </Divider>,
         );
       }
       newResults.push(...resultsToAdd);
@@ -47,7 +49,7 @@ export function useLog(): [
         setResults(newResults);
       }
     }
-  }, [results, resultsToAdd, resultsToAddRef, setResults]);
+  }, [results, resultsToAdd, resultsToAddRef, setResults, themeColor]);
 
   return [results, updateLog];
 }

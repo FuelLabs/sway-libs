@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { darkColors, lightColors } from "@fuel-ui/css";
 import { useFuelTheme } from "@fuel-ui/react";
+import createTheme from "@mui/material/styles/createTheme";
 
 interface ColorMapping {
   light: string;
@@ -86,20 +87,29 @@ const COLORS: Record<ColorName, ColorMapping> = {
   },
 };
 
+type Theme = "light" | "dark";
+
 export default function useTheme() {
   const { current: currentTheme, setTheme } = useFuelTheme();
+
   const themeColor = useCallback(
-    (name: ColorName) => COLORS[name][currentTheme as "light" | "dark"],
+    (name: ColorName) => COLORS[name][currentTheme as Theme],
     [currentTheme],
   );
   const editorTheme = useMemo(
     () => (currentTheme === "light" ? "chrome" : "tomorrow_night"),
     [currentTheme],
   );
+  const muiTheme = createTheme({
+    palette: {
+      mode: currentTheme as Theme,
+    },
+  });
   return {
     theme: currentTheme,
     editorTheme,
     setTheme,
     themeColor,
+    muiTheme,
   };
 }
