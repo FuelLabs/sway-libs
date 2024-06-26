@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import DryrunSwitch from "./DryrunSwitch";
 import { CallableParamValue } from "./FunctionParameters";
 import useTheme from "../../../context/theme";
+import { useContract } from "../hooks/useContract";
 
 interface FunctionToolbarProps {
   contractId: string;
@@ -22,10 +23,12 @@ function FunctionToolbar({
   updateLog,
 }: FunctionToolbarProps) {
   const [dryrun, setDryrun] = React.useState(true);
+  const { contract } = useContract(contractId);
+  const { themeColor } = useTheme();
 
   const title = parameters.length ? "Parameters" : "No Parameters";
 
-  const { themeColor } = useTheme();
+  const isReadOnly = !!contract?.functions[functionName].isReadOnly();
 
   return (
     <Toolbar style={{ padding: "0 2px 0", justifyContent: "space-between" }}>
@@ -38,7 +41,9 @@ function FunctionToolbar({
           flexDirection: "row",
         }}
       >
-        <DryrunSwitch dryrun={dryrun} onChange={() => setDryrun(!dryrun)} />
+        {!isReadOnly && (
+          <DryrunSwitch dryrun={dryrun} onChange={() => setDryrun(!dryrun)} />
+        )}
         <div style={{ float: "left" }}>
           <CallButton
             contractId={contractId}
