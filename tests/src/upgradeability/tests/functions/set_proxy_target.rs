@@ -1,9 +1,8 @@
 mod success {
 
-    use crate::upgradability::tests::utils::{
+    use crate::upgradeability::tests::utils::{
         abi_calls::{proxy_target, set_proxy_target},
         test_helpers::{setup, INITIAL_TARGET, SECOND_TARGET},
-        ProxyTargetSet,
     };
 
     #[tokio::test]

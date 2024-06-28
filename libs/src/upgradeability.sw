@@ -3,7 +3,7 @@ library;
 pub mod errors;
 pub mod events;
 
-use ::upgradability::{errors::SetProxyOwnerError, events::{ProxyOwnerSet, ProxyTargetSet}};
+use ::upgradeability::{errors::SetProxyOwnerError, events::{ProxyOwnerSet, ProxyTargetSet}};
 use std::{auth::msg_sender, storage::storage_api::{read, write}};
 use standards::{src14::SRC14_TARGET_STORAGE, src5::{AccessError, State}};
 
@@ -20,14 +20,14 @@ use standards::{src14::SRC14_TARGET_STORAGE, src5::{AccessError, State}};
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::proxy_target;
+/// use sway_libs::upgradeability::proxy_target;
 ///
 /// fn foo() {
 ///     let stored_proxy_target = proxy_target();
 /// }
 /// ```
 #[storage(read)]
-pub fn proxy_target() -> Option<ContractId> {
+pub fn _proxy_target() -> Option<ContractId> {
     let proxy_target_key = StorageKey::new(SRC14_TARGET_STORAGE, 0, SRC14_TARGET_STORAGE);
     proxy_target_key.read()
 }
@@ -45,7 +45,7 @@ pub fn proxy_target() -> Option<ContractId> {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::{proxy_target, set_proxy_target};
+/// use sway_libs::upgradeability::{proxy_target, set_proxy_target};
 ///
 /// fn foo() {
 ///     assert(proxy_target() == None);
@@ -57,7 +57,7 @@ pub fn proxy_target() -> Option<ContractId> {
 /// }
 /// ```
 #[storage(write)]
-pub fn set_proxy_target(new_target: ContractId) {
+pub fn _set_proxy_target(new_target: ContractId) {
     let proxy_target_key = StorageKey::new(SRC14_TARGET_STORAGE, 0, SRC14_TARGET_STORAGE);
     proxy_target_key.write(Some(new_target));
 
@@ -81,7 +81,7 @@ pub fn set_proxy_target(new_target: ContractId) {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::proxy_owner;
+/// use sway_libs::upgradeability::proxy_owner;
 ///
 /// storage {
 ///     proxy_owner: State = State::Uninitialized,
@@ -92,7 +92,7 @@ pub fn set_proxy_target(new_target: ContractId) {
 /// }
 /// ```
 #[storage(read)]
-pub fn proxy_owner(proxy_owner_storage_key: StorageKey<State>) -> State {
+pub fn _proxy_owner(proxy_owner_storage_key: StorageKey<State>) -> State {
     proxy_owner_storage_key.read()
 }
 
@@ -127,7 +127,7 @@ pub fn proxy_owner(proxy_owner_storage_key: StorageKey<State>) -> State {
 #[storage(read)]
 pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
     require(
-        proxy_owner(proxy_owner_storage_key) == State::Initialized(msg_sender().unwrap()),
+        _proxy_owner(proxy_owner_storage_key) == State::Initialized(msg_sender().unwrap()),
         AccessError::NotOwner,
     );
 }
@@ -155,7 +155,7 @@ pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::{proxy_owner, set_proxy_owner};
+/// use sway_libs::upgradeability::{proxy_owner, set_proxy_owner};
 ///
 /// storage {
 ///     proxy_owner: State = State::Uninitialized,
@@ -171,7 +171,7 @@ pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
 /// }
 /// ```
 #[storage(write)]
-pub fn set_proxy_owner(
+pub fn _set_proxy_owner(
     new_proxy_owner: State,
     proxy_owner_storage_key: StorageKey<State>,
 ) {

@@ -8,12 +8,12 @@ use fuels::{
 
 // Load abi from json
 abigen!(Contract(
-    name = "UpgradabilityLib",
-    abi = "src/upgradability/out/release/upgradability_test-abi.json"
+    name = "UpgradeabilityLib",
+    abi = "src/upgradeability/out/release/upgradeability_test-abi.json"
 ));
 
 pub struct Metadata {
-    pub contract: UpgradabilityLib<WalletUnlocked>,
+    pub contract: UpgradeabilityLib<WalletUnlocked>,
     pub wallet: WalletUnlocked,
 }
 
@@ -22,7 +22,7 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn set_proxy_target(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
         new_target: ContractId,
     ) -> FuelCallResponse<()> {
         contract
@@ -34,25 +34,25 @@ pub mod abi_calls {
     }
 
     pub async fn proxy_target(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
     ) -> FuelCallResponse<Option<ContractId>> {
         contract.methods().proxy_target().call().await.unwrap()
     }
 
     pub async fn proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
     ) -> FuelCallResponse<State> {
         contract.methods().proxy_owner().call().await.unwrap()
     }
 
     pub async fn only_proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
         contract.methods().only_proxy_owner().call().await.unwrap()
     }
 
     pub async fn set_proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
         new_proxy_owner: State,
     ) -> FuelCallResponse<()> {
         contract
@@ -64,7 +64,7 @@ pub mod abi_calls {
     }
 
     pub async fn initialize_proxy(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradeabilityLib<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
         contract.methods().initialize_proxy().call().await.unwrap()
     }
@@ -97,11 +97,11 @@ pub mod test_helpers {
 
         let storage_configuration = StorageConfiguration::default()
             .add_slot_overrides_from_file(
-                "src/upgradability/out/release/upgradability_test-storage_slots.json",
+                "src/upgradeability/out/release/upgradeability_test-storage_slots.json",
             )
             .unwrap();
 
-        let configurables = UpgradabilityLibConfigurables::default()
+        let configurables = UpgradeabilityLibConfigurables::default()
             .with_INITIAL_TARGET(Some(INITIAL_TARGET))
             .unwrap()
             .with_INITIAL_OWNER(State::Initialized(wallet2.address().into()))
@@ -112,7 +112,7 @@ pub mod test_helpers {
             .with_configurables(configurables);
 
         let id = Contract::load_from(
-            "src/upgradability/out/release/upgradability_test.bin",
+            "src/upgradeability/out/release/upgradeability_test.bin",
             configuration,
         )
         .unwrap()
@@ -121,17 +121,17 @@ pub mod test_helpers {
         .unwrap();
 
         let deploy_wallet = Metadata {
-            contract: UpgradabilityLib::new(id.clone(), wallet1.clone()),
+            contract: UpgradeabilityLib::new(id.clone(), wallet1.clone()),
             wallet: wallet1.clone(),
         };
 
         let owner1 = Metadata {
-            contract: UpgradabilityLib::new(id.clone(), wallet2.clone()),
+            contract: UpgradeabilityLib::new(id.clone(), wallet2.clone()),
             wallet: wallet2.clone(),
         };
 
         let owner2 = Metadata {
-            contract: UpgradabilityLib::new(id.clone(), wallet3.clone()),
+            contract: UpgradeabilityLib::new(id.clone(), wallet3.clone()),
             wallet: wallet3.clone(),
         };
 

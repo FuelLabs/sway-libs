@@ -64,9 +64,9 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 - [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations.
 
-## Upgradability Libraries
+## Upgradeability Libraries
 
-- [Upgradability](./upgradability/index.md) provides functions that can be used to implement contract upgrades via simple upgradable proxies.
+- [Upgradeability](https://docs.fuel.network/docs/sway-libs/upgradeability/) provides functions that can be used to implement contract upgrades via simple upgradeable proxies.
 
 ## Using a library
 

@@ -1,11 +1,11 @@
 contract;
 
-use ::sway_libs::upgradability::{
+use ::sway_libs::upgradeability::{
+    _proxy_owner,
+    _proxy_target,
+    _set_proxy_owner,
+    _set_proxy_target,
     only_proxy_owner,
-    proxy_owner,
-    proxy_target,
-    set_proxy_owner,
-    set_proxy_target,
 };
 use standards::{src14::{SRC14, SRC14Extension}, src5::State};
 
@@ -35,19 +35,19 @@ abi UpgradableTest {
 impl SRC14 for Contract {
     #[storage(read, write)]
     fn set_proxy_target(new_target: ContractId) {
-        set_proxy_target(new_target);
+        _set_proxy_target(new_target);
     }
 
     #[storage(read)]
     fn proxy_target() -> Option<ContractId> {
-        proxy_target()
+        _proxy_target()
     }
 }
 
 impl SRC14Extension for Contract {
     #[storage(read)]
     fn proxy_owner() -> State {
-        proxy_owner(storage.proxy_owner)
+        _proxy_owner(storage.proxy_owner)
     }
 }
 
@@ -59,7 +59,7 @@ impl UpgradableTest for Contract {
 
     #[storage(write)]
     fn set_proxy_owner(new_proxy_owner: State) {
-        set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+        _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
     }
 
     // Used to immediately set the storage variables as the configured constants

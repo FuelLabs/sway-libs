@@ -400,7 +400,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "upgradability_test"
+name = "upgradeability_test"
 source = "member"
 dependencies = [
     "standards git+https://github.com/FuelLabs/sway-standards?branch=master#9c85a02e5ba5a8c6f520727287e84b474895b743",

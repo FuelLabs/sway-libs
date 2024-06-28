@@ -1,12 +1,12 @@
 contract;
 
 // ANCHOR: import
-use sway_libs::upgradability::*;
+use sway_libs::upgradeability::*;
 use standards::{src14::*, src5::*};
 // ANCHOR_END: import
 
 // ANCHOR: integrate_with_src14
-use sway_libs::upgradability::{proxy_owner, proxy_target, set_proxy_target};
+use sway_libs::upgradeability::{_proxy_owner, _proxy_target, _set_proxy_target};
 use standards::{src14::{SRC14, SRC14Extension}, src5::State};
 
 #[namespace(SRC14)]
@@ -19,19 +19,19 @@ storage {
 impl SRC14 for Contract {
     #[storage(read, write)]
     fn set_proxy_target(new_target: ContractId) {
-        set_proxy_target(new_target);
+        _set_proxy_target(new_target);
     }
 
     #[storage(read)]
     fn proxy_target() -> Option<ContractId> {
-        proxy_target()
+        _proxy_target()
     }
 }
 
 impl SRC14Extension for Contract {
     #[storage(read)]
     fn proxy_owner() -> State {
-        proxy_owner(storage.proxy_owner)
+        _proxy_owner(storage.proxy_owner)
     }
 }
 // ANCHOR_END: integrate_with_src14
@@ -39,35 +39,35 @@ impl SRC14Extension for Contract {
 // ANCHOR: set_proxy_target
 #[storage(read, write)]
 fn set_proxy_target(new_target: ContractId) {
-    set_proxy_target(new_target);
+    _set_proxy_target(new_target);
 }
 // ANCHOR_END: set_proxy_target
 
 // ANCHOR: proxy_target
 #[storage(read)]
 fn proxy_target() -> Option<ContractId> {
-    proxy_target()
+    _proxy_target()
 }
 // ANCHOR_END: proxy_target
 
 // ANCHOR: set_proxy_owner
 #[storage(write)]
 fn set_proxy_owner(new_proxy_owner: State) {
-    set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+    _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
 }
 // ANCHOR_END: set_proxy_owner
 
 // ANCHOR: proxy_owner
 #[storage(read)]
 fn proxy_owner() -> State {
-    proxy_owner(storage.proxy_owner)
+    _proxy_owner(storage.proxy_owner)
 }
 // ANCHOR_END: proxy_owner
 
 // ANCHOR: only_proxy_owner
 #[storage(read)]
-    fn only_proxy_owner_may_call() {
-        only_proxy_owner(storage.proxy_owner);
-        // Only the proxy's owner may reach this line.
-    }
+fn only_proxy_owner_may_call() {
+    only_proxy_owner(storage.proxy_owner);
+    // Only the proxy's owner may reach this line.
+}
 // ANCHOR_END: only_proxy_owner
