@@ -571,7 +571,7 @@ impl Power for IFP128 {
 
 #[test]
 fn test_ord() {
-    let num  = IFP128::from_uint(42_u64);
+    let num = IFP128::from_uint(42_u64);
     let num2 = IFP128::min();
 
     assert(num > num2);
