@@ -571,9 +571,63 @@ impl Power for IFP64 {
 
 #[test]
 fn test_ord() {
+    let num = IFP64::min();
+    let num2 = IFP64::min();
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
+
+    let num = IFP64::min();
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(num < num2);
+    assert(num2 > num);
+
+    let num = IFP64::min();
+    let num2 = IFP64::max();
+
+    assert(num < num2);
+    assert(num2 > num);
+
     let num = IFP64::from_uint(42_u32);
     let num2 = IFP64::min();
 
     assert(num > num2);
     assert(num2 < num);
+
+    let num = IFP64::from_uint(42_u32);
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
+
+    let num = IFP64::from_uint(42_u32);
+    let num2 = IFP64::max();
+
+    assert(num < num2);
+    assert(num2 > num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::min();
+
+    assert(num > num2);
+    assert(num2 < num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(num > num2);
+    assert(num2 < num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::max();
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
 }
