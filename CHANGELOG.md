@@ -22,7 +22,7 @@ Description of the upcoming release here.
 ### Fixed
 
 - [#258](https://github.com/FuelLabs/sway-libs/pull/258) Fixes incorrect intructions on how to run tests in README and docs hub.
-- [#259](https://github.com/FuelLabs/sway-libs/pull/259) Fixes incorrect ordering comparison for IFP64, IFP128 and IFP256.
+- [#262](https://github.com/FuelLabs/sway-libs/pull/262) Fixes incorrect ordering comparison for IFP64, IFP128 and IFP256.
 
 #### Breaking
 
