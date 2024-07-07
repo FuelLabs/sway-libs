@@ -149,12 +149,12 @@ dependencies = [
 
 [[package]]
 name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?branch=master#9c85a02e5ba5a8c6f520727287e84b474895b743"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
 dependencies = ["std"]
 
 [[package]]
 name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.1#e2d5ac40a1d11a9e38e0a662d35141076515319f"
 dependencies = ["std"]
 
 [[package]]
@@ -183,7 +183,7 @@ dependencies = [
 name = "upgradability_examples"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?branch=master#9c85a02e5ba5a8c6f520727287e84b474895b743",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.1#e2d5ac40a1d11a9e38e0a662d35141076515319f",
     "std",
     "sway_libs",
 ]
