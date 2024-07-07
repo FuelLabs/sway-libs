@@ -20,10 +20,10 @@ use standards::{src14::SRC14_TARGET_STORAGE, src5::{AccessError, State}};
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::proxy_target;
+/// use sway_libs::upgradability::_proxy_target;
 ///
 /// fn foo() {
-///     let stored_proxy_target = proxy_target();
+///     let stored_proxy_target = _proxy_target();
 /// }
 /// ```
 #[storage(read)]
@@ -40,20 +40,20 @@ pub fn _proxy_target() -> Option<ContractId> {
 ///
 /// # Number of Storage Accesses
 ///
-/// * writes: `1`
+/// * Writes: `1`
 ///
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::{proxy_target, set_proxy_target};
+/// use sway_libs::upgradability::{_proxy_target, _set_proxy_target};
 ///
 /// fn foo() {
-///     assert(proxy_target() == None);
+///     assert(_proxy_target() == None);
 ///
 ///     let new_target = ContractId::zero();
-///     set_proxy_target(new_target);
+///     _set_proxy_target(new_target);
 ///
-///     assert(proxy_target() == Some(new_target));
+///     assert(_proxy_target() == Some(new_target));
 /// }
 /// ```
 #[storage(write)]
@@ -81,14 +81,14 @@ pub fn _set_proxy_target(new_target: ContractId) {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::proxy_owner;
+/// use sway_libs::upgradability::_proxy_owner;
 ///
 /// storage {
 ///     proxy_owner: State = State::Uninitialized,
 /// }
 ///
 /// fn foo() {
-///     let stored_proxy_owner = proxy_owner(storage.proxy_owner);
+///     let stored_proxy_owner = _proxy_owner(storage.proxy_owner);
 /// }
 /// ```
 #[storage(read)]
@@ -150,24 +150,24 @@ pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
 ///
 /// # Number of Storage Accesses
 ///
-/// * writes: `1`
+/// * Writes: `1`
 ///
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::upgradability::{proxy_owner, set_proxy_owner};
+/// use sway_libs::upgradability::{_proxy_owner, _set_proxy_owner};
 ///
 /// storage {
 ///     proxy_owner: State = State::Uninitialized,
 /// }
 ///
 /// fn foo(new_owner: Identity) {
-///     assert(proxy_owner(storage.proxy_owner) == State::Initialized(Identity::Address(Address::zero()));
+///     assert(_proxy_owner(storage.proxy_owner) == State::Initialized(Identity::Address(Address::zero()));
 ///
 ///     let new_proxy_owner = State::Initialized(new_owner);
-///     set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+///     _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
 ///
-///     assert(proxy_owner(storage.proxy_owner) == State::Initialized(new_owner));
+///     assert(_proxy_owner(storage.proxy_owner) == State::Initialized(new_owner));
 /// }
 /// ```
 #[storage(write)]
