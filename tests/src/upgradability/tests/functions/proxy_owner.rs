@@ -1,6 +1,6 @@
 mod success {
 
-    use crate::upgradeability::tests::utils::{
+    use crate::upgradability::tests::utils::{
         abi_calls::{proxy_owner, set_proxy_owner},
         test_helpers::setup,
         State,

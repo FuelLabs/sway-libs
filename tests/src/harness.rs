@@ -7,4 +7,4 @@ mod native_asset;
 mod ownership;
 mod reentrancy;
 mod signed_integers;
-mod upgradeability;
+mod upgradability;

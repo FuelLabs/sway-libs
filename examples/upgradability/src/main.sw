@@ -1,12 +1,12 @@
 contract;
 
 // ANCHOR: import
-use sway_libs::upgradeability::*;
+use sway_libs::upgradability::*;
 use standards::{src14::*, src5::*};
 // ANCHOR_END: import
 
 // ANCHOR: integrate_with_src14
-use sway_libs::upgradeability::{_proxy_owner, _proxy_target, _set_proxy_target};
+use sway_libs::upgradability::{_proxy_owner, _proxy_target, _set_proxy_target};
 use standards::{src14::{SRC14, SRC14Extension}, src5::State};
 
 #[namespace(SRC14)]

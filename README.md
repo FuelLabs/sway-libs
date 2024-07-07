@@ -64,9 +64,9 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 - [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations.
 
-## Upgradeability Libraries
+## Upgradability Libraries
 
-- [Upgradeability](https://docs.fuel.network/docs/sway-libs/upgradeability/) provides functions that can be used to implement contract upgrades via simple upgradeable proxies.
+- [Upgradability](https://docs.fuel.network/docs/sway-libs/upgradability/) provides functions that can be used to implement contract upgrades via simple upgradable proxies.
 
 ## Using a library
 
@@ -95,7 +95,7 @@ For more information about implementation please refer to the [Sway Libs Docs Hu
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what verison you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 

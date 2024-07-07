@@ -1,4 +1,4 @@
-use crate::upgradeability::tests::utils::{
+use crate::upgradability::tests::utils::{
     abi_calls::{only_proxy_owner, set_proxy_owner},
     test_helpers::setup,
     State,

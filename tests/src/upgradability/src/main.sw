@@ -1,6 +1,6 @@
 contract;
 
-use ::sway_libs::upgradeability::{
+use ::sway_libs::upgradability::{
     _proxy_owner,
     _proxy_target,
     _set_proxy_owner,

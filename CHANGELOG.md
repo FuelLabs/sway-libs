@@ -11,7 +11,7 @@ Description of the upcoming release here.
 
 ### Added
 
-- [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradeability library, including associated tests and documentation.
+- [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradability library, including associated tests and documentation.
 
 ### Changed
 
