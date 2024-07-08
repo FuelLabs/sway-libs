@@ -281,13 +281,11 @@ impl core::ops::Add for I256 {
         let mut res = Self::new();
         if (self.underlying > indent || self.underlying == indent) {
             res = Self::from_uint(self.underlying - indent + other.underlying) // subtract 1 << 31 to avoid double move
-        } else if self.underlying < indent
-            && other.underlying < indent
-        {
+        } else if self.underlying < indent && other.underlying < indent {
             res = Self::from_uint(self.underlying + other.underlying - indent);
         } else if self.underlying < indent
-                && (other.underlying > indent
-                    || other.underlying == indent)
+            && (other.underlying > indent
+            || other.underlying == indent)
         {
             res = Self::from_uint(other.underlying - indent + self.underlying);
         }
@@ -305,32 +303,16 @@ impl core::ops::Divide for I256 {
         let self_ge_indent = self.underlying > indent || self.underlying == indent;
         let divisor_gt_indent = divisor.underlying > indent;
         if self_ge_indent && divisor_gt_indent {
-            res = Self::from_uint(
-                (self.underlying - indent) / (divisor
-                        .underlying - indent) + indent,
-            );
-        } else if self.underlying < indent
-            && divisor.underlying < indent
-        {
-            res = Self::from_uint(
-                (indent - self.underlying) / (indent - divisor
-                        .underlying) +indent,
-            );
+            res = Self::from_uint((self.underlying - indent) / (divisor.underlying - indent) + indent);
+        } else if self.underlying < indent && divisor.underlying < indent {
+            res = Self::from_uint((indent - self.underlying) / (indent - divisor.underlying) + indent);
         } else if (self.underlying > indent
             || self.underlying == indent)
             && divisor.underlying < indent
         {
-            res = Self::from_uint(
-                indent - (self.underlying - indent) / (indent - divisor
-                        .underlying),
-            );
-        } else if self.underlying < indent
-            && divisor.underlying > indent
-        {
-            res = Self::from_uint(
-                indent - (indent - self.underlying) / (divisor
-                        .underlying - indent),
-            );
+            res = Self::from_uint(indent - (self.underlying - indent) / (indent - divisor.underlying));
+        } else if self.underlying < indent && divisor.underlying > indent {
+            res = Self::from_uint(indent - (indent - self.underlying) / (divisor.underlying - indent));
         }
         res
     }
@@ -342,33 +324,23 @@ impl core::ops::Multiply for I256 {
         let mut res = Self::new();
         let indent = Self::indent();
         if (self.underlying > indent
-                || self.underlying == indent)
-                && (other.underlying > indent
-                    || other.underlying == indent)
+            || self.underlying == indent)
+            && (other.underlying > indent
+            || other.underlying == indent)
         {
-            res = Self::from_uint(
-                (self.underlying - indent) * (other.underlying - indent) +indent,
-            );
-        } else if self.underlying < indent
-            && other.underlying < indent
-        {
-            res = Self::from_uint(
-                (indent - self.underlying) * (indent - other.underlying) + indent,
-            );
+            res = Self::from_uint((self.underlying - indent) * (other.underlying - indent) + indent);
+        } else if self.underlying < indent && other.underlying < indent {
+            res = Self::from_uint((indent - self.underlying) * (indent - other.underlying) + indent);
         } else if (self.underlying > indent
             || self.underlying == indent)
             && other.underlying < indent
         {
-            res = Self::from_uint(
-                indent - (self.underlying - indent) * (indent - other.underlying),
-            );
+            res = Self::from_uint(indent - (self.underlying - indent) * (indent - other.underlying));
         } else if self.underlying < indent
-                && (other.underlying > indent
-                    || other.underlying ==indent)
+            && (other.underlying > indent
+            || other.underlying == indent)
         {
-            res = Self::from_uint(
-                indent - (other.underlying - indent) * (indent - self.underlying),
-            );
+            res = Self::from_uint(indent - (other.underlying - indent) * (indent - self.underlying));
         }
         res
     }
@@ -381,9 +353,9 @@ impl core::ops::Subtract for I256 {
         let indent = Self::indent();
 
         if (self.underlying > indent
-                || self.underlying == indent)
-                && (other.underlying > indent
-                    || other.underlying == indent)
+            || self.underlying == indent)
+            && (other.underlying > indent
+            || other.underlying == indent)
         {
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + indent);
@@ -397,15 +369,13 @@ impl core::ops::Subtract for I256 {
         {
             res = Self::from_uint(self.underlying - indent + other.underlying);
         } else if self.underlying < indent
-                && (other.underlying > indent
-                    || other.underlying == indent)
+            && (other.underlying > indent
+            || other.underlying == indent)
         {
             res = Self::from_uint(self.underlying - (other.underlying - indent));
-        } else if self.underlying <indent
-            && other.underlying < indent
-        {
+        } else if self.underlying < indent && other.underlying < indent {
             if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying +indent);
+                res = Self::from_uint(other.underlying - self.underlying + indent);
             } else {
                 res = Self::from_uint(self.underlying + other.underlying - indent);
             }
