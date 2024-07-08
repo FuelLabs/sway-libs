@@ -11,8 +11,7 @@ Description of the upcoming release here.
 
 ### Added
 
-- Something new here 1
-- Something new here 2
+- [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradability library, including associated tests and documentation.
 
 ### Changed
 
@@ -21,7 +20,7 @@ Description of the upcoming release here.
 
 ### Fixed
 
-- [#258](https://github.com/FuelLabs/sway-libs/pull/258) Fixes incorrect intructions on how to run tests in README and docs hub.
+- [#258](https://github.com/FuelLabs/sway-libs/pull/258) Fixes incorrect instructions on how to run tests in README and docs hub.
 
 #### Breaking
 

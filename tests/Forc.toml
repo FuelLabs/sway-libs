@@ -50,4 +50,5 @@ members = [
   "./src/signed_integers/signed_i64_wrapping_neg",
   "./src/signed_integers/signed_i128_wrapping_neg",
   "./src/signed_integers/signed_i256_wrapping_neg",
+  "./src/upgradability",
 ]
