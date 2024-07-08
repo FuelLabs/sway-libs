@@ -208,3 +208,5 @@ Dequeuing
 StorageMetadata
 functionly
 verifiably
+upgradable
+upgradability

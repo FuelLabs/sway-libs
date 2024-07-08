@@ -65,3 +65,11 @@ Data Structure Libraries are libraries which provide complex data structures whi
 ### [Queue](./queue/index.md)
 
 The [Queue](./queue/index.md) Library is a linear data structure that provides First-In-First-Out (FIFO) operations.
+
+## Upgradability Libraries
+
+Upgradability Libraries are libraries which provide functions to implement contract upgrades.
+
+### [Upgradability](./upgradability/index.md)
+
+The [Upgradability](./upgradability/index.md) Library provides functions that can be used to implement contract upgrades via simple upgradable proxies.
