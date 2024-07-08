@@ -2,7 +2,7 @@
 authors = ["Fuel Labs <contact@fuel.sh>"]
 entry = "main.sw"
 license = "Apache-2.0"
-name = "i256_twos_complement_test"
+name = "i256_wrapping_neg_test"
 
 [dependencies]
 sway_libs = { path = "../../../../libs" }

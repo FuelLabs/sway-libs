@@ -1,7 +1,7 @@
 library;
 
 use std::u128::U128;
-use ::signed_integers::common::TwosComplement;
+use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
 /// The 128-bit signed integer type.
@@ -412,15 +412,11 @@ impl core::ops::Subtract for I128 {
     }
 }
 
-impl TwosComplement for I128 {
-    fn twos_complement(self) -> Self {
-        if self.underlying == Self::indent()
-            || self.underlying > Self::indent()
-        {
-            return self;
+impl WrappingNeg for I128 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let u_one = U128::from((0, 1));
-        let res = I128::from_uint(!self.underlying + u_one);
-        res
+        self * Self::neg_from(U128::from((0, 1)))
     }
 }
