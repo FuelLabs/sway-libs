@@ -1,6 +1,6 @@
 library;
 
-// Wrapping (modular) negation. Computes -self, wrapping around at the boundary of the type.
+/// Wrapping (modular) negation. Computes -self, wrapping around at the boundary of the type.
 pub trait WrappingNeg {
     /// Negates a signed number.
     ///
