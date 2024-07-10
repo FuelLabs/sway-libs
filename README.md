@@ -22,7 +22,7 @@
 
 ## Overview
 
-The purpose of this repository is to contain libraries which users can import and use that are not part of the standard library. 
+The purpose of this repository is to contain libraries which users can import and use that are not part of the standard library.
 
 These libraries contain helper functions and other tools valuable to blockchain development.
 
@@ -52,7 +52,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Cryptography
 
-- [Bytecode](https://docs.fuel.network/docs/sway-libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
+- [Bytecode](https://docs.fuel.network/docs/sway-libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates.
 - [Merkle Proof](https://docs.fuel.network/docs/sway-libs/merkle/) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
@@ -62,7 +62,11 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Data Structures
 
-- [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations.
+
+## Upgradability Libraries
+
+- [Upgradability](https://docs.fuel.network/docs/sway-libs/upgradability/) provides functions that can be used to implement contract upgrades via simple upgradable proxies.
 
 ## Using a library
 
@@ -72,7 +76,7 @@ To import a library, the following dependency should be added to the project's `
 sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
 ```
 
-> **NOTE:** 
+> **NOTE:**
 > Be sure to set the tag to the latest release.
 
 You may then import your desired library in your Sway Smart Contract as so:
@@ -91,7 +95,7 @@ For more information about implementation please refer to the [Sway Libs Docs Hu
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what verison you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
