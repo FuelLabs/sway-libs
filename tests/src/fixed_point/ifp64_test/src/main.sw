@@ -80,5 +80,66 @@ fn main() -> bool {
     res = value.round();
     assert(IFP64::from_uint(2u32) == res);
 
+    // Ord tests
+    let num = IFP64::min();
+    let num2 = IFP64::min();
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
+
+    let num = IFP64::min();
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(num < num2);
+    assert(num2 > num);
+
+    let num = IFP64::min();
+    let num2 = IFP64::max();
+
+    assert(num < num2);
+    assert(num2 > num);
+
+    let num = IFP64::from_uint(42_u32);
+    let num2 = IFP64::min();
+
+    assert(num > num2);
+    assert(num2 < num);
+
+    let num = IFP64::from_uint(42_u32);
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
+
+    let num = IFP64::from_uint(42_u32);
+    let num2 = IFP64::max();
+
+    assert(num < num2);
+    assert(num2 > num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::min();
+
+    assert(num > num2);
+    assert(num2 < num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::from_uint(42_u32);
+
+    assert(num > num2);
+    assert(num2 < num);
+
+    let num = IFP64::max();
+    let num2 = IFP64::max();
+
+    assert(!(num > num2));
+    assert(!(num < num2));
+    assert(!(num2 < num));
+    assert(!(num2 > num));
+
     true
 }
