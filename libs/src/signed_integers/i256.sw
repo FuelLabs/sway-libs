@@ -19,7 +19,7 @@ impl I256 {
     ///
     /// # Additional Information
     ///
-    /// The zero value for I256 is 0x0000000000000000000000000000001000000000000000000000000000000000u256.
+    /// The zero value for I256 is 0x8000000000000000000000000000000000000000000000000000000000000000u256.
     ///
     /// # Returns
     ///
@@ -32,14 +32,11 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let zero = I256::indent();
-    ///     assert(zero == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    ///     assert(zero == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn indent() -> u256 {
-        let parts = (0, 1, 0, 0);
-        asm(r1: parts) {
-            r1: u256
-        }
+        0x8000000000000000000000000000000000000000000000000000000000000000u256
     }
 }
 
@@ -173,9 +170,9 @@ impl I256 {
     /// use sway_libs::signed_integers::i256::I256;
     ///
     /// fn foo() {
-    ///     let underlying = 0x0000000000000000000000000000001000000000000000000000000000000000u256;
+    ///     let underlying = 0x0000000000000000000000000000000000000000000000000000000000000000u256;
     ///     let i256 = I256::neg_from(underlying);
-    ///     assert(i256.underlying() == 0x0000000000000000000000000000000000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn neg_from(value: u256) -> Self {
@@ -188,7 +185,7 @@ impl I256 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I256 is 0x0000000000000000000000000000001000000000000000000000000000000000u256.
+    /// The zero value of I256 is 0x8000000000000000000000000000000000000000000000000000000000000000u256.
     ///
     /// # Returns
     ///
@@ -201,7 +198,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::new();
-    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn new() -> Self {
@@ -223,7 +220,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::zero();
-    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn zero() -> Self {
@@ -265,7 +262,7 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let i256 = I256::zero();
-    ///     assert(i256.underlying() == 0x0000000000000000000000000000001000000000000000000000000000000000u256);
+    ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
     pub fn underlying(self) -> u256 {
@@ -322,25 +319,30 @@ impl core::ops::Multiply for I256 {
     /// Multiply a I256 with a I256. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
-        let indent = Self::indent();
-        if (self.underlying > indent
-            || self.underlying == indent)
-            && (other.underlying > indent
-            || other.underlying == indent)
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
-            res = Self::from_uint((self.underlying - indent) * (other.underlying - indent) + indent);
-        } else if self.underlying < indent && other.underlying < indent {
-            res = Self::from_uint((indent - self.underlying) * (indent - other.underlying) + indent);
-        } else if (self.underlying > indent
-            || self.underlying == indent)
-            && other.underlying < indent
+            res = Self::from_uint(
+                (self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent(),
+            );
+        } else if self.underlying < Self::indent()
+            && other.underlying < Self::indent()
         {
-            res = Self::from_uint(indent - (self.underlying - indent) * (indent - other.underlying));
-        } else if self.underlying < indent
-            && (other.underlying > indent
-            || other.underlying == indent)
+            res = Self::from_uint(
+                (Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent(),
+            );
+        } else if self.underlying >= Self::indent()
+            && other.underlying < Self::indent()
         {
-            res = Self::from_uint(indent - (other.underlying - indent) * (indent - self.underlying));
+            res = Self::from_uint(
+                Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying),
+            );
+        } else if self.underlying < Self::indent()
+            && other.underlying >= Self::indent()
+        {
+            res = Self::from_uint(
+                Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying),
+            );
         }
         res
     }

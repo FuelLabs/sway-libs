@@ -31,11 +31,11 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let zero = I128::indent();
-    ///     assert(zero == U128::from((1, 0)));
+    ///     assert(zero == (U128::max() / (U128::from(0, 2)) - U128::from(0,1));
     /// }
     /// ```
     pub fn indent() -> U128 {
-        U128::from((1, 0))
+        U128::from((9223372036854775808, 0))
     }
 }
 
@@ -189,7 +189,7 @@ impl I128 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I128 is U128::from((1, 0)).
+    /// The zero value of I128 is U128::from((9223372036854775808, 0)).
     ///
     /// # Returns
     ///
@@ -269,7 +269,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::zero();
-    ///     assert(i128.underlying() == U128::from((1, 0)));
+    ///     assert(i128.underlying() == U128::from((9223372036854775808, 0)));
     /// }
     /// ```
     pub fn underlying(self) -> U128 {
@@ -342,10 +342,8 @@ impl core::ops::Multiply for I128 {
     /// Multiply a I128 with a I128. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-                || self.underlying == Self::indent())
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 (self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent(),
@@ -356,16 +354,14 @@ impl core::ops::Multiply for I128 {
             res = Self::from_uint(
                 (Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent(),
             );
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
+        } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying),
             );
         } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying),
