@@ -79,7 +79,6 @@ mod success {
             Some(metadata2.clone())
         );
 
-
         let log = response
             .decode_logs_with_type::<SetMetadataEvent>()
             .unwrap();
@@ -194,7 +193,7 @@ mod success {
             metadata(&instance_1, asset_id_3, key.clone()).await,
             Some(metadata3.clone())
         );
-        
+
         let log = response
             .decode_logs_with_type::<SetMetadataEvent>()
             .unwrap();
@@ -218,8 +217,10 @@ mod success {
             defaults(id, owner_wallet.clone(), other_wallet.clone());
         let metadata1 = Metadata::String(String::from("Fuel NFT Metadata 1"));
         let metadata2 = Metadata::Int(1);
-        let metadata3 =
-            Metadata::Bytes(Bytes::from_hex_str("0101010101010101010101010101010101010101010101010101010101010101").expect("failed to convert to bytes"));
+        let metadata3 = Metadata::Bytes(
+            Bytes::from_hex_str("0101010101010101010101010101010101010101010101010101010101010101")
+                .expect("failed to convert to bytes"),
+        );
         let key1 = String::from("key1");
         let key2 = String::from("key2");
         let key3 = String::from("key3");

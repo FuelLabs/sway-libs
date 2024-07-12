@@ -183,7 +183,7 @@ pub fn _set_metadata(
         asset,
         sender: msg_sender().unwrap(),
         metadata,
-        key
+        key,
     });
     metadata_key.insert(asset, key, metadata);
 }
