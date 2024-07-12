@@ -56,6 +56,6 @@ fn main() -> bool {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
-    
+
     true
 }

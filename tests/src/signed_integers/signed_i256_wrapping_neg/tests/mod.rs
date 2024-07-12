@@ -2,7 +2,8 @@ use fuels::prelude::{abigen, launch_provider_and_get_wallet};
 
 abigen!(Script(
     name = "Testi256WrappingNeg",
-    abi = "src/signed_integers/signed_i256_wrapping_neg/out/release/i256_wrapping_neg_test-abi.json"
+    abi =
+        "src/signed_integers/signed_i256_wrapping_neg/out/release/i256_wrapping_neg_test-abi.json"
 ),);
 
 mod success {
