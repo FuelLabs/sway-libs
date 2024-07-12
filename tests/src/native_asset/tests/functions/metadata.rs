@@ -8,7 +8,6 @@ mod success {
 
     use super::*;
 
-    #[ignore]
     #[tokio::test]
     async fn gets_one_asset() {
         let (owner_wallet, other_wallet, id, instance_1, _instance_2) = setup().await;
@@ -26,7 +25,6 @@ mod success {
         );
     }
 
-    #[ignore]
     #[tokio::test]
     async fn gets_multiple_assets() {
         let (owner_wallet, other_wallet, id, instance_1, _instance_2) = setup().await;
@@ -60,7 +58,6 @@ mod success {
         );
     }
 
-    #[ignore]
     #[tokio::test]
     async fn gets_multiple_types() {
         let (owner_wallet, other_wallet, id, instance_1, _instance_2) = setup().await;
@@ -69,7 +66,7 @@ mod success {
         let metadata1 = Metadata::String(String::from("Fuel NFT Metadata 1"));
         let metadata2 = Metadata::Int(1);
         let metadata3 =
-            Metadata::Bytes(Bytes::from_hex_str("bytes").expect("failed to conver to bytes"));
+            Metadata::Bytes(Bytes::from_hex_str("0101010101010101010101010101010101010101010101010101010101010101").expect("failed to convert to bytes"));
         let key1 = String::from("key1");
         let key2 = String::from("key2");
         let key3 = String::from("key3");
