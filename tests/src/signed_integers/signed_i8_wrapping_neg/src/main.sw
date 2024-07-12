@@ -1,9 +1,8 @@
-library;
+script;
 
 use sway_libs::signed_integers::i8::I8;
 
-#[test]
-fn i8_wrapping_neg() {
+fn main() -> bool {
     let one = I8::from(1u8);
     let neg_one = I8::from(0u8) - I8::from(1u8);
 
@@ -56,4 +55,6 @@ fn i8_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+
+    true
 }

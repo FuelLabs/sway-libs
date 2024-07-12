@@ -1,9 +1,8 @@
-library;
+script;
 
 use sway_libs::signed_integers::i16::I16;
 
-#[test]
-fn i16_wrapping_neg() {
+fn main() -> bool {
     let one = I16::from(1u16);
     let neg_one = I16::from(0u16) - I16::from(1u16);
 
@@ -56,4 +55,6 @@ fn i16_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+    
+    true
 }

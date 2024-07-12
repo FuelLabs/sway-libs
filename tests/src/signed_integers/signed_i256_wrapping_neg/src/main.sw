@@ -1,9 +1,8 @@
-library;
+script;
 
 use sway_libs::signed_integers::i256::I256;
 
-#[test]
-fn i256_wrapping_neg() {
+fn main() -> bool {
     let parts_one = (0, 0, 0, 1);
     let parts_two = (0, 0, 0, 2);
     let parts_ten = (0, 0, 0, 10);
@@ -77,4 +76,6 @@ fn i256_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+
+    true
 }

@@ -1,9 +1,8 @@
-library;
+script;
 
 use sway_libs::signed_integers::i64::I64;
 
-#[test]
-fn i64_wrapping_neg() {
+fn main() -> bool {
     let one = I64::from(1u64);
     let neg_one = I64::from(0u64) - I64::from(1u64);
 
@@ -56,4 +55,6 @@ fn i64_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+
+    true
 }

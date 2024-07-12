@@ -1,9 +1,8 @@
-library;
+script;
 
 use sway_libs::signed_integers::i32::I32;
 
-#[test]
-fn i32_wrapping_neg() {
+fn main() -> bool {
     let one = I32::from(1u32);
     let neg_one = I32::from(0u32) - I32::from(1u32);
 
@@ -56,4 +55,6 @@ fn i32_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+    
+    true
 }

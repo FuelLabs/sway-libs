@@ -1,10 +1,9 @@
-library;
+script;
 
 use sway_libs::signed_integers::i128::I128;
 use std::u128::U128;
 
-#[test]
-fn i128_wrapping_neg() {
+fn main() -> bool {
     let one = I128::from(U128::from(1u64));
     let neg_one = I128::neg_from(U128::from(1u64));
 
@@ -57,4 +56,6 @@ fn i128_wrapping_neg() {
     assert(res11 == zero);
     assert(res12 == neg_min_plus_one);
     assert(res13 == min);
+    
+    true
 }
