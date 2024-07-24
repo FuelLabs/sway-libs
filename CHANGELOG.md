@@ -12,11 +12,11 @@ Description of the upcoming release here.
 ### Added
 
 - [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradability library, including associated tests and documentation.
+- [#265](https://github.com/FuelLabs/sway-libs/pull/265) Adds the `SetMetadataEvent` and emits `SetMetadataEvent` when the `_set_metadata()` function is called.
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
+- [#265](https://github.com/FuelLabs/sway-libs/pull/265) Enables the metadata events now that the Rust SDK supports wrapped heap types.
 
 ### Fixed
 
