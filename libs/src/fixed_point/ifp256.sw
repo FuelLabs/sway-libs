@@ -206,11 +206,11 @@ impl core::ops::Eq for IFP256 {
 
 impl core::ops::Ord for IFP256 {
     fn gt(self, other: Self) -> bool {
-        if self.non_negative && !self.non_negative {
+        if self.non_negative && !other.non_negative {
             true
-        } else if !self.non_negative && self.non_negative {
+        } else if !self.non_negative && other.non_negative {
             false
-        } else if self.non_negative && self.non_negative {
+        } else if self.non_negative && other.non_negative {
             self.underlying > other.underlying
         } else {
             self.underlying < other.underlying
@@ -218,11 +218,11 @@ impl core::ops::Ord for IFP256 {
     }
 
     fn lt(self, other: Self) -> bool {
-        if self.non_negative && !self.non_negative {
+        if self.non_negative && !other.non_negative {
             false
-        } else if !self.non_negative && self.non_negative {
+        } else if !self.non_negative && other.non_negative {
             true
-        } else if self.non_negative && self.non_negative {
+        } else if self.non_negative && other.non_negative {
             self.underlying < other.underlying
         } else {
             self.underlying > other.underlying
