@@ -354,7 +354,7 @@ impl core::ops::Subtract for I256 {
         let mut res = Self::new();
         if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
-                res = Self::from_uint(self.underlying - other.underlying + indent);
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
