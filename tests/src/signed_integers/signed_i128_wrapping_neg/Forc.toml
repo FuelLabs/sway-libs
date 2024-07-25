@@ -1,0 +1,8 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "main.sw"
+license = "Apache-2.0"
+name = "i128_wrapping_neg_test"
+
+[dependencies]
+sway_libs = { path = "../../../../libs" }
