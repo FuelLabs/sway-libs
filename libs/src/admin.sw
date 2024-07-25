@@ -36,8 +36,8 @@ use std::{auth::msg_sender, hash::{Hash, sha256}, storage::storage_api::clear,};
 pub fn add_admin(new_admin: Identity) {
     only_owner();
 
-    let is_admin = sha256(("admin", new_admin.bits()));
-    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
+    let key_digest = sha256(("admin", new_admin.bits()));
+    let admin_key = StorageKey::<Identity>::new(key_digest, 0, key_digest);
     admin_key.write(new_admin);
 }
 
@@ -70,8 +70,8 @@ pub fn add_admin(new_admin: Identity) {
 pub fn revoke_admin(old_admin: Identity) {
     only_owner();
 
-    let is_admin = sha256(("admin", old_admin.bits()));
-    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
+    let key_digest = sha256(("admin", old_admin.bits()));
+    let admin_key = StorageKey::<Identity>::new(key_digest, 0, key_digest);
     let _ = admin_key.clear();
 }
 
@@ -101,7 +101,7 @@ pub fn revoke_admin(old_admin: Identity) {
 #[storage(read)]
 pub fn is_admin(admin: Identity) -> bool {
     let key_digest = sha256(("admin", admin.bits()));
-    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
+    let admin_key = StorageKey::<Identity>::new(key_digest, 0, key_digest);
     match admin_key.try_read() {
         Some(identity) => {
             admin == identity
