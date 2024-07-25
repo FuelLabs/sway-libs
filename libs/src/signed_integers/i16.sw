@@ -62,6 +62,8 @@ impl core::ops::Ord for I16 {
     }
 }
 
+impl core::ops::OrdEq for I16 {}
+
 impl I16 {
     /// The size of this type in bits.
     ///
