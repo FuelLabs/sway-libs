@@ -1,7 +1,7 @@
 library;
 
 use ::signed_integers::errors::Error;
-use ::signed_integers::common::TwosComplement;
+use ::signed_integers::common::WrappingNeg;
 
 /// The 16-bit signed integer type.
 ///
@@ -383,12 +383,11 @@ impl core::ops::Subtract for I16 {
     }
 }
 
-impl TwosComplement for I16 {
-    fn twos_complement(self) -> Self {
-        if self.underlying >= Self::indent() {
-            return self;
+impl WrappingNeg for I16 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let res = Self::from_uint(!self.underlying + 1u16);
-        res
+        self * Self::neg_from(1u16)
     }
 }
