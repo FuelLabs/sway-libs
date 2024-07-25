@@ -1,12 +1,11 @@
 library;
 
-// TODO: Make this private when https://github.com/FuelLabs/sway/issues/5765 is resolved.
 pub mod errors;
 
 use ::admin::errors::AdminError;
 use ::ownership::{_owner, only_owner};
 use standards::src5::State;
-use std::{auth::msg_sender, storage::storage_api::clear,};
+use std::{auth::msg_sender, hash::{Hash, sha256}, storage::storage_api::clear,};
 
 // Sets a new administrator.
 ///
@@ -37,7 +36,8 @@ use std::{auth::msg_sender, storage::storage_api::clear,};
 pub fn add_admin(new_admin: Identity) {
     only_owner();
 
-    let admin_key = StorageKey::<Identity>::new(new_admin.bits(), 0, new_admin.bits());
+    let is_admin = sha256(("admin", new_admin.bits()));
+    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
     admin_key.write(new_admin);
 }
 
@@ -70,7 +70,8 @@ pub fn add_admin(new_admin: Identity) {
 pub fn revoke_admin(old_admin: Identity) {
     only_owner();
 
-    let admin_key = StorageKey::<Identity>::new(old_admin.bits(), 0, old_admin.bits());
+    let is_admin = sha256(("admin", old_admin.bits()));
+    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
     let _ = admin_key.clear();
 }
 
@@ -99,7 +100,8 @@ pub fn revoke_admin(old_admin: Identity) {
 /// ```
 #[storage(read)]
 pub fn is_admin(admin: Identity) -> bool {
-    let admin_key = StorageKey::<Identity>::new(admin.bits(), 0, admin.bits());
+    let key_digest = sha256(("admin", admin.bits()));
+    let admin_key = StorageKey::<Identity>::new(is_admin, 0, is_admin);
     match admin_key.try_read() {
         Some(identity) => {
             admin == identity
