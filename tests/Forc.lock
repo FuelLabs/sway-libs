@@ -22,7 +22,7 @@ dependencies = ["std"]
 
 [[package]]
 name = "core"
-source = "path+from-root-E19CE48B3E858B72"
+source = "path+from-root-2AB5BCE55EAAEFF4"
 
 [[package]]
 name = "i128_test"
@@ -276,14 +276,14 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.60.0#2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6"
+source = "git+https://github.com/fuellabs/sway?tag=v0.62.0#efda0397c7bee77de73bd726ec0b732d57614973"
 dependencies = ["core"]
 
 [[package]]
 name = "sway_libs"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.1#e2d5ac40a1d11a9e38e0a662d35141076515319f",
     "std",
 ]
 
