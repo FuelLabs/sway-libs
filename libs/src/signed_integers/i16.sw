@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -34,15 +35,6 @@ impl I16 {
     /// ```
     pub fn indent() -> u16 {
         32768u16
-    }
-}
-
-impl From<u16> for I16 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(value: u16) -> Self {
-        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
-        let underlying: u16 = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -399,5 +391,28 @@ impl WrappingNeg for I16 {
             return self::min()
         }
         self * Self::neg_from(1u16)
+    }
+}
+
+impl TryFrom<u16> for I16 {
+    fn try_from(value: u16) -> Option<Self> {
+        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
+        if value < u16::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I16> for u16 {
+    fn try_from(value: I16) -> Option<Self> {
+        if value >= I16::zero() {
+            Some(value.underlying - I16::indent())
+        } else {
+            None
+        }
     }
 }

@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -34,14 +35,6 @@ impl I8 {
     /// ```
     pub fn indent() -> u8 {
         128u8
-    }
-}
-
-impl From<u8> for I8 {
-    fn from(value: u8) -> Self {
-        // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7) 
-        let underlying: u8 = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -398,5 +391,28 @@ impl WrappingNeg for I8 {
             return self::min()
         }
         self * Self::neg_from(1u8)
+    }
+}
+
+impl TryFrom<u8> for I8 {
+    fn try_from(value: u8) -> Option<Self> {
+        // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7)
+        if value < u8::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I8> for u8 {
+    fn try_from(value: I8) -> Option<Self> {
+        if value >= I8::zero() {
+            Some(value.underlying - I8::indent())
+        } else {
+            None
+        }
     }
 }
