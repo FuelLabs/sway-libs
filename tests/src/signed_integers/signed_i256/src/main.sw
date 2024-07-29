@@ -102,6 +102,8 @@ fn main() -> bool {
     assert(neg_one_1 >= min_1);
 
     // Test neg try from
+    let indent = I256::indent();
+
     let neg_try_from_zero = I256::neg_try_from(u256::min());
     assert(neg_try_from_zero.is_some());
     assert(neg_try_from_zero.unwrap() == I256::zero());

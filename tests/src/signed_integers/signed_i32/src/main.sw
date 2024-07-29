@@ -56,6 +56,8 @@ fn main() -> bool {
     assert(neg_one_1 >= min_1);
 
     // Test neg try from
+    let indent = I32::indent();
+
     let neg_try_from_zero = I32::neg_try_from(u32::min());
     assert(neg_try_from_zero.is_some());
     assert(neg_try_from_zero.unwrap() == I32::zero());

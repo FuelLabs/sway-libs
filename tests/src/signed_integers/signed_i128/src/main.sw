@@ -68,6 +68,8 @@ fn main() -> bool {
     assert(neg_one_1 >= min_1);
 
     // Test neg try from
+    let indent = I128::indent();
+
     let neg_try_from_zero = I128::neg_try_from(U128::min());
     assert(neg_try_from_zero.is_some());
     assert(neg_try_from_zero.unwrap() == I128::zero());
