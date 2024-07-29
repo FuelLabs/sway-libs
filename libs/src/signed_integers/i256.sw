@@ -178,7 +178,7 @@ impl I256 {
     /// }
     /// ```
     pub fn neg_try_from(value: u256) -> Option<Self> {
-       if value <= Self::indent() {
+        if value <= Self::indent() {
             Some(Self {
                 underlying: Self::indent() - value,
             })
