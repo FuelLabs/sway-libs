@@ -26,6 +26,7 @@ Description of the upcoming release here.
 - [#262](https://github.com/FuelLabs/sway-libs/pull/262) Fixes incorrect ordering comparison for IFP64, IFP128 and IFP256.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I256`'s returned bits.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I128` and `I256`'s zero or "indent" value.
+- [#273](https://github.com/FuelLabs/sway-libs/pull/273) Fixes negative from implementations for Signed Integers.
 
 #### Breaking
 
@@ -43,4 +44,18 @@ After:
 ```sway
 let my_i8 = i8::zero();
 let wrapping_neg = my_i8.wrapping_neg();
+```
+
+- [#273](https://github.com/FuelLabs/sway-libs/pull/273) The `neg_from` implementation for all signed integers has been removed. The `neg_try_from()` implementation has been added in its place.
+
+The following demonstrates the breaking change. While this example code uses the `I8` type, the same logic may be applied to the `I16`, `I32`, `I64`, `I128`, and `I256` types.
+
+Before:
+```sway
+let my_negative_i8: I8 = I8::neg_from(1u8);
+```
+
+After:
+```sway
+let my_negative_i8: I8 = I8::neg_try_from(1u8).unwrap();
 ```
