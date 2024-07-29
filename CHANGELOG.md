@@ -46,4 +46,16 @@ let my_i8 = i8::zero();
 let wrapping_neg = my_i8.wrapping_neg();
 ```
 
-- [#272](https://github.com/FuelLabs/sway-libs/pull/272) 
+- [#272](https://github.com/FuelLabs/sway-libs/pull/272) The `From` implementation for all signed integers to their respective unsigned integer has been removed. The `TryFrom` implementation has been added in its place.
+
+The following demonstrates the breaking change. While this example code uses the `I8` type, the same logic may be applied to the `I16`, `I32`, `I64`, `I128`, and `I256` types.
+
+Before:
+```sway
+let my_i8: I8 = I8::from(1u8);
+```
+
+After:
+```sway
+let my_i8: I8 = I8::try_from(1u8).unwrap();
+```
