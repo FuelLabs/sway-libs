@@ -161,7 +161,7 @@ impl I64 {
     ///
     /// # Returns
     ///
-    /// * [I64] - The newly created `I64` struct.
+    /// * [Option<I64>] - The newly created `I64` struct.
     ///
     /// # Examples
     ///
@@ -170,13 +170,17 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let underlying = 1u64;
-    ///     let i64 = I64::neg_from(underlying);
+    ///     let i64 = I64::neg_try_from(underlying).unwrap();
     ///     assert(i64.underlying() == 9223372036854775807u64);
     /// }
     /// ```
-    pub fn neg_from(value: u64) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u64) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -398,6 +402,6 @@ impl WrappingNeg for I64 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1)
+        self * Self::neg_try_from(1).unwrap()
     }
 }

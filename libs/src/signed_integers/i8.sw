@@ -161,7 +161,7 @@ impl I8 {
     ///
     /// # Returns
     ///
-    /// * [I8] - The newly created `I8` struct.
+    /// * [Option<I8>] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
@@ -170,13 +170,17 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let underlying = 1u8;
-    ///     let i8 = I8::neg_from(underlying);
+    ///     let i8 = I8::neg_try_from(underlying);
     ///     assert(i8.underlying() == 127u8);
     /// }
     /// ```
-    pub fn neg_from(value: u8) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u8) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -397,6 +401,6 @@ impl WrappingNeg for I8 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1u8)
+        self * Self::neg_try_from(1u8).unwrap()
     }
 }
