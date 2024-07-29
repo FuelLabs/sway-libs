@@ -61,6 +61,8 @@ impl core::ops::Ord for I8 {
     }
 }
 
+impl core::ops::OrdEq for I8 {}
+
 impl I8 {
     /// The size of this type in bits.
     ///

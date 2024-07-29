@@ -61,6 +61,8 @@ impl core::ops::Ord for I32 {
     }
 }
 
+impl core::ops::OrdEq for I32 {}
+
 impl I32 {
     /// The size of this type in bits.
     ///

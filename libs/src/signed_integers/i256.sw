@@ -64,6 +64,8 @@ impl core::ops::Ord for I256 {
     }
 }
 
+impl core::ops::OrdEq for I256 {}
+
 impl I256 {
     /// The size of this type in bits.
     ///

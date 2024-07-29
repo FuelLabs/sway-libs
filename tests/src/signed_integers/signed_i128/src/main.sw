@@ -63,5 +63,38 @@ fn main() -> bool {
     let res6 = neg2 - neg1;
     assert(res6 == I128::neg_from(U128::from((0, 1))));
 
+    // OrqEq Tests
+    let one_1 = I128::from(U128::from((0, 1)));
+    let one_2 = I128::from(U128::from((0, 1)));
+    let neg_one_1 = I128::neg_from(U128::from((0, 1)));
+    let neg_one_2 = I128::neg_from(U128::from((0, 1)));
+    let max_1 = I128::max();
+    let max_2 = I128::max();
+    let min_1 = I128::min();
+    let min_2 = I128::min();
+
+    assert(one_1 >= one_2);
+    assert(one_1 <= one_2);
+    assert(neg_one_1 >= neg_one_2);
+    assert(neg_one_1 <= neg_one_2);
+    assert(max_1 >= max_1);
+    assert(max_1 <= max_1);
+    assert(min_1 >= min_1);
+    assert(min_1 <= min_1);
+
+    assert(min_1 <= one_1);
+    assert(min_1 <= neg_one_1);
+    assert(min_1 <= max_1);
+    assert(neg_one_1 <= max_1);
+    assert(neg_one_1 <= one_1);
+    assert(one_1 <= max_1);
+
+    assert(max_1 >= one_1);
+    assert(max_1 >= neg_one_1);
+    assert(max_1 >= min_1);
+    assert(one_1 >= neg_one_1);
+    assert(one_1 >= min_1);
+    assert(neg_one_1 >= min_1);
+
     true
 }
