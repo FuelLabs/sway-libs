@@ -3,25 +3,25 @@ script;
 use sway_libs::signed_integers::i32::I32;
 
 fn main() -> bool {
-    let one = I32::from(1u32);
-    let neg_one = I32::from(0u32) - I32::from(1u32);
+    let one = I32::try_from(1u32).unwrap();
+    let neg_one = I32::try_from(0u32).unwrap() - I32::try_from(1u32).unwrap();
 
-    let two = I32::from(2u32);
-    let neg_two = I32::from(0u32) - I32::from(2u32);
+    let two = I32::try_from(2u32).unwrap();
+    let neg_two = I32::try_from(0u32).unwrap() - I32::try_from(2u32).unwrap();
 
-    let ten = I32::from(10u32);
-    let neg_ten = I32::from(0u32) - I32::from(10u32);
+    let ten = I32::try_from(10u32).unwrap();
+    let neg_ten = I32::try_from(0u32).unwrap() - I32::try_from(10u32).unwrap();
 
-    let twenty_seven = I32::from(27u32);
-    let neg_twenty_seven = I32::from(0u32) - I32::from(27u32);
+    let twenty_seven = I32::try_from(27u32).unwrap();
+    let neg_twenty_seven = I32::try_from(0u32).unwrap() - I32::try_from(27u32).unwrap();
 
-    let ninty_three = I32::from(93u32);
-    let neg_ninty_three = I32::from(0u32) - I32::from(93u32);
+    let ninty_three = I32::try_from(93u32).unwrap();
+    let neg_ninty_three = I32::try_from(0u32).unwrap() - I32::try_from(93u32).unwrap();
 
-    let zero = I32::from(0u32);
+    let zero = I32::try_from(0u32).unwrap();
     let max = I32::max();
     let min = I32::min();
-    let neg_min_plus_one = I32::min() + I32::from(1u32);
+    let neg_min_plus_one = I32::min() + I32::try_from(1u32).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
