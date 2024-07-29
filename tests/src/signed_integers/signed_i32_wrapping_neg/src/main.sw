@@ -4,19 +4,19 @@ use sway_libs::signed_integers::i32::I32;
 
 fn main() -> bool {
     let one = I32::from(1u32);
-    let neg_one = I32::from(0u32) - I32::from(1u32);
+    let neg_one = I32::neg_try_from(1u32).unwrap();
 
     let two = I32::from(2u32);
-    let neg_two = I32::from(0u32) - I32::from(2u32);
+    let neg_two = I32::neg_try_from(2u32).unwrap();
 
     let ten = I32::from(10u32);
-    let neg_ten = I32::from(0u32) - I32::from(10u32);
+    let neg_ten = I32::neg_try_from(10u32).unwrap();
 
     let twenty_seven = I32::from(27u32);
-    let neg_twenty_seven = I32::from(0u32) - I32::from(27u32);
+    let neg_twenty_seven = I32::neg_try_from(27u32).unwrap();
 
     let ninty_three = I32::from(93u32);
-    let neg_ninty_three = I32::from(0u32) - I32::from(93u32);
+    let neg_ninty_three = I32::neg_try_from(93u32).unwrap();
 
     let zero = I32::from(0u32);
     let max = I32::max();

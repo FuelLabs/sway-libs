@@ -33,8 +33,8 @@ fn main() -> bool {
     assert(c == u64::max());
     assert(d == u64::max());
 
-    res = I256::from(u256_10) * I256::neg_from(u256_one);
-    assert(res == I256::neg_from(u256_10));
+    res = I256::from(u256_10) * I256::neg_try_from(u256_one).unwrap();
+    assert(res == I256::neg_try_from(u256_10).unwrap());
 
     res = I256::from(u256_10) * I256::from(u256_10);
     let parts_100 = (0, 0, 0, 100);
@@ -49,7 +49,7 @@ fn main() -> bool {
     };
 
     res = I256::from(u256_10) / I256::from(u256_lower_max_u64);
-    assert(res == I256::neg_from(u256_10));
+    assert(res == I256::neg_try_from(u256_10).unwrap());
 
     let parts_5 = (0, 0, 0, 5);
     let u256_5 = asm(r1: parts_5) {
@@ -71,8 +71,8 @@ fn main() -> bool {
     // OrqEq Tests
     let one_1 = I256::from(u256_one);
     let one_2 = I256::from(u256_one);
-    let neg_one_1 = I256::neg_from(u256_one);
-    let neg_one_2 = I256::neg_from(u256_one);
+    let neg_one_1 = I256::neg_try_from(u256_one).unwrap();
+    let neg_one_2 = I256::neg_try_from(u256_one).unwrap();
     let max_1 = I256::max();
     let max_2 = I256::max();
     let min_1 = I256::min();
@@ -100,5 +100,22 @@ fn main() -> bool {
     assert(one_1 >= neg_one_1);
     assert(one_1 >= min_1);
     assert(neg_one_1 >= min_1);
+
+    // Test neg try from
+    let neg_try_from_zero = I256::neg_try_from(u256::min());
+    assert(neg_try_from_zero.is_some());
+    assert(neg_try_from_zero.unwrap() == I256::zero());
+
+    let neg_try_from_one = I256::neg_try_from(u256_one);
+    assert(neg_try_from_one.is_some());
+    assert(neg_try_from_one.unwrap().underlying() == I256::indent() - u256_one);
+
+    let neg_try_from_max = I256::neg_try_from(indent);
+    assert(neg_try_from_max.is_some());
+    assert(neg_try_from_max.unwrap().underlying() == u256::min());
+
+    let neg_try_from_overflow = I256::neg_try_from(indent + u256_one);
+    assert(neg_try_from_overflow.is_none());
+
     true
 }

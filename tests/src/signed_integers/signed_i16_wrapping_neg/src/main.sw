@@ -4,19 +4,19 @@ use sway_libs::signed_integers::i16::I16;
 
 fn main() -> bool {
     let one = I16::from(1u16);
-    let neg_one = I16::from(0u16) - I16::from(1u16);
+    let neg_one = I16::neg_try_from(1u16).unwrap();
 
     let two = I16::from(2u16);
-    let neg_two = I16::from(0u16) - I16::from(2u16);
+    let neg_two = I16::neg_try_from(2u16).unwrap();
 
     let ten = I16::from(10u16);
-    let neg_ten = I16::from(0u16) - I16::from(10u16);
+    let neg_ten = I16::neg_try_from(10u16).unwrap();
 
     let twenty_seven = I16::from(27u16);
-    let neg_twenty_seven = I16::from(0u16) - I16::from(27u16);
+    let neg_twenty_seven = I16::neg_try_from(27u16).unwrap();
 
     let ninty_three = I16::from(93u16);
-    let neg_ninty_three = I16::from(0u16) - I16::from(93u16);
+    let neg_ninty_three = I16::neg_try_from(93u16).unwrap();
 
     let zero = I16::from(0u16);
     let max = I16::max();

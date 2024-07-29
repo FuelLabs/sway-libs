@@ -5,19 +5,19 @@ use std::u128::U128;
 
 fn main() -> bool {
     let one = I128::from(U128::from(1u64));
-    let neg_one = I128::neg_from(U128::from(1u64));
+    let neg_one = I128::neg_try_from(U128::from(1u64)).unwrap();
 
     let two = I128::from(U128::from(2u64));
-    let neg_two = I128::neg_from(U128::from(2u64));
+    let neg_two = I128::neg_try_from(U128::from(2u64)).unwrap();
 
     let ten = I128::from(U128::from(10u64));
-    let neg_ten = I128::neg_from(U128::from(10u64));
+    let neg_ten = I128::neg_try_from(U128::from(10u64)).unwrap();
 
     let twenty_seven = I128::from(U128::from(27u64));
-    let neg_twenty_seven = I128::neg_from(U128::from(27u64));
+    let neg_twenty_seven = I128::neg_try_from(U128::from(27u64)).unwrap();
 
     let ninty_three = I128::from(U128::from(93u64));
-    let neg_ninty_three = I128::neg_from(U128::from(93u64));
+    let neg_ninty_three = I128::neg_try_from(U128::from(93u64)).unwrap();
 
     let zero = I128::from(U128::zero());
     let max = I128::max();

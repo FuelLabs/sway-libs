@@ -4,19 +4,19 @@ use sway_libs::signed_integers::i64::I64;
 
 fn main() -> bool {
     let one = I64::from(1u64);
-    let neg_one = I64::from(0u64) - I64::from(1u64);
+    let neg_one = I64::neg_try_from(1u64).unwrap();
 
     let two = I64::from(2u64);
-    let neg_two = I64::from(0u64) - I64::from(2u64);
+    let neg_two = I64::neg_try_from(2u64).unwrap();
 
     let ten = I64::from(10u64);
-    let neg_ten = I64::from(0u64) - I64::from(10u64);
+    let neg_ten = I64::neg_try_from(10u64).unwrap();
 
     let twenty_seven = I64::from(27u64);
-    let neg_twenty_seven = I64::from(0u64) - I64::from(27u64);
+    let neg_twenty_seven = I64::neg_try_from(27u64).unwrap();
 
     let ninty_three = I64::from(93u64);
-    let neg_ninty_three = I64::from(0u64) - I64::from(93u64);
+    let neg_ninty_three = I64::neg_try_from(93u64).unwrap();
 
     let zero = I64::from(0u64);
     let max = I64::max();
