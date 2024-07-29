@@ -1,7 +1,7 @@
 library;
 
 use std::u128::U128;
-use ::signed_integers::common::TwosComplement;
+use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
 /// The 128-bit signed integer type.
@@ -31,11 +31,11 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let zero = I128::indent();
-    ///     assert(zero == U128::from((1, 0)));
+    ///     assert(zero == (U128::max() / (U128::from(0, 2)) - U128::from(0,1));
     /// }
     /// ```
     pub fn indent() -> U128 {
-        U128::from((1, 0))
+        U128::from((9223372036854775808, 0))
     }
 }
 
@@ -63,6 +63,8 @@ impl core::ops::Ord for I128 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I128 {}
 
 impl I128 {
     /// The size of this type in bits.
@@ -189,7 +191,7 @@ impl I128 {
     ///
     /// # Additional Information
     ///
-    /// The zero value of I128 is U128::from((1, 0)).
+    /// The zero value of I128 is U128::from((9223372036854775808, 0)).
     ///
     /// # Returns
     ///
@@ -269,7 +271,7 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let i128 = I128::zero();
-    ///     assert(i128.underlying() == U128::from((1, 0)));
+    ///     assert(i128.underlying() == U128::from((9223372036854775808, 0)));
     /// }
     /// ```
     pub fn underlying(self) -> U128 {
@@ -342,10 +344,8 @@ impl core::ops::Multiply for I128 {
     /// Multiply a I128 with a I128. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-                || self.underlying == Self::indent())
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+        if self.underlying >= Self::indent()
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 (self.underlying - Self::indent()) * (other.underlying - Self::indent()) + Self::indent(),
@@ -356,16 +356,14 @@ impl core::ops::Multiply for I128 {
             res = Self::from_uint(
                 (Self::indent() - self.underlying) * (Self::indent() - other.underlying) + Self::indent(),
             );
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
+        } else if self.underlying >= Self::indent()
             && other.underlying < Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (self.underlying - Self::indent()) * (Self::indent() - other.underlying),
             );
         } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
+            && other.underlying >= Self::indent()
         {
             res = Self::from_uint(
                 Self::indent() - (other.underlying - Self::indent()) * (Self::indent() - self.underlying),
@@ -412,15 +410,11 @@ impl core::ops::Subtract for I128 {
     }
 }
 
-impl TwosComplement for I128 {
-    fn twos_complement(self) -> Self {
-        if self.underlying == Self::indent()
-            || self.underlying > Self::indent()
-        {
-            return self;
+impl WrappingNeg for I128 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let u_one = U128::from((0, 1));
-        let res = I128::from_uint(!self.underlying + u_one);
-        res
+        self * Self::neg_from(U128::from((0, 1)))
     }
 }

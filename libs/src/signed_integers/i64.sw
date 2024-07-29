@@ -1,6 +1,6 @@
 library;
 
-use ::signed_integers::common::TwosComplement;
+use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
 /// The 64-bit signed integer type.
@@ -60,6 +60,8 @@ impl core::ops::Ord for I64 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I64 {}
 
 impl I64 {
     /// The size of this type in bits.
@@ -391,12 +393,11 @@ impl core::ops::Divide for I64 {
     }
 }
 
-impl TwosComplement for I64 {
-    fn twos_complement(self) -> Self {
-        if self.underlying >= Self::indent() {
-            return self;
+impl WrappingNeg for I64 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let res = Self::from_uint(!self.underlying + 1);
-        res
+        self * Self::neg_from(1)
     }
 }

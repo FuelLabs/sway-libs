@@ -1,6 +1,6 @@
 library;
 
-use ::signed_integers::common::TwosComplement;
+use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
 /// The 32-bit signed integer type.
@@ -60,6 +60,8 @@ impl core::ops::Ord for I32 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I32 {}
 
 impl I32 {
     /// The size of this type in bits.
@@ -390,12 +392,11 @@ impl core::ops::Divide for I32 {
     }
 }
 
-impl TwosComplement for I32 {
-    fn twos_complement(self) -> Self {
-        if self.underlying >= Self::indent() {
-            return self;
+impl WrappingNeg for I32 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let res = Self::from_uint(!self.underlying + 1u32);
-        res
+        self * Self::neg_from(1u32)
     }
 }
