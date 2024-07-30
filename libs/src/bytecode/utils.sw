@@ -145,6 +145,8 @@ pub fn _swap_configurables(
     while configurable_iterator < configurables.len() {
         let (offset, data) = configurables.get(configurable_iterator).unwrap();
 
+        assert(offset + data.len() <= bytecode.len());
+
         // Overwrite the configurable data into the bytecode
         data
             .ptr()

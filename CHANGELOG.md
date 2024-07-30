@@ -26,6 +26,7 @@ Description of the upcoming release here.
 - [#262](https://github.com/FuelLabs/sway-libs/pull/262) Fixes incorrect ordering comparison for IFP64, IFP128 and IFP256.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I256`'s returned bits.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I128` and `I256`'s zero or "indent" value.
+- [#271](https://github.com/FuelLabs/sway-libs/pull/271) Fixes the `swap_configurables()` function to correctly handle the case where the bytecode is too large to fit in the buffer.
 
 #### Breaking
 
