@@ -149,7 +149,7 @@ mod failure {
         let file_bytecode = simple_contract_bytecode();
 
         // Build the configurable changes
-        let my_configurables = build_simple_configurables(file_bytecode.len(), config_value);
+        let my_configurables = build_simple_configurables(file_bytecode.len() as u64, config_value);
 
         // Call the contract to swap the configurables
         let result_bytecode = swap_configurables(
