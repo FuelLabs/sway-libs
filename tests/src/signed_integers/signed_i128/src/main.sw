@@ -142,7 +142,7 @@ fn main() -> bool {
 
     // Test into U128
     let zero = I128::zero();
-    let negative = I128::neg_from(U128::from((0, 1)));
+    let negative = I128::neg_try_from(U128::from((0, 1))).unwrap();
     let max = I128::max();
 
     let U128_max_try_from: Option<U128> = U128::try_from(max);

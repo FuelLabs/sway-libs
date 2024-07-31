@@ -129,7 +129,7 @@ fn main() -> bool {
 
     // Test into u8
     let zero = I8::zero();
-    let negative = I8::neg_from(1);
+    let negative = I8::neg_try_from(1).unwrap();
     let max = I8::max();
 
     let u8_max_try_from: Option<u8> = u8::try_from(max);

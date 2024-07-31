@@ -130,7 +130,7 @@ fn main() -> bool {
 
     // Test into u16
     let zero = I16::zero();
-    let negative = I16::neg_from(1);
+    let negative = I16::neg_try_from(1).unwrap();
     let max = I16::max();
 
     let u16_max_try_from: Option<u16> = u16::try_from(max);

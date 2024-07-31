@@ -129,7 +129,7 @@ fn main() -> bool {
 
     // Test into u64
     let zero = I64::zero();
-    let negative = I64::neg_from(1);
+    let negative = I64::neg_try_from(1).unwrap();
     let max = I64::max();
 
     let u64_max_try_from: Option<u64> = u64::try_from(max);

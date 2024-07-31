@@ -130,7 +130,7 @@ fn main() -> bool {
 
     // Test into u32
     let zero = I32::zero();
-    let negative = I32::neg_from(1);
+    let negative = I32::neg_try_from(1).unwrap();
     let max = I32::max();
 
     let u32_max_try_from: Option<u32> = u32::try_from(max);

@@ -175,7 +175,7 @@ fn main() -> bool {
 
     // Test into u256
     let zero = I256::zero();
-    let negative = I256::neg_from(u256_one);
+    let negative = I256::neg_try_from(u256_one).unwrap();
     let max = I256::max();
 
     let u256_max_try_from: Option<u256> = u256::try_from(max);
