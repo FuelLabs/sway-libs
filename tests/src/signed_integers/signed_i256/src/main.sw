@@ -69,6 +69,34 @@ fn main() -> bool {
     res = i256_10 / i256_5;
     assert(res == i256_2);
 
+    // Subtraction tests
+    let pos1 = I256::from(u256_one);
+    let pos2 = I256::from(u256_two);
+    let neg1 = I256::neg_from(u256_one);
+    let neg2 = I256::neg_from(u256_two);
+
+    // Both positive:
+    let res1 = pos1 - pos2;
+    assert(res1 == I256::neg_from(u256_one));
+
+    let res2 = pos2 - pos1;
+    assert(res2 == I256::from(u256_one));
+
+    // First positive
+    let res3 = pos1 - neg1;
+    assert(res3 == I256::from(u256_two));
+
+    // Second positive
+    let res4 = neg1 - pos1;
+    assert(res4 == I256::neg_from(u256_two));
+
+    // Both negative
+    let res5 = neg1 - neg2;
+    assert(res5 == I256::from(u256_one));
+
+    let res6 = neg2 - neg1;
+    assert(res6 == I256::neg_from(u256_one));
+
     // OrqEq Tests
     let one_1 = I256::try_from(u256_one).unwrap();
     let one_2 = I256::try_from(u256_one).unwrap();

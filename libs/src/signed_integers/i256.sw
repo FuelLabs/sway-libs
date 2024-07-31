@@ -347,34 +347,21 @@ impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        let indent = Self::indent();
-
-        if (self.underlying > indent
-            || self.underlying == indent)
-            && (other.underlying > indent
-            || other.underlying == indent)
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
-                res = Self::from_uint(self.underlying - other.underlying + indent);
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                let q = other.underlying - indent;
-                res = Self::from_uint(self.underlying - q);
+                res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if (self.underlying > indent
-            || self.underlying == indent)
-            && other.underlying < indent
-        {
-            res = Self::from_uint(self.underlying - indent + other.underlying);
-        } else if self.underlying < indent
-            && (other.underlying > indent
-            || other.underlying == indent)
-        {
-            res = Self::from_uint(self.underlying - (other.underlying - indent));
-        } else if self.underlying < indent && other.underlying < indent {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + indent);
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
+            res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - indent);
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
