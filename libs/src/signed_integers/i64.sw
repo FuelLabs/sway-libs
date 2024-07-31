@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -34,14 +35,6 @@ impl I64 {
     /// ```
     pub fn indent() -> u64 {
         9223372036854775808u64
-    }
-}
-
-impl From<u64> for I64 {
-    fn from(value: u64) -> Self {
-        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
-        let underlying = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -395,5 +388,28 @@ impl WrappingNeg for I64 {
             return self::min()
         }
         self * Self::neg_try_from(1).unwrap()
+    }
+}
+
+impl TryFrom<u64> for I64 {
+    fn try_from(value: u64) -> Option<Self> {
+        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
+        if value < u64::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I64> for u64 {
+    fn try_from(value: I64) -> Option<Self> {
+        if value >= I64::zero() {
+            Some(value.underlying - I64::indent())
+        } else {
+            None
+        }
     }
 }

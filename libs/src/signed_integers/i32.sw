@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -34,14 +35,6 @@ impl I32 {
     /// ```
     pub fn indent() -> u32 {
         2147483648u32
-    }
-}
-
-impl From<u32> for I32 {
-    fn from(value: u32) -> Self {
-        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
-        let underlying = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -394,5 +387,28 @@ impl WrappingNeg for I32 {
             return self::min()
         }
         self * Self::neg_try_from(1u32).unwrap()
+    }
+}
+
+impl TryFrom<u32> for I32 {
+    fn try_from(value: u32) -> Option<Self> {
+        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
+        if value < u32::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I32> for u32 {
+    fn try_from(value: I32) -> Option<Self> {
+        if value >= I32::zero() {
+            Some(value.underlying - I32::indent())
+        } else {
+            None
+        }
     }
 }

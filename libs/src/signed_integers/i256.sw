@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -37,14 +38,6 @@ impl I256 {
     /// ```
     pub fn indent() -> u256 {
         0x8000000000000000000000000000000000000000000000000000000000000000u256
-    }
-}
-
-impl From<u256> for I256 {
-    fn from(value: u256) -> Self {
-        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
-        let underlying = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -385,5 +378,28 @@ impl WrappingNeg for I256 {
             return self::min()
         }
         self * Self::neg_try_from(0x0000000000000000000000000000000000000000000000000000000000000001u256).unwrap()
+    }
+}
+
+impl TryFrom<u256> for I256 {
+    fn try_from(value: u256) -> Option<Self> {
+        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
+        if value < u256::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I256> for u256 {
+    fn try_from(value: I256) -> Option<Self> {
+        if value >= I256::zero() {
+            Some(value.underlying - I256::indent())
+        } else {
+            None
+        }
     }
 }

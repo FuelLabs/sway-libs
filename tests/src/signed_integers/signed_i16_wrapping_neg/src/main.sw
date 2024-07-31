@@ -3,25 +3,25 @@ script;
 use sway_libs::signed_integers::i16::I16;
 
 fn main() -> bool {
-    let one = I16::from(1u16);
+    let one = I16::try_from(1u16).unwrap();
     let neg_one = I16::neg_try_from(1u16).unwrap();
 
-    let two = I16::from(2u16);
+    let two = I16::try_from(2u16).unwrap();
     let neg_two = I16::neg_try_from(2u16).unwrap();
 
-    let ten = I16::from(10u16);
+    let ten = I16::try_from(10u16).unwrap();
     let neg_ten = I16::neg_try_from(10u16).unwrap();
 
-    let twenty_seven = I16::from(27u16);
+    let twenty_seven = I16::try_from(27u16).unwrap();
     let neg_twenty_seven = I16::neg_try_from(27u16).unwrap();
 
-    let ninty_three = I16::from(93u16);
+    let ninty_three = I16::try_from(93u16).unwrap();
     let neg_ninty_three = I16::neg_try_from(93u16).unwrap();
 
-    let zero = I16::from(0u16);
+    let zero = I16::try_from(0u16).unwrap();
     let max = I16::max();
     let min = I16::min();
-    let neg_min_plus_one = I16::min() + I16::from(1u16);
+    let neg_min_plus_one = I16::min() + I16::try_from(1u16).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
