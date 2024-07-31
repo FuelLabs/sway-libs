@@ -14,6 +14,7 @@ Description of the upcoming release here.
 - [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradability library, including associated tests and documentation.
 - [#265](https://github.com/FuelLabs/sway-libs/pull/265) Adds the `SetMetadataEvent` and emits `SetMetadataEvent` when the `_set_metadata()` function is called.
 - [#270](https://github.com/FuelLabs/sway-libs/pull/270) Adds `OrdEq` functionality to Signed Integers.
+- [#272](https://github.com/FuelLabs/sway-libs/pull/272) Adds the `TryFrom` implementation from signed integers to unsigned integers.
 
 ### Changed
 
@@ -27,7 +28,7 @@ Description of the upcoming release here.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I256`'s returned bits.
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Fixes `I128` and `I256`'s zero or "indent" value.
 - [#268](https://github.com/FuelLabs/sway-libs/pull/268) Fixes subtraction involving negative numbers for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
-
+- [#272](https://github.com/FuelLabs/sway-libs/pull/272) Fixes `From` implementations for Signed Integers with `TryFrom`.
 
 #### Breaking
 
@@ -45,4 +46,18 @@ After:
 ```sway
 let my_i8 = i8::zero();
 let wrapping_neg = my_i8.wrapping_neg();
+```
+
+- [#272](https://github.com/FuelLabs/sway-libs/pull/272) The `From` implementation for all signed integers to their respective unsigned integer has been removed. The `TryFrom` implementation has been added in its place.
+
+The following demonstrates the breaking change. While this example code uses the `I8` type, the same logic may be applied to the `I16`, `I32`, `I64`, `I128`, and `I256` types.
+
+Before:
+```sway
+let my_i8: I8 = I8::from(1u8);
+```
+
+After:
+```sway
+let my_i8: I8 = I8::try_from(1u8).unwrap();
 ```
