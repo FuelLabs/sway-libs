@@ -64,3 +64,20 @@ mod success {
         assert_eq!(result_bytecode_root, predicate_bytecode_root);
     }
 }
+
+mod revert {
+
+    use super::*;
+
+    #[tokio::test]
+    #[should_panic]
+    async fn when_bytecode_is_empty() {
+        let (test_contract_instance, _wallet) = test_contract_instance().await;
+
+        let empty_bytecode: Vec<u8> = Vec::new();
+
+        // Call the contract and compute the bytecode root
+        let result_bytecode_root =
+            compute_bytecode_root(&test_contract_instance, empty_bytecode).await;
+    }
+}

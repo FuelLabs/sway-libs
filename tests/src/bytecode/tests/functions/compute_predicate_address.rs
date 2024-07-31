@@ -25,3 +25,20 @@ mod success {
         assert_eq!(result_address, predicate_instance.address().into());
     }
 }
+
+mod revert {
+
+    use super::*;
+
+    #[tokio::test]
+    #[should_panic]
+    async fn when_bytecode_is_empty() {
+        let (test_contract_instance, _wallet) = test_contract_instance().await;
+
+        let empty_bytecode: Vec<u8> = Vec::new();
+
+        // Call the contract and compute the address
+        let result_address =
+            compute_predicate_address(&test_contract_instance, empty_bytecode).await;
+    }
+}
