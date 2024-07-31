@@ -115,7 +115,7 @@ mod revert {
         let my_configurables: Vec<(u64, Vec<u8>)> = Vec::new();
 
         // Call the contract and compute the bytecode root
-        let result_bytecode_root = compute_bytecode_root_with_configurables(
+        let _result_bytecode_root = compute_bytecode_root_with_configurables(
             &test_contract_instance,
             empty_bytecode,
             my_configurables,

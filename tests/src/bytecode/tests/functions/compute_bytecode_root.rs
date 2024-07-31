@@ -77,7 +77,7 @@ mod revert {
         let empty_bytecode: Vec<u8> = Vec::new();
 
         // Call the contract and compute the bytecode root
-        let result_bytecode_root =
+        let _result_bytecode_root =
             compute_bytecode_root(&test_contract_instance, empty_bytecode).await;
     }
 }

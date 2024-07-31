@@ -51,7 +51,7 @@ mod revert {
         let my_configurables: Vec<(u64, Vec<u8>)> = Vec::new();
 
         // Call the contract and compute the address
-        let result_address = compute_predicate_address_with_configurables(
+        let _result_address = compute_predicate_address_with_configurables(
             &test_contract_instance,
             empty_bytecode,
             my_configurables,

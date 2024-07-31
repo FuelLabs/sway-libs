@@ -38,7 +38,7 @@ mod revert {
         let empty_bytecode: Vec<u8> = Vec::new();
 
         // Call the contract and compute the address
-        let result_address =
+        let _result_address =
             compute_predicate_address(&test_contract_instance, empty_bytecode).await;
     }
 }

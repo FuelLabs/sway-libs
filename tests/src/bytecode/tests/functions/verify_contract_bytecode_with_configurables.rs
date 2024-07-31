@@ -112,17 +112,14 @@ mod revert {
     #[tokio::test]
     #[should_panic]
     async fn when_bytecode_is_empty() {
-        let (test_contract_instance, _wallet) = test_contract_instance().await;
+        let (test_contract_instance, wallet) = test_contract_instance().await;
 
         let empty_bytecode: Vec<u8> = Vec::new();
         let my_configurables: Vec<(u64, Vec<u8>)> = Vec::new();
 
         // Deploy the new simple contract with the bytecode that contains the changes
-        let (simple_contract_instance, id) = deploy_simple_contract_with_configurables_from_file(
-            wallet.clone(),
-            (config_value as u64) + 1,
-        )
-        .await;
+        let (simple_contract_instance, id) =
+            deploy_simple_contract_with_configurables_from_file(wallet.clone(), 0).await;
 
         // Call the contract and compute the bytecode root
         verify_simple_contract_bytecode_with_configurables(
