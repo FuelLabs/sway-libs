@@ -70,8 +70,8 @@ fn main() -> bool {
     assert(res == i256_2);
 
     // Subtraction tests
-    let pos1 = I256::from(u256_one);
-    let pos2 = I256::from(u256_two);
+    let pos1 = I256::try_from(u256_one).unwrap();
+    let pos2 = I256::try_from(u256_two).unwrap();
     let neg1 = I256::neg_from(u256_one);
     let neg2 = I256::neg_from(u256_two);
 
@@ -80,11 +80,11 @@ fn main() -> bool {
     assert(res1 == I256::neg_from(u256_one));
 
     let res2 = pos2 - pos1;
-    assert(res2 == I256::from(u256_one));
+    assert(res2 == I256::try_from(u256_one).unwrap());
 
     // First positive
     let res3 = pos1 - neg1;
-    assert(res3 == I256::from(u256_two));
+    assert(res3 == I256::try_from(u256_two).unwrap());
 
     // Second positive
     let res4 = neg1 - pos1;
@@ -92,7 +92,7 @@ fn main() -> bool {
 
     // Both negative
     let res5 = neg1 - neg2;
-    assert(res5 == I256::from(u256_one));
+    assert(res5 == I256::try_from(u256_one).unwrap());
 
     let res6 = neg2 - neg1;
     assert(res6 == I256::neg_from(u256_one));

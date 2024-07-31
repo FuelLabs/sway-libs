@@ -36,8 +36,8 @@ fn main() -> bool {
     assert(res == I128::try_from(u128_2).unwrap());
 
     // Subtraction tests
-    let pos1 = I128::from(U128::from((0, 1)));
-    let pos2 = I128::from(U128::from((0, 2)));
+    let pos1 = I128::try_from(U128::from((0, 1))).unwrap();
+    let pos2 = I128::try_from(U128::from((0, 2))).unwrap();
     let neg1 = I128::neg_from(U128::from((0, 1)));
     let neg2 = I128::neg_from(U128::from((0, 2)));
 
@@ -47,11 +47,11 @@ fn main() -> bool {
     assert(res1 == I128::neg_from(U128::from((0, 1))));
 
     let res2 = pos2 - pos1;
-    assert(res2 == I128::from(U128::from((0, 1))));
+    assert(res2 == I128::try_from(U128::from((0, 1))).unwrap());
 
     // First positive
     let res3 = pos1 - neg1;
-    assert(res3 == I128::from(U128::from((0, 2))));
+    assert(res3 == I128::try_from(U128::from((0, 2))).unwrap());
 
     // Second positive
     let res4 = neg1 - pos1;
@@ -59,7 +59,7 @@ fn main() -> bool {
 
     // Both negative
     let res5 = neg1 - neg2;
-    assert(res5 == I128::from(U128::from((0, 1))));
+    assert(res5 == I128::try_from(U128::from((0, 1))).unwrap());
 
     let res6 = neg2 - neg1;
     assert(res6 == I128::neg_from(U128::from((0, 1))));

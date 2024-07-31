@@ -24,8 +24,8 @@ fn main() -> bool {
     assert(res == I16::try_from(2u16).unwrap());
 
     // Subtraction tests
-    let pos1 = I16::from(1);
-    let pos2 = I16::from(2);
+    let pos1 = I16::try_from(1).unwrap();
+    let pos2 = I16::try_from(2).unwrap();
     let neg1 = I16::neg_from(1);
     let neg2 = I16::neg_from(2);
 
@@ -35,11 +35,11 @@ fn main() -> bool {
     assert(res1 == I16::neg_from(1));
 
     let res2 = pos2 - pos1;
-    assert(res2 == I16::from(1));
+    assert(res2 == I16::try_from(1).unwrap());
 
     // First positive
     let res3 = pos1 - neg1;
-    assert(res3 == I16::from(2));
+    assert(res3 == I16::try_from(2).unwrap());
 
     // Second positive
     let res4 = neg1 - pos1;
@@ -47,7 +47,7 @@ fn main() -> bool {
 
     // Both negative
     let res5 = neg1 - neg2;
-    assert(res5 == I16::from(1));
+    assert(res5 == I16::try_from(1).unwrap());
 
     let res6 = neg2 - neg1;
     assert(res6 == I16::neg_from(1));
