@@ -5,9 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - yyyy-mm-dd
-
-Description of the upcoming release here.
+## [v0.23.0]
 
 ### Added
 
@@ -20,6 +18,7 @@ Description of the upcoming release here.
 
 - [#265](https://github.com/FuelLabs/sway-libs/pull/265) Enables the metadata events now that the Rust SDK supports wrapped heap types.
 - [#269](https://github.com/FuelLabs/sway-libs/pull/269) Hashes the string "admin" and with the bits of an Identity when creating a storage slot to storage an admin in the Admin Library.
+- [#276](https://github.com/FuelLabs/sway-libs/pull/276) Prepares for v0.23.0 release.
 - [#278](https://github.com/FuelLabs/sway-libs/pull/278) Deprecates the Fixed Point number library.
 
 ### Fixed
