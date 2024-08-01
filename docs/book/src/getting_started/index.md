@@ -5,7 +5,7 @@
 To import any library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```sway
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.0" }
 ```
 
 For reference, here is a complete `Forc.toml` file:
@@ -18,7 +18,7 @@ license = "Apache-2.0"
 name = "MyProject"
 
 [dependencies]
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.0" }
 ```
 
 > **NOTE:** Be sure to set the tag to the latest release.
@@ -68,6 +68,6 @@ impl Pausable for Contract {
 }
 ```
 
-Any instructions related to using a specific library should be found within the [libraries](../libraries.md) section of the Sway Libs Book.
+Any instructions related to using a specific library should be found within the [libraries](../index.md) section of the Sway Libs Book.
 
 For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).

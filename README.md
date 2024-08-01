@@ -22,18 +22,18 @@
 
 ## Overview
 
-The purpose of this repository is to contain libraries which users can import and use that are not part of the standard library. 
+The purpose of this repository is to contain libraries which users can import and use that are not part of the standard library.
 
 These libraries contain helper functions and other tools valuable to blockchain development.
 
 > **NOTE:**
 > Sway is a language under heavy development therefore the libraries may not be the most ergonomic. Over time they should receive updates / improvements in order to demonstrate how Sway can be used in real use cases.
 
-## Sway Libs Book
+## Sway Libs Docs Hub
 
-Please refer to the [Sway Libs Book](https://fuellabs.github.io/sway-libs/book/index.html) for documentation for a general overview on Sway Libs and how to implement libraries.
+Please refer to the [Sway Libs Docs Hub](https://docs.fuel.network/docs/sway-libs/) for documentation for a general overview on Sway Libs and how to implement libraries.
 
-## Sway Docs
+## Library Docs
 
 For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).
 
@@ -41,38 +41,44 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Assets
 
-- [Native Asset](https://fuellabs.github.io/sway-libs/book/asset/index.html) provides helper functions for the [SRC-20](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-20.md), [SRC-3](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-3.md), and [SRC-7](https://github.com/FuelLabs/sway-standards/blob/master/SRCs/src-7.md) standards.
+- [Native Asset](https://docs.fuel.network/docs/sway-libs/asset/) provides helper functions for the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/), [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/), and [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standards.
 
 #### Access Control and Security
 
-- [Ownership](https://fuellabs.github.io/sway-libs/book/ownership/index.html) is used to apply restrictions on functions such that only a **single** user may call them.
-- [Admin](https://fuellabs.github.io/sway-libs/book/admin/index.html) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
-- [Pausable](https://fuellabs.github.io/sway-libs/book/pausable/index.html) allows contracts to implement an emergency stop mechanism.
-- [Reentrancy](https://fuellabs.github.io/sway-libs/book/reentrancy/index.html) is used to detect and prevent reentrancy attacks.
+- [Ownership](https://docs.fuel.network/docs/sway-libs/ownership/) is used to apply restrictions on functions such that only a **single** user may call them.
+- [Admin](https://docs.fuel.network/docs/sway-libs/admin/) is used to apply restrictions on functions such that only a select few users may call them like a whitelist.
+- [Pausable](https://docs.fuel.network/docs/sway-libs/pausable/) allows contracts to implement an emergency stop mechanism.
+- [Reentrancy](https://docs.fuel.network/docs/sway-libs/reentrancy/) is used to detect and prevent reentrancy attacks.
 
 #### Cryptography
 
-- [Bytecode](https://fuellabs.github.io/sway-libs/book/bytecode/index.html) is used for on-chain verification and computation of bytecode roots for contracts and predicates. 
-- [Merkle Proof](https://fuellabs.github.io/sway-libs/book/merkle/index.html) is used to verify Binary Merkle Trees computed off-chain.
+- [Bytecode](https://docs.fuel.network/docs/sway-libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates.
+- [Merkle Proof](https://docs.fuel.network/docs/sway-libs/merkle/) is used to verify Binary Merkle Trees computed off-chain.
 
 #### Math
 
-- [Fixed Point Number](https://fuellabs.github.io/sway-libs/book/fixed_point/index.html) is an interface to implement fixed-point numbers.
-- [Signed Integers](https://fuellabs.github.io/sway-libs/book/signed_integers/index.html) is an interface to implement signed integers.
+- [Signed Integers](https://docs.fuel.network/docs/sway-libs/queue/) is an interface to implement signed integers.
+
+> **NOTE:**
+> The Fixed Point Number library has been deprecated pending a re-write.
 
 #### Data Structures
 
-- [Queue](https://fuellabs.github.io/sway-libs/book/queue/index.html) is a linear data structure that provides First-In-First-Out (FIFO) operations. 
+- [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations.
+
+## Upgradability Libraries
+
+- [Upgradability](https://docs.fuel.network/docs/sway-libs/upgradability/) provides functions that can be used to implement contract upgrades via simple upgradable proxies.
 
 ## Using a library
 
 To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.0" }
 ```
 
-> **NOTE:** 
+> **NOTE:**
 > Be sure to set the tag to the latest release.
 
 You may then import your desired library in your Sway Smart Contract as so:
@@ -87,26 +93,24 @@ For example, to import the `only_owner()` function use the following statement:
 use sway_libs::ownership::only_owner;
 ```
 
-For more information about implementation please refer to the [Sway Libs Book](https://fuellabs.github.io/sway-libs/book/index.html)
+For more information about implementation please refer to the [Sway Libs Docs Hub](https://docs.fuel.network/docs/sway-libs/)
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what version you are using by running the `fuelup show` command.
 
-In order to run the inline tests, make sure you are in the `libs/` folder of this repository `sway-libs/libs/<you are here>`.
+Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
-Run the tests:
+Run the inline tests:
 
 ```bash
-forc test
+forc test --path libs --release --locked
 ```
 
-Once these tests have passed, make sure you are in the `tests/` folder of this repository `sway-libs/tests/<you are here>`.
-
-Run the tests:
+Once these tests have passed, run the sdk-harness tests:
 
 ```bash
-forc test && cargo test
+forc test --path tests --release --locked && cargo test --manifest-path tests/Cargo.toml
 ```
 
 > **NOTE:**
@@ -115,8 +119,8 @@ forc test && cargo test
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core 0.26.0`.
+> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core v0.26.0`.
 
 ## Contributing
 
-Check out the [book](https://fuellabs.github.io/sway-libs/contributing-book/index.html) for more info!
+Check out the [contributing book](https://fuellabs.github.io/sway-libs/contributing-book/index.html) for more info!

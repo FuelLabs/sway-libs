@@ -89,6 +89,7 @@ fn _generate_leaves(bytecode: raw_slice) -> raw_slice {
 
 /// Takes some bytecode and computes the bytecode root.
 pub fn _compute_bytecode_root(bytecode: raw_slice) -> b256 {
+    assert(bytecode.number_of_bytes() != 0);
     let mut vec_digest = _generate_leaves(bytecode);
     let vec_digest_len = vec_digest.len::<b256>();
     let mut size = (vec_digest_len + 1) >> 1;
@@ -144,6 +145,9 @@ pub fn _swap_configurables(
     let mut configurable_iterator = 0;
     while configurable_iterator < configurables.len() {
         let (offset, data) = configurables.get(configurable_iterator).unwrap();
+
+        // Make sure the configurable data doesnt overflow the bytecode
+        assert(offset + data.len() <= bytecode.len::<u8>());
 
         // Overwrite the configurable data into the bytecode
         data

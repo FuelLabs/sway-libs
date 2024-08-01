@@ -1,6 +1,7 @@
 library;
 
-use ::signed_integers::common::TwosComplement;
+use std::convert::TryFrom;
+use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
 /// The 32-bit signed integer type.
@@ -37,14 +38,6 @@ impl I32 {
     }
 }
 
-impl From<u32> for I32 {
-    fn from(value: u32) -> Self {
-        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
-        let underlying = value + Self::indent();
-        Self { underlying }
-    }
-}
-
 impl core::ops::Eq for I32 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
@@ -60,6 +53,8 @@ impl core::ops::Ord for I32 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I32 {}
 
 impl I32 {
     /// The size of this type in bits.
@@ -159,7 +154,7 @@ impl I32 {
     ///
     /// # Returns
     ///
-    /// * [I32] - The newly created `I32` struct.
+    /// * [Option<I32>] - The newly created `I32` struct.
     ///
     /// # Examples
     ///
@@ -168,13 +163,17 @@ impl I32 {
     ///
     /// fn foo() {
     ///     let underlying = 1u32;
-    ///     let i32 = I32::neg_from(underlying);
+    ///     let i32 = I32::neg_try_from(underlying).unwrap();
     ///     assert(i32.underlying() == 2147483647u32)
     /// }
     /// ```
-    pub fn neg_from(value: u32) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u32) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -290,29 +289,21 @@ impl core::ops::Subtract for I32 {
     /// Subtract a I32 from a I32. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if self.underlying >= Self::indent()
-            && other.underlying < Self::indent()
-        {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent()
-            && other.underlying < Self::indent()
-        {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -390,12 +381,34 @@ impl core::ops::Divide for I32 {
     }
 }
 
-impl TwosComplement for I32 {
-    fn twos_complement(self) -> Self {
-        if self.underlying >= Self::indent() {
-            return self;
+impl WrappingNeg for I32 {
+    fn wrapping_neg(self) -> Self {
+        if self == self::min() {
+            return self::min()
         }
-        let res = Self::from_uint(!self.underlying + 1u32);
-        res
+        self * Self::neg_try_from(1u32).unwrap()
+    }
+}
+
+impl TryFrom<u32> for I32 {
+    fn try_from(value: u32) -> Option<Self> {
+        // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
+        if value < u32::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I32> for u32 {
+    fn try_from(value: I32) -> Option<Self> {
+        if value >= I32::zero() {
+            Some(value.underlying - I32::indent())
+        } else {
+            None
+        }
     }
 }

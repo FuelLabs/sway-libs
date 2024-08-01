@@ -4,7 +4,6 @@
 
 - [Getting Started](./getting_started/index.md)
   - [Running Tests](./getting_started/running_tests.md)
-- [Libraries Overview](./libraries.md)
 - [Asset Library](./asset/index.md)
   - [Base](./asset/base.md)
   - [Supply](./asset/supply.md)
@@ -15,6 +14,6 @@
 - [Reentrancy Guard Library](./reentrancy/index.md)
 - [Bytecode Library](./bytecode/index.md)
 - [Merkle Library](./merkle/index.md)
-- [Fixed Point Number Library](./fixed_point/index.md)
 - [Signed Integers Library](./signed_integers/index.md)
 - [Queue Library](./queue/index.md)
+- [Upgradability](./upgradability/index.md)
