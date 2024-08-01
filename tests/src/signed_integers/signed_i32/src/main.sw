@@ -12,13 +12,13 @@ fn main() -> bool {
     assert(res == I32::try_from(2147483647u32).unwrap());
 
     res = I32::try_from(10u32).unwrap() * I32::try_from(1u32).unwrap();
-    assert(res == I32::neg_from(10u32));
+    assert(res == I32::neg_try_from(10u32).unwrap());
 
     res = I32::try_from(10u32).unwrap() * I32::try_from(10u32).unwrap();
     assert(res == I32::try_from(100u32).unwrap());
 
-    res = I32::try_from(10u32).unwrap() / I32::neg_from(1u32);
-    assert(res == I32::neg_from(10u32));
+    res = I32::try_from(10u32).unwrap() / I32::neg_try_from(1u32).unwrap();
+    assert(res == I32::neg_try_from(10u32).unwrap());
 
     res = I32::try_from(10u32).unwrap() / I32::try_from(5u32).unwrap();
     assert(res == I32::try_from(2u32).unwrap());
@@ -26,13 +26,13 @@ fn main() -> bool {
     // Subtraction Tests
     let pos1 = I32::try_from(1).unwrap();
     let pos2 = I32::try_from(2).unwrap();
-    let neg1 = I32::neg_from(1);
-    let neg2 = I32::neg_from(2);
+    let neg1 = I32::neg_try_from(1).unwrap();
+    let neg2 = I32::neg_try_from(2).unwrap();
 
     // Both positive:
     let res1 = pos1 - pos2;
     let res1_2 = pos2 - pos1;
-    assert(res1 == I32::neg_from(1));
+    assert(res1 == I32::neg_try_from(1).unwrap());
 
     let res2 = pos2 - pos1;
     assert(res2 == I32::try_from(1).unwrap());
@@ -43,20 +43,20 @@ fn main() -> bool {
 
     // Second positive
     let res4 = neg1 - pos1;
-    assert(res4 == I32::neg_from(2));
+    assert(res4 == I32::neg_try_from(2).unwrap());
 
     // Both negative
     let res5 = neg1 - neg2;
     assert(res5 == I32::try_from(1).unwrap());
 
     let res6 = neg2 - neg1;
-    assert(res6 == I32::neg_from(1));
+    assert(res6 == I32::neg_try_from(1).unwrap());
 
     // OrqEq Tests
     let one_1 = I32::try_from(1u32).unwrap();
     let one_2 = I32::try_from(1u32).unwrap();
-    let neg_one_1 = I32::neg_from(1u32);
-    let neg_one_2 = I32::neg_from(1u32);
+    let neg_one_1 = I32::neg_try_from(1u32).unwrap();
+    let neg_one_2 = I32::neg_try_from(1u32).unwrap();
     let max_1 = I32::max();
     let max_2 = I32::max();
     let min_1 = I32::min();
@@ -85,6 +85,24 @@ fn main() -> bool {
     assert(one_1 >= min_1);
     assert(neg_one_1 >= min_1);
 
+    // Test neg try from
+    let indent = I32::indent();
+
+    let neg_try_from_zero = I32::neg_try_from(u32::min());
+    assert(neg_try_from_zero.is_some());
+    assert(neg_try_from_zero.unwrap() == I32::zero());
+
+    let neg_try_from_one = I32::neg_try_from(1u32);
+    assert(neg_try_from_one.is_some());
+    assert(neg_try_from_one.unwrap().underlying() == I32::indent() - 1u32);
+
+    let neg_try_from_max = I32::neg_try_from(indent);
+    assert(neg_try_from_max.is_some());
+    assert(neg_try_from_max.unwrap().underlying() == u32::min());
+
+    let neg_try_from_overflow = I32::neg_try_from(indent + 1u32);
+    assert(neg_try_from_overflow.is_none());
+
     // Test into I32
     let indent: u32 = I32::indent();
 
@@ -112,7 +130,7 @@ fn main() -> bool {
 
     // Test into u32
     let zero = I32::zero();
-    let negative = I32::neg_from(1);
+    let negative = I32::neg_try_from(1).unwrap();
     let max = I32::max();
 
     let u32_max_try_from: Option<u32> = u32::try_from(max);

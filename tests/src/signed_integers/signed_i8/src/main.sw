@@ -26,12 +26,12 @@ fn main() -> bool {
     // Subtraction Tests
     let pos1 = I8::try_from(1).unwrap();
     let pos2 = I8::try_from(2).unwrap();
-    let neg1 = I8::neg_from(1);
-    let neg2 = I8::neg_from(2);
+    let neg1 = I8::neg_try_from(1).unwrap();
+    let neg2 = I8::neg_try_from(2).unwrap();
 
     // Both positive:
     let res1 = pos1 - pos2;
-    assert(res1 == I8::neg_from(1));
+    assert(res1 == I8::neg_try_from(1).unwrap());
 
     let res2 = pos2 - pos1;
     assert(res2 == I8::try_from(1).unwrap());
@@ -42,20 +42,20 @@ fn main() -> bool {
 
     // Second positive
     let res4 = neg1 - pos1;
-    assert(res4 == I8::neg_from(2));
+    assert(res4 == I8::neg_try_from(2).unwrap());
 
     // Both negative
     let res5 = neg1 - neg2;
     assert(res5 == I8::try_from(1).unwrap());
 
     let res6 = neg2 - neg1;
-    assert(res6 == I8::neg_from(1));
+    assert(res6 == I8::neg_try_from(1).unwrap());
 
     // OrqEq Tests
     let one_1 = I8::try_from(1u8).unwrap();
     let one_2 = I8::try_from(1u8).unwrap();
-    let neg_one_1 = I8::neg_from(1u8);
-    let neg_one_2 = I8::neg_from(1u8);
+    let neg_one_1 = I8::neg_try_from(1u8).unwrap();
+    let neg_one_2 = I8::neg_try_from(1u8).unwrap();
     let max_1 = I8::max();
     let max_2 = I8::max();
     let min_1 = I8::min();
@@ -84,6 +84,24 @@ fn main() -> bool {
     assert(one_1 >= min_1);
     assert(neg_one_1 >= min_1);
 
+    // Test neg try from
+    let indent = I8::indent();
+
+    let neg_try_from_zero = I8::neg_try_from(u8::min());
+    assert(neg_try_from_zero.is_some());
+    assert(neg_try_from_zero.unwrap() == I8::zero());
+
+    let neg_try_from_one = I8::neg_try_from(1u8);
+    assert(neg_try_from_one.is_some());
+    assert(neg_try_from_one.unwrap().underlying() == I8::indent() - 1u8);
+
+    let neg_try_from_max = I8::neg_try_from(indent);
+    assert(neg_try_from_max.is_some());
+    assert(neg_try_from_max.unwrap().underlying() == u8::min());
+
+    let neg_try_from_overflow = I8::neg_try_from(indent + 1u8);
+    assert(neg_try_from_overflow.is_none());
+
     // Test into I8
     let indent: u8 = I8::indent();
 
@@ -111,7 +129,7 @@ fn main() -> bool {
 
     // Test into u8
     let zero = I8::zero();
-    let negative = I8::neg_from(1);
+    let negative = I8::neg_try_from(1).unwrap();
     let max = I8::max();
 
     let u8_max_try_from: Option<u8> = u8::try_from(max);
