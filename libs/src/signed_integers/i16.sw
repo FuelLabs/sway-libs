@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -34,15 +35,6 @@ impl I16 {
     /// ```
     pub fn indent() -> u16 {
         32768u16
-    }
-}
-
-impl From<u16> for I16 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(value: u16) -> Self {
-        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
-        let underlying: u16 = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -162,7 +154,7 @@ impl I16 {
     ///
     /// # Returns
     ///
-    /// * [I16] - The newly created `I16` struct.
+    /// * [Option<I16>] - The newly created `I16` struct.
     ///
     /// # Examples
     ///
@@ -171,13 +163,17 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let underlying = 1u16;
-    ///     let i16 = I16::neg_from(underlying);
+    ///     let i16 = I16::neg_try_from(underlying).unwrap();
     ///     assert(i16.underlying() == 32767u16)
     /// }
     /// ```
-    pub fn neg_from(value: u16) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u16) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -364,29 +360,21 @@ impl core::ops::Subtract for I16 {
     /// Subtract a I16 from a I16. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if self.underlying >= Self::indent()
-            && other.underlying < Self::indent()
-        {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent()
-            && other.underlying < Self::indent()
-        {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -398,6 +386,29 @@ impl WrappingNeg for I16 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1u16)
+        self * Self::neg_try_from(1u16).unwrap()
+    }
+}
+
+impl TryFrom<u16> for I16 {
+    fn try_from(value: u16) -> Option<Self> {
+        // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
+        if value < u16::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I16> for u16 {
+    fn try_from(value: I16) -> Option<Self> {
+        if value >= I16::zero() {
+            Some(value.underlying - I16::indent())
+        } else {
+            None
+        }
     }
 }

@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -37,14 +38,6 @@ impl I256 {
     /// ```
     pub fn indent() -> u256 {
         0x8000000000000000000000000000000000000000000000000000000000000000u256
-    }
-}
-
-impl From<u256> for I256 {
-    fn from(value: u256) -> Self {
-        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
-        let underlying = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -164,7 +157,7 @@ impl I256 {
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [Option<I256>] - The newly created `I256` struct.
     ///
     /// # Examples
     ///
@@ -173,13 +166,17 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let underlying = 0x0000000000000000000000000000000000000000000000000000000000000000u256;
-    ///     let i256 = I256::neg_from(underlying);
+    ///     let i256 = I256::neg_try_from(underlying).unwrap();
     ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
-    pub fn neg_from(value: u256) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u256) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -354,34 +351,21 @@ impl core::ops::Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        let indent = Self::indent();
-
-        if (self.underlying > indent
-            || self.underlying == indent)
-            && (other.underlying > indent
-            || other.underlying == indent)
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
-                res = Self::from_uint(self.underlying - other.underlying + indent);
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                let q = other.underlying - indent;
-                res = Self::from_uint(self.underlying - q);
+                res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if (self.underlying > indent
-            || self.underlying == indent)
-            && other.underlying < indent
-        {
-            res = Self::from_uint(self.underlying - indent + other.underlying);
-        } else if self.underlying < indent
-            && (other.underlying > indent
-            || other.underlying == indent)
-        {
-            res = Self::from_uint(self.underlying - (other.underlying - indent));
-        } else if self.underlying < indent && other.underlying < indent {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + indent);
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
+            res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - indent);
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -393,6 +377,29 @@ impl WrappingNeg for I256 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(0x0000000000000000000000000000000000000000000000000000000000000001u256)
+        self * Self::neg_try_from(0x0000000000000000000000000000000000000000000000000000000000000001u256).unwrap()
+    }
+}
+
+impl TryFrom<u256> for I256 {
+    fn try_from(value: u256) -> Option<Self> {
+        // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
+        if value < u256::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I256> for u256 {
+    fn try_from(value: I256) -> Option<Self> {
+        if value >= I256::zero() {
+            Some(value.underlying - I256::indent())
+        } else {
+            None
+        }
     }
 }

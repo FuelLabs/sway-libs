@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -34,14 +35,6 @@ impl I64 {
     /// ```
     pub fn indent() -> u64 {
         9223372036854775808u64
-    }
-}
-
-impl From<u64> for I64 {
-    fn from(value: u64) -> Self {
-        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
-        let underlying = value + Self::indent();
-        Self { underlying }
     }
 }
 
@@ -161,7 +154,7 @@ impl I64 {
     ///
     /// # Returns
     ///
-    /// * [I64] - The newly created `I64` struct.
+    /// * [Option<I64>] - The newly created `I64` struct.
     ///
     /// # Examples
     ///
@@ -170,13 +163,17 @@ impl I64 {
     ///
     /// fn foo() {
     ///     let underlying = 1u64;
-    ///     let i64 = I64::neg_from(underlying);
+    ///     let i64 = I64::neg_try_from(underlying).unwrap();
     ///     assert(i64.underlying() == 9223372036854775807u64);
     /// }
     /// ```
-    pub fn neg_from(value: u64) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u64) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -293,29 +290,21 @@ impl core::ops::Subtract for I64 {
     /// Subtract a I64 from a I64. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if self.underlying >= Self::indent()
-            && other.underlying < Self::indent()
-        {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent()
-            && other.underlying < Self::indent()
-        {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -398,6 +387,29 @@ impl WrappingNeg for I64 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1)
+        self * Self::neg_try_from(1).unwrap()
+    }
+}
+
+impl TryFrom<u64> for I64 {
+    fn try_from(value: u64) -> Option<Self> {
+        // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
+        if value < u64::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I64> for u64 {
+    fn try_from(value: I64) -> Option<Self> {
+        if value >= I64::zero() {
+            Some(value.underlying - I64::indent())
+        } else {
+            None
+        }
     }
 }
