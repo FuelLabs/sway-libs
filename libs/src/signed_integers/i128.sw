@@ -158,7 +158,7 @@ impl I128 {
     ///
     /// # Returns
     ///
-    /// * [I128] - The newly created `I128` struct.
+    /// * [Option<I128>] - The newly created `I128` struct.
     ///
     /// # Examples
     ///
@@ -168,13 +168,17 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let underlying = U128::from((1, 0));
-    ///     let i128 = I128::neg_from(underlying);
+    ///     let i128 = I128::neg_try_from(underlying).unwrap();
     ///     assert(i128.underlying() == U128::from((0, 0)));
     /// }
     /// ```
-    pub fn neg_from(value: U128) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: U128) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -394,7 +398,7 @@ impl WrappingNeg for I128 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(U128::from((0, 1)))
+        self * Self::neg_try_from(U128::from((0, 1))).unwrap()
     }
 }
 

@@ -154,7 +154,7 @@ impl I16 {
     ///
     /// # Returns
     ///
-    /// * [I16] - The newly created `I16` struct.
+    /// * [Option<I16>] - The newly created `I16` struct.
     ///
     /// # Examples
     ///
@@ -163,13 +163,17 @@ impl I16 {
     ///
     /// fn foo() {
     ///     let underlying = 1u16;
-    ///     let i16 = I16::neg_from(underlying);
+    ///     let i16 = I16::neg_try_from(underlying).unwrap();
     ///     assert(i16.underlying() == 32767u16)
     /// }
     /// ```
-    pub fn neg_from(value: u16) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u16) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -382,7 +386,7 @@ impl WrappingNeg for I16 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1u16)
+        self * Self::neg_try_from(1u16).unwrap()
     }
 }
 

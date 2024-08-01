@@ -25,19 +25,19 @@ fn main() -> bool {
     };
 
     let one = I256::try_from(u_one).unwrap();
-    let neg_one = I256::neg_from(u_one);
+    let neg_one = I256::neg_try_from(u_one).unwrap();
 
     let two = I256::try_from(u_two).unwrap();
-    let neg_two = I256::neg_from(u_two);
+    let neg_two = I256::neg_try_from(u_two).unwrap();
 
     let ten = I256::try_from(u_ten).unwrap();
-    let neg_ten = I256::neg_from(u_ten);
+    let neg_ten = I256::neg_try_from(u_ten).unwrap();
 
     let twenty_seven = I256::try_from(u_twenty_seven).unwrap();
-    let neg_twenty_seven = I256::neg_from(u_twenty_seven);
+    let neg_twenty_seven = I256::neg_try_from(u_twenty_seven).unwrap();
 
     let ninty_three = I256::try_from(u_ninty_three).unwrap();
-    let neg_ninty_three = I256::neg_from(u_ninty_three);
+    let neg_ninty_three = I256::neg_try_from(u_ninty_three).unwrap();
 
     let zero = I256::try_from(u256::zero()).unwrap();
     let max = I256::max();

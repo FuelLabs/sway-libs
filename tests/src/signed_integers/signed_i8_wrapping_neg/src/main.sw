@@ -4,19 +4,19 @@ use sway_libs::signed_integers::i8::I8;
 
 fn main() -> bool {
     let one = I8::try_from(1u8).unwrap();
-    let neg_one = I8::try_from(0u8).unwrap() - I8::try_from(1u8).unwrap();
+    let neg_one = I8::neg_try_from(1u8).unwrap();
 
     let two = I8::try_from(2u8).unwrap();
-    let neg_two = I8::try_from(0u8).unwrap() - I8::try_from(2u8).unwrap();
+    let neg_two = I8::neg_try_from(2u8).unwrap();
 
     let ten = I8::try_from(10u8).unwrap();
-    let neg_ten = I8::try_from(0u8).unwrap() - I8::try_from(10u8).unwrap();
+    let neg_ten = I8::neg_try_from(10u8).unwrap();
 
     let twenty_seven = I8::try_from(27u8).unwrap();
-    let neg_twenty_seven = I8::try_from(0u8).unwrap() - I8::try_from(27u8).unwrap();
+    let neg_twenty_seven = I8::neg_try_from(27u8).unwrap();
 
     let ninty_three = I8::try_from(93u8).unwrap();
-    let neg_ninty_three = I8::try_from(0u8).unwrap() - I8::try_from(93u8).unwrap();
+    let neg_ninty_three = I8::neg_try_from(93u8).unwrap();
 
     let zero = I8::try_from(0u8).unwrap();
     let max = I8::max();
