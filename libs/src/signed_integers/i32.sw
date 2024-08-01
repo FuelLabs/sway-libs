@@ -154,7 +154,7 @@ impl I32 {
     ///
     /// # Returns
     ///
-    /// * [I32] - The newly created `I32` struct.
+    /// * [Option<I32>] - The newly created `I32` struct.
     ///
     /// # Examples
     ///
@@ -163,13 +163,17 @@ impl I32 {
     ///
     /// fn foo() {
     ///     let underlying = 1u32;
-    ///     let i32 = I32::neg_from(underlying);
+    ///     let i32 = I32::neg_try_from(underlying).unwrap();
     ///     assert(i32.underlying() == 2147483647u32)
     /// }
     /// ```
-    pub fn neg_from(value: u32) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u32) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -382,7 +386,7 @@ impl WrappingNeg for I32 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1u32)
+        self * Self::neg_try_from(1u32).unwrap()
     }
 }
 

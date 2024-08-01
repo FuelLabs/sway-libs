@@ -4,19 +4,19 @@ use sway_libs::signed_integers::i32::I32;
 
 fn main() -> bool {
     let one = I32::try_from(1u32).unwrap();
-    let neg_one = I32::try_from(0u32).unwrap() - I32::try_from(1u32).unwrap();
+    let neg_one = I32::neg_try_from(1u32).unwrap();
 
     let two = I32::try_from(2u32).unwrap();
-    let neg_two = I32::try_from(0u32).unwrap() - I32::try_from(2u32).unwrap();
+    let neg_two = I32::neg_try_from(2u32).unwrap();
 
     let ten = I32::try_from(10u32).unwrap();
-    let neg_ten = I32::try_from(0u32).unwrap() - I32::try_from(10u32).unwrap();
+    let neg_ten = I32::neg_try_from(10u32).unwrap();
 
     let twenty_seven = I32::try_from(27u32).unwrap();
-    let neg_twenty_seven = I32::try_from(0u32).unwrap() - I32::try_from(27u32).unwrap();
+    let neg_twenty_seven = I32::neg_try_from(27u32).unwrap();
 
     let ninty_three = I32::try_from(93u32).unwrap();
-    let neg_ninty_three = I32::try_from(0u32).unwrap() - I32::try_from(93u32).unwrap();
+    let neg_ninty_three = I32::neg_try_from(93u32).unwrap();
 
     let zero = I32::try_from(0u32).unwrap();
     let max = I32::max();

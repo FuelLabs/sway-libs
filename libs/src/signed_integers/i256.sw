@@ -157,7 +157,7 @@ impl I256 {
     ///
     /// # Returns
     ///
-    /// * [I256] - The newly created `I256` struct.
+    /// * [Option<I256>] - The newly created `I256` struct.
     ///
     /// # Examples
     ///
@@ -166,13 +166,17 @@ impl I256 {
     ///
     /// fn foo() {
     ///     let underlying = 0x0000000000000000000000000000000000000000000000000000000000000000u256;
-    ///     let i256 = I256::neg_from(underlying);
+    ///     let i256 = I256::neg_try_from(underlying).unwrap();
     ///     assert(i256.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
     /// }
     /// ```
-    pub fn neg_from(value: u256) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u256) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -373,7 +377,7 @@ impl WrappingNeg for I256 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(0x0000000000000000000000000000000000000000000000000000000000000001u256)
+        self * Self::neg_try_from(0x0000000000000000000000000000000000000000000000000000000000000001u256).unwrap()
     }
 }
 
