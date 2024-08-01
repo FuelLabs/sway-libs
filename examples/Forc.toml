@@ -10,7 +10,6 @@ members = [
   "./asset/setting_src20_attributes",
   "./asset/supply_docs",
   "./bytecode",
-  "./fixed_point",
   "./merkle",
   "./ownership",
   "./pausable/pausable",

@@ -56,14 +56,6 @@ name = "core"
 source = "path+from-root-E19CE48B3E858B72"
 
 [[package]]
-name = "fixed_point_examples"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
 name = "merkle_examples"
 source = "member"
 dependencies = [
