@@ -135,3 +135,28 @@ mod success {
         spend_predicate(predicate_instance, wallet).await;
     }
 }
+
+mod failure {
+    use super::*;
+
+    #[tokio::test]
+    #[should_panic]
+    async fn able_to_buffer_overflow() {
+        let (test_contract_instance, wallet) = test_contract_instance().await;
+        let (_contract_offset, _predicate_offset, config_value) = defaults();
+
+        // Get the bytecode for the contract
+        let file_bytecode = simple_contract_bytecode();
+
+        // Build the configurable changes
+        let my_configurables = build_simple_configurables(file_bytecode.len() as u64, config_value);
+
+        // Call the contract to swap the configurables
+        let result_bytecode = swap_configurables(
+            &test_contract_instance,
+            file_bytecode.clone(),
+            my_configurables.clone(),
+        )
+        .await;
+    }
+}
