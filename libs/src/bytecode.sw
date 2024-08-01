@@ -16,6 +16,10 @@ use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _s
 ///
 /// * [b256] - The bytecode root of the contract or predicate.
 ///
+/// # Reverts
+///
+/// * When the bytecode is empty.
+///
 /// # Examples
 ///
 /// ```sway
@@ -40,6 +44,10 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 /// # Returns
 ///
 /// * [b256] - The bytecode root of the contract or predicate.
+///
+/// # Reverts
+///
+/// * When the bytecode is empty.
 ///
 /// # Examples
 ///
@@ -71,6 +79,11 @@ pub fn compute_bytecode_root_with_configurables(
 ///
 /// * [Address] - The address of the predicate.
 ///
+///
+/// # Reverts
+///
+/// * When the bytecode is empty.
+///
 /// # Examples
 ///
 /// ```sway
@@ -96,6 +109,10 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 /// # Returns
 ///
 /// * [Address] - The address of the predicate.
+///
+/// # Reverts
+///
+/// * When the bytecode is empty.
 ///
 /// # Examples
 ///
@@ -182,6 +199,7 @@ pub fn swap_configurables(
 ///
 /// # Reverts
 ///
+/// * When the bytecode is empty.
 /// * When the contract's bytecode root does not match the passed bytecode.
 ///
 /// # Examples
@@ -211,6 +229,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 ///
 /// # Reverts
 ///
+/// * When the bytecode is empty.
 /// * When the contract's bytecode root does not match the passed bytecode.
 ///
 /// # Examples
@@ -246,6 +265,7 @@ pub fn verify_contract_bytecode_with_configurables(
 ///
 /// # Reverts
 ///
+/// * When the bytecode is empty.
 /// * When the predicate's address does not match the passed address.
 ///
 /// # Examples
@@ -275,6 +295,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 ///
 /// # Reverts
 ///
+/// * When the bytecode is empty.
 /// * When the predicate's address does not match the passed address.
 ///
 /// # Examples
