@@ -14,7 +14,6 @@
 - [Reentrancy Guard Library](./reentrancy/index.md)
 - [Bytecode Library](./bytecode/index.md)
 - [Merkle Library](./merkle/index.md)
-- [Fixed Point Number Library](./fixed_point/index.md)
 - [Signed Integers Library](./signed_integers/index.md)
 - [Queue Library](./queue/index.md)
 - [Upgradability](./upgradability/index.md)
