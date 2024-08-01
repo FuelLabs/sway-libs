@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#272](https://github.com/FuelLabs/sway-libs/pull/272) Fixes `From` implementations for Signed Integers with `TryFrom`.
 - [#273](https://github.com/FuelLabs/sway-libs/pull/273) Fixes negative from implementations for Signed Integers.
 - [#274](https://github.com/FuelLabs/sway-libs/pull/274) Fixes the `swap_configurables()` function to correctly handle the case where the bytecode is too large to fit in the buffer.
+- [#275](https://github.com/FuelLabs/sway-libs/pull/275) Fixes an infinite loop in the Bytecode root library's `_compute_bytecode_root()` function.
 
 #### Breaking
 
