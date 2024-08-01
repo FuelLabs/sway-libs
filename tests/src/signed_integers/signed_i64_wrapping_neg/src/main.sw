@@ -3,25 +3,25 @@ script;
 use sway_libs::signed_integers::i64::I64;
 
 fn main() -> bool {
-    let one = I64::from(1u64);
-    let neg_one = I64::from(0u64) - I64::from(1u64);
+    let one = I64::try_from(1u64).unwrap();
+    let neg_one = I64::neg_try_from(1u64).unwrap();
 
-    let two = I64::from(2u64);
-    let neg_two = I64::from(0u64) - I64::from(2u64);
+    let two = I64::try_from(2u64).unwrap();
+    let neg_two = I64::neg_try_from(2u64).unwrap();
 
-    let ten = I64::from(10u64);
-    let neg_ten = I64::from(0u64) - I64::from(10u64);
+    let ten = I64::try_from(10u64).unwrap();
+    let neg_ten = I64::neg_try_from(10u64).unwrap();
 
-    let twenty_seven = I64::from(27u64);
-    let neg_twenty_seven = I64::from(0u64) - I64::from(27u64);
+    let twenty_seven = I64::try_from(27u64).unwrap();
+    let neg_twenty_seven = I64::neg_try_from(27u64).unwrap();
 
-    let ninty_three = I64::from(93u64);
-    let neg_ninty_three = I64::from(0u64) - I64::from(93u64);
+    let ninty_three = I64::try_from(93u64).unwrap();
+    let neg_ninty_three = I64::neg_try_from(93u64).unwrap();
 
-    let zero = I64::from(0u64);
+    let zero = I64::try_from(0u64).unwrap();
     let max = I64::max();
     let min = I64::min();
-    let neg_min_plus_one = I64::min() + I64::from(1);
+    let neg_min_plus_one = I64::min() + I64::try_from(1).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();

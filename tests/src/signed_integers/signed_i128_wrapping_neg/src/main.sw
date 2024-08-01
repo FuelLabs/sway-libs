@@ -4,25 +4,25 @@ use sway_libs::signed_integers::i128::I128;
 use std::u128::U128;
 
 fn main() -> bool {
-    let one = I128::from(U128::from(1u64));
-    let neg_one = I128::neg_from(U128::from(1u64));
+    let one = I128::try_from(U128::from(1u64)).unwrap();
+    let neg_one = I128::neg_try_from(U128::from(1u64)).unwrap();
 
-    let two = I128::from(U128::from(2u64));
-    let neg_two = I128::neg_from(U128::from(2u64));
+    let two = I128::try_from(U128::from(2u64)).unwrap();
+    let neg_two = I128::neg_try_from(U128::from(2u64)).unwrap();
 
-    let ten = I128::from(U128::from(10u64));
-    let neg_ten = I128::neg_from(U128::from(10u64));
+    let ten = I128::try_from(U128::from(10u64)).unwrap();
+    let neg_ten = I128::neg_try_from(U128::from(10u64)).unwrap();
 
-    let twenty_seven = I128::from(U128::from(27u64));
-    let neg_twenty_seven = I128::neg_from(U128::from(27u64));
+    let twenty_seven = I128::try_from(U128::from(27u64)).unwrap();
+    let neg_twenty_seven = I128::neg_try_from(U128::from(27u64)).unwrap();
 
-    let ninty_three = I128::from(U128::from(93u64));
-    let neg_ninty_three = I128::neg_from(U128::from(93u64));
+    let ninty_three = I128::try_from(U128::from(93u64)).unwrap();
+    let neg_ninty_three = I128::neg_try_from(U128::from(93u64)).unwrap();
 
-    let zero = I128::from(U128::zero());
+    let zero = I128::try_from(U128::zero()).unwrap();
     let max = I128::max();
     let min = I128::min();
-    let neg_min_plus_one = I128::min() + I128::from(U128::from((0, 1)));
+    let neg_min_plus_one = I128::min() + I128::try_from(U128::from((0, 1))).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
