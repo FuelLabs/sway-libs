@@ -26,11 +26,11 @@ Using a single character to name a variable conveys little to no information to 
 
 - Is this a throw away variable?
 - What is the variable meant to represent where ever it is used?
-- Does it make sense to call it by the chosen character e.g. `x` when referring to forumlas?
+- Does it make sense to call it by the chosen character e.g. `x` when referring to formulas?
 
-### Ambigious Abbreviations
+### Ambiguous Abbreviations
 
-A common mistake is to abbreviate a variable when it does not need to be abbreviated or when the abbreviation may be ambigious.
+A common mistake is to abbreviate a variable when it does not need to be abbreviated or when the abbreviation may be ambiguous.
 
 For example, in the context of an industry that deals with temperature sensors what does the variable `temp` refer to?
 

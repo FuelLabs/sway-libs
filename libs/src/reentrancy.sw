@@ -41,7 +41,7 @@ pub fn reentrancy_guard() {
 ///
 /// # Returns
 ///
-/// * [bool] - `true` if reentrancy pattern has occured.
+/// * [bool] - `true` if reentrancy pattern has occurred.
 ///
 /// # Examples
 ///
@@ -58,7 +58,7 @@ pub fn is_reentrant() -> bool {
     let this_id = ContractId::this();
 
     // Reentrancy cannot occur in an external context. If not detected by the time we get to the
-    // bottom of the call_frame stack, then no reentrancy has occured.
+    // bottom of the call_frame stack, then no reentrancy has occurred.
     let mut call_frame_pointer = frame_ptr();
     if !call_frame_pointer.is_null() {
         call_frame_pointer = get_previous_frame_pointer(call_frame_pointer);
