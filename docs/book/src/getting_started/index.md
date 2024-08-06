@@ -38,7 +38,7 @@ use sway_libs::ownership::only_owner;
 ```
 
 > **NOTE:**
-> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core 0.26.0`.
+> All projects currently use `forc v0.62.0`, `fuels-rs v0.62.0` and `fuel-core 0.31.0`.
 
 ## Using Sway Libs
 
