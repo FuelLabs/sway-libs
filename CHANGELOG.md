@@ -5,23 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.23.0]
+## [Unreleased]
 
 ### Added
+
+- Something new here 1
+- Something new here 2
+
+### Changed
+
+- Something changed here 1
+- Something changed here 2
+
+### Fixed
+
+- Some fix here 1
+- Some fix here 2
+
+### Breaking
+
+- Some breaking change here 1
+- Some breaking change here 2
+
+## [v0.23.1]
+
+### Added v0.23.1
+
+- None
+
+### Changed v0.23.1
+
+- [#281](https://github.com/FuelLabs/sway-libs/pull/281) Prepares for `v0.23.1` release.
+- [#281](https://github.com/FuelLabs/sway-libs/pull/281) Updates repository to use sway-standards `v0.5.2`.
+
+### Fixed v0.23.1
+
+- None
+
+### Breaking v0.23.1
+
+- None
+
+## [v0.23.0]
+
+### Added v0.23.0
 
 - [#259](https://github.com/FuelLabs/sway-libs/pull/259) Adds a new upgradability library, including associated tests and documentation.
 - [#265](https://github.com/FuelLabs/sway-libs/pull/265) Adds the `SetMetadataEvent` and emits `SetMetadataEvent` when the `_set_metadata()` function is called.
 - [#270](https://github.com/FuelLabs/sway-libs/pull/270) Adds `OrdEq` functionality to Signed Integers.
 - [#272](https://github.com/FuelLabs/sway-libs/pull/272) Adds the `TryFrom` implementation from signed integers to unsigned integers.
 
-### Changed
+### Changed v0.23.0
 
 - [#265](https://github.com/FuelLabs/sway-libs/pull/265) Enables the metadata events now that the Rust SDK supports wrapped heap types.
 - [#269](https://github.com/FuelLabs/sway-libs/pull/269) Hashes the string "admin" and with the bits of an Identity when creating a storage slot to storage an admin in the Admin Library.
 - [#276](https://github.com/FuelLabs/sway-libs/pull/276) Prepares for v0.23.0 release.
 - [#278](https://github.com/FuelLabs/sway-libs/pull/278) Deprecates the Fixed Point number library.
 
-### Fixed
+### Fixed v0.23.0
 
 - [#258](https://github.com/FuelLabs/sway-libs/pull/258) Fixes incorrect instructions on how to run tests in README and docs hub.
 - [#262](https://github.com/FuelLabs/sway-libs/pull/262) Fixes incorrect ordering comparison for IFP64, IFP128 and IFP256.
@@ -33,7 +74,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#274](https://github.com/FuelLabs/sway-libs/pull/274) Fixes the `swap_configurables()` function to correctly handle the case where the bytecode is too large to fit in the buffer.
 - [#275](https://github.com/FuelLabs/sway-libs/pull/275) Fixes an infinite loop in the Bytecode root library's `_compute_bytecode_root()` function.
 
-#### Breaking
+### Breaking v0.23.0
 
 - [#263](https://github.com/FuelLabs/sway-libs/pull/263) Removes the `TwosComplement` trait in favor of `WrappingNeg`.
 
