@@ -36,8 +36,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed v0.23.1
 
 - [#281](https://github.com/FuelLabs/sway-libs/pull/281) Prepares for `v0.23.1` release.
-- [#281](https://github.com/FuelLabs/sway-libs/pull/281) Updates repository to use forc `v0.62.0`.
-- [#281](https://github.com/FuelLabs/sway-libs/pull/281) Updates repository to use fuel-core `v0.31.0`.
 - [#281](https://github.com/FuelLabs/sway-libs/pull/281) Updates repository to use sway-standards `v0.5.2`.
 
 ### Fixed v0.23.1

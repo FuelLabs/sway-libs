@@ -1,6 +1,6 @@
 # Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.62.0` and `fuel-core v0.31.0`. You can check what version you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.60.0` and `fuel-core v0.26.0`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
