@@ -57,8 +57,10 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Math
 
-- [Fixed Point Number](https://docs.fuel.network/docs/sway-libs/fixed_point/) is an interface to implement fixed-point numbers.
 - [Signed Integers](https://docs.fuel.network/docs/sway-libs/queue/) is an interface to implement signed integers.
+
+> **NOTE:**
+> The Fixed Point Number library has been deprecated pending a re-write.
 
 #### Data Structures
 
@@ -73,7 +75,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.22.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.1" }
 ```
 
 > **NOTE:**

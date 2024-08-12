@@ -2,7 +2,7 @@
 name = "admin_test"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18",
+    "standards",
     "std",
     "sway_libs",
 ]
@@ -121,78 +121,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ifp128_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp128_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp256_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp256_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp64_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp64_exp_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp64_mul_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp64_pow_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ifp64_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
 name = "merkle_proof_test"
 source = "member"
 dependencies = [
@@ -204,7 +132,7 @@ dependencies = [
 name = "native_asset_lib"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18",
+    "standards",
     "std",
     "sway_libs",
 ]
@@ -213,7 +141,7 @@ dependencies = [
 name = "ownership_test"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18",
+    "standards",
     "std",
     "sway_libs",
 ]
@@ -282,12 +210,7 @@ dependencies = ["std"]
 
 [[package]]
 name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18"
-dependencies = ["std"]
-
-[[package]]
-name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.1#e2d5ac40a1d11a9e38e0a662d35141076515319f"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.5.2#270350e69bd7455b7e99f0aae2e29a94d42324bd"
 dependencies = ["std"]
 
 [[package]]
@@ -299,127 +222,15 @@ dependencies = ["core"]
 name = "sway_libs"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.0#348f7175df4c012b23c86cdb18aab79025ca1f18",
+    "standards",
     "std",
-]
-
-[[package]]
-name = "ufp128_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp128_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_exp_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_mul_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_pow_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_root_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp32_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_div_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_exp_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_mul_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_pow_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_root_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "ufp64_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "upgradability_test"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.5.1#e2d5ac40a1d11a9e38e0a662d35141076515319f",
+    "standards",
     "std",
     "sway_libs",
 ]

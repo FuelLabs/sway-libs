@@ -50,10 +50,6 @@ The [Merkle Proof](./merkle/index.md) Library is used to verify Binary Merkle Tr
 
 Math Libraries are libraries which provide mathematic functions or number types that are outside of the std-lib's scope.
 
-### [Fixed Point Number Library](./fixed_point/index.md)
-
-The [Fixed Point Number](./fixed_point/index.md) Library is an interface to implement fixed-point numbers.
-
 ### [Signed Integers](./signed_integers/index.md)
 
 The [Signed Integers](./signed_integers/index.md) Library is an interface to implement signed integers.

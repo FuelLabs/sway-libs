@@ -1,5 +1,6 @@
 library;
 
+use std::convert::TryFrom;
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -37,14 +38,6 @@ impl I8 {
     }
 }
 
-impl From<u8> for I8 {
-    fn from(value: u8) -> Self {
-        // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7) 
-        let underlying: u8 = value + Self::indent();
-        Self { underlying }
-    }
-}
-
 impl core::ops::Eq for I8 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
@@ -60,6 +53,8 @@ impl core::ops::Ord for I8 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I8 {}
 
 impl I8 {
     /// The size of this type in bits.
@@ -159,7 +154,7 @@ impl I8 {
     ///
     /// # Returns
     ///
-    /// * [I8] - The newly created `I8` struct.
+    /// * [Option<I8>] - The newly created `I8` struct.
     ///
     /// # Examples
     ///
@@ -168,13 +163,17 @@ impl I8 {
     ///
     /// fn foo() {
     ///     let underlying = 1u8;
-    ///     let i8 = I8::neg_from(underlying);
+    ///     let i8 = I8::neg_try_from(underlying);
     ///     assert(i8.underlying() == 127u8);
     /// }
     /// ```
-    pub fn neg_from(value: u8) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: u8) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -361,29 +360,21 @@ impl core::ops::Subtract for I8 {
     /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if self.underlying >= Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if self.underlying >= Self::indent()
-            && other.underlying < Self::indent()
-        {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent()
-            && other.underlying >= Self::indent()
-        {
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent()
-            && other.underlying < Self::indent()
-        {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -395,6 +386,29 @@ impl WrappingNeg for I8 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(1u8)
+        self * Self::neg_try_from(1u8).unwrap()
+    }
+}
+
+impl TryFrom<u8> for I8 {
+    fn try_from(value: u8) -> Option<Self> {
+        // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7)
+        if value < u8::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I8> for u8 {
+    fn try_from(value: I8) -> Option<Self> {
+        if value >= I8::zero() {
+            Some(value.underlying - I8::indent())
+        } else {
+            None
+        }
     }
 }

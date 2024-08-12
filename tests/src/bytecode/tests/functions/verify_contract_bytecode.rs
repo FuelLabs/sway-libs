@@ -74,4 +74,23 @@ mod revert {
         )
         .await;
     }
+
+    #[tokio::test]
+    #[should_panic]
+    async fn when_bytecode_is_empty() {
+        let (test_contract_instance, wallet) = test_contract_instance().await;
+
+        let empty_bytecode: Vec<u8> = Vec::new();
+
+        // Deploy the new simple contract with the bytecode that contains the changes
+        let (simple_contract_instance, id) = deploy_simple_contract_from_file(wallet.clone()).await;
+
+        verify_simple_contract_bytecode(
+            &test_contract_instance,
+            empty_bytecode,
+            id,
+            simple_contract_instance,
+        )
+        .await;
+    }
 }

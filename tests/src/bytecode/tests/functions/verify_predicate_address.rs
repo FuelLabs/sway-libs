@@ -51,4 +51,22 @@ mod revert {
         )
         .await;
     }
+
+    #[tokio::test]
+    #[should_panic]
+    async fn when_bytecode_is_empty() {
+        let (test_contract_instance, wallet) = test_contract_instance().await;
+
+        let empty_bytecode: Vec<u8> = Vec::new();
+
+        // Create an instance of the predicate
+        let predicate_instance = setup_predicate_from_file(wallet.clone()).await;
+
+        verify_predicate_address(
+            &test_contract_instance,
+            empty_bytecode,
+            predicate_instance.address().into(),
+        )
+        .await;
+    }
 }

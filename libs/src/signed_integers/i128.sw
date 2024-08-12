@@ -1,6 +1,6 @@
 library;
 
-use std::u128::U128;
+use std::{convert::TryFrom, u128::U128};
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -39,15 +39,6 @@ impl I128 {
     }
 }
 
-impl From<U128> for I128 {
-    /// Helper function to get a signed number from with an underlying
-    fn from(value: U128) -> Self {
-        // as the minimal value of I128 is -I128::indent() (1 << 63) we should add I128::indent() (1 << 63) 
-        let underlying: U128 = value + Self::indent();
-        Self { underlying }
-    }
-}
-
 impl core::ops::Eq for I128 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
@@ -63,6 +54,8 @@ impl core::ops::Ord for I128 {
         self.underlying < other.underlying
     }
 }
+
+impl core::ops::OrdEq for I128 {}
 
 impl I128 {
     /// The size of this type in bits.
@@ -165,7 +158,7 @@ impl I128 {
     ///
     /// # Returns
     ///
-    /// * [I128] - The newly created `I128` struct.
+    /// * [Option<I128>] - The newly created `I128` struct.
     ///
     /// # Examples
     ///
@@ -175,13 +168,17 @@ impl I128 {
     ///
     /// fn foo() {
     ///     let underlying = U128::from((1, 0));
-    ///     let i128 = I128::neg_from(underlying);
+    ///     let i128 = I128::neg_try_from(underlying).unwrap();
     ///     assert(i128.underlying() == U128::from((0, 0)));
     /// }
     /// ```
-    pub fn neg_from(value: U128) -> Self {
-        Self {
-            underlying: Self::indent() - value,
+    pub fn neg_try_from(value: U128) -> Option<Self> {
+        if value <= Self::indent() {
+            Some(Self {
+                underlying: Self::indent() - value,
+            })
+        } else {
+            None
         }
     }
 
@@ -375,33 +372,21 @@ impl core::ops::Subtract for I128 {
     /// Subtract a I128 from a I128. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
-        if (self.underlying > Self::indent()
-                || self.underlying == Self::indent())
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
-        {
+        if self.underlying >= Self::indent() && other.underlying >= Self::indent() { // Both Positive
             if self.underlying > other.underlying {
                 res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
                 res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
             }
-        } else if (self.underlying > Self::indent()
-            || self.underlying == Self::indent())
-            && other.underlying < Self::indent()
-        {
-            res = Self::from_uint(self.underlying - Self::indent() + other.underlying);
-        } else if self.underlying < Self::indent()
-                && (other.underlying > Self::indent()
-                    || other.underlying == Self::indent())
-        {
+        } else if self.underlying >= Self::indent() && other.underlying < Self::indent() { // Self Positive, Other Negative
+            res = Self::from_uint(self.underlying - other.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying >= Self::indent() { // Self Negative, Other Positive
             res = Self::from_uint(self.underlying - (other.underlying - Self::indent()));
-        } else if self.underlying < Self::indent()
-            && other.underlying < Self::indent()
-        {
-            if self.underlying < other.underlying {
-                res = Self::from_uint(other.underlying - self.underlying + Self::indent());
+        } else if self.underlying < Self::indent() && other.underlying < Self::indent() { // Both Negative
+            if self.underlying > other.underlying {
+                res = Self::from_uint(self.underlying - other.underlying + Self::indent());
             } else {
-                res = Self::from_uint(self.underlying + other.underlying - Self::indent());
+                res = Self::from_uint((self.underlying + Self::indent()) - other.underlying);
             }
         }
         res
@@ -413,6 +398,29 @@ impl WrappingNeg for I128 {
         if self == self::min() {
             return self::min()
         }
-        self * Self::neg_from(U128::from((0, 1)))
+        self * Self::neg_try_from(U128::from((0, 1))).unwrap()
+    }
+}
+
+impl TryFrom<U128> for I128 {
+    fn try_from(value: U128) -> Option<Self> {
+        // as the minimal value of I128 is -I128::indent() (1 << 63) we should add I128::indent() (1 << 63) 
+        if value < U128::max() - Self::indent() {
+            Some(Self {
+                underlying: value + Self::indent(),
+            })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryFrom<I128> for U128 {
+    fn try_from(value: I128) -> Option<Self> {
+        if value >= I128::zero() {
+            Some(value.underlying - I128::indent())
+        } else {
+            None
+        }
     }
 }
