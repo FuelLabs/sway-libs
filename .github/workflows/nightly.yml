@@ -1,0 +1,56 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run every day at midnight UTC
+
+env:
+  CARGO_TERM_COLOR: always
+  REGISTRY: ghcr.io
+
+jobs:
+  nightly-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        job: [build-sway-lib, forc-inline-tests, contributing-book, build-forc-doc-sway-libs, build-examples]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Init cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Fuel toolchain
+        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        with:
+          toolchain: nightly
+
+      - name: Run ${{ matrix.job }}
+        run: |
+          if [ "${{ matrix.job }}" = "build-sway-lib" ]; then
+            forc fmt --path libs --check
+            cargo fmt --manifest-path tests/Cargo.toml --verbose --check
+            forc build --path libs --release --locked
+            forc build --path tests --release --locked
+            cargo test --manifest-path tests/Cargo.toml
+          elif [ "${{ matrix.job }}" = "forc-inline-tests" ]; then
+            forc build --path libs --release --locked && forc test --path libs --locked
+            forc build --path tests --release --locked && forc test --path tests --locked
+          elif [ "${{ matrix.job }}" = "contributing-book" ]; then
+            forc fmt --path docs/contributing-book/src/code --check
+            forc build --path docs/contributing-book/src/code --release
+          elif [ "${{ matrix.job }}" = "build-forc-doc-sway-libs" ]; then
+            forc doc --manifest-path libs
+          elif [ "${{ matrix.job }}" = "build-examples" ]; then
+            forc fmt --path examples --check
+            cargo fmt --manifest-path examples/Cargo.toml --verbose --check
+            forc build --path examples --release --locked
+            cargo test --manifest-path examples/Cargo.toml
+          fi
