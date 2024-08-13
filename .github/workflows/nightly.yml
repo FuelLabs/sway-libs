@@ -3,6 +3,7 @@ name: Nightly Tests
 on:
   schedule:
     - cron: '0 0 * * *'  # Run every day at midnight UTC
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
