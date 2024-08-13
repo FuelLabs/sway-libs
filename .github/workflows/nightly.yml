@@ -38,12 +38,12 @@ jobs:
           if [ "${{ matrix.job }}" = "build-sway-lib" ]; then
             forc fmt --path libs --check
             cargo fmt --manifest-path tests/Cargo.toml --verbose --check
-            forc build --path libs --release --locked
-            forc build --path tests --release --locked
+            forc build --path libs --release
+            forc build --path tests --release
             cargo test --manifest-path tests/Cargo.toml
           elif [ "${{ matrix.job }}" = "forc-inline-tests" ]; then
-            forc build --path libs --release --locked && forc test --path libs --locked
-            forc build --path tests --release --locked && forc test --path tests --locked
+            forc build --path libs --release && forc test --path libs
+            forc build --path tests --release && forc test --path tests
           elif [ "${{ matrix.job }}" = "contributing-book" ]; then
             forc fmt --path docs/contributing-book/src/code --check
             forc build --path docs/contributing-book/src/code --release
@@ -52,6 +52,6 @@ jobs:
           elif [ "${{ matrix.job }}" = "build-examples" ]; then
             forc fmt --path examples --check
             cargo fmt --manifest-path examples/Cargo.toml --verbose --check
-            forc build --path examples --release --locked
+            forc build --path examples --release
             cargo test --manifest-path examples/Cargo.toml
           fi
