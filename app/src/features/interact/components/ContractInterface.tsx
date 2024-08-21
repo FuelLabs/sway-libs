@@ -25,8 +25,10 @@ export function ContractInterface({
   const { contract, functionNames } = useContractFunctions(contractId);
 
   const typeMap: AbiTypeMap = useMemo(() => {
+    console.log("abi types", contract?.interface.jsonAbi);
     return new Map(
-      contract?.interface.jsonAbi.types.map((type) => [type.typeId, type]),
+      [], // TODO
+      // contract?.interface.jsonAbi.types.map((type) => [type.typeId, type]),
     );
   }, [contract]);
 

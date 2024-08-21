@@ -63,16 +63,16 @@ export function useDeployContract(
           );
 
           contractFactory
-            .deployContract({
+            .deploy({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
             })
-            .then((contract) => {
+            .then((contract: any) => {
               resolve({
                 contractId: contract.id.toB256(),
                 networkUrl: contract.provider.url,
               });
             })
-            .catch((error) => {
+            .catch((error: any) => {
               // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
               const source = error?.code === 0 ? "user" : "sdk";
               error.cause = { source };

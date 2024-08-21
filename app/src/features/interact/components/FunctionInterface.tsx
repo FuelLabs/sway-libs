@@ -89,7 +89,8 @@ export function FunctionInterface({
   );
 
   const outputType = useMemo(() => {
-    const outputTypeId = functionFragment?.jsonFn.output?.type;
+    // const outputTypeId = functionFragment?.jsonFn.output?.type;
+    const outputTypeId = 0; // TODO
     if (outputTypeId !== undefined) {
       const sdkType = typeMap.get(outputTypeId);
       return sdkType ? getTypeInfo(sdkType, typeMap).literal : undefined;
@@ -98,8 +99,9 @@ export function FunctionInterface({
 
   const inputInstances: InputInstance[] = useMemo(
     () =>
-      functionFragment?.jsonFn.inputs.map((input) =>
-        toInputInstance(input.type, input.name),
+      functionFragment?.jsonFn.inputs.map(
+        (input) => toInputInstance(0, input.name), // TODO
+        // toInputInstance(input.type, input.name),
       ) ?? [],
     [functionFragment?.jsonFn.inputs, toInputInstance],
   );
