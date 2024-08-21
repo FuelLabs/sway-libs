@@ -59,7 +59,7 @@ RUN fuelup toolchain install nightly
 RUN fuelup toolchain install beta-1
 RUN fuelup toolchain install beta-2
 RUN fuelup toolchain install beta-3
-RUN fuelup toolchain install beta-4s
+RUN fuelup toolchain install beta-4
 RUN fuelup toolchain install beta-5
 RUN fuelup toolchain install testnet
 
