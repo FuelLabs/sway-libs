@@ -1,4 +1,4 @@
-import { ContractFactory, JsonAbi, StorageSlot } from "fuels";
+import { ContractFactory, DeployContractResult, JsonAbi, StorageSlot } from "fuels";
 import { useMutation } from "@tanstack/react-query";
 import { useFuel, useWallet } from "@fuels/react";
 import { track } from "@vercel/analytics/react";
@@ -66,7 +66,8 @@ export function useDeployContract(
             .deploy({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
             })
-            .then((contract: any) => {
+            .then(({ waitForResult }: DeployContractResult<any>) => waitForResult())
+            .then(({ contract }) => {
               resolve({
                 contractId: contract.id.toB256(),
                 networkUrl: contract.provider.url,

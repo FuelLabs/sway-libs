@@ -16,7 +16,29 @@ export interface SdkJsonAbiType {
   readonly typeId: number;
   readonly type: string;
   readonly components: readonly SdkJsonAbiArgument[] | null;
-  readonly typeParameters: readonly number[] | null;
+  readonly typeArguments: readonly number[] | null;
+}
+
+export interface SdkConcreteType {
+  readonly type: string;
+  readonly concreteTypeId: string;
+  readonly metadataTypeId?: number;
+  readonly typeArguments?: readonly string[];
+}
+export interface SdkMetadataType {
+  readonly type: string;
+  readonly metadataTypeId: number;
+  readonly components?: readonly SdkComponent[];
+  readonly typeParameters?: readonly number[];
+}
+
+export interface SdkComponent extends SdkTypeArgument {
+  readonly name: string;
+}
+
+export interface SdkTypeArgument {
+  readonly typeId: number | string;
+  readonly typeArguments?: readonly SdkTypeArgument[];
 }
 
 export interface FunctionInterfaceProps {
@@ -56,7 +78,7 @@ export function FunctionInterface({
           return {
             name,
             type: typeInfo,
-            components: [toInputInstance(input.typeParameters?.at(0) ?? 0, "")],
+            components: [toInputInstance(input.typeArguments?.at(0) ?? 0, "")],
           };
         case "object":
           return {

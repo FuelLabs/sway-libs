@@ -43,10 +43,10 @@ function formatTypeArguments(
   if (!name) {
     return type;
   }
-  if (!sdkType?.typeParameters?.length) {
+  if (!sdkType?.typeArguments?.length) {
     return name;
   }
-  return `${name}<${sdkType.typeParameters.map((ta) => formatTypeArguments(ta, typeMap)).join(", ")}>`;
+  return `${name}<${sdkType.typeArguments.map((ta) => formatTypeArguments(ta, typeMap)).join(", ")}>`;
 }
 
 export function getTypeInfo(

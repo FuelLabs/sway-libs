@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@fuel-ui/css": "^0.23",
     "@fuel-ui/react": "^0.23.3",
-    "@fuels/connectors": "0.25.0",
+    "@fuels/connectors": "0.5.0",
     "@fuels/react": "0.25.0",
     "@mui/base": "^5.0.0-beta.2",
     "@mui/icons-material": "^5.11.16",
@@ -15,8 +15,6 @@
     "@mui/material": "^5.13.2",
     "@tanstack/react-query": "5.35.1",
     "@vercel/analytics": "^1.2.2",
-    "@wagmi/connectors": "5.1.6",
-    "@wagmi/core": "2.13.4",
     "ace-builds": "^1.22.0",
     "ace-mode-solidity": "^0.1.1",
     "ansicolor": "^1.1.100",
@@ -53,14 +51,14 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --fix 'src/**/*.{ts,tsx}'",
     "lint-check": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
-    "format-check": "prettier --check 'src/**/*.{ts,tsx}'"
+    "format-check": "prettier --check 'src/**/*.{ts,tsx}' --max-warnings=0"
   },
   "eslintConfig": {
     "plugins": [
