@@ -28,7 +28,7 @@ function FunctionToolbar({
 
   const title = parameters.length ? "Parameters" : "No Parameters";
 
-  const isReadOnly = !!contract?.functions[functionName].isReadOnly();
+  const isReadOnly = !!contract?.functions[functionName]?.isReadOnly();
 
   return (
     <Toolbar style={{ padding: "0 2px 0", justifyContent: "space-between" }}>

@@ -3,47 +3,12 @@ import { useCallback, useMemo } from "react";
 import { InputInstance } from "./FunctionParameters";
 import { FunctionCallAccordion } from "./FunctionCallAccordion";
 import { getTypeInfo } from "../utils/getTypeInfo";
-import { AbiTypeMap } from "./ContractInterface";
 import React from "react";
-
-export interface SdkJsonAbiArgument {
-  readonly type: number;
-  readonly name: string;
-  readonly typeArguments: readonly SdkJsonAbiArgument[] | null;
-}
-
-export interface SdkJsonAbiType {
-  readonly typeId: number;
-  readonly type: string;
-  readonly components: readonly SdkJsonAbiArgument[] | null;
-  readonly typeArguments: readonly number[] | null;
-}
-
-export interface SdkConcreteType {
-  readonly type: string;
-  readonly concreteTypeId: string;
-  readonly metadataTypeId?: number;
-  readonly typeArguments?: readonly string[];
-}
-export interface SdkMetadataType {
-  readonly type: string;
-  readonly metadataTypeId: number;
-  readonly components?: readonly SdkComponent[];
-  readonly typeParameters?: readonly number[];
-}
-
-export interface SdkComponent extends SdkTypeArgument {
-  readonly name: string;
-}
-
-export interface SdkTypeArgument {
-  readonly typeId: number | string;
-  readonly typeArguments?: readonly SdkTypeArgument[];
-}
+import { AbiHelper } from "../utils/abi";
 
 export interface FunctionInterfaceProps {
   contractId: string;
-  typeMap: AbiTypeMap;
+  abiHelper: AbiHelper;
   functionFragment: FunctionFragment | undefined;
   functionName: string;
   response?: string | Error;
@@ -53,7 +18,7 @@ export interface FunctionInterfaceProps {
 
 export function FunctionInterface({
   contractId,
-  typeMap,
+  abiHelper,
   functionFragment,
   functionName,
   response,
@@ -61,31 +26,25 @@ export function FunctionInterface({
   updateLog,
 }: FunctionInterfaceProps) {
   const toInputInstance = useCallback(
-    (typeId: number, name: string): InputInstance => {
-      const input = typeMap?.get(typeId);
-      if (!input) {
-        return {
-          name,
-          type: {
-            literal: "string",
-            swayType: "Unknown",
-          },
-        };
-      }
-      const typeInfo = getTypeInfo(input, typeMap);
+    (typeId: string | number, name: string): InputInstance => {
+      const { concreteType, metadataType } = abiHelper.getTypesById(typeId);
+      const typeInfo = getTypeInfo(concreteType, abiHelper);
+
       switch (typeInfo.literal) {
         case "vector":
           return {
             name,
             type: typeInfo,
-            components: [toInputInstance(input.typeArguments?.at(0) ?? 0, "")],
+            components: [
+              toInputInstance(concreteType?.typeArguments?.at(0) ?? "", ""),
+            ],
           };
         case "object":
           return {
             name,
             type: typeInfo,
-            components: input.components?.map((c) =>
-              toInputInstance(c.type, c.name),
+            components: metadataType?.components?.map((c) =>
+              toInputInstance(c.typeId, c.name),
             ),
           };
         case "option":
@@ -95,8 +54,8 @@ export function FunctionInterface({
             type: typeInfo,
             components: [
               toInputInstance(
-                input.components?.at(0)?.type ?? 0,
-                input.components?.at(0)?.name ?? "",
+                metadataType?.components?.at(0)?.typeId ?? "",
+                metadataType?.components?.at(0)?.name ?? "",
               ),
             ],
           };
@@ -107,25 +66,23 @@ export function FunctionInterface({
           };
       }
     },
-    [typeMap],
+    [abiHelper],
   );
 
   const outputType = useMemo(() => {
-    // const outputTypeId = functionFragment?.jsonFn.output?.type;
-    const outputTypeId = 0; // TODO
+    const outputTypeId = functionFragment?.jsonFn?.output;
     if (outputTypeId !== undefined) {
-      const sdkType = typeMap.get(outputTypeId);
-      return sdkType ? getTypeInfo(sdkType, typeMap).literal : undefined;
+      const sdkType = abiHelper.getConcreteTypeById(outputTypeId);
+      return sdkType ? getTypeInfo(sdkType, abiHelper).literal : undefined;
     }
-  }, [functionFragment?.jsonFn.output, typeMap]);
+  }, [functionFragment?.jsonFn?.output, abiHelper]);
 
   const inputInstances: InputInstance[] = useMemo(
     () =>
-      functionFragment?.jsonFn.inputs.map(
-        (input) => toInputInstance(0, input.name), // TODO
-        // toInputInstance(input.type, input.name),
+      functionFragment?.jsonFn?.inputs.map((input) =>
+        toInputInstance(input.concreteTypeId, input.name),
       ) ?? [],
-    [functionFragment?.jsonFn.inputs, toInputInstance],
+    [functionFragment?.jsonFn?.inputs, toInputInstance],
   );
 
   return (

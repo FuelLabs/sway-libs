@@ -1,13 +1,13 @@
-import { AbiTypeMap } from "../components/ContractInterface";
-import { SdkJsonAbiType } from "../components/FunctionInterface";
 import { ParamTypeLiteral } from "../components/FunctionParameters";
+import { AbiHelper, SdkConcreteType, SdkMetadataType } from "./abi";
 
+/// An interface for displaying ABI types.
 export interface TypeInfo {
   literal: ParamTypeLiteral;
   swayType: string;
 }
 
-function getLiteral(sdkType: string): ParamTypeLiteral {
+export function getLiteral(sdkType: string): ParamTypeLiteral {
   const [type, name] = sdkType.split(" ");
   switch (type) {
     case "struct": {
@@ -31,11 +31,16 @@ function getLiteral(sdkType: string): ParamTypeLiteral {
   }
 }
 
+export function parseTypeName(typeName: string): string {
+  let trimmed = typeName.split("<")[0].split("::");
+  return trimmed[trimmed.length - 1];
+}
+
 function formatTypeArguments(
-  sdkArgumentTypeId: number,
-  typeMap: AbiTypeMap,
+  concreteTypeId: string,
+  abiHelper: AbiHelper,
 ): string {
-  const sdkType = typeMap.get(sdkArgumentTypeId);
+  let sdkType = abiHelper.getConcreteTypeById(concreteTypeId);
   if (!sdkType) {
     return "Unknown";
   }
@@ -44,16 +49,16 @@ function formatTypeArguments(
     return type;
   }
   if (!sdkType?.typeArguments?.length) {
-    return name;
+    return parseTypeName(name);
   }
-  return `${name}<${sdkType.typeArguments.map((ta) => formatTypeArguments(ta, typeMap)).join(", ")}>`;
+  return `${parseTypeName(name)}<${sdkType.typeArguments.map((ta) => formatTypeArguments(ta, abiHelper)).join(", ")}>`;
 }
 
 export function getTypeInfo(
-  sdkType: SdkJsonAbiType,
-  typeMap: AbiTypeMap,
+  sdkType: SdkConcreteType | undefined,
+  abiHelper: AbiHelper,
 ): TypeInfo {
-  if (!typeMap) {
+  if (!abiHelper || !sdkType) {
     return {
       literal: "string",
       swayType: "Unknown",
@@ -61,6 +66,6 @@ export function getTypeInfo(
   }
   return {
     literal: getLiteral(sdkType.type),
-    swayType: formatTypeArguments(sdkType.typeId, typeMap),
+    swayType: formatTypeArguments(sdkType.concreteTypeId, abiHelper),
   };
 }
