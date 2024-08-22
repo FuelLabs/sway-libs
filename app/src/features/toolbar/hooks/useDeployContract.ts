@@ -1,4 +1,10 @@
-import { ContractFactory, JsonAbi, StorageSlot } from "fuels";
+import {
+  Contract,
+  ContractFactory,
+  DeployContractResult,
+  JsonAbi,
+  StorageSlot,
+} from "fuels";
 import { useMutation } from "@tanstack/react-query";
 import { useFuel, useWallet } from "@fuels/react";
 import { track } from "@vercel/analytics/react";
@@ -63,21 +69,29 @@ export function useDeployContract(
           );
 
           contractFactory
-            .deployContract({
+            .deploy({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
             })
-            .then((contract) => {
+            .then(({ waitForResult }: DeployContractResult<Contract>) =>
+              waitForResult(),
+            )
+            .then(({ contract }) => {
               resolve({
                 contractId: contract.id.toB256(),
                 networkUrl: contract.provider.url,
               });
             })
-            .catch((error) => {
-              // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-              const source = error?.code === 0 ? "user" : "sdk";
-              error.cause = { source };
-              reject(error);
-            });
+            .catch(
+              (error: {
+                code: number | undefined;
+                cause: object | undefined;
+              }) => {
+                // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+                const source = error?.code === 0 ? "user" : "sdk";
+                error.cause = { source };
+                reject(error);
+              },
+            );
         },
       );
 

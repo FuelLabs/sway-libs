@@ -1,20 +1,21 @@
-import { AbiTypeMap } from "../components/ContractInterface";
-import { SdkJsonAbiType } from "../components/FunctionInterface";
 import { ParamTypeLiteral } from "../components/FunctionParameters";
+import { AbiHelper, SdkConcreteType } from "./abi";
 
+/// An interface for displaying ABI types.
 export interface TypeInfo {
   literal: ParamTypeLiteral;
   swayType: string;
 }
 
-function getLiteral(sdkType: string): ParamTypeLiteral {
+export function getLiteral(sdkType: string): ParamTypeLiteral {
   const [type, name] = sdkType.split(" ");
+  const trimmedName = name ? parseTypeName(name) : name;
   switch (type) {
     case "struct": {
-      return name === "Vec" ? "vector" : "object";
+      return trimmedName === "Vec" ? "vector" : "object";
     }
     case "enum": {
-      return name === "Option" ? "option" : "enum";
+      return trimmedName === "Option" ? "option" : "enum";
     }
     case "u8":
     case "u16":
@@ -31,11 +32,16 @@ function getLiteral(sdkType: string): ParamTypeLiteral {
   }
 }
 
+export function parseTypeName(typeName: string): string {
+  const trimmed = typeName.split("<")[0].split("::");
+  return trimmed[trimmed.length - 1];
+}
+
 function formatTypeArguments(
-  sdkArgumentTypeId: number,
-  typeMap: AbiTypeMap,
+  concreteTypeId: string,
+  abiHelper: AbiHelper,
 ): string {
-  const sdkType = typeMap.get(sdkArgumentTypeId);
+  const sdkType = abiHelper.getConcreteTypeById(concreteTypeId);
   if (!sdkType) {
     return "Unknown";
   }
@@ -43,17 +49,17 @@ function formatTypeArguments(
   if (!name) {
     return type;
   }
-  if (!sdkType?.typeParameters?.length) {
-    return name;
+  if (!sdkType?.typeArguments?.length) {
+    return parseTypeName(name);
   }
-  return `${name}<${sdkType.typeParameters.map((ta) => formatTypeArguments(ta, typeMap)).join(", ")}>`;
+  return `${parseTypeName(name)}<${sdkType.typeArguments.map((ta) => formatTypeArguments(ta, abiHelper)).join(", ")}>`;
 }
 
 export function getTypeInfo(
-  sdkType: SdkJsonAbiType,
-  typeMap: AbiTypeMap,
+  sdkType: SdkConcreteType | undefined,
+  abiHelper: AbiHelper,
 ): TypeInfo {
-  if (!typeMap) {
+  if (!abiHelper || !sdkType) {
     return {
       literal: "string",
       swayType: "Unknown",
@@ -61,6 +67,6 @@ export function getTypeInfo(
   }
   return {
     literal: getLiteral(sdkType.type),
-    swayType: formatTypeArguments(sdkType.typeId, typeMap),
+    swayType: formatTypeArguments(sdkType.concreteTypeId, abiHelper),
   };
 }

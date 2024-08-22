@@ -1,5 +1,6 @@
 import { useContractFunctions } from "../hooks/useContractFunctions";
-import { FunctionInterface, SdkJsonAbiType } from "./FunctionInterface";
+import { FunctionInterface } from "./FunctionInterface";
+import { AbiHelper } from "../utils/abi";
 import { useMemo, useState } from "react";
 import { CopyableHex } from "../../../components/shared";
 import { FunctionFragment } from "fuels";
@@ -9,8 +10,6 @@ interface ContractInterfaceProps {
   contractId: string;
   updateLog: (entry: string) => void;
 }
-
-export type AbiTypeMap = Map<number, SdkJsonAbiType>;
 
 export function ContractInterface({
   contractId,
@@ -24,12 +23,6 @@ export function ContractInterface({
 
   const { contract, functionNames } = useContractFunctions(contractId);
 
-  const typeMap: AbiTypeMap = useMemo(() => {
-    return new Map(
-      contract?.interface.jsonAbi.types.map((type) => [type.typeId, type]),
-    );
-  }, [contract]);
-
   function isType<T>(item: T | undefined): item is T {
     return !!item;
   }
@@ -39,13 +32,17 @@ export function ContractInterface({
     .map((functionName) => contract?.interface.functions[functionName])
     .filter(isType<FunctionFragment>);
 
+  const abiHelper = useMemo(() => {
+    return new AbiHelper(contract?.interface?.jsonAbi);
+  }, [contract]);
+
   const functionInterfaces = useMemo(
     () =>
       functionFragments.map((functionFragment, index) => (
         <div key={`${index}`} style={{ marginBottom: "15px" }}>
           <FunctionInterface
             contractId={contractId}
-            typeMap={typeMap}
+            abiHelper={abiHelper}
             functionFragment={functionFragment}
             functionName={functionFragment.name}
             response={responses[contractId + functionFragment.name]}
@@ -59,7 +56,7 @@ export function ContractInterface({
           />
         </div>
       )),
-    [contractId, functionFragments, responses, typeMap, updateLog],
+    [contractId, functionFragments, responses, abiHelper, updateLog],
   );
 
   return (

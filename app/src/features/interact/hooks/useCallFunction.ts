@@ -3,7 +3,7 @@ import { useContract } from "./useContract";
 import { modifyJsonStringify } from "../utils/modifyJsonStringify";
 import { CallType } from "../../../utils/types";
 import { CallableParamValue } from "../components/FunctionParameters";
-import { FunctionInvocationResult, InvocationCallResult } from "fuels";
+import { Contract, DryRunResult, FunctionResult } from "fuels";
 
 interface CallFunctionProps {
   parameters: CallableParamValue[];
@@ -53,12 +53,21 @@ export function useCallFunction({
     setResponse(new Error(error?.message));
   }
 
-  function handleSuccess(
+  async function handleSuccess(
     data:
-      | InvocationCallResult<unknown>
-      | FunctionInvocationResult<unknown, void>,
+      | DryRunResult<Contract>
+      | {
+          transactionId: string;
+          waitForResult: () => Promise<FunctionResult<Contract>>;
+        },
   ) {
-    setResponse(JSON.stringify(data.value, modifyJsonStringify, 2));
+    if ("transactionId" in data) {
+      updateLog(`Transaction submitted. Transaction ID: ${data.transactionId}`);
+      const result = await data.waitForResult();
+      setResponse(JSON.stringify(result.value, modifyJsonStringify, 2));
+    } else {
+      setResponse(JSON.stringify(data.value, modifyJsonStringify, 2));
+    }
   }
 
   return mutation;
