@@ -3,7 +3,7 @@ import { useContract } from "./useContract";
 import { modifyJsonStringify } from "../utils/modifyJsonStringify";
 import { CallType } from "../../../utils/types";
 import { CallableParamValue } from "../components/FunctionParameters";
-import { DryRunResult, FunctionResult } from "fuels";
+import { Contract, DryRunResult, FunctionResult } from "fuels";
 
 interface CallFunctionProps {
   parameters: CallableParamValue[];
@@ -55,10 +55,10 @@ export function useCallFunction({
 
   async function handleSuccess(
     data:
-      | DryRunResult<any>
+      | DryRunResult<Contract>
       | {
           transactionId: string;
-          waitForResult: () => Promise<FunctionResult<any>>;
+          waitForResult: () => Promise<FunctionResult<Contract>>;
         },
   ) {
     if ("transactionId" in data) {

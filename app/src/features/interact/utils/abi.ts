@@ -1,5 +1,4 @@
 import { JsonAbi } from "fuels";
-import { ParamTypeLiteral } from "../components/FunctionParameters";
 
 /// Types ported from the fuels SDK
 export interface SdkConcreteType {

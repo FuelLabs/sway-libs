@@ -3,10 +3,10 @@ import { getLiteral, parseTypeName } from "./getTypeInfo";
 describe(`test getLiteral`, () => {
   test.each`
     input                                                       | expected
-    ${"enum std::option::Option"}                               | ${"enum"}
-    ${"enum std::option::Option<enum std::identity::Identity>"} | ${"enum"}
+    ${"enum std::option::Option"}                               | ${"option"}
+    ${"enum std::option::Option<enum std::identity::Identity>"} | ${"option"}
     ${"struct ComplexStruct2<b256>"}                            | ${"object"}
-    ${"struct std::vec::Vec"}                                   | ${"object"}
+    ${"struct std::vec::Vec"}                                   | ${"vector"}
     ${"bool"}                                                   | ${"bool"}
     ${"b256"}                                                   | ${"string"}
     ${"str[7]"}                                                 | ${"string"}

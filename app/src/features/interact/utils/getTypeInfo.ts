@@ -1,5 +1,5 @@
 import { ParamTypeLiteral } from "../components/FunctionParameters";
-import { AbiHelper, SdkConcreteType, SdkMetadataType } from "./abi";
+import { AbiHelper, SdkConcreteType } from "./abi";
 
 /// An interface for displaying ABI types.
 export interface TypeInfo {
@@ -9,12 +9,13 @@ export interface TypeInfo {
 
 export function getLiteral(sdkType: string): ParamTypeLiteral {
   const [type, name] = sdkType.split(" ");
+  const trimmedName = name ? parseTypeName(name) : name;
   switch (type) {
     case "struct": {
-      return name === "Vec" ? "vector" : "object";
+      return trimmedName === "Vec" ? "vector" : "object";
     }
     case "enum": {
-      return name === "Option" ? "option" : "enum";
+      return trimmedName === "Option" ? "option" : "enum";
     }
     case "u8":
     case "u16":
@@ -32,7 +33,7 @@ export function getLiteral(sdkType: string): ParamTypeLiteral {
 }
 
 export function parseTypeName(typeName: string): string {
-  let trimmed = typeName.split("<")[0].split("::");
+  const trimmed = typeName.split("<")[0].split("::");
   return trimmed[trimmed.length - 1];
 }
 
@@ -40,7 +41,7 @@ function formatTypeArguments(
   concreteTypeId: string,
   abiHelper: AbiHelper,
 ): string {
-  let sdkType = abiHelper.getConcreteTypeById(concreteTypeId);
+  const sdkType = abiHelper.getConcreteTypeById(concreteTypeId);
   if (!sdkType) {
     return "Unknown";
   }

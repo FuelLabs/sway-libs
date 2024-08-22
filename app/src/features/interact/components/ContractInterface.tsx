@@ -4,7 +4,6 @@ import { AbiHelper } from "../utils/abi";
 import { useMemo, useState } from "react";
 import { CopyableHex } from "../../../components/shared";
 import { FunctionFragment } from "fuels";
-import { get } from "http";
 
 const FUNCTION_COUNT_LIMIT = 1000;
 interface ContractInterfaceProps {

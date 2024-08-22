@@ -1,4 +1,5 @@
 import {
+  Contract,
   ContractFactory,
   DeployContractResult,
   JsonAbi,
@@ -71,7 +72,7 @@ export function useDeployContract(
             .deploy({
               storageSlots: JSON.parse(storageSlots) as StorageSlot[],
             })
-            .then(({ waitForResult }: DeployContractResult<any>) =>
+            .then(({ waitForResult }: DeployContractResult<Contract>) =>
               waitForResult(),
             )
             .then(({ contract }) => {
@@ -80,12 +81,17 @@ export function useDeployContract(
                 networkUrl: contract.provider.url,
               });
             })
-            .catch((error: any) => {
-              // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
-              const source = error?.code === 0 ? "user" : "sdk";
-              error.cause = { source };
-              reject(error);
-            });
+            .catch(
+              (error: {
+                code: number | undefined;
+                cause: object | undefined;
+              }) => {
+                // This is a hack to handle the case where the deployment failed because the user rejected the transaction.
+                const source = error?.code === 0 ? "user" : "sdk";
+                error.cause = { source };
+                reject(error);
+              },
+            );
         },
       );
 
