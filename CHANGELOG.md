@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 The following demonstrates the breaking change.
 
-Before: 
+Before:
 
 ```sway
 // Compute bytecode root
@@ -48,6 +48,7 @@ verify_predicate_address_with_configurables(my_predicate_address, my_bytecode, m
 ```
 
 After:
+
 ```sway
 // Compute bytecode root
 let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, None);
