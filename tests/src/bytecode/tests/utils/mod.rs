@@ -66,24 +66,11 @@ pub mod abi_calls {
     pub async fn compute_predicate_address(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode: Vec<u8>,
+        configurables: Option<Vec<(u64, Vec<u8>)>>,
     ) -> Address {
         contract
             .methods()
-            .compute_predicate_address(bytecode)
-            .call()
-            .await
-            .unwrap()
-            .value
-    }
-
-    pub async fn compute_predicate_address_with_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
-        bytecode: Vec<u8>,
-        configurables: Vec<(u64, Vec<u8>)>,
-    ) -> Address {
-        contract
-            .methods()
-            .compute_predicate_address_with_configurables(bytecode, configurables)
+            .compute_predicate_address(bytecode, configurables)
             .call()
             .await
             .unwrap()
@@ -93,6 +80,7 @@ pub mod abi_calls {
     pub async fn compute_bytecode_root(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode: Vec<u8>,
+        configurables: Option<Vec<(u64, Vec<u8>)>>,
     ) -> Bits256 {
         contract
             .clone()
@@ -101,26 +89,7 @@ pub mod abi_calls {
                 max_tokens: 100_000,
             })
             .methods()
-            .compute_bytecode_root(bytecode)
-            .call()
-            .await
-            .unwrap()
-            .value
-    }
-
-    pub async fn compute_bytecode_root_with_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
-        bytecode: Vec<u8>,
-        configurables: Vec<(u64, Vec<u8>)>,
-    ) -> Bits256 {
-        contract
-            .clone()
-            .with_encoder_config(EncoderConfig {
-                max_depth: 10,
-                max_tokens: 100_000,
-            })
-            .methods()
-            .compute_bytecode_root_with_configurables(bytecode, configurables)
+            .compute_bytecode_root(bytecode, configurables)
             .call()
             .await
             .unwrap()
@@ -175,12 +144,13 @@ pub mod abi_calls {
     pub async fn verify_simple_contract_bytecode(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode: Vec<u8>,
+        configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
         simple_contract_instance: SimpleContract<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
         contract
             .methods()
-            .verify_contract_bytecode(contract_id, bytecode)
+            .verify_contract_bytecode(contract_id, bytecode, configurables)
             .with_contracts(&[&simple_contract_instance])
             .call()
             .await
@@ -190,6 +160,7 @@ pub mod abi_calls {
     pub async fn verify_complex_contract_bytecode(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode: Vec<u8>,
+        configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
         complex_contract_instance: ComplexContract<WalletUnlocked>,
     ) -> FuelCallResponse<()> {
@@ -200,44 +171,7 @@ pub mod abi_calls {
                 max_tokens: 100_000,
             })
             .methods()
-            .verify_contract_bytecode(contract_id, bytecode)
-            .with_contracts(&[&complex_contract_instance])
-            .call()
-            .await
-            .unwrap()
-    }
-
-    pub async fn verify_simple_contract_bytecode_with_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
-        bytecode: Vec<u8>,
-        configurables: Vec<(u64, Vec<u8>)>,
-        contract_id: ContractId,
-        simple_contract_instance: SimpleContract<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
-        contract
-            .methods()
-            .verify_contract_bytecode_with_configurables(contract_id, bytecode, configurables)
-            .with_contracts(&[&simple_contract_instance])
-            .call()
-            .await
-            .unwrap()
-    }
-
-    pub async fn verify_complex_contract_bytecode_with_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
-        bytecode: Vec<u8>,
-        configurables: Vec<(u64, Vec<u8>)>,
-        contract_id: ContractId,
-        complex_contract_instance: ComplexContract<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
-        contract
-            .clone()
-            .with_encoder_config(EncoderConfig {
-                max_depth: 10,
-                max_tokens: 100_000,
-            })
-            .methods()
-            .verify_contract_bytecode_with_configurables(contract_id, bytecode, configurables)
+            .verify_contract_bytecode(contract_id, bytecode, configurables)
             .with_contracts(&[&complex_contract_instance])
             .call()
             .await
@@ -247,25 +181,12 @@ pub mod abi_calls {
     pub async fn verify_predicate_address(
         contract: &BytecodeTestContract<WalletUnlocked>,
         bytecode: Vec<u8>,
+        configurables: Option<Vec<(u64, Vec<u8>)>>,
         predicate_id: Address,
     ) -> FuelCallResponse<()> {
         contract
             .methods()
-            .verify_predicate_address(predicate_id, bytecode)
-            .call()
-            .await
-            .unwrap()
-    }
-
-    pub async fn verify_predicate_address_with_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
-        bytecode: Vec<u8>,
-        configurables: Vec<(u64, Vec<u8>)>,
-        predicate_id: Address,
-    ) -> FuelCallResponse<()> {
-        contract
-            .methods()
-            .verify_predicate_address_with_configurables(predicate_id, bytecode, configurables)
+            .verify_predicate_address(predicate_id, bytecode, configurables)
             .call()
             .await
             .unwrap()
