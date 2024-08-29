@@ -14,7 +14,7 @@ storage {
 // Implement the SRC-3 Standard for this contract
 impl SRC3 for Contract {
     #[storage(read, write)]
-    fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
+    fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
         // Pass the StorageKeys to the `_mint()` function from the Asset Library.
         _mint(
             storage

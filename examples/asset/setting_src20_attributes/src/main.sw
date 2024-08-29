@@ -12,12 +12,12 @@ storage {
 
 impl SetAssetAttributes for Contract {
     #[storage(write)]
-    fn set_name(asset: AssetId, name: String) {
+    fn set_name(asset: AssetId, name: Option<String>) {
         _set_name(storage.name, asset, name);
     }
 
     #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: String) {
+    fn set_symbol(asset: AssetId, symbol: Option<String>) {
         _set_symbol(storage.symbol, asset, symbol);
     }
 
