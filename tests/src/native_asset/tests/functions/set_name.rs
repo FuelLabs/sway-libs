@@ -18,13 +18,8 @@ mod success {
         assert_eq!(name(&instance_1, asset_id_1).await, None);
 
         let response = set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -44,16 +39,11 @@ mod success {
         let name_1 = String::from("Fuel Asset 1");
 
         set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1.clone())
-        );
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1.clone()));
 
         let response = set_name(&instance_1, asset_id_1, None).await;
         assert_eq!(name(&instance_1, asset_id_1).await, None);
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -74,13 +64,8 @@ mod success {
         let name_2 = String::from("Fuel Asset 2");
 
         let response = set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -92,13 +77,8 @@ mod success {
         );
 
         let response = set_name(&instance_1, asset_id_1, Some(name_2.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_2.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_2.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -126,13 +106,8 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_1).await, None);
         let response = set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -145,13 +120,8 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_2).await, None);
         let response = set_name(&instance_1, asset_id_2, Some(name_2.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_2).await,
-            Some(name_2.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_2).await, Some(name_2.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -164,13 +134,8 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_3).await, None);
         let response = set_name(&instance_1, asset_id_3, Some(name_3.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_3).await,
-            Some(name_3.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_3).await, Some(name_3.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -183,13 +148,8 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_4).await, None);
         let response = set_name(&instance_1, asset_id_4, Some(name_4.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_4).await,
-            Some(name_4.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_4).await, Some(name_4.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -202,13 +162,8 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_5).await, None);
         let response = set_name(&instance_1, asset_id_5, Some(name_5.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_5).await,
-            Some(name_5.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_5).await, Some(name_5.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -227,16 +182,11 @@ mod success {
             defaults(id, owner_wallet.clone(), other_wallet.clone());
         let name_1 = String::from("Fuel Asset 1");
         let name_2 = String::from("Fuel Asset 2");
-        
+
         assert_eq!(name(&instance_1, asset_id_1).await, None);
         let response = set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1.clone())
-        );
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1.clone()));
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -249,9 +199,7 @@ mod success {
 
         assert_eq!(name(&instance_1, asset_id_2).await, None);
         let response = set_name(&instance_1, asset_id_2, Some(name_2.clone())).await;
-        let log = response
-            .decode_logs_with_type::<SetNameEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetNameEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -262,14 +210,8 @@ mod success {
             }
         );
 
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1)
-        );
-        assert_eq!(
-            name(&instance_1, asset_id_2).await,
-            Some(name_2)
-        );
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1));
+        assert_eq!(name(&instance_1, asset_id_2).await, Some(name_2));
     }
 }
 

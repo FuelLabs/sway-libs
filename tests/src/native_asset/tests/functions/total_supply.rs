@@ -35,12 +35,24 @@ mod success {
 
         let asset_id_3 = get_asset_id(Bytes32::from([3u8; 32]), id);
         assert_eq!(total_supply(&instance_1, asset_id_3).await, None);
-        mint(&instance_1, identity2.clone(), Some(Bits256([3u8; 32])), 300).await;
+        mint(
+            &instance_1,
+            identity2.clone(),
+            Some(Bits256([3u8; 32])),
+            300,
+        )
+        .await;
         assert_eq!(total_supply(&instance_1, asset_id_3).await, Some(300));
 
         let asset_id_4 = get_asset_id(Bytes32::from([4u8; 32]), id);
         assert_eq!(total_supply(&instance_1, asset_id_4).await, None);
-        mint(&instance_1, identity2.clone(), Some(Bits256([4u8; 32])), 400).await;
+        mint(
+            &instance_1,
+            identity2.clone(),
+            Some(Bits256([4u8; 32])),
+            400,
+        )
+        .await;
         assert_eq!(total_supply(&instance_1, asset_id_4).await, Some(400));
 
         let asset_id_5 = get_asset_id(Bytes32::from([5u8; 32]), id);

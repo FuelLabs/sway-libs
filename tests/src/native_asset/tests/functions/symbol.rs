@@ -26,12 +26,8 @@ mod success {
 
         assert_eq!(symbol(&instance_1, asset_id_1).await, None);
 
-
         set_symbol(&instance_1, asset_id_1, Some(symbol_1.clone())).await;
-        assert_eq!(
-            symbol(&instance_1, asset_id_1).await,
-            Some(symbol_1)
-        );
+        assert_eq!(symbol(&instance_1, asset_id_1).await, Some(symbol_1));
     }
 
     #[tokio::test]
@@ -60,25 +56,10 @@ mod success {
         set_symbol(&instance_1, asset_id_4, Some(symbol_4.clone())).await;
         set_symbol(&instance_1, asset_id_5, Some(symbol_5.clone())).await;
 
-        assert_eq!(
-            symbol(&instance_1, asset_id_1).await,
-            Some(symbol_1)
-        );
-        assert_eq!(
-            symbol(&instance_1, asset_id_2).await,
-            Some(symbol_2)
-        );
-        assert_eq!(
-            symbol(&instance_1, asset_id_3).await,
-            Some(symbol_3)
-        );
-        assert_eq!(
-            symbol(&instance_1, asset_id_4).await,
-            Some(symbol_4)
-        );
-        assert_eq!(
-            symbol(&instance_1, asset_id_5).await,
-            Some(symbol_5)
-        );
+        assert_eq!(symbol(&instance_1, asset_id_1).await, Some(symbol_1));
+        assert_eq!(symbol(&instance_1, asset_id_2).await, Some(symbol_2));
+        assert_eq!(symbol(&instance_1, asset_id_3).await, Some(symbol_3));
+        assert_eq!(symbol(&instance_1, asset_id_4).await, Some(symbol_4));
+        assert_eq!(symbol(&instance_1, asset_id_5).await, Some(symbol_5));
     }
 }

@@ -28,7 +28,13 @@ mod success {
 
         assert_eq!(metadata(&instance_1, asset_id_1, key.clone()).await, None);
 
-        set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key).await,
             Some(metadata1)
@@ -49,10 +55,28 @@ mod success {
         assert_eq!(metadata(&instance_1, asset_id_1, key.clone()).await, None);
         assert_eq!(metadata(&instance_1, asset_id_2, key.clone()).await, None);
         assert_eq!(metadata(&instance_1, asset_id_3, key.clone()).await, None);
-        
-        set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
-        set_metadata(&instance_1, asset_id_2, key.clone(), Some(metadata2.clone())).await;
-        set_metadata(&instance_1, asset_id_3, key.clone(), Some(metadata3.clone())).await;
+
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
+        set_metadata(
+            &instance_1,
+            asset_id_2,
+            key.clone(),
+            Some(metadata2.clone()),
+        )
+        .await;
+        set_metadata(
+            &instance_1,
+            asset_id_3,
+            key.clone(),
+            Some(metadata3.clone()),
+        )
+        .await;
 
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
@@ -90,10 +114,34 @@ mod success {
         assert_eq!(metadata(&instance_1, asset_id_1, key3.clone()).await, None);
         assert_eq!(metadata(&instance_1, asset_id_1, key4.clone()).await, None);
 
-        set_metadata(&instance_1, asset_id_1, key1.clone(), Some(metadata1.clone())).await;
-        set_metadata(&instance_1, asset_id_1, key2.clone(), Some(metadata2.clone())).await;
-        set_metadata(&instance_1, asset_id_1, key3.clone(), Some(metadata3.clone())).await;
-        set_metadata(&instance_1, asset_id_1, key4.clone(), Some(metadata4.clone())).await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key1.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key2.clone(),
+            Some(metadata2.clone()),
+        )
+        .await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key3.clone(),
+            Some(metadata3.clone()),
+        )
+        .await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key4.clone(),
+            Some(metadata4.clone()),
+        )
+        .await;
 
         assert_eq!(
             metadata(&instance_1, asset_id_1, key1.clone()).await,

@@ -34,10 +34,22 @@ mod success {
         mint(&instance_1, identity2.clone(), Some(sub_id_2), 200).await;
         assert_eq!(total_assets(&instance_1).await, 2);
 
-        mint(&instance_1, identity2.clone(), Some(Bits256([3u8; 32])), 300).await;
+        mint(
+            &instance_1,
+            identity2.clone(),
+            Some(Bits256([3u8; 32])),
+            300,
+        )
+        .await;
         assert_eq!(total_assets(&instance_1).await, 3);
 
-        mint(&instance_1, identity2.clone(), Some(Bits256([4u8; 32])), 400).await;
+        mint(
+            &instance_1,
+            identity2.clone(),
+            Some(Bits256([4u8; 32])),
+            400,
+        )
+        .await;
         assert_eq!(total_assets(&instance_1).await, 4);
 
         mint(&instance_1, identity2, Some(Bits256([5u8; 32])), 200).await;

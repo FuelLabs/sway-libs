@@ -18,7 +18,13 @@ mod success {
 
         assert_eq!(metadata(&instance_1, asset_id_1, key.clone()).await, None);
 
-        let response = set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
             Some(metadata1.clone())
@@ -48,7 +54,13 @@ mod success {
         let metadata1 = Metadata::String(String::from("Fuel NFT Metadata"));
         let key = String::from("key1");
 
-        set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
             Some(metadata1.clone())
@@ -83,7 +95,13 @@ mod success {
         let key = String::from("key1");
 
         assert_eq!(metadata(&instance_1, asset_id_1, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
             Some(metadata1.clone())
@@ -105,7 +123,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_2, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_2, key.clone(), Some(metadata2.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_2,
+            key.clone(),
+            Some(metadata2.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_2, key.clone()).await,
             Some(metadata2.clone())
@@ -128,7 +152,13 @@ mod success {
 
         let asset_id_3 = get_asset_id(Bytes32::from([3u8; 32]), id);
         assert_eq!(metadata(&instance_1, asset_id_3, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_3, key.clone(), Some(metadata3.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_3,
+            key.clone(),
+            Some(metadata3.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_3, key.clone()).await,
             Some(metadata3.clone())
@@ -162,7 +192,13 @@ mod success {
         let asset_id_3 = get_asset_id(Bytes32::from([3u8; 32]), id);
 
         assert_eq!(metadata(&instance_1, asset_id_1, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1.clone(), key.clone()).await,
             Some(metadata1.clone())
@@ -182,7 +218,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_2, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_2, key.clone(), Some(metadata2.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_2,
+            key.clone(),
+            Some(metadata2.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
             Some(metadata1.clone())
@@ -206,7 +248,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_3, key.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_3, key.clone(), Some(metadata3.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_3,
+            key.clone(),
+            Some(metadata3.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key.clone()).await,
             Some(metadata1)
@@ -252,7 +300,13 @@ mod success {
         let key4 = String::from("key4");
 
         assert_eq!(metadata(&instance_1, asset_id_1, key1.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key1.clone(), Some(metadata1.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key1.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key1.clone()).await,
             Some(metadata1.clone())
@@ -272,7 +326,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_1, key2.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key2.clone(), Some(metadata2.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key2.clone(),
+            Some(metadata2.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key2.clone()).await,
             Some(metadata2.clone())
@@ -296,7 +356,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_1, key3.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key3.clone(), Some(metadata3.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key3.clone(),
+            Some(metadata3.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key3.clone()).await,
             Some(metadata3.clone())
@@ -324,7 +390,13 @@ mod success {
         );
 
         assert_eq!(metadata(&instance_1, asset_id_1, key4.clone()).await, None);
-        let response = set_metadata(&instance_1, asset_id_1, key4.clone(), Some(metadata4.clone())).await;
+        let response = set_metadata(
+            &instance_1,
+            asset_id_1,
+            key4.clone(),
+            Some(metadata4.clone()),
+        )
+        .await;
         assert_eq!(
             metadata(&instance_1, asset_id_1, key4.clone()).await,
             Some(metadata4.clone())
@@ -370,7 +442,13 @@ mod revert {
         let metadata1 = Metadata::String(String::from(""));
         let key = String::from("key1");
 
-        set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
     }
 
     #[tokio::test]
@@ -379,13 +457,16 @@ mod revert {
         let (owner_wallet, other_wallet, id, instance_1, _instance_2) = setup().await;
         let (asset_id_1, _asset_id_2, _sub_id_1, _sub_id_2, _identity1, _other_identity) =
             defaults(id, owner_wallet.clone(), other_wallet.clone());
-        let metadata1 = Metadata::Bytes(
-            Bytes::from_hex_str("")
-                .expect("failed to convert to bytes"),
-        );        
+        let metadata1 =
+            Metadata::Bytes(Bytes::from_hex_str("").expect("failed to convert to bytes"));
         let key = String::from("key1");
 
-        set_metadata(&instance_1, asset_id_1, key.clone(), Some(metadata1.clone())).await;
+        set_metadata(
+            &instance_1,
+            asset_id_1,
+            key.clone(),
+            Some(metadata1.clone()),
+        )
+        .await;
     }
-
 }

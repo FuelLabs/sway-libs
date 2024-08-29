@@ -61,7 +61,12 @@ impl StorageKey<StorageMetadata> {
     /// }
     /// ```
     #[storage(read, write)]
-    pub fn insert(self, asset: AssetId, metadata: Option<Metadata>, key: String) {
+    pub fn insert(
+        self,
+        asset: AssetId,
+        metadata: Option<Metadata>,
+        key: String,
+) {
         let hashed_key = sha256((asset, key));
 
         match metadata {
@@ -223,13 +228,12 @@ pub fn _set_metadata(
 /// ```
 #[storage(read)]
 pub fn _metadata(
-    metadata_key: StorageKey<StorageMetadata>, 
-    asset: AssetId, 
-    key: String
+    metadata_key: StorageKey<StorageMetadata>,
+    asset: AssetId,
+    key: String,
 ) -> Option<Metadata> {
     metadata_key.get(asset, key)
-} 
-
+}
 abi SetAssetMetadata {
     /// Stores metadata for a specific asset and key pair.
     ///

@@ -22,9 +22,7 @@ mod success {
             symbol(&instance_1, asset_id_1).await,
             Some(symbol_1.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -51,9 +49,7 @@ mod success {
 
         let response = set_symbol(&instance_1, asset_id_1, None).await;
         assert_eq!(symbol(&instance_1, asset_id_1).await, None);
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -73,15 +69,12 @@ mod success {
         let symbol_1 = String::from("FA1");
         let symbol_2 = String::from("FA2");
 
-
         let response = set_symbol(&instance_1, asset_id_1, Some(symbol_1.clone())).await;
         assert_eq!(
             symbol(&instance_1, asset_id_1).await,
             Some(symbol_1.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -97,9 +90,7 @@ mod success {
             symbol(&instance_1, asset_id_1).await,
             Some(symbol_2.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -131,9 +122,7 @@ mod success {
             symbol(&instance_1, asset_id_1).await,
             Some(symbol_1.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -150,9 +139,7 @@ mod success {
             symbol(&instance_1, asset_id_2).await,
             Some(symbol_2.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -169,9 +156,7 @@ mod success {
             symbol(&instance_1, asset_id_3).await,
             Some(symbol_3.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -188,9 +173,7 @@ mod success {
             symbol(&instance_1, asset_id_4).await,
             Some(symbol_4.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -207,9 +190,7 @@ mod success {
             symbol(&instance_1, asset_id_5).await,
             Some(symbol_5.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -235,9 +216,7 @@ mod success {
             symbol(&instance_1, asset_id_1).await,
             Some(symbol_1.clone())
         );
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -250,9 +229,7 @@ mod success {
 
         assert_eq!(symbol(&instance_1, asset_id_2).await, None);
         let response = set_symbol(&instance_1, asset_id_2, Some(symbol_2.clone())).await;
-        let log = response
-            .decode_logs_with_type::<SetSymbolEvent>()
-            .unwrap();
+        let log = response.decode_logs_with_type::<SetSymbolEvent>().unwrap();
         let event = log.first().unwrap();
         assert_eq!(
             *event,
@@ -263,14 +240,8 @@ mod success {
             }
         );
 
-        assert_eq!(
-            symbol(&instance_1, asset_id_1).await,
-            Some(symbol_1)
-        );
-        assert_eq!(
-            symbol(&instance_1, asset_id_2).await,
-            Some(symbol_2)
-        );
+        assert_eq!(symbol(&instance_1, asset_id_1).await, Some(symbol_1));
+        assert_eq!(symbol(&instance_1, asset_id_2).await, Some(symbol_2));
     }
 }
 

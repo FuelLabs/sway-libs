@@ -27,10 +27,7 @@ mod success {
         assert_eq!(name(&instance_1, asset_id_1).await, None);
 
         set_name(&instance_1, asset_id_1, Some(name_1.clone())).await;
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1)
-        );
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1));
     }
 
     #[tokio::test]
@@ -47,7 +44,6 @@ mod success {
         let asset_id_4 = get_asset_id(Bytes32::from([4u8; 32]), id);
         let asset_id_5 = get_asset_id(Bytes32::from([5u8; 32]), id);
 
-
         assert_eq!(name(&instance_1, asset_id_1).await, None);
         assert_eq!(name(&instance_1, asset_id_2).await, None);
         assert_eq!(name(&instance_1, asset_id_3).await, None);
@@ -60,25 +56,10 @@ mod success {
         set_name(&instance_1, asset_id_4, Some(name_4.clone())).await;
         set_name(&instance_1, asset_id_5, Some(name_5.clone())).await;
 
-        assert_eq!(
-            name(&instance_1, asset_id_1).await,
-            Some(name_1)
-        );
-        assert_eq!(
-            name(&instance_1, asset_id_2).await,
-            Some(name_2)
-        );
-        assert_eq!(
-            name(&instance_1, asset_id_3).await,
-            Some(name_3)
-        );
-        assert_eq!(
-            name(&instance_1, asset_id_4).await,
-            Some(name_4)
-        );
-        assert_eq!(
-            name(&instance_1, asset_id_5).await,
-            Some(name_5)
-        );
+        assert_eq!(name(&instance_1, asset_id_1).await, Some(name_1));
+        assert_eq!(name(&instance_1, asset_id_2).await, Some(name_2));
+        assert_eq!(name(&instance_1, asset_id_3).await, Some(name_3));
+        assert_eq!(name(&instance_1, asset_id_4).await, Some(name_4));
+        assert_eq!(name(&instance_1, asset_id_5).await, Some(name_5));
     }
 }

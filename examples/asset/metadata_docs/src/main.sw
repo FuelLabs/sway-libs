@@ -3,7 +3,7 @@ contract;
 use std::{bytes::Bytes, string::String};
 
 // ANCHOR: import
-use sway_libs::asset::metadata::{StorageMetadata, SetAssetMetadata, _set_metadata, _metadata};
+use sway_libs::asset::metadata::{_metadata, _set_metadata, SetAssetMetadata, StorageMetadata};
 use standards::src7::*;
 // ANCHOR_END: import
 

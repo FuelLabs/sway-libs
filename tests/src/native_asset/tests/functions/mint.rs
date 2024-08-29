@@ -21,8 +21,14 @@ mod success {
 
         let response = mint(&instance_1, identity2, Some(sub_id_1), mint_amount).await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount));
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount)
+        );
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
             .decode_logs_with_type::<TotalSupplyEvent>()
@@ -48,8 +54,14 @@ mod success {
 
         let response = mint(&instance_1, identity2, Some(sub_id_1), mint_amount_1).await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount_1);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount_1));
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount_1
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount_1)
+        );
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
             .decode_logs_with_type::<TotalSupplyEvent>()
@@ -65,8 +77,14 @@ mod success {
         );
 
         let response = mint(&instance_1, identity2, Some(sub_id_1), mint_amount_2).await;
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount_1 + mint_amount_2);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount_1 + mint_amount_2));
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount_1 + mint_amount_2
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount_1 + mint_amount_2)
+        );
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
             .decode_logs_with_type::<TotalSupplyEvent>()
@@ -95,8 +113,14 @@ mod success {
 
         let response = mint(&instance_1, identity2, Some(sub_id_1), mint_amount).await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount));
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount)
+        );
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
             .decode_logs_with_type::<TotalSupplyEvent>()
@@ -126,7 +150,10 @@ mod success {
 
         let response = mint(&instance_1, identity2, None, mint_amount).await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id).await, mint_amount);
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id).await,
+            mint_amount
+        );
         assert_eq!(total_supply(&instance_1, asset_id).await, Some(mint_amount));
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
@@ -151,11 +178,23 @@ mod success {
         let mint_amount_1 = 100;
         let mint_amount_2 = 200;
 
-        let response = mint(&instance_1, identity2.clone(), Some(sub_id_1), mint_amount_1).await;
+        let response = mint(
+            &instance_1,
+            identity2.clone(),
+            Some(sub_id_1),
+            mint_amount_1,
+        )
+        .await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount_1);
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount_1
+        );
         assert_eq!(get_wallet_balance(&other_wallet, &asset_id_2).await, 0);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount_1));
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount_1)
+        );
         assert_eq!(total_supply(&instance_1, asset_id_2).await, None);
         assert_eq!(total_assets(&instance_1).await, 1);
         let log = response
@@ -173,10 +212,22 @@ mod success {
 
         let response = mint(&instance_1, identity2, Some(sub_id_2), mint_amount_2).await;
 
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_1).await, mint_amount_1);
-        assert_eq!(get_wallet_balance(&other_wallet, &asset_id_2).await, mint_amount_2);
-        assert_eq!(total_supply(&instance_1, asset_id_1).await, Some(mint_amount_1));
-        assert_eq!(total_supply(&instance_1, asset_id_2).await, Some(mint_amount_2));
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_1).await,
+            mint_amount_1
+        );
+        assert_eq!(
+            get_wallet_balance(&other_wallet, &asset_id_2).await,
+            mint_amount_2
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_1).await,
+            Some(mint_amount_1)
+        );
+        assert_eq!(
+            total_supply(&instance_1, asset_id_2).await,
+            Some(mint_amount_2)
+        );
         assert_eq!(total_assets(&instance_1).await, 2);
         let log = response
             .decode_logs_with_type::<TotalSupplyEvent>()

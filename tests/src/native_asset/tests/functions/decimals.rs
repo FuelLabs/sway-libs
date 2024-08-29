@@ -32,7 +32,7 @@ mod success {
         let decimals_4 = 16u8;
         let decimals_5 = 9u8;
         let asset_id_3 = get_asset_id(Bytes32::from([3u8; 32]), id);
-        let asset_id_4 = get_asset_id(Bytes32::from([4u8; 32]), id);        
+        let asset_id_4 = get_asset_id(Bytes32::from([4u8; 32]), id);
         let asset_id_5 = get_asset_id(Bytes32::from([5u8; 32]), id);
 
         assert_eq!(decimals(&instance_1, asset_id_1).await, None);
@@ -46,7 +46,7 @@ mod success {
         set_decimals(&instance_1, asset_id_3, decimals_3).await;
         set_decimals(&instance_1, asset_id_4, decimals_4).await;
         set_decimals(&instance_1, asset_id_5, decimals_5).await;
-        
+
         assert_eq!(decimals(&instance_1, asset_id_1).await, Some(decimals_1));
         assert_eq!(decimals(&instance_1, asset_id_2).await, Some(decimals_2));
         assert_eq!(decimals(&instance_1, asset_id_3).await, Some(decimals_3));
