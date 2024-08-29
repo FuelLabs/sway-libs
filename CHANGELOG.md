@@ -85,7 +85,7 @@ fn foo(my_metadata: Metadata) {
 }
 ```
 
-After: 
+After:
 
 ```sway
 use standards::src7::*;
@@ -120,7 +120,7 @@ abi SetAssetMetadata {
 
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) The `_set_name()`, `_set_symbol()`, `_mint()`, and `_set_metdata()` functions `name`, `symbol`, `sub_id`, and `metadata` arguments are now `Option`s.
 
-Before: 
+Before:
 
 ```sway
 fn foo(asset: AssetId, recipient: Identity, amount: u64, key: String, metadata: Metadata) {
@@ -131,7 +131,7 @@ fn foo(asset: AssetId, recipient: Identity, amount: u64, key: String, metadata: 
 }
 ```
 
-After: 
+After:
 
 ```sway
 fn foo(asset: AssetId, recipient: Identity, amount: u64, metadata: Metadata, key: String) {
