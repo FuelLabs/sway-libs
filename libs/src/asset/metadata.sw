@@ -50,6 +50,7 @@ impl StorageKey<StorageMetadata> {
     /// ```sway
     /// use standards::src7::Metadata;
     /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -119,6 +120,7 @@ impl StorageKey<StorageMetadata> {
     /// ```sway
     /// use standards::src7::Metadata;
     /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -159,8 +161,8 @@ impl StorageKey<StorageMetadata> {
 ///
 /// * `metadata_key`: [StorageKey<StorageMetadata>] - The storage location for metadata.
 /// * `asset`: [AssetId] - The asset for the metadata to be stored.
+/// * `metadata`: [Option<Metadata>] - The metadata which to be stored.
 /// * `key`: [String] - The key for the metadata to be stored.
-/// * `metadata`: [Metadata] - The metadata which to be stored.
 ///
 /// # Number of Storage Accesses
 ///
@@ -171,13 +173,14 @@ impl StorageKey<StorageMetadata> {
 /// ```sway
 /// use standards::src7::Metadata;
 /// use sway_libs::asset::metadata::*;
+/// use std::string::String;
 ///
 /// storage {
 ///     metadata: StorageMetadata = StorageMetadata {}
 /// }
 ///
-/// fn foo(asset: AssetId, key: String, metadata: Metadata) {
-///     _set_metadata(storage.metadata, asset, key, metadata);
+/// fn foo(asset: AssetId, key: String, metadata: Option<Metadata>) {
+///     _set_metadata(storage.metadata, asset, metadata, key);
 /// }
 /// ```
 #[storage(read, write)]
@@ -190,6 +193,34 @@ pub fn _set_metadata(
     metadata_key.insert(asset, metadata, key);
 }
 
+/// Returns metadata for a specific asset and key pair.
+///
+/// # Arguments
+///
+/// * `metadata_key`: [StorageKey<StorageMetadata>] - The storage location for metadata.
+/// * `asset`: [AssetId] - The asset for the metadata to be read.
+/// * `metadata`: [Option<Metadata>] - The metadata which to be read.
+/// * `key`: [String] - The key for the metadata to be read.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `2`
+///
+/// # Example
+///
+/// ```sway
+/// use standards::src7::Metadata;
+/// use sway_libs::asset::metadata::*;
+/// use std::string::String;
+///
+/// storage {
+///     metadata: StorageMetadata = StorageMetadata {}
+/// }
+///
+/// fn foo(asset: AssetId, key: String) {
+///     let result: Option<Metadata> = _metadata(storage.metadata, asset, key);
+/// }
+/// ```
 #[storage(read)]
 pub fn _metadata(
     metadata_key: StorageKey<StorageMetadata>, 
@@ -200,6 +231,27 @@ pub fn _metadata(
 } 
 
 abi SetAssetMetadata {
+    /// Stores metadata for a specific asset and key pair.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset`: [AssetId] - The asset for the metadata to be stored.
+    /// * `metadata`: [Option<Metadata>] - The metadata which to be stored.
+    /// * `key`: [String] - The key for the metadata to be stored.
+    ///
+    /// # Example
+    ///
+    /// ```sway
+    /// use standards::src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, metadata: Option<Metadata>, key: String) {
+    ///     let contract_abi = abi(SetAssetMetadata, contract_id.bits());
+    ///     contract_abi.set_metadata(asset, metadata, key);
+    ///     assert(contract_abi.metadata(asset, key).unwrap() == Metadata);
+    /// }
+    /// ```
     #[storage(read, write)]
     fn set_metadata(asset: AssetId, metadata: Option<Metadata>, key: String);
 }
