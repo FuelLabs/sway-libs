@@ -2,7 +2,7 @@ use fuels::{
     accounts::predicate::Predicate,
     core::codec::{DecoderConfig, EncoderConfig},
     prelude::*,
-    programs::call_response::FuelCallResponse,
+    programs::responses::CallResponse,
     tx::StorageSlot,
     types::{Bits256, Bytes32},
 };
@@ -147,7 +147,7 @@ pub mod abi_calls {
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
         simple_contract_instance: SimpleContract<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .verify_contract_bytecode(contract_id, bytecode, configurables)
@@ -163,7 +163,7 @@ pub mod abi_calls {
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
         complex_contract_instance: ComplexContract<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .clone()
             .with_encoder_config(EncoderConfig {
@@ -183,7 +183,7 @@ pub mod abi_calls {
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         predicate_id: Address,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .verify_predicate_address(predicate_id, bytecode, configurables)
@@ -262,7 +262,7 @@ pub mod test_helpers {
         let rng = &mut StdRng::seed_from_u64(2322u64);
         let salt: [u8; 32] = rng.gen();
         let storage_vec = Vec::<StorageSlot>::new();
-        let result_id = Contract::new(bytecode, salt.into(), storage_vec)
+        let result_id = Contract::regular(bytecode, salt.into(), storage_vec)
             .deploy(&wallet, TxPolicies::default())
             .await
             .unwrap();
@@ -347,7 +347,7 @@ pub mod test_helpers {
         let rng = &mut StdRng::seed_from_u64(2323u64);
         let salt: [u8; 32] = rng.gen();
         let storage_vec = Vec::<StorageSlot>::new();
-        let result_id = Contract::new(bytecode, salt.into(), storage_vec)
+        let result_id = Contract::regular(bytecode, salt.into(), storage_vec)
             .deploy(&wallet, TxPolicies::default())
             .await
             .unwrap();

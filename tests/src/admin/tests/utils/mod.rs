@@ -3,7 +3,7 @@ use fuels::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
         StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
     },
-    programs::call_response::FuelCallResponse,
+    programs::responses::CallResponse,
     types::Identity,
 };
 
@@ -25,7 +25,7 @@ pub mod abi_calls {
     pub async fn add_admin(
         contract: &AdminLib<WalletUnlocked>,
         new_admin: Identity,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .add_admin(new_admin)
@@ -37,7 +37,7 @@ pub mod abi_calls {
     pub async fn remove_admin(
         contract: &AdminLib<WalletUnlocked>,
         old_admin: Identity,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .remove_admin(old_admin)
@@ -56,11 +56,11 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn only_admin(contract: &AdminLib<WalletUnlocked>) -> FuelCallResponse<()> {
+    pub async fn only_admin(contract: &AdminLib<WalletUnlocked>) -> CallResponse<()> {
         contract.methods().only_admin().call().await.unwrap()
     }
 
-    pub async fn only_owner_or_admin(contract: &AdminLib<WalletUnlocked>) -> FuelCallResponse<()> {
+    pub async fn only_owner_or_admin(contract: &AdminLib<WalletUnlocked>) -> CallResponse<()> {
         contract
             .methods()
             .only_owner_or_admin()
@@ -72,7 +72,7 @@ pub mod abi_calls {
     pub async fn set_ownership(
         contract: &AdminLib<WalletUnlocked>,
         new_owner: Identity,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .set_ownership(new_owner)
