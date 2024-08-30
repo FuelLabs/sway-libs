@@ -23,7 +23,10 @@ fn make_mutable(not_mutable_bytecode: Vec<u8>) {
 // ANCHOR_END: known_issue
 
 // ANCHOR: swap_configurables
-fn swap(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
+fn swap(
+    my_bytecode: Vec<u8>,
+    my_configurables: ContractConfigurables,
+) {
     let mut my_bytecode = my_bytecode;
     let resulting_bytecode: Vec<u8> = swap_configurables(my_bytecode, my_configurables);
 }
@@ -34,7 +37,10 @@ fn compute_bytecode(my_bytecode: Vec<u8>) {
     let root: BytecodeRoot = compute_bytecode_root(my_bytecode);
 }
 
-fn compute_bytecode_configurables(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
+fn compute_bytecode_configurables(
+    my_bytecode: Vec<u8>,
+    my_configurables: ContractConfigurables,
+) {
     let mut my_bytecode = my_bytecode;
     let root: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
 }
@@ -62,7 +68,10 @@ fn compute_predicate(my_bytecode: Vec<u8>) {
     let address: Address = compute_predicate_address(my_bytecode);
 }
 
-fn compute_predicate_configurables(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
+fn compute_predicate_configurables(
+    my_bytecode: Vec<u8>,
+    my_configurables: ContractConfigurables,
+) {
     let mut my_bytecode = my_bytecode;
     let address: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
 }
