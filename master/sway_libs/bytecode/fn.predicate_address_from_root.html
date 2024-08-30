@@ -11,7 +11,7 @@
 <pre><code class="language-sway">use sway_libs::bytecode::{predicate_address_from_root, BytecodeRoot};
 
 fn foo(predicate_bytecode_root: BytecodeRoot) {
-    let predicate_address = predicate_address_from_root(predicate_bytecode_root);
+    let predicate_address: Address = predicate_address_from_root(predicate_bytecode_root);
     assert(predicate_address != Address::zero());
 }
 </code></pre>
