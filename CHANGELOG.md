@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()`, `_set_name()` and `_set_symbol()` now revert if the metadata is an empty string.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()` now reverts if the metadata is empty bytes.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_mint()` and `_burn()` now revert if the `amount` argument is zero.
+- [#290](https://github.com/FuelLabs/sway-libs/pull/290) Update the Upgradeability library to use a specific storage slot for owner functionality.
 
 ### Fixed
 
@@ -78,9 +79,9 @@ Before:
 use sway_libs::asset::metadata::*;
 
 fn foo(my_metadata: Metadata) {
-     let res: bool = my_metadata.is_b256(); 
-     let res: bool = my_metadata.is_string(); 
-     let res: bool = my_metadata.is_bytes(); 
+     let res: bool = my_metadata.is_b256();
+     let res: bool = my_metadata.is_string();
+     let res: bool = my_metadata.is_bytes();
      let res: bool = my_metadata.is_uint();
 }
 ```
@@ -91,9 +92,9 @@ After:
 use standards::src7::*;
 
 fn foo(my_metadata: Metadata) {
-     let res: bool = my_metadata.is_b256(); 
-     let res: bool = my_metadata.is_string(); 
-     let res: bool = my_metadata.is_bytes(); 
+     let res: bool = my_metadata.is_b256();
+     let res: bool = my_metadata.is_string();
+     let res: bool = my_metadata.is_bytes();
      let res: bool = my_metadata.is_uint();
 }
 ```
@@ -140,6 +141,28 @@ fn foo(asset: AssetId, recipient: Identity, amount: u64, metadata: Metadata, key
     _mint(storage.total_assets, storage.total_supply, recipient, Some(SubId::zero()), amount);
     // Note: Ordering of arguments has changed for `_set_metadata()`
     _set_metadata(storage.metadata, asset, Some(metadata), key);
+}
+```
+
+- [#290](https://github.com/FuelLabs/sway-libs/pull/290) The `_proxy_owner()`, `only_proxy_owner()` and `_set_proxy_owner()` functions no longer take `storage.proxy_owner` as a parameter. Instead they directly read and write to the storage slot `0xbb79927b15d9259ea316f2ecb2297d6cc8851888a98278c0a2e03e1a091ea754` which is `sha256("storage_SRC14_1")`.
+
+Before:
+
+```sway
+fn foo() {
+    let stored_proxy_owner = _proxy_owner(storage.proxy_owner);
+    only_proxy_owner(storage.proxy_owner);
+    _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+}
+```
+
+After:
+
+```sway
+fn foo() {
+    let stored_proxy_owner = _proxy_owner();
+    only_proxy_owner();
+    _set_proxy_owner(new_proxy_owner);
 }
 ```
 
