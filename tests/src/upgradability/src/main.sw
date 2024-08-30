@@ -14,11 +14,17 @@ configurable {
     INITIAL_OWNER: State = State::Uninitialized,
 }
 
-#[namespace(SRC14)]
 storage {
-    // target is at sha256("storage_SRC14_0")
-    target: Option<ContractId> = None,
-    proxy_owner: State = State::Uninitialized,
+    SRC14 {
+        /// The [ContractId] of the target contract.
+        ///
+        /// # Additional Information
+        ///
+        /// `target` is stored at sha256("storage_SRC14_0")
+        target in 0x7bb458adc1d118713319a5baa00a2d049dd64d2916477d2688d76970c898cd55: Option<ContractId> = None,
+        /// The [State] of the proxy owner.
+        proxy_owner: State = State::Uninitialized,
+    },
 }
 
 abi UpgradableTest {
@@ -47,25 +53,25 @@ impl SRC14 for Contract {
 impl SRC14Extension for Contract {
     #[storage(read)]
     fn proxy_owner() -> State {
-        _proxy_owner(storage.proxy_owner)
+        _proxy_owner(storage::SRC14.proxy_owner)
     }
 }
 
 impl UpgradableTest for Contract {
     #[storage(read)]
     fn only_proxy_owner() {
-        only_proxy_owner(storage.proxy_owner);
+        only_proxy_owner(storage::SRC14.proxy_owner);
     }
 
     #[storage(write)]
     fn set_proxy_owner(new_proxy_owner: State) {
-        _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+        _set_proxy_owner(new_proxy_owner, storage::SRC14.proxy_owner);
     }
 
     // Used to immediately set the storage variables as the configured constants
     #[storage(write)]
     fn initialize_proxy() {
-        storage.target.write(INITIAL_TARGET);
-        storage.proxy_owner.write(INITIAL_OWNER);
+        storage::SRC14.target.write(INITIAL_TARGET);
+        storage::SRC14.proxy_owner.write(INITIAL_OWNER);
     }
 }
