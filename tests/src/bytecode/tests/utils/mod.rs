@@ -37,14 +37,14 @@ const PREDICATE_BYTECODE_PATH: &str =
     "src/bytecode/test_artifacts/simple_predicate/out/release/simple_predicate.bin";
 const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 
-const HEX_STR_1: &str = "0xacbe4bfc77e55c071db31f2e37c824d75794867d88499107dc8318cb22aceea5";
-const HEX_STR_2: &str = "0x0b1af92ac5a3e8cfeafede9586a1f853a9e0258e7cdccae5e5181edac081f2c1b";
-const HEX_STR_3: &str = "0x0345c74edfb0ce0820409176d0cbc2c44eac1e5e4c7382ee7e7c38d611d9ba767";
-const SIMPLE_PREDICATE_OFFSET: u64 = 408;
-const SIMPLE_CONTRACT_OFFSET: u64 = 1432;
-const COMPLEX_CONTRACT_OFFSET_1: u64 = 23344;
-const COMPLEX_CONTRACT_OFFSET_2: u64 = 23360;
-const COMPLEX_CONTRACT_OFFSET_3: u64 = 23400;
+const HEX_STR_1: &str = "0xb4ca495f61ac3433e9a78cbf3adfb0e4486913bb548029cef99d1de2cf606d52";
+const HEX_STR_2: &str = "0x5d617010b482b54332741fab0dfd1b15dfad07e8895360af0fb9f3e3a04b0c74";
+const HEX_STR_3: &str = "0xfebf0fdda20de46a0f2261a69556b0f9fdeea85759af1edb322831cf7d0dc8d5";
+const SIMPLE_PREDICATE_OFFSET: u64 = 376;
+const SIMPLE_CONTRACT_OFFSET: u64 = 1400;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 22968;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 22928;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 22856;
 
 pub mod abi_calls {
 
