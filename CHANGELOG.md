@@ -33,7 +33,7 @@ Description of the upcoming release here.
 
 ### Added v0.24.0
 
-- [#285](https://github.com/FuelLabs/sway-libs/pull/285) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
+- [#293](https://github.com/FuelLabs/sway-libs/pull/293) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
 
 ### Changed v0.24.0
