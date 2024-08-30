@@ -61,12 +61,7 @@ impl StorageKey<StorageMetadata> {
     /// }
     /// ```
     #[storage(read, write)]
-    pub fn insert(
-        self,
-        asset: AssetId,
-        key: String,
-        metadata: Metadata,
-) {
+    pub fn insert(self, asset: AssetId, key: String, metadata: Metadata) {
         let hashed_key = sha256((asset, key));
 
         match metadata {

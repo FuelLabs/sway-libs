@@ -237,7 +237,7 @@ pub fn _set_name(
 
     name_key.insert(asset, StorageString {});
     name_key.get(asset).write_slice(name);
-    
+
     log(SetNameEvent {
         asset,
         name: Some(name),
