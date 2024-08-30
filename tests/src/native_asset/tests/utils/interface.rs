@@ -49,7 +49,7 @@ pub(crate) async fn decimals(contract: &AssetLib<WalletUnlocked>, asset: AssetId
 pub(crate) async fn mint(
     contract: &AssetLib<WalletUnlocked>,
     recipient: Identity,
-    sub_id: Bits256,
+    sub_id: Option<Bits256>,
     amount: u64,
 ) -> FuelCallResponse<()> {
     contract
@@ -83,7 +83,7 @@ pub(crate) async fn burn(
 pub(crate) async fn set_name(
     contract: &AssetLib<WalletUnlocked>,
     asset: AssetId,
-    name: String,
+    name: Option<String>,
 ) -> FuelCallResponse<()> {
     contract
         .methods()
@@ -96,7 +96,7 @@ pub(crate) async fn set_name(
 pub(crate) async fn set_symbol(
     contract: &AssetLib<WalletUnlocked>,
     asset: AssetId,
-    name: String,
+    name: Option<String>,
 ) -> FuelCallResponse<()> {
     contract
         .methods()
@@ -137,11 +137,11 @@ pub(crate) async fn set_metadata(
     contract: &AssetLib<WalletUnlocked>,
     asset: AssetId,
     key: String,
-    metadata: Metadata,
+    metadata: Option<Metadata>,
 ) -> FuelCallResponse<()> {
     contract
         .methods()
-        .set_metadata(asset, key, metadata)
+        .set_metadata(asset, metadata, key)
         .call()
         .await
         .unwrap()

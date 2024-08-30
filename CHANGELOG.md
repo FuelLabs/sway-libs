@@ -10,11 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - [#285](https://github.com/FuelLabs/sway-libs/pull/285) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) Updates the repository to Sway-Standards v0.6.0 and implements the new SRC-20 and SRC-7 logging specifications.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()`, `_set_name()` and `_set_symbol()` now revert if the metadata is an empty string.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()` now reverts if the metadata is empty bytes.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_mint()` and `_burn()` now revert if the `amount` argument is zero.
 
 ### Fixed
 
@@ -65,6 +68,79 @@ verify_contract_bytecode(my_contract_id, my_bytecode, Some(my_configurables)); /
 // Verify predicate address
 verify_predicate_address(my_predicate_address, my_bytecode, None); // No configurables
 verify_predicate_address(my_predicate_address, my_bytecode, Some(my_configurables)); // With configurables
+```
+
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) The support functions for `Metadata` have been removed. They have been moved to sway-standards.
+
+Before:
+
+```sway
+use sway_libs::asset::metadata::*;
+
+fn foo(my_metadata: Metadata) {
+     let res: bool = my_metadata.is_b256(); 
+     let res: bool = my_metadata.is_string(); 
+     let res: bool = my_metadata.is_bytes(); 
+     let res: bool = my_metadata.is_uint();
+}
+```
+
+After:
+
+```sway
+use standards::src7::*;
+
+fn foo(my_metadata: Metadata) {
+     let res: bool = my_metadata.is_b256(); 
+     let res: bool = my_metadata.is_string(); 
+     let res: bool = my_metadata.is_bytes(); 
+     let res: bool = my_metadata.is_uint();
+}
+```
+
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) The `SetMetadata` abi `set_metadata` function definition has changed. The `metadata` argument is now an `Option<Metadata>` and the argument order has changed.
+
+Before:
+
+```sway
+abi SetAssetMetadata {
+    #[storage(read, write)]
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata);
+}
+```
+
+After:
+
+```sway
+abi SetAssetMetadata {
+    #[storage(read, write)]
+    fn set_metadata(asset: AssetId, metadata: Option<Metadata>, key: String);
+}
+```
+
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) The `_set_name()`, `_set_symbol()`, `_mint()`, and `_set_metdata()` functions `name`, `symbol`, `sub_id`, and `metadata` arguments are now `Option`s.
+
+Before:
+
+```sway
+fn foo(asset: AssetId, recipient: Identity, amount: u64, key: String, metadata: Metadata) {
+    _set_name(storage.name, asset, String::from_ascii_str("Ether"));
+    _set_symbol(storage.symbol, asset, String::from_ascii_str("ETH"));
+    _mint(storage.total_assets, storage.total_supply, recipient, SubId::zero(), amount);
+    _set_metadata(storage.metadata, asset, key, metadata);
+}
+```
+
+After:
+
+```sway
+fn foo(asset: AssetId, recipient: Identity, amount: u64, metadata: Metadata, key: String) {
+    _set_name(storage.name, asset, Some(String::from_ascii_str("Ether")));
+    _set_symbol(storage.symbol, asset, Some(String::from_ascii_str("ETH")));
+    _mint(storage.total_assets, storage.total_supply, recipient, Some(SubId::zero()), amount);
+    // Note: Ordering of arguments has changed for `_set_metadata()`
+    _set_metadata(storage.metadata, asset, Some(metadata), key);
+}
 ```
 
 ## [v0.23.1]

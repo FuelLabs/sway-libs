@@ -10,7 +10,7 @@ use standards::src3::*;
 // ANCHOR: src3_abi
 abi SRC3 {
     #[storage(read, write)]
-    fn mint(recipient: Identity, vault_sub_id: SubId, amount: u64);
+    fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64);
     #[payable]
     #[storage(read, write)]
     fn burn(vault_sub_id: SubId, amount: u64);

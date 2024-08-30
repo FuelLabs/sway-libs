@@ -1,6 +1,6 @@
 library;
 
-use ::asset::errors::BurnError;
+use ::asset::errors::{BurnError, MintError};
 use ::asset::base::{_total_assets, _total_supply};
 use std::{
     asset::{
@@ -16,24 +16,30 @@ use std::{
     storage::storage_string::*,
     string::String,
 };
+use standards::src20::TotalSupplyEvent;
 
 /// Unconditionally mints new assets using the `sub_id` sub-identifier.
 ///
 /// # Additional Information
 ///
 /// **Warning** This function increases the total supply by the number of coins minted.
+/// **Note:** If `None` is passed for the `sub_id` argument, `b256::zero()` is used as the `SubId`.
 ///
 /// # Arguments
 ///
 /// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
 /// * `total_supply_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
 /// * `recipient`: [Identity] - The user to which the newly minted asset is transferred to.
-/// * `sub_id`: [SubId] - The sub-identifier of the newly minted asset.
+/// * `sub_id`: [Option<SubId>] - The sub-identifier of the newly minted asset.
 /// * `amount`: [u64] - The quantity of coins to mint.
 ///
 /// # Returns
 ///
 /// * [AssetId] - The `AssetId` of the newly minted asset.
+///
+/// # Reverts
+///
+/// * When `amount` is zero.
 ///
 /// # Number of Storage Accesses
 ///
@@ -62,9 +68,14 @@ pub fn _mint(
     total_assets_key: StorageKey<u64>,
     total_supply_key: StorageKey<StorageMap<AssetId, u64>>,
     recipient: Identity,
-    sub_id: SubId,
+    sub_id: Option<SubId>,
     amount: u64,
 ) -> AssetId {
+    require(amount > 0, MintError::ZeroAmount);
+    let sub_id = match sub_id {
+        Some(id) => id,
+        None => b256::zero(),
+    };
     let asset_id = AssetId::new(ContractId::this(), sub_id);
     let supply = _total_supply(total_supply_key, asset_id);
 
@@ -77,6 +88,12 @@ pub fn _mint(
     total_supply_key.insert(asset_id, current_supply + amount);
 
     mint_to(recipient, sub_id, amount);
+    log(TotalSupplyEvent {
+        asset: asset_id,
+        supply: current_supply + amount,
+        sender: msg_sender().unwrap(),
+    });
+
     asset_id
 }
 
@@ -96,6 +113,7 @@ pub fn _mint(
 /// # Reverts
 ///
 /// * When the calling contract does not have enough assets.
+/// * When `amount` is zero.
 ///
 /// # Number of Storage Accesses
 ///
@@ -124,6 +142,7 @@ pub fn _burn(
     sub_id: SubId,
     amount: u64,
 ) {
+    require(amount > 0, BurnError::ZeroAmount);
     let asset_id = AssetId::new(ContractId::this(), sub_id);
 
     require(this_balance(asset_id) >= amount, BurnError::NotEnoughCoins);
@@ -133,4 +152,9 @@ pub fn _burn(
     total_supply_key.insert(asset_id, supply - amount);
 
     burn(sub_id, amount);
+    log(TotalSupplyEvent {
+        asset: asset_id,
+        supply: supply - amount,
+        sender: msg_sender().unwrap(),
+    });
 }
