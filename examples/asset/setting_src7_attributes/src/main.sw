@@ -12,8 +12,8 @@ storage {
 
 impl SetAssetMetadata for Contract {
     #[storage(read, write)]
-    fn set_metadata(asset: AssetId, metadata: Option<Metadata>, key: String) {
-        _set_metadata(storage.metadata, asset, metadata, key);
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata) {
+        _set_metadata(storage.metadata, asset, key, metadata);
     }
 }
 // ANCHOR_END: setting_src7_attributes
