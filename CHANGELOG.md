@@ -44,6 +44,7 @@ Description of the upcoming release here.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_mint()` and `_burn()` now revert if the `amount` argument is zero.
 - [#289](https://github.com/FuelLabs/sway-libs/pull/289) Bumps Sway-Libs to forc `v0.63.3`, fuel-core `v0.34.0`, and fuels `v0.66.2`.
 - [#290](https://github.com/FuelLabs/sway-libs/pull/290) Update the Upgradeability library to use a specific storage slot for owner functionality.
+- [#291](https://github.com/FuelLabs/sway-libs/pull/291) Prepares for the `v0.24.0` release.
 
 ### Breaking v0.24.0
 
