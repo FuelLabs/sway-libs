@@ -187,7 +187,7 @@ fn foo() {
 }
 ```
 
-## [v0.23.1]
+## [Version 0.23.1]
 
 ### Added v0.23.1
 
@@ -206,7 +206,7 @@ fn foo() {
 
 - None
 
-## [Versio 0.23.0]
+## [Version 0.23.0]
 
 ### Added v0.23.0
 
