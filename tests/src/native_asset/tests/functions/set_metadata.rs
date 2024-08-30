@@ -5,7 +5,7 @@ use crate::native_asset::tests::utils::{
 use fuels::types::{Bits256, Bytes, Bytes32, Identity};
 
 mod success {
-
+  
     use super::*;
 
     #[tokio::test]
@@ -218,6 +218,21 @@ mod success {
             }
         );
 
+        let log = response
+            .decode_logs_with_type::<SetMetadataEvent>()
+            .unwrap();
+        let event = log.first().unwrap();
+
+        assert_eq!(
+            *event,
+            SetMetadataEvent {
+                asset: asset_id_1,
+                sender: Identity::Address(owner_wallet.address().into()),
+                metadata: metadata1.clone(),
+                key: key.clone()
+            }
+        );
+
         assert_eq!(metadata(&instance_1, asset_id_2, key.clone()).await, None);
         let response = set_metadata(
             &instance_1,
@@ -326,6 +341,21 @@ mod success {
             }
         );
 
+        let log = response
+            .decode_logs_with_type::<SetMetadataEvent>()
+            .unwrap();
+        let event = log.first().unwrap();
+
+        assert_eq!(
+            *event,
+            SetMetadataEvent {
+                asset: asset_id_1,
+                sender: Identity::Address(owner_wallet.address().into()),
+                metadata: metadata1.clone(),
+                key: key1.clone()
+            }
+        );
+
         assert_eq!(metadata(&instance_1, asset_id_1, key2.clone()).await, None);
         let response = set_metadata(
             &instance_1,
@@ -353,6 +383,21 @@ mod success {
                 metadata: Some(metadata2.clone()),
                 key: key2.clone(),
                 sender: Identity::Address(owner_wallet.address().into()),
+            }
+        );
+
+        let log = response
+            .decode_logs_with_type::<SetMetadataEvent>()
+            .unwrap();
+        let event = log.first().unwrap();
+
+        assert_eq!(
+            *event,
+            SetMetadataEvent {
+                asset: asset_id_1,
+                sender: Identity::Address(owner_wallet.address().into()),
+                metadata: metadata2.clone(),
+                key: key2.clone()
             }
         );
 
@@ -403,8 +448,8 @@ mod success {
             Some(metadata4.clone())
         );
         assert_eq!(
-            metadata(&instance_1, asset_id_1, key3).await,
-            Some(metadata3)
+            metadata(&instance_1, asset_id_1, key3.clone()).await,
+            Some(metadata3.clone())
         );
         assert_eq!(
             metadata(&instance_1, asset_id_1, key2).await,

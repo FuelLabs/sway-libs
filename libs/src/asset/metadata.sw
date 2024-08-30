@@ -20,6 +20,18 @@ use std::{
 };
 use ::asset::errors::SetMetadataError;
 
+/// The event emitted when metadata is set via the `_set_metadata()` function.
+pub struct SetMetadataEvent {
+    /// The asset for which metadata is set.
+    asset: AssetId,
+    /// The `Identity` of the caller that set the metadata.
+    sender: Identity,
+    /// The Metadata that is set.
+    metadata: Metadata,
+    /// The key used for the metadata.
+    key: String,
+}
+
 /// A persistent storage type to store the SRC-7; Metadata Standard type.
 ///
 /// # Additional Information
@@ -187,6 +199,12 @@ pub fn _set_metadata(
     key: String,
     metadata: Metadata,
 ) {
+    log(SetMetadataEvent {
+        asset,
+        sender: msg_sender().unwrap(),
+        metadata,
+        key,
+    });
     metadata_key.insert(asset, key, metadata);
 }
 

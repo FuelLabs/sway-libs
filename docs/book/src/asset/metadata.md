@@ -24,6 +24,17 @@ The Asset Library has the following complimentary data type for the [SRC-7](http
 
 - `StorageMetadata`
 
+The following additional functionality for the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/)'s `Metadata` type is provided:
+
+- `as_string()`
+- `is_string()`
+- `as_u64()`
+- `is_u64()`
+- `as_bytes()`
+- `is_bytes()`
+- `as_b256()`
+- `is_b256()`
+
 ## Setting Up Storage
 
 Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard.
@@ -48,7 +59,58 @@ The `_set_metadata()` function follows the SRC-7 standard for logging and will e
 
 ### Implementing the SRC-7 Standard with StorageMetadata
 
-To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId` using the provided `_metadata()` convenience function. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type and the `_metadata()` function with no user defined restrictions or custom functionality.
+To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId`. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type with no user defined restrictions or custom functionality.
+
+```sway
+{{#include ../../../../examples/asset/basic_src7/src/main.sw:basic_src7}}
+```
+
+## Using the `Metadata` Extensions
+
+The `Metadata` type defined by the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard can be one of 4 states:
+
+```sway
+pub enum Metadata {
+    B256: b256,
+    Bytes: Bytes,
+    Int: u64,
+    String: String,
+}
+```
+
+The Asset Library enables the following functionality for the `Metadata` type:
+
+### `is_b256()` and `as_b256()`
+
+The `is_b256()` check enables checking whether the `Metadata` type is a `b256`.
+The `as_b256()` returns the `b256` of the `Metadata` type.
+
+```sway
+{{#include ../../../../examples/asset/metadata_docs/src/main.sw:as_b256}}
+```
+
+### `is_bytes()` and `as_bytes()`
+
+The `is_bytes()` check enables checking whether the `Metadata` type is a `Bytes`.
+The `as_bytes()` returns the `Bytes` of the `Metadata` type.
+
+```sway
+{{#include ../../../../examples/asset/metadata_docs/src/main.sw:as_bytes}}
+```
+
+### `is_u64()` and `as_u64()`
+
+The `is_u64()` check enables checking whether the `Metadata` type is a `u64`.
+The `as_u64()` returns the `u64` of the `Metadata` type.
+
+```sway
+{{#include ../../../../examples/asset/metadata_docs/src/main.sw:as_u64}}
+```
+
+### `is_string()` and `as_string()`
+
+The `is_string()` check enables checking whether the `Metadata` type is a `String`.
+The `as_string()` returns the `String` of the `Metadata` type.
 
 ```sway
 {{#include ../../../../examples/asset/basic_src7/src/main.sw:src7_metadata_convenience_function}}
