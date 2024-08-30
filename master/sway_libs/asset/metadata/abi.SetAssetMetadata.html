@@ -4,7 +4,7 @@
     /// # Arguments
     ///
     /// * `asset`: [AssetId] - The asset for the metadata to be stored.
-    /// * `metadata`: [Option&lt;Metadata&gt;] - The metadata which to be stored.
+    /// * `metadata`: [Metadata] - The metadata which to be stored.
     /// * `key`: [String] - The key for the metadata to be stored.
     ///
     /// # Example
@@ -14,19 +14,19 @@
     /// use sway_libs::asset::metadata::*;
     /// use std::string::String;
     ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, metadata: Option&lt;Metadata&gt;, key: String) {
+    /// fn foo(contract_id: ContractId, asset: AssetId, key: String, metadata: Metadata) {
     ///     let contract_abi = abi(SetAssetMetadata, contract_id.bits());
     ///     contract_abi.set_metadata(asset, metadata, key);
     ///     assert(contract_abi.metadata(asset, key).unwrap() == Metadata);
     /// }
     /// ```
     #[storage(read, write)]
-    fn set_metadata(asset: AssetId, metadata: Option&lt;Metadata&gt;, key: String);
-}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.set_metadata" class="method has-srclink"><a href="#tymethod.set_metadata" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_metadata">set_metadata</a>(<br>    asset: AssetId,<br>    metadata: Option&lt;Metadata&gt;,<br>    key: String,<br>)</h4></div></summary><div class="docblock"><p>Stores metadata for a specific asset and key pair.</p>
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata);
+}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.set_metadata" class="method has-srclink"><a href="#tymethod.set_metadata" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_metadata">set_metadata</a>(<br>    asset: AssetId,<br>    key: String,<br>    metadata: Metadata,<br>)</h4></div></summary><div class="docblock"><p>Stores metadata for a specific asset and key pair.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>asset</code>: [AssetId] - The asset for the metadata to be stored.</li>
-<li><code>metadata</code>: [Option<!-- raw HTML omitted -->] - The metadata which to be stored.</li>
+<li><code>metadata</code>: [Metadata] - The metadata which to be stored.</li>
 <li><code>key</code>: [String] - The key for the metadata to be stored.</li>
 </ul>
 <h1>Example</h1>
@@ -34,7 +34,7 @@
 use sway_libs::asset::metadata::*;
 use std::string::String;
 
-fn foo(contract_id: ContractId, asset: AssetId, metadata: Option&lt;Metadata&gt;, key: String) {
+fn foo(contract_id: ContractId, asset: AssetId, key: String, metadata: Metadata) {
     let contract_abi = abi(SetAssetMetadata, contract_id.bits());
     contract_abi.set_metadata(asset, metadata, key);
     assert(contract_abi.metadata(asset, key).unwrap() == Metadata);

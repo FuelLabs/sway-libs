@@ -4,7 +4,7 @@
     /// # Arguments
     ///
     /// * `asset`: [AssetId] - The asset for the name to be stored.
-    /// * `name`: [Option&lt;String&gt;] - The name which to be stored.
+    /// * `name`: [String] - The name which to be stored.
     ///
     /// # Example
     ///
@@ -13,20 +13,20 @@
     /// use sway_libs::asset::base::*;
     /// use std::string::String;
     ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, name: Option&lt;String&gt;) {
+    /// fn foo(contract_id: ContractId, asset: AssetId, name: String) {
     ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     ///     contract_abi.set_name(asset, name);
     ///     assert(contract_abi.name(asset) == name);
     /// }
     /// ```
     #[storage(write)]
-    fn set_name(asset: AssetId, name: Option&lt;String&gt;);
+    fn set_name(asset: AssetId, name: String);
     /// Stores the symbol for a specific asset.
     ///
     /// # Arguments
     ///
     /// * `asset`: [AssetId] - The asset for the symbol to be stored.
-    /// * `symbol`: [Option&lt;String&gt;] - The symbol which to be stored.
+    /// * `symbol`: [String] - The symbol which to be stored.
     ///
     /// # Example
     ///
@@ -35,14 +35,14 @@
     /// use sway_libs::asset::base::*;
     /// use std::string::String;
     ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, symbol: Option&lt;String&gt;) {
+    /// fn foo(contract_id: ContractId, asset: AssetId, symbol: String) {
     ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     ///     contract_abi.set_symbol(asset, symbol);
     ///     assert(contract_abi.symbol(asset) == symbol);
     /// }
     /// ```
     #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: Option&lt;String&gt;);
+    fn set_symbol(asset: AssetId, symbol: String);
     /// Stores the decimals for a specific asset.
     ///
     /// # Arguments
@@ -64,35 +64,35 @@
     /// ```
     #[storage(write)]
     fn set_decimals(asset: AssetId, decimals: u8);
-}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.set_name" class="method has-srclink"><a href="#tymethod.set_name" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_name">set_name</a>(<br>    asset: AssetId,<br>    name: Option&lt;String&gt;,<br>)</h4></div></summary><div class="docblock"><p>Stores the name for a specific asset.</p>
+}</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.set_name" class="method has-srclink"><a href="#tymethod.set_name" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_name">set_name</a>(<br>    asset: AssetId,<br>    name: String,<br>)</h4></div></summary><div class="docblock"><p>Stores the name for a specific asset.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>asset</code>: [AssetId] - The asset for the name to be stored.</li>
-<li><code>name</code>: [Option<!-- raw HTML omitted -->] - The name which to be stored.</li>
+<li><code>name</code>: [String] - The name which to be stored.</li>
 </ul>
 <h1>Example</h1>
 <pre><code class="language-sway">use standards::src20::SRC20;
 use sway_libs::asset::base::*;
 use std::string::String;
 
-fn foo(contract_id: ContractId, asset: AssetId, name: Option&lt;String&gt;) {
+fn foo(contract_id: ContractId, asset: AssetId, name: String) {
     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     contract_abi.set_name(asset, name);
     assert(contract_abi.name(asset) == name);
 }
 </code></pre>
-</div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.set_symbol" class="method has-srclink"><a href="#tymethod.set_symbol" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_symbol">set_symbol</a>(<br>    asset: AssetId,<br>    symbol: Option&lt;String&gt;,<br>)</h4></div></summary><div class="docblock"><p>Stores the symbol for a specific asset.</p>
+</div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.set_symbol" class="method has-srclink"><a href="#tymethod.set_symbol" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.set_symbol">set_symbol</a>(<br>    asset: AssetId,<br>    symbol: String,<br>)</h4></div></summary><div class="docblock"><p>Stores the symbol for a specific asset.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>asset</code>: [AssetId] - The asset for the symbol to be stored.</li>
-<li><code>symbol</code>: [Option<!-- raw HTML omitted -->] - The symbol which to be stored.</li>
+<li><code>symbol</code>: [String] - The symbol which to be stored.</li>
 </ul>
 <h1>Example</h1>
 <pre><code class="language-sway">use standards::src20::SRC20;
 use sway_libs::asset::base::*;
 use std::string::String;
 
-fn foo(contract_id: ContractId, asset: AssetId, symbol: Option&lt;String&gt;) {
+fn foo(contract_id: ContractId, asset: AssetId, symbol: String) {
     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     contract_abi.set_symbol(asset, symbol);
     assert(contract_abi.symbol(asset) == symbol);
