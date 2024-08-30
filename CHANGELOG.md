@@ -33,7 +33,7 @@ Description of the upcoming release here.
 
 ### Added v0.24.0
 
-- [#285](https://github.com/FuelLabs/sway-libs/pull/285) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
+- [#293](https://github.com/FuelLabs/sway-libs/pull/293) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
 
 ### Changed v0.24.0
@@ -47,50 +47,6 @@ Description of the upcoming release here.
 - [#291](https://github.com/FuelLabs/sway-libs/pull/291) Prepares for the `v0.24.0` release.
 
 ### Breaking v0.24.0
-
-- [#285](https://github.com/FuelLabs/sway-libs/pull/285) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
-
-The following demonstrates the breaking change.
-
-Before:
-
-```sway
-// Compute bytecode root
-let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode);
-let root_with_configurables: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
-
-// Compute predicate address
-let address_no_configurables: Address = compute_predicate_address(my_bytecode);
-let address_with_configurables: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
-
-// Verify contract bytecode
-verify_contract_bytecode(my_contract_id, my_bytecode); // No configurables
-verify_contract_bytecode_with_configurables(my_contract_id, my_bytecode, my_configurables); // With configurables
-
-// Verify predicate address
-verify_predicate_address(my_predicate_address, my_bytecode); // No configurables
-verify_predicate_address_with_configurables(my_predicate_address, my_bytecode, my_configurables); // With configurables
-```
-
-After:
-
-```sway
-// Compute bytecode root
-let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, None);
-let root_with_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, Some(my_configurables));
-
-// Compute predicate address
-let address_no_configurables: Address = compute_predicate_address(my_bytecode, None);
-let address_with_configurables: Address = compute_predicate_address(my_bytecode, Some(my_configurables));
-
-// Verify contract bytecode
-verify_contract_bytecode(my_contract_id, my_bytecode, None); // No configurables
-verify_contract_bytecode(my_contract_id, my_bytecode, Some(my_configurables)); // With configurables
-
-// Verify predicate address
-verify_predicate_address(my_predicate_address, my_bytecode, None); // No configurables
-verify_predicate_address(my_predicate_address, my_bytecode, Some(my_configurables)); // With configurables
-```
 
 - [#290](https://github.com/FuelLabs/sway-libs/pull/290) The `_proxy_owner()`, `only_proxy_owner()` and `_set_proxy_owner()` functions no longer take `storage.proxy_owner` as a parameter. Instead they directly read and write to the storage slot `0xbb79927b15d9259ea316f2ecb2297d6cc8851888a98278c0a2e03e1a091ea754` which is `sha256("storage_SRC14_1")`.
 
