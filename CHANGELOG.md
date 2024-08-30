@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [Version 0.24.0]
 
-### Added
+### Added v0.24.0
 
 - [#285](https://github.com/FuelLabs/sway-libs/pull/285) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
@@ -21,12 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#289](https://github.com/FuelLabs/sway-libs/pull/289) Bumps Sway-Libs to forc `v0.63.3`, fuel-core `v0.34.0`, and fuels `v0.66.2`.
 - [#290](https://github.com/FuelLabs/sway-libs/pull/290) Update the Upgradeability library to use a specific storage slot for owner functionality.
 
-### Fixed
-
-- Some fix here 1
-- Some fix here 2
-
-### Breaking
+### Breaking v0.24.0
 
 - [#285](https://github.com/FuelLabs/sway-libs/pull/285) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
 
@@ -186,7 +181,7 @@ fn foo() {
 
 - None
 
-## [v0.23.0]
+## [Versio 0.23.0]
 
 ### Added v0.23.0
 
