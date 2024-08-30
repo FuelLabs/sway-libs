@@ -17,7 +17,6 @@
 </ul>
 <h1>Examples</h1>
 <pre><code class="language-sway">use sway_libs::asset::base::{_set_decimals, _decimals};
-use std::string::String;
 
 storage {
     decimals: StorageMap&lt;AssetId, u8&gt; = StorageMap {},
@@ -26,7 +25,7 @@ storage {
 fn foo(asset: AssetId) {
     let decimals = 8u8;
     _set_decimals(storage.decimals, asset, decimals);
-    assert(_decimals(storage.decimals, asset) == decimals);
+    assert(_decimals(storage.decimals, asset).unwrap() == decimals);
 }
 </code></pre>
 </div></details></section><section id="search" class="search-results"></section></div></main><script src="../../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>

@@ -2,22 +2,27 @@
     total_assets_key: StorageKey&lt;u64&gt;,
     total_supply_key: StorageKey&lt;StorageMap&lt;AssetId, u64&gt;&gt;,
     recipient: Identity,
-    sub_id: SubId,
+    sub_id: Option&lt;SubId&gt;,
     amount: u64,
 ) -&gt; AssetId </code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Unconditionally mints new assets using the <code>sub_id</code> sub-identifier.</p>
 <h1>Additional Information</h1>
-<p><strong>Warning</strong> This function increases the total supply by the number of coins minted.</p>
+<p><strong>Warning</strong> This function increases the total supply by the number of coins minted.<br />
+<strong>Note:</strong> If <code>None</code> is passed for the <code>sub_id</code> argument, <code>b256::zero()</code> is used as the <code>SubId</code>.</p>
 <h1>Arguments</h1>
 <ul>
 <li><code>total_assets_key</code>: [StorageKey<!-- raw HTML omitted -->] - The location in storage that the <code>u64</code> which represents the total assets is stored.</li>
 <li><code>total_supply_key</code>: [StorageKey&lt;StorageMap&lt;AssetId, u64&gt;&gt;] - The location in storage which the <code>StorageMap</code> that stores the total supply of assets is stored.</li>
 <li><code>recipient</code>: [Identity] - The user to which the newly minted asset is transferred to.</li>
-<li><code>sub_id</code>: [SubId] - The sub-identifier of the newly minted asset.</li>
+<li><code>sub_id</code>: [Option<!-- raw HTML omitted -->] - The sub-identifier of the newly minted asset.</li>
 <li><code>amount</code>: [u64] - The quantity of coins to mint.</li>
 </ul>
 <h1>Returns</h1>
 <ul>
 <li>[AssetId] - The <code>AssetId</code> of the newly minted asset.</li>
+</ul>
+<h1>Reverts</h1>
+<ul>
+<li>When <code>amount</code> is zero.</li>
 </ul>
 <h1>Number of Storage Accesses</h1>
 <ul>
