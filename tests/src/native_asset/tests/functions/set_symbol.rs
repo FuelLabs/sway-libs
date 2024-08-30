@@ -34,7 +34,9 @@ mod success {
         );
     }
 
+    // TODO: Renable when set_symbol() accepts an Option
     #[tokio::test]
+    #[ignore]
     async fn sets_none() {
         let (owner_wallet, other_wallet, id, instance_1, _instance_2) = setup().await;
         let (asset_id_1, _asset_id_2, _sub_id_1, _sub_id_2, _identity1, _other_identity) =

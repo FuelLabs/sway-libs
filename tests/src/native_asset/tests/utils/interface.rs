@@ -87,7 +87,7 @@ pub(crate) async fn set_name(
 ) -> CallResponse<()> {
     contract
         .methods()
-        .set_name(asset, name)
+        .set_name(asset, name.unwrap())
         .call()
         .await
         .unwrap()
@@ -96,11 +96,11 @@ pub(crate) async fn set_name(
 pub(crate) async fn set_symbol(
     contract: &AssetLib<WalletUnlocked>,
     asset: AssetId,
-    name: Option<String>,
+    symbol: Option<String>,
 ) -> CallResponse<()> {
     contract
         .methods()
-        .set_symbol(asset, name)
+        .set_symbol(asset, symbol.unwrap())
         .call()
         .await
         .unwrap()
@@ -141,7 +141,7 @@ pub(crate) async fn set_metadata(
 ) -> CallResponse<()> {
     contract
         .methods()
-        .set_metadata(asset, metadata, key)
+        .set_metadata(asset, key, metadata.unwrap())
         .call()
         .await
         .unwrap()

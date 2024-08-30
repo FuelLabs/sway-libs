@@ -60,13 +60,13 @@ impl SRC20 for Contract {
 impl SRC3 for Contract {
     #[storage(read, write)]
     fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
-        let _ = _mint(
+        _mint(
             storage
                 .total_assets,
             storage
                 .total_supply,
             recipient,
-            sub_id,
+            sub_id.unwrap_or(b256::zero()),
             amount,
         );
     }
@@ -87,12 +87,12 @@ impl SRC7 for Contract {
 
 impl SetAssetAttributes for Contract {
     #[storage(write)]
-    fn set_name(asset: AssetId, name: Option<String>) {
+    fn set_name(asset: AssetId, name: String) {
         _set_name(storage.name, asset, name);
     }
 
     #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: Option<String>) {
+    fn set_symbol(asset: AssetId, symbol: String) {
         _set_symbol(storage.symbol, asset, symbol);
     }
 
@@ -104,8 +104,8 @@ impl SetAssetAttributes for Contract {
 
 impl SetAssetMetadata for Contract {
     #[storage(read, write)]
-    fn set_metadata(asset: AssetId, metadata: Option<Metadata>, key: String) {
-        _set_metadata(storage.metadata, asset, metadata, key);
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata) {
+        _set_metadata(storage.metadata, asset, key, metadata);
     }
 }
 
@@ -157,7 +157,7 @@ fn test_name() {
 
     assert(src20_abi.name(asset_id).is_none());
 
-    attributes_abi.set_name(asset_id, Some(name));
+    attributes_abi.set_name(asset_id, name);
     assert(src20_abi.name(asset_id).unwrap().as_bytes() == name.as_bytes());
 }
 
@@ -173,7 +173,7 @@ fn test_symbol() {
 
     assert(src20_abi.symbol(asset_id).is_none());
 
-    attributes_abi.set_symbol(asset_id, Some(symbol));
+    attributes_abi.set_symbol(asset_id, symbol);
     assert(src20_abi.symbol(asset_id).unwrap().as_bytes() == symbol.as_bytes());
 }
 
@@ -229,6 +229,70 @@ fn test_burn() {
 }
 
 #[test]
+fn test_metadata_as_string() {
+    let data_string = String::from_ascii_str("Fuel is blazingly fast");
+    let metadata = Metadata::String(data_string);
+
+    assert(data_string == metadata.as_string().unwrap());
+}
+
+#[test]
+fn test_metadata_is_string() {
+    let data_string = String::from_ascii_str("Fuel is blazingly fast");
+    let metadata = Metadata::String(data_string);
+
+    assert(metadata.is_string());
+}
+
+#[test]
+fn test_metadata_as_u64() {
+    let data_int = 1;
+    let metadata = Metadata::Int(data_int);
+
+    assert(data_int == metadata.as_u64().unwrap());
+}
+
+#[test]
+fn test_metadata_is_u64() {
+    let data_int = 1;
+    let metadata = Metadata::Int(data_int);
+
+    assert(metadata.is_u64());
+}
+
+#[test]
+fn test_metadata_as_bytes() {
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
+    let metadata = Metadata::Bytes(data_bytes);
+
+    assert(data_bytes == metadata.as_bytes().unwrap());
+}
+
+#[test]
+fn test_metadata_is_bytes() {
+    let data_bytes = String::from_ascii_str("Fuel is blazingly fast").as_bytes();
+    let metadata = Metadata::Bytes(data_bytes);
+
+    assert(metadata.is_bytes());
+}
+
+#[test]
+fn test_metadata_as_b256() {
+    let data_b256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
+    let metadata = Metadata::B256(data_b256);
+
+    assert(data_b256 == metadata.as_b256().unwrap());
+}
+
+#[test]
+fn test_metadata_is_b256() {
+    let data_b256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
+    let metadata = Metadata::B256(data_b256);
+
+    assert(metadata.is_b256());
+}
+
+#[test]
 fn test_set_metadata_b256() {
     let data_b256 = 0x0000000000000000000000000000000000000000000000000000000000000001;
     let metadata = Metadata::B256(data_b256);
@@ -237,7 +301,7 @@ fn test_set_metadata_b256() {
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
-    set_metadata_abi.set_metadata(asset_id, Some(metadata), key);
+    set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
     assert(returned_metadata.is_some());
@@ -253,7 +317,7 @@ fn test_set_metadata_u64() {
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
-    set_metadata_abi.set_metadata(asset_id, Some(metadata), key);
+    set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
     assert(returned_metadata.is_some());
@@ -269,7 +333,7 @@ fn test_set_metadata_string() {
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
-    set_metadata_abi.set_metadata(asset_id, Some(metadata), key);
+    set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
     assert(returned_metadata.is_some());
@@ -285,7 +349,7 @@ fn test_set_metadata_bytes() {
     let set_metadata_abi = abi(SetAssetMetadata, CONTRACT_ID);
     let key = String::from_ascii_str("my_key");
 
-    set_metadata_abi.set_metadata(asset_id, Some(metadata), key);
+    set_metadata_abi.set_metadata(asset_id, key, metadata);
 
     let returned_metadata = src7_abi.metadata(asset_id, key);
     assert(returned_metadata.is_some());

@@ -201,7 +201,7 @@ pub fn _decimals(
 ///
 /// * `name_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the names of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the name.
-/// * `name`: [Option<String>] - The name of the asset.
+/// * `name`: [String] - The name of the asset.
 ///
 /// # Reverts
 ///
@@ -223,7 +223,7 @@ pub fn _decimals(
 ///
 /// fn foo(asset: AssetId) {
 ///     let name = String::from_ascii_str("Ether");
-///     _set_name(storage.name, asset, Some(name));
+///     _set_name(storage.name, asset, name);
 ///     assert(_name(storage.name, asset).unwrap() == name);
 /// }
 /// ```
@@ -231,23 +231,16 @@ pub fn _decimals(
 pub fn _set_name(
     name_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
-    name: Option<String>,
+    name: String,
 ) {
-    match name {
-        Some(name) => {
-            require(!name.is_empty(), SetMetadataError::EmptyString);
+    require(!name.is_empty(), SetMetadataError::EmptyString);
 
-            name_key.insert(asset, StorageString {});
-            name_key.get(asset).write_slice(name);
-        },
-        None => {
-            let _ = name_key.get(asset).clear();
-        }
-    }
-
+    name_key.insert(asset, StorageString {});
+    name_key.get(asset).write_slice(name);
+    
     log(SetNameEvent {
         asset,
-        name,
+        name: Some(name),
         sender: msg_sender().unwrap(),
     });
 }
@@ -262,7 +255,7 @@ pub fn _set_name(
 ///
 /// * `symbol_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the symbol.
-/// * `symbol`: [Option<String>] - The symbol of the asset.
+/// * `symbol`: [String] - The symbol of the asset.
 ///
 /// # Reverts
 ///
@@ -284,7 +277,7 @@ pub fn _set_name(
 ///
 /// fn foo(asset: AssetId) {
 ///     let symbol = String::from_ascii_str("ETH");
-///     _set_symbol(storage.symbol, asset, Some(symbol));
+///     _set_symbol(storage.symbol, asset, symbol);
 ///     assert(_symbol(storage.symbol, asset).unwrap() == symbol);
 /// }
 /// ```
@@ -292,23 +285,16 @@ pub fn _set_name(
 pub fn _set_symbol(
     symbol_key: StorageKey<StorageMap<AssetId, StorageString>>,
     asset: AssetId,
-    symbol: Option<String>,
+    symbol: String,
 ) {
-    match symbol {
-        Some(symbol) => {
-            require(!symbol.is_empty(), SetMetadataError::EmptyString);
+    require(!symbol.is_empty(), SetMetadataError::EmptyString);
 
-            symbol_key.insert(asset, StorageString {});
-            symbol_key.get(asset).write_slice(symbol);
-        },
-        None => {
-            let _ = symbol_key.get(asset).clear();
-        }
-    }
+    symbol_key.insert(asset, StorageString {});
+    symbol_key.get(asset).write_slice(symbol);
 
     log(SetSymbolEvent {
         asset,
-        symbol: symbol,
+        symbol: Some(symbol),
         sender: msg_sender().unwrap(),
     });
 }
@@ -365,7 +351,7 @@ abi SetAssetAttributes {
     /// # Arguments
     ///
     /// * `asset`: [AssetId] - The asset for the name to be stored.
-    /// * `name`: [Option<String>] - The name which to be stored.
+    /// * `name`: [String] - The name which to be stored.
     ///
     /// # Example
     ///
@@ -374,20 +360,20 @@ abi SetAssetAttributes {
     /// use sway_libs::asset::base::*;
     /// use std::string::String;
     ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, name: Option<String>) {
+    /// fn foo(contract_id: ContractId, asset: AssetId, name: String) {
     ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     ///     contract_abi.set_name(asset, name);
     ///     assert(contract_abi.name(asset) == name);
     /// }
     /// ```
     #[storage(write)]
-    fn set_name(asset: AssetId, name: Option<String>);
+    fn set_name(asset: AssetId, name: String);
     /// Stores the symbol for a specific asset.
     ///
     /// # Arguments
     ///
     /// * `asset`: [AssetId] - The asset for the symbol to be stored.
-    /// * `symbol`: [Option<String>] - The symbol which to be stored.
+    /// * `symbol`: [String] - The symbol which to be stored.
     ///
     /// # Example
     ///
@@ -396,14 +382,14 @@ abi SetAssetAttributes {
     /// use sway_libs::asset::base::*;
     /// use std::string::String;
     ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, symbol: Option<String>) {
+    /// fn foo(contract_id: ContractId, asset: AssetId, symbol: String) {
     ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
     ///     contract_abi.set_symbol(asset, symbol);
     ///     assert(contract_abi.symbol(asset) == symbol);
     /// }
     /// ```
     #[storage(write)]
-    fn set_symbol(asset: AssetId, symbol: Option<String>);
+    fn set_symbol(asset: AssetId, symbol: String);
     /// Stores the decimals for a specific asset.
     ///
     /// # Arguments

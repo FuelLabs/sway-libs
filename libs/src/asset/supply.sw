@@ -30,7 +30,7 @@ use standards::src20::TotalSupplyEvent;
 /// * `total_assets_key`: [StorageKey<u64>] - The location in storage that the `u64` which represents the total assets is stored.
 /// * `total_supply_key`: [StorageKey<StorageMap<AssetId, u64>>] - The location in storage which the `StorageMap` that stores the total supply of assets is stored.
 /// * `recipient`: [Identity] - The user to which the newly minted asset is transferred to.
-/// * `sub_id`: [Option<SubId>] - The sub-identifier of the newly minted asset.
+/// * `sub_id`: [SubId] - The sub-identifier of the newly minted asset.
 /// * `amount`: [u64] - The quantity of coins to mint.
 ///
 /// # Returns
@@ -68,14 +68,11 @@ pub fn _mint(
     total_assets_key: StorageKey<u64>,
     total_supply_key: StorageKey<StorageMap<AssetId, u64>>,
     recipient: Identity,
-    sub_id: Option<SubId>,
+    sub_id: SubId,
     amount: u64,
 ) -> AssetId {
     require(amount > 0, MintError::ZeroAmount);
-    let sub_id = match sub_id {
-        Some(id) => id,
-        None => b256::zero(),
-    };
+
     let asset_id = AssetId::new(ContractId::this(), sub_id);
     let supply = _total_supply(total_supply_key, asset_id);
 

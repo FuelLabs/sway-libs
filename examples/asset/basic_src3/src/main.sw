@@ -22,7 +22,7 @@ impl SRC3 for Contract {
             storage
                 .total_supply,
             recipient,
-            sub_id,
+            sub_id.unwrap_or(b256::zero()),
             amount,
         );
     }
