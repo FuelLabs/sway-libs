@@ -23,7 +23,11 @@ storage {
         /// `target` is stored at sha256("storage_SRC14_0")
         target in 0x7bb458adc1d118713319a5baa00a2d049dd64d2916477d2688d76970c898cd55: Option<ContractId> = None,
         /// The [State] of the proxy owner.
-        proxy_owner: State = State::Uninitialized,
+        ///
+        /// # Additional Information
+        ///
+        /// `proxy_owner` is stored at sha256("storage_SRC14_1")
+        proxy_owner in 0xbb79927b15d9259ea316f2ecb2297d6cc8851888a98278c0a2e03e1a091ea754: State = State::Uninitialized,
     },
 }
 
@@ -53,19 +57,19 @@ impl SRC14 for Contract {
 impl SRC14Extension for Contract {
     #[storage(read)]
     fn proxy_owner() -> State {
-        _proxy_owner(storage::SRC14.proxy_owner)
+        _proxy_owner()
     }
 }
 
 impl UpgradableTest for Contract {
     #[storage(read)]
     fn only_proxy_owner() {
-        only_proxy_owner(storage::SRC14.proxy_owner);
+        only_proxy_owner();
     }
 
     #[storage(write)]
     fn set_proxy_owner(new_proxy_owner: State) {
-        _set_proxy_owner(new_proxy_owner, storage::SRC14.proxy_owner);
+        _set_proxy_owner(new_proxy_owner);
     }
 
     // Used to immediately set the storage variables as the configured constants
