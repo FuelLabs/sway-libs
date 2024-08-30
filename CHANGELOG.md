@@ -7,12 +7,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+Description of the upcoming release here.
+
 ### Added
+
+- Something new here 1
+- Something new here 2
+
+### Changed
+
+- Something changed here 1
+- Something changed here 2
+
+### Fixed
+
+- Some fix here 1
+- Some fix here 2
+
+#### Breaking
+
+- Some breaking change here 1
+- Some breaking change here 2
+
+## [Version 0.24.0]
+
+### Added v0.24.0
 
 - [#285](https://github.com/FuelLabs/sway-libs/pull/285) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
 
-### Changed
+### Changed v0.24.0
 
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) Updates the repository to Sway-Standards v0.6.0 and implements the new SRC-20 and SRC-7 logging specifications.
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()`, `_set_name()` and `_set_symbol()` now revert if the metadata is an empty string.
@@ -20,13 +44,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_mint()` and `_burn()` now revert if the `amount` argument is zero.
 - [#289](https://github.com/FuelLabs/sway-libs/pull/289) Bumps Sway-Libs to forc `v0.63.3`, fuel-core `v0.34.0`, and fuels `v0.66.2`.
 - [#290](https://github.com/FuelLabs/sway-libs/pull/290) Update the Upgradeability library to use a specific storage slot for owner functionality.
+- [#291](https://github.com/FuelLabs/sway-libs/pull/291) Prepares for the `v0.24.0` release.
 
-### Fixed
-
-- Some fix here 1
-- Some fix here 2
-
-### Breaking
+### Breaking v0.24.0
 
 - [#285](https://github.com/FuelLabs/sway-libs/pull/285) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
 
@@ -167,7 +187,7 @@ fn foo() {
 }
 ```
 
-## [v0.23.1]
+## [Version 0.23.1]
 
 ### Added v0.23.1
 
@@ -186,7 +206,7 @@ fn foo() {
 
 - None
 
-## [v0.23.0]
+## [Version 0.23.0]
 
 ### Added v0.23.0
 
