@@ -79,9 +79,9 @@ Before:
 use sway_libs::asset::metadata::*;
 
 fn foo(my_metadata: Metadata) {
-     let res: bool = my_metadata.is_b256();
-     let res: bool = my_metadata.is_string();
-     let res: bool = my_metadata.is_bytes();
+     let res: bool = my_metadata.is_b256(); 
+     let res: bool = my_metadata.is_string(); 
+     let res: bool = my_metadata.is_bytes(); 
      let res: bool = my_metadata.is_uint();
 }
 ```
@@ -92,9 +92,9 @@ After:
 use standards::src7::*;
 
 fn foo(my_metadata: Metadata) {
-     let res: bool = my_metadata.is_b256();
-     let res: bool = my_metadata.is_string();
-     let res: bool = my_metadata.is_bytes();
+     let res: bool = my_metadata.is_b256(); 
+     let res: bool = my_metadata.is_string(); 
+     let res: bool = my_metadata.is_bytes(); 
      let res: bool = my_metadata.is_uint();
 }
 ```
