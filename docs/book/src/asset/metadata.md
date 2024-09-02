@@ -47,7 +47,9 @@ Once imported, the Asset Library's metadata functionality should be available. T
 
 ### Setting Metadata
 
-To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library. Be sure to follow the [SRC-9](https://docs.fuel.network/docs/sway-standards/src-9-metadata-keys/) standard for your `key`. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
+To set some metadata for an Asset, use the `SetAssetMetadata` ABI provided by the Asset Library with the `_set_metadata()` function. Be sure to follow the [SRC-9](https://docs.fuel.network/docs/sway-standards/src-9-metadata-keys/) standard for your `key`. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetMetadata` ABI to ensure only a single user has permissions to set an Asset's metadata.
+
+The `_set_metadata()` function follows the SRC-7 standard for logging and will emit the `SetMetadataEvent` when called.
 
 ```sway
 {{#include ../../../../examples/asset/setting_src7_attributes/src/main.sw:setting_src7_attributes}}
@@ -111,5 +113,5 @@ The `is_string()` check enables checking whether the `Metadata` type is a `Strin
 The `as_string()` returns the `String` of the `Metadata` type.
 
 ```sway
-{{#include ../../../../examples/asset/metadata_docs/src/main.sw:as_string}}
+{{#include ../../../../examples/asset/basic_src7/src/main.sw:src7_metadata_convenience_function}}
 ```

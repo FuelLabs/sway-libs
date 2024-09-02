@@ -6,6 +6,9 @@ pub mod utils;
 use std::external::bytecode_root;
 use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _swap_configurables};
 
+pub type BytecodeRoot = b256;
+pub type ContractConfigurables = Vec<(u64, Vec<u8>)>;
+
 /// Takes the bytecode of a contract or predicate and computes the bytecode root.
 ///
 /// # Arguments
@@ -23,14 +26,14 @@ use ::bytecode::utils::{_compute_bytecode_root, _predicate_address_from_root, _s
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::compute_bytecode_root;
+/// use sway_libs::bytecode::{compute_bytecode_root, BytecodeRoot};
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
-///     let bytecode_root = compute_bytecode_root(my_bytecode);
+///     let bytecode_root: BytecodeRoot = compute_bytecode_root(my_bytecode);
 ///     assert(bytecode_root != b256::zero());
 /// }
 /// ```
-pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
+pub fn compute_bytecode_root(bytecode: Vec<u8>) -> BytecodeRoot {
     _compute_bytecode_root(bytecode.as_raw_slice())
 }
 
@@ -39,7 +42,7 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 /// # Arguments
 ///
 /// * `bytecode`: [Vec<u8>] - The bytecode of a contract or predicate.
-/// * `configurables`: [Vec<(u64, Vec<u8>)] - The configurable values to swap.
+/// * `configurables`: [ContractConfigurables] - The configurable values to swap.
 ///
 /// # Returns
 ///
@@ -52,18 +55,18 @@ pub fn compute_bytecode_root(bytecode: Vec<u8>) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::compute_bytecode_root_with_configurables;
+/// use sway_libs::bytecode::{compute_bytecode_root_with_configurables, BytecodeRoot, ContractConfigurables};
 ///
-/// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+/// fn foo(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
 ///     let mut my_bytecode = my_bytecode;
-///     let bytecode_root = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
+///     let bytecode_root: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
 ///     assert(bytecode_root != b256::zero());
 /// }
 /// ```
 pub fn compute_bytecode_root_with_configurables(
     ref mut bytecode: Vec<u8>,
-    configurables: Vec<(u64, Vec<u8>)>,
-) -> b256 {
+    configurables: ContractConfigurables,
+) -> BytecodeRoot {
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
     _compute_bytecode_root(bytecode_slice)
@@ -90,7 +93,7 @@ pub fn compute_bytecode_root_with_configurables(
 /// use sway_libs::bytecode::compute_predicate_address;
 ///
 /// fn foo(my_bytecode: Vec<u8>) {
-///     let predicate_address = compute_predicate_address(my_bytecode);
+///     let predicate_address: Address = compute_predicate_address(my_bytecode);
 ///     assert(predicate_address != Address::zero());
 /// }
 /// ```
@@ -104,7 +107,7 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 /// # Arguments
 ///
 /// * `bytecode`: [Vec<u8>] - The bytecode of a predicate.
-/// * `configurables`: [Vec<(u64, Vec<u8>)] - The configurable values to swap.
+/// * `configurables`: [ContractConfigurables] - The configurable values to swap.
 ///
 /// # Returns
 ///
@@ -117,17 +120,17 @@ pub fn compute_predicate_address(bytecode: Vec<u8>) -> Address {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::compute_predicate_address;
+/// use sway_libs::bytecode::{compute_predicate_address, ContractConfigurables};
 ///
-/// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+/// fn foo(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
 ///     let mut my_bytecode = my_bytecode;
-///     let predicate_address = compute_predicate_address(my_bytecode, my_configurables);
+///     let predicate_address: Address = compute_predicate_address(my_bytecode, my_configurables);
 ///     assert(predicate_address != Address::zero());
 /// }
 /// ```
 pub fn compute_predicate_address_with_configurables(
     ref mut bytecode: Vec<u8>,
-    configurables: Vec<(u64, Vec<u8>)>,
+    configurables: ContractConfigurables,
 ) -> Address {
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
@@ -139,7 +142,7 @@ pub fn compute_predicate_address_with_configurables(
 ///
 /// # Arguments
 ///
-/// * `bytecode_root`: [b256] - The bytecode root of a predicate.
+/// * `bytecode_root`: [BytecodeRoot] - The bytecode root of a predicate.
 ///
 /// # Returns
 ///
@@ -148,14 +151,14 @@ pub fn compute_predicate_address_with_configurables(
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::predicate_address_from_root;
+/// use sway_libs::bytecode::{predicate_address_from_root, BytecodeRoot};
 ///
-/// fn foo(predicate_bytecode_root: b256) {
-///     let predicate_address = predicate_address_from_root(predicate_bytecode_root);
+/// fn foo(predicate_bytecode_root: BytecodeRoot) {
+///     let predicate_address: Address = predicate_address_from_root(predicate_bytecode_root);
 ///     assert(predicate_address != Address::zero());
 /// }
 /// ```
-pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
+pub fn predicate_address_from_root(bytecode_root: BytecodeRoot) -> Address {
     _predicate_address_from_root(bytecode_root)
 }
 
@@ -164,7 +167,7 @@ pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
 /// # Arguments
 ///
 /// * `bytecode`: [Vec<u8>] - The bytecode of a contract or predicate.
-/// * `configurables`: [Vec<(u64, Vec<u8>)] - The configurable values to swap.
+/// * `configurables`: [ContractConfigurables] - The configurable values to swap.
 ///
 /// # Returns
 ///
@@ -173,9 +176,9 @@ pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::sway_configurables;
+/// use sway_libs::bytecode::{sway_configurables, ContractConfigurables};
 ///
-/// fn foo(my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+/// fn foo(my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
 ///     let mut my_bytecode = my_bytecode;
 ///     let resulting_bytecode = swap_configurables(my_bytecode, my_configurables);
 ///     assert(resulting_bytecode != my_bytecode);
@@ -183,7 +186,7 @@ pub fn predicate_address_from_root(bytecode_root: b256) -> Address {
 /// ```
 pub fn swap_configurables(
     ref mut bytecode: Vec<u8>,
-    configurables: Vec<(u64, Vec<u8>)>,
+    configurables: ContractConfigurables,
 ) -> Vec<u8> {
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);
@@ -225,7 +228,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 ///
 /// * `contract_id`: [ContractId] - The contract that the bytecode should match.
 /// * `bytecode`: [Vec<u8>] - The bytecode of the contract.
-/// * `configurables`: [Vec<(u6, Vec<u8>)>] - The configurable values to swap.
+/// * `configurables`: [ContractConfigurables] - The configurable values to swap.
 ///
 /// # Reverts
 ///
@@ -235,9 +238,9 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::bytecode::verify_contract_bytecode_with_configurables;
+/// use sway_libs::bytecode::{verify_contract_bytecode_with_configurables, ContractConfigurables};
 ///
-/// fn foo(my_contract_id: ContractId, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+/// fn foo(my_contract_id: ContractId, my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
 ///     let mut my_bytecode = my_bytecode;
 ///     verify_contract_bytecode_with_configurables(my_contract_id, my_bytecode, my_configurables);
 ///     // This line will only be reached if the contract's bytecode root and the computed bytecode root match.
@@ -246,7 +249,7 @@ pub fn verify_contract_bytecode(contract_id: ContractId, bytecode: Vec<u8>) {
 pub fn verify_contract_bytecode_with_configurables(
     contract_id: ContractId,
     ref mut bytecode: Vec<u8>,
-    configurables: Vec<(u64, Vec<u8>)>,
+    configurables: ContractConfigurables,
 ) {
     let root = bytecode_root(contract_id);
     let mut bytecode_slice = bytecode.as_raw_slice();
@@ -291,7 +294,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 ///
 /// * `predicate_id`: [Address] - The predicate address that the bytecode should match.
 /// * `bytecode`: [Vec<u8>] - The bytecode of the predicate.
-/// * `configurables`: [Vec<(u64, Vec<u8>)>] - The configurable values to swap.
+/// * `configurables`: [ContractConfigurables] - The configurable values to swap.
 ///
 /// # Reverts
 ///
@@ -303,7 +306,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 /// ```sway
 /// use sway_libs::bytecode::verify_predicate_address_with_configurables;
 ///
-/// fn foo(my_predicate_id: Address, my_bytecode: Vec<u8>, my_configurables: Vec<(u64, Vec<u8>)>) {
+/// fn foo(my_predicate_id: Address, my_bytecode: Vec<u8>, my_configurables: ContractConfigurables) {
 ///     let mut my_bytecode = my_bytecode;
 ///     verify_predicate_address_with_configurables(my_predicate_id, my_bytecode, my_configurables);
 ///     // This line will only be reached if the predicates's address and the computed address match.
@@ -312,7 +315,7 @@ pub fn verify_predicate_address(predicate_id: Address, bytecode: Vec<u8>) {
 pub fn verify_predicate_address_with_configurables(
     predicate_id: Address,
     ref mut bytecode: Vec<u8>,
-    configurables: Vec<(u64, Vec<u8>)>,
+    configurables: ContractConfigurables,
 ) {
     let mut bytecode_slice = bytecode.as_raw_slice();
     _swap_configurables(bytecode_slice, configurables);

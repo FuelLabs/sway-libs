@@ -7,6 +7,11 @@ use ::upgradability::{errors::SetProxyOwnerError, events::{ProxyOwnerSet, ProxyT
 use std::{auth::msg_sender, storage::storage_api::{read, write}};
 use standards::{src14::SRC14_TARGET_STORAGE, src5::{AccessError, State}};
 
+/// The storage slot to store the proxy owner State.
+///
+/// Value is `sha256("storage_SRC14_1")`.
+pub const PROXY_OWNER_STORAGE: b256 = 0xbb79927b15d9259ea316f2ecb2297d6cc8851888a98278c0a2e03e1a091ea754;
+
 /// Returns the proxy target.
 ///
 /// # Returns
@@ -66,10 +71,6 @@ pub fn _set_proxy_target(new_target: ContractId) {
 
 /// Returns the owner of the proxy.
 ///
-/// # Arguments
-///
-/// * `proxy_owner_storage_key`: [StorageKey<State>] - The storage key of the stored proxy owner.
-///
 /// # Returns
 ///
 /// * [State] - The state of the proxy ownership.
@@ -83,24 +84,18 @@ pub fn _set_proxy_target(new_target: ContractId) {
 /// ```sway
 /// use sway_libs::upgradability::_proxy_owner;
 ///
-/// storage {
-///     proxy_owner: State = State::Uninitialized,
-/// }
 ///
 /// fn foo() {
-///     let stored_proxy_owner = _proxy_owner(storage.proxy_owner);
+///     let stored_proxy_owner = _proxy_owner();
 /// }
 /// ```
 #[storage(read)]
-pub fn _proxy_owner(proxy_owner_storage_key: StorageKey<State>) -> State {
-    proxy_owner_storage_key.read()
+pub fn _proxy_owner() -> State {
+    let proxy_owner_key = StorageKey::new(PROXY_OWNER_STORAGE, 0, PROXY_OWNER_STORAGE);
+    proxy_owner_key.read()
 }
 
 /// Ensures that the sender is the proxy owner.
-///
-/// # Arguments
-///
-/// * `proxy_owner_storage_key`: [StorageKey<State>] - The storage key of the stored proxy owner.
 ///
 /// # Reverts
 ///
@@ -115,19 +110,15 @@ pub fn _proxy_owner(proxy_owner_storage_key: StorageKey<State>) -> State {
 /// ```sway
 /// use sway_libs::ownership::only_proxy_owner;
 ///
-/// storage {
-///     proxy_owner: State = State::Uninitialized,
-/// }
-///
 /// fn foo() {
-///     only_proxy_owner(storage.proxy_owner);
+///     only_proxy_owner();
 ///     // Do stuff here if the sender is the proxy owner
 /// }
 /// ```
 #[storage(read)]
-pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
+pub fn only_proxy_owner() {
     require(
-        _proxy_owner(proxy_owner_storage_key) == State::Initialized(msg_sender().unwrap()),
+        _proxy_owner() == State::Initialized(msg_sender().unwrap()),
         AccessError::NotOwner,
     );
 }
@@ -141,7 +132,6 @@ pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
 /// # Arguments
 ///
 /// * `new_proxy_owner`: [State] - The new state of the proxy ownership.
-/// * `proxy_owner_storage_key`: [StorageKey<State>] - The storage key of the stored proxy owner.
 ///
 /// # Reverts
 ///
@@ -157,31 +147,26 @@ pub fn only_proxy_owner(proxy_owner_storage_key: StorageKey<State>) {
 /// ```sway
 /// use sway_libs::upgradability::{_proxy_owner, _set_proxy_owner};
 ///
-/// storage {
-///     proxy_owner: State = State::Uninitialized,
-/// }
-///
 /// fn foo(new_owner: Identity) {
-///     assert(_proxy_owner(storage.proxy_owner) == State::Initialized(Identity::Address(Address::zero()));
+///     assert(_proxy_owner() == State::Initialized(Identity::Address(Address::zero()));
 ///
 ///     let new_proxy_owner = State::Initialized(new_owner);
-///     _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+///     _set_proxy_owner(new_proxy_owner);
 ///
-///     assert(_proxy_owner(storage.proxy_owner) == State::Initialized(new_owner));
+///     assert(_proxy_owner() == State::Initialized(new_owner));
 /// }
 /// ```
 #[storage(write)]
-pub fn _set_proxy_owner(
-    new_proxy_owner: State,
-    proxy_owner_storage_key: StorageKey<State>,
-) {
-    only_proxy_owner(proxy_owner_storage_key);
+pub fn _set_proxy_owner(new_proxy_owner: State) {
+    only_proxy_owner();
+
     require(
         new_proxy_owner != State::Uninitialized,
         SetProxyOwnerError::CannotUninitialize,
     );
 
-    proxy_owner_storage_key.write(new_proxy_owner);
+    let proxy_owner_key = StorageKey::new(PROXY_OWNER_STORAGE, 0, PROXY_OWNER_STORAGE);
+    proxy_owner_key.write(new_proxy_owner);
 
     log(ProxyOwnerSet {
         new_proxy_owner,

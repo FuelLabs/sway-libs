@@ -3,7 +3,7 @@ contract;
 use std::{bytes::Bytes, string::String};
 
 // ANCHOR: import
-use sway_libs::asset::metadata::*;
+use sway_libs::asset::metadata::{_metadata, _set_metadata, SetAssetMetadata, StorageMetadata};
 use standards::src7::*;
 // ANCHOR_END: import
 
@@ -20,34 +20,20 @@ storage {
 }
 // ANCHOR_END: src7_storage
 
-// ANCHOR: as_b256
-fn b256_type(my_metadata: Metadata) {
-    assert(my_metadata.is_b256());
-
-    let my_b256: b256 = my_metadata.as_b256().unwrap();
+// ANCHOR src7_metadata_convenience_function
+impl SRC7 for Contract {
+    #[storage(read)]
+    fn metadata(asset: AssetId, key: String) -> Option<Metadata> {
+        _metadata(storage.metadata, asset, key)
+    }
 }
-// ANCHOR_END: as_b256
+// ANCHOR src7_metadata_convenience_function
 
-// ANCHOR: as_bytes
-fn bytes_type(my_metadata: Metadata) {
-    assert(my_metadata.is_bytes());
-
-    let my_bytes: Bytes = my_metadata.as_bytes().unwrap();
+// ANCHOR: src7_set_metadata
+impl SetAssetMetadata for Contract {
+    #[storage(read, write)]
+    fn set_metadata(asset: AssetId, key: String, metadata: Metadata) {
+        _set_metadata(storage.metadata, asset, key, metadata);
+    }
 }
-// ANCHOR_END: as_bytes
-
-// ANCHOR: as_u64
-fn u64_type(my_metadata: Metadata) {
-    assert(my_metadata.is_u64());
-
-    let my_u64: u64 = my_metadata.as_u64().unwrap();
-}
-// ANCHOR_END: as_u64
-
-// ANCHOR: as_string
-fn string_type(my_metadata: Metadata) {
-    assert(my_metadata.is_string());
-
-    let my_string: String = my_metadata.as_string().unwrap();
-}
-// ANCHOR_END: as_string
+// ANCHOR_END: src7_set_metadata
