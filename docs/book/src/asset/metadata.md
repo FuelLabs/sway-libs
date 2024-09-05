@@ -51,5 +51,5 @@ The `_set_metadata()` function follows the SRC-7 standard for logging and will e
 To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId` using the provided `_metadata()` convenience function. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type and the `_metadata()` function with no user defined restrictions or custom functionality.
 
 ```sway
-{{#include ../../../../examples/asset/basic_src7/src/main.sw:src7_metadata_convenience_function}}
+{{#include ../../../../examples/asset/basic_src7/src/main.sw:basic_src7}}
 ```
