@@ -21,8 +21,7 @@ Description of the upcoming release here.
 
 ### Fixed
 
-- Some fix here 1
-- Some fix here 2
+- [#297](https://github.com/FuelLabs/sway-libs/pull/297) Fixes docs anchor in basic SRC-7 example.
 
 #### Breaking
 
