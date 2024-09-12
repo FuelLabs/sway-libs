@@ -3,7 +3,7 @@ contract;
 
 use standards::src3::SRC3;
 use standards::src5::{AccessError, SRC5, State};
-use standards::src20::SRC20;
+use standards::src20::{SetDecimalsEvent, SetNameEvent, SetSymbolEvent, SRC20, TotalSupplyEvent};
 use std::{
     asset::{
         burn,
@@ -108,14 +108,16 @@ impl SRC5 for Contract {
 
 impl SRC3 for Contract {
     #[storage(read, write)]
-    fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
-        require(sub_id == DEFAULT_SUB_ID, "incorrect-sub-id");
+    fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
+        require(sub_id.is_some() && sub_id.unwrap() == DEFAULT_SUB_ID, "incorrect-sub-id");
         require_access_owner();
 
+        let current_supply = storage.total_supply.read();
         storage
             .total_supply
-            .write(amount + storage.total_supply.read());
+            .write(current_supply + amount);
         mint_to(recipient, DEFAULT_SUB_ID, amount);
+        TotalSupplyEvent::new(AssetId::default(), current_supply + amount, msg_sender().unwrap()).log();
     }
 
     #[payable]
@@ -129,10 +131,30 @@ impl SRC3 for Contract {
         );
         require_access_owner();
 
+        let current_supply = storage.total_supply.read();
         storage
             .total_supply
-            .write(storage.total_supply.read() - amount);
+            .write(current_supply - amount);
         burn(DEFAULT_SUB_ID, amount);
+        TotalSupplyEvent::new(AssetId::default(), current_supply - amount, msg_sender().unwrap()).log();
+    }
+}
+
+abi EmitSRC20Events {
+    fn emit_src20_events();
+}
+
+impl EmitSRC20Events for Contract {
+    fn emit_src20_events() {
+        // Metadata that is stored as a configurable should only be emitted once.
+        let asset = AssetId::default();
+        let sender = msg_sender().unwrap();
+        let name = Some(String::from_ascii_str(from_str_array(NAME)));
+        let symbol = Some(String::from_ascii_str(from_str_array(SYMBOL)));
+
+        SetNameEvent::new(asset, name, sender).log();
+        SetSymbolEvent::new(asset, symbol, sender).log();
+        SetDecimalsEvent::new(asset, DECIMALS, sender).log();
     }
 }
 `;

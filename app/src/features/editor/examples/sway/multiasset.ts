@@ -2,7 +2,7 @@ export const EXAMPLE_SWAY_CONTRACT_MULTIASSET = `// ERC1155 equivalent in Sway.
 contract;
 
 use standards::src5::{AccessError, SRC5, State};
-use standards::src20::SRC20;
+use standards::src20::{SetDecimalsEvent, SetNameEvent, SetSymbolEvent, SRC20, TotalSupplyEvent};
 use standards::src3::SRC3;
 use std::{
     asset::{
@@ -58,6 +58,7 @@ impl MultiAsset for Contract {
         require_access_owner();
         storage.name.insert(asset, StorageString {});
         storage.name.get(asset).write_slice(name);
+        SetNameEvent::new(asset, Some(name), msg_sender().unwrap()).log();
     }
 
     #[storage(read, write)]
@@ -65,12 +66,14 @@ impl MultiAsset for Contract {
         require_access_owner();
         storage.symbol.insert(asset, StorageString {});
         storage.symbol.get(asset).write_slice(symbol);
+        SetSymbolEvent::new(asset, Some(symbol), msg_sender().unwrap()).log();
     }
 
     #[storage(read, write)]
     fn set_decimals(asset: AssetId, decimals: u8) {
         require_access_owner();
         storage.decimals.insert(asset, decimals);
+        SetDecimalsEvent::new(asset, decimals, msg_sender().unwrap()).log();
     }
 }
 
@@ -113,8 +116,12 @@ impl SRC20 for Contract {
 
 impl SRC3 for Contract {
     #[storage(read, write)]
-    fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
+    fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
         require_access_owner();
+        let sub_id = match sub_id {
+            Some(id) => id,
+            None => SubId::zero(),
+        };
         let asset_id = AssetId::new(ContractId::this(), sub_id);
         let supply = storage.total_supply.get(asset_id).try_read();
         if supply.is_none() {
@@ -127,6 +134,7 @@ impl SRC3 for Contract {
             .total_supply
             .insert(asset_id, current_supply + amount);
         mint_to(recipient, sub_id, amount);
+        TotalSupplyEvent::new(asset_id, current_supply + amount, msg_sender().unwrap()).log();
     }
 
     #[payable]
@@ -142,6 +150,7 @@ impl SRC3 for Contract {
             .total_supply
             .insert(asset_id, current_supply - amount);
         burn(sub_id, amount);
+        TotalSupplyEvent::new(asset_id, current_supply - amount, msg_sender().unwrap()).log();
     }
 }
 `;
