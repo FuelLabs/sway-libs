@@ -12,6 +12,8 @@ import {
 } from "../../../utils/localStorage";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import SwitchThemeButton from "./SwitchThemeButton";
+import { useConnectIfNotAlready } from "../hooks/useConnectIfNotAlready";
+import { useDisconnect } from "@fuels/react";
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -41,6 +43,8 @@ function ActionToolbar({
   updateLog,
 }: ActionToolbarProps) {
   const isMobile = useIsMobile();
+  const { isConnected } = useConnectIfNotAlready();
+  const { disconnect } = useDisconnect();
 
   const onDocsClick = useCallback(() => {
     window.open("https://docs.fuel.network/docs/sway", "_blank", "noreferrer");
@@ -108,6 +112,14 @@ function ActionToolbar({
         text="SHARE"
         tooltip={"Get a shareable link to your code"}
       />
+      {isConnected && !isMobile && (
+        <SecondaryButton
+          header={true}
+          onClick={disconnect}
+          text="DISCONNECT"
+          tooltip={"Disconnect from the wallet"}
+        />
+      )}
       {!isMobile && <SwitchThemeButton />}
     </div>
   );
