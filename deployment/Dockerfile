@@ -56,15 +56,11 @@ ENV PATH="/root/.fuelup/bin:$PATH"
 # Install all fuel toolchains
 RUN fuelup toolchain install latest
 RUN fuelup toolchain install nightly
-RUN fuelup toolchain install beta-1
-RUN fuelup toolchain install beta-2
-RUN fuelup toolchain install beta-3
-RUN fuelup toolchain install beta-4
-RUN fuelup toolchain install beta-5
 RUN fuelup toolchain install testnet
+RUN fuelup toolchain install mainnet
 
 # Install the forc dependencies
-RUN fuelup default testnet
+RUN fuelup default mainnet
 RUN forc build --path projects/swaypad
 
 EXPOSE 8080

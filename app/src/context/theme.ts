@@ -106,7 +106,7 @@ export default function useTheme() {
     },
   });
   return {
-    theme: currentTheme,
+    theme: currentTheme as Theme,
     editorTheme,
     setTheme,
     themeColor,

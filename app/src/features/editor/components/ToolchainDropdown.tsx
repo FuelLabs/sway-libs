@@ -6,12 +6,8 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 
 const ToolchainNames = [
+  "mainnet",
   "testnet",
-  "beta-5",
-  "beta-4",
-  "beta-3",
-  "beta-2",
-  "beta-1",
   "latest",
   "nightly",
 ] as const;

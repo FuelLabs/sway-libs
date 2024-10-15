@@ -49,7 +49,7 @@ function App() {
   const [isCompiled, setIsCompiled] = useState(false);
 
   // The toolchain to use for compilation.
-  const [toolchain, setToolchain] = useState<Toolchain>("testnet");
+  const [toolchain, setToolchain] = useState<Toolchain>("mainnet");
 
   // The deployment state
   const [deployState, setDeployState] = useState(DeployState.NOT_DEPLOYED);
