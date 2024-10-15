@@ -60,7 +60,7 @@ RUN fuelup toolchain install testnet
 RUN fuelup toolchain install mainnet
 
 # Install the forc dependencies
-RUN fuelup default mainnet
+RUN fuelup default testnet
 RUN forc build --path projects/swaypad
 
 EXPOSE 8080
