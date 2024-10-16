@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@fuel-ui/css": "^0.23",
     "@fuel-ui/react": "^0.23.3",
-    "@fuels/connectors": "0.36.0",
+    "@fuels/connectors": "0.5.0",
     "@fuels/react": "0.36.0",
     "@mui/base": "^5.0.0-beta.2",
     "@mui/icons-material": "^5.11.16",
