@@ -10,32 +10,19 @@ pub enum Language {
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Toolchain {
-    #[serde(rename = "beta-5")]
-    Beta5,
-    #[serde(rename = "beta-4")]
-    Beta4,
-    #[serde(rename = "beta-3")]
-    Beta3,
-    #[serde(rename = "beta-2")]
-    Beta2,
-    #[serde(rename = "beta-1")]
-    Beta1,
     Latest,
     Nightly,
     Testnet,
+    Mainnet,
 }
 
 impl fmt::Display for Toolchain {
     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         let s = match self {
-            Toolchain::Beta5 => "beta-5",
-            Toolchain::Beta4 => "beta-4",
-            Toolchain::Beta3 => "beta-3",
-            Toolchain::Beta2 => "beta-2",
-            Toolchain::Beta1 => "beta-1",
             Toolchain::Latest => "latest",
             Toolchain::Nightly => "nightly",
             Toolchain::Testnet => "testnet",
+            Toolchain::Mainnet => "mainnet",
         };
 
         write!(formatter, "{}", s)

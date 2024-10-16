@@ -5,16 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel/InputLabel";
 
-const ToolchainNames = [
-  "testnet",
-  "beta-5",
-  "beta-4",
-  "beta-3",
-  "beta-2",
-  "beta-1",
-  "latest",
-  "nightly",
-] as const;
+const ToolchainNames = ["testnet", "mainnet", "latest", "nightly"] as const;
 export type Toolchain = (typeof ToolchainNames)[number];
 
 export function isToolchain(value: string | null): value is Toolchain {
