@@ -16,7 +16,7 @@ To import the Signed Integer Number Library to your Sway Smart Contract, add the
 {{#include ../../../../examples/signed_integers/src/main.sw:import}}
 ```
 
-In order to use the any of the Signed Integer types, import them into your Sway project like so:
+In order to use any of the Signed Integer types, import them into your Sway project like so:
 
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:import_8}}
