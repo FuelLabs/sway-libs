@@ -16,8 +16,7 @@ Description of the upcoming release here.
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
+- [#305](https://github.com/FuelLabs/sway-libs/pull/305) Updates to forc `v0.66.2`, fuel-core `v0.40.0`, and fuels-rs `v0.66.9`.
 
 ### Fixed
 
