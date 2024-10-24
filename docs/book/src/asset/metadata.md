@@ -14,7 +14,7 @@ To import the Asset Library Base Functionality and [SRC-7](https://docs.fuel.net
 
 ## Integration with the SRC-7 Standard
 
-The [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) definition states that the following abi implementation is required for any Native Asset on Fuel:
+The [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) definition states that the following abi implementation is required for any Native Asset on Fuel which uses stateful metadata:
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:src7_abi}}
