@@ -16,8 +16,7 @@ Description of the upcoming release here.
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
+- [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
 
 ### Fixed
 
