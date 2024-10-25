@@ -9,8 +9,8 @@ on:
 
 env:
   RUST_VERSION: 1.80.1
-  FORC_VERSION: 0.63.3
-  CORE_VERSION: 0.34.0
+  FORC_VERSION: 0.66.2
+  CORE_VERSION: 0.40.0
 
 jobs:
   deploy-contributing:
