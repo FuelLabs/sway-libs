@@ -26,7 +26,7 @@ The Asset Library has the following complimentary data type for the [SRC-7](http
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard.
+Once imported, the Asset Library's metadata functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:src7_storage}}

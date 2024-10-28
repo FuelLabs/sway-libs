@@ -53,7 +53,7 @@ dependencies = [
 
 [[package]]
 name = "core"
-source = "path+from-root-EF1196EF955CE54B"
+source = "path+from-root-7053AAA90CC5E690"
 
 [[package]]
 name = "merkle_examples"
@@ -146,7 +146,7 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.63.3#f55c81cce61aac31913ac0e87306cbaed7da679a"
+source = "git+https://github.com/fuellabs/sway?tag=v0.66.2#31486c0b47669612acb7c64d66ecb50aea281282"
 dependencies = ["core"]
 
 [[package]]
