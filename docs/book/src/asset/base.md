@@ -42,7 +42,7 @@ The following ABI and functions are also provided to set your [SRC-20](https://d
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
+Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:src20_storage}}
