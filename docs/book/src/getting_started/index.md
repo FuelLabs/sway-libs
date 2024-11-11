@@ -5,7 +5,7 @@
 To import any library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```sway
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.1" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.24.0" }
 ```
 
 For reference, here is a complete `Forc.toml` file:
@@ -18,7 +18,7 @@ license = "Apache-2.0"
 name = "MyProject"
 
 [dependencies]
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.23.1" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.24.0" }
 ```
 
 > **NOTE:** Be sure to set the tag to the latest release.
@@ -38,7 +38,7 @@ use sway_libs::ownership::only_owner;
 ```
 
 > **NOTE:**
-> All projects currently use `forc v0.60.0`, `fuels-rs v0.62.0` and `fuel-core 0.26.0`.
+> All projects currently use `forc 0.63.3`, `fuels-rs v0.66.2` and `fuel-core 0.34.0`.
 
 ## Using Sway Libs
 

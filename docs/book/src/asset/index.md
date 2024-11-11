@@ -14,4 +14,4 @@ The [SRC-3; Mint and Burn Standard](https://docs.fuel.network/docs/sway-standard
 
 ## [SRC-7 Functionality](./metadata.md)
 
-The [SRC-7; Arbitrary Asset Metadata Standard](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) prescribes an ABI for metadata associated with Native Assets on the Fuel Network. The Asset Library's [metadata](./metadata.md) section supports the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/)'s implementation.
+The [SRC-7; Onchain Asset Metadata Standard](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) prescribes an ABI for stateful metadata associated with Native Assets on the Fuel Network. The Asset Library's [metadata](./metadata.md) section supports the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/)'s implementation.

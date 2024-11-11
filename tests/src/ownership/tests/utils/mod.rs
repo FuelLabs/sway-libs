@@ -3,7 +3,7 @@ use fuels::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
         StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
     },
-    programs::call_response::FuelCallResponse,
+    programs::responses::CallResponse,
     types::Identity,
 };
 
@@ -22,7 +22,7 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn only_owner(contract: &OwnershipLib<WalletUnlocked>) -> FuelCallResponse<()> {
+    pub async fn only_owner(contract: &OwnershipLib<WalletUnlocked>) -> CallResponse<()> {
         contract.methods().only_owner().call().await.unwrap()
     }
 
@@ -30,9 +30,7 @@ pub mod abi_calls {
         contract.methods().owner().call().await.unwrap().value
     }
 
-    pub async fn renounce_ownership(
-        contract: &OwnershipLib<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    pub async fn renounce_ownership(contract: &OwnershipLib<WalletUnlocked>) -> CallResponse<()> {
         contract
             .methods()
             .renounce_ownership()
@@ -44,7 +42,7 @@ pub mod abi_calls {
     pub async fn set_ownership(
         contract: &OwnershipLib<WalletUnlocked>,
         new_owner: Identity,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .set_ownership(new_owner)
@@ -56,7 +54,7 @@ pub mod abi_calls {
     pub async fn transfer_ownership(
         contract: &OwnershipLib<WalletUnlocked>,
         new_owner: Identity,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .transfer_ownership(new_owner)

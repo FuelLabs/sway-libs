@@ -45,7 +45,7 @@ mod revert {
     #[tokio::test]
     #[should_panic]
     async fn when_bytecode_is_empty() {
-        let (test_contract_instance, wallet) = test_contract_instance().await;
+        let (test_contract_instance, _wallet) = test_contract_instance().await;
 
         let empty_bytecode: Vec<u8> = Vec::new();
         let my_configurables: Vec<(u64, Vec<u8>)> = Vec::new();

@@ -59,14 +59,15 @@ impl SRC20 for Contract {
 
 impl SRC3 for Contract {
     #[storage(read, write)]
-    fn mint(recipient: Identity, sub_id: SubId, amount: u64) {
+    fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
         _mint(
             storage
                 .total_assets,
             storage
                 .total_supply,
             recipient,
-            sub_id,
+            sub_id
+                .unwrap_or(b256::zero()),
             amount,
         );
     }
@@ -81,7 +82,7 @@ impl SRC3 for Contract {
 impl SRC7 for Contract {
     #[storage(read)]
     fn metadata(asset: AssetId, key: String) -> Option<Metadata> {
-        storage.metadata.get(asset, key)
+        _metadata(storage.metadata, asset, key)
     }
 }
 
@@ -120,10 +121,10 @@ fn test_total_assets() {
 
     assert(src20_abi.total_assets() == 0);
 
-    src3_abi.mint(recipient, sub_id1, 10);
+    src3_abi.mint(recipient, Some(sub_id1), 10);
     assert(src20_abi.total_assets() == 1);
 
-    src3_abi.mint(recipient, sub_id2, 10);
+    src3_abi.mint(recipient, Some(sub_id2), 10);
     assert(src20_abi.total_assets() == 2);
 }
 
@@ -138,10 +139,10 @@ fn test_total_supply() {
 
     assert(src20_abi.total_supply(asset_id).is_none());
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(src20_abi.total_supply(asset_id).unwrap() == 10);
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(src20_abi.total_supply(asset_id).unwrap() == 20);
 }
 
@@ -206,7 +207,7 @@ fn test_mint() {
 
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 0);
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
 }
 
@@ -221,7 +222,7 @@ fn test_burn() {
     let sub_id = SubId::zero();
     let asset_id = AssetId::new(ContractId::from(CONTRACT_ID), sub_id);
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
 
     src3_abi.burn(sub_id, 10);
@@ -369,7 +370,7 @@ fn total_assets_only_incremented_once() {
 
     assert(src20_abi.total_assets() == 0);
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
 
     assert(src20_abi.total_assets() == 1);
@@ -379,7 +380,7 @@ fn total_assets_only_incremented_once() {
 
     assert(src20_abi.total_assets() == 1);
 
-    src3_abi.mint(recipient, sub_id, 10);
+    src3_abi.mint(recipient, Some(sub_id), 10);
     assert(balance_of(ContractId::from(CONTRACT_ID), asset_id) == 10);
 
     assert(src20_abi.total_assets() == 1);

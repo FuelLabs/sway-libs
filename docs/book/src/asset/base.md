@@ -42,7 +42,7 @@ The following ABI and functions are also provided to set your [SRC-20](https://d
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
+Once imported, the Asset Library's base functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-20](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/base_docs/src/main.sw:src20_storage}}
@@ -59,6 +59,8 @@ To use the Asset Library's base functionly, simply pass the `StorageKey` from th
 ## Setting an Asset's SRC-20 Attributes
 
 To set some the asset attributes for an Asset, use the `SetAssetAttributes` ABI provided by the Asset Library. The example below shows the implementation of the `SetAssetAttributes` ABI with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the `SetAssetAttributes` ABI to ensure only a single user has permissions to set an Asset's attributes.
+
+The `_set_name()`, `_set_symbol()`, and `_set_decimals()` functions follows the SRC-20 standard for logging and will emit their respective log when called.
 
 ```sway
 {{#include ../../../../examples/asset/setting_src20_attributes/src/main.sw:setting_src20_attributes}}

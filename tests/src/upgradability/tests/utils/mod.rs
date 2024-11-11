@@ -3,7 +3,7 @@ use fuels::{
         abigen, launch_custom_provider_and_get_wallets, Contract, ContractId, LoadConfiguration,
         StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
     },
-    programs::call_response::FuelCallResponse,
+    programs::responses::CallResponse,
 };
 
 // Load abi from json
@@ -24,7 +24,7 @@ pub mod abi_calls {
     pub async fn set_proxy_target(
         contract: &UpgradabilityLib<WalletUnlocked>,
         new_target: ContractId,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .set_proxy_target(new_target)
@@ -35,26 +35,22 @@ pub mod abi_calls {
 
     pub async fn proxy_target(
         contract: &UpgradabilityLib<WalletUnlocked>,
-    ) -> FuelCallResponse<Option<ContractId>> {
+    ) -> CallResponse<Option<ContractId>> {
         contract.methods().proxy_target().call().await.unwrap()
     }
 
-    pub async fn proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
-    ) -> FuelCallResponse<State> {
+    pub async fn proxy_owner(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<State> {
         contract.methods().proxy_owner().call().await.unwrap()
     }
 
-    pub async fn only_proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    pub async fn only_proxy_owner(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<()> {
         contract.methods().only_proxy_owner().call().await.unwrap()
     }
 
     pub async fn set_proxy_owner(
         contract: &UpgradabilityLib<WalletUnlocked>,
         new_proxy_owner: State,
-    ) -> FuelCallResponse<()> {
+    ) -> CallResponse<()> {
         contract
             .methods()
             .set_proxy_owner(new_proxy_owner)
@@ -63,9 +59,7 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn initialize_proxy(
-        contract: &UpgradabilityLib<WalletUnlocked>,
-    ) -> FuelCallResponse<()> {
+    pub async fn initialize_proxy(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<()> {
         contract.methods().initialize_proxy().call().await.unwrap()
     }
 }

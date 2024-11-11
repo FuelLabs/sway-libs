@@ -36,7 +36,7 @@ async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlock
     .await
     .unwrap();
 
-    let instance = MerkleExample::new(id.clone(), wallet.clone());
+    let instance = MerkleExample::new(id, wallet.clone());
 
     (instance, wallet)
 }
@@ -48,12 +48,12 @@ async fn rust_setup_example() {
     // ANCHOR: generating_a_tree
     // Create a new Merkle Tree and define leaves
     let mut tree = MerkleTree::new();
-    let leaves = ["A".as_bytes(), "B".as_bytes(), "C".as_bytes()].to_vec();
+    let leaves = [b"A", b"B", b"C"].to_vec();
 
     // Hash the leaves and then push to the merkle tree
-    for datum in leaves.iter() {
+    for datum in &leaves {
         let mut hasher = Sha256::new();
-        hasher.update(&datum);
+        hasher.update(datum);
         let hash = hasher.finalize();
         tree.push(&hash);
     }
@@ -69,14 +69,14 @@ async fn rust_setup_example() {
     // Convert the proof set from Vec<Bytes32> to Vec<Bits256>
     let mut bits256_proof: Vec<Bits256> = Vec::new();
     for itterator in proof_set {
-        bits256_proof.push(Bits256(itterator.clone()));
+        bits256_proof.push(Bits256(itterator));
     }
     // ANCHOR_END: generating_proof
 
     // ANCHOR: verify_proof
     // Create the merkle leaf
     let mut leaf_hasher = Sha256::new();
-    leaf_hasher.update(&leaves[key as usize]);
+    leaf_hasher.update(leaves[key as usize]);
     let hashed_leaf_data = leaf_hasher.finalize();
     let merkle_leaf = leaf_sum(&hashed_leaf_data);
 
@@ -104,7 +104,7 @@ async fn rust_setup_example() {
 pub fn leaf_sum(data: &[u8]) -> [u8; 32] {
     let mut hash = Sha256::new();
 
-    hash.update(&[LEAF]);
+    hash.update([LEAF]);
     hash.update(data);
 
     hash.finalize().into()

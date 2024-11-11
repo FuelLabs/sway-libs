@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+Description of the upcoming release here.
+
 ### Added
 
 - Something new here 1
@@ -14,20 +16,63 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
+- [#305](https://github.com/FuelLabs/sway-libs/pull/305) Updates to forc `v0.66.2`, fuel-core `v0.40.0`, and fuels-rs `v0.66.9`.
+- [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
 
 ### Fixed
 
-- Some fix here 1
-- Some fix here 2
+- [#297](https://github.com/FuelLabs/sway-libs/pull/297) Fixes docs anchor in basic SRC-7 example.
+- [#298](https://github.com/FuelLabs/sway-libs/pull/298) Fixes the README headers on Upgradability Libraries from an `h2` to an `h4`.
+- [#302](https://github.com/FuelLabs/sway-libs/pull/302) Fixes typos in documentation.
+- [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documenation.
 
-### Breaking
+#### Breaking
 
 - Some breaking change here 1
 - Some breaking change here 2
 
-## [v0.23.1]
+## [Version 0.24.0]
+
+### Added v0.24.0
+
+- [#293](https://github.com/FuelLabs/sway-libs/pull/293) Adds the `BytecodeRoot` and `ContractConfigurables` types to the Bytecode Library.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) Adds the `_metadata()` function to the Asset Library.
+
+### Changed v0.24.0
+
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) Updates the repository to Sway-Standards v0.6.0 and implements the new SRC-20 and SRC-7 logging specifications.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()`, `_set_name()` and `_set_symbol()` now revert if the metadata is an empty string.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_set_metadata()` now reverts if the metadata is empty bytes.
+- [#286](https://github.com/FuelLabs/sway-libs/pull/286) `_mint()` and `_burn()` now revert if the `amount` argument is zero.
+- [#289](https://github.com/FuelLabs/sway-libs/pull/289) Bumps Sway-Libs to forc `v0.63.3`, fuel-core `v0.34.0`, and fuels `v0.66.2`.
+- [#290](https://github.com/FuelLabs/sway-libs/pull/290) Update the Upgradeability library to use a specific storage slot for owner functionality.
+- [#291](https://github.com/FuelLabs/sway-libs/pull/291) Prepares for the `v0.24.0` release.
+
+### Breaking v0.24.0
+
+- [#290](https://github.com/FuelLabs/sway-libs/pull/290) The `_proxy_owner()`, `only_proxy_owner()` and `_set_proxy_owner()` functions no longer take `storage.proxy_owner` as a parameter. Instead they directly read and write to the storage slot `0xbb79927b15d9259ea316f2ecb2297d6cc8851888a98278c0a2e03e1a091ea754` which is `sha256("storage_SRC14_1")`.
+
+Before:
+
+```sway
+fn foo() {
+    let stored_proxy_owner = _proxy_owner(storage.proxy_owner);
+    only_proxy_owner(storage.proxy_owner);
+    _set_proxy_owner(new_proxy_owner, storage.proxy_owner);
+}
+```
+
+After:
+
+```sway
+fn foo() {
+    let stored_proxy_owner = _proxy_owner();
+    only_proxy_owner();
+    _set_proxy_owner(new_proxy_owner);
+}
+```
+
+## [Version 0.23.1]
 
 ### Added v0.23.1
 
@@ -46,7 +91,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - None
 
-## [v0.23.0]
+## [Version 0.23.0]
 
 ### Added v0.23.0
 

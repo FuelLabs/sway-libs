@@ -1,7 +1,7 @@
 use crate::ownership::tests::utils::{
     abi_calls::{owner, renounce_ownership, set_ownership},
-    abigen_bindings::ownership_lib_mod::State,
     test_helpers::setup,
+    State,
 };
 use fuels::types::Identity;
 

@@ -1,6 +1,6 @@
 library;
 
-use standards::src7::Metadata;
+use standards::src7::{Metadata, SetMetadataEvent};
 use std::{
     auth::msg_sender,
     bytes::Bytes,
@@ -18,18 +18,7 @@ use std::{
     },
     string::String,
 };
-
-/// The event emitted when metadata is set via the `_set_metadata()` function.
-pub struct SetMetadataEvent {
-    /// The asset for which metadata is set.
-    asset: AssetId,
-    /// The `Identity` of the caller that set the metadata.
-    sender: Identity,
-    /// The Metadata that is set.
-    metadata: Metadata,
-    /// The key used for the metadata.
-    key: String,
-}
+use ::asset::errors::SetMetadataError;
 
 /// A persistent storage type to store the SRC-7; Metadata Standard type.
 ///
@@ -47,6 +36,11 @@ impl StorageKey<StorageMetadata> {
     /// * `key`: [String] - The key for the metadata to be stored.
     /// * `metadata`: [Metadata] - The metadata which to be stored.
     ///
+    /// # Reverts
+    ///
+    /// * When the metadata is an empty string.
+    /// * When the metadata is an empty bytes.
+    ///
     /// # Number of Storage Accesses
     ///
     /// * Writes: `2`
@@ -56,6 +50,7 @@ impl StorageKey<StorageMetadata> {
     /// ```sway
     /// use standards::src7::Metadata;
     /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -72,23 +67,34 @@ impl StorageKey<StorageMetadata> {
         match metadata {
             Metadata::Int(data) => {
                 write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot())), 0, 0);
+                write(sha256((hashed_key, self.slot())), 0, 1);
             },
             Metadata::B256(data) => {
                 write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot())), 0, 1);
-            },
-            Metadata::String(data) => {
-                let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
-                storage_string.write_slice(data);
                 write(sha256((hashed_key, self.slot())), 0, 2);
             },
+            Metadata::String(data) => {
+                require(!data.is_empty(), SetMetadataError::EmptyString);
+
+                let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
+                storage_string.write_slice(data);
+                write(sha256((hashed_key, self.slot())), 0, 3);
+            },
             Metadata::Bytes(data) => {
+                require(!data.is_empty(), SetMetadataError::EmptyBytes);
+
                 let storage_bytes: StorageKey<StorageBytes> = StorageKey::new(hashed_key, 0, hashed_key);
                 storage_bytes.write_slice(data);
-                write(sha256((hashed_key, self.slot())), 0, 3);
-            }
+                write(sha256((hashed_key, self.slot())), 0, 4);
+            },
         }
+
+        log(SetMetadataEvent {
+            asset,
+            metadata: Some(metadata),
+            key,
+            sender: msg_sender().unwrap(),
+        });
     }
 
     /// Returns metadata for a specific asset and key pair.
@@ -111,6 +117,7 @@ impl StorageKey<StorageMetadata> {
     /// ```sway
     /// use standards::src7::Metadata;
     /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
     ///
     /// storage {
     ///     metadata: StorageMetadata = StorageMetadata {}
@@ -126,21 +133,21 @@ impl StorageKey<StorageMetadata> {
         let hashed_key = sha256((asset, key));
 
         match read::<u64>(sha256((hashed_key, self.slot())), 0) {
-            Option::Some(0) => {
-                Option::Some(Metadata::Int(read::<u64>(hashed_key, 0).unwrap()))
+            Some(1) => {
+                Some(Metadata::Int(read::<u64>(hashed_key, 0).unwrap()))
             },
-            Option::Some(1) => {
-                Option::Some(Metadata::B256(read::<b256>(hashed_key, 0).unwrap()))
+            Some(2) => {
+                Some(Metadata::B256(read::<b256>(hashed_key, 0).unwrap()))
             },
-            Option::Some(2) => {
+            Some(3) => {
                 let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
-                Option::Some(Metadata::String(storage_string.read_slice().unwrap()))
+                Some(Metadata::String(storage_string.read_slice().unwrap_or(String::new())))
             },
-            Option::Some(3) => {
+            Some(4) => {
                 let storage_bytes: StorageKey<StorageBytes> = StorageKey::new(hashed_key, 0, hashed_key);
-                Option::Some(Metadata::Bytes(storage_bytes.read_slice().unwrap()))
+                Some(Metadata::Bytes(storage_bytes.read_slice().unwrap_or(Bytes::new())))
             },
-            _ => Option::None,
+            _ => None,
         }
     }
 }
@@ -151,8 +158,8 @@ impl StorageKey<StorageMetadata> {
 ///
 /// * `metadata_key`: [StorageKey<StorageMetadata>] - The storage location for metadata.
 /// * `asset`: [AssetId] - The asset for the metadata to be stored.
+/// * `metadata`: [Option<Metadata>] - The metadata which to be stored.
 /// * `key`: [String] - The key for the metadata to be stored.
-/// * `metadata`: [Metadata] - The metadata which to be stored.
 ///
 /// # Number of Storage Accesses
 ///
@@ -163,13 +170,14 @@ impl StorageKey<StorageMetadata> {
 /// ```sway
 /// use standards::src7::Metadata;
 /// use sway_libs::asset::metadata::*;
+/// use std::string::String;
 ///
 /// storage {
 ///     metadata: StorageMetadata = StorageMetadata {}
 /// }
 ///
-/// fn foo(asset: AssetId, key: String, metadata: Metadata) {
-///     _set_metadata(storage.metadata, asset, key, metadata);
+/// fn foo(asset: AssetId, key: String, metadata: Option<Metadata>) {
+///     _set_metadata(storage.metadata, asset, metadata, key);
 /// }
 /// ```
 #[storage(read, write)]
@@ -179,16 +187,67 @@ pub fn _set_metadata(
     key: String,
     metadata: Metadata,
 ) {
-    log(SetMetadataEvent {
-        asset,
-        sender: msg_sender().unwrap(),
-        metadata,
-        key,
-    });
     metadata_key.insert(asset, key, metadata);
 }
 
+/// Returns metadata for a specific asset and key pair.
+///
+/// # Arguments
+///
+/// * `metadata_key`: [StorageKey<StorageMetadata>] - The storage location for metadata.
+/// * `asset`: [AssetId] - The asset for the metadata to be read.
+/// * `metadata`: [Option<Metadata>] - The metadata which to be read.
+/// * `key`: [String] - The key for the metadata to be read.
+///
+/// # Number of Storage Accesses
+///
+/// * Reads: `2`
+///
+/// # Example
+///
+/// ```sway
+/// use standards::src7::Metadata;
+/// use sway_libs::asset::metadata::*;
+/// use std::string::String;
+///
+/// storage {
+///     metadata: StorageMetadata = StorageMetadata {}
+/// }
+///
+/// fn foo(asset: AssetId, key: String) {
+///     let result: Option<Metadata> = _metadata(storage.metadata, asset, key);
+/// }
+/// ```
+#[storage(read)]
+pub fn _metadata(
+    metadata_key: StorageKey<StorageMetadata>,
+    asset: AssetId,
+    key: String,
+) -> Option<Metadata> {
+    metadata_key.get(asset, key)
+}
 abi SetAssetMetadata {
+    /// Stores metadata for a specific asset and key pair.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset`: [AssetId] - The asset for the metadata to be stored.
+    /// * `metadata`: [Metadata] - The metadata which to be stored.
+    /// * `key`: [String] - The key for the metadata to be stored.
+    ///
+    /// # Example
+    ///
+    /// ```sway
+    /// use standards::src7::{SRC7, Metadata};
+    /// use sway_libs::asset::metadata::*;
+    /// use std::string::String;
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, key: String, metadata: Metadata) {
+    ///     let contract_abi = abi(SetAssetMetadata, contract_id.bits());
+    ///     contract_abi.set_metadata(asset, metadata, key);
+    ///     assert(contract_abi.metadata(asset, key).unwrap() == Metadata);
+    /// }
+    /// ```
     #[storage(read, write)]
     fn set_metadata(asset: AssetId, key: String, metadata: Metadata);
 }

@@ -1,6 +1,8 @@
 library;
 
 use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
+use standards::src20::{SetDecimalsEvent, SetNameEvent, SetSymbolEvent};
+use ::asset::errors::SetMetadataError;
 
 /// Returns the total number of individual assets for a contract.
 ///
@@ -201,6 +203,10 @@ pub fn _decimals(
 /// * `asset`: [AssetId] - The asset of which to set the name.
 /// * `name`: [String] - The name of the asset.
 ///
+/// # Reverts
+///
+/// * When passing an empty string.
+///
 /// # Number of Storage Accesses
 ///
 /// * Writes: `2`
@@ -218,7 +224,7 @@ pub fn _decimals(
 /// fn foo(asset: AssetId) {
 ///     let name = String::from_ascii_str("Ether");
 ///     _set_name(storage.name, asset, name);
-///     assert(_name(storage.name, asset) == name);
+///     assert(_name(storage.name, asset).unwrap() == name);
 /// }
 /// ```
 #[storage(write)]
@@ -227,8 +233,16 @@ pub fn _set_name(
     asset: AssetId,
     name: String,
 ) {
+    require(!name.is_empty(), SetMetadataError::EmptyString);
+
     name_key.insert(asset, StorageString {});
     name_key.get(asset).write_slice(name);
+
+    log(SetNameEvent {
+        asset,
+        name: Some(name),
+        sender: msg_sender().unwrap(),
+    });
 }
 
 /// Unconditionally sets the symbol of an asset.
@@ -242,6 +256,10 @@ pub fn _set_name(
 /// * `symbol_key`: [StorageKey<StorageMap<AssetId, StorageKey<StorageString>>>] - The location in storage which the `StorageMap` that stores the symbols of assets is stored.
 /// * `asset`: [AssetId] - The asset of which to set the symbol.
 /// * `symbol`: [String] - The symbol of the asset.
+///
+/// # Reverts
+///
+/// * When passing an empty string.
 ///
 /// # Number of Storage Accesses
 ///
@@ -260,7 +278,7 @@ pub fn _set_name(
 /// fn foo(asset: AssetId) {
 ///     let symbol = String::from_ascii_str("ETH");
 ///     _set_symbol(storage.symbol, asset, symbol);
-///     assert(_symbol(storage.symbol, asset) == symbol);
+///     assert(_symbol(storage.symbol, asset).unwrap() == symbol);
 /// }
 /// ```
 #[storage(write)]
@@ -269,8 +287,16 @@ pub fn _set_symbol(
     asset: AssetId,
     symbol: String,
 ) {
+    require(!symbol.is_empty(), SetMetadataError::EmptyString);
+
     symbol_key.insert(asset, StorageString {});
     symbol_key.get(asset).write_slice(symbol);
+
+    log(SetSymbolEvent {
+        asset,
+        symbol: Some(symbol),
+        sender: msg_sender().unwrap(),
+    });
 }
 
 /// Unconditionally sets the decimals of an asset.
@@ -293,7 +319,6 @@ pub fn _set_symbol(
 ///
 /// ```sway
 /// use sway_libs::asset::base::{_set_decimals, _decimals};
-/// use std::string::String;
 ///
 /// storage {
 ///     decimals: StorageMap<AssetId, u8> = StorageMap {},
@@ -302,7 +327,7 @@ pub fn _set_symbol(
 /// fn foo(asset: AssetId) {
 ///     let decimals = 8u8;
 ///     _set_decimals(storage.decimals, asset, decimals);
-///     assert(_decimals(storage.decimals, asset) == decimals);
+///     assert(_decimals(storage.decimals, asset).unwrap() == decimals);
 /// }
 /// ```
 #[storage(write)]
@@ -312,13 +337,78 @@ pub fn _set_decimals(
     decimals: u8,
 ) {
     decimals_key.insert(asset, decimals);
+
+    log(SetDecimalsEvent {
+        asset,
+        decimals,
+        sender: msg_sender().unwrap(),
+    });
 }
 
 abi SetAssetAttributes {
+    /// Stores the name for a specific asset.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset`: [AssetId] - The asset for the name to be stored.
+    /// * `name`: [String] - The name which to be stored.
+    ///
+    /// # Example
+    ///
+    /// ```sway
+    /// use standards::src20::SRC20;
+    /// use sway_libs::asset::base::*;
+    /// use std::string::String;
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, name: String) {
+    ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
+    ///     contract_abi.set_name(asset, name);
+    ///     assert(contract_abi.name(asset) == name);
+    /// }
+    /// ```
     #[storage(write)]
     fn set_name(asset: AssetId, name: String);
+    /// Stores the symbol for a specific asset.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset`: [AssetId] - The asset for the symbol to be stored.
+    /// * `symbol`: [String] - The symbol which to be stored.
+    ///
+    /// # Example
+    ///
+    /// ```sway
+    /// use standards::src20::SRC20;
+    /// use sway_libs::asset::base::*;
+    /// use std::string::String;
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, symbol: String) {
+    ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
+    ///     contract_abi.set_symbol(asset, symbol);
+    ///     assert(contract_abi.symbol(asset) == symbol);
+    /// }
+    /// ```
     #[storage(write)]
     fn set_symbol(asset: AssetId, symbol: String);
+    /// Stores the decimals for a specific asset.
+    ///
+    /// # Arguments
+    ///
+    /// * `asset`: [AssetId] - The asset for the symbol to be stored.
+    /// * `decimals`: [u8] - The decimals which to be stored.
+    ///
+    /// # Example
+    ///
+    /// ```sway
+    /// use standards::src20::SRC20;
+    /// use sway_libs::asset::base::*;
+    ///
+    /// fn foo(contract_id: ContractId, asset: AssetId, decimals: u8) {
+    ///     let contract_abi = abi(SetAssetAttributes, contract_id.bits());
+    ///     contract_abi.set_decimals(asset, decimals);
+    ///     assert(contract_abi.decimals(asset).unwrap() == decimals);
+    /// }
+    /// ```
     #[storage(write)]
     fn set_decimals(asset: AssetId, decimals: u8);
 }
