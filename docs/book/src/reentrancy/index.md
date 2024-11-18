@@ -2,16 +2,11 @@
 
 The Reentrancy Guard Library provides an API to check for and disallow reentrancy on a contract. A reentrancy attack happens when a function is externally invoked during its execution, allowing it to be run multiple times in a single transaction.
 
-The reentrancy check is used to check if a contract ID has been called more than
-once in the current call stack.
+The reentrancy check is used to check if a contract ID has been called more than once in the current call stack.
 
 A reentrancy, or "recursive call" attack can cause some functions to behave in unexpected ways. This can be prevented by asserting a contract has not yet been called in the current transaction. An example can be found [here](https://swcregistry.io/docs/SWC-107).
 
 For implementation details on the Reentrancy Guard Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/index.html).
-
-## Known Issues
-
-While this can protect against both single-function reentrancy and cross-function reentrancy attacks, it WILL NOT PREVENT a cross-contract reentrancy attack.
 
 ## Importing the Reentrancy Guard Library
 
@@ -45,3 +40,7 @@ To check if the current caller is a reentrant, you may call the `is_reentrant()`
 ```sway
 {{#include ../../../../examples/reentrancy/src/main.sw:is_reentrant}}
 ```
+
+## Cross Contract Reentrancy
+
+Cross-Contract Reentrancy is not possible on Fuel due to the use of Native Assets. As such, no contract calls are performed when assets are transfered. However standard security practices when relying on other contracts for state should still be applied, especially when making external calls.
