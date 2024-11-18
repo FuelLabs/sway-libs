@@ -43,4 +43,4 @@ To check if the current caller is a reentrant, you may call the `is_reentrant()`
 
 ## Cross Contract Reentrancy
 
-Cross-Contract Reentrancy is not possible on Fuel due to the use of Native Assets. As such, no contract calls are performed when assets are transfered. However standard security practices when relying on other contracts for state should still be applied, especially when making external calls.
+Cross-Contract Reentrancy is not possible on Fuel due to the use of Native Assets. As such, no contract calls are performed when assets are transferred. However standard security practices when relying on other contracts for state should still be applied, especially when making external calls.
