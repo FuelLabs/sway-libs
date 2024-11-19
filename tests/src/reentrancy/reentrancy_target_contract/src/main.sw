@@ -5,6 +5,7 @@ use sway_libs::reentrancy::*;
 
 use reentrancy_attacker_abi::Attacker;
 use reentrancy_target_abi::Target;
+use reentrancy_fallback_abi::FallbackAttack;
 
 // Return the sender as a ContractId or panic:
 pub fn get_msg_sender_id_or_panic() -> ContractId {
@@ -62,5 +63,15 @@ impl Target for Contract {
         abi(Attacker, get_msg_sender_id_or_panic()
             .bits())
             .evil_callback_4();
+    }
+
+    fn fallback_contract_call() {
+        // panic if reentrancy detected
+        reentrancy_guard();
+
+        // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
+        abi(FallbackAttack, get_msg_sender_id_or_panic()
+            .bits())
+            .nonexistant_function(ContractId::this());
     }
 }

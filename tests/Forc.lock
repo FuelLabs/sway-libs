@@ -184,6 +184,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "reentrancy_fallback_abi"
+source = "path+from-root-F53252C7DB7025EE"
+dependencies = ["std"]
+
+[[package]]
 name = "reentrancy_target_abi"
 source = "member"
 dependencies = ["std"]
@@ -193,6 +198,7 @@ name = "reentrancy_target_contract"
 source = "member"
 dependencies = [
     "reentrancy_attacker_abi",
+    "reentrancy_fallback_abi",
     "reentrancy_target_abi",
     "std",
     "sway_libs",

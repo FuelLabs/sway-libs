@@ -1,6 +1,9 @@
 contract;
 
-use std::auth::*;
+use std::{
+    auth::*,
+    call_frames::*,
+};
 
 use reentrancy_target_abi::Target;
 use reentrancy_attacker_abi::Attacker;
@@ -41,6 +44,10 @@ impl Attacker for Contract {
             .cross_contract_reentrancy_denied();
     }
 
+    fn launch_thwarted_attack_4(target: ContractId) {
+        abi(Target, target.bits()).fallback_contract_call();
+    }
+
     fn innocent_call(target: ContractId) {
         abi(Target, target.bits()).guarded_function_is_callable();
     }
@@ -70,4 +77,12 @@ impl Attacker for Contract {
     }
 
     fn innocent_callback() {}
+}
+
+#[fallback]
+fn fallback() {
+    let call_args = called_args::<ContractId>();
+
+    let target_abi = abi(Target, call_args.bits());
+    target_abi.fallback_contract_call();
 }

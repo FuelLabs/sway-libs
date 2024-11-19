@@ -7,4 +7,5 @@ abi Target {
     fn intra_contract_call();
     fn guarded_function_is_callable();
     fn cross_contract_reentrancy_denied();
+    fn fallback_contract_call();
 }

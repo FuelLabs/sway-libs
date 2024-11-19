@@ -6,6 +6,7 @@ abi Attacker {
     fn launch_thwarted_attack_2(target: ContractId);
     #[storage(write)]
     fn launch_thwarted_attack_3(target: ContractId, helper: ContractId);
+    fn launch_thwarted_attack_4(target: ContractId);
     fn innocent_call(target: ContractId);
     fn evil_callback_1() -> bool;
     fn evil_callback_2();
