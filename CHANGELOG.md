@@ -17,6 +17,7 @@ Description of the upcoming release here.
 
 - [#305](https://github.com/FuelLabs/sway-libs/pull/305) Updates to forc `v0.66.2`, fuel-core `v0.40.0`, and fuels-rs `v0.66.9`.
 - [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
+- [#308](https://github.com/FuelLabs/sway-libs/pull/308) Removes comments on Cross-Contract Reentrancy vulnerability.
 
 ### Fixed
 
