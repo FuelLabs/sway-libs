@@ -161,4 +161,20 @@ mod revert {
             .await
             .unwrap();
     }
+
+    #[tokio::test]
+    #[should_panic(expected = "NonReentrant")]
+    async fn can_block_fallback_reentrancy() {
+        let wallet = launch_provider_and_get_wallet().await.unwrap();
+        let (attacker_instance, _) = get_attacker_instance(wallet.clone()).await;
+        let (instance, target_id) = get_target_instance(wallet).await;
+
+        attacker_instance
+            .methods()
+            .launch_thwarted_attack_4(target_id)
+            .with_contracts(&[&instance])
+            .call()
+            .await
+            .unwrap();
+    }
 }
