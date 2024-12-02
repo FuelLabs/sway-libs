@@ -15,16 +15,16 @@ impl Attacker for Contract {
     #[storage(read)]
     fn launch_attack(target: Option<ContractId>) -> bool {
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).reentrancy_detected(),
+            Some(target_id) => abi(Target, target_id.bits()).reentrancy_detected(),
             None => abi(Target, storage.target_id.read().bits()).reentrancy_detected(),
-        }       
+        }
     }
 
     #[storage(read)]
     fn launch_thwarted_attack_1(target: Option<ContractId>) {
         log("launch_thwarted_attack_1");
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).reentrance_denied(),
+            Some(target_id) => abi(Target, target_id.bits()).reentrance_denied(),
             None => abi(Target, storage.target_id.read().bits()).reentrance_denied(),
         }
     }
@@ -32,7 +32,7 @@ impl Attacker for Contract {
     #[storage(read)]
     fn launch_thwarted_attack_2(target: Option<ContractId>) {
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).intra_contract_call(),
+            Some(target_id) => abi(Target, target_id.bits()).intra_contract_call(),
             None => abi(Target, storage.target_id.read().bits()).intra_contract_call(),
         };
     }
@@ -42,7 +42,7 @@ impl Attacker for Contract {
         storage.helper.write(helper);
 
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).cross_contract_reentrancy_denied(),
+            Some(target_id) => abi(Target, target_id.bits()).cross_contract_reentrancy_denied(),
             None => abi(Target, storage.target_id.read().bits()).cross_contract_reentrancy_denied(),
         };
     }
@@ -50,7 +50,7 @@ impl Attacker for Contract {
     #[storage(read)]
     fn launch_thwarted_attack_4(target: Option<ContractId>) {
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).fallback_contract_call(),
+            Some(target_id) => abi(Target, target_id.bits()).fallback_contract_call(),
             None => abi(Target, storage.target_id.read().bits()).fallback_contract_call(),
         };
     }
@@ -58,7 +58,7 @@ impl Attacker for Contract {
     #[storage(read)]
     fn innocent_call(target: Option<ContractId>) {
         match target {
-            Some(target_id) =>  abi(Target, target_id.bits()).guarded_function_is_callable(),
+            Some(target_id) => abi(Target, target_id.bits()).guarded_function_is_callable(),
             None => abi(Target, storage.target_id.read().bits()).guarded_function_is_callable(),
         };
     }

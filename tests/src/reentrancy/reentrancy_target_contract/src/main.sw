@@ -28,7 +28,10 @@ impl Target for Contract {
         reentrancy_guard();
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        abi(Attacker, storage.attack_contract.read().bits())
+        abi(Attacker, storage
+            .attack_contract
+            .read()
+            .bits())
             .evil_callback_2();
     }
 
@@ -38,7 +41,10 @@ impl Target for Contract {
         reentrancy_guard();
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        abi(Attacker, storage.attack_contract.read().bits())
+        abi(Attacker, storage
+            .attack_contract
+            .read()
+            .bits())
             .evil_callback_3();
     }
 
@@ -58,7 +64,10 @@ impl Target for Contract {
         // panic if reentrancy detected
         reentrancy_guard();
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        abi(Attacker, storage.attack_contract.read().bits())
+        abi(Attacker, storage
+            .attack_contract
+            .read()
+            .bits())
             .evil_callback_4();
     }
 
@@ -68,7 +77,10 @@ impl Target for Contract {
         reentrancy_guard();
 
         // this call transfers control to the attacker contract, allowing it to execute arbitrary code.
-        abi(FallbackAttack, storage.attack_contract.read().bits())
+        abi(FallbackAttack, storage
+            .attack_contract
+            .read()
+            .bits())
             .nonexistant_function(ContractId::this());
     }
 

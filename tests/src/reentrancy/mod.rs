@@ -63,7 +63,12 @@ pub async fn get_target_instance(
 
     let instance = TargetContract::new(id.clone(), wallet);
 
-    instance.methods().set_attack_contract(attack_contract_id).call().await.unwrap();
+    instance
+        .methods()
+        .set_attack_contract(attack_contract_id)
+        .call()
+        .await
+        .unwrap();
 
     (instance, id.into())
 }
@@ -73,8 +78,10 @@ pub async fn get_proxy_instance(
     target_contract: ContractId,
 ) -> (ProxyContract<WalletUnlocked>, ContractId) {
     let configurables = ProxyContractConfigurables::default()
-        .with_INITIAL_TARGET(Some(target_contract)).unwrap()
-        .with_INITIAL_OWNER(State::Initialized(wallet.address().into())).unwrap();
+        .with_INITIAL_TARGET(Some(target_contract))
+        .unwrap()
+        .with_INITIAL_OWNER(State::Initialized(wallet.address().into()))
+        .unwrap();
 
     let storage_configuration =
         StorageConfiguration::default().add_slot_overrides_from_file(REENTRANCY_PROXY_STORAGE);
@@ -119,7 +126,12 @@ mod success {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         let result = attacker_instance
             .methods()
@@ -137,7 +149,12 @@ mod success {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -158,7 +175,12 @@ mod revert {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -175,7 +197,12 @@ mod revert {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -193,7 +220,12 @@ mod revert {
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (helper_instance, helper_id) = get_attack_helper_id(wallet.clone()).await;
         let (target_instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -210,7 +242,12 @@ mod revert {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet, attacker_id).await;
-        attacker_instance.methods().set_target_contract(target_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(target_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -229,7 +266,12 @@ mod revert {
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet.clone(), attacker_id).await;
         let (proxy_instance, proxy_id) = get_proxy_instance(wallet, target_id).await;
-        attacker_instance.methods().set_target_contract(proxy_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(proxy_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -248,7 +290,12 @@ mod revert {
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet.clone(), attacker_id).await;
         let (proxy_instance, proxy_id) = get_proxy_instance(wallet, target_id).await;
-        attacker_instance.methods().set_target_contract(proxy_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(proxy_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -268,7 +315,12 @@ mod revert {
         let (helper_instance, helper_id) = get_attack_helper_id(wallet.clone()).await;
         let (target_instance, target_id) = get_target_instance(wallet.clone(), attacker_id).await;
         let (proxy_instance, proxy_id) = get_proxy_instance(wallet, target_id).await;
-        attacker_instance.methods().set_target_contract(proxy_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(proxy_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
@@ -287,7 +339,12 @@ mod revert {
         let (attacker_instance, attacker_id) = get_attacker_instance(wallet.clone()).await;
         let (instance, target_id) = get_target_instance(wallet.clone(), attacker_id).await;
         let (proxy_instance, proxy_id) = get_proxy_instance(wallet, target_id).await;
-        attacker_instance.methods().set_target_contract(proxy_id).call().await.unwrap();
+        attacker_instance
+            .methods()
+            .set_target_contract(proxy_id)
+            .call()
+            .await
+            .unwrap();
 
         attacker_instance
             .methods()
