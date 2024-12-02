@@ -24,7 +24,6 @@ impl Target for Contract {
 
     #[storage(read)]
     fn reentrance_denied() {
-        log("reentrance_denied");
         // panic if reentrancy detected
         reentrancy_guard();
 

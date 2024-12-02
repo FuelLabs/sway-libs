@@ -68,7 +68,6 @@ impl Attacker for Contract {
     }
 
     fn evil_callback_2() {
-        log("evil_callback_2");
         abi(Attacker, ContractId::this()
             .bits())
             .launch_thwarted_attack_1(None);

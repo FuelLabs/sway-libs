@@ -154,6 +154,5 @@ impl OwnedProxy for Contract {
 #[fallback]
 #[storage(read)]
 fn fallback() {
-    log("proxy fallback");
     run_external(_proxy_target().expect("FallbackError::TargetNotSet"))
 }
