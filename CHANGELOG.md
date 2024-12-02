@@ -12,6 +12,7 @@ Description of the upcoming release here.
 ### Added
 
 - [#309](https://github.com/FuelLabs/sway-libs/pull/309) Adds fallback function test cases to the Reentrancy Guard Library.
+- [#310](https://github.com/FuelLabs/sway-libs/pull/310) Adds proxy tests cases to the Reentrancy Guard Library.
 
 ### Changed
 
