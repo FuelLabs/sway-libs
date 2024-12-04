@@ -56,6 +56,24 @@ impl core::ops::Ord for I32 {
 
 impl core::ops::OrdEq for I32 {}
 
+impl core::ops::TotalOrd for I32 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
+
 impl I32 {
     /// The size of this type in bits.
     ///
