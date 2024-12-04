@@ -154,5 +154,30 @@ fn main() -> bool {
     let u64_overflow_try_into: Option<u64> = negative.try_into();
     assert(u64_overflow_try_into.is_none());
 
+    // TotalOrd tests
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+
     true
 }
