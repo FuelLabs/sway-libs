@@ -20,9 +20,9 @@ fn main() -> bool {
     let neg_ninty_three = I128::neg_try_from(U128::from(93u64)).unwrap();
 
     let zero = I128::try_from(U128::zero()).unwrap();
-    let max = I128::max();
-    let min = I128::min();
-    let neg_min_plus_one = I128::min() + I128::try_from(U128::from((0, 1))).unwrap();
+    let max = I128::MAX;
+    let min = I128::MIN;
+    let neg_min_plus_one = I128::MIN + I128::try_from(U128::from((0, 1))).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();

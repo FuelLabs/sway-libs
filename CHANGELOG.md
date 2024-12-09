@@ -12,6 +12,7 @@ Description of the upcoming release here.
 ### Added
 
 - [#309](https://github.com/FuelLabs/sway-libs/pull/309) Adds fallback function test cases to the Reentrancy Guard Library.
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
 
 ### Changed
 

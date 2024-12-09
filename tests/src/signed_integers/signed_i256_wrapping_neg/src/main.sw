@@ -40,9 +40,9 @@ fn main() -> bool {
     let neg_ninty_three = I256::neg_try_from(u_ninty_three).unwrap();
 
     let zero = I256::try_from(u256::zero()).unwrap();
-    let max = I256::max();
-    let min = I256::min();
-    let neg_min_plus_one = I256::min() + I256::try_from(u_one).unwrap();
+    let max = I256::MAX;
+    let min = I256::MIN;
+    let neg_min_plus_one = I256::MIN + I256::try_from(u_one).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();

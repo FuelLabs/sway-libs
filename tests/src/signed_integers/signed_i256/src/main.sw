@@ -102,10 +102,10 @@ fn main() -> bool {
     let one_2 = I256::try_from(u256_one).unwrap();
     let neg_one_1 = I256::neg_try_from(u256_one).unwrap();
     let neg_one_2 = I256::neg_try_from(u256_one).unwrap();
-    let max_1 = I256::max();
-    let max_2 = I256::max();
-    let min_1 = I256::min();
-    let min_2 = I256::min();
+    let max_1 = I256::MAX;
+    let max_2 = I256::MAX;
+    let min_1 = I256::MIN;
+    let min_2 = I256::MIN;
 
     assert(one_1 >= one_2);
     assert(one_1 <= one_2);
@@ -153,7 +153,7 @@ fn main() -> bool {
 
     let i256_max_try_from = I256::try_from(indent);
     assert(i256_max_try_from.is_some());
-    assert(i256_max_try_from.unwrap() == I256::max());
+    assert(i256_max_try_from.unwrap() == I256::MAX);
 
     let i256_min_try_from = I256::try_from(u256::min());
     assert(i256_min_try_from.is_some());
@@ -164,7 +164,7 @@ fn main() -> bool {
 
     let i256_max_try_into: Option<I256> = indent.try_into();
     assert(i256_max_try_into.is_some());
-    assert(i256_max_try_into.unwrap() == I256::max());
+    assert(i256_max_try_into.unwrap() == I256::MAX);
 
     let i256_min_try_into: Option<I256> = u256::min().try_into();
     assert(i256_min_try_into.is_some());
@@ -176,7 +176,7 @@ fn main() -> bool {
     // Test into u256
     let zero = I256::zero();
     let negative = I256::neg_try_from(u256_one).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
 
     let u256_max_try_from: Option<u256> = u256::try_from(max);
     assert(u256_max_try_from.is_some());
@@ -199,6 +199,31 @@ fn main() -> bool {
 
     let u256_overflow_try_into: Option<u256> = negative.try_into();
     assert(u256_overflow_try_into.is_none());
+
+    // TotalOrd tests
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
 
     true
 }

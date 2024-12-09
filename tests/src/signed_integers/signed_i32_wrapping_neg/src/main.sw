@@ -19,9 +19,9 @@ fn main() -> bool {
     let neg_ninty_three = I32::neg_try_from(93u32).unwrap();
 
     let zero = I32::try_from(0u32).unwrap();
-    let max = I32::max();
-    let min = I32::min();
-    let neg_min_plus_one = I32::min() + I32::try_from(1u32).unwrap();
+    let max = I32::MAX;
+    let min = I32::MIN;
+    let neg_min_plus_one = I32::MIN + I32::try_from(1u32).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
