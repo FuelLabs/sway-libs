@@ -30,4 +30,4 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
+      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
