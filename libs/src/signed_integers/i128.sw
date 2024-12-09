@@ -405,7 +405,7 @@ impl WrappingNeg for I128 {
     fn wrapping_neg(self) -> Self {
         // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
         let min = Self {
-            underlying: U128::min()
+            underlying: U128::min(),
         };
         if self == min {
             return min
