@@ -56,10 +56,10 @@ fn main() -> bool {
     let one_2 = I8::try_from(1u8).unwrap();
     let neg_one_1 = I8::neg_try_from(1u8).unwrap();
     let neg_one_2 = I8::neg_try_from(1u8).unwrap();
-    let max_1 = I8::max();
-    let max_2 = I8::max();
-    let min_1 = I8::min();
-    let min_2 = I8::min();
+    let max_1 = I8::MAX;
+    let max_2 = I8::MAX;
+    let min_1 = I8::MIN;
+    let min_2 = I8::MIN;
 
     assert(one_1 >= one_2);
     assert(one_1 <= one_2);
@@ -107,7 +107,7 @@ fn main() -> bool {
 
     let i8_max_try_from = I8::try_from(indent);
     assert(i8_max_try_from.is_some());
-    assert(i8_max_try_from.unwrap() == I8::max());
+    assert(i8_max_try_from.unwrap() == I8::MAX);
 
     let i8_min_try_from = I8::try_from(u8::min());
     assert(i8_min_try_from.is_some());
@@ -118,7 +118,7 @@ fn main() -> bool {
 
     let i8_max_try_into: Option<I8> = indent.try_into();
     assert(i8_max_try_into.is_some());
-    assert(i8_max_try_into.unwrap() == I8::max());
+    assert(i8_max_try_into.unwrap() == I8::MAX);
 
     let i8_min_try_into: Option<I8> = u8::min().try_into();
     assert(i8_min_try_into.is_some());
@@ -130,7 +130,7 @@ fn main() -> bool {
     // Test into u8
     let zero = I8::zero();
     let negative = I8::neg_try_from(1).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
 
     let u8_max_try_from: Option<u8> = u8::try_from(max);
     assert(u8_max_try_from.is_some());

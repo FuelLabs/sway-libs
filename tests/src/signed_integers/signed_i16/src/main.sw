@@ -57,10 +57,10 @@ fn main() -> bool {
     let one_2 = I16::try_from(1u16).unwrap();
     let neg_one_1 = I16::neg_try_from(1u16).unwrap();
     let neg_one_2 = I16::neg_try_from(1u16).unwrap();
-    let max_1 = I16::max();
-    let max_2 = I16::max();
-    let min_1 = I16::min();
-    let min_2 = I16::min();
+    let max_1 = I16::MAX;
+    let max_2 = I16::MAX;
+    let min_1 = I16::MIN;
+    let min_2 = I16::MIN;
 
     assert(one_1 >= one_2);
     assert(one_1 <= one_2);
@@ -108,7 +108,7 @@ fn main() -> bool {
 
     let i16_max_try_from = I16::try_from(indent);
     assert(i16_max_try_from.is_some());
-    assert(i16_max_try_from.unwrap() == I16::max());
+    assert(i16_max_try_from.unwrap() == I16::MAX);
 
     let i16_min_try_from = I16::try_from(u16::min());
     assert(i16_min_try_from.is_some());
@@ -119,7 +119,7 @@ fn main() -> bool {
 
     let i16_max_try_into: Option<I16> = indent.try_into();
     assert(i16_max_try_into.is_some());
-    assert(i16_max_try_into.unwrap() == I16::max());
+    assert(i16_max_try_into.unwrap() == I16::MAX);
 
     let i16_min_try_into: Option<I16> = u16::min().try_into();
     assert(i16_min_try_into.is_some());
@@ -131,7 +131,7 @@ fn main() -> bool {
     // Test into u16
     let zero = I16::zero();
     let negative = I16::neg_try_from(1).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
 
     let u16_max_try_from: Option<u16> = u16::try_from(max);
     assert(u16_max_try_from.is_some());

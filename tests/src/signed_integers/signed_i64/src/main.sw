@@ -56,10 +56,10 @@ fn main() -> bool {
     let one_2 = I64::try_from(1u64).unwrap();
     let neg_one_1 = I64::neg_try_from(1u64).unwrap();
     let neg_one_2 = I64::neg_try_from(1u64).unwrap();
-    let max_1 = I64::max();
-    let max_2 = I64::max();
-    let min_1 = I64::min();
-    let min_2 = I64::min();
+    let max_1 = I64::MAX;
+    let max_2 = I64::MAX;
+    let min_1 = I64::MIN;
+    let min_2 = I64::MIN;
 
     assert(one_1 >= one_2);
     assert(one_1 <= one_2);
@@ -107,7 +107,7 @@ fn main() -> bool {
 
     let i64_max_try_from = I64::try_from(indent);
     assert(i64_max_try_from.is_some());
-    assert(i64_max_try_from.unwrap() == I64::max());
+    assert(i64_max_try_from.unwrap() == I64::MAX);
 
     let i64_min_try_from = I64::try_from(u64::min());
     assert(i64_min_try_from.is_some());
@@ -118,7 +118,7 @@ fn main() -> bool {
 
     let i64_max_try_into: Option<I64> = indent.try_into();
     assert(i64_max_try_into.is_some());
-    assert(i64_max_try_into.unwrap() == I64::max());
+    assert(i64_max_try_into.unwrap() == I64::MAX);
 
     let i64_min_try_into: Option<I64> = u64::min().try_into();
     assert(i64_min_try_into.is_some());
@@ -130,7 +130,7 @@ fn main() -> bool {
     // Test into u64
     let zero = I64::zero();
     let negative = I64::neg_try_from(1).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
 
     let u64_max_try_from: Option<u64> = u64::try_from(max);
     assert(u64_max_try_from.is_some());
