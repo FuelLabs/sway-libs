@@ -386,7 +386,7 @@ impl WrappingNeg for I256 {
     fn wrapping_neg(self) -> Self {
         // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
         let min = Self {
-            underlying: u256::min()
+            underlying: u256::min(),
         };
         if self == min {
             return min
