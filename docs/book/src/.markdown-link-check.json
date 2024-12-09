@@ -1,0 +1,10 @@
+{
+    "ignorePatterns": [
+        {
+            "pattern": "https://crates.io/crates/fuel-merkle"
+        },
+        {
+            "pattern": "https://github.com/FuelLabs/devrel-requests/issues/new/choose"
+        }
+    ]
+}
