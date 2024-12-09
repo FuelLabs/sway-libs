@@ -2,8 +2,6 @@ name: Docs
 
 on:
   pull_request:
-    paths:
-      - docs/**
 
 jobs:
   spell-check:
