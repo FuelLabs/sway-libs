@@ -24,10 +24,22 @@ jobs:
           pnpm install
           pnpm lint:check
 
-  markdown-link-check:
+  check-links:
     name: Check Links
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          npm install -g linkinator
+
+      - name: Check Links
+        run: |
+          linkinator "docs/book/src" --silent
