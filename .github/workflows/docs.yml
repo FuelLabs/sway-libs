@@ -6,9 +6,27 @@ on:
       - docs/**
 
 jobs:
-  test:
+  spell-check:
     uses: FuelLabs/github-actions/.github/workflows/mdbook-docs.yml@master
     with:
-      docs-src-path: 'docs/book/src'
-      spellcheck-config-path: 'docs/book/.spellcheck.yml'
-      
+      docs-src-path: "docs/book/src"
+      spellcheck-config-path: "docs/book/.spellcheck.yml"
+
+  lint-docs:
+    name: Lint Docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: FuelLabs/github-actions/setups/node@master
+      - name: Lint Check
+        run: |
+          pnpm install
+          pnpm lint:check
+
+  markdown-link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
