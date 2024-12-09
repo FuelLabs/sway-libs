@@ -393,8 +393,12 @@ impl core::ops::Subtract for I8 {
 
 impl WrappingNeg for I8 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::MIN {
-            return Self::MIN
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u8::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1u8).unwrap()
     }

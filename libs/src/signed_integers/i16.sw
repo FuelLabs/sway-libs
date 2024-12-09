@@ -75,6 +75,42 @@ impl core::ops::TotalOrd for I16 {
 }
 
 impl I16 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::MIN;
+    ///     assert(i16.underlying() == u16::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u16::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::MAX;
+    ///     assert(i16.underlying() == u16::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u16::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -118,50 +154,6 @@ impl I16 {
     /// ```
     pub fn from_uint(underlying: u16) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I16] - The newly created `I16` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i16::I16;
-    ///
-    /// fn foo() {
-    ///     let i16 = I16::max();
-    ///     assert(i16.underlying() == u16::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u16::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I16] - The newly created `I16` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i16::I16;
-    ///
-    /// fn foo() {
-    ///     let i16 = I16::min();
-    ///     assert(i16.underlying() == u16::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u16::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -401,8 +393,12 @@ impl core::ops::Subtract for I16 {
 
 impl WrappingNeg for I16 {
     fn wrapping_neg(self) -> Self {
-        if self == self::min() {
-            return self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u16::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1u16).unwrap()
     }
