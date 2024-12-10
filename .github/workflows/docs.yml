@@ -11,6 +11,16 @@ jobs:
       docs-src-path: "docs/book/src"
       spellcheck-config-path: "docs/book/.spellcheck.yml"
 
+  link-check:
+    name: Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
+        with:
+          configuration-path: ".markdown-link-check.json"
+
   lint-docs:
     runs-on: ubuntu-latest
     needs: link-check
@@ -24,11 +34,3 @@ jobs:
         run: pnpm install
       - name: Lint Check
         run: pnpm lint:check
-
-  markdown-link-check:
-    name: Check Links
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
