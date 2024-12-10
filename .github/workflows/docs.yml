@@ -27,11 +27,12 @@ jobs:
     needs: link-check
     steps:
       - uses: actions/checkout@v3
-      - uses: FuelLabs/github-actions/setups/node@master
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          node-version: '22'
-          pnpm: true
-      - name: Install Dependencies
-        run: pnpm install
-      - name: Lint Check
-        run: pnpm lint:check
+          python-version: '3.x'
+      - name: Install Markdown Linter
+        run: pip install pymarkdownlint
+      - name: Lint Markdown Files
+        run: pymarkdownlint docs/book
+
