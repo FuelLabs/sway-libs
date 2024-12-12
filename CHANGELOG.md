@@ -7,30 +7,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-Description of the upcoming release here.
-
 ### Added
+
+- Something new here 1
+- Something new here 2
+
+### Changed
+
+- Something changed here 1
+- Something changed here 2
+
+### Fixed
+
+- Some fix here 1
+- Some fix here 2
+
+### Breaking
+
+- Some breaking change here 1
+- Some breaking change here 2
+
+##  [Version 0.24.1]
+
+### Added v0.24.1
 
 - [#309](https://github.com/FuelLabs/sway-libs/pull/309) Adds fallback function test cases to the Reentrancy Guard Library.
 - [#310](https://github.com/FuelLabs/sway-libs/pull/310) Adds proxy tests cases to the Reentrancy Guard Library.
 
-### Changed
+### Changed v0.24.1
 
 - [#305](https://github.com/FuelLabs/sway-libs/pull/305) Updates to forc `v0.66.2`, fuel-core `v0.40.0`, and fuels-rs `v0.66.9`.
 - [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
 - [#308](https://github.com/FuelLabs/sway-libs/pull/308) Removes comments on Cross-Contract Reentrancy vulnerability.
 
-### Fixed
+### Fixed v0.24.1
 
 - [#297](https://github.com/FuelLabs/sway-libs/pull/297) Fixes docs anchor in basic SRC-7 example.
 - [#298](https://github.com/FuelLabs/sway-libs/pull/298) Fixes the README headers on Upgradability Libraries from an `h2` to an `h4`.
 - [#302](https://github.com/FuelLabs/sway-libs/pull/302) Fixes typos in documentation.
 - [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documenation.
 
-#### Breaking
+#### Breaking v0.24.1
 
-- Some breaking change here 1
-- Some breaking change here 2
+- None
 
 ## [Version 0.24.0]
 
