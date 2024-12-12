@@ -15,6 +15,8 @@ members = [
   "./src/reentrancy/reentrancy_attack_helper_contract",
   "./src/reentrancy/reentrancy_target_abi",
   "./src/reentrancy/reentrancy_target_contract",
+  "./src/reentrancy/reentrancy_proxy_abi",
+  "./src/reentrancy/reentrancy_proxy_contract",
   "./src/signed_integers/signed_i8",
   "./src/signed_integers/signed_i16",
   "./src/signed_integers/signed_i32",
