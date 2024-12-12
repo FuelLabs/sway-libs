@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#298](https://github.com/FuelLabs/sway-libs/pull/298) Fixes the README headers on Upgradability Libraries from an `h2` to an `h4`.
 - [#302](https://github.com/FuelLabs/sway-libs/pull/302) Fixes typos in documentation.
 - [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documenation.
+- [#311](https://github.com/FuelLabs/sway-libs/pull/311) Fixes links in README.
 
 #### Breaking v0.24.1
 
