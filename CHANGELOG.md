@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Some breaking change here 1
 - Some breaking change here 2
 
-##  [Version 0.24.1]
+## [Version 0.24.1]
 
 ### Added v0.24.1
 
