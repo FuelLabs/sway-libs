@@ -14,6 +14,7 @@ import { useIsMobile } from "../../../hooks/useIsMobile";
 import SwitchThemeButton from "./SwitchThemeButton";
 import { useConnectIfNotAlready } from "../hooks/useConnectIfNotAlready";
 import { useDisconnect } from "@fuels/react";
+import { useNavigate } from "react-router-dom";
 
 export interface ActionToolbarProps {
   deployState: DeployState;
@@ -45,6 +46,7 @@ function ActionToolbar({
   const isMobile = useIsMobile();
   const { isConnected } = useConnectIfNotAlready();
   const { disconnect } = useDisconnect();
+  const navigate = useNavigate();
 
   const onDocsClick = useCallback(() => {
     window.open("https://docs.fuel.network/docs/sway", "_blank", "noreferrer");
@@ -98,6 +100,12 @@ function ActionToolbar({
             ? "Hide the Solidity editor"
             : "Show the Solidity editor to transpile Solidity to Sway"
         }
+      />
+      <SecondaryButton
+        header={true}
+        onClick={() => navigate("/abi")}
+        text="ABI"
+        tooltip="Query an already-deployed contract using the ABI"
       />
       <SecondaryButton
         header={true}
