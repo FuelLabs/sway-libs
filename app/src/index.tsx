@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import AbiApp from "./AbiApp";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { Providers } from "./components/Providers";
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/abi",
+    element: <AbiApp />,
   },
 ]);
 
