@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LogView from "./features/editor/components/LogView";
-import { loadAbi, saveSwayCode } from "./utils/localStorage";
+import { loadAbi, saveAbi, saveSwayCode } from "./utils/localStorage";
 import InteractionDrawer from "./features/interact/components/InteractionDrawer";
 import { useLog } from "./features/editor/hooks/useLog";
 import { Analytics } from "@vercel/analytics/react";
@@ -25,6 +25,11 @@ function AbiApp() {
 
   // The theme color for the app.
   const { themeColor } = useTheme();
+
+  // Update the ABI in localstorage when the editor changes.
+  useEffect(() => {
+    saveAbi(abiCode);
+  }, [abiCode]);
 
   const onSwayCodeChange = useCallback(
     (code: string) => {
