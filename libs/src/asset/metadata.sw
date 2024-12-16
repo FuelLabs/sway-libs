@@ -187,6 +187,12 @@ pub fn _set_metadata(
     key: String,
     metadata: Metadata,
 ) {
+    log(SetMetadataEvent {
+        asset,
+        sender: msg_sender().unwrap(),
+        metadata: Some(metadata),
+        key,
+    });
     metadata_key.insert(asset, key, metadata);
 }
 
