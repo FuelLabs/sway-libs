@@ -47,7 +47,7 @@ When developing a contract, you may want to lock functions down to a specific st
 
 It is highly recommended to integrate the [Ownership Library](../ownership/index.md) with the Pausable Library and apply restrictions the `pause()` and `unpause()` functions. This will ensure that only a single user may pause and unpause a contract in cause of emergency. Failure to apply this restriction will allow any user to obstruct a contract's functionality.
 
-The follow example implements the `Pausable` abi and applies restrictions to it's pause/unpause functions. The owner of the contract must be set in an constructor defined by `MyConstructor` in this example.
+The follow example implements the `Pausable` abi and applies restrictions to it's pause/unpause functions. The owner of the contract must be set in a constructor defined by `MyConstructor` in this example.
 
 ```sway
 {{#include ../../../../examples/pausable/pausable_with_ownership/src/main.sw:impl_with_ownership}}

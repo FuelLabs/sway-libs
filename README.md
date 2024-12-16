@@ -57,7 +57,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 #### Math
 
-- [Signed Integers](https://docs.fuel.network/docs/sway-libs/queue/) is an interface to implement signed integers.
+- [Signed Integers](https://docs.fuel.network/docs/sway-libs/signed_integers/) is an interface to implement signed integers.
 
 > **NOTE:**
 > The Fixed Point Number library has been deprecated pending a re-write.
@@ -66,7 +66,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 - [Queue](https://docs.fuel.network/docs/sway-libs/queue/) is a linear data structure that provides First-In-First-Out (FIFO) operations.
 
-## Upgradability Libraries
+#### Upgradability Libraries
 
 - [Upgradability](https://docs.fuel.network/docs/sway-libs/upgradability/) provides functions that can be used to implement contract upgrades via simple upgradable proxies.
 
@@ -75,7 +75,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.24.0" }
+sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.24.1" }
 ```
 
 > **NOTE:**
@@ -97,7 +97,7 @@ For more information about implementation please refer to the [Sway Libs Docs Hu
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.63.3` and `fuel-core v0.34.0`. You can check what version you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.66.2` and `fuel-core v0.40.0`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
@@ -119,7 +119,7 @@ forc test --path tests --release --locked && cargo test --manifest-path tests/Ca
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.63.3`, `fuels-rs v0.66.2` and `fuel-core v0.34.0`.
+> All projects currently use `forc v0.66.2`, `fuels-rs v0.66.9` and `fuel-core v0.40.0`.
 
 ## Contributing
 

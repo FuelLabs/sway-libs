@@ -29,7 +29,7 @@ The Asset Library has the following complimentary functions for each function in
 
 ## Setting Up Storage
 
-Once imported, the Asset Library's supply functionality should be available. To use them, be sure to add the storage block bellow to your contract which enables the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) standard.
+Once imported, the Asset Library's supply functionality should be available. To use them, be sure to add the storage block below to your contract which enables the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) standard.
 
 ```sway
 {{#include ../../../../examples/asset/supply_docs/src/main.sw:src3_storage}}
@@ -37,7 +37,7 @@ Once imported, the Asset Library's supply functionality should be available. To 
 
 ## Implementing the SRC-3 Standard with the Asset Library
 
-To use either function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the Asset Library;s supply functionality to ensure only a single user has permissions to mint an Asset.
+To use either function, simply pass the `StorageKey` from the prescribed storage block. The example below shows the implementation of the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) standard in combination with the Asset Library with no user defined restrictions or custom functionality. It is recommended that the [Ownership Library](../ownership/index.md) is used in conjunction with the Asset Library's supply functionality to ensure only a single user has permissions to mint an Asset.
 
 The `_mint()` and `_burn()` functions follows the SRC-20 standard for logging and will emit the `TotalSupplyEvent` when called.
 

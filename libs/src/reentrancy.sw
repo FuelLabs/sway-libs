@@ -15,8 +15,6 @@ use std::registers::frame_ptr;
 ///
 /// Not needed if the Checks-Effects-Interactions (CEI) pattern is followed (as prompted by the
 /// compiler).
-/// > Caution: While this can protect against both single-function reentrancy and cross-function
-/// reentrancy attacks, it WILL NOT PREVENT a cross-contract reentrancy attack.
 ///
 /// # Examples
 ///

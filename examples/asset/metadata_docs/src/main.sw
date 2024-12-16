@@ -20,14 +20,14 @@ storage {
 }
 // ANCHOR_END: src7_storage
 
-// ANCHOR src7_metadata_convenience_function
+// ANCHOR: src7_metadata_convenience_function
 impl SRC7 for Contract {
     #[storage(read)]
     fn metadata(asset: AssetId, key: String) -> Option<Metadata> {
         _metadata(storage.metadata, asset, key)
     }
 }
-// ANCHOR src7_metadata_convenience_function
+// ANCHOR_END: src7_metadata_convenience_function
 
 // ANCHOR: src7_set_metadata
 impl SetAssetMetadata for Contract {
