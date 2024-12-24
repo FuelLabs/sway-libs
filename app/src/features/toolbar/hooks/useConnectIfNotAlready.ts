@@ -39,5 +39,5 @@ export function useConnectIfNotAlready() {
     }
   }, [isError, failedCallbackRef]);
 
-  return { connectIfNotAlready, isConnected };
+  return { connectIfNotAlready, isConnected, connect };
 }
