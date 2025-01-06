@@ -8,7 +8,7 @@ on:
       - v*
 
 env:
-  RUST_VERSION: 1.80.1
+  RUST_VERSION: 1.83.0
   FORC_VERSION: 0.66.2
   CORE_VERSION: 0.40.0
 

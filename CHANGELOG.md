@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
 - [#308](https://github.com/FuelLabs/sway-libs/pull/308) Removes comments on Cross-Contract Reentrancy vulnerability.
 - [#314](https://github.com/FuelLabs/sway-libs/pull/314) Prepares for the v0.24.1 release.
+- [#317](https://github.com/FuelLabs/sway-libs/pull/317) Updates the CI rust version to v1.83.0.
 
 ### Fixed v0.24.1
 
