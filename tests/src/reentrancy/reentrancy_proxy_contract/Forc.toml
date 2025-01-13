@@ -1,0 +1,10 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "main.sw"
+license = "Apache-2.0"
+name = "reentrancy_proxy_contract"
+
+[dependencies]
+reentrancy_proxy_abi = { path = "../reentrancy_proxy_abi" }
+standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.6.1" }
+sway_libs = { path = "../../../../libs" }
