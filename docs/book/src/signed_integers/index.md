@@ -49,6 +49,7 @@ The `new` function is functionally equivalent to the `zero` function.
 As the signed variants can only represent half as high a number as the unsigned variants (but with either a positive or negative sign), the `try_from` and `neg_try_from` functions will only work with half of the maximum value of the unsigned variant.
 
 You can use the `try_from` function to create a new positive `Signed Integer` from a its unsigned variant.
+
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:positive_conversion}}
 ```
@@ -64,16 +65,19 @@ You can use the `neg_try_from` function to create a new negative `Signed Integer
 As mentioned previously, the signed integers are internally represented by an unsigned integer, with its values divided into two halves, the bottom half of the values represent the negative values and the top half represent the positive values, and the middle value represents zero.
 
 Therefore, for the lowest value representable by a i8, `-128`, the underlying value would be `0`.
+
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:neg_128_from_underlying}}
 ```
 
 For the zero value, the underlying value would be `128`.
+
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:zero_from_underlying}}
 ```
 
 And for the highest value representable by a i8, `127`, the underlying value would be `255`.
+
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:127_from_underlying}}
 ```
