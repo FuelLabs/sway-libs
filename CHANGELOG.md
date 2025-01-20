@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Something new here 1
-- Something new here 2
+- [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
 
 ### Changed
 
