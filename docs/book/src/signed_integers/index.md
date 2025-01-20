@@ -24,7 +24,7 @@ In order to use any of the Signed Integer types, import them into your Sway proj
 
 ## Basic Functionality
 
-All the functionality is demonstrated with the `I8` type, but all of the same functionality is available for the other types aswell.
+All the functionality is demonstrated with the `I8` type, but all of the same functionality is available for the other types as well.
 
 ### Instantiating a Signed Integer
 
