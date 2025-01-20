@@ -32,7 +32,6 @@ abi MyContract {
     fn get_current_owner() -> State;
 }
 
-
 impl MyContract for Contract {
     #[storage(read, write)]
     fn constructor(new_owner: Identity) {
