@@ -23,6 +23,7 @@ In order to use any of the Signed Integer types, import them into your Sway proj
 ```
 
 ## Basic Functionality
+
 All the functionality is demonstrated with the `I8` type, but all of the same functionality is available for the other types aswell.
 
 ### Instantiating a Signed Integer
@@ -78,6 +79,7 @@ And for the highest value representable by a i8, `127`, the underlying value wou
 ```
 
 #### Minimum and Maximum Values
+
 To get the minimum and maximum values of a signed integer, use the `min` and `max` functions.
 
 ```sway
@@ -97,6 +99,7 @@ Basic arithmetic operations are working as usual.
 ```
 
 #### Checking if a Signed Integer is Zero
+
 The library also provides a helper function to easily check if a `Signed Integer` is zero.
 
 ```sway
