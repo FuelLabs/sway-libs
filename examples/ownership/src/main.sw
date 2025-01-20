@@ -24,8 +24,6 @@ abi MyContract {
     fn restricted_action();
     #[storage(read, write)]
     fn change_owner(new_owner: Identity);
-    #[storage(read)]
-    fn get_owner() -> Identity;
     #[storage(read, write)]
     fn revoke_ownership();
     #[storage(read)]
