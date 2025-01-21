@@ -1,12 +1,13 @@
-library;
+// ANCHOR: example_contract
+contract;
 
-// ANCHOR: import
-use sway_libs::ownership::*;
-use standards::src5::*;
-// ANCHOR_END: import
-
-// ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
+use sway_libs::ownership::{
+    _owner,
+    initialize_ownership,
+    only_owner,
+    renounce_ownership,
+    transfer_ownership,
+};
 use standards::src5::{SRC5, State};
 
 impl SRC5 for Contract {
@@ -15,26 +16,49 @@ impl SRC5 for Contract {
         _owner()
     }
 }
-// ANCHOR_END: integrate_with_src5
 
-// ANCHOR: initialize
-#[storage(read, write)]
-fn my_constructor(new_owner: Identity) {
-    initialize_ownership(new_owner);
+abi MyContract {
+    #[storage(read, write)]
+    fn constructor(new_owner: Identity);
+    #[storage(read)]
+    fn restricted_action();
+    #[storage(read, write)]
+    fn change_owner(new_owner: Identity);
+    #[storage(read, write)]
+    fn revoke_ownership();
+    #[storage(read)]
+    fn get_current_owner() -> State;
 }
-// ANCHOR_END: initialize
 
-// ANCHOR: only_owner
-#[storage(read)]
-fn only_owner_may_call() {
-    only_owner();
-    // Only the contract's owner may reach this line.
-}
-// ANCHOR_END: only_owner
+impl MyContract for Contract {
+    #[storage(read, write)]
+    fn constructor(new_owner: Identity) {
+        initialize_ownership(new_owner);
+    }
 
-// ANCHOR: state
-#[storage(read)]
-fn get_owner_state() {
-    let owner: State = _owner();
+    // A function restricted to the owner
+    #[storage(read)]
+    fn restricted_action() {
+        only_owner();
+        // Protected action
+    }
+
+    // Transfer ownership
+    #[storage(read, write)]
+    fn change_owner(new_owner: Identity) {
+        transfer_ownership(new_owner);
+    }
+
+    // Renounce ownership
+    #[storage(read, write)]
+    fn revoke_ownership() {
+        renounce_ownership();
+    }
+
+    // Get current owner state
+    #[storage(read)]
+    fn get_current_owner() -> State {
+        _owner()
+    }
 }
-// ANCHOR_END: state
+// ANCHOR: example_contract
