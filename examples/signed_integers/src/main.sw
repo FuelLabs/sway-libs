@@ -27,7 +27,7 @@ fn initialize() {
 
     // ANCHOR: 127_from_underlying
     let pos_127 = I8::from_uint(255u8);
-    // ANCHOR_END: 128_from_underlying
+    // ANCHOR_END: 127_from_underlying
 
     // ANCHOR: min
     let min = I8::min();
