@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
+- [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
 
 ### Changed
 
