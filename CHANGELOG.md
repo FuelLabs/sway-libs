@@ -13,12 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-
 ### Fixed
 
-
 ### Breaking
-
 
 ## [Version 0.24.1]
 
