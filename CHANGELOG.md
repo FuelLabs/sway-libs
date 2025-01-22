@@ -9,22 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
 - [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
 
 ### Changed
 
-- Something changed here 1
-- Something changed here 2
-
 ### Fixed
 
-- Some fix here 1
-- Some fix here 2
-
 ### Breaking
-
-- Some breaking change here 1
-- Some breaking change here 2
 
 ## [Version 0.24.1]
 
