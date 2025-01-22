@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
+- [#320](https://github.com/FuelLabs/sway-libs/pull/320) Adds further documentation and examples for the asset metadata library.
 
 ### Changed
 
