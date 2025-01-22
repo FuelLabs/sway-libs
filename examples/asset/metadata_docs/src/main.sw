@@ -50,17 +50,17 @@ fn get_metadata(asset: AssetId, key: String) {
     // ANCHOR: get_metadata_match
     match metadata.unwrap() {
         Metadata::B256(b256) => {
-            // do something with b256
-        },
+        // do something with b256
+},
         Metadata::Bytes(bytes) => {
-            // do something with bytes
-        },
+        // do something with bytes
+},
         Metadata::Int(int) => {
-            // do something with int
-        },
+        // do something with int
+},
         Metadata::String(string) => {
-            // do something with string
-        },
+        // do something with string
+},
     }
     // ANCHOR_END: get_metadata_match
 

@@ -24,16 +24,30 @@ impl SetAssetMetadata for Contract {
 // ANCHOR: setting_src7_attributes_custom_abi
 abi CustomSetAssetMetadata {
     #[storage(read, write)]
-    fn set_metadata(asset: AssetId, key: String, bits256: b256, bytes: Bytes, int: u64, string: String);
+    fn set_metadata(
+        asset: AssetId,
+        key: String,
+        bits256: b256,
+        bytes: Bytes,
+        int: u64,
+        string: String,
+    );
 }
 
-impl CustomSetAssetMetadata {
+impl CustomSetAssetMetadata for Contract {
     #[storage(read, write)]
-    fn set_metadata(asset: AssetId, key: String, bits256: b256, bytes: Bytes, int: u64, string: String) {
+    fn set_metadata(
+        asset: AssetId,
+        key: String,
+        bits256: b256,
+        bytes: Bytes,
+        int: u64,
+        string: String,
+    ) {
         let b256_metadata = Metadata::B256(bits256);
         let bytes_metadata = Metadata::Bytes(bytes);
         let int_metadata = Metadata::Int(int);
-        let string_metadata = Metadata::String::(string);
+        let string_metadata = Metadata::String(string);
 
         // your authentication logic here
 
