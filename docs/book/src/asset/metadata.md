@@ -61,7 +61,6 @@ To set the metadata of an Asset, using only one of the above types, you can defi
 
 > **NOTE** The `_set_metadata()` function will set the metadata of an asset *unconditionally*. External checks should be applied to restrict the setting of metadata.
 
-
 ### Implementing the SRC-7 Standard with StorageMetadata
 
 To use the `StorageMetadata` type, simply get the stored metadata with the associated `key` and `AssetId` using the provided `_metadata()` convenience function. The example below shows the implementation of the [SRC-7](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/) standard in combination with the Asset Library's `StorageMetadata` type and the `_metadata()` function with no user defined restrictions or custom functionality.
@@ -72,7 +71,7 @@ To use the `StorageMetadata` type, simply get the stored metadata with the assoc
 
 ### Getting Metadata
 
-To get the metadata for an asset, apart from the above mentioned `_metadata()` convinience function, you can also use the `get()` method on the `StorageMetadata` type, which returns the `Metadata` type.
+To get the metadata for an asset, apart from the above mentioned `_metadata()` convenience function, you can also use the `get()` method on the `StorageMetadata` type, which returns the `Metadata` type.
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:get_metadata}}
@@ -80,7 +79,7 @@ To get the metadata for an asset, apart from the above mentioned `_metadata()` c
 
 This results an `Option` type as the metadata may not be set for the asset and key combination.
 
-If you know that the metadata is set, but you dont know the type, you can use a match statement to access the metadata.
+If you know that the metadata is set, but you don't know the type, you can use a match statement to access the metadata.
 
 ```sway
 {{#include ../../../../examples/asset/metadata_docs/src/main.sw:get_metadata_match}}
