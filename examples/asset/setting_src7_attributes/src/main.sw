@@ -24,7 +24,7 @@ impl SetAssetMetadata for Contract {
 // ANCHOR: setting_src7_attributes_custom_abi
 abi CustomSetAssetMetadata {
     #[storage(read, write)]
-    fn set_metadata(
+    fn custom_set_metadata(
         asset: AssetId,
         key: String,
         bits256: b256,
@@ -36,7 +36,7 @@ abi CustomSetAssetMetadata {
 
 impl CustomSetAssetMetadata for Contract {
     #[storage(read, write)]
-    fn set_metadata(
+    fn custom_set_metadata(
         asset: AssetId,
         key: String,
         bits256: b256,
