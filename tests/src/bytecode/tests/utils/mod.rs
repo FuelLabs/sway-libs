@@ -40,8 +40,8 @@ const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 const HEX_STR_1: &str = "0xb4ca495f61ac3433e9a78cbf3adfb0e4486913bb548029cef99d1de2cf606d52";
 const HEX_STR_2: &str = "0x5d617010b482b54332741fab0dfd1b15dfad07e8895360af0fb9f3e3a04b0c74";
 const HEX_STR_3: &str = "0xfebf0fdda20de46a0f2261a69556b0f9fdeea85759af1edb322831cf7d0dc8d5";
-// For bytecode test failures, these offsets need to be updated with the new configurable values 
-// in the .json files in `bytecode/test_artifacts/*/out/*-abi.json`. 
+// For bytecode test failures, these offsets need to be updated with the new configurable values
+// in the .json files in `bytecode/test_artifacts/*/out/*-abi.json`.
 // For example: in `bytecode/test_artifacts/complex_contract/out/contract_contract-abi.json` we have the following:
 //  "configurables": [
 //   {
