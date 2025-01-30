@@ -374,8 +374,8 @@ impl core::ops::Subtract for I256 {
 
 impl WrappingNeg for I256 {
     fn wrapping_neg(self) -> Self {
-        if self == self::min() {
-            return self::min()
+        if self == Self::min() {
+            return Self::min()
         }
         self * Self::neg_try_from(0x0000000000000000000000000000000000000000000000000000000000000001u256).unwrap()
     }

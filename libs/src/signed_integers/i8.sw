@@ -383,8 +383,8 @@ impl core::ops::Subtract for I8 {
 
 impl WrappingNeg for I8 {
     fn wrapping_neg(self) -> Self {
-        if self == self::min() {
-            return self::min()
+        if self == Self::min() {
+            return Self::min()
         }
         self * Self::neg_try_from(1u8).unwrap()
     }
