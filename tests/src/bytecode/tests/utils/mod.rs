@@ -60,7 +60,7 @@ const HEX_STR_3: &str = "0xfebf0fdda20de46a0f2261a69556b0f9fdeea85759af1edb32283
 //     "offset": 20688
 //   }
 // ]
-// And you would use 20800, 20760, and 20688
+// You would use 20800, 20760, and 20688 for 1, 2, 3 respectively
 const SIMPLE_PREDICATE_OFFSET: u64 = 384;
 const SIMPLE_CONTRACT_OFFSET: u64 = 1280;
 const COMPLEX_CONTRACT_OFFSET_1: u64 = 20800;
