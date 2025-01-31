@@ -395,8 +395,8 @@ impl core::ops::Subtract for I128 {
 
 impl WrappingNeg for I128 {
     fn wrapping_neg(self) -> Self {
-        if self == self::min() {
-            return self::min()
+        if self == Self::min() {
+            return Self::min()
         }
         self * Self::neg_try_from(U128::from((0, 1))).unwrap()
     }
