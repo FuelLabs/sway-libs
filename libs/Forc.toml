@@ -6,3 +6,4 @@ name = "sway_libs"
 
 [dependencies]
 standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.6.0" }
+std = { path = "../../sway/sway-lib-std" }
