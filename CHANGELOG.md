@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed v0.24.2
 
-- None
+- [#323](https://github.com/FuelLabs/sway-libs/pull/323) Updates the repository to forc `v0.66.6`.
+- [#324](https://github.com/FuelLabs/sway-libs/pull/324) Prepares for the `v0.24.2` release.
 
 ### Fixed v0.24.2
 
