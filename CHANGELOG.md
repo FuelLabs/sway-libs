@@ -5,27 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [Version v0.24.2]
 
-### Added
+### Added v0.24.2
 
-- Something new here 1
-- Something new here 2
+- [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
+- [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
+- [#322](https://github.com/FuelLabs/sway-libs/pull/320) Adds further documentation and examples for the asset metadata library.
 
-### Changed
+### Changed v0.24.2
 
-- Something changed here 1
-- Something changed here 2
+- [#323](https://github.com/FuelLabs/sway-libs/pull/323) Updates the repository to forc `v0.66.6`.
+- [#324](https://github.com/FuelLabs/sway-libs/pull/324) Prepares for the `v0.24.2` release.
 
-### Fixed
+### Fixed v0.24.2
 
-- Some fix here 1
-- Some fix here 2
+- None
 
-### Breaking
+### Breaking v0.24.2
 
-- Some breaking change here 1
-- Some breaking change here 2
+- None
 
 ## [Version 0.24.1]
 

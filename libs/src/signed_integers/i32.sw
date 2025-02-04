@@ -383,8 +383,8 @@ impl core::ops::Divide for I32 {
 
 impl WrappingNeg for I32 {
     fn wrapping_neg(self) -> Self {
-        if self == self::min() {
-            return self::min()
+        if self == Self::min() {
+            return Self::min()
         }
         self * Self::neg_try_from(1u32).unwrap()
     }
