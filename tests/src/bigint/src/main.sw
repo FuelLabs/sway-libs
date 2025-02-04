@@ -83,7 +83,7 @@ fn bigint_get_limb() {
     assert(bigint_4.get_limb(0).unwrap() == 0);
     assert(bigint_4.get_limb(1).unwrap() == 1);
     assert(bigint_4.get_limb(2) == None);
-    
+
     assert(bigint_5.get_limb(0).unwrap() == u64::max());
     assert(bigint_5.get_limb(1).unwrap() == u64::max());
     assert(bigint_5.get_limb(2).unwrap() == u64::max());
@@ -281,7 +281,10 @@ fn bigint_try_into_U128() {
     assert(<BigInt as TryInto<U128>>::try_into(bigint_2).unwrap() == U128::from((0, 1)));
 
     let bigint_3 = BigInt::from(u64::max());
-    assert(<BigInt as TryInto<U128>>::try_into(bigint_3).unwrap() == U128::from((0, u64::max())));
+    assert(
+        <BigInt as TryInto<U128>>::try_into(bigint_3)
+            .unwrap() == U128::from((0, u64::max())),
+    );
 
     let bigint_4 = BigInt::from(u64::max().as_u256() + 1u64.as_u256());
     assert(<BigInt as TryInto<U128>>::try_into(bigint_4).unwrap() == U128::from((1, 0)));
@@ -325,13 +328,22 @@ fn bigint_try_into_u256() {
     assert(<BigInt as TryInto<u256>>::try_into(bigint_1).unwrap() == u256::zero());
 
     let bigint_2 = BigInt::from(0x0000000000000000000000000000000000000000000000000000000000000001u256);
-    assert(<BigInt as TryInto<u256>>::try_into(bigint_2).unwrap() == 0x0000000000000000000000000000000000000000000000000000000000000001u256);
+    assert(
+        <BigInt as TryInto<u256>>::try_into(bigint_2)
+            .unwrap() == 0x0000000000000000000000000000000000000000000000000000000000000001u256,
+    );
 
     let bigint_3 = BigInt::from(0x0000000000000000000000000000000000000000000000010000000000000000u256);
-    assert(<BigInt as TryInto<u256>>::try_into(bigint_3).unwrap() == 0x0000000000000000000000000000000000000000000000010000000000000000u256);
+    assert(
+        <BigInt as TryInto<u256>>::try_into(bigint_3)
+            .unwrap() == 0x0000000000000000000000000000000000000000000000010000000000000000u256,
+    );
 
     let bigint_4 = BigInt::from(0x0000000000000000000000000000000100000000000000000000000000000000u256);
-    assert(<BigInt as TryInto<u256>>::try_into(bigint_4).unwrap() == 0x0000000000000000000000000000000100000000000000000000000000000000u256);
+    assert(
+        <BigInt as TryInto<u256>>::try_into(bigint_4)
+            .unwrap() == 0x0000000000000000000000000000000100000000000000000000000000000000u256,
+    );
 
     let bigint_5 = BigInt::from(u256::max());
     assert(<BigInt as TryInto<u256>>::try_into(bigint_5).unwrap() == u256::max());
@@ -342,40 +354,405 @@ fn bigint_try_into_u256() {
 
 #[test]
 fn bigint_from_bytes() {
+    // New is zero
     let bigint_1 = BigInt::from(Bytes::new());
     assert(bigint_1.number_of_limbs() == 1);
     assert(bigint_1.is_zero());
 
+    // One 0u8 is zero
     let mut bytes_2 = Bytes::new();
     bytes_2.push(0u8);
     let bigint_2 = BigInt::from(bytes_2);
-    let bigint_2 = BigInt::from(Bytes::new());
     assert(bigint_2.number_of_limbs() == 1);
     assert(bigint_2.is_zero());
 
+    // Multiple 0u8 is zero
     let mut bytes_3 = Bytes::new();
     bytes_3.push(0u8);
     bytes_3.push(0u8);
     bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
     let bigint_3 = BigInt::from(bytes_3);
-    let bigint_3 = BigInt::from(Bytes::new());
     assert(bigint_3.number_of_limbs() == 1);
     assert(bigint_3.is_zero());
 
-    // let mut bytes_4 = Bytes::new();
-    // bytes_4.push(1u8);
-    // let bigint_4 = BigInt::from(bytes_4);
-    // let bigint_4 = BigInt::from(Bytes::new());
-    // assert(bigint_4.number_of_limbs() == 1);
-    // assert(bigint_4.get_limb(0).unwrap() == 1);
+    // Single u8
+    let mut bytes_4 = Bytes::new();
+    bytes_4.push(1u8);
+    let bigint_4 = BigInt::from(bytes_4);
+    assert(bigint_4.number_of_limbs() == 1);
+    assert(bigint_4.get_limb(0).unwrap() == 1);
 
-    // let mut bytes_5 = Bytes::new();
-    // bytes_5.push(1u8);
-    // bytes_5.push(1u8);
-    // let bigint_5 = BigInt::from(bytes_5);
-    // let bigint_5 = BigInt::from(Bytes::new());
-    // assert(bigint_5.number_of_limbs() == 1);
-    // assert(bigint_5.get_limb(0).unwrap() == 10);
+    // u8 with leading zeros
+    let mut bytes_5 = Bytes::new();
+    bytes_5.push(0u8);
+    bytes_5.push(1u8);
+    let bigint_5 = BigInt::from(bytes_5);
+    assert(bigint_5.number_of_limbs() == 1);
+    assert(bigint_5.get_limb(0).unwrap() == 1);
+
+    // two u8 
+    let mut bytes_6 = Bytes::new();
+    bytes_6.push(0u8);
+    bytes_6.insert(0, 1u8);
+    let bigint_6 = BigInt::from(bytes_6);
+    assert(bigint_6.number_of_limbs() == 1);
+    assert(bigint_6.get_limb(0).unwrap() == 256);
+
+    // bytes size of u64
+    let mut bytes_7 = Bytes::new();
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    let bigint_7 = BigInt::from(bytes_7);
+    assert(bigint_7.number_of_limbs() == 1);
+    assert(bigint_7.get_limb(0).unwrap() == u64::max());
+
+    // bytes size of u64 with leading zeros
+    let mut bytes_8 = Bytes::new();
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.insert(0, 0u8);
+    let bigint_8 = BigInt::from(bytes_8);
+    assert(bigint_8.number_of_limbs() == 1);
+    assert(bigint_8.get_limb(0).unwrap() == u64::max());
+
+    // bytes results in 2 limbs
+    let mut bytes_9 = Bytes::new();
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.insert(0, 1u8);
+    let bigint_9 = BigInt::from(bytes_9);
+    assert(bigint_9.number_of_limbs() == 2);
+    assert(bigint_9.get_limb(0).unwrap() == 0);
+    assert(bigint_9.get_limb(1).unwrap() == 1);
+
+    // bytes results in 3 limbs
+    let mut bytes_10 = Bytes::new();
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.insert(0, 1u8);
+    let bigint_10 = BigInt::from(bytes_10);
+    assert(bigint_10.number_of_limbs() == 3);
+    assert(bigint_10.get_limb(0).unwrap() == 0);
+    assert(bigint_10.get_limb(1).unwrap() == 0);
+    assert(bigint_10.get_limb(2).unwrap() == 1);
+}
+
+#[test]
+fn bigint_into_bytes() {
+    // New is 0
+    let bigint_1 = BigInt::from(Bytes::new());
+    let converted_bytes_1: Bytes = <BigInt as Into<Bytes>>::into(bigint_1);
+    assert(converted_bytes_1.len() == 0);
+
+    // One 0u8 is zero
+    let mut bytes_2 = Bytes::new();
+    bytes_2.push(0u8);
+    let bigint_2 = BigInt::from(bytes_2);
+    let converted_bytes_2: Bytes = <BigInt as Into<Bytes>>::into(bigint_2);
+    assert(converted_bytes_2.len() == 0);
+
+    // Multiple 0u8 is zero
+    let mut bytes_3 = Bytes::new();
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    bytes_3.push(0u8);
+    let bigint_3 = BigInt::from(bytes_3);
+    let converted_bytes_3: Bytes = <BigInt as Into<Bytes>>::into(bigint_3);
+    assert(converted_bytes_3.len() == 0);
+
+    // Single u8
+    let mut bytes_4 = Bytes::new();
+    bytes_4.push(1u8);
+    let bigint_4 = BigInt::from(bytes_4);
+    let converted_bytes_4: Bytes = <BigInt as Into<Bytes>>::into(bigint_4);
+    assert(converted_bytes_4.len() == 1);
+    assert(converted_bytes_4.get(0).unwrap() == 1);
+
+    // single u8 with leading zeros
+    let mut bytes_5 = Bytes::new();
+    bytes_5.push(0u8);
+    bytes_5.push(1u8);
+    let bigint_5 = BigInt::from(bytes_5);
+    let converted_bytes_5: Bytes = <BigInt as Into<Bytes>>::into(bigint_5);
+    assert(converted_bytes_5.len() == 1);
+    assert(converted_bytes_5.get(0).unwrap() == 1);
+
+    // two u8 
+    let mut bytes_6 = Bytes::new();
+    bytes_6.push(0u8);
+    bytes_6.insert(0, 1u8);
+    let bigint_6 = BigInt::from(bytes_6);
+    let converted_bytes_6: Bytes = <BigInt as Into<Bytes>>::into(bigint_6);
+    assert(converted_bytes_6.len() == 2);
+    assert(converted_bytes_6.get(0).unwrap() == 1);
+    assert(converted_bytes_6.get(1).unwrap() == 0);
+
+    // bytes size of u64
+    let mut bytes_7 = Bytes::new();
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    bytes_7.push(255u8);
+    let bigint_7 = BigInt::from(bytes_7);
+    let converted_bytes_7: Bytes = <BigInt as Into<Bytes>>::into(bigint_7);
+    assert(converted_bytes_7.len() == 8);
+    assert(converted_bytes_7.get(0).unwrap() == 255u8);
+    assert(converted_bytes_7.get(1).unwrap() == 255u8);
+    assert(converted_bytes_7.get(2).unwrap() == 255u8);
+    assert(converted_bytes_7.get(3).unwrap() == 255u8);
+    assert(converted_bytes_7.get(4).unwrap() == 255u8);
+    assert(converted_bytes_7.get(5).unwrap() == 255u8);
+    assert(converted_bytes_7.get(6).unwrap() == 255u8);
+    assert(converted_bytes_7.get(7).unwrap() == 255u8);
+
+    // bytes size of u64 with leading zeros
+    let mut bytes_8 = Bytes::new();
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.push(255u8);
+    bytes_8.insert(0, 0u8);
+    let bigint_8 = BigInt::from(bytes_8);
+    let converted_bytes_8: Bytes = <BigInt as Into<Bytes>>::into(bigint_8);
+    assert(converted_bytes_8.len() == 8);
+    assert(converted_bytes_8.get(0).unwrap() == 255u8);
+    assert(converted_bytes_8.get(1).unwrap() == 255u8);
+    assert(converted_bytes_8.get(2).unwrap() == 255u8);
+    assert(converted_bytes_8.get(3).unwrap() == 255u8);
+    assert(converted_bytes_8.get(4).unwrap() == 255u8);
+    assert(converted_bytes_8.get(5).unwrap() == 255u8);
+    assert(converted_bytes_8.get(6).unwrap() == 255u8);
+    assert(converted_bytes_8.get(7).unwrap() == 255u8);
+
+    // bytes results in 2 limbs
+    let mut bytes_9 = Bytes::new();
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.push(0u8);
+    bytes_9.insert(0, 1u8);
+    let bigint_9 = BigInt::from(bytes_9);
+    let converted_bytes_9: Bytes = <BigInt as Into<Bytes>>::into(bigint_9);
+    assert(converted_bytes_9.len() == 9);
+    assert(converted_bytes_9.get(0).unwrap() == 1);
+    assert(converted_bytes_9.get(1).unwrap() == 0);
+    assert(converted_bytes_9.get(2).unwrap() == 0);
+    assert(converted_bytes_9.get(3).unwrap() == 0);
+    assert(converted_bytes_9.get(4).unwrap() == 0);
+    assert(converted_bytes_9.get(5).unwrap() == 0);
+    assert(converted_bytes_9.get(6).unwrap() == 0);
+    assert(converted_bytes_9.get(7).unwrap() == 0);
+    assert(converted_bytes_9.get(8).unwrap() == 0);
+
+    // bytes results in 3 limbs
+    let mut bytes_10 = Bytes::new();
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.push(0u8);
+    bytes_10.insert(0, 1u8);
+    let bigint_10 = BigInt::from(bytes_10);
+    let converted_bytes_10: Bytes = <BigInt as Into<Bytes>>::into(bigint_10);
+    assert(converted_bytes_10.len() == 17);
+    assert(converted_bytes_10.get(0).unwrap() == 1);
+    assert(converted_bytes_10.get(1).unwrap() == 0);
+    assert(converted_bytes_10.get(2).unwrap() == 0);
+    assert(converted_bytes_10.get(3).unwrap() == 0);
+    assert(converted_bytes_10.get(4).unwrap() == 0);
+    assert(converted_bytes_10.get(5).unwrap() == 0);
+    assert(converted_bytes_10.get(6).unwrap() == 0);
+    assert(converted_bytes_10.get(7).unwrap() == 0);
+    assert(converted_bytes_10.get(8).unwrap() == 0);
+    assert(converted_bytes_10.get(9).unwrap() == 0);
+    assert(converted_bytes_10.get(10).unwrap() == 0);
+    assert(converted_bytes_10.get(11).unwrap() == 0);
+    assert(converted_bytes_10.get(12).unwrap() == 0);
+    assert(converted_bytes_10.get(13).unwrap() == 0);
+    assert(converted_bytes_10.get(14).unwrap() == 0);
+    assert(converted_bytes_10.get(15).unwrap() == 0);
+    assert(converted_bytes_10.get(16).unwrap() == 0);
+}
+
+#[test]
+fn bigint_eq() {
+    let bigint_1 = BigInt::zero();
+    let bigint_2 = BigInt::zero();
+    let bigint_3 = BigInt::from(1u64);
+    let bigint_4 = BigInt::from(1u64);
+    let bigint_5 = BigInt::from(20u64);
+    let bigint_6 = BigInt::from(20u64);
+    let bigint_7 = BigInt::from(u64::max());
+    let bigint_8 = BigInt::from(u64::max());
+    let bigint_9 = BigInt::from(U128::from((1, 0)));
+    let bigint_10 = BigInt::from(U128::from((1, 0)));
+    let bigint_11 = BigInt::from(U128::from((u64::max(), u64::max())));
+    let bigint_12 = BigInt::from(U128::from((u64::max(), u64::max())));
+    let bigint_13 = BigInt::from(u256::max());
+    let bigint_14 = BigInt::from(u256::max());
+
+    assert(bigint_1 == bigint_2);
+    assert(bigint_3 == bigint_4);
+    assert(bigint_5 == bigint_6);
+    assert(bigint_7 == bigint_8);
+    assert(bigint_9 == bigint_10);
+    assert(bigint_11 == bigint_12);
+    assert(bigint_13 == bigint_14);
+
+    assert(bigint_1 != bigint_3);
+    assert(bigint_1 != bigint_5);
+    assert(bigint_1 != bigint_7);
+    assert(bigint_1 != bigint_9);
+    assert(bigint_1 != bigint_11);
+    assert(bigint_1 != bigint_13);
+
+    assert(bigint_3 != bigint_5);
+    assert(bigint_3 != bigint_7);
+    assert(bigint_3 != bigint_9);
+    assert(bigint_3 != bigint_11);
+    assert(bigint_3 != bigint_13);
+
+    assert(bigint_5 != bigint_7);
+    assert(bigint_5 != bigint_9);
+    assert(bigint_5 != bigint_11);
+    assert(bigint_5 != bigint_13);
+
+    assert(bigint_7 != bigint_9);
+    assert(bigint_7 != bigint_11);
+    assert(bigint_7 != bigint_13);
+
+    assert(bigint_9 != bigint_11);
+    assert(bigint_9 != bigint_13);
+
+    assert(bigint_11 != bigint_13);
+}
+
+#[test]
+fn bigint_ord() {
+    let bigint_zero = BigInt::zero();
+    let bigint_1 = BigInt::from(1u64);
+    let bigint_2 = BigInt::from(20u64);
+    let bigint_3 = BigInt::from(u64::max());
+    let bigint_4 = BigInt::from(U128::from((1, 0)));
+    let bigint_5 = BigInt::from(U128::from((u64::max(), u64::max())));
+    let bigint_6 = BigInt::from(u256::max());
+
+    assert(bigint_zero < bigint_1);
+    assert(bigint_zero < bigint_2);
+    assert(bigint_zero < bigint_3);
+    assert(bigint_zero < bigint_4);
+    assert(bigint_zero < bigint_5);
+    assert(bigint_zero < bigint_6);
+    assert(bigint_1 > bigint_zero);
+    assert(bigint_2 > bigint_zero);
+    assert(bigint_3 > bigint_zero);
+    assert(bigint_4 > bigint_zero);
+    assert(bigint_5 > bigint_zero);
+    assert(bigint_6 > bigint_zero);
+
+    assert(bigint_1 < bigint_2);
+    assert(bigint_1 < bigint_3);
+    assert(bigint_1 < bigint_4);
+    assert(bigint_1 < bigint_5);
+    assert(bigint_1 < bigint_6);
+    assert(bigint_2 > bigint_1);
+    assert(bigint_3 > bigint_1);
+    assert(bigint_4 > bigint_1);
+    assert(bigint_5 > bigint_1);
+    assert(bigint_6 > bigint_1);
+
+    assert(bigint_2 < bigint_3);
+    assert(bigint_2 < bigint_4);
+    assert(bigint_2 < bigint_5);
+    assert(bigint_2 < bigint_6);
+    assert(bigint_3 > bigint_2);
+    assert(bigint_4 > bigint_2);
+    assert(bigint_5 > bigint_2);
+    assert(bigint_6 > bigint_2);
+
+    assert(bigint_3 < bigint_4);
+    assert(bigint_3 < bigint_5);
+    assert(bigint_3 < bigint_6);
+    assert(bigint_4 > bigint_3);
+    assert(bigint_5 > bigint_3);
+    assert(bigint_6 > bigint_3);
+
+    assert(bigint_4 < bigint_5);
+    assert(bigint_4 < bigint_6);
+    assert(bigint_5 > bigint_4);
+    assert(bigint_6 > bigint_4);
+
+    assert(bigint_5 < bigint_6);
+    assert(bigint_6 > bigint_5);
 }
 
 #[test]
@@ -430,7 +807,7 @@ fn bigint_add() {
     assert(result_6.limbs().get(1).unwrap() == 0);
     assert(result_6.limbs().get(2).unwrap() == 1);
     assert(result_6.limbs().len() == 3);
-    
+
     // Add goes over u256 in size
     let result_7 = bigint_1 + bigint_6;
     assert(result_7.limbs().get(0).unwrap() == 0);
@@ -477,8 +854,20 @@ fn bigint_mul() {
 
     // Mul results in new limb
     let result_4 = bigint_2 * bigint_3;
-    assert(result_4.limbs().get(0).unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2))).lower());
-    assert(result_4.limbs().get(1).unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2))).upper());
+    assert(
+        result_4
+            .limbs()
+            .get(0)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .lower(),
+    );
+    assert(
+        result_4
+            .limbs()
+            .get(1)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .upper(),
+    );
     assert(result_4.limbs().len() == 2);
 
     // Mul two limbs to one limb
@@ -493,7 +882,7 @@ fn bigint_mul() {
     assert(result_6.limbs().get(1).unwrap() == 0);
     assert(result_6.limbs().get(2).unwrap() == 1);
     assert(result_6.limbs().len() == 3);
-    
+
     // Add goes over u256 in size
     let result_7 = bigint_2 * bigint_6;
     assert(result_7.limbs().get(0).unwrap() == 0);
@@ -553,8 +942,8 @@ fn bigint_sub() {
     assert(result_6.limbs().get(1).unwrap() == u64::max());
     assert(result_6.limbs().get(2).unwrap() == u64::max());
     assert(result_6.limbs().len() == 3);
-    
-   // Sub four limbs to two limbs
+
+    // Sub four limbs to two limbs
     let result_7 = bigint_8 - bigint_6;
     assert(result_7.limbs().get(0).unwrap() == u64::max());
     assert(result_7.limbs().get(1).unwrap() == u64::max());

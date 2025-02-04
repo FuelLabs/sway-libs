@@ -1,6 +1,6 @@
 library;
 
-use std::{bytes::Bytes, convert::{Into, TryInto}, flags::*, u128::U128};
+use std::{alloc::alloc, bytes::Bytes, convert::{Into, TryInto}, flags::*, u128::U128};
 
 pub struct BigInt {
     limbs: Vec<u64>,
@@ -187,11 +187,31 @@ impl TryInto<u256> for BigInt {
 
 impl From<Bytes> for BigInt {
     fn from(bytes: Bytes) -> Self {
-        if bytes.len() == 0 {
+        let bytes_len = bytes.len();
+        if bytes_len == 0 {
             return Self::new();
         }
 
-        let result = Vec::from(bytes.as_raw_slice());
+        let mut result: Vec<u64> = Vec::new();
+
+        // Start from the last values and move forward
+        let bytes_remaining = bytes_len % 8;
+        let mut iter = bytes_len / 8;
+        while iter > 0 {
+            let ptr = bytes.ptr().add::<u8>(((iter - 1) * 8) + bytes_remaining);
+            result.push(ptr.read::<u64>());
+            iter -= 1;
+        }
+
+        // Padding is required if it doesn't fit into u64
+        if bytes_remaining != 0 {
+            // Do some padding
+            let mut result_u64 = alloc::<u64>(1);
+            bytes
+                .ptr()
+                .copy_bytes_to(result_u64.add::<u8>(8 - bytes_remaining), bytes_remaining);
+            result.push(result_u64.read::<u64>());
+        }
 
         // Remove leading zeros
         while result.len() > 1 && result.get(result.len() - 1) == Some(0) {
@@ -204,19 +224,33 @@ impl From<Bytes> for BigInt {
 
 impl Into<Bytes> for BigInt {
     fn into(self) -> Bytes {
-        Bytes::from(self.limbs.as_raw_slice())
-    }
-}
+        let number_of_u8 = self.limbs.len() * 8;
+        let mut result_ptr = alloc::<u8>(number_of_u8);
 
-impl From<Vec<u64>> for BigInt {
-    fn from(vec: Vec<u64>) -> Self {
-        Self { limbs: vec }
-    }
-}
+        // Start from the back and fill
+        let mut iter = self.limbs.len();
+        let mut ptr_iter = 0;
+        while iter > 0 {
+            iter -= 1;
+            self.limbs
+                .ptr()
+                .add::<u64>(iter)
+                .copy_to::<u64>(result_ptr.add::<u64>(ptr_iter), 1);
+            ptr_iter += 1;
+        }
 
-impl Into<Vec<u64>> for BigInt {
-    fn into(self) -> Vec<u64> {
-        self.limbs
+        // Determine the number of leading zeros
+        let mut leading_zeros = 0;
+        while result_ptr.add::<u8>(leading_zeros).read::<u8>() == 0 && leading_zeros < number_of_u8 {
+            leading_zeros += 1;
+        }
+
+        // Shift the pointer down and ignore the leading zeros
+        Bytes::from(raw_slice::from_parts::<u8>(
+            result_ptr
+                .add::<u8>(leading_zeros),
+            number_of_u8 - leading_zeros,
+        ))
     }
 }
 
@@ -249,10 +283,10 @@ impl core::ops::Ord for BigInt {
                 iter -= 1;
 
                 // If these two values are the same, move to the next one
-                if self.limbs.get(iter).unwrap() != other.limbs.get(iter).unwrap() {
+                if self.limbs.get(iter).unwrap() != other.limbs.get(iter).unwrap()
+                {
                     return self.limbs.get(iter).unwrap() > other.limbs.get(iter).unwrap()
-                } else {
-                }
+                } else {            }
             }
 
             // If everything is the same, false
@@ -271,7 +305,8 @@ impl core::ops::Ord for BigInt {
                 iter -= 1;
 
                 // If these two values are the same, move to the next one
-                if self.limbs.get(iter).unwrap() != other.limbs.get(iter).unwrap() {
+                if self.limbs.get(iter).unwrap() != other.limbs.get(iter).unwrap()
+                {
                     return self.limbs.get(iter).unwrap() < other.limbs.get(iter).unwrap()
                 }
             }
@@ -360,7 +395,9 @@ impl core::ops::Multiply for BigInt {
             while j < other_number_of_limbs {
                 // Multiply limbs and add to the result
                 let (c, res) = mac_with_carry_u64(
-                    result.get(i + j).unwrap(),
+                    result
+                        .get(i + j)
+                        .unwrap(),
                     self.limbs
                         .get(i)
                         .unwrap(),
@@ -378,13 +415,12 @@ impl core::ops::Multiply for BigInt {
 
             // Propagate the carry to the next position
             if carry > 0 {
-                result
-                    .set(
-                        i + other_number_of_limbs,
-                        result
-                            .get(i + other_number_of_limbs)
-                            .unwrap() + carry,
-                    );
+                result.set(
+                    i + other_number_of_limbs,
+                    result
+                        .get(i + other_number_of_limbs)
+                        .unwrap() + carry,
+                );
             }
 
             i += 1;
@@ -405,7 +441,7 @@ fn sub_with_borrow_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     let c_u128: U128 = c.into();
 
     disable_panic_on_overflow();
-    let diff: U128 =  a_u128 - b_u128 - c_u128;
+    let diff: U128 = a_u128 - b_u128 - c_u128;
     enable_panic_on_overflow();
 
     let (diff_msw, diff_lsw): (u64, u64) = diff.into();
