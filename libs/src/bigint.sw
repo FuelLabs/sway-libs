@@ -2,45 +2,208 @@ library;
 
 use std::{alloc::alloc, bytes::Bytes, convert::{Into, TryInto}, flags::*, u128::U128};
 
-pub struct BigInt {
+/// The `BigUint` type.
+///
+/// # Additional Information
+///
+/// The `BigUint` type is unsigned. The minimum value is zero and the maximum value is infinity.
+pub struct BigUint {
+    /// The underlying limbs representing the `BigUint` type.
     limbs: Vec<u64>,
 }
 
-impl BigInt {
+impl BigUint {
+    /// Create a new instance of a `BigUint`.
+    ///
+    /// # Returns
+    ///
+    /// * [BigUint] - A newly instantiated instance of a `BigUint`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let new_big_uint = BigUint::new();
+    ///     assert(new_big_uint.is_zero());
+    /// }
+    /// ```
     pub fn new() -> Self {
         let mut vec = Vec::with_capacity(1);
         vec.push(0);
         Self { limbs: vec }
     }
 
-    pub fn equal_limb_size(self, rhs: BigInt) -> bool {
-        self.limbs.len() == rhs.limbs.len()
+    /// Returns true if two `BigUint` numbers have the same number of limbs.
+    ///
+    /// # Arguments
+    ///
+    /// * `other`: [BigUint] - The other `BigUint` to compare with.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] - `true` if both `BigUint` values have the same limbs, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let new_big_uint = BigUint::new();
+    ///     let u64_big_uint = BigUint::from(u64::max());
+    ///     let u256_big_uint = BigUint::from(u256::max());
+    ///
+    ///     assert(new_big_uint.equal_limb_size(u64_big_uint));
+    ///     assert(!new_big_uint.equal_limb_size(u256_big_uint));
+    ///     assert(!u64_big_uint.equal_limb_size(u256_big_uint));
+    /// }
+    /// ```
+    pub fn equal_limb_size(self, other: BigUint) -> bool {
+        self.limbs.len() == other.limbs.len()
     }
 
+    /// Returns the number of limbs the `BigUint`.
+    ///
+    /// # Returns
+    ///
+    /// * [u64] - The number of limbs the `BigUint` has.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let new_big_uint = BigUint::new();
+    ///     let u64_big_uint = BigUint::from(u64::max());
+    ///     let u256_big_uint = BigUint::from(u256::max());
+    ///
+    ///     assert(new_big_uint.number_of_limbs() == 1);
+    ///     assert(u64_big_uint.number_of_limbs() == 1);
+    ///     assert(u256_big_uint.number_of_limbs() == 4);
+    /// }
+    /// ```
     pub fn number_of_limbs(self) -> u64 {
         self.limbs.len()
     }
 
+    /// Returns a copy of the `BigUint`'s limbs.
+    ///
+    /// # Returns
+    ///
+    /// * [Vec<u64>] - A clone of the `BigUint`'s limbs.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let new_big_uint = BigUint::new();
+    ///     let new_limbs: Vec<u64> = new_big_uint.limbs();
+    ///     assert(new_limbs.len() == 1);
+    ///     assert(new_limbs.get(0).unwrap() == 0);
+    ///
+    ///     let u64_big_uint = BigUint::from(u64::max());
+    ///     let u64_limbs: Vec<u64> = u64_big_uint.limbs();
+    ///     assert(u64_limbs.len() == 1);
+    ///     assert(u64_limbs.get(0).unwrap() == u64::max());
+    ///
+    ///     let u256_big_uint = BigUint::from(u256::max());
+    ///     let u256_limbs: Vec<u64> = u256_big_uint.limbs();
+    ///     assert(u256_limbs.len() == 4);
+    ///     assert(u256_limbs.get(0).unwrap() == u64::max());
+    ///     assert(u256_limbs.get(1).unwrap() == u64::max());
+    ///     assert(u256_limbs.get(2).unwrap() == u64::max());
+    ///     assert(u256_limbs.get(3).unwrap() == u64::max());
+    /// }
+    /// ```
     pub fn limbs(self) -> Vec<u64> {
         self.limbs.clone()
     }
 
+    /// Returns the `BigUint`'s limb at a specific index.
+    ///
+    /// # Arguments
+    ///
+    /// * `index`: [u64] - The index at which to fetch the limb.
+    ///
+    /// # Returns
+    ///
+    // * [Option<u64>] - Some(u64) if `index` is valid and within range, otherwise false.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let new_big_uint = BigUint::new();
+    ///     assert(new_big_uint.get_limb(0).unwrap() == 0);
+    ///     assert(new_big_uint.get_limb(1).is_none());
+    ///
+    ///     let u64_big_uint = BigUint::from(u64::max());
+    ///     assert(u64_big_uint.get_limb(0).unwrap() == u64::max());
+    ///     assert(u64_big_uint.get_limb(1).is_none());
+    ///
+    ///     let u256_big_uint = BigUint::from(u256::max());
+    ///     assert(u256_big_uint.get_limb(0).unwrap() == u64::max());
+    ///     assert(u256_big_uint.get_limb(1).unwrap() == u64::max());
+    ///     assert(u256_big_uint.get_limb(2).unwrap() == u64::max());
+    ///     assert(u256_big_uint.get_limb(3).unwrap() == u64::max());
+    ///     assert(u256_big_uint.get_limb(4).is_none());
+    /// }
+    /// ```
     pub fn get_limb(self, index: u64) -> Option<u64> {
         self.limbs.get(index)
     }
 
+    /// A zeroed instance of a `BigUint`.
+    ///
+    /// # Returns
+    ///
+    /// * [BigUint] - A newly created zeroed `BigUint`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let zero_big_uint = BigUint::zero();
+    ///     assert(zero_big_uint.is_zero());
+    /// }
+    /// ```
     pub fn zero() -> Self {
         let mut vec = Vec::with_capacity(1);
         vec.push(0);
         Self { limbs: vec }
     }
 
+    /// Returns whether the `BigUint` is zero.
+    ///
+    /// # Returns
+    ///
+    /// * [bool] - `true` if the `BigUint` is zero, otherwise `false`.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::bigint::BigUint;
+    ///
+    /// fn foo() {
+    ///     let zero_big_uint = BigUint::zero();
+    ///     assert(zero_big_uint.is_zero());
+    /// }
+    /// ```
     pub fn is_zero(self) -> bool {
         self.limbs.len() == 1 && self.limbs.get(0).unwrap() == 0
     }
 }
 
-impl Clone for BigInt {
+impl Clone for BigUint {
     fn clone(self) -> Self {
         Self {
             limbs: self.limbs.clone(),
@@ -48,7 +211,7 @@ impl Clone for BigInt {
     }
 }
 
-impl From<u8> for BigInt {
+impl From<u8> for BigUint {
     fn from(value: u8) -> Self {
         let mut vec = Vec::new();
         vec.push(value.into());
@@ -56,7 +219,7 @@ impl From<u8> for BigInt {
     }
 }
 
-impl TryInto<u8> for BigInt {
+impl TryInto<u8> for BigUint {
     fn try_into(self) -> Option<u8> {
         if self.limbs.len() == 1 {
             self.limbs.get(0).unwrap().try_as_u8()
@@ -66,7 +229,7 @@ impl TryInto<u8> for BigInt {
     }
 }
 
-impl From<u16> for BigInt {
+impl From<u16> for BigUint {
     fn from(value: u16) -> Self {
         let mut vec = Vec::new();
         vec.push(value.into());
@@ -74,7 +237,7 @@ impl From<u16> for BigInt {
     }
 }
 
-impl TryInto<u16> for BigInt {
+impl TryInto<u16> for BigUint {
     fn try_into(self) -> Option<u16> {
         if self.limbs.len() == 1 {
             self.limbs.get(0).unwrap().try_as_u16()
@@ -84,7 +247,7 @@ impl TryInto<u16> for BigInt {
     }
 }
 
-impl From<u32> for BigInt {
+impl From<u32> for BigUint {
     fn from(value: u32) -> Self {
         let mut vec = Vec::new();
         vec.push(value.into());
@@ -92,7 +255,7 @@ impl From<u32> for BigInt {
     }
 }
 
-impl TryInto<u32> for BigInt {
+impl TryInto<u32> for BigUint {
     fn try_into(self) -> Option<u32> {
         if self.limbs.len() == 1 {
             self.limbs.get(0).unwrap().try_as_u32()
@@ -102,7 +265,7 @@ impl TryInto<u32> for BigInt {
     }
 }
 
-impl From<u64> for BigInt {
+impl From<u64> for BigUint {
     fn from(value: u64) -> Self {
         let mut vec = Vec::new();
         vec.push(value);
@@ -110,7 +273,7 @@ impl From<u64> for BigInt {
     }
 }
 
-impl TryInto<u64> for BigInt {
+impl TryInto<u64> for BigUint {
     fn try_into(self) -> Option<u64> {
         if self.limbs.len() == 1 {
             self.limbs.get(0)
@@ -120,7 +283,7 @@ impl TryInto<u64> for BigInt {
     }
 }
 
-impl From<U128> for BigInt {
+impl From<U128> for BigUint {
     fn from(value: U128) -> Self {
         let mut vec = Vec::new();
         vec.push(value.lower());
@@ -135,7 +298,7 @@ impl From<U128> for BigInt {
     }
 }
 
-impl TryInto<U128> for BigInt {
+impl TryInto<U128> for BigUint {
     fn try_into(self) -> Option<U128> {
         if self.limbs.len() == 2 || self.limbs.len() == 1 {
             let lower = self.limbs.get(0).unwrap_or(0);
@@ -147,7 +310,7 @@ impl TryInto<U128> for BigInt {
     }
 }
 
-impl From<u256> for BigInt {
+impl From<u256> for BigUint {
     fn from(value: u256) -> Self {
         let mut vec = Vec::with_capacity(4);
         let (u64_1, u64_2, u64_3, u64_4) = asm(val: value) {
@@ -167,7 +330,7 @@ impl From<u256> for BigInt {
     }
 }
 
-impl TryInto<u256> for BigInt {
+impl TryInto<u256> for BigUint {
     fn try_into(self) -> Option<u256> {
         if self.limbs.len() <= 4 && self.limbs.len() >= 1 {
             let u64_1 = self.limbs.get(0).unwrap_or(0);
@@ -185,7 +348,7 @@ impl TryInto<u256> for BigInt {
     }
 }
 
-impl From<Bytes> for BigInt {
+impl From<Bytes> for BigUint {
     fn from(bytes: Bytes) -> Self {
         let bytes_len = bytes.len();
         if bytes_len == 0 {
@@ -222,7 +385,7 @@ impl From<Bytes> for BigInt {
     }
 }
 
-impl Into<Bytes> for BigInt {
+impl Into<Bytes> for BigUint {
     fn into(self) -> Bytes {
         let number_of_u8 = self.limbs.len() * 8;
         let mut result_ptr = alloc::<u8>(number_of_u8);
@@ -254,7 +417,7 @@ impl Into<Bytes> for BigInt {
     }
 }
 
-impl core::ops::Eq for BigInt {
+impl core::ops::Eq for BigUint {
     fn eq(self, other: Self) -> bool {
         if self.limbs.len() != other.limbs.len() {
             false
@@ -273,7 +436,7 @@ impl core::ops::Eq for BigInt {
     }
 }
 
-impl core::ops::Ord for BigInt {
+impl core::ops::Ord for BigUint {
     fn gt(self, other: Self) -> bool {
         // Save some gas by assuming anything with more limbs is larger
         if self.limbs.len() == other.limbs.len() {
@@ -319,7 +482,7 @@ impl core::ops::Ord for BigInt {
     }
 }
 
-impl core::ops::OrdEq for BigInt {}
+impl core::ops::OrdEq for BigUint {}
 
 fn add_with_carry_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     let a_u128: U128 = a.into();
@@ -330,7 +493,7 @@ fn add_with_carry_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     sum.into()
 }
 
-impl core::ops::Add for BigInt {
+impl core::ops::Add for BigUint {
     fn add(self, other: Self) -> Self {
         // Determine the length and setup variables
         let max_limbs = self.limbs.len().max(other.limbs.len());
@@ -379,7 +542,7 @@ fn mac_with_carry_u64(acc: u64, a: u64, b: u64, c: u64) -> (u64, u64) {
     res.into()
 }
 
-impl core::ops::Multiply for BigInt {
+impl core::ops::Multiply for BigUint {
     fn multiply(self, other: Self) -> Self {
         // Determine the length and setup variables
         let self_number_of_limbs = self.limbs.len();
@@ -440,7 +603,7 @@ fn sub_with_borrow_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     let b_u128: U128 = b.into();
     let c_u128: U128 = c.into();
 
-    disable_panic_on_overflow();
+    let _ = disable_panic_on_overflow();
     let diff: U128 = a_u128 - b_u128 - c_u128;
     enable_panic_on_overflow();
 
@@ -450,7 +613,7 @@ fn sub_with_borrow_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     (diff_lsw, carry)
 }
 
-impl core::ops::Subtract for BigInt {
+impl core::ops::Subtract for BigUint {
     fn subtract(self, other: Self) -> Self {
         // No negative numbers
         if self < other {
