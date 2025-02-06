@@ -119,7 +119,7 @@ forc test --path tests --release --locked && cargo test --manifest-path tests/Ca
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.66.7`, `fuels-rs v0.66.9` and `fuel-core v0.41.4`.
+> All projects currently use `forc v0.66.7`, `fuels-rs v0.70.0` and `fuel-core v0.41.4`.
 
 ## Contributing
 
