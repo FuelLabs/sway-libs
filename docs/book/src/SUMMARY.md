@@ -15,6 +15,6 @@
 - [Bytecode Library](./bytecode/index.md)
 - [Merkle Library](./merkle/index.md)
 - [Signed Integers Library](./signed_integers/index.md)
-- [Big Integers Library](./big_integers/index.md)
+- [Big Integers Library](./bigint/index.md)
 - [Queue Library](./queue/index.md)
 - [Upgradability](./upgradability/index.md)

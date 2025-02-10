@@ -28,9 +28,9 @@ In order to use any of the Big Integer types, import them into your Sway project
 <!--Uncomment when BigInt is available-->
 <!--All the functionality is demonstrated with the `BigUint` type, but all of the same functionality is available for the other types as well.-->
 
-#### Minimum and Maximum Values
+### Minimum and Maximum Values
 
-For the `BigUint` type, the minimum value is zero. There is no maximum value and the `BigUint` will grow to accomidate as large of a number as needed.
+For the `BigUint` type, the minimum value is zero. There is no maximum value and the `BigUint` will grow to accommodate as large of a number as needed.
 
 ### Instantiating a Big Integer
 

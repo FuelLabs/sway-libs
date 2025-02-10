@@ -54,9 +54,9 @@ Math Libraries are libraries which provide mathematic functions or number types 
 
 The [Signed Integers](./signed_integers/index.md) Library is an interface to implement signed integers.
 
-### [Big Integers](./big_integers/index.md)
+### [Big Integers](./bigint/index.md)
 
-The [Big Integers](./big_integers/index.md) Library is an interface to implement extremely integers.
+The [Big Integers](./bigint/index.md) Library is an interface to implement extremely integers.
 
 ## Data Structures Libraries
 
