@@ -39,7 +39,7 @@ fn mathematical_ops() {
     let result: bool = big_uint_1 == big_uint_2;
 
     // Ord
-    let result: bool = big_uint_1 < big_uint_2;     
+    let result: bool = big_uint_1 < big_uint_2;
     // ANCHOR_END: mathematical_ops
 }
 
