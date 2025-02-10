@@ -5,5 +5,4 @@ license = "Apache-2.0"
 name = "bigint_test"
 
 [dependencies]
-std = { path = "../../../../sway/sway-lib-std" }
 sway_libs = { path = "../../../libs" }

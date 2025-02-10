@@ -1,6 +1,7 @@
 library;
 
 use std::u128::U128;
+use std::bytes::Bytes;
 
 // ANCHOR: import
 use sway_libs::bigint::*;
@@ -20,29 +21,19 @@ fn initialize() {
     // ANCHOR_END: zero
 }
 
-fn conversion() {
-    // ANCHOR: positive_conversion
-    let one = I8::try_from(1u8).unwrap();
-    // ANCHOR_END: positive_conversion
-
-    // ANCHOR: negative_conversion
-    let negative_one = I8::neg_try_from(1u8).unwrap();
-    // ANCHOR_END: negative_conversion
-}
-
-fn mathematical_ops(val1: I8, val2: I8) {
+fn mathematical_ops() {
     // ANCHOR: mathematical_ops
     let big_uint_1 = BigUint::from(1u64);
     let big_uint_2 = BigUint::from(2u64);
 
     // Add
-    let result: BigUInt = big_uint_1 + big_uint_2;
+    let result: BigUint = big_uint_1 + big_uint_2;
 
     // Multiply
-    let result: BigUInt = big_uint_1 * big_uint_2;
+    let result: BigUint = big_uint_1 * big_uint_2;
 
     // Subtract
-    let result: BigUInt = big_uint_2 - big_uint_1;
+    let result: BigUint = big_uint_2 - big_uint_1;
 
     // Eq
     let result: bool = big_uint_1 == big_uint_2;
@@ -77,42 +68,65 @@ fn from() {
     // ANCHOR_END: from
 }
 
-fn try_into() {
+fn try_into_example() {
     // ANCHOR: try_into
     let big_uint = BigUint::zero();
 
     // u8
-    let u8_result: Option<u8> = big_uint.try_into();
+    let u8_result: Option<u8> = <BigUint as TryInto<u8>>::try_into(big_uint);
 
     // u16
-    let u16_result: Option<u16> = big_uint.try_into();
+    let u16_result: Option<u16> = <BigUint as TryInto<u16>>::try_into(big_uint);
 
     // u32
-    let u32_result: Option<u32> = big_uint.try_into();
+    let u32_result: Option<u32> = <BigUint as TryInto<u32>>::try_into(big_uint);
 
     // u64
-    let u64_result: Option<u64> = big_uint.try_into();
+    let u64_result: Option<u64> = <BigUint as TryInto<u64>>::try_into(big_uint);
 
     // U128
-    let u128_big_int: Option<U128> = big_uint.try_into();
+    let u128_big_int: Option<U128> = <BigUint as TryInto<U128>>::try_into(big_uint);
 
     // u256
-    let u256_big_int: Option<u256> = big_uint.try_into();
+    let u256_big_int: Option<u256> = <BigUint as TryInto<u256>>::try_into(big_uint);
     // ANCHOR_END: try_into
+
+    // Replace the above with this when https://github.com/FuelLabs/sway/issues/6858 is resolved
+    // // u8
+    // let u8_result: Option<u8> = big_uint.try_into();
+
+    // // u16
+    // let u16_result: Option<u16> = big_uint.try_into();
+
+    // // u32
+    // let u32_result: Option<u32> = big_uint.try_into();
+
+    // // u64
+    // let u64_result: Option<u64> = big_uint.try_into();
+
+    // // U128
+    // let u128_big_int: Option<U128> = big_uint.try_into();
+
+    // // u256
+    // let u256_big_int: Option<u256> = big_uint.try_into();
 }
 
-fn into() {
+fn into_example() {
     let big_uint = BigUint::zero();
 
     // ANCHOR: into
     // Bytes
-    let bytes_big_int: Bytes = big_uint.into();
+    let bytes_big_int: Bytes = <BigUint as Into<Bytes>>::into(big_uint);
     // ANCHOR_END: into
+
+    // Replace the above with this when https://github.com/FuelLabs/sway/issues/6858 is resolved
+    // // Bytes
+    // let bytes_big_int: Bytes = big_uint.into();
 }
 
 // ANCHOR: is_zero
 fn is_zero() {
-    let big_int = BitUint::zero();
+    let big_int = BigUint::zero();
     assert(big_int.is_zero());
 }
 // ANCHOR_END: is_zero
