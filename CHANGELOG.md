@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Something new here 1
+- Something new here 2
+
+### Changed
+
+- [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+
+### Fixed
+
+- Some fix here 1
+- Some fix here 2
+
+### Breaking
+
+- Some breaking change here 1
+- Some breaking change here 2
+
 ## [Version v0.24.2]
 
 ### Added v0.24.2

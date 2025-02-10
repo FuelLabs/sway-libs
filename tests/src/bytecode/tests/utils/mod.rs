@@ -558,14 +558,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -584,14 +598,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -621,14 +649,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -672,7 +714,13 @@ pub mod test_helpers {
             .transfer(
                 wallet.address(),
                 1,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
