@@ -1,4 +1,13 @@
 [[package]]
+name = "admin_test"
+source = "member"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "bigint_test"
 source = "member"
 dependencies = [
@@ -7,12 +16,238 @@ dependencies = [
 ]
 
 [[package]]
+name = "bytecode_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "complex_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
 name = "core"
 source = "path+from-root-DD4F12EBC39CAB5B"
 
 [[package]]
+name = "i128_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i128_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i16_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i16_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i256_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i256_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i32_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i32_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i64_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i64_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i8_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "i8_wrapping_neg_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "merkle_proof_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "native_asset_lib"
+source = "member"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "ownership_test"
+source = "member"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "pausable_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "reentrancy_attack_helper_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attack_helper_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_attacker_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attacker_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_attacker_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_fallback_abi"
+source = "path+from-root-F53252C7DB7025EE"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_proxy_abi"
+source = "member"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_proxy_contract"
+source = "member"
+dependencies = [
+    "reentrancy_proxy_abi",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "reentrancy_target_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_target_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attacker_abi",
+    "reentrancy_fallback_abi",
+    "reentrancy_target_abi",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "simple_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "simple_predicate"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
 name = "standards"
 source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c"
+dependencies = ["std"]
+
+[[package]]
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5"
 dependencies = ["std"]
 
 [[package]]
@@ -22,8 +257,17 @@ dependencies = ["core"]
 
 [[package]]
 name = "sway_libs"
-source = "path+from-root-0F6BD27B7DBAC338"
+source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
     "std",
+]
+
+[[package]]
+name = "upgradability_test"
+source = "member"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
+    "std",
+    "sway_libs",
 ]
