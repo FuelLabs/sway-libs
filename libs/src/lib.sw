@@ -10,3 +10,4 @@ pub mod queue;
 pub mod reentrancy;
 pub mod signed_integers;
 pub mod upgradability;
+pub mod bigint;

@@ -44,6 +44,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "big_integers_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "bytecode_examples"
 source = "member"
 dependencies = [

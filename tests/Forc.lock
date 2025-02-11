@@ -8,6 +8,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "bigint_test"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "bytecode_test"
 source = "member"
 dependencies = [
