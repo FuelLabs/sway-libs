@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Something new here 1
-- Something new here 2
+- [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
 
 ### Changed
 
