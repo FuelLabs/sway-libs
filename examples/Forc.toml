@@ -17,5 +17,6 @@ members = [
   "./queue",
   "./reentrancy",
   "./signed_integers",
+  "./big_integers",
   "./upgradability",
 ]
