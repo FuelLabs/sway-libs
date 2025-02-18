@@ -1,0 +1,244 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `BigUint` struct in `bigint`."><meta name="keywords" content="sway, swaylang, sway-lang, BigUint"><link rel="icon" href="../../static.files/sway-logo.svg"><title>BigUint in bigint - Sway</title><link rel="stylesheet" type="text/css" href="../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../static.files/ayu.css"><link rel="stylesheet" href="../../static.files/ayu.min.css"></head><body class="swaydoc struct"><nav class="sidebar"><a class="sidebar-logo" href="../../sway_libs/index.html"><div class="logo-container"><img class="sway-logo" src="../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Struct BigUint</h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block method"><li><a href="#structfield.limbs">limbs</a></li></ul></section><section><h3><a href="#methods">Methods</a></h3><ul class="block method"><li><a href="#method.new">new</a></li><li><a href="#method.equal_limb_size">equal_limb_size</a></li><li><a href="#method.number_of_limbs">number_of_limbs</a></li><li><a href="#method.limbs">limbs</a></li><li><a href="#method.get_limb">get_limb</a></li><li><a href="#method.zero">zero</a></li><li><a href="#method.is_zero">is_zero</a></li></ul></section><section><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block method"><li><a href="#impl-AbiEncode">AbiEncode</a></li><li><a href="#impl-AbiDecode">AbiDecode</a></li><li><a href="#impl-Clone">Clone</a></li><li><a href="#impl-From&lt;u8&gt;">From&lt;u8&gt;</a></li><li><a href="#impl-TryInto&lt;u8&gt;">TryInto&lt;u8&gt;</a></li><li><a href="#impl-From&lt;u16&gt;">From&lt;u16&gt;</a></li><li><a href="#impl-TryInto&lt;u16&gt;">TryInto&lt;u16&gt;</a></li><li><a href="#impl-From&lt;u32&gt;">From&lt;u32&gt;</a></li><li><a href="#impl-TryInto&lt;u32&gt;">TryInto&lt;u32&gt;</a></li><li><a href="#impl-From&lt;u64&gt;">From&lt;u64&gt;</a></li><li><a href="#impl-TryInto&lt;u64&gt;">TryInto&lt;u64&gt;</a></li><li><a href="#impl-From&lt;U128&gt;">From&lt;U128&gt;</a></li><li><a href="#impl-TryInto&lt;U128&gt;">TryInto&lt;U128&gt;</a></li><li><a href="#impl-From&lt;u256&gt;">From&lt;u256&gt;</a></li><li><a href="#impl-TryInto&lt;u256&gt;">TryInto&lt;u256&gt;</a></li><li><a href="#impl-From&lt;Bytes&gt;">From&lt;Bytes&gt;</a></li><li><a href="#impl-Into&lt;Bytes&gt;">Into&lt;Bytes&gt;</a></li><li><a href="#impl-Eq">Eq</a></li><li><a href="#impl-Ord">Ord</a></li><li><a href="#impl-OrdEq">OrdEq</a></li><li><a href="#impl-Add">Add</a></li><li><a href="#impl-Multiply">Multiply</a></li><li><a href="#impl-Subtract">Subtract</a></li></ul></section></div></nav><main><div class="width-limiter"><script src="../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){onSearchFormSubmit(event)});searchbar.addEventListener("search",function(event){onSearchFormSubmit(event)});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=item.type_name==="module"?[...item.module_info.slice(0,-1),formattedName].join("::"):[...item.module_info,formattedName].join("::");const path=["../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Struct <a class="mod" href="../index.html">sway_libs</a><span>::</span><a class="mod" href="index.html">bigint</a><span>::</span><a class="struct" href="#">BigUint</a></span></h1></div><div class="docblock item-decl"><pre class="sway struct"><code>pub struct BigUint {
+    /// The underlying limbs representing the `BigUint` type.
+    limbs: Vec&lt;u64&gt;,
+}</code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The <code>BigUint</code> type.</p>
+<h1>Additional Information</h1>
+<p>The <code>BigUint</code> type is unsigned. The minimum value is zero and the maximum value is infinity.</p>
+</div></details><h2 id="fields" class="fields small-section-header">Fields<a class="anchor" href="#fields"></a></h2><span id="structfield.limbs" class="structfield small-section-header"><a class="anchor field" href="#structfield.limbs"></a><code>limbs: <a class="struct" href="std/vec/struct.Vec.html">Vec</a></code></span><div class="docblock"><p>The underlying limbs representing the <code>BigUint</code> type.</p>
+</div><h2 id="methods" class="small-section-header">Implementations<a href="#methods" class="anchor"></a></h2><div id="methods-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-BigUint" class="impl has-srclink"><a href="#impl-BigUint" class="anchor"></a><h3 class="code-header in-band">impl BigUint</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.new" class="method trait-impl"><a href="#method.new" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.new">new</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>Create a new instance of a <code>BigUint</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[BigUint] - A newly instantiated instance of a <code>BigUint</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let new_big_uint = BigUint::new();
+    assert(new_big_uint.is_zero());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.equal_limb_size" class="method trait-impl"><a href="#method.equal_limb_size" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.equal_limb_size">equal_limb_size</a>(self, other: BigUint) -&gt; bool</h4></div></summary><div class="docblock"><p>Returns true if two <code>BigUint</code> numbers have the same number of limbs.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>other</code>: [BigUint] - The other <code>BigUint</code> to compare with.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if both <code>BigUint</code> values have the same limbs, otherwise false.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let new_big_uint = BigUint::new();
+    let u64_big_uint = BigUint::from(u64::max());
+    let u256_big_uint = BigUint::from(u256::max());
+
+    assert(new_big_uint.equal_limb_size(u64_big_uint));
+    assert(!new_big_uint.equal_limb_size(u256_big_uint));
+    assert(!u64_big_uint.equal_limb_size(u256_big_uint));
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.number_of_limbs" class="method trait-impl"><a href="#method.number_of_limbs" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.number_of_limbs">number_of_limbs</a>(self) -&gt; u64</h4></div></summary><div class="docblock"><p>Returns the number of limbs the <code>BigUint</code> has.</p>
+<h1>Returns</h1>
+<ul>
+<li>[u64] - The number of limbs the <code>BigUint</code> has.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let new_big_uint = BigUint::new();
+    let u64_big_uint = BigUint::from(u64::max());
+    let u256_big_uint = BigUint::from(u256::max());
+
+    assert(new_big_uint.number_of_limbs() == 1);
+    assert(u64_big_uint.number_of_limbs() == 1);
+    assert(u256_big_uint.number_of_limbs() == 4);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.limbs" class="method trait-impl"><a href="#method.limbs" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.limbs">limbs</a>(self) -&gt; Vec&lt;u64&gt;</h4></div></summary><div class="docblock"><p>Returns a copy of the <code>BigUint</code>’s limbs.</p>
+<h1>Returns</h1>
+<ul>
+<li>[Vec<!-- raw HTML omitted -->] - A clone of the <code>BigUint</code>’s limbs.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let new_big_uint = BigUint::new();
+    let new_limbs: Vec&lt;u64&gt; = new_big_uint.limbs();
+    assert(new_limbs.len() == 1);
+    assert(new_limbs.get(0).unwrap() == 0);
+
+    let u64_big_uint = BigUint::from(u64::max());
+    let u64_limbs: Vec&lt;u64&gt; = u64_big_uint.limbs();
+    assert(u64_limbs.len() == 1);
+    assert(u64_limbs.get(0).unwrap() == u64::max());
+
+    let u256_big_uint = BigUint::from(u256::max());
+    let u256_limbs: Vec&lt;u64&gt; = u256_big_uint.limbs();
+    assert(u256_limbs.len() == 4);
+    assert(u256_limbs.get(0).unwrap() == u64::max());
+    assert(u256_limbs.get(1).unwrap() == u64::max());
+    assert(u256_limbs.get(2).unwrap() == u64::max());
+    assert(u256_limbs.get(3).unwrap() == u64::max());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.get_limb" class="method trait-impl"><a href="#method.get_limb" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.get_limb">get_limb</a>(self, index: u64) -&gt; Option&lt;u64&gt;</h4></div></summary><div class="docblock"><p>Returns the <code>BigUint</code>’s limb at a specific index.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>index</code>: [u64] - The index at which to fetch the limb.</li>
+</ul>
+<h1>Returns</h1>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let new_big_uint = BigUint::new();
+    assert(new_big_uint.get_limb(0).unwrap() == 0);
+    assert(new_big_uint.get_limb(1).is_none());
+
+    let u64_big_uint = BigUint::from(u64::max());
+    assert(u64_big_uint.get_limb(0).unwrap() == u64::max());
+    assert(u64_big_uint.get_limb(1).is_none());
+
+    let u256_big_uint = BigUint::from(u256::max());
+    assert(u256_big_uint.get_limb(0).unwrap() == u64::max());
+    assert(u256_big_uint.get_limb(1).unwrap() == u64::max());
+    assert(u256_big_uint.get_limb(2).unwrap() == u64::max());
+    assert(u256_big_uint.get_limb(3).unwrap() == u64::max());
+    assert(u256_big_uint.get_limb(4).is_none());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.zero" class="method trait-impl"><a href="#method.zero" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.zero">zero</a>() -&gt; Self</h4></div></summary><div class="docblock"><p>A zeroed instance of a <code>BigUint</code>.</p>
+<h1>Returns</h1>
+<ul>
+<li>[BigUint] - A newly created zeroed <code>BigUint</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let zero_big_uint = BigUint::zero();
+    assert(zero_big_uint.is_zero());
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.is_zero" class="method trait-impl"><a href="#method.is_zero" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.is_zero">is_zero</a>(self) -&gt; bool</h4></div></summary><div class="docblock"><p>Returns whether the <code>BigUint</code> is zero.</p>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if the <code>BigUint</code> is zero, otherwise <code>false</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use sway_libs::bigint::BigUint;
+
+fn foo() {
+    let zero_big_uint = BigUint::zero();
+    assert(zero_big_uint.is_zero());
+}
+</code></pre>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-AbiEncode" class="impl has-srclink"><a href="#impl-AbiEncode" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/codec/trait.AbiEncode.html">AbiEncode</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.abi_encode" class="method trait-impl"><a href="#method.abi_encode" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.abi_encode">abi_encode</a>(self, buffer: Buffer) -&gt; Buffer</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-AbiDecode" class="impl has-srclink"><a href="#impl-AbiDecode" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/codec/trait.AbiDecode.html">AbiDecode</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.abi_decode" class="method trait-impl"><a href="#method.abi_decode" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.abi_decode">abi_decode</a>(refmut buffer: BufferReader) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Clone" class="impl has-srclink"><a href="#impl-Clone" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/clone/trait.Clone.html">Clone</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.clone" class="method trait-impl"><a href="#method.clone" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.clone">clone</a>(self) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;u8&gt;" class="impl has-srclink"><a href="#impl-From&lt;u8&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;u8&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: u8) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;u8&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;u8&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;u8&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;u8&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;u16&gt;" class="impl has-srclink"><a href="#impl-From&lt;u16&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;u16&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: u16) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;u16&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;u16&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;u16&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;u16&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;u32&gt;" class="impl has-srclink"><a href="#impl-From&lt;u32&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;u32&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: u32) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;u32&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;u32&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;u32&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;u32&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;u64&gt;" class="impl has-srclink"><a href="#impl-From&lt;u64&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;u64&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: u64) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;u64&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;u64&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;u64&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;u64&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;U128&gt;" class="impl has-srclink"><a href="#impl-From&lt;U128&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;U128&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: U128) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;U128&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;U128&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;U128&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;U128&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;u256&gt;" class="impl has-srclink"><a href="#impl-From&lt;u256&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;u256&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(value: u256) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-TryInto&lt;u256&gt;" class="impl has-srclink"><a href="#impl-TryInto&lt;u256&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.TryInto.html">TryInto</a>&lt;u256&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.try_into" class="method trait-impl"><a href="#method.try_into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.try_into">try_into</a>(self) -&gt; Option&lt;u256&gt;</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-From&lt;Bytes&gt;" class="impl has-srclink"><a href="#impl-From&lt;Bytes&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/convert/trait.From.html">From</a>&lt;Bytes&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.from" class="method trait-impl"><a href="#method.from" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.from">from</a>(bytes: Bytes) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Into&lt;Bytes&gt;" class="impl has-srclink"><a href="#impl-Into&lt;Bytes&gt;" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="..//trait.Into.html">Into</a>&lt;Bytes&gt; for BigUint</h3></div></summary><div class="impl-items"><div id="method.into" class="method trait-impl"><a href="#method.into" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.into">into</a>(self) -&gt; Bytes</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Eq" class="impl has-srclink"><a href="#impl-Eq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.Eq.html">Eq</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.eq" class="method trait-impl"><a href="#method.eq" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.eq">eq</a>(self, other: Self) -&gt; bool</h4></div><details class="swaydoc-toggle method-toggle" open><summary><div id="method.neq" class="method trait-impl"><a href="#method.neq" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.neq">neq</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="docblock"><p>Evaluates if two values of the same type are not equal.</p>
+<h1>Additional Information</h1>
+<p>This function is inherited when <code>eq()</code> is implemented.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>other</code>: [Self] - The value of the same type.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if the two values are not equal, otherwise <code>false</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">struct MyStruct {
+    val: u64,
+}
+
+impl Eq for MyStruct {
+    fn eq(self, other: Self) -&gt; bool {
+         self.val == other.val
+    }
+}
+
+fn foo() {
+    let struct1 = MyStruct { val: 10 };
+    let struct2 = MyStruct { val: 2 };
+    let result = struct1 != struct2;
+    assert(result);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Ord" class="impl has-srclink"><a href="#impl-Ord" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.Ord.html">Ord</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.gt" class="method trait-impl"><a href="#method.gt" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.gt">gt</a>(self, other: Self) -&gt; bool</h4></div><div id="method.lt" class="method trait-impl"><a href="#method.lt" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.lt">lt</a>(self, other: Self) -&gt; bool</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-OrdEq" class="impl has-srclink"><a href="#impl-OrdEq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.OrdEq.html">OrdEq</a> for BigUint</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.ge" class="method trait-impl"><a href="#method.ge" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.ge">ge</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="docblock"><p>Evaluates if one value of the same type is greater or equal to than another.</p>
+<h1>Additional Information</h1>
+<p>This trait requires that the <code>Ord</code> and <code>Eq</code> traits are implemented.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>other</code>: [Self] - The value of the same type.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if <code>self</code> is greater than or equal to <code>other</code>, otherwise <code>false</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">struct MyStruct {
+    val: u64,
+}
+
+impl Eq for MyStruct {
+    fn eq(self, other: Self) -&gt; bool {
+        self.val == other.val
+    }
+}
+
+impl Ord for MyStruct {
+    fn gt(self, other: Self) -&gt; bool {
+        self.val &gt; other.val
+    }
+}
+
+impl OrdEq for MyStruct {}
+
+fn foo() {
+    let struct1 = MyStruct { val: 10 };
+    let struct2 = MyStruct { val: 10 };
+    let result = struct1 &gt;= struct2;
+    assert(result);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.le" class="method trait-impl"><a href="#method.le" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.le">le</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="docblock"><p>Evaluates if one value of the same type is less or equal to than another.</p>
+<h1>Additional Information</h1>
+<p>This trait requires that the <code>Ord</code> and <code>Eq</code> traits are implemented.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>other</code>: [Self] - The value of the same type.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if <code>self</code> is less than or equal to <code>other</code>, otherwise <code>false</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">struct MyStruct {
+    val: u64,
+}
+
+impl Eq for MyStruct {
+    fn eq(self, other: Self) -&gt; bool {
+        self.val == other.val
+    }
+}
+
+impl Ord for MyStruct {
+    fn lt(self, other: Self) -&gt; bool {
+        self.val &lt; other.val
+    }
+}
+
+impl OrdEq for MyStruct {}
+
+fn foo() {
+    let struct1 = MyStruct { val: 10 };
+    let struct2 = MyStruct { val: 10 };
+    let result = struct1 &lt;= struct2;
+    assert(result);
+}
+</code></pre>
+</div></details></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Add" class="impl has-srclink"><a href="#impl-Add" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.Add.html">Add</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.add" class="method trait-impl"><a href="#method.add" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.add">add</a>(self, other: Self) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Multiply" class="impl has-srclink"><a href="#impl-Multiply" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.Multiply.html">Multiply</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.multiply" class="method trait-impl"><a href="#method.multiply" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.multiply">multiply</a>(self, other: Self) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Subtract" class="impl has-srclink"><a href="#impl-Subtract" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../core/ops/trait.Subtract.html">Subtract</a> for BigUint</h3></div></summary><div class="impl-items"><div id="method.subtract" class="method trait-impl"><a href="#method.subtract" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.subtract">subtract</a>(self, other: Self) -&gt; Self</h4></div></div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>
