@@ -56,7 +56,7 @@ The [Signed Integers](./signed_integers/index.md) Library is an interface to imp
 
 ### [Big Integers](./bigint/index.md)
 
-The [Big Integers](./bigint/index.md) Library is an interface to implement extremely integers.
+The [Big Integers](./bigint/index.md) Library is an interface to implement extremely large integers.
 
 ## Data Structures Libraries
 

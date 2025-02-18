@@ -64,7 +64,7 @@ impl BigUint {
         self.limbs.len() == other.limbs.len()
     }
 
-    /// Returns the number of limbs the `BigUint`.
+    /// Returns the number of limbs the `BigUint` has.
     ///
     /// # Returns
     ///

@@ -85,7 +85,7 @@ The library also provides a helper function to easily check if a `Big Integer` i
 
 ### Type Conversions
 
-The Big Integers Library offers a number of different conversion between mathematical type. These include the following:
+The Big Integers Library offers a number of different conversions between mathematical types. These include the following:
 
 - `u8`
 - `u16`
