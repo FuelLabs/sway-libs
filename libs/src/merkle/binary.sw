@@ -1,80 +1,6 @@
 library;
 
-use std::{alloc::alloc_bytes, bytes::Bytes, hash::{Hash, sha256}};
-use ::merkle::utils::{path_length_from_key, starting_bit};
-
-pub enum ProofError {
-    InvalidKey: (),
-    InvalidProofLength: (),
-}
-
-/// Concatenated to leaf hash input as described by
-/// "MTH({d(0)}) = SHA-256(0x00 || d(0))"
-pub const LEAF = 0u8;
-/// Concatenated to node hash input as described by
-/// "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))"
-pub const NODE = 1u8;
-
-/// Returns the computed leaf hash of "MTH({d(0)}) = SHA-256(0x00 || d(0))".
-///
-/// # Arguments
-///
-/// * 'data': [b256] - The hash of the leaf data.
-///
-/// # Returns
-///
-/// * [b256] - The computed hash.
-///
-/// # Examples
-///
-/// ```sway
-/// use sway_libs::merkle::binary_proof::leaf_digest;
-///
-/// fn foo() {
-///     let data = b256::zero();
-///     let digest = leaf_digest(data);
-///     assert(digest == 0x54f05a87f5b881780cdc40e3fddfebf72e3ba7e5f65405ab121c7f22d9849ab4);
-/// }
-/// ```
-pub fn leaf_digest(data: b256) -> b256 {
-    let ptr = alloc_bytes(33);
-    ptr.write_byte(LEAF);
-    __addr_of(data).copy_bytes_to(ptr.add_uint_offset(1), 32);
-
-    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 33)))
-}
-
-/// Returns the computed node hash of "MTH(D[n]) = SHA-256(0x01 || MTH(D[0:k]) || MTH(D[k:n]))".
-///
-/// # Arguments
-///
-/// * 'left': [b256] - The hash of the left node.
-/// * 'right': [b256] - The hash of the right node.
-///
-/// # Returns
-///
-/// * [b256] - The hash of the node data.
-///
-/// # Examples
-///
-/// ```sway
-/// use sway_libs::merkle::binary_proof::node_digest;
-///
-/// fn foo() {
-///     let leaf_1 = b256::zero();
-///     let leaf_2 = b256::zero();
-///     let digest = node_digest(leaf_1, leaf_2);
-///     assert(digest == 0xee510d4daf24756c7b56b56b838212b193d9265c85c4a3b2c74f5a3189477c80);
-/// }
-/// ```
-pub fn node_digest(left: b256, right: b256) -> b256 {
-    let ptr = alloc_bytes(65);
-    ptr.write_byte(NODE);
-    __addr_of(left).copy_bytes_to(ptr.add_uint_offset(1), 32);
-    __addr_of(right).copy_bytes_to(ptr.add_uint_offset(33), 32);
-
-    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 65)))
-}
+use ::merkle::common::{node_digest, ProofError};
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
 ///
@@ -99,7 +25,7 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::merkle::binary_proof::process_proof;
+/// use sway_libs::merkle::binary::process_proof;
 ///
 /// fn foo() {
 ///     let key = 0;
@@ -199,7 +125,7 @@ pub fn process_proof(
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::merkle::binary_proof::process_proof;
+/// use sway_libs::merkle::binary::verify_proof;
 ///
 /// fn foo() {
 ///     let key = 0;
@@ -220,4 +146,67 @@ pub fn verify_proof(
     proof: Vec<b256>,
 ) -> bool {
     merkle_root == process_proof(key, merkle_leaf, num_leaves, proof)
+}
+
+/// Calculates the starting bit of the path to a leaf
+///
+/// # Arguments
+///
+/// * `num_leaves`: [u64] - The number of leaves in the Merkle Tree.
+///
+/// # Returns
+///
+/// * [u64] - The starting bit.
+fn starting_bit(num_leaves: u64) -> u64 {
+    let mut starting_bit = 0;
+
+    while (1 << starting_bit) < num_leaves {
+        starting_bit = starting_bit + 1;
+    }
+
+    starting_bit
+}
+
+/// Calculates the length of the path to a leaf
+///
+/// # Arguments
+///
+/// * `key`: [u64] - The key or index of the leaf.
+/// * `num_leaves`: [u64] - The total number of leaves in the Merkle Tree.
+///
+/// # Returns
+///
+/// * [u64] - The length from the leaf to a root.
+fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
+    let mut total_length = 0;
+    let mut num_leaves = num_leaves;
+    let mut key = key;
+
+    while true {
+        // The height of the left subtree is equal to the offset of the starting bit of the path
+        let path_length = starting_bit(num_leaves);
+        // Determine the number of leaves in the left subtree
+        let num_leaves_left_sub_tree = (1 << (path_length - 1));
+
+        if key <= (num_leaves_left_sub_tree - 1) {
+            // If the leaf is in the left subtreee, path length is full height of the left subtree
+            total_length = total_length + path_length;
+            break;
+        } else if num_leaves_left_sub_tree == 1 {
+            // If the left sub tree has only one leaf, path has one additional step
+            total_length = total_length + 1;
+            break;
+        } else if (num_leaves - num_leaves_left_sub_tree) <= 1 {
+            // If the right sub tree only has one leaf, path has one additonal step
+            total_length = total_length + 1;
+            break;
+        } else {
+            // Otherwise add 1 to height and loop
+            total_length = total_length + 1;
+            key = key - num_leaves_left_sub_tree;
+            num_leaves = num_leaves - num_leaves_left_sub_tree;
+        }
+    }
+
+    total_length
 }
