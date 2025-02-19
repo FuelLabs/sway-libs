@@ -1,7 +1,8 @@
 contract;
 
 // ANCHOR: import
-use sway_libs::merkle::binary_proof::*;
+use sway_libs::merkle::binary::{process_proof, verify_proof};
+use sway_libs::merkle::common::{leaf_digest, node_digest};
 // ANCHOR_END: import
 
 abi MerkleExample {
