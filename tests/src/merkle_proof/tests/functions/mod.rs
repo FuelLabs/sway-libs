@@ -1,4 +1,4 @@
 mod leaf_digest;
 mod node_digest;
-mod process_proof;
-mod verify_proof;
+mod binary_process_proof;
+mod binary_verify_proof;
