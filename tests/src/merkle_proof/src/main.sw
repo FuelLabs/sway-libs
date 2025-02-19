@@ -1,22 +1,33 @@
 contract;
 
-use sway_libs::merkle::binary_proof::{leaf_digest, node_digest, process_proof, verify_proof};
+use sway_libs::merkle::common::{leaf_digest, node_digest};
 
 abi MerkleProofTest {
     fn leaf_digest(data: b256) -> b256;
     fn node_digest(left: b256, right: b256) -> b256;
-    fn process_proof(
+    fn binary_process_proof(
         key: u64,
         merkle_leaf: b256,
         num_leaves: u64,
         proof: Vec<b256>,
     ) -> b256;
-    fn verify_proof(
+    fn binary_verify_proof(
         key: u64,
         merkle_leaf: b256,
         merkle_root: b256,
         num_leaves: u64,
         proof: Vec<b256>,
+    ) -> bool;
+    fn sparse_process_proof(
+        key: b256,
+        merkle_leaf: b256,
+        proof: Vec<b256>,
+    ) -> b256;
+    fn sparse_verify_proof(
+        key: b256,
+        merkle_leaf: b256,
+        proof: Vec<b256>,
+        merkle_root: b256,
     ) -> bool;
 }
 
@@ -29,22 +40,39 @@ impl MerkleProofTest for Contract {
         node_digest(left, right)
     }
 
-    fn process_proof(
+    fn binary_process_proof(
         key: u64,
         merkle_leaf: b256,
         num_leaves: u64,
         proof: Vec<b256>,
     ) -> b256 {
-        process_proof(key, merkle_leaf, num_leaves, proof)
+        sway_libs::merkle::binary::process_proof(key, merkle_leaf, num_leaves, proof)
     }
 
-    fn verify_proof(
+    fn binary_verify_proof(
         key: u64,
         merkle_leaf: b256,
         merkle_root: b256,
         num_leaves: u64,
         proof: Vec<b256>,
     ) -> bool {
-        verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
+        sway_libs::merkle::binary::verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
+    }
+
+        fn sparse_process_proof(
+        key: b256,
+        merkle_leaf: b256,
+        proof: Vec<b256>,
+    ) -> b256 {
+        sway_libs::merkle::sparse::process_proof(key, merkle_leaf, proof)
+    }
+
+    fn sparse_verify_proof(
+        key: b256,
+        merkle_leaf: b256,
+        proof: Vec<b256>,
+        merkle_root: b256,
+    ) -> bool {
+        sway_libs::merkle::sparse::verify_proof(key, merkle_leaf, proof, merkle_root)
     }
 }
