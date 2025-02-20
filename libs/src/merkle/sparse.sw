@@ -6,7 +6,7 @@ use ::merkle::common::{node_digest, ProofError};
 ///
 /// # Arguments
 ///
-/// * 'key': [b256] - The key or index of the leaf to prove.
+/// * `key`: [b256] - The key or index of the leaf to prove.
 /// * `leaf`: [b256] - The hash of a leaf on the Sparse Merkle Tree.
 /// * `proof`: [Vec<b256>] - The Sparse Merkle proof that will be used to traverse the Sparse Merkle Tree and compute a root.
 ///
@@ -54,7 +54,7 @@ pub fn process_proof(key: b256, leaf: b256, proof: Vec<b256>) -> b256 {
 ///
 /// # Arguments
 ///
-/// * 'key': [u64] - The key or index of the leaf to verify.
+/// * `key`: [u64] - The key or index of the leaf to verify.
 /// * `leaf`: [b256] - The hash of a leaf on the Sparse Merkle Tree.
 /// * `proof`: [Vec<b256>] - The Sparse Merkle proof that will be used to traverse the Sparse Merkle Tree and compute a root.
 /// * `root`: [b256] - The pre-computed Sparse Merkle root that will be used to verify the leaf and proof.

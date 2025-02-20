@@ -18,7 +18,7 @@ pub const NODE = 1u8;
 ///
 /// # Arguments
 ///
-/// * 'data': [b256] - The hash of the leaf data.
+/// * `data`: [b256] - The hash of the leaf data.
 ///
 /// # Returns
 ///
@@ -47,8 +47,8 @@ pub fn leaf_digest(data: b256) -> b256 {
 ///
 /// # Arguments
 ///
-/// * 'left': [b256] - The hash of the left node.
-/// * 'right': [b256] - The hash of the right node.
+/// * `left`: [b256] - The hash of the left node.
+/// * `right`: [b256] - The hash of the right node.
 ///
 /// # Returns
 ///

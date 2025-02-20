@@ -6,7 +6,7 @@ use ::merkle::common::{node_digest, ProofError};
 ///
 /// # Arguments
 ///
-/// * 'key': [u64] - The key or index of the leaf to prove.
+/// * `key`: [u64] - The key or index of the leaf to prove.
 /// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
 /// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
 /// * `proof`: [Vec<b256>] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
@@ -105,7 +105,7 @@ pub fn process_proof(
 ///
 /// # Arguments
 ///
-/// * 'key': [u64] - The key or index of the leaf to verify.
+/// * `key`: [u64] - The key or index of the leaf to verify.
 /// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
 /// * `merkle_root`: [b256] - The pre-computed Merkle root that will be used to verify the leaf and proof.
 /// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
