@@ -1,6 +1,7 @@
 library;
 
-use ::merkle::common::{node_digest, ProofError};
+use ::merkle::common::{LEAF, MerkleRoot, node_digest, ProofError, ProofSet};
+use std::{alloc::alloc_bytes, bytes::Bytes, hash::{Hash, sha256}};
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
 ///
@@ -9,11 +10,11 @@ use ::merkle::common::{node_digest, ProofError};
 /// * `key`: [u64] - The key or index of the leaf to prove.
 /// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
 /// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
-/// * `proof`: [Vec<b256>] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+/// * `proof`: [ProofSet] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
 ///
 /// # Returns
 ///
-/// * [b256] - The calculated root.
+/// * [MerkleRoot] - The calculated root.
 ///
 /// # Reverts
 ///
@@ -25,13 +26,13 @@ use ::merkle::common::{node_digest, ProofError};
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::merkle::binary::process_proof;
+/// use sway_libs::merkle::{binary::process_proof, common::{MerkleRoot, ProofSet}};
 ///
 /// fn foo() {
 ///     let key = 0;
 ///     let leaf = b256::zero();
 ///     let num_leaves = 3;
-///     let mut proof = Vec::new();
+///     let mut proof = ProofSet::new();
 ///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);
 ///     let root = process_proof(key, leaf, num_leaves, proof);
 ///     assert(root == 0xed84ee783dcb8999206160218e4fe8a1dc5ccb056e3b98f0a6fa633ca5896a47);
@@ -41,8 +42,8 @@ pub fn process_proof(
     key: u64,
     merkle_leaf: b256,
     num_leaves: u64,
-    proof: Vec<b256>,
-) -> b256 {
+    proof: ProofSet,
+) -> MerkleRoot {
     let proof_length = proof.len();
     require(
         (num_leaves > 1 && proof_length == path_length_from_key(key, num_leaves)) || (num_leaves <= 1 && proof_length == 0),
@@ -107,9 +108,9 @@ pub fn process_proof(
 ///
 /// * `key`: [u64] - The key or index of the leaf to verify.
 /// * `merkle_leaf`: [b256] - The hash of a leaf on the Merkle Tree.
-/// * `merkle_root`: [b256] - The pre-computed Merkle root that will be used to verify the leaf and proof.
+/// * `merkle_root`: [MerkleRoot] - The pre-computed Merkle root that will be used to verify the leaf and proof.
 /// * 'num_leaves': [u64] - The number of leaves in the Merkle Tree.
-/// * `proof`: [Vec<b256>] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
+/// * `proof`: [ProofSet] - The Merkle proof that will be used to traverse the Merkle Tree and compute a root.
 ///
 /// # Returns
 ///
@@ -125,13 +126,13 @@ pub fn process_proof(
 /// # Examples
 ///
 /// ```sway
-/// use sway_libs::merkle::binary::verify_proof;
+/// use sway_libs::merkle::{binary::verify_proof, common::{MerkleRoot, ProofSet}};
 ///
 /// fn foo() {
 ///     let key = 0;
 ///     let leaf = b256::zero();
 ///     let num_leaves = 3;
-///     let mut proof = Vec::new();
+///     let mut proof = ProofSet::new();
 ///     proof.push(0xb51fc5c7f5b6393a5b13bb6068de2247ac09df1d3b1bec17627502cb1d1a6ac6);
 ///     let root = 0xed84ee783dcb8999206160218e4fe8a1dc5ccb056e3b98f0a6fa633ca5896a47;
 ///
@@ -141,11 +142,40 @@ pub fn process_proof(
 pub fn verify_proof(
     key: u64,
     merkle_leaf: b256,
-    merkle_root: b256,
+    merkle_root: MerkleRoot,
     num_leaves: u64,
-    proof: Vec<b256>,
+    proof: ProofSet,
 ) -> bool {
     merkle_root == process_proof(key, merkle_leaf, num_leaves, proof)
+}
+
+/// Returns the computed leaf hash of "MTH({d(0)}) = SHA-256(0x00 || d(0))".
+///
+/// # Arguments
+///
+/// * `data`: [b256] - The hash of the leaf data.
+///
+/// # Returns
+///
+/// * [b256] - The computed hash.
+///
+/// # Examples
+///
+/// ```sway
+/// use sway_libs::merkle::binary::leaf_digest;
+///
+/// fn foo() {
+///     let data = b256::zero();
+///     let digest = leaf_digest(data);
+///     assert(digest == 0x54f05a87f5b881780cdc40e3fddfebf72e3ba7e5f65405ab121c7f22d9849ab4);
+/// }
+/// ```
+pub fn leaf_digest(data: b256) -> b256 {
+    let ptr = alloc_bytes(33);
+    ptr.write_byte(LEAF);
+    __addr_of(data).copy_bytes_to(ptr.add_uint_offset(1), 32);
+
+    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 33)))
 }
 
 /// Calculates the starting bit of the path to a leaf
