@@ -1,5 +1,5 @@
 use crate::merkle_proof::tests::utils::{
-    abi_calls::verify_proof,
+    abi_calls::binary_verify_proof,
     test_helpers::{build_tree, leaves_with_depth, merkle_proof_instance},
 };
 
@@ -18,7 +18,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            verify_proof(&instance, key + 1, leaf, root, leaves.len() as u64, proof).await,
+            binary_verify_proof(&instance, key + 1, leaf, root, leaves.len() as u64, proof).await,
             false
         );
     }
@@ -34,7 +34,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            verify_proof(&instance, key, leaf, root, leaves.len() as u64, proof).await,
+            binary_verify_proof(&instance, key, leaf, root, leaves.len() as u64, proof).await,
             true
         );
     }
