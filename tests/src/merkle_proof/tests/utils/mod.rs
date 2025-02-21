@@ -1,13 +1,15 @@
 use fuel_merkle::binary::in_memory::MerkleTree;
 use fuel_merkle::sparse::in_memory::MerkleTree as SparseTree;
-use fuel_merkle::sparse::in_memory::MerkleTreeKey as SparseTreeKey;
+use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
+use fuel_merkle::sparse::proof::Proof as FuelProof;
+use fuel_merkle::sparse::proof::ExclusionLeaf as FuelExclusionLeaf;
 use fuel_tx::Bytes32;
 use fuels::{
     prelude::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies,
         WalletUnlocked,
     },
-    types::Bits256,
+    types::{Bits256, Bytes},
 };
 use sha2::{Digest, Sha256};
 
@@ -23,13 +25,13 @@ pub mod abi_calls {
 
     use super::*;
 
-    pub async fn leaf_digest(
+    pub async fn binary_leaf_digest(
         contract: &TestMerkleProofLib<WalletUnlocked>,
         data: Bits256,
     ) -> Bits256 {
         contract
             .methods()
-            .leaf_digest(data)
+            .binary_leaf_digest(data)
             .call()
             .await
             .unwrap()
@@ -86,8 +88,8 @@ pub mod abi_calls {
     pub async fn sparse_process_proof(
         contract: &TestMerkleProofLib<WalletUnlocked>,
         key: Bits256,
-        leaf: Bits256,
-        proof: Vec<Bits256>,
+        leaf: Option<Bytes>,
+        proof: Proof,
     ) -> Bits256 {
         contract
             .methods()
@@ -101,13 +103,27 @@ pub mod abi_calls {
     pub async fn sparse_verify_proof(
         contract: &TestMerkleProofLib<WalletUnlocked>,
         key: Bits256,
-        leaf: Bits256,
+        leaf: Option<Bytes>,
         root: Bits256,
-        proof: Vec<Bits256>,
+        proof: Proof,
     ) -> bool {
         contract
             .methods()
             .sparse_verify_proof(key, leaf, proof, root)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
+
+    pub async fn sparse_leaf_digest(
+        contract: &TestMerkleProofLib<WalletUnlocked>,
+        key: Bits256,
+        data: Bits256,
+    ) -> Bits256 {
+        contract
+            .methods()
+            .sparse_leaf_digest(key, data)
             .call()
             .await
             .unwrap()
@@ -267,10 +283,11 @@ pub mod test_helpers {
     pub async fn build_sparse_tree(
         leaves: Vec<[u8; 1]>,
         key: u64,
-    ) -> (SparseTree, Bits256, Bits256) {
+    ) -> (SparseTree, Bits256, Bytes, SparseTreeKey) {
         let mut tree = SparseTree::new();
         let num_leaves = leaves.len();
         let mut leaf_hash = [0u8; 32];
+        let mut leaf_key = SparseTreeKey::new(leaf_hash);
 
         for n in 0..num_leaves {
             let mut hasher = Sha256::new();
@@ -279,41 +296,24 @@ pub mod test_helpers {
 
             if n == key as usize {
                 leaf_hash = hash.into();
+                leaf_key = SparseTreeKey::new(hash);
             }
 
-            let _ = tree.update(&hash);
+            let _ = tree.update(SparseTreeKey::new(hash), &hash);
         }
 
         let merkle_root = tree.root();
-        let merkle_leaf = leaf_sum(&leaf_hash);
 
         (
             tree,
             Bits256(merkle_root),
-            Bits256(merkle_leaf),
+            Bytes(leaf_hash.into()),
+            leaf_key
         )
     }
 
-    pub async fn sparse_inclusion_proof(tree: SparseTree, ) -> Vec<Bits256> {
-        let proof = tree.prove(key).unwrap();
-        let mut final_proof: Vec<Bits256> = Vec::new();
-
-        for iterator in proof {
-            final_proof.push(Bits256(iterator.clone()));
-        }
-
-        Vec::new()
-    }
-
-    pub async fn sparse_exclusion_proof(tree: SparseTree, ) -> Vec<Bits256> {
-        let proof = tree.prove(key).unwrap();
-        let mut final_proof: Vec<Bits256> = Vec::new();
-
-        for iterator in proof {
-            final_proof.push(Bits256(iterator.clone()));
-        }
-
-        Vec::new()
+    pub async fn sparse_proof(tree: SparseTree, key: SparseTreeKey) -> FuelProof {
+        tree.generate_proof(&key).unwrap()
     }
 
     pub async fn leaves_with_depth(depth: u32) -> Vec<[u8; 1]> {
@@ -352,5 +352,41 @@ pub mod test_helpers {
         hash.update(data);
 
         hash.finalize().into()
+    }
+
+    pub fn sparse_leaf(key: &[u8; 32], data: &[u8]) -> [u8; 32] {
+        let mut hash_1 = Sha256::new();
+        hash_1.update(data);
+
+        let hashed_data: [u8; 32] = hash_1.finalize().into();
+
+        let mut hash_2 = Sha256::new();
+        hash_2.update(&[LEAF]);
+        hash_2.update(key);
+        hash_2.update(hashed_data);
+
+        hash_2.finalize().into()
+    }
+
+    pub fn fuel_to_sway_sparse_proof(fuel_proof: FuelProof) -> Proof {
+        let mut proof_bits: Vec<Bits256> = Vec::new();
+        for iterator in fuel_proof.proof_set().iter() {
+            proof_bits.push(Bits256(iterator.clone()));
+        }
+
+        match fuel_proof {
+            FuelProof::Exclusion(exlcusion_proof) => {
+                Proof::Exclusion(ExclusionProof { 
+                    proof_set: proof_bits, 
+                    leaf: match exlcusion_proof.leaf {
+                        FuelExclusionLeaf::Leaf(leaf_data) => ExclusionLeaf::Leaf(ExclusionLeafData{ leaf_key: Bits256(leaf_data.leaf_key), leaf_value: Bits256(leaf_data.leaf_value) }),
+                        FuelExclusionLeaf::Placeholder => ExclusionLeaf::Placeholder,
+                    },
+                })
+            },
+            FuelProof::Inclusion(_) => {
+                Proof::Inclusion(InclusionProof { proof_set: proof_bits })
+            }
+        }
     }
 }
