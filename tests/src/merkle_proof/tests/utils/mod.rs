@@ -85,7 +85,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn sparse_process_proof(
+    pub async fn sparse_root(
         contract: &TestMerkleProofLib<WalletUnlocked>,
         key: Bits256,
         leaf: Option<Bytes>,
@@ -93,14 +93,29 @@ pub mod abi_calls {
     ) -> Bits256 {
         contract
             .methods()
-            .sparse_process_proof(key, leaf, proof)
+            .sparse_root(key, leaf, proof)
             .call()
             .await
             .unwrap()
             .value
     }
 
-    pub async fn sparse_verify_proof(
+    pub async fn sparse_root_hash(
+        contract: &TestMerkleProofLib<WalletUnlocked>,
+        key: Bits256,
+        leaf: Bits256,
+        proof: Proof,
+    ) -> Bits256 {
+        contract
+            .methods()
+            .sparse_root_hash(key, leaf, proof)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
+
+    pub async fn sparse_verify(
         contract: &TestMerkleProofLib<WalletUnlocked>,
         key: Bits256,
         leaf: Option<Bytes>,
@@ -109,7 +124,23 @@ pub mod abi_calls {
     ) -> bool {
         contract
             .methods()
-            .sparse_verify_proof(key, leaf, proof, root)
+            .sparse_verify(key, leaf, proof, root)
+            .call()
+            .await
+            .unwrap()
+            .value
+    }
+
+    pub async fn sparse_verify_hash(
+        contract: &TestMerkleProofLib<WalletUnlocked>,
+        key: Bits256,
+        leaf: Bits256,
+        root: Bits256,
+        proof: Proof,
+    ) -> bool {
+        contract
+            .methods()
+            .sparse_verify_hash(key, leaf, proof, root)
             .call()
             .await
             .unwrap()
