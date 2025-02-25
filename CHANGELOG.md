@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
 
 ### Changed
 
@@ -22,8 +23,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking
 
-- Some breaking change here 1
-- Some breaking change here 2
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the Binary Merkle Library.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_poof::*;
+```
+
+After:
+
+```sway
+use sway_libs::merkle::binary::*;
+```
+
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the `LEAF`, `NODE`, `leaf_digest()`, and `node_disgest()` functions and constants.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_proof::{LEAF, NODE, leaf_digest, node_digest};
+```
+
+After:
+
+```sway
+use sway_libs::merkle::common::{LEAF, NODE, node_digest};
+use sway_libs::merkle::binary::{leaf_digest};
+```
 
 ## [Version v0.24.2]
 
