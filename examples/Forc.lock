@@ -44,6 +44,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "big_integers_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "bytecode_examples"
 source = "member"
 dependencies = [
@@ -53,7 +61,7 @@ dependencies = [
 
 [[package]]
 name = "core"
-source = "path+from-root-7053AAA90CC5E690"
+source = "path+from-root-DD4F12EBC39CAB5B"
 
 [[package]]
 name = "merkle_examples"
@@ -146,7 +154,7 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.66.2#31486c0b47669612acb7c64d66ecb50aea281282"
+source = "git+https://github.com/fuellabs/sway?tag=v0.66.7#5ed7cec6dbcd42f0c2f84df8511a4c0007b1902e"
 dependencies = ["core"]
 
 [[package]]

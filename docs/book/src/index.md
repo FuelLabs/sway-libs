@@ -54,6 +54,10 @@ Math Libraries are libraries which provide mathematic functions or number types 
 
 The [Signed Integers](./signed_integers/index.md) Library is an interface to implement signed integers.
 
+### [Big Integers](./bigint/index.md)
+
+The [Big Integers](./bigint/index.md) Library is an interface to implement extremely large integers.
+
 ## Data Structures Libraries
 
 Data Structure Libraries are libraries which provide complex data structures which unlock additional functionality for Smart Contracts.

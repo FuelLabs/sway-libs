@@ -7,30 +7,73 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-Description of the upcoming release here.
-
 ### Added
 
-- [#309](https://github.com/FuelLabs/sway-libs/pull/309) Adds fallback function test cases to the Reentrancy Guard Library.
 - [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
+- [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
+
 
 ### Changed
+
+- [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+
+### Fixed
+
+- Some fix here 1
+- Some fix here 2
+
+### Breaking
+
+- Some breaking change here 1
+- Some breaking change here 2
+
+## [Version v0.24.2]
+
+### Added v0.24.2
+
+- [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
+- [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
+- [#322](https://github.com/FuelLabs/sway-libs/pull/320) Adds further documentation and examples for the asset metadata library.
+
+### Changed v0.24.2
+
+- [#323](https://github.com/FuelLabs/sway-libs/pull/323) Updates the repository to forc `v0.66.6`.
+- [#324](https://github.com/FuelLabs/sway-libs/pull/324) Prepares for the `v0.24.2` release.
+
+### Fixed v0.24.2
+
+- None
+
+### Breaking v0.24.2
+
+- None
+
+## [Version 0.24.1]
+
+### Added v0.24.1
+
+- [#309](https://github.com/FuelLabs/sway-libs/pull/309) Adds fallback function test cases to the Reentrancy Guard Library.
+- [#310](https://github.com/FuelLabs/sway-libs/pull/310) Adds proxy tests cases to the Reentrancy Guard Library.
+
+### Changed v0.24.1
 
 - [#305](https://github.com/FuelLabs/sway-libs/pull/305) Updates to forc `v0.66.2`, fuel-core `v0.40.0`, and fuels-rs `v0.66.9`.
 - [#306](https://github.com/FuelLabs/sway-libs/pull/306) Updates the SRC-7 naming to Onchain Native Asset Metadata Standard.
 - [#308](https://github.com/FuelLabs/sway-libs/pull/308) Removes comments on Cross-Contract Reentrancy vulnerability.
+- [#314](https://github.com/FuelLabs/sway-libs/pull/314) Prepares for the v0.24.1 release.
+- [#317](https://github.com/FuelLabs/sway-libs/pull/317) Updates the CI rust version to v1.83.0.
 
-### Fixed
+### Fixed v0.24.1
 
 - [#297](https://github.com/FuelLabs/sway-libs/pull/297) Fixes docs anchor in basic SRC-7 example.
 - [#298](https://github.com/FuelLabs/sway-libs/pull/298) Fixes the README headers on Upgradability Libraries from an `h2` to an `h4`.
 - [#302](https://github.com/FuelLabs/sway-libs/pull/302) Fixes typos in documentation.
 - [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documenation.
+- [#311](https://github.com/FuelLabs/sway-libs/pull/311) Fixes links in README.
 
-#### Breaking
+#### Breaking v0.24.1
 
-- Some breaking change here 1
-- Some breaking change here 2
+- None
 
 ## [Version 0.24.0]
 

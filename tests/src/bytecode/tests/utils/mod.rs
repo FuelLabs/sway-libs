@@ -40,11 +40,32 @@ const DEFAULT_PREDICATE_BALANCE: u64 = 512;
 const HEX_STR_1: &str = "0xb4ca495f61ac3433e9a78cbf3adfb0e4486913bb548029cef99d1de2cf606d52";
 const HEX_STR_2: &str = "0x5d617010b482b54332741fab0dfd1b15dfad07e8895360af0fb9f3e3a04b0c74";
 const HEX_STR_3: &str = "0xfebf0fdda20de46a0f2261a69556b0f9fdeea85759af1edb322831cf7d0dc8d5";
-const SIMPLE_PREDICATE_OFFSET: u64 = 376;
-const SIMPLE_CONTRACT_OFFSET: u64 = 1384;
-const COMPLEX_CONTRACT_OFFSET_1: u64 = 22584;
-const COMPLEX_CONTRACT_OFFSET_2: u64 = 22544;
-const COMPLEX_CONTRACT_OFFSET_3: u64 = 22472;
+// For bytecode test failures, these offsets need to be updated with the new configurable values
+// in the .json files in `bytecode/test_artifacts/*/out/*-abi.json`.
+// For example: in `bytecode/test_artifacts/complex_contract/out/contract_contract-abi.json` we have the following:
+//  "configurables": [
+//   {
+//     "name": "VALUE",
+//     "concreteTypeId": "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+//     "offset": 20800
+//   },
+//   {
+//     "name": "STRUCT",
+//     "concreteTypeId": "75f7f7a06026cab5d7a70984d1fde56001e83505e3a091ff9722b92d7f56d8be",
+//     "offset": 20760
+//   },
+//   {
+//     "name": "ENUM",
+//     "concreteTypeId": "8dfea60c80d5eb43188e38922a715225450c499b19fd0dacc673c13ff708cdb2",
+//     "offset": 20688
+//   }
+// ]
+// You would use 20800, 20760, and 20688 for 1, 2, 3 respectively
+const SIMPLE_PREDICATE_OFFSET: u64 = 384;
+const SIMPLE_CONTRACT_OFFSET: u64 = 1280;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 20800;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 20760;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 20688;
 
 pub mod abi_calls {
 
@@ -537,14 +558,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -563,14 +598,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -600,14 +649,28 @@ pub mod test_helpers {
             .transfer(
                 result_instance.address(),
                 DEFAULT_PREDICATE_BALANCE,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await
             .unwrap();
 
         let predicate_balance = result_instance
-            .get_asset_balance(&wallet.provider().unwrap().base_asset_id())
+            .get_asset_balance(
+                &wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
+            )
             .await
             .unwrap();
         assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
@@ -651,7 +714,13 @@ pub mod test_helpers {
             .transfer(
                 wallet.address(),
                 1,
-                *wallet.provider().unwrap().base_asset_id(),
+                *wallet
+                    .provider()
+                    .unwrap()
+                    .consensus_parameters()
+                    .await
+                    .unwrap()
+                    .base_asset_id(),
                 TxPolicies::default(),
             )
             .await

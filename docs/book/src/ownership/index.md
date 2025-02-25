@@ -1,51 +1,119 @@
 # Ownership Library
 
-The Ownership Library provides a way to block anyone other than a **single** "owner" from calling functions. The Ownership Library is often used when needing administrative calls on a contract by a single user.
+The **Ownership Library** provides a straightforward way to restrict specific calls in a Sway contract to a single _owner_. Its design follows the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard from [Sway Standards](https://docs.fuel.network/docs/sway-standards/) and offers a set of functions to initialize, verify, revoke, and transfer ownership.
 
-For implementation details on the Ownership Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
+For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
 
 ## Importing the Ownership Library
 
-In order to use the Ownership library, Sway Libs and [Sway Standards](https://docs.fuel.network/docs/sway-standards/) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard).
+1. **Add Sway Libs to `Forc.toml`**  
+   Please see the [Getting Started](../getting_started/index.md) guide for instructions on adding **Sway Libs** as a dependency.
 
-To import the Ownership Library and [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard to your Sway Smart Contract, add the following to your Sway file:
+2. **Add Sway Standards to `Forc.toml`**  
+   Refer to the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard) to add **Sway Standards**.
 
-```sway
-{{#include ../../../../examples/ownership/src/main.sw:import}}
-```
+3. **Import the Ownership Library**  
+   To import the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard, include the following in your Sway file:
+
+   ```sway
+   {{#include ../../../../examples/ownership/src/lib.sw:import}}
+   ```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
 
-To implement the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard with the Ownership library, be sure to add the Sway Standards dependency to your contract. The following demonstrates the integration of the Ownership library with the SRC-5 standard.
+When integrating the Ownership Library with [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/), ensure that the `SRC5` trait from **Sway Standards** is implemented in your contract, as shown below. The `_owner()` function from this library is used to fulfill the SRC-5 requirement of exposing the ownership state.
 
 ```sway
-{{#include ../../../../examples/ownership/src/main.sw:integrate_with_src5}}
+{{#include ../../../../examples/ownership/src/lib.sw:integrate_with_src5}}
 ```
 
-> **NOTE** A constructor method must be implemented to initialize the owner.
-
-## Basic Functionality
+## Basic Usage
 
 ### Setting a Contract Owner
 
-Once imported, the Ownership Library's functions will be available. To use them initialize the owner for your contract by calling the `initialize_ownership()` function in your own constructor method.
+Establishes the initial ownership state by calling `initialize_ownership(new_owner)`. This can only be done once, typically in your contract's constructor.
 
 ```sway
-{{#include ../../../../examples/ownership/src/main.sw:initialize}}
+{{#include ../../../../examples/ownership/src/lib.sw:initialize}}
 ```
 
 ### Applying Restrictions
 
-To restrict a function to only the owner, call the `only_owner()` function.
+Protect functions so only the owner can call them by invoking `only_owner()` at the start of those functions.
 
 ```sway
-{{#include ../../../../examples/ownership/src/main.sw:only_owner}}
+{{#include ../../../../examples/ownership/src/lib.sw:only_owner}}
 ```
 
 ### Checking the Ownership Status
 
-To return the ownership state from storage, call the `_owner()` function.
+To retrieve the current ownership state, call `_owner()`.
 
 ```sway
-{{#include ../../../../examples/ownership/src/main.sw:state}}
+{{#include ../../../../examples/ownership/src/lib.sw:state}}
 ```
+
+### Transferring Ownership
+
+To transfer ownership from the current owner to a new owner, call `transfer_ownership(new_owner)`.
+
+```sway
+{{#include ../../../../examples/ownership/src/lib.sw:transfer_ownership}}
+```
+
+### Renouncing Ownership
+
+To revoke ownership entirely and disallow the assignment of a new owner, call `renounce_ownership()`.
+
+```sway
+{{#include ../../../../examples/ownership/src/lib.sw:renouncing_ownership}}
+```
+
+## Events
+
+### `OwnershipRenounced`
+
+Emitted when ownership is revoked.
+
+- **Fields:**
+  - `previous_owner`: Identity of the owner prior to revocation.
+
+### `OwnershipSet`
+
+Emitted when initial ownership is set.
+
+- **Fields:**
+  - `new_owner`: Identity of the newly set owner.
+
+### `OwnershipTransferred`
+
+Emitted when ownership is transferred from one owner to another.
+
+- **Fields:**
+  - `new_owner`: Identity of the new owner.
+  - `previous_owner`: Identity of the prior owner.
+
+## Errors
+
+### `InitializationError`
+
+- **Variants:**
+  - `CannotReinitialized`: Thrown when attempting to initialize ownership if the owner is already set.
+
+### `AccessError`
+
+- **Variants:**
+  - `NotOwner`: Thrown when a function restricted to the owner is called by a non-owner.
+
+## Example Integration
+
+Below is a example illustrating how to use this library within a Sway contract:
+
+```sway
+{{#include ../../../../examples/ownership/src/main.sw:example_contract}}
+```
+
+1. **Initialization:** Call `constructor(new_owner)` once to set the initial owner.  
+2. **Restricted Calls:** Use `only_owner()` to guard any owner-specific functions.  
+3. **Ownership Checks:** Retrieve the current owner state via `_owner()`.  
+4. **Transfer or Renounce:** Use `transfer_ownership(new_owner)` or `renounce_ownership()` for ownership modifications.

@@ -1,6 +1,6 @@
 contract;
 
-use std::{hash::*, math::*, storage::storage_vec::*,};
+use std::{hash::*, math::*, storage::storage_vec::*};
 
 struct SimpleStruct {
     x: u32,
