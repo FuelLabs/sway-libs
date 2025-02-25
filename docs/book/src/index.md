@@ -44,7 +44,7 @@ The [Bytecode](./bytecode/index.md) Library is used for on-chain verification an
 
 ### [Merkle Library](./merkle/index.md)
 
-The [Merkle Proof](./merkle/index.md) Library is used to verify Binary Merkle Trees computed off-chain.
+The [Merkle Proof](./merkle/index.md) Library is used to verify Binary and Sparse Merkle Trees computed off-chain.
 
 ## Math Libraries
 
