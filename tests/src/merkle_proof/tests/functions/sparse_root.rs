@@ -1,9 +1,12 @@
 use crate::merkle_proof::tests::utils::{
     abi_calls::{sparse_root, sparse_root_hash},
-    test_helpers::{build_sparse_tree, fuel_to_sway_sparse_proof, sparse_proof, leaves_with_depth, merkle_proof_instance},
+    test_helpers::{
+        build_sparse_tree, fuel_to_sway_sparse_proof, leaves_with_depth, merkle_proof_instance,
+        sparse_proof,
+    },
 };
-use fuels::types::Bits256;
 use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
+use fuels::types::Bits256;
 use sha2::{Digest, Sha256};
 
 mod success {
@@ -86,14 +89,13 @@ mod success {
         let (tree, root, leaf, leaf_key) = build_sparse_tree(leaves.clone(), key).await;
         let fuel_proof = sparse_proof(tree, leaf_key).await;
         let proof = fuel_to_sway_sparse_proof(fuel_proof.clone());
-        
+
         assert!(fuel_proof.is_inclusion());
         assert_eq!(
             sparse_root(&instance, Bits256(*leaf_key.as_ref()), Some(leaf), proof).await,
             root
         );
     }
-
 
     #[tokio::test]
     async fn compute_exclusion_root() {
@@ -280,7 +282,7 @@ mod revert {
         let (tree, _root, _leaf, leaf_key) = build_sparse_tree(leaves.clone(), key).await;
         let fuel_proof = sparse_proof(tree, leaf_key).await;
         let proof = fuel_to_sway_sparse_proof(fuel_proof.clone());
-        
+
         assert!(fuel_proof.is_inclusion());
         let _ = sparse_root(&instance, Bits256(*leaf_key.as_ref()), None, proof).await;
     }

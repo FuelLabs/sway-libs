@@ -1,6 +1,6 @@
 use crate::merkle_proof::tests::utils::{
     abi_calls::sparse_leaf_digest,
-    test_helpers::{build_sparse_tree, sparse_leaf, merkle_proof_instance},
+    test_helpers::{build_sparse_tree, merkle_proof_instance, sparse_leaf},
 };
 use fuel_merkle::common::Bytes32;
 use fuels::types::Bits256;
@@ -26,6 +26,9 @@ mod success {
         hasher1.update(&leaf.0);
         let data_hash: Bytes32 = hasher1.finalize().try_into().unwrap();
 
-        assert_eq!(sparse_leaf_digest(&instance, Bits256(*leaf_key.as_ref()), Bits256(data_hash)).await, Bits256(computed_leaf));
+        assert_eq!(
+            sparse_leaf_digest(&instance, Bits256(*leaf_key.as_ref()), Bits256(data_hash)).await,
+            Bits256(computed_leaf)
+        );
     }
 }

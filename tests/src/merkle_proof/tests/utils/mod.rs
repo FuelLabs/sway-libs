@@ -1,8 +1,8 @@
 use fuel_merkle::binary::in_memory::MerkleTree;
 use fuel_merkle::sparse::in_memory::MerkleTree as SparseTree;
-use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
-use fuel_merkle::sparse::proof::Proof as FuelProof;
 use fuel_merkle::sparse::proof::ExclusionLeaf as FuelExclusionLeaf;
+use fuel_merkle::sparse::proof::Proof as FuelProof;
+use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
 use fuel_tx::Bytes32;
 use fuels::{
     prelude::{
@@ -339,7 +339,7 @@ pub mod test_helpers {
             tree,
             Bits256(merkle_root),
             Bytes(leaf_hash.into()),
-            leaf_key
+            leaf_key,
         )
     }
 
@@ -406,18 +406,19 @@ pub mod test_helpers {
         }
 
         match fuel_proof {
-            FuelProof::Exclusion(exlcusion_proof) => {
-                Proof::Exclusion(ExclusionProof { 
-                    proof_set: proof_bits, 
-                    leaf: match exlcusion_proof.leaf {
-                        FuelExclusionLeaf::Leaf(leaf_data) => ExclusionLeaf::Leaf(ExclusionLeafData{ leaf_key: Bits256(leaf_data.leaf_key), leaf_value: Bits256(leaf_data.leaf_value) }),
-                        FuelExclusionLeaf::Placeholder => ExclusionLeaf::Placeholder,
-                    },
-                })
-            },
-            FuelProof::Inclusion(_) => {
-                Proof::Inclusion(InclusionProof { proof_set: proof_bits })
-            }
+            FuelProof::Exclusion(exlcusion_proof) => Proof::Exclusion(ExclusionProof {
+                proof_set: proof_bits,
+                leaf: match exlcusion_proof.leaf {
+                    FuelExclusionLeaf::Leaf(leaf_data) => ExclusionLeaf::Leaf(ExclusionLeafData {
+                        leaf_key: Bits256(leaf_data.leaf_key),
+                        leaf_value: Bits256(leaf_data.leaf_value),
+                    }),
+                    FuelExclusionLeaf::Placeholder => ExclusionLeaf::Placeholder,
+                },
+            }),
+            FuelProof::Inclusion(_) => Proof::Inclusion(InclusionProof {
+                proof_set: proof_bits,
+            }),
         }
     }
 }

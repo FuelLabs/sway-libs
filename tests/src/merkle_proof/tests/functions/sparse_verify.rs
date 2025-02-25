@@ -1,9 +1,12 @@
 use crate::merkle_proof::tests::utils::{
     abi_calls::{sparse_verify, sparse_verify_hash},
-    test_helpers::{build_sparse_tree, fuel_to_sway_sparse_proof, sparse_proof, leaves_with_depth, merkle_proof_instance},
+    test_helpers::{
+        build_sparse_tree, fuel_to_sway_sparse_proof, leaves_with_depth, merkle_proof_instance,
+        sparse_proof,
+    },
 };
-use fuels::types::Bits256;
 use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
+use fuels::types::Bits256;
 use sha2::{Digest, Sha256};
 
 mod success {
@@ -88,7 +91,14 @@ mod success {
 
         assert!(fuel_proof.is_inclusion());
         assert_eq!(
-            sparse_verify(&instance, Bits256(*leaf_key.as_ref()), Some(leaf), root, proof).await,
+            sparse_verify(
+                &instance,
+                Bits256(*leaf_key.as_ref()),
+                Some(leaf),
+                root,
+                proof
+            )
+            .await,
             true
         );
     }
@@ -111,7 +121,14 @@ mod success {
 
         assert!(fuel_proof.is_inclusion());
         assert_eq!(
-            sparse_verify_hash(&instance, Bits256(*leaf_key.as_ref()), Bits256(hashed_leaf), root, proof).await,
+            sparse_verify_hash(
+                &instance,
+                Bits256(*leaf_key.as_ref()),
+                Bits256(hashed_leaf),
+                root,
+                proof
+            )
+            .await,
             true
         );
     }
@@ -173,7 +190,13 @@ mod revert {
         let proof = fuel_to_sway_sparse_proof(fuel_proof.clone());
 
         assert!(fuel_proof.is_exclusion());
-        let _ = sparse_verify(&instance, Bits256(*empty_key.as_ref()), Some(leaf), root, proof).await;
+        let _ = sparse_verify(
+            &instance,
+            Bits256(*empty_key.as_ref()),
+            Some(leaf),
+            root,
+            proof,
+        )
+        .await;
     }
-
 }
