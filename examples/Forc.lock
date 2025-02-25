@@ -56,7 +56,15 @@ name = "core"
 source = "path+from-root-DD4F12EBC39CAB5B"
 
 [[package]]
-name = "merkle_examples"
+name = "merkle_binary_examples"
+source = "member"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
+name = "merkle_sparse_examples"
 source = "member"
 dependencies = [
     "std",

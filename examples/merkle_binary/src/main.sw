@@ -1,23 +1,24 @@
 contract;
 
 // ANCHOR: import
-use sway_libs::merkle::binary::{process_proof, verify_proof};
-use sway_libs::merkle::common::{leaf_digest, node_digest};
+use sway_libs::merkle::binary::{leaf_digest, process_proof, verify_proof};
+use sway_libs::merkle::common::{MerkleRoot, node_digest, ProofSet};
 // ANCHOR_END: import
 
 abi MerkleExample {
     fn verify(
-        merkle_root: b256,
+        merkle_root: MerkleRoot,
         key: u64,
         leaf: b256,
         num_leaves: u64,
+        // TODO: Updated to ProofSet when https://github.com/FuelLabs/fuels-rs/issues/1603 is resolved
         proof: Vec<b256>,
     ) -> bool;
 }
 
 impl MerkleExample for Contract {
     fn verify(
-        merkle_root: b256,
+        merkle_root: MerkleRoot,
         key: u64,
         leaf: b256,
         num_leaves: u64,
@@ -40,18 +41,18 @@ fn compute_node(leaf_a: b256, leaf_b: b256) {
 // ANCHOR_END: node_digest
 
 // ANCHOR: process_proof
-fn process(key: u64, leaf: b256, num_leaves: u64, proof: Vec<b256>) {
-    let merkle_root: b256 = process_proof(key, leaf, num_leaves, proof);
+fn process(key: u64, leaf: b256, num_leaves: u64, proof: ProofSet) {
+    let merkle_root: MerkleRoot = process_proof(key, leaf, num_leaves, proof);
 }
 // ANCHOR_END: process_proof
 
 // ANCHOR: verify_proof
 fn verify(
-    merkle_root: b256,
+    merkle_root: MerkleRoot,
     key: u64,
     leaf: b256,
     num_leaves: u64,
-    proof: Vec<b256>,
+    proof: ProofSet,
 ) {
     assert(verify_proof(key, leaf, merkle_root, num_leaves, proof));
 }
