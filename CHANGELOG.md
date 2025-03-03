@@ -22,8 +22,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking
 
-- Some breaking change here 1
-- Some breaking change here 2
+- [#330](https://github.com/FuelLabs/sway-libs/pull/330) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
+
+The following demonstrates the breaking change.
+
+Before:
+
+```sway
+// Compute bytecode root
+let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode);
+let root_with_configurables: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
+
+// Compute predicate address
+let address_no_configurables: Address = compute_predicate_address(my_bytecode);
+let address_with_configurables: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
+
+// Verify contract bytecode
+verify_contract_bytecode(my_contract_id, my_bytecode); // No configurables
+verify_contract_bytecode_with_configurables(my_contract_id, my_bytecode, my_configurables); // With configurables
+
+// Verify predicate address
+verify_predicate_address(my_predicate_address, my_bytecode); // No configurables
+verify_predicate_address_with_configurables(my_predicate_address, my_bytecode, my_configurables); // With configurables
+```
+
+After:
+
+```sway
+// Compute bytecode root
+let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, None);
+let root_with_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, Some(my_configurables));
+
+// Compute predicate address
+let address_no_configurables: Address = compute_predicate_address(my_bytecode, None);
+let address_with_configurables: Address = compute_predicate_address(my_bytecode, Some(my_configurables));
+
+// Verify contract bytecode
+verify_contract_bytecode(my_contract_id, my_bytecode, None); // No configurables
+verify_contract_bytecode(my_contract_id, my_bytecode, Some(my_configurables)); // With configurables
+
+// Verify predicate address
+verify_predicate_address(my_predicate_address, my_bytecode, None); // No configurables
+verify_predicate_address(my_predicate_address, my_bytecode, Some(my_configurables)); // With configurables
+```
 
 ## [Version v0.24.2]
 
