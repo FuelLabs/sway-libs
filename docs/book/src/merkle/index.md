@@ -73,7 +73,7 @@ To generate a Binary Merkle Tree and corresponding proof for your Sway Smart Con
 
 #### Importing Binary Into Your Project
 
-The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
+To import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
 ```sway
 fuel-merkle = { version = "0.56.0" }
@@ -154,7 +154,7 @@ To generate a Sparse Merkle Tree and corresponding proof for your Sway Smart Con
 
 #### Importing Sparse Tree Into Your Project
 
-The import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
+To import the Fuel-Merkle crate, the following should be added to the project's `Cargo.toml` file under `[dependencies]`:
 
 ```sway
 fuel-merkle = { version = "0.56.0" }
