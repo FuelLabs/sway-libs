@@ -1,5 +1,5 @@
 use crate::merkle_proof::tests::utils::{
-    abi_calls::leaf_digest,
+    abi_calls::binary_leaf_digest,
     test_helpers::{build_tree, merkle_proof_instance},
 };
 use fuel_merkle::common::Bytes32;
@@ -25,6 +25,9 @@ mod success {
         hasher1.update(&leaves[key as usize]);
         let data_hash: Bytes32 = hasher1.finalize().try_into().unwrap();
 
-        assert_eq!(leaf_digest(&instance, Bits256(data_hash)).await, leaf);
+        assert_eq!(
+            binary_leaf_digest(&instance, Bits256(data_hash)).await,
+            leaf
+        );
     }
 }

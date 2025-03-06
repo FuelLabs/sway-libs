@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
 - [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
 
 ### Changed
 
@@ -23,9 +24,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking
 
-- [#330](https://github.com/FuelLabs/sway-libs/pull/330) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the Binary Merkle Library.
 
-The following demonstrates the breaking change.
+Before:
+
+```sway
+use sway_libs::merkle::binary_poof::*;
+```
+
+After:
+
+```sway
+use sway_libs::merkle::binary::*;
+```
+
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the `LEAF`, `NODE`, `leaf_digest()`, and `node_disgest()` functions and constants.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_proof::{LEAF, NODE, leaf_digest, node_digest};
+```
+
+After:
+
+```sway
+use sway_libs::merkle::common::{LEAF, NODE, node_digest};
+use sway_libs::merkle::binary::{leaf_digest};
+```
+
+- [#330](https://github.com/FuelLabs/sway-libs/pull/330) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
 
 Before:
 
