@@ -56,7 +56,61 @@ impl core::ops::Ord for I64 {
 
 impl core::ops::OrdEq for I64 {}
 
+impl core::ops::TotalOrd for I64 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
+
 impl I64 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::MIN;
+    ///     assert(i64.underlying() == u64::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u64::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::MAX;
+    ///     assert(i64.underlying() == u64::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u64::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -100,50 +154,6 @@ impl I64 {
     /// ```
     pub fn from_uint(underlying: u64) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I64] - The newly created `I64` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i64::I64;
-    ///
-    /// fn foo() {
-    ///     let i64 = I64::max();
-    ///     assert(i64.underlying() == u64::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u64::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I64] - The newly created `I64` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i64::I64;
-    ///
-    /// fn foo() {
-    ///     let i64 = I64::min();
-    ///     assert(i64.underlying() == u64::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u64::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -384,8 +394,12 @@ impl core::ops::Divide for I64 {
 
 impl WrappingNeg for I64 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u64::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1).unwrap()
     }

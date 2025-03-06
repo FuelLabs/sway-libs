@@ -19,9 +19,9 @@ fn main() -> bool {
     let neg_ninty_three = I64::neg_try_from(93u64).unwrap();
 
     let zero = I64::try_from(0u64).unwrap();
-    let max = I64::max();
-    let min = I64::min();
-    let neg_min_plus_one = I64::min() + I64::try_from(1).unwrap();
+    let max = I64::MAX;
+    let min = I64::MIN;
+    let neg_min_plus_one = I64::MIN + I64::try_from(1).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();

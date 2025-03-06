@@ -30,11 +30,11 @@ fn initialize() {
     // ANCHOR_END: 127_from_underlying
 
     // ANCHOR: min
-    let min = I8::min();
+    let min = I8::MIN;
     // ANCHOR_END: min
 
     // ANCHOR: max
-    let max = I8::max();
+    let max = I8::MAX;
     // ANCHOR_END: max
 }
 
