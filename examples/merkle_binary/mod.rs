@@ -9,7 +9,7 @@ pub const LEAF: u8 = 0x00;
 // Load abi from json
 abigen!(Contract(
     name = "MerkleExample",
-    abi = "merkle/out/release/merkle_examples-abi.json"
+    abi = "merkle_binary/out/release/merkle_binary_examples-abi.json"
 ));
 
 async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlocked) {
@@ -28,7 +28,7 @@ async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlock
     let wallet = wallets.pop().unwrap();
 
     let id = Contract::load_from(
-        "./merkle/out/release/merkle_examples.bin",
+        "./merkle_binary/out/release/merkle_binary_examples.bin",
         LoadConfiguration::default(),
     )
     .unwrap()

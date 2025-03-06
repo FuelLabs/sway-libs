@@ -53,7 +53,7 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 #### Cryptography
 
 - [Bytecode](https://docs.fuel.network/docs/sway-libs/bytecode/) is used for on-chain verification and computation of bytecode roots for contracts and predicates.
-- [Merkle Proof](https://docs.fuel.network/docs/sway-libs/merkle/) is used to verify Binary Merkle Trees computed off-chain.
+- [Merkle Proof](https://docs.fuel.network/docs/sway-libs/merkle/) is used to verify Binary and Sparse Merkle Trees computed off-chain.
 
 #### Math
 
