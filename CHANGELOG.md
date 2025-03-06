@@ -56,6 +56,7 @@ use sway_libs::merkle::binary::{leaf_digest};
 - [#312](https://github.com/FuelLabs/sway-libs/pull/312) Breaks functionality of `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`'s `::min()` and `::max()` functions. These functions are now used for comparison for two values of the type and return the higher or lower value respectively. To obtain the minimum and maximum values you must now use the `::MIN` and `::MAX` assosciated constants.
 
 Before:
+
 ```sway
 fn foo() -> I8 {
     let minimum_i8 = I8::min();
@@ -64,6 +65,7 @@ fn foo() -> I8 {
 ```
 
 After:
+
 ```sway
 fn foo() -> I8 {
     let minimum_i8 = I8::MIN;
