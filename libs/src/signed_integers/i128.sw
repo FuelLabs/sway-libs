@@ -57,7 +57,61 @@ impl core::ops::Ord for I128 {
 
 impl core::ops::OrdEq for I128 {}
 
+impl core::ops::TotalOrd for I128 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
+
 impl I128 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i128::I128;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::MIN;
+    ///     assert(i128.underlying() == U128::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: U128::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I128] - The newly created `I128` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i128::I128;
+    ///
+    /// fn foo() {
+    ///     let i128 = I128::MAX;
+    ///     assert(i128.underlying() == U128::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: U128::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -102,52 +156,6 @@ impl I128 {
     /// ```
     pub fn from_uint(underlying: U128) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I128] - The newly created `I128` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i128::I128;
-    /// use std::U128::*;
-    ///
-    /// fn foo() {
-    ///     let i128 = I128::max();
-    ///     assert(i128.underlying() == U128::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: U128::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I128] - The newly created `I128` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i128::I128;
-    /// use std::U128::*;
-    ///
-    /// fn foo() {
-    ///     let i128 = I128::min();
-    ///     assert(i128.underlying() == U128::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: U128::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -395,8 +403,12 @@ impl core::ops::Subtract for I128 {
 
 impl WrappingNeg for I128 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: U128::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(U128::from((0, 1))).unwrap()
     }
