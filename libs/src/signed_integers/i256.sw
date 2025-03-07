@@ -1,6 +1,6 @@
 library;
 
-use std::convert::TryFrom;
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled};
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -292,7 +292,10 @@ impl core::ops::Add for I256 {
 impl core::ops::Divide for I256 {
     /// Divide a I256 by a I256. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+
         let mut res = Self::new();
         let indent = Self::indent();
 
@@ -384,10 +387,20 @@ impl WrappingNeg for I256 {
 impl TryFrom<u256> for I256 {
     fn try_from(value: u256) -> Option<Self> {
         // as the minimal value of I256 is -I256::indent() (1 << 63) we should add I256::indent() (1 << 63) 
-        if value < u256::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<u256> for I256 {
+    fn try_into(self) -> Option<u256> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -398,6 +411,18 @@ impl TryFrom<I256> for u256 {
     fn try_from(value: I256) -> Option<Self> {
         if value >= I256::zero() {
             Some(value.underlying - I256::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I256> for u256 {
+    fn try_into(self) -> Option<I256> {
+        if self < I256::indent() {
+            Some(I256 { 
+                underlying: self + I256::indent(),
+            })
         } else {
             None
         }
