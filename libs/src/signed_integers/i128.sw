@@ -1,6 +1,6 @@
 library;
 
-use std::{convert::TryFrom, u128::U128};
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled, u128::U128};
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -298,8 +298,10 @@ impl core::ops::Add for I128 {
 impl core::ops::Divide for I128 {
     /// Divide a I128 by a I128. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
-        let mut res = Self::new();
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+                let mut res = Self::new();
         if (self.underlying > Self::indent()
             || self.underlying == Self::indent())
             && divisor.underlying > Self::indent()
@@ -405,10 +407,20 @@ impl WrappingNeg for I128 {
 impl TryFrom<U128> for I128 {
     fn try_from(value: U128) -> Option<Self> {
         // as the minimal value of I128 is -I128::indent() (1 << 63) we should add I128::indent() (1 << 63) 
-        if value < U128::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<U128> for I128 {
+    fn try_into(self) -> Option<U128> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -419,6 +431,18 @@ impl TryFrom<I128> for U128 {
     fn try_from(value: I128) -> Option<Self> {
         if value >= I128::zero() {
             Some(value.underlying - I128::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I128> for U128 {
+    fn try_into(self) -> Option<I128> {
+        if self < I128::indent() {
+            Some(I128 { 
+                underlying: self + I128::indent(),
+            })
         } else {
             None
         }
