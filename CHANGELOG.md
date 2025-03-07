@@ -95,9 +95,9 @@ verify_predicate_address(my_predicate_address, my_bytecode, None); // No configu
 verify_predicate_address(my_predicate_address, my_bytecode, Some(my_configurables)); // With configurables
 ```
 
-- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Breaks functionality of `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`'s `::min()` and `::max()` functions. These functions are now used for comparison for two values of the type and return the higher or lower value respectively. To obtain the minimum and maximum values you must now use the `::MIN` and `::MAX` assosciated constants.
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Breaks functionality of `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`'s `::min()` and `::max()` functions. These functions are now used for comparison for two values of the type and return the higher or lower value respectively. To obtain the minimum and maximum values you must now use the `::MIN` and `::MAX` associated constants.
 
-Before: 
+Before:
 
 ```sway
 fn foo() -> I8 {
