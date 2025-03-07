@@ -1,6 +1,6 @@
 library;
 
-use std::convert::TryFrom;
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled};
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -346,7 +346,10 @@ impl core::ops::Multiply for I32 {
 impl core::ops::Divide for I32 {
     /// Divide a I32 by a I32. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+
         let mut res = Self::new();
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
@@ -393,10 +396,20 @@ impl WrappingNeg for I32 {
 impl TryFrom<u32> for I32 {
     fn try_from(value: u32) -> Option<Self> {
         // as the minimal value of I32 is 2147483648 (1 << 31) we should add I32::indent() (1 << 31) 
-        if value < u32::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<u32> for I32 {
+    fn try_into(self) -> Option<u32> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -407,6 +420,18 @@ impl TryFrom<I32> for u32 {
     fn try_from(value: I32) -> Option<Self> {
         if value >= I32::zero() {
             Some(value.underlying - I32::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I32> for u32 {
+    fn try_into(self) -> Option<I32> {
+        if self < I32::indent() {
+            Some(I32 { 
+                underlying: self + I32::indent(),
+            })
         } else {
             None
         }
