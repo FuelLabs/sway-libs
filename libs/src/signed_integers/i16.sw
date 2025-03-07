@@ -429,7 +429,7 @@ impl TryFrom<I16> for u16 {
 impl TryInto<I16> for u16 {
     fn try_into(self) -> Option<I16> {
         if self < I16::indent() {
-            Some(I16 { 
+            Some(I16 {
                 underlying: self + I16::indent(),
             })
         } else {

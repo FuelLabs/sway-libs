@@ -430,7 +430,7 @@ impl TryFrom<I64> for u64 {
 impl TryInto<I64> for u64 {
     fn try_into(self) -> Option<I64> {
         if self < I64::indent() {
-            Some(I64 { 
+            Some(I64 {
                 underlying: self + I64::indent(),
             })
         } else {

@@ -420,7 +420,7 @@ impl TryFrom<I256> for u256 {
 impl TryInto<I256> for u256 {
     fn try_into(self) -> Option<I256> {
         if self < I256::indent() {
-            Some(I256 { 
+            Some(I256 {
                 underlying: self + I256::indent(),
             })
         } else {

@@ -244,7 +244,7 @@ fn signed_i32_add() {
 fn revert_signed_i32_add() {
     let one = I32::try_from(1u32).unwrap();
     let max = I32::max();
-    
+
     let _ = max + one;
 }
 
@@ -252,7 +252,7 @@ fn revert_signed_i32_add() {
 fn revert_signed_i32_add_negative() {
     let neg_one = I32::neg_try_from(1u32).unwrap();
     let min = I32::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -262,17 +262,17 @@ fn revert_signed_i32_add_unsafe_math() {
 
     let one = I32::try_from(1u32).unwrap();
     let max = I32::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i32_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I32::try_from(1u32).unwrap();
     let max = I32::max();
-    
+
     assert(max + one == I32::min());
 }
 
@@ -592,7 +592,7 @@ fn signed_i32_try_from_u32() {
     assert(i32_min_try_from.unwrap() == I32::zero());
 
     let i32_overflow_try_from = I32::try_from(indent);
-    assert(i32_overflow_try_from.is_none());   
+    assert(i32_overflow_try_from.is_none());
 }
 
 #[test]

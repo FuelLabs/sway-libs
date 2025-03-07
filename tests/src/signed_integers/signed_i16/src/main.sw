@@ -244,7 +244,7 @@ fn signed_i16_add() {
 fn revert_signed_i16_add() {
     let one = I16::try_from(1u16).unwrap();
     let max = I16::max();
-    
+
     let _ = max + one;
 }
 
@@ -252,7 +252,7 @@ fn revert_signed_i16_add() {
 fn revert_signed_i16_add_negative() {
     let neg_one = I16::neg_try_from(1u16).unwrap();
     let min = I16::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -262,17 +262,17 @@ fn revert_signed_i16_add_unsafe_math() {
 
     let one = I16::try_from(1u16).unwrap();
     let max = I16::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i16_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I16::try_from(1u16).unwrap();
     let max = I16::max();
-    
+
     assert(max + one == I16::min());
 }
 
@@ -591,7 +591,7 @@ fn signed_i16_try_from_u16() {
     assert(i16_min_try_from.unwrap() == I16::zero());
 
     let i16_overflow_try_from = I16::try_from(indent);
-    assert(i16_overflow_try_from.is_none());   
+    assert(i16_overflow_try_from.is_none());
 }
 
 #[test]

@@ -429,7 +429,7 @@ impl TryFrom<I32> for u32 {
 impl TryInto<I32> for u32 {
     fn try_into(self) -> Option<I32> {
         if self < I32::indent() {
-            Some(I32 { 
+            Some(I32 {
                 underlying: self + I32::indent(),
             })
         } else {

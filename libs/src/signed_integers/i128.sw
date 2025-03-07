@@ -301,7 +301,7 @@ impl core::ops::Divide for I128 {
         if panic_on_unsafe_math_enabled() {
             require(divisor != Self::new(), Error::ZeroDivisor);
         }
-                let mut res = Self::new();
+        let mut res = Self::new();
         if (self.underlying > Self::indent()
             || self.underlying == Self::indent())
             && divisor.underlying > Self::indent()
@@ -440,7 +440,7 @@ impl TryFrom<I128> for U128 {
 impl TryInto<I128> for U128 {
     fn try_into(self) -> Option<I128> {
         if self < I128::indent() {
-            Some(I128 { 
+            Some(I128 {
                 underlying: self + I128::indent(),
             })
         } else {

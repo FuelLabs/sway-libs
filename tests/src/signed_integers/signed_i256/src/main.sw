@@ -6,7 +6,9 @@ use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};
 
 #[test]
 fn signed_i256_indent() {
-    assert(I256::indent() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
+    assert(
+        I256::indent() == 0x8000000000000000000000000000000000000000000000000000000000000000u256,
+    );
 }
 
 #[test]
@@ -151,14 +153,20 @@ fn signed_i256_neg_try_from() {
 fn signed_i256_new() {
     let new = I256::new();
 
-    assert(new.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
+    assert(
+        new
+            .underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256,
+    );
 }
 
 #[test]
 fn signed_i256_zero() {
     let zero = I256::zero();
 
-    assert(zero.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
+    assert(
+        zero
+            .underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256,
+    );
 }
 
 #[test]
@@ -182,7 +190,10 @@ fn signed_i256_underlying() {
     assert(zero.underlying() == 0x0u256);
     assert(one.underlying() == 0x1u256);
     assert(max.underlying() == u256::max());
-    assert(indent.underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256);
+    assert(
+        indent
+            .underlying() == 0x8000000000000000000000000000000000000000000000000000000000000000u256,
+    );
 }
 
 #[test]
@@ -244,7 +255,7 @@ fn signed_i256_add() {
 fn revert_signed_i256_add() {
     let one = I256::try_from(0x1u256).unwrap();
     let max = I256::max();
-    
+
     let _ = max + one;
 }
 
@@ -252,7 +263,7 @@ fn revert_signed_i256_add() {
 fn revert_signed_i256_add_negative() {
     let neg_one = I256::neg_try_from(0x1u256).unwrap();
     let min = I256::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -262,17 +273,17 @@ fn revert_signed_i256_add_unsafe_math() {
 
     let one = I256::try_from(0x1u256).unwrap();
     let max = I256::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i256_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I256::try_from(0x1u256).unwrap();
     let max = I256::max();
-    
+
     assert(max + one == I256::min());
 }
 
@@ -591,7 +602,7 @@ fn signed_i256_try_from_u256() {
     assert(i256_min_try_from.unwrap() == I256::zero());
 
     let i256_overflow_try_from = I256::try_from(indent);
-    assert(i256_overflow_try_from.is_none());   
+    assert(i256_overflow_try_from.is_none());
 }
 
 #[test]

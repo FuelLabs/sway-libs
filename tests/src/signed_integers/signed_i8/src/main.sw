@@ -244,7 +244,7 @@ fn signed_i8_add() {
 fn revert_signed_i8_add() {
     let one = I8::try_from(1u8).unwrap();
     let max = I8::max();
-    
+
     let _ = max + one;
 }
 
@@ -252,7 +252,7 @@ fn revert_signed_i8_add() {
 fn revert_signed_i8_add_negative() {
     let neg_one = I8::neg_try_from(1u8).unwrap();
     let min = I8::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -262,17 +262,17 @@ fn revert_signed_i8_add_unsafe_math() {
 
     let one = I8::try_from(1u8).unwrap();
     let max = I8::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i8_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I8::try_from(1u8).unwrap();
     let max = I8::max();
-    
+
     assert(max + one == I8::min());
 }
 
@@ -591,7 +591,7 @@ fn signed_i8_try_from_u8() {
     assert(i8_min_try_from.unwrap() == I8::zero());
 
     let i8_overflow_try_from = I8::try_from(indent);
-    assert(i8_overflow_try_from.is_none());   
+    assert(i8_overflow_try_from.is_none());
 }
 
 #[test]
@@ -646,5 +646,4 @@ fn signed_i8_u8_try_into() {
 
     let i8_overflow_try_into: Option<I8> = indent.try_into();
     assert(i8_overflow_try_into.is_none());
-
 }

@@ -25,7 +25,7 @@ fn signed_i128_eq() {
     let i128_11 = I128::try_from(U128::from((1, 0))).unwrap();
     let i128_12 = I128::try_from(U128::from((1, 0))).unwrap();
     let i128_13 = I128::neg_try_from(U128::from((1, 0))).unwrap();
-    let i128_14= I128::neg_try_from(U128::from((1, 0))).unwrap();
+    let i128_14 = I128::neg_try_from(U128::from((1, 0))).unwrap();
 
     assert(i128_1 == i128_2);
     assert(i128_3 == i128_4);
@@ -78,7 +78,7 @@ fn signed_i128_ord() {
     let i128_11 = I128::try_from(U128::from((1, 0))).unwrap();
     let i128_12 = I128::try_from(U128::from((1, 0))).unwrap();
     let i128_13 = I128::neg_try_from(U128::from((1, 0))).unwrap();
-    let i128_14= I128::neg_try_from(U128::from((1, 0))).unwrap();
+    let i128_14 = I128::neg_try_from(U128::from((1, 0))).unwrap();
 
     assert(!(i128_1 > i128_2));
     assert(!(i128_3 > i128_4));
@@ -317,7 +317,7 @@ fn signed_i128_add() {
 fn revert_signed_i128_add() {
     let one = I128::try_from(U128::from((0, 1))).unwrap();
     let max = I128::max();
-    
+
     let _ = max + one;
 }
 
@@ -325,7 +325,7 @@ fn revert_signed_i128_add() {
 fn revert_signed_i128_add_negative() {
     let neg_one = I128::neg_try_from(U128::from((0, 1))).unwrap();
     let min = I128::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -335,17 +335,17 @@ fn revert_signed_i128_add_unsafe_math() {
 
     let one = I128::try_from(U128::from((0, 1))).unwrap();
     let max = I128::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i128_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I128::try_from(U128::from((0, 1))).unwrap();
     let max = I128::max();
-    
+
     assert(max + one == I128::min());
 }
 
@@ -671,7 +671,7 @@ fn signed_i128_try_from_u128() {
     assert(i128_min_try_from.unwrap() == I128::zero());
 
     let i128_overflow_try_from = I128::try_from(indent);
-    assert(i128_overflow_try_from.is_none());   
+    assert(i128_overflow_try_from.is_none());
 }
 
 #[test]

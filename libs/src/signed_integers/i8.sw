@@ -291,7 +291,7 @@ impl core::ops::Divide for I8 {
         if panic_on_unsafe_math_enabled() {
             require(divisor != Self::new(), Error::ZeroDivisor);
         }
-        
+
         let mut res = Self::new();
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
@@ -429,7 +429,7 @@ impl TryFrom<I8> for u8 {
 impl TryInto<I8> for u8 {
     fn try_into(self) -> Option<I8> {
         if self < I8::indent() {
-            Some(I8 { 
+            Some(I8 {
                 underlying: self + I8::indent(),
             })
         } else {

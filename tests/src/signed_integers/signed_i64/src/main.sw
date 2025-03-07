@@ -244,7 +244,7 @@ fn signed_i64_add() {
 fn revert_signed_i64_add() {
     let one = I64::try_from(1u64).unwrap();
     let max = I64::max();
-    
+
     let _ = max + one;
 }
 
@@ -252,7 +252,7 @@ fn revert_signed_i64_add() {
 fn revert_signed_i64_add_negative() {
     let neg_one = I64::neg_try_from(1u64).unwrap();
     let min = I64::min();
-    
+
     let _ = min + neg_one;
 }
 
@@ -262,17 +262,17 @@ fn revert_signed_i64_add_unsafe_math() {
 
     let one = I64::try_from(1u64).unwrap();
     let max = I64::max();
-    
+
     let _ = max + one;
 }
 
 #[test]
 fn signed_i64_add_overflow() {
     let _ = disable_panic_on_overflow();
-    
+
     let one = I64::try_from(1u64).unwrap();
     let max = I64::max();
-    
+
     assert(max + one == I64::min());
 }
 
@@ -591,7 +591,7 @@ fn signed_i64_try_from_u64() {
     assert(i64_min_try_from.unwrap() == I64::zero());
 
     let i64_overflow_try_from = I64::try_from(indent);
-    assert(i64_overflow_try_from.is_none());   
+    assert(i64_overflow_try_from.is_none());
 }
 
 #[test]
