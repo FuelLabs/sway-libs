@@ -1,6 +1,6 @@
 library;
 
-use std::convert::TryFrom;
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled};
 use ::signed_integers::common::WrappingNeg;
 use ::signed_integers::errors::Error;
 
@@ -347,7 +347,10 @@ impl core::ops::Multiply for I64 {
 impl core::ops::Divide for I64 {
     /// Divide a I64 by a I64. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+
         let mut res = Self::new();
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
@@ -394,10 +397,20 @@ impl WrappingNeg for I64 {
 impl TryFrom<u64> for I64 {
     fn try_from(value: u64) -> Option<Self> {
         // as the minimal value of I64 is -I64::indent() (1 << 63) we should add I64::indent() (1 << 63) 
-        if value < u64::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<u64> for I64 {
+    fn try_into(self) -> Option<u64> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -408,6 +421,18 @@ impl TryFrom<I64> for u64 {
     fn try_from(value: I64) -> Option<Self> {
         if value >= I64::zero() {
             Some(value.underlying - I64::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I64> for u64 {
+    fn try_into(self) -> Option<I64> {
+        if self < I64::indent() {
+            Some(I64 { 
+                underlying: self + I64::indent(),
+            })
         } else {
             None
         }
