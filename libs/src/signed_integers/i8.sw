@@ -1,6 +1,6 @@
 library;
 
-use std::convert::TryFrom;
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled};
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -288,7 +288,10 @@ impl core::ops::Add for I8 {
 impl core::ops::Divide for I8 {
     /// Divide a I8 by a I8. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+        
         let mut res = Self::new();
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
@@ -393,10 +396,20 @@ impl WrappingNeg for I8 {
 impl TryFrom<u8> for I8 {
     fn try_from(value: u8) -> Option<Self> {
         // as the minimal value of I8 is -I8::indent() (1 << 7) we should add I8::indent() (1 << 7)
-        if value < u8::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<u8> for I8 {
+    fn try_into(self) -> Option<u8> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -407,6 +420,18 @@ impl TryFrom<I8> for u8 {
     fn try_from(value: I8) -> Option<Self> {
         if value >= I8::zero() {
             Some(value.underlying - I8::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I8> for u8 {
+    fn try_into(self) -> Option<I8> {
+        if self < I8::indent() {
+            Some(I8 { 
+                underlying: self + I8::indent(),
+            })
         } else {
             None
         }
