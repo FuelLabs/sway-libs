@@ -15,10 +15,10 @@ fn signed_i8_eq() {
     let i8_2 = I8::zero();
     let i8_3 = I8::try_from(1u8).unwrap();
     let i8_4 = I8::try_from(1u8).unwrap();
-    let i8_5 = I8::max();
-    let i8_6 = I8::max();
-    let i8_7 = I8::min();
-    let i8_8 = I8::min();
+    let i8_5 = I8::MAX;
+    let i8_6 = I8::MAX;
+    let i8_7 = I8::MIN;
+    let i8_8 = I8::MIN;
     let i8_9 = I8::neg_try_from(1u8).unwrap();
     let i8_10 = I8::neg_try_from(1u8).unwrap();
 
@@ -49,10 +49,10 @@ fn signed_i8_ord() {
     let i8_2 = I8::zero();
     let i8_3 = I8::try_from(1u8).unwrap();
     let i8_4 = I8::try_from(1u8).unwrap();
-    let i8_5 = I8::max();
-    let i8_6 = I8::max();
-    let i8_7 = I8::min();
-    let i8_8 = I8::min();
+    let i8_5 = I8::MAX;
+    let i8_6 = I8::MAX;
+    let i8_7 = I8::MIN;
+    let i8_8 = I8::MIN;
     let i8_9 = I8::neg_try_from(1u8).unwrap();
     let i8_10 = I8::neg_try_from(1u8).unwrap();
 
@@ -100,6 +100,40 @@ fn signed_i8_ord() {
 }
 
 #[test]
+fn signed_i8_total_ord() {
+    let zero = I8::zero();
+    let one = I8::try_from(1u8).unwrap();
+    let max_1 = I8::MAX;
+    let min_1 = I8::MIN;
+    let neg_one_1 = I8::neg_try_from(1u8).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i8_bits() {
     assert(I8::bits() == 8);
 }
@@ -116,14 +150,14 @@ fn signed_i8_from_uint() {
 }
 
 #[test]
-fn signed_i8_max() {
-    let max = I8::max();
+fn signed_i8_max_constant() {
+    let max = I8::MAX;
     assert(max.underlying() == u8::max());
 }
 
 #[test]
-fn signed_i8_min() {
-    let max = I8::min();
+fn signed_i8_min_constant() {
+    let max = I8::MIN;
     assert(max.underlying() == u8::min());
 }
 
@@ -167,7 +201,7 @@ fn signed_i8_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I8::from_uint(1);
-    let other_2 = I8::max();
+    let other_2 = I8::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -227,14 +261,14 @@ fn signed_i8_add() {
     assert(res10 == I8::neg_try_from(3).unwrap());
 
     // Edge Cases
-    let res11 = I8::min() + I8::max();
+    let res11 = I8::MIN + I8::MAX;
     assert(res11 == I8::neg_try_from(1).unwrap());
 
-    let res12 = I8::max() + I8::zero();
-    assert(res12 == I8::max());
+    let res12 = I8::MAX + I8::zero();
+    assert(res12 == I8::MAX);
 
-    let res13 = I8::min() + I8::zero();
-    assert(res13 == I8::min());
+    let res13 = I8::MIN + I8::zero();
+    assert(res13 == I8::MIN);
 
     let res14 = I8::zero() + I8::zero();
     assert(res14 == I8::zero());
@@ -243,7 +277,7 @@ fn signed_i8_add() {
 #[test(should_revert)]
 fn revert_signed_i8_add() {
     let one = I8::try_from(1u8).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
 
     let _ = max + one;
 }
@@ -251,7 +285,7 @@ fn revert_signed_i8_add() {
 #[test(should_revert)]
 fn revert_signed_i8_add_negative() {
     let neg_one = I8::neg_try_from(1u8).unwrap();
-    let min = I8::min();
+    let min = I8::MIN;
 
     let _ = min + neg_one;
 }
@@ -261,7 +295,7 @@ fn revert_signed_i8_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I8::try_from(1u8).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
 
     let _ = max + one;
 }
@@ -271,9 +305,9 @@ fn signed_i8_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I8::try_from(1u8).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
 
-    assert(max + one == I8::min());
+    assert(max + one == I8::MIN);
 }
 
 #[test]
@@ -312,14 +346,14 @@ fn signed_i8_subtract() {
     assert(res8 == I8::neg_try_from(1).unwrap());
 
     // Edge Cases
-    let res11 = I8::zero() - (I8::min() + I8::try_from(1).unwrap());
-    assert(res11 == I8::max());
+    let res11 = I8::zero() - (I8::MIN + I8::try_from(1).unwrap());
+    assert(res11 == I8::MAX);
 
-    let res12 = I8::max() - I8::zero();
-    assert(res12 == I8::max());
+    let res12 = I8::MAX - I8::zero();
+    assert(res12 == I8::MAX);
 
-    let res13 = I8::min() - I8::zero();
-    assert(res13 == I8::min());
+    let res13 = I8::MIN - I8::zero();
+    assert(res13 == I8::MIN);
 
     let res14 = I8::zero() - I8::zero();
     assert(res14 == I8::zero());
@@ -327,7 +361,7 @@ fn signed_i8_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i8_sub() {
-    let min = I8::min();
+    let min = I8::MIN;
     let one = I8::try_from(1u8).unwrap();
 
     let _ = min - one;
@@ -335,7 +369,7 @@ fn revert_signed_i8_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i8_sub_negative() {
-    let max = I8::max();
+    let max = I8::MAX;
     let neg_one = I8::neg_try_from(1u8).unwrap();
 
     let _ = max - neg_one;
@@ -345,7 +379,7 @@ fn revert_signed_i8_sub_negative() {
 fn revert_signed_i8_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I8::min();
+    let min = I8::MIN;
     let one = I8::try_from(1u8).unwrap();
 
     let _ = min - one;
@@ -355,11 +389,11 @@ fn revert_signed_i8_sub_unsafe_math() {
 fn signed_i8_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I8::min();
+    let min = I8::MIN;
     let one = I8::try_from(1u8).unwrap();
 
     let result = min - one;
-    assert(result == I8::max());
+    assert(result == I8::MAX);
 }
 
 #[test]
@@ -404,10 +438,10 @@ fn signed_i8_multiply() {
     assert(res10 == I8::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I8::max() * I8::zero();
+    let res12 = I8::MAX * I8::zero();
     assert(res12 == I8::zero());
 
-    let res13 = I8::min() * I8::zero();
+    let res13 = I8::MIN * I8::zero();
     assert(res13 == I8::zero());
 
     let res14 = I8::zero() * I8::zero();
@@ -416,7 +450,7 @@ fn signed_i8_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i8_mul() {
-    let max = I8::max();
+    let max = I8::MAX;
     let two = I8::try_from(2u8).unwrap();
 
     let _ = max * two;
@@ -424,7 +458,7 @@ fn revert_signed_i8_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i8_mul_negatice() {
-    let max = I8::max();
+    let max = I8::MAX;
     let two = I8::neg_try_from(2u8).unwrap();
 
     let _ = max * two;
@@ -434,7 +468,7 @@ fn revert_signed_i8_mul_negatice() {
 fn revert_signed_i8_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I8::max();
+    let max = I8::MAX;
     let two = I8::try_from(2u8).unwrap();
 
     let _ = max * two;
@@ -444,7 +478,7 @@ fn revert_signed_i8_mul_unsafe_math() {
 fn signed_i8_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I8::max();
+    let max = I8::MAX;
     let two = I8::try_from(2u8).unwrap();
 
     let result = max * two;
@@ -493,10 +527,10 @@ fn signed_i8_divide() {
     assert(res10 == I8::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I8::zero() / I8::max();
+    let res12 = I8::zero() / I8::MAX;
     assert(res12 == I8::zero());
 
-    let res13 = I8::zero() / I8::min();
+    let res13 = I8::zero() / I8::MIN;
     assert(res13 == I8::zero());
 }
 
@@ -540,9 +574,9 @@ fn signed_i8_wrapping_neg() {
     let ninty_three = I8::try_from(93u8).unwrap();
     let neg_ninty_three = I8::neg_try_from(93u8).unwrap();
     let zero = I8::try_from(0u8).unwrap();
-    let max = I8::max();
-    let min = I8::min();
-    let neg_min_plus_one = I8::min() + I8::try_from(1u8).unwrap();
+    let max = I8::MAX;
+    let min = I8::MIN;
+    let neg_min_plus_one = I8::MIN + I8::try_from(1u8).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -598,7 +632,7 @@ fn signed_i8_try_from_u8() {
 fn signed_i8_try_into_u8() {
     let zero = I8::zero();
     let negative = I8::neg_try_from(1).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
     let indent: u8 = I8::indent();
 
     let u8_max_try_into: Option<u8> = max.try_into();
@@ -617,7 +651,7 @@ fn signed_i8_try_into_u8() {
 fn signed_i8_u8_try_from() {
     let zero = I8::zero();
     let negative = I8::neg_try_from(1).unwrap();
-    let max = I8::max();
+    let max = I8::MAX;
     let indent: u8 = I8::indent();
 
     let u8_max_try_from: Option<u8> = u8::try_from(max);
@@ -638,7 +672,7 @@ fn signed_i8_u8_try_into() {
 
     let i8_max_try_into: Option<I8> = (indent - 1).try_into();
     assert(i8_max_try_into.is_some());
-    assert(i8_max_try_into.unwrap() == I8::max());
+    assert(i8_max_try_into.unwrap() == I8::MAX);
 
     let i8_min_try_into: Option<I8> = u8::min().try_into();
     assert(i8_min_try_into.is_some());

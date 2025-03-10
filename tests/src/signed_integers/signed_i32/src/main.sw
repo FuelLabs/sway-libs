@@ -15,10 +15,10 @@ fn signed_i32_eq() {
     let i32_2 = I32::zero();
     let i32_3 = I32::try_from(1u32).unwrap();
     let i32_4 = I32::try_from(1u32).unwrap();
-    let i32_5 = I32::max();
-    let i32_6 = I32::max();
-    let i32_7 = I32::min();
-    let i32_8 = I32::min();
+    let i32_5 = I32::MAX;
+    let i32_6 = I32::MAX;
+    let i32_7 = I32::MIN;
+    let i32_8 = I32::MIN;
     let i32_9 = I32::neg_try_from(1u32).unwrap();
     let i32_10 = I32::neg_try_from(1u32).unwrap();
 
@@ -49,10 +49,10 @@ fn signed_i32_ord() {
     let i32_2 = I32::zero();
     let i32_3 = I32::try_from(1u32).unwrap();
     let i32_4 = I32::try_from(1u32).unwrap();
-    let i32_5 = I32::max();
-    let i32_6 = I32::max();
-    let i32_7 = I32::min();
-    let i32_8 = I32::min();
+    let i32_5 = I32::MAX;
+    let i32_6 = I32::MAX;
+    let i32_7 = I32::MIN;
+    let i32_8 = I32::MIN;
     let i32_9 = I32::neg_try_from(1u32).unwrap();
     let i32_10 = I32::neg_try_from(1u32).unwrap();
 
@@ -100,6 +100,40 @@ fn signed_i32_ord() {
 }
 
 #[test]
+fn signed_i32_total_ord() {
+    let zero = I32::zero();
+    let one = I32::try_from(1u32).unwrap();
+    let max_1 = I32::MAX;
+    let min_1 = I32::MIN;
+    let neg_one_1 = I32::neg_try_from(1u32).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i32_bits() {
     assert(I32::bits() == 32);
 }
@@ -116,14 +150,14 @@ fn signed_i32_from_uint() {
 }
 
 #[test]
-fn signed_i32_max() {
-    let max = I32::max();
+fn signed_i32_max_constant() {
+    let max = I32::MAX;
     assert(max.underlying() == u32::max());
 }
 
 #[test]
-fn signed_i32_min() {
-    let max = I32::min();
+fn signed_i32_min_constant() {
+    let max = I32::MIN;
     assert(max.underlying() == u32::min());
 }
 
@@ -167,7 +201,7 @@ fn signed_i32_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I32::from_uint(1);
-    let other_2 = I32::max();
+    let other_2 = I32::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -227,14 +261,14 @@ fn signed_i32_add() {
     assert(res10 == I32::neg_try_from(3).unwrap());
 
     // Edge Cases
-    let res11 = I32::min() + I32::max();
+    let res11 = I32::MIN + I32::MAX;
     assert(res11 == I32::neg_try_from(1).unwrap());
 
-    let res12 = I32::max() + I32::zero();
-    assert(res12 == I32::max());
+    let res12 = I32::MAX + I32::zero();
+    assert(res12 == I32::MAX);
 
-    let res13 = I32::min() + I32::zero();
-    assert(res13 == I32::min());
+    let res13 = I32::MIN + I32::zero();
+    assert(res13 == I32::MIN);
 
     let res14 = I32::zero() + I32::zero();
     assert(res14 == I32::zero());
@@ -243,7 +277,7 @@ fn signed_i32_add() {
 #[test(should_revert)]
 fn revert_signed_i32_add() {
     let one = I32::try_from(1u32).unwrap();
-    let max = I32::max();
+    let max = I32::MAX;
 
     let _ = max + one;
 }
@@ -251,7 +285,7 @@ fn revert_signed_i32_add() {
 #[test(should_revert)]
 fn revert_signed_i32_add_negative() {
     let neg_one = I32::neg_try_from(1u32).unwrap();
-    let min = I32::min();
+    let min = I32::MIN;
 
     let _ = min + neg_one;
 }
@@ -261,7 +295,7 @@ fn revert_signed_i32_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I32::try_from(1u32).unwrap();
-    let max = I32::max();
+    let max = I32::MAX;
 
     let _ = max + one;
 }
@@ -271,9 +305,9 @@ fn signed_i32_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I32::try_from(1u32).unwrap();
-    let max = I32::max();
+    let max = I32::MAX;
 
-    assert(max + one == I32::min());
+    assert(max + one == I32::MIN);
 }
 
 #[test]
@@ -312,14 +346,14 @@ fn signed_i32_subtract() {
     assert(res8 == I32::neg_try_from(1).unwrap());
 
     // Edge Cases
-    let res11 = I32::zero() - (I32::min() + I32::try_from(1).unwrap());
-    assert(res11 == I32::max());
+    let res11 = I32::zero() - (I32::MIN + I32::try_from(1).unwrap());
+    assert(res11 == I32::MAX);
 
-    let res12 = I32::max() - I32::zero();
-    assert(res12 == I32::max());
+    let res12 = I32::MAX - I32::zero();
+    assert(res12 == I32::MAX);
 
-    let res13 = I32::min() - I32::zero();
-    assert(res13 == I32::min());
+    let res13 = I32::MIN - I32::zero();
+    assert(res13 == I32::MIN);
 
     let res14 = I32::zero() - I32::zero();
     assert(res14 == I32::zero());
@@ -327,7 +361,7 @@ fn signed_i32_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i32_sub() {
-    let min = I32::min();
+    let min = I32::MIN;
     let one = I32::try_from(1u32).unwrap();
 
     let _ = min - one;
@@ -335,7 +369,7 @@ fn revert_signed_i32_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i32_sub_negative() {
-    let max = I32::max();
+    let max = I32::MAX;
     let neg_one = I32::neg_try_from(1u32).unwrap();
 
     let _ = max - neg_one;
@@ -345,7 +379,7 @@ fn revert_signed_i32_sub_negative() {
 fn revert_signed_i32_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I32::min();
+    let min = I32::MIN;
     let one = I32::try_from(1u32).unwrap();
 
     let _ = min - one;
@@ -355,12 +389,12 @@ fn revert_signed_i32_sub_unsafe_math() {
 fn signed_i32_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I32::min();
+    let min = I32::MIN;
     let one = I32::try_from(1u32).unwrap();
 
     let result = min - one;
     log(result);
-    assert(result == I32::max());
+    assert(result == I32::MAX);
 }
 
 #[test]
@@ -405,10 +439,10 @@ fn signed_i32_multiply() {
     assert(res10 == I32::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I32::max() * I32::zero();
+    let res12 = I32::MAX * I32::zero();
     assert(res12 == I32::zero());
 
-    let res13 = I32::min() * I32::zero();
+    let res13 = I32::MIN * I32::zero();
     assert(res13 == I32::zero());
 
     let res14 = I32::zero() * I32::zero();
@@ -417,7 +451,7 @@ fn signed_i32_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i32_mul() {
-    let max = I32::max();
+    let max = I32::MAX;
     let two = I32::try_from(2u32).unwrap();
 
     let _ = max * two;
@@ -425,7 +459,7 @@ fn revert_signed_i32_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i32_mul_negatice() {
-    let max = I32::max();
+    let max = I32::MAX;
     let two = I32::neg_try_from(2u32).unwrap();
 
     let _ = max * two;
@@ -435,7 +469,7 @@ fn revert_signed_i32_mul_negatice() {
 fn revert_signed_i32_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I32::max();
+    let max = I32::MAX;
     let two = I32::try_from(2u32).unwrap();
 
     let _ = max * two;
@@ -445,7 +479,7 @@ fn revert_signed_i32_mul_unsafe_math() {
 fn signed_i32_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I32::max();
+    let max = I32::MAX;
     let two = I32::try_from(2u32).unwrap();
 
     let result = max * two;
@@ -494,10 +528,10 @@ fn signed_i32_divide() {
     assert(res10 == I32::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I32::zero() / I32::max();
+    let res12 = I32::zero() / I32::MAX;
     assert(res12 == I32::zero());
 
-    let res13 = I32::zero() / I32::min();
+    let res13 = I32::zero() / I32::MIN;
     assert(res13 == I32::zero());
 }
 
@@ -541,9 +575,9 @@ fn signed_i32_wrapping_neg() {
     let ninty_three = I32::try_from(93u32).unwrap();
     let neg_ninty_three = I32::neg_try_from(93u32).unwrap();
     let zero = I32::try_from(0u32).unwrap();
-    let max = I32::max();
-    let min = I32::min();
-    let neg_min_plus_one = I32::min() + I32::try_from(1u32).unwrap();
+    let max = I32::MAX;
+    let min = I32::MIN;
+    let neg_min_plus_one = I32::MIN + I32::try_from(1u32).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -599,6 +633,52 @@ fn signed_i32_try_from_u32() {
 fn signed_i32_try_into_u32() {
     let zero = I32::zero();
     let negative = I32::neg_try_from(1).unwrap();
-    let max = I32::max();
+    let max = I32::MAX;
     let indent: u32 = I32::indent();
+
+    let u32_max_try_into: Option<u32> = max.try_into();
+    assert(u32_max_try_into.is_some());
+    assert(u32_max_try_into.unwrap() == indent - 1);
+
+    let u32_min_try_into: Option<u32> = zero.try_into();
+    assert(u32_min_try_into.is_some());
+    assert(u32_min_try_into.unwrap() == u32::zero());
+
+    let u32_overflow_try_into: Option<u32> = negative.try_into();
+    assert(u32_overflow_try_into.is_none());
+}
+
+#[test]
+fn signed_i32_u32_try_from() {
+    let zero = I32::zero();
+    let negative = I32::neg_try_from(1).unwrap();
+    let max = I32::MAX;
+    let indent: u32 = I32::indent();
+
+    let u32_max_try_from: Option<u32> = u32::try_from(max);
+    assert(u32_max_try_from.is_some());
+    assert(u32_max_try_from.unwrap() == indent - 1);
+
+    let u32_min_try_from: Option<u32> = u32::try_from(zero);
+    assert(u32_min_try_from.is_some());
+    assert(u32_min_try_from.unwrap() == u32::zero());
+
+    let u32_overflow_try_from: Option<u32> = u32::try_from(negative);
+    assert(u32_overflow_try_from.is_none());
+}
+
+#[test]
+fn signed_i32_u32_try_into() {
+    let indent: u32 = I32::indent();
+
+    let i32_max_try_into: Option<I32> = (indent - 1).try_into();
+    assert(i32_max_try_into.is_some());
+    assert(i32_max_try_into.unwrap() == I32::MAX);
+
+    let i32_min_try_into: Option<I32> = u32::min().try_into();
+    assert(i32_min_try_into.is_some());
+    assert(i32_min_try_into.unwrap() == I32::zero());
+
+    let i32_overflow_try_into: Option<I32> = indent.try_into();
+    assert(i32_overflow_try_into.is_none());
 }

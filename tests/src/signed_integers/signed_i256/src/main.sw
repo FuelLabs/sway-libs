@@ -17,10 +17,10 @@ fn signed_i256_eq() {
     let i256_2 = I256::zero();
     let i256_3 = I256::try_from(0x1u256).unwrap();
     let i256_4 = I256::try_from(0x1u256).unwrap();
-    let i256_5 = I256::max();
-    let i256_6 = I256::max();
-    let i256_7 = I256::min();
-    let i256_8 = I256::min();
+    let i256_5 = I256::MAX;
+    let i256_6 = I256::MAX;
+    let i256_7 = I256::MIN;
+    let i256_8 = I256::MIN;
     let i256_9 = I256::neg_try_from(0x1u256).unwrap();
     let i256_10 = I256::neg_try_from(0x1u256).unwrap();
 
@@ -51,10 +51,10 @@ fn signed_i256_ord() {
     let i256_2 = I256::zero();
     let i256_3 = I256::try_from(0x1u256).unwrap();
     let i256_4 = I256::try_from(0x1u256).unwrap();
-    let i256_5 = I256::max();
-    let i256_6 = I256::max();
-    let i256_7 = I256::min();
-    let i256_8 = I256::min();
+    let i256_5 = I256::MAX;
+    let i256_6 = I256::MAX;
+    let i256_7 = I256::MIN;
+    let i256_8 = I256::MIN;
     let i256_9 = I256::neg_try_from(0x1u256).unwrap();
     let i256_10 = I256::neg_try_from(0x1u256).unwrap();
 
@@ -102,6 +102,40 @@ fn signed_i256_ord() {
 }
 
 #[test]
+fn signed_i256_total_ord() {
+    let zero = I256::zero();
+    let one = I256::try_from(0x01u256).unwrap();
+    let max_1 = I256::MAX;
+    let min_1 = I256::MIN;
+    let neg_one_1 = I256::neg_try_from(0x01u256).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i256_bits() {
     assert(I256::bits() == 256);
 }
@@ -118,14 +152,14 @@ fn signed_i256_from_uint() {
 }
 
 #[test]
-fn signed_i256_max() {
-    let max = I256::max();
+fn signed_i256_max_constant() {
+    let max = I256::MAX;
     assert(max.underlying() == u256::max());
 }
 
 #[test]
-fn signed_i256_min() {
-    let max = I256::min();
+fn signed_i256_min_constant() {
+    let max = I256::MIN;
     assert(max.underlying() == u256::min());
 }
 
@@ -175,7 +209,7 @@ fn signed_i256_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I256::from_uint(0x1u256);
-    let other_2 = I256::max();
+    let other_2 = I256::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -238,14 +272,14 @@ fn signed_i256_add() {
     assert(res10 == I256::neg_try_from(0x3u256).unwrap());
 
     // Edge Cases
-    let res11 = I256::min() + I256::max();
+    let res11 = I256::MIN + I256::MAX;
     assert(res11 == I256::neg_try_from(0x1u256).unwrap());
 
-    let res12 = I256::max() + I256::zero();
-    assert(res12 == I256::max());
+    let res12 = I256::MAX + I256::zero();
+    assert(res12 == I256::MAX);
 
-    let res13 = I256::min() + I256::zero();
-    assert(res13 == I256::min());
+    let res13 = I256::MIN + I256::zero();
+    assert(res13 == I256::MIN);
 
     let res14 = I256::zero() + I256::zero();
     assert(res14 == I256::zero());
@@ -254,7 +288,7 @@ fn signed_i256_add() {
 #[test(should_revert)]
 fn revert_signed_i256_add() {
     let one = I256::try_from(0x1u256).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
 
     let _ = max + one;
 }
@@ -262,7 +296,7 @@ fn revert_signed_i256_add() {
 #[test(should_revert)]
 fn revert_signed_i256_add_negative() {
     let neg_one = I256::neg_try_from(0x1u256).unwrap();
-    let min = I256::min();
+    let min = I256::MIN;
 
     let _ = min + neg_one;
 }
@@ -272,7 +306,7 @@ fn revert_signed_i256_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I256::try_from(0x1u256).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
 
     let _ = max + one;
 }
@@ -282,9 +316,9 @@ fn signed_i256_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I256::try_from(0x1u256).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
 
-    assert(max + one == I256::min());
+    assert(max + one == I256::MIN);
 }
 
 #[test]
@@ -323,14 +357,14 @@ fn signed_i256_subtract() {
     assert(res8 == I256::neg_try_from(0x1u256).unwrap());
 
     // Edge Cases
-    let res11 = I256::zero() - (I256::min() + I256::try_from(0x1u256).unwrap());
-    assert(res11 == I256::max());
+    let res11 = I256::zero() - (I256::MIN + I256::try_from(0x1u256).unwrap());
+    assert(res11 == I256::MAX);
 
-    let res12 = I256::max() - I256::zero();
-    assert(res12 == I256::max());
+    let res12 = I256::MAX - I256::zero();
+    assert(res12 == I256::MAX);
 
-    let res13 = I256::min() - I256::zero();
-    assert(res13 == I256::min());
+    let res13 = I256::MIN - I256::zero();
+    assert(res13 == I256::MIN);
 
     let res14 = I256::zero() - I256::zero();
     assert(res14 == I256::zero());
@@ -338,7 +372,7 @@ fn signed_i256_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i256_sub() {
-    let min = I256::min();
+    let min = I256::MIN;
     let one = I256::try_from(0x1u256).unwrap();
 
     let _ = min - one;
@@ -346,7 +380,7 @@ fn revert_signed_i256_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i256_sub_negative() {
-    let max = I256::max();
+    let max = I256::MAX;
     let neg_one = I256::neg_try_from(0x1u256).unwrap();
 
     let _ = max - neg_one;
@@ -356,7 +390,7 @@ fn revert_signed_i256_sub_negative() {
 fn revert_signed_i256_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I256::min();
+    let min = I256::MIN;
     let one = I256::try_from(0x1u256).unwrap();
 
     let _ = min - one;
@@ -366,11 +400,11 @@ fn revert_signed_i256_sub_unsafe_math() {
 fn signed_i256_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I256::min();
+    let min = I256::MIN;
     let one = I256::try_from(0x1u256).unwrap();
 
     let result = min - one;
-    assert(result == I256::max());
+    assert(result == I256::MAX);
 }
 
 #[test]
@@ -415,10 +449,10 @@ fn signed_i256_multiply() {
     assert(res10 == I256::try_from(0x2u256).unwrap());
 
     // Edge Cases
-    let res12 = I256::max() * I256::zero();
+    let res12 = I256::MAX * I256::zero();
     assert(res12 == I256::zero());
 
-    let res13 = I256::min() * I256::zero();
+    let res13 = I256::MIN * I256::zero();
     assert(res13 == I256::zero());
 
     let res14 = I256::zero() * I256::zero();
@@ -427,7 +461,7 @@ fn signed_i256_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i256_mul() {
-    let max = I256::max();
+    let max = I256::MAX;
     let two = I256::try_from(0x2u256).unwrap();
 
     let _ = max * two;
@@ -435,7 +469,7 @@ fn revert_signed_i256_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i256_mul_negatice() {
-    let max = I256::max();
+    let max = I256::MAX;
     let two = I256::neg_try_from(0x2u256).unwrap();
 
     let _ = max * two;
@@ -445,7 +479,7 @@ fn revert_signed_i256_mul_negatice() {
 fn revert_signed_i256_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I256::max();
+    let max = I256::MAX;
     let two = I256::try_from(0x2u256).unwrap();
 
     let _ = max * two;
@@ -455,7 +489,7 @@ fn revert_signed_i256_mul_unsafe_math() {
 fn signed_i256_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I256::max();
+    let max = I256::MAX;
     let two = I256::try_from(0x2u256).unwrap();
 
     let result = max * two;
@@ -504,10 +538,10 @@ fn signed_i256_divide() {
     assert(res10 == I256::try_from(0x2u256).unwrap());
 
     // Edge Cases
-    let res12 = I256::zero() / I256::max();
+    let res12 = I256::zero() / I256::MAX;
     assert(res12 == I256::zero());
 
-    let res13 = I256::zero() / I256::min();
+    let res13 = I256::zero() / I256::MIN;
     assert(res13 == I256::zero());
 }
 
@@ -551,9 +585,9 @@ fn signed_i256_wrapping_neg() {
     let ninty_three = I256::try_from(0x93u256).unwrap();
     let neg_ninty_three = I256::neg_try_from(0x93u256).unwrap();
     let zero = I256::try_from(u256::zero()).unwrap();
-    let max = I256::max();
-    let min = I256::min();
-    let neg_min_plus_one = I256::min() + I256::try_from(0x1u256).unwrap();
+    let max = I256::MAX;
+    let min = I256::MIN;
+    let neg_min_plus_one = I256::MIN + I256::try_from(0x1u256).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -609,7 +643,7 @@ fn signed_i256_try_from_u256() {
 fn signed_i256_try_into_u256() {
     let zero = I256::zero();
     let negative = I256::neg_try_from(0x1u256).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
     let indent: u256 = I256::indent();
 
     let u256_max_try_into: Option<u256> = max.try_into();
@@ -628,7 +662,7 @@ fn signed_i256_try_into_u256() {
 fn signed_i256_u256_try_from() {
     let zero = I256::zero();
     let negative = I256::neg_try_from(0x1u256).unwrap();
-    let max = I256::max();
+    let max = I256::MAX;
     let indent: u256 = I256::indent();
 
     let u256_max_try_from: Option<u256> = u256::try_from(max);
@@ -649,7 +683,7 @@ fn signed_i256_u256_try_into() {
 
     let i256_max_try_into: Option<I256> = (indent - 0x1u256).try_into();
     assert(i256_max_try_into.is_some());
-    assert(i256_max_try_into.unwrap() == I256::max());
+    assert(i256_max_try_into.unwrap() == I256::MAX);
 
     let i256_min_try_into: Option<I256> = u256::min().try_into();
     assert(i256_min_try_into.is_some());

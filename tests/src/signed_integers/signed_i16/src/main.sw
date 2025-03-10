@@ -15,10 +15,10 @@ fn signed_i16_eq() {
     let i16_2 = I16::zero();
     let i16_3 = I16::try_from(1u16).unwrap();
     let i16_4 = I16::try_from(1u16).unwrap();
-    let i16_5 = I16::max();
-    let i16_6 = I16::max();
-    let i16_7 = I16::min();
-    let i16_8 = I16::min();
+    let i16_5 = I16::MAX;
+    let i16_6 = I16::MAX;
+    let i16_7 = I16::MIN;
+    let i16_8 = I16::MIN;
     let i16_9 = I16::neg_try_from(1u16).unwrap();
     let i16_10 = I16::neg_try_from(1u16).unwrap();
 
@@ -49,10 +49,10 @@ fn signed_i16_ord() {
     let i16_2 = I16::zero();
     let i16_3 = I16::try_from(1u16).unwrap();
     let i16_4 = I16::try_from(1u16).unwrap();
-    let i16_5 = I16::max();
-    let i16_6 = I16::max();
-    let i16_7 = I16::min();
-    let i16_8 = I16::min();
+    let i16_5 = I16::MAX;
+    let i16_6 = I16::MAX;
+    let i16_7 = I16::MIN;
+    let i16_8 = I16::MIN;
     let i16_9 = I16::neg_try_from(1u16).unwrap();
     let i16_10 = I16::neg_try_from(1u16).unwrap();
 
@@ -100,6 +100,40 @@ fn signed_i16_ord() {
 }
 
 #[test]
+fn signed_i16_total_ord() {
+    let zero = I16::zero();
+    let one = I16::try_from(1u16).unwrap();
+    let max_1 = I16::MAX;
+    let min_1 = I16::MIN;
+    let neg_one_1 = I16::neg_try_from(1u16).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i16_bits() {
     assert(I16::bits() == 16);
 }
@@ -116,14 +150,14 @@ fn signed_i16_from_uint() {
 }
 
 #[test]
-fn signed_i16_max() {
-    let max = I16::max();
+fn signed_i16_max_constant() {
+    let max = I16::MAX;
     assert(max.underlying() == u16::max());
 }
 
 #[test]
-fn signed_i16_min() {
-    let max = I16::min();
+fn signed_i16_min_constant() {
+    let max = I16::MIN;
     assert(max.underlying() == u16::min());
 }
 
@@ -167,7 +201,7 @@ fn signed_i16_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I16::from_uint(1);
-    let other_2 = I16::max();
+    let other_2 = I16::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -227,14 +261,14 @@ fn signed_i16_add() {
     assert(res10 == I16::neg_try_from(3).unwrap());
 
     // Edge Cases
-    let res11 = I16::min() + I16::max();
+    let res11 = I16::MIN + I16::MAX;
     assert(res11 == I16::neg_try_from(1).unwrap());
 
-    let res12 = I16::max() + I16::zero();
-    assert(res12 == I16::max());
+    let res12 = I16::MAX + I16::zero();
+    assert(res12 == I16::MAX);
 
-    let res13 = I16::min() + I16::zero();
-    assert(res13 == I16::min());
+    let res13 = I16::MIN + I16::zero();
+    assert(res13 == I16::MIN);
 
     let res14 = I16::zero() + I16::zero();
     assert(res14 == I16::zero());
@@ -243,7 +277,7 @@ fn signed_i16_add() {
 #[test(should_revert)]
 fn revert_signed_i16_add() {
     let one = I16::try_from(1u16).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
 
     let _ = max + one;
 }
@@ -251,7 +285,7 @@ fn revert_signed_i16_add() {
 #[test(should_revert)]
 fn revert_signed_i16_add_negative() {
     let neg_one = I16::neg_try_from(1u16).unwrap();
-    let min = I16::min();
+    let min = I16::MIN;
 
     let _ = min + neg_one;
 }
@@ -261,7 +295,7 @@ fn revert_signed_i16_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I16::try_from(1u16).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
 
     let _ = max + one;
 }
@@ -271,9 +305,9 @@ fn signed_i16_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I16::try_from(1u16).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
 
-    assert(max + one == I16::min());
+    assert(max + one == I16::MIN);
 }
 
 #[test]
@@ -312,14 +346,14 @@ fn signed_i16_subtract() {
     assert(res8 == I16::neg_try_from(1).unwrap());
 
     // Edge Cases
-    let res11 = I16::zero() - (I16::min() + I16::try_from(1).unwrap());
-    assert(res11 == I16::max());
+    let res11 = I16::zero() - (I16::MIN + I16::try_from(1).unwrap());
+    assert(res11 == I16::MAX);
 
-    let res12 = I16::max() - I16::zero();
-    assert(res12 == I16::max());
+    let res12 = I16::MAX - I16::zero();
+    assert(res12 == I16::MAX);
 
-    let res13 = I16::min() - I16::zero();
-    assert(res13 == I16::min());
+    let res13 = I16::MIN - I16::zero();
+    assert(res13 == I16::MIN);
 
     let res14 = I16::zero() - I16::zero();
     assert(res14 == I16::zero());
@@ -327,7 +361,7 @@ fn signed_i16_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i16_sub() {
-    let min = I16::min();
+    let min = I16::MIN;
     let one = I16::try_from(1u16).unwrap();
 
     let _ = min - one;
@@ -335,7 +369,7 @@ fn revert_signed_i16_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i16_sub_negative() {
-    let max = I16::max();
+    let max = I16::MAX;
     let neg_one = I16::neg_try_from(1u16).unwrap();
 
     let _ = max - neg_one;
@@ -345,7 +379,7 @@ fn revert_signed_i16_sub_negative() {
 fn revert_signed_i16_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I16::min();
+    let min = I16::MIN;
     let one = I16::try_from(1u16).unwrap();
 
     let _ = min - one;
@@ -355,11 +389,11 @@ fn revert_signed_i16_sub_unsafe_math() {
 fn signed_i16_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I16::min();
+    let min = I16::MIN;
     let one = I16::try_from(1u16).unwrap();
 
     let result = min - one;
-    assert(result == I16::max());
+    assert(result == I16::MAX);
 }
 
 #[test]
@@ -404,10 +438,10 @@ fn signed_i16_multiply() {
     assert(res10 == I16::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I16::max() * I16::zero();
+    let res12 = I16::MAX * I16::zero();
     assert(res12 == I16::zero());
 
-    let res13 = I16::min() * I16::zero();
+    let res13 = I16::MIN * I16::zero();
     assert(res13 == I16::zero());
 
     let res14 = I16::zero() * I16::zero();
@@ -416,7 +450,7 @@ fn signed_i16_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i16_mul() {
-    let max = I16::max();
+    let max = I16::MAX;
     let two = I16::try_from(2u16).unwrap();
 
     let _ = max * two;
@@ -424,7 +458,7 @@ fn revert_signed_i16_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i16_mul_negatice() {
-    let max = I16::max();
+    let max = I16::MAX;
     let two = I16::neg_try_from(2u16).unwrap();
 
     let _ = max * two;
@@ -434,7 +468,7 @@ fn revert_signed_i16_mul_negatice() {
 fn revert_signed_i16_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I16::max();
+    let max = I16::MAX;
     let two = I16::try_from(2u16).unwrap();
 
     let _ = max * two;
@@ -444,7 +478,7 @@ fn revert_signed_i16_mul_unsafe_math() {
 fn signed_i16_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I16::max();
+    let max = I16::MAX;
     let two = I16::try_from(2u16).unwrap();
 
     let result = max * two;
@@ -493,10 +527,10 @@ fn signed_i16_divide() {
     assert(res10 == I16::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I16::zero() / I16::max();
+    let res12 = I16::zero() / I16::MAX;
     assert(res12 == I16::zero());
 
-    let res13 = I16::zero() / I16::min();
+    let res13 = I16::zero() / I16::MIN;
     assert(res13 == I16::zero());
 }
 
@@ -540,9 +574,9 @@ fn signed_i16_wrapping_neg() {
     let ninty_three = I16::try_from(93u16).unwrap();
     let neg_ninty_three = I16::neg_try_from(93u16).unwrap();
     let zero = I16::try_from(0u16).unwrap();
-    let max = I16::max();
-    let min = I16::min();
-    let neg_min_plus_one = I16::min() + I16::try_from(1u16).unwrap();
+    let max = I16::MAX;
+    let min = I16::MIN;
+    let neg_min_plus_one = I16::MIN + I16::try_from(1u16).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -598,7 +632,7 @@ fn signed_i16_try_from_u16() {
 fn signed_i16_try_into_u16() {
     let zero = I16::zero();
     let negative = I16::neg_try_from(1).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
     let indent: u16 = I16::indent();
 
     let u16_max_try_into: Option<u16> = max.try_into();
@@ -617,7 +651,7 @@ fn signed_i16_try_into_u16() {
 fn signed_i16_u16_try_from() {
     let zero = I16::zero();
     let negative = I16::neg_try_from(1).unwrap();
-    let max = I16::max();
+    let max = I16::MAX;
     let indent: u16 = I16::indent();
 
     let u16_max_try_from: Option<u16> = u16::try_from(max);
@@ -638,7 +672,7 @@ fn signed_i16_u16_try_into() {
 
     let i16_max_try_into: Option<I16> = (indent - 1).try_into();
     assert(i16_max_try_into.is_some());
-    assert(i16_max_try_into.unwrap() == I16::max());
+    assert(i16_max_try_into.unwrap() == I16::MAX);
 
     let i16_min_try_into: Option<I16> = u16::min().try_into();
     assert(i16_min_try_into.is_some());

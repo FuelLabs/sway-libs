@@ -15,10 +15,10 @@ fn signed_i64_eq() {
     let i64_2 = I64::zero();
     let i64_3 = I64::try_from(1u64).unwrap();
     let i64_4 = I64::try_from(1u64).unwrap();
-    let i64_5 = I64::max();
-    let i64_6 = I64::max();
-    let i64_7 = I64::min();
-    let i64_8 = I64::min();
+    let i64_5 = I64::MAX;
+    let i64_6 = I64::MAX;
+    let i64_7 = I64::MIN;
+    let i64_8 = I64::MIN;
     let i64_9 = I64::neg_try_from(1u64).unwrap();
     let i64_10 = I64::neg_try_from(1u64).unwrap();
 
@@ -49,10 +49,10 @@ fn signed_i64_ord() {
     let i64_2 = I64::zero();
     let i64_3 = I64::try_from(1u64).unwrap();
     let i64_4 = I64::try_from(1u64).unwrap();
-    let i64_5 = I64::max();
-    let i64_6 = I64::max();
-    let i64_7 = I64::min();
-    let i64_8 = I64::min();
+    let i64_5 = I64::MAX;
+    let i64_6 = I64::MAX;
+    let i64_7 = I64::MIN;
+    let i64_8 = I64::MIN;
     let i64_9 = I64::neg_try_from(1u64).unwrap();
     let i64_10 = I64::neg_try_from(1u64).unwrap();
 
@@ -100,6 +100,40 @@ fn signed_i64_ord() {
 }
 
 #[test]
+fn signed_i64_total_ord() {
+    let zero = I64::zero();
+    let one = I64::try_from(1u64).unwrap();
+    let max_1 = I64::MAX;
+    let min_1 = I64::MIN;
+    let neg_one_1 = I64::neg_try_from(1u64).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i64_bits() {
     assert(I64::bits() == 64);
 }
@@ -116,14 +150,14 @@ fn signed_i64_from_uint() {
 }
 
 #[test]
-fn signed_i64_max() {
-    let max = I64::max();
+fn signed_i64_max_constant() {
+    let max = I64::MAX;
     assert(max.underlying() == u64::max());
 }
 
 #[test]
-fn signed_i64_min() {
-    let max = I64::min();
+fn signed_i64_min_constant() {
+    let max = I64::MIN;
     assert(max.underlying() == u64::min());
 }
 
@@ -167,7 +201,7 @@ fn signed_i64_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I64::from_uint(1);
-    let other_2 = I64::max();
+    let other_2 = I64::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -227,14 +261,14 @@ fn signed_i64_add() {
     assert(res10 == I64::neg_try_from(3).unwrap());
 
     // Edge Cases
-    let res11 = I64::min() + I64::max();
+    let res11 = I64::MIN + I64::MAX;
     assert(res11 == I64::neg_try_from(1).unwrap());
 
-    let res12 = I64::max() + I64::zero();
-    assert(res12 == I64::max());
+    let res12 = I64::MAX + I64::zero();
+    assert(res12 == I64::MAX);
 
-    let res13 = I64::min() + I64::zero();
-    assert(res13 == I64::min());
+    let res13 = I64::MIN + I64::zero();
+    assert(res13 == I64::MIN);
 
     let res14 = I64::zero() + I64::zero();
     assert(res14 == I64::zero());
@@ -243,7 +277,7 @@ fn signed_i64_add() {
 #[test(should_revert)]
 fn revert_signed_i64_add() {
     let one = I64::try_from(1u64).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
 
     let _ = max + one;
 }
@@ -251,7 +285,7 @@ fn revert_signed_i64_add() {
 #[test(should_revert)]
 fn revert_signed_i64_add_negative() {
     let neg_one = I64::neg_try_from(1u64).unwrap();
-    let min = I64::min();
+    let min = I64::MIN;
 
     let _ = min + neg_one;
 }
@@ -261,7 +295,7 @@ fn revert_signed_i64_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I64::try_from(1u64).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
 
     let _ = max + one;
 }
@@ -271,9 +305,9 @@ fn signed_i64_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I64::try_from(1u64).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
 
-    assert(max + one == I64::min());
+    assert(max + one == I64::MIN);
 }
 
 #[test]
@@ -312,14 +346,14 @@ fn signed_i64_subtract() {
     assert(res8 == I64::neg_try_from(1).unwrap());
 
     // Edge Cases
-    let res11 = I64::zero() - (I64::min() + I64::try_from(1).unwrap());
-    assert(res11 == I64::max());
+    let res11 = I64::zero() - (I64::MIN + I64::try_from(1).unwrap());
+    assert(res11 == I64::MAX);
 
-    let res12 = I64::max() - I64::zero();
-    assert(res12 == I64::max());
+    let res12 = I64::MAX - I64::zero();
+    assert(res12 == I64::MAX);
 
-    let res13 = I64::min() - I64::zero();
-    assert(res13 == I64::min());
+    let res13 = I64::MIN - I64::zero();
+    assert(res13 == I64::MIN);
 
     let res14 = I64::zero() - I64::zero();
     assert(res14 == I64::zero());
@@ -327,7 +361,7 @@ fn signed_i64_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i64_sub() {
-    let min = I64::min();
+    let min = I64::MIN;
     let one = I64::try_from(1u64).unwrap();
 
     let _ = min - one;
@@ -335,7 +369,7 @@ fn revert_signed_i64_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i64_sub_negative() {
-    let max = I64::max();
+    let max = I64::MAX;
     let neg_one = I64::neg_try_from(1u64).unwrap();
 
     let _ = max - neg_one;
@@ -345,7 +379,7 @@ fn revert_signed_i64_sub_negative() {
 fn revert_signed_i64_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I64::min();
+    let min = I64::MIN;
     let one = I64::try_from(1u64).unwrap();
 
     let _ = min - one;
@@ -355,11 +389,11 @@ fn revert_signed_i64_sub_unsafe_math() {
 fn signed_i64_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I64::min();
+    let min = I64::MIN;
     let one = I64::try_from(1u64).unwrap();
 
     let result = min - one;
-    assert(result == I64::max());
+    assert(result == I64::MAX);
 }
 
 #[test]
@@ -404,10 +438,10 @@ fn signed_i64_multiply() {
     assert(res10 == I64::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I64::max() * I64::zero();
+    let res12 = I64::MAX * I64::zero();
     assert(res12 == I64::zero());
 
-    let res13 = I64::min() * I64::zero();
+    let res13 = I64::MIN * I64::zero();
     assert(res13 == I64::zero());
 
     let res14 = I64::zero() * I64::zero();
@@ -416,7 +450,7 @@ fn signed_i64_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i64_mul() {
-    let max = I64::max();
+    let max = I64::MAX;
     let two = I64::try_from(2u64).unwrap();
 
     let _ = max * two;
@@ -424,7 +458,7 @@ fn revert_signed_i64_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i64_mul_negatice() {
-    let max = I64::max();
+    let max = I64::MAX;
     let two = I64::neg_try_from(2u64).unwrap();
 
     let _ = max * two;
@@ -434,7 +468,7 @@ fn revert_signed_i64_mul_negatice() {
 fn revert_signed_i64_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I64::max();
+    let max = I64::MAX;
     let two = I64::try_from(2u64).unwrap();
 
     let _ = max * two;
@@ -444,7 +478,7 @@ fn revert_signed_i64_mul_unsafe_math() {
 fn signed_i64_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I64::max();
+    let max = I64::MAX;
     let two = I64::try_from(2u64).unwrap();
 
     let result = max * two;
@@ -493,10 +527,10 @@ fn signed_i64_divide() {
     assert(res10 == I64::try_from(2).unwrap());
 
     // Edge Cases
-    let res12 = I64::zero() / I64::max();
+    let res12 = I64::zero() / I64::MAX;
     assert(res12 == I64::zero());
 
-    let res13 = I64::zero() / I64::min();
+    let res13 = I64::zero() / I64::MIN;
     assert(res13 == I64::zero());
 }
 
@@ -540,9 +574,9 @@ fn signed_i64_wrapping_neg() {
     let ninty_three = I64::try_from(93u64).unwrap();
     let neg_ninty_three = I64::neg_try_from(93u64).unwrap();
     let zero = I64::try_from(0u64).unwrap();
-    let max = I64::max();
-    let min = I64::min();
-    let neg_min_plus_one = I64::min() + I64::try_from(1u64).unwrap();
+    let max = I64::MAX;
+    let min = I64::MIN;
+    let neg_min_plus_one = I64::MIN + I64::try_from(1u64).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -598,7 +632,7 @@ fn signed_i64_try_from_u64() {
 fn signed_i64_try_into_u64() {
     let zero = I64::zero();
     let negative = I64::neg_try_from(1).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
     let indent: u64 = I64::indent();
 
     let u64_max_try_into: Option<u64> = max.try_into();
@@ -617,7 +651,7 @@ fn signed_i64_try_into_u64() {
 fn signed_i64_u64_try_from() {
     let zero = I64::zero();
     let negative = I64::neg_try_from(1).unwrap();
-    let max = I64::max();
+    let max = I64::MAX;
     let indent: u64 = I64::indent();
 
     let u64_max_try_from: Option<u64> = u64::try_from(max);
@@ -638,7 +672,7 @@ fn signed_i64_u64_try_into() {
 
     let i64_max_try_into: Option<I64> = (indent - 1).try_into();
     assert(i64_max_try_into.is_some());
-    assert(i64_max_try_into.unwrap() == I64::max());
+    assert(i64_max_try_into.unwrap() == I64::MAX);
 
     let i64_min_try_into: Option<I64> = u64::min().try_into();
     assert(i64_min_try_into.is_some());

@@ -138,6 +138,40 @@ fn signed_i128_ord() {
 }
 
 #[test]
+fn signed_i128_total_ord() {
+    let zero = I128::zero();
+    let one = I128::try_from(U128::from((0,1))).unwrap();
+    let max_1 = I128::MAX;
+    let min_1 = I128::MIN;
+    let neg_one_1 = I128::neg_try_from(U128::from((0,1))).unwrap();
+    
+    assert(zero.min(one) == zero);
+    assert(zero.max(one) == one);
+    assert(one.min(zero) == zero);
+    assert(one.max(zero) == one);
+
+    assert(max_1.min(one) == one);
+    assert(max_1.max(one) == max_1);
+    assert(one.min(max_1) == one);
+    assert(one.max(max_1) == max_1);
+
+    assert(min_1.min(one) == min_1);
+    assert(min_1.max(one) == one);
+    assert(one.min(min_1) == min_1);
+    assert(one.max(min_1) == one);
+
+    assert(max_1.min(min_1) == min_1);
+    assert(max_1.max(min_1) == max_1);
+    assert(min_1.min(max_1) == min_1);
+    assert(min_1.max(max_1) == max_1);
+
+    assert(neg_one_1.min(one) == neg_one_1);
+    assert(neg_one_1.max(one) == one);
+    assert(one.min(neg_one_1) == neg_one_1);
+    assert(one.max(neg_one_1) == one);
+}
+
+#[test]
 fn signed_i128_bits() {
     assert(I128::bits() == 128);
 }
@@ -156,13 +190,13 @@ fn signed_i128_from_uint() {
 }
 
 #[test]
-fn signed_i128_MAX() {
+fn signed_i128_max_constant() {
     let max = I128::MAX;
     assert(max.underlying() == U128::max());
 }
 
 #[test]
-fn signed_i128_MIN() {
+fn signed_i128_min_constant() {
     let max = I128::MIN;
     assert(max.underlying() == U128::min());
 }
@@ -207,7 +241,7 @@ fn signed_i128_is_zero() {
     assert(zero.is_zero());
 
     let other_1 = I128::from_uint(U128::from((0, 1)));
-    let other_2 = I128::max();
+    let other_2 = I128::MAX;
     assert(!other_1.is_zero());
     assert(!other_2.is_zero());
 }
@@ -304,7 +338,7 @@ fn signed_i128_add() {
     assert(res11 == I128::neg_try_from(U128::from((0, 1))).unwrap());
 
     let res12 = I128::MAX + I128::zero();
-    assert(res12 == I128::max());
+    assert(res12 == I128::MAX);
 
     let res13 = I128::MIN + I128::zero();
     assert(res13 == I128::MIN);
@@ -316,7 +350,7 @@ fn signed_i128_add() {
 #[test(should_revert)]
 fn revert_signed_i128_add() {
     let one = I128::try_from(U128::from((0, 1))).unwrap();
-    let max = I128::max();
+    let max = I128::MAX;
 
     let _ = max + one;
 }
@@ -324,7 +358,7 @@ fn revert_signed_i128_add() {
 #[test(should_revert)]
 fn revert_signed_i128_add_negative() {
     let neg_one = I128::neg_try_from(U128::from((0, 1))).unwrap();
-    let min = I128::min();
+    let min = I128::MIN;
 
     let _ = min + neg_one;
 }
@@ -334,7 +368,7 @@ fn revert_signed_i128_add_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
     let one = I128::try_from(U128::from((0, 1))).unwrap();
-    let max = I128::max();
+    let max = I128::MAX;
 
     let _ = max + one;
 }
@@ -344,9 +378,9 @@ fn signed_i128_add_overflow() {
     let _ = disable_panic_on_overflow();
 
     let one = I128::try_from(U128::from((0, 1))).unwrap();
-    let max = I128::max();
+    let max = I128::MAX;
 
-    assert(max + one == I128::min());
+    assert(max + one == I128::MIN);
 }
 
 #[test]
@@ -385,14 +419,14 @@ fn signed_i128_subtract() {
     assert(res8 == I128::neg_try_from(U128::from((0, 1))).unwrap());
 
     // Edge Cases
-    let res11 = I128::zero() - (I128::min() + I128::try_from(U128::from((0, 1))).unwrap());
-    assert(res11 == I128::max());
+    let res11 = I128::zero() - (I128::MIN + I128::try_from(U128::from((0, 1))).unwrap());
+    assert(res11 == I128::MAX);
 
-    let res12 = I128::max() - I128::zero();
-    assert(res12 == I128::max());
+    let res12 = I128::MAX - I128::zero();
+    assert(res12 == I128::MAX);
 
-    let res13 = I128::min() - I128::zero();
-    assert(res13 == I128::min());
+    let res13 = I128::MIN - I128::zero();
+    assert(res13 == I128::MIN);
 
     let res14 = I128::zero() - I128::zero();
     assert(res14 == I128::zero());
@@ -400,7 +434,7 @@ fn signed_i128_subtract() {
 
 #[test(should_revert)]
 fn revert_signed_i128_sub() {
-    let min = I128::min();
+    let min = I128::MIN;
     let one = I128::try_from(U128::from((0, 1))).unwrap();
 
     let _ = min - one;
@@ -408,7 +442,7 @@ fn revert_signed_i128_sub() {
 
 #[test(should_revert)]
 fn revert_signed_i128_sub_negative() {
-    let max = I128::max();
+    let max = I128::MAX;
     let neg_one = I128::neg_try_from(U128::from((0, 1))).unwrap();
 
     let _ = max - neg_one;
@@ -418,7 +452,7 @@ fn revert_signed_i128_sub_negative() {
 fn revert_signed_i128_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let min = I128::min();
+    let min = I128::MIN;
     let one = I128::try_from(U128::from((0, 1))).unwrap();
 
     let _ = min - one;
@@ -428,11 +462,11 @@ fn revert_signed_i128_sub_unsafe_math() {
 fn signed_i128_sub_underflow() {
     let _ = disable_panic_on_overflow();
 
-    let min = I128::min();
+    let min = I128::MIN;
     let one = I128::try_from(U128::from((0, 1))).unwrap();
 
     let result = min - one;
-    assert(result == I128::max());
+    assert(result == I128::MAX);
 }
 
 #[test]
@@ -477,10 +511,10 @@ fn signed_i128_multiply() {
     assert(res10 == I128::try_from(U128::from((0, 2))).unwrap());
 
     // Edge Cases
-    let res12 = I128::max() * I128::zero();
+    let res12 = I128::MAX * I128::zero();
     assert(res12 == I128::zero());
 
-    let res13 = I128::min() * I128::zero();
+    let res13 = I128::MIN * I128::zero();
     assert(res13 == I128::zero());
 
     let res14 = I128::zero() * I128::zero();
@@ -489,7 +523,7 @@ fn signed_i128_multiply() {
 
 #[test(should_revert)]
 fn revert_signed_i128_mul() {
-    let max = I128::max();
+    let max = I128::MAX;
     let two = I128::try_from(U128::from((0, 2))).unwrap();
 
     let _ = max * two;
@@ -497,7 +531,7 @@ fn revert_signed_i128_mul() {
 
 #[test(should_revert)]
 fn revert_signed_i128_mul_negatice() {
-    let max = I128::max();
+    let max = I128::MAX;
     let two = I128::neg_try_from(U128::from((0, 2))).unwrap();
 
     let _ = max * two;
@@ -507,7 +541,7 @@ fn revert_signed_i128_mul_negatice() {
 fn revert_signed_i128_mul_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
 
-    let max = I128::max();
+    let max = I128::MAX;
     let two = I128::try_from(U128::from((0, 2))).unwrap();
 
     let _ = max * two;
@@ -517,7 +551,7 @@ fn revert_signed_i128_mul_unsafe_math() {
 fn signed_i128_mul() {
     let _ = disable_panic_on_overflow();
 
-    let max = I128::max();
+    let max = I128::MAX;
     let two = I128::try_from(U128::from((0, 2))).unwrap();
 
     let result = max * two;
@@ -566,10 +600,10 @@ fn signed_i128_divide() {
     assert(res10 == I128::try_from(U128::from((0, 2))).unwrap());
 
     // Edge Cases
-    let res12 = I128::zero() / I128::max();
+    let res12 = I128::zero() / I128::MAX;
     assert(res12 == I128::zero());
 
-    let res13 = I128::zero() / I128::min();
+    let res13 = I128::zero() / I128::MIN;
     assert(res13 == I128::zero());
 }
 
@@ -615,9 +649,9 @@ fn signed_i128_wrapping_neg() {
     let upper_u128 = I128::try_from(U128::from((1, 0))).unwrap();
     let neg_upper_u128 = I128::neg_try_from(U128::from((1, 0))).unwrap();
     let zero = I128::try_from(U128::from((0, 0))).unwrap();
-    let max = I128::max();
-    let min = I128::min();
-    let neg_min_plus_one = I128::min() + I128::try_from(U128::from((0, 1))).unwrap();
+    let max = I128::MAX;
+    let min = I128::MIN;
+    let neg_min_plus_one = I128::MIN + I128::try_from(U128::from((0, 1))).unwrap();
 
     let res1 = one.wrapping_neg();
     let res2 = neg_one.wrapping_neg();
@@ -678,7 +712,7 @@ fn signed_i128_try_from_u128() {
 fn signed_i128_try_into_u128() {
     let zero = I128::zero();
     let negative = I128::neg_try_from(U128::from((0, 1))).unwrap();
-    let max = I128::max();
+    let max = I128::MAX;
     let indent: U128 = I128::indent();
 
     let U128_max_try_into: Option<U128> = max.try_into();
@@ -697,7 +731,7 @@ fn signed_i128_try_into_u128() {
 fn signed_i128_u128_try_from() {
     let zero = I128::zero();
     let negative = I128::neg_try_from(U128::from((0, 1))).unwrap();
-    let max = I128::max();
+    let max = I128::MAX;
     let indent: U128 = I128::indent();
 
     let U128_max_try_from: Option<U128> = U128::try_from(max);
@@ -718,7 +752,7 @@ fn signed_i128_u128_try_into() {
 
     let i128_max_try_into: Option<I128> = (indent - U128::from((0, 1))).try_into();
     assert(i128_max_try_into.is_some());
-    assert(i128_max_try_into.unwrap() == I128::max());
+    assert(i128_max_try_into.unwrap() == I128::MAX);
 
     let i128_min_try_into: Option<I128> = U128::min().try_into();
     assert(i128_min_try_into.is_some());
