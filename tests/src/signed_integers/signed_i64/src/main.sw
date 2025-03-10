@@ -584,7 +584,7 @@ fn signed_i64_try_from_u64() {
 
     let i64_max_try_from = I64::try_from(indent - 1);
     assert(i64_max_try_from.is_some());
-    assert(i64_max_try_from.unwrap() == I64::max());
+    assert(i64_max_try_from.unwrap() == I64::MAX);
 
     let i64_min_try_from = I64::try_from(u64::min());
     assert(i64_min_try_from.is_some());

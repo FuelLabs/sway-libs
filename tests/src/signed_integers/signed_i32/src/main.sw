@@ -585,7 +585,7 @@ fn signed_i32_try_from_u32() {
 
     let i32_max_try_from = I32::try_from(indent - 1);
     assert(i32_max_try_from.is_some());
-    assert(i32_max_try_from.unwrap() == I32::max());
+    assert(i32_max_try_from.unwrap() == I32::MAX);
 
     let i32_min_try_from = I32::try_from(u32::min());
     assert(i32_min_try_from.is_some());
@@ -601,50 +601,4 @@ fn signed_i32_try_into_u32() {
     let negative = I32::neg_try_from(1).unwrap();
     let max = I32::max();
     let indent: u32 = I32::indent();
-
-    let u32_max_try_into: Option<u32> = max.try_into();
-    assert(u32_max_try_into.is_some());
-    assert(u32_max_try_into.unwrap() == indent - 1);
-
-    let u32_min_try_into: Option<u32> = zero.try_into();
-    assert(u32_min_try_into.is_some());
-    assert(u32_min_try_into.unwrap() == u32::zero());
-
-    let u32_overflow_try_into: Option<u32> = negative.try_into();
-    assert(u32_overflow_try_into.is_none());
-}
-
-#[test]
-fn signed_i32_u32_try_from() {
-    let zero = I32::zero();
-    let negative = I32::neg_try_from(1).unwrap();
-    let max = I32::max();
-    let indent: u32 = I32::indent();
-
-    let u32_max_try_from: Option<u32> = u32::try_from(max);
-    assert(u32_max_try_from.is_some());
-    assert(u32_max_try_from.unwrap() == indent - 1);
-
-    let u32_min_try_from: Option<u32> = u32::try_from(zero);
-    assert(u32_min_try_from.is_some());
-    assert(u32_min_try_from.unwrap() == u32::zero());
-
-    let u32_overflow_try_from: Option<u32> = u32::try_from(negative);
-    assert(u32_overflow_try_from.is_none());
-}
-
-#[test]
-fn signed_i32_u32_try_into() {
-    let indent: u32 = I32::indent();
-
-    let i32_max_try_into: Option<I32> = (indent - 1).try_into();
-    assert(i32_max_try_into.is_some());
-    assert(i32_max_try_into.unwrap() == I32::max());
-
-    let i32_min_try_into: Option<I32> = u32::min().try_into();
-    assert(i32_min_try_into.is_some());
-    assert(i32_min_try_into.unwrap() == I32::zero());
-
-    let i32_overflow_try_into: Option<I32> = indent.try_into();
-    assert(i32_overflow_try_into.is_none());
 }

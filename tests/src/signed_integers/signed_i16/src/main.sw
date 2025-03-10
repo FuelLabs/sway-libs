@@ -584,7 +584,7 @@ fn signed_i16_try_from_u16() {
 
     let i16_max_try_from = I16::try_from(indent - 1);
     assert(i16_max_try_from.is_some());
-    assert(i16_max_try_from.unwrap() == I16::max());
+    assert(i16_max_try_from.unwrap() == I16::MAX);
 
     let i16_min_try_from = I16::try_from(u16::min());
     assert(i16_min_try_from.is_some());

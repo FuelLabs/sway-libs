@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
 - [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
 
 ### Changed
 
@@ -22,8 +24,54 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Breaking
 
-- Some breaking change here 1
-- Some breaking change here 2
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the Binary Merkle Library.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_poof::*;
+```
+
+After:
+
+```sway
+use sway_libs::merkle::binary::*;
+```
+
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the `LEAF`, `NODE`, `leaf_digest()`, and `node_disgest()` functions and constants.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_proof::{LEAF, NODE, leaf_digest, node_digest};
+```
+
+After:
+
+```sway
+use sway_libs::merkle::common::{LEAF, NODE, node_digest};
+use sway_libs::merkle::binary::{leaf_digest};
+```
+
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Breaks functionality of `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`'s `::min()` and `::max()` functions. These functions are now used for comparison for two values of the type and return the higher or lower value respectively. To obtain the minimum and maximum values you must now use the `::MIN` and `::MAX` assosciated constants.
+
+Before:
+
+```sway
+fn foo() -> I8 {
+    let minimum_i8 = I8::min();
+    let maximum_i8 = I8::max();
+}
+```
+
+After:
+
+```sway
+fn foo() -> I8 {
+    let minimum_i8 = I8::MIN;
+    let maximum_i8 = I8::MAX;
+}
+```
 
 ## [Version v0.24.2]
 

@@ -584,7 +584,7 @@ fn signed_i8_try_from_u8() {
 
     let i8_max_try_from = I8::try_from(indent - 1);
     assert(i8_max_try_from.is_some());
-    assert(i8_max_try_from.unwrap() == I8::max());
+    assert(i8_max_try_from.unwrap() == I8::MAX);
 
     let i8_min_try_from = I8::try_from(u8::min());
     assert(i8_min_try_from.is_some());

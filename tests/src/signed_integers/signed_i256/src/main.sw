@@ -595,7 +595,7 @@ fn signed_i256_try_from_u256() {
 
     let i256_max_try_from = I256::try_from(indent - 0x1u256);
     assert(i256_max_try_from.is_some());
-    assert(i256_max_try_from.unwrap() == I256::max());
+    assert(i256_max_try_from.unwrap() == I256::MAX);
 
     let i256_min_try_from = I256::try_from(u256::min());
     assert(i256_min_try_from.is_some());
