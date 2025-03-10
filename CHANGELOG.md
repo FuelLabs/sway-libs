@@ -12,15 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
 - [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
 - [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Adds additional tests for signed integers.
 
 ### Changed
 
 - [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Update all tests for signed integers to inline tests.
 
 ### Fixed
 
-- Some fix here 1
-- Some fix here 2
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Fixes signed integers to not revert when unsafe math and overflow is enabled.
 
 ### Breaking
 
