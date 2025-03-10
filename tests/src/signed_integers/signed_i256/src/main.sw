@@ -108,7 +108,7 @@ fn signed_i256_total_ord() {
     let max_1 = I256::MAX;
     let min_1 = I256::MIN;
     let neg_one_1 = I256::neg_try_from(0x01u256).unwrap();
-    
+
     assert(zero.min(one) == zero);
     assert(zero.max(one) == one);
     assert(one.min(zero) == zero);

@@ -106,7 +106,7 @@ fn signed_i32_total_ord() {
     let max_1 = I32::MAX;
     let min_1 = I32::MIN;
     let neg_one_1 = I32::neg_try_from(1u32).unwrap();
-    
+
     assert(zero.min(one) == zero);
     assert(zero.max(one) == one);
     assert(one.min(zero) == zero);

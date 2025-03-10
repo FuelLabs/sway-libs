@@ -140,11 +140,11 @@ fn signed_i128_ord() {
 #[test]
 fn signed_i128_total_ord() {
     let zero = I128::zero();
-    let one = I128::try_from(U128::from((0,1))).unwrap();
+    let one = I128::try_from(U128::from((0, 1))).unwrap();
     let max_1 = I128::MAX;
     let min_1 = I128::MIN;
-    let neg_one_1 = I128::neg_try_from(U128::from((0,1))).unwrap();
-    
+    let neg_one_1 = I128::neg_try_from(U128::from((0, 1))).unwrap();
+
     assert(zero.min(one) == zero);
     assert(zero.max(one) == one);
     assert(one.min(zero) == zero);

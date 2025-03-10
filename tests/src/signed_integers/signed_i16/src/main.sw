@@ -106,7 +106,7 @@ fn signed_i16_total_ord() {
     let max_1 = I16::MAX;
     let min_1 = I16::MIN;
     let neg_one_1 = I16::neg_try_from(1u16).unwrap();
-    
+
     assert(zero.min(one) == zero);
     assert(zero.max(one) == one);
     assert(one.min(zero) == zero);
