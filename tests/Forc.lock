@@ -41,23 +41,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "i128_wrapping_neg_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
 name = "i16_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "i16_wrapping_neg_test"
 source = "member"
 dependencies = [
     "std",
@@ -73,23 +57,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "i256_wrapping_neg_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
 name = "i32_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "i32_wrapping_neg_test"
 source = "member"
 dependencies = [
     "std",
@@ -105,23 +73,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "i64_wrapping_neg_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
 name = "i8_test"
-source = "member"
-dependencies = [
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "i8_wrapping_neg_test"
 source = "member"
 dependencies = [
     "std",

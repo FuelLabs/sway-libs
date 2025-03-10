@@ -5,5 +5,4 @@ mod merkle_proof;
 mod native_asset;
 mod ownership;
 mod reentrancy;
-mod signed_integers;
 mod upgradability;
