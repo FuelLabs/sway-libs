@@ -715,15 +715,15 @@ fn signed_i128_try_into_u128() {
     let max = I128::MAX;
     let indent: U128 = I128::indent();
 
-    let U128_max_try_into: Option<U128> = max.try_into();
+    let U128_max_try_into: Option<U128> = <I128 as TryInto<U128>>::try_into(max);
     assert(U128_max_try_into.is_some());
     assert(U128_max_try_into.unwrap() == indent - U128::from((0, 1)));
 
-    let U128_min_try_into: Option<U128> = zero.try_into();
+    let U128_min_try_into: Option<U128> = <I128 as TryInto<U128>>::try_into(zero);
     assert(U128_min_try_into.is_some());
     assert(U128_min_try_into.unwrap() == U128::zero());
 
-    let U128_overflow_try_into: Option<U128> = negative.try_into();
+    let U128_overflow_try_into: Option<U128> = <I128 as TryInto<U128>>::try_into(negative);
     assert(U128_overflow_try_into.is_none());
 }
 
@@ -750,14 +750,14 @@ fn signed_i128_u128_try_from() {
 fn signed_i128_u128_try_into() {
     let indent: U128 = I128::indent();
 
-    let i128_max_try_into: Option<I128> = (indent - U128::from((0, 1))).try_into();
+    let i128_max_try_into: Option<I128> = <U128 as TryInto<I128>>::try_into((indent - U128::from((0, 1))));
     assert(i128_max_try_into.is_some());
     assert(i128_max_try_into.unwrap() == I128::MAX);
 
-    let i128_min_try_into: Option<I128> = U128::min().try_into();
+    let i128_min_try_into: Option<I128> = <U128 as TryInto<I128>>::try_into(U128::min());
     assert(i128_min_try_into.is_some());
     assert(i128_min_try_into.unwrap() == I128::zero());
 
-    let i128_overflow_try_into: Option<I128> = indent.try_into();
+    let i128_overflow_try_into: Option<I128> = <U128 as TryInto<I128>>::try_into(indent);
     assert(i128_overflow_try_into.is_none());
 }

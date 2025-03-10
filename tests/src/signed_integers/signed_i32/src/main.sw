@@ -393,7 +393,6 @@ fn signed_i32_sub_underflow() {
     let one = I32::try_from(1u32).unwrap();
 
     let result = min - one;
-    log(result);
     assert(result == I32::MAX);
 }
 
@@ -636,15 +635,15 @@ fn signed_i32_try_into_u32() {
     let max = I32::MAX;
     let indent: u32 = I32::indent();
 
-    let u32_max_try_into: Option<u32> = max.try_into();
+    let u32_max_try_into: Option<u32> = <I32 as TryInto<u32>>::try_into(max);
     assert(u32_max_try_into.is_some());
     assert(u32_max_try_into.unwrap() == indent - 1);
 
-    let u32_min_try_into: Option<u32> = zero.try_into();
+    let u32_min_try_into: Option<u32> = <I32 as TryInto<u32>>::try_into(zero);
     assert(u32_min_try_into.is_some());
     assert(u32_min_try_into.unwrap() == u32::zero());
 
-    let u32_overflow_try_into: Option<u32> = negative.try_into();
+    let u32_overflow_try_into: Option<u32> = <I32 as TryInto<u32>>::try_into(negative);
     assert(u32_overflow_try_into.is_none());
 }
 
@@ -671,14 +670,14 @@ fn signed_i32_u32_try_from() {
 fn signed_i32_u32_try_into() {
     let indent: u32 = I32::indent();
 
-    let i32_max_try_into: Option<I32> = (indent - 1).try_into();
+    let i32_max_try_into: Option<I32> = <u32 as TryInto<I32>>::try_into((indent - 1));
     assert(i32_max_try_into.is_some());
     assert(i32_max_try_into.unwrap() == I32::MAX);
 
-    let i32_min_try_into: Option<I32> = u32::min().try_into();
+    let i32_min_try_into: Option<I32> = <u32 as TryInto<I32>>::try_into(u32::min());
     assert(i32_min_try_into.is_some());
     assert(i32_min_try_into.unwrap() == I32::zero());
 
-    let i32_overflow_try_into: Option<I32> = indent.try_into();
+    let i32_overflow_try_into: Option<I32> = <u32 as TryInto<I32>>::try_into(indent);
     assert(i32_overflow_try_into.is_none());
 }

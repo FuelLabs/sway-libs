@@ -635,15 +635,15 @@ fn signed_i8_try_into_u8() {
     let max = I8::MAX;
     let indent: u8 = I8::indent();
 
-    let u8_max_try_into: Option<u8> = max.try_into();
+    let u8_max_try_into: Option<u8> = <I8 as TryInto<u8>>::try_into(max);
     assert(u8_max_try_into.is_some());
     assert(u8_max_try_into.unwrap() == indent - 1);
 
-    let u8_min_try_into: Option<u8> = zero.try_into();
+    let u8_min_try_into: Option<u8> = <I8 as TryInto<u8>>::try_into(zero);
     assert(u8_min_try_into.is_some());
     assert(u8_min_try_into.unwrap() == u8::zero());
 
-    let u8_overflow_try_into: Option<u8> = negative.try_into();
+    let u8_overflow_try_into: Option<u8> = <I8 as TryInto<u8>>::try_into(negative);
     assert(u8_overflow_try_into.is_none());
 }
 
@@ -670,14 +670,14 @@ fn signed_i8_u8_try_from() {
 fn signed_i8_u8_try_into() {
     let indent: u8 = I8::indent();
 
-    let i8_max_try_into: Option<I8> = (indent - 1).try_into();
+    let i8_max_try_into: Option<I8> = <u8 as TryInto<I8>>::try_into((indent - 1));
     assert(i8_max_try_into.is_some());
     assert(i8_max_try_into.unwrap() == I8::MAX);
 
-    let i8_min_try_into: Option<I8> = u8::min().try_into();
+    let i8_min_try_into: Option<I8> = <u8 as TryInto<I8>>::try_into(u8::min());
     assert(i8_min_try_into.is_some());
     assert(i8_min_try_into.unwrap() == I8::zero());
 
-    let i8_overflow_try_into: Option<I8> = indent.try_into();
+    let i8_overflow_try_into: Option<I8> = <u8 as TryInto<I8>>::try_into(indent);
     assert(i8_overflow_try_into.is_none());
 }

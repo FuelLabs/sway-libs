@@ -635,15 +635,15 @@ fn signed_i64_try_into_u64() {
     let max = I64::MAX;
     let indent: u64 = I64::indent();
 
-    let u64_max_try_into: Option<u64> = max.try_into();
+    let u64_max_try_into: Option<u64> = <I64 as TryInto<u64>>::try_into(max);
     assert(u64_max_try_into.is_some());
     assert(u64_max_try_into.unwrap() == indent - 1);
 
-    let u64_min_try_into: Option<u64> = zero.try_into();
+    let u64_min_try_into: Option<u64> = <I64 as TryInto<u64>>::try_into(zero);
     assert(u64_min_try_into.is_some());
     assert(u64_min_try_into.unwrap() == u64::zero());
 
-    let u64_overflow_try_into: Option<u64> = negative.try_into();
+    let u64_overflow_try_into: Option<u64> = <I64 as TryInto<u64>>::try_into(negative);
     assert(u64_overflow_try_into.is_none());
 }
 
@@ -670,14 +670,14 @@ fn signed_i64_u64_try_from() {
 fn signed_i64_u64_try_into() {
     let indent: u64 = I64::indent();
 
-    let i64_max_try_into: Option<I64> = (indent - 1).try_into();
+    let i64_max_try_into: Option<I64> = <u64 as TryInto<I64>>::try_into((indent - 1));
     assert(i64_max_try_into.is_some());
     assert(i64_max_try_into.unwrap() == I64::MAX);
 
-    let i64_min_try_into: Option<I64> = u64::min().try_into();
+    let i64_min_try_into: Option<I64> = <u64 as TryInto<I64>>::try_into(u64::min());
     assert(i64_min_try_into.is_some());
     assert(i64_min_try_into.unwrap() == I64::zero());
 
-    let i64_overflow_try_into: Option<I64> = indent.try_into();
+    let i64_overflow_try_into: Option<I64> = <u64 as TryInto<I64>>::try_into(indent);
     assert(i64_overflow_try_into.is_none());
 }

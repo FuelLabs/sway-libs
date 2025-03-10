@@ -635,15 +635,15 @@ fn signed_i16_try_into_u16() {
     let max = I16::MAX;
     let indent: u16 = I16::indent();
 
-    let u16_max_try_into: Option<u16> = max.try_into();
+    let u16_max_try_into: Option<u16> = <I16 as TryInto<u16>>::try_into(max);
     assert(u16_max_try_into.is_some());
     assert(u16_max_try_into.unwrap() == indent - 1);
 
-    let u16_min_try_into: Option<u16> = zero.try_into();
+    let u16_min_try_into: Option<u16> = <I16 as TryInto<u16>>::try_into(zero);
     assert(u16_min_try_into.is_some());
     assert(u16_min_try_into.unwrap() == u16::zero());
 
-    let u16_overflow_try_into: Option<u16> = negative.try_into();
+    let u16_overflow_try_into: Option<u16> = <I16 as TryInto<u16>>::try_into(negative);
     assert(u16_overflow_try_into.is_none());
 }
 
@@ -670,14 +670,14 @@ fn signed_i16_u16_try_from() {
 fn signed_i16_u16_try_into() {
     let indent: u16 = I16::indent();
 
-    let i16_max_try_into: Option<I16> = (indent - 1).try_into();
+    let i16_max_try_into: Option<I16> = <u16 as TryInto<I16>>::try_into((indent - 1));
     assert(i16_max_try_into.is_some());
     assert(i16_max_try_into.unwrap() == I16::MAX);
 
-    let i16_min_try_into: Option<I16> = u16::min().try_into();
+    let i16_min_try_into: Option<I16> = <u16 as TryInto<I16>>::try_into(u16::min());
     assert(i16_min_try_into.is_some());
     assert(i16_min_try_into.unwrap() == I16::zero());
 
-    let i16_overflow_try_into: Option<I16> = indent.try_into();
+    let i16_overflow_try_into: Option<I16> = <u16 as TryInto<I16>>::try_into(indent);
     assert(i16_overflow_try_into.is_none());
 }

@@ -646,15 +646,15 @@ fn signed_i256_try_into_u256() {
     let max = I256::MAX;
     let indent: u256 = I256::indent();
 
-    let u256_max_try_into: Option<u256> = max.try_into();
+    let u256_max_try_into: Option<u256> = <I256 as TryInto<u256>>::try_into(max);
     assert(u256_max_try_into.is_some());
     assert(u256_max_try_into.unwrap() == indent - 0x1u256);
 
-    let u256_min_try_into: Option<u256> = zero.try_into();
+    let u256_min_try_into: Option<u256> = <I256 as TryInto<u256>>::try_into(zero);
     assert(u256_min_try_into.is_some());
     assert(u256_min_try_into.unwrap() == u256::zero());
 
-    let u256_overflow_try_into: Option<u256> = negative.try_into();
+    let u256_overflow_try_into: Option<u256> = <I256 as TryInto<u256>>::try_into(negative);
     assert(u256_overflow_try_into.is_none());
 }
 
@@ -681,14 +681,14 @@ fn signed_i256_u256_try_from() {
 fn signed_i256_u256_try_into() {
     let indent: u256 = I256::indent();
 
-    let i256_max_try_into: Option<I256> = (indent - 0x1u256).try_into();
+    let i256_max_try_into: Option<I256> = <u256 as TryInto<I256>>::try_into((indent - 0x1u256));
     assert(i256_max_try_into.is_some());
     assert(i256_max_try_into.unwrap() == I256::MAX);
 
-    let i256_min_try_into: Option<I256> = u256::min().try_into();
+    let i256_min_try_into: Option<I256> = <u256 as TryInto<I256>>::try_into(u256::min());
     assert(i256_min_try_into.is_some());
     assert(i256_min_try_into.unwrap() == I256::zero());
 
-    let i256_overflow_try_into: Option<I256> = indent.try_into();
+    let i256_overflow_try_into: Option<I256> = <u256 as TryInto<I256>>::try_into(indent);
     assert(i256_overflow_try_into.is_none());
 }
