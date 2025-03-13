@@ -1373,7 +1373,8 @@ fn revert_big_uint_sub_underflow() {
     let _ = disable_panic_on_overflow();
     let big_uint_zero = BigUint::zero();
     let big_uint_1 = BigUint::from(1u64);
-    let _result = big_uint_zero - big_uint_1;
+    let result = big_uint_zero - big_uint_1;
+    log(result);
 }
 
 #[test(should_revert)]
@@ -1381,12 +1382,14 @@ fn revert_big_uint_sub_unsafe_math() {
     let _ = disable_panic_on_unsafe_math();
     let big_uint_zero = BigUint::zero();
     let big_uint_1 = BigUint::from(1u64);
-    let _result = big_uint_zero - big_uint_1;
+    let result = big_uint_zero - big_uint_1;
+    log(result);
 }
 
 #[test(should_revert)]
 fn revert_big_uint_sub_negative() {
     let big_uint_zero = BigUint::zero();
     let big_uint_1 = BigUint::from(1u64);
-    let _result = big_uint_zero - big_uint_1;
+    let result = big_uint_zero - big_uint_1;
+    log(result);
 }
