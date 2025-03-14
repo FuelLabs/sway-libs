@@ -3,6 +3,7 @@ library;
 use sway_libs::bigint::BigUint;
 use std::u128::U128;
 use std::bytes::Bytes;
+use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};
 
 #[test]
 fn big_uint_new() {
@@ -252,7 +253,7 @@ fn big_uint_try_into_u64() {
 }
 
 #[test]
-fn big_uint_from_U128() {
+fn big_uint_from_u128() {
     let big_uint_1 = BigUint::from(U128::zero());
     assert(big_uint_1.number_of_limbs() == 1);
     assert(big_uint_1.is_zero());
@@ -273,7 +274,7 @@ fn big_uint_from_U128() {
 }
 
 #[test]
-fn big_uint_try_into_U128() {
+fn big_uint_try_into_u128() {
     let big_uint_1 = BigUint::zero();
     assert(<BigUint as TryInto<U128>>::try_into(big_uint_1).unwrap() == U128::zero());
 
@@ -819,7 +820,291 @@ fn big_uint_add() {
 }
 
 #[test]
+fn big_uint_add_enable_overflow() {
+    let _ = disable_panic_on_overflow();
+
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(20u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(U128::from((u64::max(), u64::max())));
+    let big_uint_6 = BigUint::from(u256::max());
+
+    // Two zeros added is zero
+    assert(big_uint_zero + big_uint_zero == big_uint_zero);
+
+    // Order does not matter
+    assert(big_uint_1 + big_uint_2 == big_uint_2 + big_uint_1);
+
+    // Add zero stays the same
+    let result_1 = big_uint_1 + big_uint_zero;
+    assert(result_1 == big_uint_1);
+    assert(result_1.limbs().get(0).unwrap() == 1);
+    assert(result_1.limbs().len() == 1);
+
+    // Add two numbers with no overflow
+    let result_2 = big_uint_1 + big_uint_2;
+    assert(result_2 == BigUint::from(21u64));
+    assert(result_2.limbs().get(0).unwrap() == 21);
+    assert(result_2.limbs().len() == 1);
+
+    // Add self to self
+    let result_3 = big_uint_1 + big_uint_1;
+    assert(result_3 == BigUint::from(2u64));
+    assert(result_3.limbs().get(0).unwrap() == 2);
+    assert(result_3.limbs().len() == 1);
+
+    // Add results in new limb
+    let result_4 = big_uint_1 + big_uint_3;
+    assert(result_4.limbs().get(0).unwrap() == 0);
+    assert(result_4.limbs().get(1).unwrap() == 1);
+    assert(result_4.limbs().len() == 2);
+
+    // Add two limbs to one limb
+    let result_5 = big_uint_1 + big_uint_4;
+    assert(result_5.limbs().get(0).unwrap() == 1);
+    assert(result_5.limbs().get(1).unwrap() == 1);
+    assert(result_5.limbs().len() == 2);
+
+    // Add two limbs to one limb resulting in 3 limbs
+    let result_6 = big_uint_1 + big_uint_5;
+    assert(result_6.limbs().get(0).unwrap() == 0);
+    assert(result_6.limbs().get(1).unwrap() == 0);
+    assert(result_6.limbs().get(2).unwrap() == 1);
+    assert(result_6.limbs().len() == 3);
+
+    // Add goes over u256 in size
+    let result_7 = big_uint_1 + big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == 0);
+    assert(result_7.limbs().get(1).unwrap() == 0);
+    assert(result_7.limbs().get(2).unwrap() == 0);
+    assert(result_7.limbs().get(3).unwrap() == 0);
+    assert(result_7.limbs().get(4).unwrap() == 1);
+    assert(result_7.limbs().len() == 5);
+}
+
+#[test]
+fn big_uint_add_enable_unsafe_math() {
+    let _ = disable_panic_on_unsafe_math();
+
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(20u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(U128::from((u64::max(), u64::max())));
+    let big_uint_6 = BigUint::from(u256::max());
+
+    // Two zeros added is zero
+    assert(big_uint_zero + big_uint_zero == big_uint_zero);
+
+    // Order does not matter
+    assert(big_uint_1 + big_uint_2 == big_uint_2 + big_uint_1);
+
+    // Add zero stays the same
+    let result_1 = big_uint_1 + big_uint_zero;
+    assert(result_1 == big_uint_1);
+    assert(result_1.limbs().get(0).unwrap() == 1);
+    assert(result_1.limbs().len() == 1);
+
+    // Add two numbers with no overflow
+    let result_2 = big_uint_1 + big_uint_2;
+    assert(result_2 == BigUint::from(21u64));
+    assert(result_2.limbs().get(0).unwrap() == 21);
+    assert(result_2.limbs().len() == 1);
+
+    // Add self to self
+    let result_3 = big_uint_1 + big_uint_1;
+    assert(result_3 == BigUint::from(2u64));
+    assert(result_3.limbs().get(0).unwrap() == 2);
+    assert(result_3.limbs().len() == 1);
+
+    // Add results in new limb
+    let result_4 = big_uint_1 + big_uint_3;
+    assert(result_4.limbs().get(0).unwrap() == 0);
+    assert(result_4.limbs().get(1).unwrap() == 1);
+    assert(result_4.limbs().len() == 2);
+
+    // Add two limbs to one limb
+    let result_5 = big_uint_1 + big_uint_4;
+    assert(result_5.limbs().get(0).unwrap() == 1);
+    assert(result_5.limbs().get(1).unwrap() == 1);
+    assert(result_5.limbs().len() == 2);
+
+    // Add two limbs to one limb resulting in 3 limbs
+    let result_6 = big_uint_1 + big_uint_5;
+    assert(result_6.limbs().get(0).unwrap() == 0);
+    assert(result_6.limbs().get(1).unwrap() == 0);
+    assert(result_6.limbs().get(2).unwrap() == 1);
+    assert(result_6.limbs().len() == 3);
+
+    // Add goes over u256 in size
+    let result_7 = big_uint_1 + big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == 0);
+    assert(result_7.limbs().get(1).unwrap() == 0);
+    assert(result_7.limbs().get(2).unwrap() == 0);
+    assert(result_7.limbs().get(3).unwrap() == 0);
+    assert(result_7.limbs().get(4).unwrap() == 1);
+    assert(result_7.limbs().len() == 5);
+}
+
+#[test]
 fn big_uint_mul() {
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(2u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(U128::from((9223372036854775808, 0)));
+    let big_uint_6 = BigUint::from(0x8000000000000000000000000000000000000000000000000000000000000000u256);
+
+    // Two zeros mul is zero
+    assert(big_uint_zero * big_uint_zero == big_uint_zero);
+
+    // Order does not matter
+    assert(big_uint_1 * big_uint_2 == big_uint_2 * big_uint_1);
+
+    // Mul zero to anything is zero
+    let result_1 = big_uint_1 * big_uint_zero;
+    assert(result_1 == big_uint_zero);
+    assert(result_1.limbs().get(0).unwrap() == 0);
+    assert(result_1.limbs().len() == 1);
+
+    // Mul one to anything is anything
+    let result_2 = big_uint_1 * big_uint_2;
+    assert(result_2 == big_uint_2);
+    assert(result_2.limbs().get(0).unwrap() == 2);
+    assert(result_2.limbs().len() == 1);
+
+    // Mul self to self
+    let result_3 = big_uint_2 * big_uint_2;
+    assert(result_3 == BigUint::from(4u64));
+    assert(result_3.limbs().get(0).unwrap() == 4);
+    assert(result_3.limbs().len() == 1);
+
+    // Mul results in new limb
+    let result_4 = big_uint_2 * big_uint_3;
+    assert(
+        result_4
+            .limbs()
+            .get(0)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .lower(),
+    );
+    assert(
+        result_4
+            .limbs()
+            .get(1)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .upper(),
+    );
+    assert(result_4.limbs().len() == 2);
+
+    // Mul two limbs to one limb
+    let result_5 = big_uint_2 * big_uint_4;
+    assert(result_5.limbs().get(0).unwrap() == 0);
+    assert(result_5.limbs().get(1).unwrap() == 2);
+    assert(result_5.limbs().len() == 2);
+
+    // Mul two limbs to one limb resulting in 3 limbs
+    let result_6 = big_uint_2 * big_uint_5;
+    assert(result_6.limbs().get(0).unwrap() == 0);
+    assert(result_6.limbs().get(1).unwrap() == 0);
+    assert(result_6.limbs().get(2).unwrap() == 1);
+    assert(result_6.limbs().len() == 3);
+
+    // Add goes over u256 in size
+    let result_7 = big_uint_2 * big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == 0);
+    assert(result_7.limbs().get(1).unwrap() == 0);
+    assert(result_7.limbs().get(2).unwrap() == 0);
+    assert(result_7.limbs().get(3).unwrap() == 0);
+    assert(result_7.limbs().get(4).unwrap() == 1);
+    assert(result_7.limbs().len() == 5);
+}
+
+#[test]
+fn big_uint_mul_enable_overfow() {
+    let _ = disable_panic_on_overflow();
+
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(2u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(U128::from((9223372036854775808, 0)));
+    let big_uint_6 = BigUint::from(0x8000000000000000000000000000000000000000000000000000000000000000u256);
+
+    // Two zeros mul is zero
+    assert(big_uint_zero * big_uint_zero == big_uint_zero);
+
+    // Order does not matter
+    assert(big_uint_1 * big_uint_2 == big_uint_2 * big_uint_1);
+
+    // Mul zero to anything is zero
+    let result_1 = big_uint_1 * big_uint_zero;
+    assert(result_1 == big_uint_zero);
+    assert(result_1.limbs().get(0).unwrap() == 0);
+    assert(result_1.limbs().len() == 1);
+
+    // Mul one to anything is anything
+    let result_2 = big_uint_1 * big_uint_2;
+    assert(result_2 == big_uint_2);
+    assert(result_2.limbs().get(0).unwrap() == 2);
+    assert(result_2.limbs().len() == 1);
+
+    // Mul self to self
+    let result_3 = big_uint_2 * big_uint_2;
+    assert(result_3 == BigUint::from(4u64));
+    assert(result_3.limbs().get(0).unwrap() == 4);
+    assert(result_3.limbs().len() == 1);
+
+    // Mul results in new limb
+    let result_4 = big_uint_2 * big_uint_3;
+    assert(
+        result_4
+            .limbs()
+            .get(0)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .lower(),
+    );
+    assert(
+        result_4
+            .limbs()
+            .get(1)
+            .unwrap() == (U128::from((0, u64::max())) * U128::from((0, 2)))
+            .upper(),
+    );
+    assert(result_4.limbs().len() == 2);
+
+    // Mul two limbs to one limb
+    let result_5 = big_uint_2 * big_uint_4;
+    assert(result_5.limbs().get(0).unwrap() == 0);
+    assert(result_5.limbs().get(1).unwrap() == 2);
+    assert(result_5.limbs().len() == 2);
+
+    // Mul two limbs to one limb resulting in 3 limbs
+    let result_6 = big_uint_2 * big_uint_5;
+    assert(result_6.limbs().get(0).unwrap() == 0);
+    assert(result_6.limbs().get(1).unwrap() == 0);
+    assert(result_6.limbs().get(2).unwrap() == 1);
+    assert(result_6.limbs().len() == 3);
+
+    // Add goes over u256 in size
+    let result_7 = big_uint_2 * big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == 0);
+    assert(result_7.limbs().get(1).unwrap() == 0);
+    assert(result_7.limbs().get(2).unwrap() == 0);
+    assert(result_7.limbs().get(3).unwrap() == 0);
+    assert(result_7.limbs().get(4).unwrap() == 1);
+    assert(result_7.limbs().len() == 5);
+}
+
+#[test]
+fn big_uint_mul_enable_unsafe_math() {
+    let _ = disable_panic_on_unsafe_math();
+
     let big_uint_zero = BigUint::zero();
     let big_uint_1 = BigUint::from(1u64);
     let big_uint_2 = BigUint::from(2u64);
@@ -955,9 +1240,156 @@ fn big_uint_sub() {
     assert(result_7.limbs().len() == 1);
 }
 
+#[test]
+fn big_uint_sub_enable_overflow() {
+    let _ = disable_panic_on_overflow();
+
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(2u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000u256);
+    let big_uint_6 = BigUint::from(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000u256);
+    let big_uint_7 = BigUint::from(0xFFFFFFFFFFFFFFFF000000000000000000000000000000000000000000000000u256);
+    let big_uint_8 = BigUint::from(u256::max());
+
+    // Zero sub is zero
+    assert(big_uint_zero - big_uint_zero == big_uint_zero);
+
+    // Sub zero to anything is zero
+    let result_1 = big_uint_1 - big_uint_zero;
+    assert(result_1 == big_uint_1);
+    assert(result_1.limbs().get(0).unwrap() == 1);
+    assert(result_1.limbs().len() == 1);
+
+    // Sub to zero
+    let result_2 = (big_uint_2 - big_uint_1) - big_uint_1;
+    assert(result_2 == big_uint_zero);
+    assert(result_2.limbs().get(0).unwrap() == 0);
+    assert(result_2.limbs().len() == 1);
+
+    // Sub self to self
+    let result_3 = big_uint_2 - big_uint_2;
+    assert(result_3 == big_uint_zero);
+    assert(result_3.limbs().get(0).unwrap() == 0);
+    assert(result_3.limbs().len() == 1);
+
+    // Sub results in less limbs
+    let result_4 = big_uint_4 - big_uint_1;
+    assert(result_4.limbs().get(0).unwrap() == u64::max());
+    assert(result_4.limbs().len() == 1);
+
+    // Sub two limbs to one limb
+    let result_5 = big_uint_4 - big_uint_3;
+    assert(result_5.limbs().get(0).unwrap() == 1);
+    assert(result_5.limbs().len() == 1);
+
+    // Sub four limbs to three limbs
+    let result_6 = big_uint_8 - big_uint_7;
+    assert(result_6.limbs().get(0).unwrap() == u64::max());
+    assert(result_6.limbs().get(1).unwrap() == u64::max());
+    assert(result_6.limbs().get(2).unwrap() == u64::max());
+    assert(result_6.limbs().len() == 3);
+
+    // Sub four limbs to two limbs
+    let result_7 = big_uint_8 - big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == u64::max());
+    assert(result_7.limbs().get(1).unwrap() == u64::max());
+    assert(result_7.limbs().len() == 2);
+
+    // Sub four limbs to one limb
+    let result_7 = big_uint_8 - big_uint_5;
+    assert(result_7.limbs().get(0).unwrap() == u64::max());
+    assert(result_7.limbs().len() == 1);
+}
+
+#[test]
+fn big_uint_sub_enable_unsafe_math() {
+    let _ = disable_panic_on_unsafe_math();
+
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let big_uint_2 = BigUint::from(2u64);
+    let big_uint_3 = BigUint::from(u64::max());
+    let big_uint_4 = BigUint::from(U128::from((1, 0)));
+    let big_uint_5 = BigUint::from(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000u256);
+    let big_uint_6 = BigUint::from(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000u256);
+    let big_uint_7 = BigUint::from(0xFFFFFFFFFFFFFFFF000000000000000000000000000000000000000000000000u256);
+    let big_uint_8 = BigUint::from(u256::max());
+
+    // Zero sub is zero
+    assert(big_uint_zero - big_uint_zero == big_uint_zero);
+
+    // Sub zero to anything is zero
+    let result_1 = big_uint_1 - big_uint_zero;
+    assert(result_1 == big_uint_1);
+    assert(result_1.limbs().get(0).unwrap() == 1);
+    assert(result_1.limbs().len() == 1);
+
+    // Sub to zero
+    let result_2 = (big_uint_2 - big_uint_1) - big_uint_1;
+    assert(result_2 == big_uint_zero);
+    assert(result_2.limbs().get(0).unwrap() == 0);
+    assert(result_2.limbs().len() == 1);
+
+    // Sub self to self
+    let result_3 = big_uint_2 - big_uint_2;
+    assert(result_3 == big_uint_zero);
+    assert(result_3.limbs().get(0).unwrap() == 0);
+    assert(result_3.limbs().len() == 1);
+
+    // Sub results in less limbs
+    let result_4 = big_uint_4 - big_uint_1;
+    assert(result_4.limbs().get(0).unwrap() == u64::max());
+    assert(result_4.limbs().len() == 1);
+
+    // Sub two limbs to one limb
+    let result_5 = big_uint_4 - big_uint_3;
+    assert(result_5.limbs().get(0).unwrap() == 1);
+    assert(result_5.limbs().len() == 1);
+
+    // Sub four limbs to three limbs
+    let result_6 = big_uint_8 - big_uint_7;
+    assert(result_6.limbs().get(0).unwrap() == u64::max());
+    assert(result_6.limbs().get(1).unwrap() == u64::max());
+    assert(result_6.limbs().get(2).unwrap() == u64::max());
+    assert(result_6.limbs().len() == 3);
+
+    // Sub four limbs to two limbs
+    let result_7 = big_uint_8 - big_uint_6;
+    assert(result_7.limbs().get(0).unwrap() == u64::max());
+    assert(result_7.limbs().get(1).unwrap() == u64::max());
+    assert(result_7.limbs().len() == 2);
+
+    // Sub four limbs to one limb
+    let result_7 = big_uint_8 - big_uint_5;
+    assert(result_7.limbs().get(0).unwrap() == u64::max());
+    assert(result_7.limbs().len() == 1);
+}
+
 #[test(should_revert)]
-fn big_uint_sub_negative() {
+fn revert_big_uint_sub_underflow() {
+    let _ = disable_panic_on_overflow();
     let big_uint_zero = BigUint::zero();
     let big_uint_1 = BigUint::from(1u64);
     let result = big_uint_zero - big_uint_1;
+    log(result);
+}
+
+#[test(should_revert)]
+fn revert_big_uint_sub_unsafe_math() {
+    let _ = disable_panic_on_unsafe_math();
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let result = big_uint_zero - big_uint_1;
+    log(result);
+}
+
+#[test(should_revert)]
+fn revert_big_uint_sub_negative() {
+    let big_uint_zero = BigUint::zero();
+    let big_uint_1 = BigUint::from(1u64);
+    let result = big_uint_zero - big_uint_1;
+    log(result);
 }
