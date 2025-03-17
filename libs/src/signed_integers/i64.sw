@@ -38,13 +38,15 @@ impl I64 {
     }
 }
 
-impl core::ops::Eq for I64 {
+impl PartialEq for I64 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I64 {
+impl Eq for I64 {}
+
+impl Ord for I64 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,9 @@ impl core::ops::Ord for I64 {
     }
 }
 
-impl core::ops::OrdEq for I64 {}
+impl OrdEq for I64 {}
 
-impl core::ops::TotalOrd for I64 {
+impl TotalOrd for I64 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -276,7 +278,7 @@ impl I64 {
     }
 }
 
-impl core::ops::Add for I64 {
+impl Add for I64 {
     /// Add a I64 to a I64. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
@@ -296,7 +298,7 @@ impl core::ops::Add for I64 {
     }
 }
 
-impl core::ops::Subtract for I64 {
+impl Subtract for I64 {
     /// Subtract a I64 from a I64. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -321,7 +323,7 @@ impl core::ops::Subtract for I64 {
     }
 }
 
-impl core::ops::Multiply for I64 {
+impl Multiply for I64 {
     /// Multiply a I64 with a I64. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -354,7 +356,7 @@ impl core::ops::Multiply for I64 {
     }
 }
 
-impl core::ops::Divide for I64 {
+impl Divide for I64 {
     /// Divide a I64 by a I64. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
