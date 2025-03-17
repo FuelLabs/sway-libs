@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed v0.25.0
 
 - [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Prepares for the `v0.25.0` release.
 
 ### Fixed v0.25.0
 
@@ -136,6 +137,8 @@ fn foo() -> I8 {
     let maximum_i8 = I8::MAX;
 }
 ```
+
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Updates to the forc `v0.67.0` release. Earlier versions are *not* compatible.
 
 ## [Version v0.24.2]
 
