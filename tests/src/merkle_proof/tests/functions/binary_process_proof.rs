@@ -1,5 +1,5 @@
 use crate::merkle_proof::tests::utils::{
-    abi_calls::process_proof,
+    abi_calls::binary_process_proof,
     test_helpers::{build_tree, build_tree_manual, leaves_with_depth, merkle_proof_instance},
 };
 
@@ -18,7 +18,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_ne!(
-            process_proof(&instance, key + 1, leaf, leaves.len() as u64, proof).await,
+            binary_process_proof(&instance, key + 1, leaf, leaves.len() as u64, proof).await,
             root
         );
     }
@@ -34,7 +34,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
+            binary_process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
             root
         );
     }
@@ -53,7 +53,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
+            binary_process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
             root
         );
     }
@@ -69,7 +69,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
+            binary_process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
             root
         );
     }
@@ -85,7 +85,7 @@ mod success {
         let (_tree, root, leaf, proof) = build_tree(leaves.clone(), key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
+            binary_process_proof(&instance, key, leaf, leaves.len() as u64, proof).await,
             root
         );
     }
@@ -103,7 +103,7 @@ mod success {
             build_tree_manual(leaves.clone(), depth.try_into().unwrap(), key).await;
 
         assert_eq!(
-            process_proof(
+            binary_process_proof(
                 &instance,
                 key.try_into().unwrap(),
                 leaf_hash,
@@ -135,7 +135,7 @@ mod revert {
         let (_tree, root, leaf, _proof) = build_tree(leaves, key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, num_leaves, [].to_vec()).await,
+            binary_process_proof(&instance, key, leaf, num_leaves, [].to_vec()).await,
             root
         );
     }
@@ -155,7 +155,7 @@ mod revert {
         let (_tree, root, leaf, proof) = build_tree(leaves, key).await;
 
         assert_eq!(
-            process_proof(&instance, key, leaf, num_leaves, proof).await,
+            binary_process_proof(&instance, key, leaf, num_leaves, proof).await,
             root
         );
     }
@@ -175,7 +175,7 @@ mod revert {
         let (_tree, _root, leaf, proof) = build_tree(leaves, key).await;
         key = num_leaves;
 
-        process_proof(&instance, key, leaf, num_leaves, proof).await;
+        binary_process_proof(&instance, key, leaf, num_leaves, proof).await;
     }
 
     #[tokio::test]
@@ -192,7 +192,7 @@ mod revert {
 
         let (_tree, _root, leaf, proof) = build_tree(leaves, key).await;
 
-        process_proof(&instance, num_leaves, leaf, num_leaves, proof).await;
+        binary_process_proof(&instance, num_leaves, leaf, num_leaves, proof).await;
     }
 
     #[tokio::test]
@@ -210,7 +210,7 @@ mod revert {
         let (_tree, _root, leaf, proof) = build_tree(leaves, key).await;
         key = num_leaves + 1;
 
-        process_proof(&instance, key, leaf, num_leaves, proof).await;
+        binary_process_proof(&instance, key, leaf, num_leaves, proof).await;
     }
 
     #[tokio::test]
@@ -227,6 +227,6 @@ mod revert {
 
         let (_tree, _root, leaf, proof) = build_tree(leaves, key).await;
 
-        process_proof(&instance, key, leaf, num_leaves, proof).await;
+        binary_process_proof(&instance, key, leaf, num_leaves, proof).await;
     }
 }

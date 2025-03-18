@@ -38,13 +38,15 @@ impl I64 {
     }
 }
 
-impl core::ops::Eq for I64 {
+impl PartialEq for I64 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I64 {
+impl Eq for I64 {}
+
+impl Ord for I64 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,63 @@ impl core::ops::Ord for I64 {
     }
 }
 
-impl core::ops::OrdEq for I64 {}
+impl OrdEq for I64 {}
+
+impl TotalOrd for I64 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
 
 impl I64 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::MIN;
+    ///     assert(i64.underlying() == u64::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u64::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I64] - The newly created `I64` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i64::I64;
+    ///
+    /// fn foo() {
+    ///     let i64 = I64::MAX;
+    ///     assert(i64.underlying() == u64::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u64::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -100,50 +156,6 @@ impl I64 {
     /// ```
     pub fn from_uint(underlying: u64) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I64] - The newly created `I64` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i64::I64;
-    ///
-    /// fn foo() {
-    ///     let i64 = I64::max();
-    ///     assert(i64.underlying() == u64::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u64::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I64] - The newly created `I64` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i64::I64;
-    ///
-    /// fn foo() {
-    ///     let i64 = I64::min();
-    ///     assert(i64.underlying() == u64::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u64::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -266,7 +278,7 @@ impl I64 {
     }
 }
 
-impl core::ops::Add for I64 {
+impl Add for I64 {
     /// Add a I64 to a I64. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
@@ -286,7 +298,7 @@ impl core::ops::Add for I64 {
     }
 }
 
-impl core::ops::Subtract for I64 {
+impl Subtract for I64 {
     /// Subtract a I64 from a I64. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -311,7 +323,7 @@ impl core::ops::Subtract for I64 {
     }
 }
 
-impl core::ops::Multiply for I64 {
+impl Multiply for I64 {
     /// Multiply a I64 with a I64. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -344,7 +356,7 @@ impl core::ops::Multiply for I64 {
     }
 }
 
-impl core::ops::Divide for I64 {
+impl Divide for I64 {
     /// Divide a I64 by a I64. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
@@ -384,8 +396,12 @@ impl core::ops::Divide for I64 {
 
 impl WrappingNeg for I64 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u64::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1).unwrap()
     }

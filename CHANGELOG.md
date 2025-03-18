@@ -5,6 +5,141 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Some addition here.
+- Some addition here.
+
+### Changed
+
+- Some change here.
+- Some change here.
+
+### Fixed
+
+- Some fix here.
+- Some fix here.
+
+### Breaking
+
+- Some breaking change here.
+- Some breaking change here.
+
+## [Version 0.25.0]
+
+### Added v0.25.0
+
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
+- [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
+- [#333](https://github.com/FuelLabs/sway-libs/pull/333) Adds `BigInt` inline tests for expected behavior on overflow and unsafe math.
+
+### Changed v0.25.0
+
+- [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Prepares for the `v0.25.0` release.
+
+### Fixed v0.25.0
+
+- None
+
+### Breaking v0.25.0
+
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the Binary Merkle Library.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_poof::*;
+```
+
+After:
+
+```sway
+use sway_libs::merkle::binary::*;
+```
+
+- [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the `LEAF`, `NODE`, `leaf_digest()`, and `node_disgest()` functions and constants.
+
+Before:
+
+```sway
+use sway_libs::merkle::binary_proof::{LEAF, NODE, leaf_digest, node_digest};
+```
+
+After:
+
+```sway
+use sway_libs::merkle::common::{LEAF, NODE, node_digest};
+use sway_libs::merkle::binary::{leaf_digest};
+```
+
+- [#330](https://github.com/FuelLabs/sway-libs/pull/330) Removes `_with_configurables()` functions from Bytecode Library in favor of using an `Option`.
+
+Before:
+
+```sway
+// Compute bytecode root
+let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode);
+let root_with_configurables: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
+
+// Compute predicate address
+let address_no_configurables: Address = compute_predicate_address(my_bytecode);
+let address_with_configurables: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
+
+// Verify contract bytecode
+verify_contract_bytecode(my_contract_id, my_bytecode); // No configurables
+verify_contract_bytecode_with_configurables(my_contract_id, my_bytecode, my_configurables); // With configurables
+
+// Verify predicate address
+verify_predicate_address(my_predicate_address, my_bytecode); // No configurables
+verify_predicate_address_with_configurables(my_predicate_address, my_bytecode, my_configurables); // With configurables
+```
+
+After:
+
+```sway
+// Compute bytecode root
+let root_no_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, None);
+let root_with_configurables: BytecodeRoot = compute_bytecode_root(my_bytecode, Some(my_configurables));
+
+// Compute predicate address
+let address_no_configurables: Address = compute_predicate_address(my_bytecode, None);
+let address_with_configurables: Address = compute_predicate_address(my_bytecode, Some(my_configurables));
+
+// Verify contract bytecode
+verify_contract_bytecode(my_contract_id, my_bytecode, None); // No configurables
+verify_contract_bytecode(my_contract_id, my_bytecode, Some(my_configurables)); // With configurables
+
+// Verify predicate address
+verify_predicate_address(my_predicate_address, my_bytecode, None); // No configurables
+verify_predicate_address(my_predicate_address, my_bytecode, Some(my_configurables)); // With configurables
+```
+
+- [#312](https://github.com/FuelLabs/sway-libs/pull/312) Breaks functionality of `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`'s `::min()` and `::max()` functions. These functions are now used for comparison for two values of the type and return the higher or lower value respectively. To obtain the minimum and maximum values you must now use the `::MIN` and `::MAX` associated constants.
+
+Before:
+
+```sway
+fn foo() -> I8 {
+    let minimum_i8 = I8::min();
+    let maximum_i8 = I8::max();
+}
+```
+
+After:
+
+```sway
+fn foo() -> I8 {
+    let minimum_i8 = I8::MIN;
+    let maximum_i8 = I8::MAX;
+}
+```
+
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Updates to the forc `v0.67.0` release. Earlier versions are *not* compatible.
+
 ## [Version v0.24.2]
 
 ### Added v0.24.2

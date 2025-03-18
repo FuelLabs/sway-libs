@@ -41,13 +41,15 @@ impl I256 {
     }
 }
 
-impl core::ops::Eq for I256 {
+impl PartialEq for I256 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I256 {
+impl Eq for I256 {}
+
+impl Ord for I256 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -57,9 +59,63 @@ impl core::ops::Ord for I256 {
     }
 }
 
-impl core::ops::OrdEq for I256 {}
+impl OrdEq for I256 {}
+
+impl TotalOrd for I256 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
 
 impl I256 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i256::I256;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::MIN;
+    ///     assert(i256.underlying() == u256::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u256::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I256] - The newly created `I256` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i256::I256;
+    ///
+    /// fn foo() {
+    ///     let i256 = I256::MAX;
+    ///     assert(i256.underlying() == u256::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u256::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -103,50 +159,6 @@ impl I256 {
     /// ```
     pub fn from_uint(underlying: u256) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I256] - The newly created `I256` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i256::I256;
-    ///
-    /// fn foo() {
-    ///     let i256 = I256::max();
-    ///     assert(i256.underlying() == u256::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u256::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I256] - The newly created `I256` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i256::I256;
-    ///
-    /// fn foo() {
-    ///     let i256 = I256::min();
-    ///     assert(i256.underlying() == u256::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u256::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -269,7 +281,7 @@ impl I256 {
     }
 }
 
-impl core::ops::Add for I256 {
+impl Add for I256 {
     /// Add a I256 to a I256. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
@@ -289,7 +301,7 @@ impl core::ops::Add for I256 {
     }
 }
 
-impl core::ops::Divide for I256 {
+impl Divide for I256 {
     /// Divide a I256 by a I256. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
@@ -314,7 +326,7 @@ impl core::ops::Divide for I256 {
     }
 }
 
-impl core::ops::Multiply for I256 {
+impl Multiply for I256 {
     /// Multiply a I256 with a I256. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -347,7 +359,7 @@ impl core::ops::Multiply for I256 {
     }
 }
 
-impl core::ops::Subtract for I256 {
+impl Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -374,8 +386,12 @@ impl core::ops::Subtract for I256 {
 
 impl WrappingNeg for I256 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u256::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(0x0000000000000000000000000000000000000000000000000000000000000001u256).unwrap()
     }
