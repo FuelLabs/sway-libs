@@ -9,21 +9,43 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Some addition here.
+- Some addition here.
+
+### Changed
+
+- Some change here.
+- Some change here.
+
+### Fixed
+
+- Some fix here.
+- Some fix here.
+
+### Breaking
+
+- Some breaking change here.
+- Some breaking change here.
+
+## [Version 0.25.0]
+
+### Added v0.25.0
+
 - [#312](https://github.com/FuelLabs/sway-libs/pull/312) Implements `TotalOrd` trait for `I8`, `I16`, `I32`, `I64`, `I128`, and `I256`.
 - [#326](https://github.com/FuelLabs/sway-libs/pull/326) Introduces the Big Integers Library with the `BigUint` type.
 - [#329](https://github.com/FuelLabs/sway-libs/pull/329) Introduce the Sparse Merkle Proof Library.
 - [#333](https://github.com/FuelLabs/sway-libs/pull/333) Adds `BigInt` inline tests for expected behavior on overflow and unsafe math.
 
-### Changed
+### Changed v0.25.0
 
 - [#327](https://github.com/FuelLabs/sway-libs/pull/327) Updates the repository to forc `v0.66.7`, fuel-core `v0.41.4`, and fuels `v0.70.0`.
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Prepares for the `v0.25.0` release.
 
-### Fixed
+### Fixed v0.25.0
 
-- Some fix here 1
-- Some fix here 2
+- None
 
-### Breaking
+### Breaking v0.25.0
 
 - [#329](https://github.com/FuelLabs/sway-libs/pull/329) Breaks imports for the Binary Merkle Library.
 
@@ -115,6 +137,8 @@ fn foo() -> I8 {
     let maximum_i8 = I8::MAX;
 }
 ```
+
+- [#334](https://github.com/FuelLabs/sway-libs/pull/334) Updates to the forc `v0.67.0` release. Earlier versions are *not* compatible.
 
 ## [Version v0.24.2]
 

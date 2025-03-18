@@ -1,7 +1,7 @@
 library;
 
 use sway_libs::bigint::BigUint;
-use std::u128::U128;
+use std::u128::*;
 use std::bytes::Bytes;
 use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};
 
