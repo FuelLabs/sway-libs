@@ -69,11 +69,7 @@ To verify a contract's bytecode root you may call `verify_bytecode_root()` funct
 
 ### Computing the Address from Bytecode
 
-<<<<<<< HEAD
-To compute a predicate's address you may call the `compute_predicate_address()` or `compute_predicate_address_with_configurables()` functions.
-=======
 To compute a predicate's address you may call the `compute_predicate_address()` function.
->>>>>>> master
 
 ```sway
 {{#include ../../../../examples/bytecode/src/main.sw:compute_predicate_address}}

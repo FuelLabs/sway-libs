@@ -10,21 +10,14 @@ members = [
   "./asset/setting_src20_attributes",
   "./asset/supply_docs",
   "./bytecode",
-<<<<<<< HEAD
-  "./merkle",
-=======
   "./merkle_binary",
   "./merkle_sparse",
->>>>>>> master
   "./ownership",
   "./pausable/pausable",
   "./pausable/pausable_with_ownership",
   "./queue",
   "./reentrancy",
   "./signed_integers",
-<<<<<<< HEAD
-=======
   "./big_integers",
->>>>>>> master
   "./upgradability",
 ]

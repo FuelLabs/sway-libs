@@ -44,11 +44,7 @@ The [Bytecode](./bytecode/index.md) Library is used for on-chain verification an
 
 ### [Merkle Library](./merkle/index.md)
 
-<<<<<<< HEAD
-The [Merkle Proof](./merkle/index.md) Library is used to verify Binary Merkle Trees computed off-chain.
-=======
 The [Merkle Proof](./merkle/index.md) Library is used to verify Binary and Sparse Merkle Trees computed off-chain.
->>>>>>> master
 
 ## Math Libraries
 
@@ -58,13 +54,10 @@ Math Libraries are libraries which provide mathematic functions or number types 
 
 The [Signed Integers](./signed_integers/index.md) Library is an interface to implement signed integers.
 
-<<<<<<< HEAD
-=======
 ### [Big Integers](./bigint/index.md)
 
 The [Big Integers](./bigint/index.md) Library is an interface to implement extremely large integers.
 
->>>>>>> master
 ## Data Structures Libraries
 
 Data Structure Libraries are libraries which provide complex data structures which unlock additional functionality for Smart Contracts.
