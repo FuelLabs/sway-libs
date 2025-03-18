@@ -21,15 +21,11 @@ To import the Bytecode Library to your Sway Smart Contract, add the following to
 Once imported, using the Bytecode Library is as simple as calling the desired function. Here is a list of function definitions that you may use.
 
 - `compute_bytecode_root()`
-- `compute_bytecode_root_with_configurables()`
 - `compute_predicate_address()`
-- `compute_predicate_address_with_configurables()`
 - `predicate_address_from_root()`
 - `swap_configurables()`
 - `verify_contract_bytecode()`
-- `verify_contract_bytecode_with_configurables()`
 - `verify_predicate_address()`
-- `verify_predicate_address_with_configurables()`
 
 ## Known Issues
 
@@ -55,7 +51,7 @@ Given some bytecode, you may swap the configurables of both Contracts and Predic
 
 ### Computing the Bytecode Root
 
-To compute a contract's bytecode root you may call the `compute_bytecode_root()` or `compute_bytecode_root_with_configurables()` functions.
+To compute a contract's bytecode root you may call the `compute_bytecode_root()` function.
 
 ```sway
 {{#include ../../../../examples/bytecode/src/main.sw:compute_bytecode_root}}
@@ -63,7 +59,7 @@ To compute a contract's bytecode root you may call the `compute_bytecode_root()`
 
 ### Verifying a Contract's Bytecode Root
 
-To verify a contract's bytecode root you may call `verify_bytecode_root()` or `verify_contract_bytecode_with_configurables()` functions.
+To verify a contract's bytecode root you may call `verify_bytecode_root()` function.
 
 ```sway
 {{#include ../../../../examples/bytecode/src/main.sw:verify_contract_bytecode}}
@@ -73,7 +69,11 @@ To verify a contract's bytecode root you may call `verify_bytecode_root()` or `v
 
 ### Computing the Address from Bytecode
 
+<<<<<<< HEAD
 To compute a predicate's address you may call the `compute_predicate_address()` or `compute_predicate_address_with_configurables()` functions.
+=======
+To compute a predicate's address you may call the `compute_predicate_address()` function.
+>>>>>>> master
 
 ```sway
 {{#include ../../../../examples/bytecode/src/main.sw:compute_predicate_address}}
@@ -89,7 +89,7 @@ If you have the root of a predicate, you may compute it's corresponding predicat
 
 ### Verifying the Address
 
-To verify a predicates's address you may call `verify_predicate_address()` or `verify_predicate_address_with_configurables()` functions.
+To verify a predicates's address you may call `verify_predicate_address()` function.
 
 ```sway
 {{#include ../../../../examples/bytecode/src/main.sw:verify_predicate_address}}

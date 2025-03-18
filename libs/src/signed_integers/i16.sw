@@ -38,13 +38,15 @@ impl I16 {
     }
 }
 
-impl core::ops::Eq for I16 {
+impl PartialEq for I16 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I16 {
+impl Eq for I16 {}
+
+impl Ord for I16 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,63 @@ impl core::ops::Ord for I16 {
     }
 }
 
-impl core::ops::OrdEq for I16 {}
+impl OrdEq for I16 {}
+
+impl TotalOrd for I16 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
 
 impl I16 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::MIN;
+    ///     assert(i16.underlying() == u16::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u16::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I16] - The newly created `I16` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i16::I16;
+    ///
+    /// fn foo() {
+    ///     let i16 = I16::MAX;
+    ///     assert(i16.underlying() == u16::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u16::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -100,50 +156,6 @@ impl I16 {
     /// ```
     pub fn from_uint(underlying: u16) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I16] - The newly created `I16` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i16::I16;
-    ///
-    /// fn foo() {
-    ///     let i16 = I16::max();
-    ///     assert(i16.underlying() == u16::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u16::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I16] - The newly created `I16` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i16::I16;
-    ///
-    /// fn foo() {
-    ///     let i16 = I16::min();
-    ///     assert(i16.underlying() == u16::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u16::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -266,7 +278,7 @@ impl I16 {
     }
 }
 
-impl core::ops::Add for I16 {
+impl Add for I16 {
     /// Add a I16 to a I16. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -285,7 +297,7 @@ impl core::ops::Add for I16 {
     }
 }
 
-impl core::ops::Divide for I16 {
+impl Divide for I16 {
     /// Divide a I16 by a I16. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
@@ -323,7 +335,7 @@ impl core::ops::Divide for I16 {
     }
 }
 
-impl core::ops::Multiply for I16 {
+impl Multiply for I16 {
     /// Multiply a I16 with a I16. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -356,7 +368,7 @@ impl core::ops::Multiply for I16 {
     }
 }
 
-impl core::ops::Subtract for I16 {
+impl Subtract for I16 {
     /// Subtract a I16 from a I16. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -383,8 +395,12 @@ impl core::ops::Subtract for I16 {
 
 impl WrappingNeg for I16 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u16::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1u16).unwrap()
     }

@@ -6,9 +6,13 @@ edition = "2021"
 license = "Apache-2.0"
 
 [dependencies]
-fuel-merkle = { version = "0.50.0" }
+fuel-merkle = { version = "0.56.0" }
 sha2 = { version = "0.10" }
+<<<<<<< HEAD
 fuels = { version = "0.66.2" }
+=======
+fuels = { version = "0.70.0" }
+>>>>>>> master
 tokio = { version = "1.12", features = ["rt", "macros"] }
 
 [[test]]

@@ -38,13 +38,15 @@ impl I8 {
     }
 }
 
-impl core::ops::Eq for I8 {
+impl PartialEq for I8 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I8 {
+impl Eq for I8 {}
+
+impl Ord for I8 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,63 @@ impl core::ops::Ord for I8 {
     }
 }
 
-impl core::ops::OrdEq for I8 {}
+impl OrdEq for I8 {}
+
+impl TotalOrd for I8 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
 
 impl I8 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::MIN;
+    ///     assert(i8.underlying() == u8::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u8::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I8] - The newly created `I8` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i8::I8;
+    ///
+    /// fn foo() {
+    ///     let i8 = I8::MAX;
+    ///     assert(i8.underlying() == u8::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u8::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -100,50 +156,6 @@ impl I8 {
     /// ```
     pub fn from_uint(underlying: u8) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I8] - The newly created `I8` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i8::I8;
-    ///
-    /// fn foo() {
-    ///     let i8 = I8::max();
-    ///     assert(i8.underlying() == u8::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u8::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I8] - The newly created `I8` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i8::I8;
-    ///
-    /// fn foo() {
-    ///     let i8 = I8::new();
-    ///     assert(i8.underlying() == u8::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u8::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned number.
@@ -266,7 +278,7 @@ impl I8 {
     }
 }
 
-impl core::ops::Add for I8 {
+impl Add for I8 {
     /// Add a I8 to a I8. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -285,7 +297,7 @@ impl core::ops::Add for I8 {
     }
 }
 
-impl core::ops::Divide for I8 {
+impl Divide for I8 {
     /// Divide a I8 by a I8. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
@@ -323,7 +335,7 @@ impl core::ops::Divide for I8 {
     }
 }
 
-impl core::ops::Multiply for I8 {
+impl Multiply for I8 {
     /// Multiply a I8 with a I8. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -356,7 +368,7 @@ impl core::ops::Multiply for I8 {
     }
 }
 
-impl core::ops::Subtract for I8 {
+impl Subtract for I8 {
     /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -383,8 +395,12 @@ impl core::ops::Subtract for I8 {
 
 impl WrappingNeg for I8 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u8::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1u8).unwrap()
     }

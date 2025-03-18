@@ -38,13 +38,15 @@ impl I32 {
     }
 }
 
-impl core::ops::Eq for I32 {
+impl PartialEq for I32 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I32 {
+impl Eq for I32 {}
+
+impl Ord for I32 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,63 @@ impl core::ops::Ord for I32 {
     }
 }
 
-impl core::ops::OrdEq for I32 {}
+impl OrdEq for I32 {}
+
+impl TotalOrd for I32 {
+    fn min(self, other: Self) -> Self {
+        if self.underlying < other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+
+    fn max(self, other: Self) -> Self {
+        if self.underlying > other.underlying {
+            self
+        } else {
+            other
+        }
+    }
+}
 
 impl I32 {
+    /// The smallest value that can be represented by this integer type.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i32::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::MIN;
+    ///     assert(i32.underlying() == u32::min());
+    /// }
+    /// ```
+    const MIN: Self = Self {
+        underlying: u32::min(),
+    };
+
+    /// The largest value that can be represented by this integer type.
+    ///
+    /// # Returns
+    ///
+    /// * [I32] - The newly created `I32` struct.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use sway_libs::signed_integers::i32::I32;
+    ///
+    /// fn foo() {
+    ///     let i32 = I32::MAX;
+    ///     assert(i32.underlying() == u32::max());
+    /// }
+    /// ```
+    const MAX: Self = Self {
+        underlying: u32::max(),
+    };
+
     /// The size of this type in bits.
     ///
     /// # Returns
@@ -100,50 +156,6 @@ impl I32 {
     /// ```
     pub fn from_uint(underlying: u32) -> Self {
         Self { underlying }
-    }
-
-    /// The largest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I32] - The newly created `I32` struct.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i32::I32;
-    ///
-    /// fn foo() {
-    ///     let i32 = I32::max();
-    ///     assert(i32.underlying() == u32::max());
-    /// }
-    /// ```
-    pub fn max() -> Self {
-        Self {
-            underlying: u32::max(),
-        }
-    }
-
-    /// The smallest value that can be represented by this integer type.
-    ///
-    /// # Returns
-    ///
-    /// * [I32] - The newly created `I32` type.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use sway_libs::signed_integers::i32::I32;
-    ///
-    /// fn foo() {
-    ///     let i32 = I32::min();
-    ///     assert(i32.underlying() == u32::min());
-    /// }
-    /// ```
-    pub fn min() -> Self {
-        Self {
-            underlying: u32::min(),
-        }
     }
 
     /// Helper function to get a negative value of an unsigned numbers.
@@ -266,7 +278,7 @@ impl I32 {
     }
 }
 
-impl core::ops::Add for I32 {
+impl Add for I32 {
     /// Add a I32 to a I32. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -285,7 +297,7 @@ impl core::ops::Add for I32 {
     }
 }
 
-impl core::ops::Subtract for I32 {
+impl Subtract for I32 {
     /// Subtract a I32 from a I32. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -310,7 +322,7 @@ impl core::ops::Subtract for I32 {
     }
 }
 
-impl core::ops::Multiply for I32 {
+impl Multiply for I32 {
     /// Multiply a I32 with a I32. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -343,7 +355,7 @@ impl core::ops::Multiply for I32 {
     }
 }
 
-impl core::ops::Divide for I32 {
+impl Divide for I32 {
     /// Divide a I32 by a I32. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         require(divisor != Self::new(), Error::ZeroDivisor);
@@ -383,8 +395,12 @@ impl core::ops::Divide for I32 {
 
 impl WrappingNeg for I32 {
     fn wrapping_neg(self) -> Self {
-        if self == Self::min() {
-            return Self::min()
+        // TODO: Replace the hardcoded min with Self::MIN once https://github.com/FuelLabs/sway/issues/6772 is closed
+        let min = Self {
+            underlying: u32::min(),
+        };
+        if self == min {
+            return min
         }
         self * Self::neg_try_from(1u32).unwrap()
     }
