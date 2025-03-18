@@ -8,10 +8,14 @@
     /// # Examples
     ///
     /// ```sway
-    /// fn foo() {
-    ///     match owner() {
-    ///         State::Uninitalized =&gt; log(&quot;The ownership is uninitalized&quot;),
-    ///         State::Initialized(owner) =&gt; log(&quot;The ownership is initalized&quot;),
+    /// use standards::src5::{SRC5, State};
+    ///
+    /// fn foo(contract_id: ContractId) {
+    ///     let contract_abi = abi(SRC5, contract_id.bits());
+    ///
+    ///     match contract_abi.owner() {
+    ///         State::Uninitialized =&gt; log(&quot;The ownership is uninitialized&quot;),
+    ///         State::Initialized(owner) =&gt; log(&quot;The ownership is initialized&quot;),
     ///         State::Revoked =&gt; log(&quot;The ownership is revoked&quot;),
     ///     }
     /// }
@@ -24,10 +28,14 @@
 <li>[State] - Represents the state of ownership for this contract.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">fn foo() {
-    match owner() {
-        State::Uninitalized =&gt; log(&quot;The ownership is uninitalized&quot;),
-        State::Initialized(owner) =&gt; log(&quot;The ownership is initalized&quot;),
+<pre><code class="language-sway">use standards::src5::{SRC5, State};
+
+fn foo(contract_id: ContractId) {
+    let contract_abi = abi(SRC5, contract_id.bits());
+
+    match contract_abi.owner() {
+        State::Uninitialized =&gt; log(&quot;The ownership is uninitialized&quot;),
+        State::Initialized(owner) =&gt; log(&quot;The ownership is initialized&quot;),
         State::Revoked =&gt; log(&quot;The ownership is revoked&quot;),
     }
 }

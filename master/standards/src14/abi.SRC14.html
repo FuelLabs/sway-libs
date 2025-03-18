@@ -8,7 +8,7 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src14::SRC14;
+    /// use standards::src14::SRC14;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let contract_abi = abi(SRC14, contract_id.bits());
@@ -27,11 +27,12 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src14::SRC14;
+    /// use standards::src14::SRC14;
     ///
     /// fn foo(contract_id: ContractId) {
     ///     let contract_abi = abi(SRC14, contract_id.bits());
     ///     let target_contract: Option&lt;ContractId&gt; = contract_abi.proxy_target();
+    ///     assert(target_contract.is_some());
     /// }
     /// ```
     #[storage(read)]
@@ -42,7 +43,7 @@
 <li><code>new_target</code>: [ContractId] - The new proxy contract to which all fallback calls will be passed.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src14::SRC14;
+<pre><code class="language-sway">use standards::src14::SRC14;
 
 fn foo(contract_id: ContractId) {
     let contract_abi = abi(SRC14, contract_id.bits());
@@ -56,11 +57,12 @@ fn foo(contract_id: ContractId) {
 <li>[Option<!-- raw HTML omitted -->] - The new proxy contract to which all fallback calls will be passed or <code>None</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src14::SRC14;
+<pre><code class="language-sway">use standards::src14::SRC14;
 
 fn foo(contract_id: ContractId) {
     let contract_abi = abi(SRC14, contract_id.bits());
     let target_contract: Option&lt;ContractId&gt; = contract_abi.proxy_target();
+    assert(target_contract.is_some());
 }
 </code></pre>
 </div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>

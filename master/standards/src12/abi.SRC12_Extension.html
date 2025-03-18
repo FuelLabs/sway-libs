@@ -12,12 +12,13 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src12::SRC12;
+    /// use standards::src12::SRC12;
     ///
-    /// fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    ///     let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    ///     src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
-    ///     let result_contract_id = src_12_contract_abi.get_contract_id(my_configurables);
+    /// fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    ///     let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    ///     let _ = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    ///
+    ///     let result_contract_id: Option&lt;ContractId&gt; = src_12_contract_abi.get_contract_id(my_configurables);
     ///     assert(result_contract_id.unwrap() == my_deployed_contract);
     /// }
     /// ```
@@ -33,12 +34,13 @@
 <li>[Option<!-- raw HTML omitted -->] - The id of the contract which has registered with the specified configurables.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src12::SRC12;
+<pre><code class="language-sway">use standards::src12::SRC12;
 
-fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
-    let result_contract_id = src_12_contract_abi.get_contract_id(my_configurables);
+fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    let _ = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+
+    let result_contract_id: Option&lt;ContractId&gt; = src_12_contract_abi.get_contract_id(my_configurables);
     assert(result_contract_id.unwrap() == my_deployed_contract);
 }
 </code></pre>

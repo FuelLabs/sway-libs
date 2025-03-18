@@ -10,10 +10,10 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src3::SRC3;
+    /// use standards::src3::SRC3;
     ///
     /// fn foo(contract_id: ContractId) {
-    ///     let contract_abi = abi(SRC3, contract);
+    ///     let contract_abi = abi(SRC3, contract_id.bits());
     ///     contract_abi.mint(Identity::ContractId(contract_id), SubId::zero(), 100);
     /// }
     /// ```
@@ -34,10 +34,10 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src3::SRC3;
+    /// use standards::src3::SRC3;
     ///
     /// fn foo(contract_id: ContractId, asset_id: AssetId) {
-    ///     let contract_abi = abi(SRC3, contract_id);
+    ///     let contract_abi = abi(SRC3, contract_id.bits());
     ///     contract_abi {
     ///         gas: 10000,
     ///         coins: 100,
@@ -56,10 +56,10 @@
 <li><code>amount</code>: [u64] - The quantity of coins to mint.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src3::SRC3;
+<pre><code class="language-sway">use standards::src3::SRC3;
 
 fn foo(contract_id: ContractId) {
-    let contract_abi = abi(SRC3, contract);
+    let contract_abi = abi(SRC3, contract_id.bits());
     contract_abi.mint(Identity::ContractId(contract_id), SubId::zero(), 100);
 }
 </code></pre>
@@ -73,10 +73,10 @@ the implementing contract and <code>SubId</code> is the given <code>sub_id</code
 <li><code>amount</code>: [u64] - The quantity of coins to burn.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src3::SRC3;
+<pre><code class="language-sway">use standards::src3::SRC3;
 
 fn foo(contract_id: ContractId, asset_id: AssetId) {
-    let contract_abi = abi(SRC3, contract_id);
+    let contract_abi = abi(SRC3, contract_id.bits());
     contract_abi {
         gas: 10000,
         coins: 100,

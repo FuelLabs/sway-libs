@@ -19,6 +19,28 @@
     /// * If the asset is not supported by the contract.
     /// * If the amount of assets forwarded to the contract is zero.
     /// * The user crosses any global or user specific deposit limits.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use standards::src6::SRC6;
+    ///
+    /// fn foo(
+    ///     contract_id: ContractId,
+    ///     receiver: Identity,
+    ///     vault_sub_id: SubId,
+    ///     amount: u64,
+    ///     asset_id: AssetId
+    /// ) {
+    ///     let contract_abi = abi(SRC6, contract_id.bits());
+    ///     let minted_shares: u64 = contract_abi.deposit {
+    ///         gas: 10000,
+    ///         coins: amount,
+    ///         asset_id: asset_id.bits()
+    ///     } (receiver, vault_sub_id);
+    ///     assert(minted_shares != 0);
+    /// }
+    /// ```
     #[payable]
     #[storage(read, write)]
     fn deposit(receiver: Identity, vault_sub_id: SubId) -&gt; u64;
@@ -44,6 +66,27 @@
     /// * If the amount of shares is zero.
     /// * If the transferred shares do not corresspond to the given asset.
     /// * The user crosses any global or user specific withdrawal limits.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use standards::src6::SRC6;
+    ///
+    /// fn foo(
+    ///     contract_id: ContractId,
+    ///     receiver: Identity,
+    ///     underlying_asset: AssetId,
+    ///     vault_sub_id: SubId,
+    ///     share_asset_id: AssetId,
+    ///     amount: u64
+    /// ) {
+    ///     let contract_abi = abi(SRC6, contract_id.bits());
+    ///     let withdrawn_amount: u64 = contract_abi.withdraw {
+    ///         gas: 10000,
+    ///         coins: amount,
+    ///         asset_id: share_asset_id.bits()
+    ///     } (receiver, underlying_asset, vault_sub_id);
+    ///     assert(withdrawn_amount != 0);
     #[payable]
     #[storage(read, write)]
     fn withdraw(
@@ -61,6 +104,22 @@
     /// # Returns
     ///
     /// * [u64] - The amount of managed assets of the given asset.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use standards::src6::SRC6;
+    ///
+    /// fn foo(
+    ///     contract_id: ContractId,
+    ///     underlying_asset: AssetId,
+    ///     vault_sub_id: SubId
+    /// ) {
+    ///     let contract_abi = abi(SRC6, contract_id.bits());
+    ///     let managed_assets: u64 = contract_abi.managed_assets(underlying_asset, vault_sub_id);
+    ///     assert(managed_assets != 0);
+    /// }
+    /// ```
     #[storage(read)]
     fn managed_assets(underlying_asset: AssetId, vault_sub_id: SubId) -&gt; u64;
     /// Returns the maximum amount of assets that can be deposited into the contract, for the given asset.
@@ -79,6 +138,23 @@
     ///
     /// * [Some(u64)] - The maximum amount of assets that can be deposited into the contract, for the given asset.
     /// * [None] - If the asset is not supported by the contract.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use standards::src6::SRC6;
+    ///
+    /// fn foo(
+    ///     contract_id: ContractId,
+    ///     receiver: Identity,
+    ///     underlying_asset: AssetId,
+    ///     vault_sub_id: SubId
+    /// ) {
+    ///     let contract_abi = abi(SRC6, contract_id.bits());
+    ///     let max_depositable: u64 = contract_abi.max_depositable(receiver, underlying_asset, vault_sub_id).unwrap();
+    ///     assert(max_depositable != 0);
+    /// }
+    /// ```
     #[storage(read)]
     fn max_depositable(
         receiver: Identity,
@@ -100,6 +176,22 @@
     ///
     /// * [Some(u64)] - The maximum amount of assets that can be withdrawn from the contract, for the given asset.
     /// * [None] - If the asset is not supported by the contract.
+    ///
+    /// # Examples
+    ///
+    /// ```sway
+    /// use standards::src6::SRC6;
+    ///
+    /// fn foo(
+    ///     contract_id: ContractId,
+    ///     underlying_asset: AssetId,
+    ///     vault_sub_id: SubId
+    /// ) {
+    ///     let contract_abi = abi(SRC6, contract_id.bits());
+    ///     let max_withdrawable: u64 = contract_abi.max_withdrawable(underlying_asset, vault_sub_id).unwrap();
+    ///     assert(max_withdrawable != 0);
+    /// }
+    /// ```
     #[storage(read)]
     fn max_withdrawable(underlying_asset: AssetId, vault_sub_id: SubId) -&gt; Option&lt;u64&gt;;
 }</code></pre></div><h2 id="required-methods" class="required-methods small-section-header">Required Methods<a class="anchor" href="#required-methods"></a></h2><div class="methods"><details class="swaydoc-toggle open"><summary><div id="tymethod.deposit" class="method has-srclink"><a href="#tymethod.deposit" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.deposit">deposit</a>(receiver: Identity, vault_sub_id: SubId) -&gt; u64</h4></div></summary><div class="docblock"><p>Deposits assets into the contract and mints shares to the receiver.</p>
@@ -122,6 +214,25 @@
 <li>If the amount of assets forwarded to the contract is zero.</li>
 <li>The user crosses any global or user specific deposit limits.</li>
 </ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src6::SRC6;
+
+fn foo(
+    contract_id: ContractId,
+    receiver: Identity,
+    vault_sub_id: SubId,
+    amount: u64,
+    asset_id: AssetId
+) {
+    let contract_abi = abi(SRC6, contract_id.bits());
+    let minted_shares: u64 = contract_abi.deposit {
+        gas: 10000,
+        coins: amount,
+        asset_id: asset_id.bits()
+    } (receiver, vault_sub_id);
+    assert(minted_shares != 0);
+}
+</code></pre>
 </div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.withdraw" class="method has-srclink"><a href="#tymethod.withdraw" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.withdraw">withdraw</a>(<br>    receiver: Identity,<br>    underlying_asset: AssetId,<br>    vault_sub_id: SubId,<br>) -&gt; u64</h4></div></summary><div class="docblock"><p>Burns shares from the sender and transfers assets to the receiver.</p>
 <h1>Additional Information</h1>
 <ul>
@@ -144,6 +255,25 @@
 <li>If the transferred shares do not corresspond to the given asset.</li>
 <li>The user crosses any global or user specific withdrawal limits.</li>
 </ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src6::SRC6;
+
+fn foo(
+    contract_id: ContractId,
+    receiver: Identity,
+    underlying_asset: AssetId,
+    vault_sub_id: SubId,
+    share_asset_id: AssetId,
+    amount: u64
+) {
+    let contract_abi = abi(SRC6, contract_id.bits());
+    let withdrawn_amount: u64 = contract_abi.withdraw {
+        gas: 10000,
+        coins: amount,
+        asset_id: share_asset_id.bits()
+    } (receiver, underlying_asset, vault_sub_id);
+    assert(withdrawn_amount != 0);
+</code></pre>
 </div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.managed_assets" class="method has-srclink"><a href="#tymethod.managed_assets" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.managed_assets">managed_assets</a>(<br>    underlying_asset: AssetId,<br>    vault_sub_id: SubId,<br>) -&gt; u64</h4></div></summary><div class="docblock"><p>Returns the amount of managed assets of the given asset.</p>
 <h1>Arguments</h1>
 <ul>
@@ -154,6 +284,19 @@
 <ul>
 <li>[u64] - The amount of managed assets of the given asset.</li>
 </ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src6::SRC6;
+
+fn foo(
+    contract_id: ContractId,
+    underlying_asset: AssetId,
+    vault_sub_id: SubId
+) {
+    let contract_abi = abi(SRC6, contract_id.bits());
+    let managed_assets: u64 = contract_abi.managed_assets(underlying_asset, vault_sub_id);
+    assert(managed_assets != 0);
+}
+</code></pre>
 </div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.max_depositable" class="method has-srclink"><a href="#tymethod.max_depositable" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.max_depositable">max_depositable</a>(<br>    receiver: Identity,<br>    underlying_asset: AssetId,<br>    vault_sub_id: SubId,<br>) -&gt; Option&lt;u64&gt;</h4></div></summary><div class="docblock"><p>Returns the maximum amount of assets that can be deposited into the contract, for the given asset.</p>
 <h1>Additional Information</h1>
 <p>Must account for any user or global limits.</p>
@@ -168,6 +311,20 @@
 <li>[Some(u64)] - The maximum amount of assets that can be deposited into the contract, for the given asset.</li>
 <li>[None] - If the asset is not supported by the contract.</li>
 </ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src6::SRC6;
+
+fn foo(
+    contract_id: ContractId,
+    receiver: Identity,
+    underlying_asset: AssetId,
+    vault_sub_id: SubId
+) {
+    let contract_abi = abi(SRC6, contract_id.bits());
+    let max_depositable: u64 = contract_abi.max_depositable(receiver, underlying_asset, vault_sub_id).unwrap();
+    assert(max_depositable != 0);
+}
+</code></pre>
 </div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.max_withdrawable" class="method has-srclink"><a href="#tymethod.max_withdrawable" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.max_withdrawable">max_withdrawable</a>(<br>    underlying_asset: AssetId,<br>    vault_sub_id: SubId,<br>) -&gt; Option&lt;u64&gt;</h4></div></summary><div class="docblock"><p>Returns the maximum amount of assets that can be withdrawn from the contract, for the given asset.</p>
 <h1>Additional Information</h1>
 <p>Must account for any global limits.</p>
@@ -181,4 +338,17 @@
 <li>[Some(u64)] - The maximum amount of assets that can be withdrawn from the contract, for the given asset.</li>
 <li>[None] - If the asset is not supported by the contract.</li>
 </ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src6::SRC6;
+
+fn foo(
+    contract_id: ContractId,
+    underlying_asset: AssetId,
+    vault_sub_id: SubId
+) {
+    let contract_abi = abi(SRC6, contract_id.bits());
+    let max_withdrawable: u64 = contract_abi.max_withdrawable(underlying_asset, vault_sub_id).unwrap();
+    assert(max_withdrawable != 0);
+}
+</code></pre>
 </div></details></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>

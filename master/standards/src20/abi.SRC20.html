@@ -8,11 +8,11 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src20::SRC20;
+    /// use standards::src20::SRC20;
     ///
-    /// fn foo(contract: ContractId) {
-    ///     let contract_abi = abi(SRC20, contract);
-    ///     let total_assets = contract_abi.total_assets();
+    /// fn foo(contract_id: ContractId) {
+    ///     let contract_abi = abi(SRC20, contract_id.bits());
+    ///     let total_assets: u64 = contract_abi.total_assets();
     ///     assert(total_assets != 0);
     /// }
     /// ```
@@ -31,11 +31,11 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src20::SRC20;
+    /// use standards::src20::SRC20;
     ///
-    /// fn foo(contract: ContractId, asset: AssetId) {
-    ///     let contract_abi = abi(SRC20, contract);
-    ///     let total_supply = contract_abi.total_supply(asset);
+    /// fn foo(contract_id: ContractId, asset: AssetId) {
+    ///     let contract_abi = abi(SRC20, contract_id.bits());
+    ///     let total_supply: Option&lt;u64&gt; = contract_abi.total_supply(asset);
     ///     assert(total_supply.unwrap() != 0);
     /// }
     /// ```
@@ -54,12 +54,12 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src20::SRC20;
+    /// use standards::src20::SRC20;
     /// use std::string::String;
     ///
-    /// fn foo(contract: ContractId, asset: AssetId) {
-    ///     let contract_abi = abi(SRC20, contract);
-    ///     let name = contract_abi.name(asset);
+    /// fn foo(contract_id: ContractId, asset: AssetId) {
+    ///     let contract_abi = abi(SRC20, contract_id.bits());
+    ///     let name: Option&lt;String&gt; = contract_abi.name(asset);
     ///     assert(name.is_some());
     /// }
     /// ```
@@ -78,12 +78,12 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src20::SRC20;
+    /// use standards::src20::SRC20;
     /// use std::string::String;
     ///
-    /// fn foo(contract: ContractId, asset: AssetId) {
-    ///     let contract_abi = abi(SRC20, contract);
-    ///     let symbol = contract_abi.symbol(asset);
+    /// fn foo(contract_id: ContractId, asset: AssetId) {
+    ///     let contract_abi = abi(SRC20, contract_id.bits());
+    ///     let symbol: Option&lt;String&gt; = contract_abi.symbol(asset);
     ///     assert(symbol.is_some());
     /// }
     /// ```
@@ -106,11 +106,11 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src20::SRC20;
+    /// use standards::src20::SRC20;
     ///
-    /// fn foo(contract: ContractId, asset: AssedId) {
-    ///     let contract_abi = abi(SRC20, contract);
-    ///     let decimals = contract_abi.decimals(asset);
+    /// fn foo(contract_id: ContractId, asset: AssedId) {
+    ///     let contract_abi = abi(SRC20, contract_id.bits());
+    ///     let decimals: Option&lt;u8&gt; = contract_abi.decimals(asset);
     ///     assert(decimals.unwrap() == 8u8);
     /// }
     /// ```
@@ -122,11 +122,11 @@
 <li>[u64] - The number of assets that this contract has minted.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src20::SRC20;
+<pre><code class="language-sway">use standards::src20::SRC20;
 
-fn foo(contract: ContractId) {
-    let contract_abi = abi(SRC20, contract);
-    let total_assets = contract_abi.total_assets();
+fn foo(contract_id: ContractId) {
+    let contract_abi = abi(SRC20, contract_id.bits());
+    let total_assets: u64 = contract_abi.total_assets();
     assert(total_assets != 0);
 }
 </code></pre>
@@ -140,11 +140,11 @@ fn foo(contract: ContractId) {
 <li>[Option<!-- raw HTML omitted -->] - The total supply of coins for <code>asset</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src20::SRC20;
+<pre><code class="language-sway">use standards::src20::SRC20;
 
-fn foo(contract: ContractId, asset: AssetId) {
-    let contract_abi = abi(SRC20, contract);
-    let total_supply = contract_abi.total_supply(asset);
+fn foo(contract_id: ContractId, asset: AssetId) {
+    let contract_abi = abi(SRC20, contract_id.bits());
+    let total_supply: Option&lt;u64&gt; = contract_abi.total_supply(asset);
     assert(total_supply.unwrap() != 0);
 }
 </code></pre>
@@ -158,12 +158,12 @@ fn foo(contract: ContractId, asset: AssetId) {
 <li>[Option<!-- raw HTML omitted -->] - The name of <code>asset</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src20::SRC20;
+<pre><code class="language-sway">use standards::src20::SRC20;
 use std::string::String;
 
-fn foo(contract: ContractId, asset: AssetId) {
-    let contract_abi = abi(SRC20, contract);
-    let name = contract_abi.name(asset);
+fn foo(contract_id: ContractId, asset: AssetId) {
+    let contract_abi = abi(SRC20, contract_id.bits());
+    let name: Option&lt;String&gt; = contract_abi.name(asset);
     assert(name.is_some());
 }
 </code></pre>
@@ -177,12 +177,12 @@ fn foo(contract: ContractId, asset: AssetId) {
 <li>[Option<!-- raw HTML omitted -->] - The symbol of <code>asset</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src20::SRC20;
+<pre><code class="language-sway">use standards::src20::SRC20;
 use std::string::String;
 
-fn foo(contract: ContractId, asset: AssetId) {
-    let contract_abi = abi(SRC20, contract);
-    let symbol = contract_abi.symbol(asset);
+fn foo(contract_id: ContractId, asset: AssetId) {
+    let contract_abi = abi(SRC20, contract_id.bits());
+    let symbol: Option&lt;String&gt; = contract_abi.symbol(asset);
     assert(symbol.is_some());
 }
 </code></pre>
@@ -198,11 +198,11 @@ fn foo(contract: ContractId, asset: AssetId) {
 <li>[Option<!-- raw HTML omitted -->] - The decimal precision used by <code>asset</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src20::SRC20;
+<pre><code class="language-sway">use standards::src20::SRC20;
 
-fn foo(contract: ContractId, asset: AssedId) {
-    let contract_abi = abi(SRC20, contract);
-    let decimals = contract_abi.decimals(asset);
+fn foo(contract_id: ContractId, asset: AssedId) {
+    let contract_abi = abi(SRC20, contract_id.bits());
+    let decimals: Option&lt;u8&gt; = contract_abi.decimals(asset);
     assert(decimals.unwrap() == 8u8);
 }
 </code></pre>

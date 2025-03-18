@@ -8,10 +8,10 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src10::SRC10;
+    /// use standards::src10::SRC10;
     ///
     /// fn foo(message_index: u64, bridge: ContractId) {
-    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     let bridge_abi = abi(SRC10, bridge.bits());
     ///     bridge_abi.process_message(message_index);
     /// }
     /// ```
@@ -28,10 +28,10 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src10::SRC10;
+    /// use standards::src10::SRC10;
     ///
     /// fn foo(to_address: b256, bridge: ContractId, bridged_asset: AssetId) {
-    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     let bridge_abi = abi(SRC10, bridge.bits());
     ///     bridge_abi {
     ///         gas: 10000,
     ///         coins: 100,
@@ -53,10 +53,10 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src10::SRC10;
+    /// use standards::src10::SRC10;
     ///
     /// fn foo(to_address: b256, token_address: b256, token_id: b256, gateway_contract: b256, bridge: ContractId) {
-    ///     let bridge_abi = abi(SRC10, bridge.value);
+    ///     let bridge_abi = abi(SRC10, bridge.bits());
     ///     bridge_abi.claim_refund(to_address, token_address, token_id, gateway_contract);
     /// }
     /// ```
@@ -73,10 +73,10 @@
 <li><code>message_index</code>: [u64] - The index of the message to parse.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src10::SRC10;
+<pre><code class="language-sway">use standards::src10::SRC10;
 
 fn foo(message_index: u64, bridge: ContractId) {
-    let bridge_abi = abi(SRC10, bridge.value);
+    let bridge_abi = abi(SRC10, bridge.bits());
     bridge_abi.process_message(message_index);
 }
 </code></pre>
@@ -88,10 +88,10 @@ fn foo(message_index: u64, bridge: ContractId) {
 <li><code>gateway_contract</code>: [b256] - The contract that holds the deposited tokens on the canonical chain.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src10::SRC10;
+<pre><code class="language-sway">use standards::src10::SRC10;
 
 fn foo(to_address: b256, bridge: ContractId, bridged_asset: AssetId) {
-    let bridge_abi = abi(SRC10, bridge.value);
+    let bridge_abi = abi(SRC10, bridge.bits());
     bridge_abi {
         gas: 10000,
         coins: 100,
@@ -108,10 +108,10 @@ fn foo(to_address: b256, bridge: ContractId, bridged_asset: AssetId) {
 <li><code>gateway_contract</code>: [b256] - The contract that holds the deposited tokens on the canonical chain.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src10::SRC10;
+<pre><code class="language-sway">use standards::src10::SRC10;
 
 fn foo(to_address: b256, token_address: b256, token_id: b256, gateway_contract: b256, bridge: ContractId) {
-    let bridge_abi = abi(SRC10, bridge.value);
+    let bridge_abi = abi(SRC10, bridge.bits());
     bridge_abi.claim_refund(to_address, token_address, token_id, gateway_contract);
 }
 </code></pre>

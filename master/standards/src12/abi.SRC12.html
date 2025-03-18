@@ -13,11 +13,12 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src12::SRC12;
+    /// use standards::src12::SRC12;
     ///
-    /// fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    ///     let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    ///     src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    /// fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    ///     let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    ///     let result = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    ///     assert(result.is_ok());
     ///     assert(src_12_contract_abi.is_valid(my_deployed_contract));
     /// }
     /// ```
@@ -39,12 +40,14 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src12::SRC12;
+    /// use standards::src12::SRC12;
     ///
-    /// fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    ///     let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    ///     src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
-    ///     assert(src_12_contract_abi.is_valid(my_deployed_contract));
+    /// fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    ///     let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    ///     let _ = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    ///
+    ///     let result: bool = src_12_contract_abi.is_valid(my_deployed_contract)
+    ///     assert(result);
     /// }
     /// ```
     #[storage(read)]
@@ -58,11 +61,11 @@
     /// # Examples
     ///
     /// ```sway
-    /// use src12::SRC12;
+    /// use standards::src12::SRC12;
     ///
-    /// fn foo(my_src_12_contract: ContractId) {
-    ///     let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    ///     let root = src_12_contract_abi.factory_bytecode_root();
+    /// fn foo(src_12_contract: ContractId) {
+    ///     let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    ///     let root: Option&lt;BytecodeRoot&gt; = src_12_contract_abi.factory_bytecode_root();
     ///     assert(root.unwrap() != b256::zero());
     /// }
     /// ```
@@ -79,11 +82,12 @@
 <li>[Result&lt;BytecodeRoot, str&gt;] - Either the bytecode root of the newly registered contract or a <code>str</code> error message.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src12::SRC12;
+<pre><code class="language-sway">use standards::src12::SRC12;
 
-fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    let result = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+    assert(result.is_ok());
     assert(src_12_contract_abi.is_valid(my_deployed_contract));
 }
 </code></pre>
@@ -97,12 +101,14 @@ fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_conf
 <li>[bool] - <code>true</code> if the contract has registered and is valid, otherwise <code>false</code>.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src12::SRC12;
+<pre><code class="language-sway">use standards::src12::SRC12;
 
-fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
-    let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
-    assert(src_12_contract_abi.is_valid(my_deployed_contract));
+fn foo(src_12_contract: ContractId, my_deployed_contract: ContractId, my_configurables: Option&lt;ContractConfigurables&gt;) {
+    let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    let _ = src_12_contract_abi.register_contract(my_deployed_contract, my_configurables);
+
+    let result: bool = src_12_contract_abi.is_valid(my_deployed_contract)
+    assert(result);
 }
 </code></pre>
 </div></details><details class="swaydoc-toggle open"><summary><div id="tymethod.factory_bytecode_root" class="method has-srclink"><a href="#tymethod.factory_bytecode_root" class="anchor"></a><h4 class="code-header">fn <a class="fnname" href="#tymethod.factory_bytecode_root">factory_bytecode_root</a>() -&gt; Option&lt;BytecodeRoot&gt;</h4></div></summary><div class="docblock"><p>Returns the bytecode root of the default template contract.</p>
@@ -111,11 +117,11 @@ fn foo(my_src_12_contract: ContractId, my_deployed_contract: ContractId, my_conf
 <li>[Option<!-- raw HTML omitted -->] - The bytecode root of the default template contract.</li>
 </ul>
 <h1>Examples</h1>
-<pre><code class="language-sway">use src12::SRC12;
+<pre><code class="language-sway">use standards::src12::SRC12;
 
-fn foo(my_src_12_contract: ContractId) {
-    let src_12_contract_abi = abi(SRC12, my_src_12_contract.bits());
-    let root = src_12_contract_abi.factory_bytecode_root();
+fn foo(src_12_contract: ContractId) {
+    let src_12_contract_abi = abi(SRC12, src_12_contract.bits());
+    let root: Option&lt;BytecodeRoot&gt; = src_12_contract_abi.factory_bytecode_root();
     assert(root.unwrap() != b256::zero());
 }
 </code></pre>
