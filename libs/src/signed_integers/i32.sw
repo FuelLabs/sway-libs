@@ -38,13 +38,15 @@ impl I32 {
     }
 }
 
-impl core::ops::Eq for I32 {
+impl PartialEq for I32 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I32 {
+impl Eq for I32 {}
+
+impl Ord for I32 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,9 @@ impl core::ops::Ord for I32 {
     }
 }
 
-impl core::ops::OrdEq for I32 {}
+impl OrdEq for I32 {}
 
-impl core::ops::TotalOrd for I32 {
+impl TotalOrd for I32 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -276,7 +278,7 @@ impl I32 {
     }
 }
 
-impl core::ops::Add for I32 {
+impl Add for I32 {
     /// Add a I32 to a I32. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -295,7 +297,7 @@ impl core::ops::Add for I32 {
     }
 }
 
-impl core::ops::Subtract for I32 {
+impl Subtract for I32 {
     /// Subtract a I32 from a I32. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -320,7 +322,7 @@ impl core::ops::Subtract for I32 {
     }
 }
 
-impl core::ops::Multiply for I32 {
+impl Multiply for I32 {
     /// Multiply a I32 with a I32. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -353,7 +355,7 @@ impl core::ops::Multiply for I32 {
     }
 }
 
-impl core::ops::Divide for I32 {
+impl Divide for I32 {
     /// Divide a I32 by a I32. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         if panic_on_unsafe_math_enabled() {

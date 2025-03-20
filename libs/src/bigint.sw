@@ -417,7 +417,7 @@ impl Into<Bytes> for BigUint {
     }
 }
 
-impl core::ops::Eq for BigUint {
+impl PartialEq for BigUint {
     fn eq(self, other: Self) -> bool {
         if self.limbs.len() != other.limbs.len() {
             false
@@ -436,7 +436,9 @@ impl core::ops::Eq for BigUint {
     }
 }
 
-impl core::ops::Ord for BigUint {
+impl Eq for BigUint {}
+
+impl Ord for BigUint {
     fn gt(self, other: Self) -> bool {
         // Save some gas by assuming anything with more limbs is larger
         if self.limbs.len() == other.limbs.len() {
@@ -482,7 +484,7 @@ impl core::ops::Ord for BigUint {
     }
 }
 
-impl core::ops::OrdEq for BigUint {}
+impl OrdEq for BigUint {}
 
 fn add_with_carry_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     let a_u128: U128 = a.into();
@@ -493,7 +495,7 @@ fn add_with_carry_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     sum.into()
 }
 
-impl core::ops::Add for BigUint {
+impl Add for BigUint {
     fn add(self, other: Self) -> Self {
         // Determine the length and setup variables
         let max_limbs = self.limbs.len().max(other.limbs.len());
@@ -542,7 +544,7 @@ fn mac_with_carry_u64(acc: u64, a: u64, b: u64, c: u64) -> (u64, u64) {
     res.into()
 }
 
-impl core::ops::Multiply for BigUint {
+impl Multiply for BigUint {
     fn multiply(self, other: Self) -> Self {
         // Determine the length and setup variables
         let self_number_of_limbs = self.limbs.len();
@@ -613,7 +615,7 @@ fn sub_with_borrow_u64(a: u64, b: u64, c: u64) -> (u64, u64) {
     (diff_lsw, carry)
 }
 
-impl core::ops::Subtract for BigUint {
+impl Subtract for BigUint {
     fn subtract(self, other: Self) -> Self {
         // No negative numbers
         if self < other {

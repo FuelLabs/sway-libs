@@ -41,13 +41,15 @@ impl I256 {
     }
 }
 
-impl core::ops::Eq for I256 {
+impl PartialEq for I256 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I256 {
+impl Eq for I256 {}
+
+impl Ord for I256 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -57,9 +59,9 @@ impl core::ops::Ord for I256 {
     }
 }
 
-impl core::ops::OrdEq for I256 {}
+impl OrdEq for I256 {}
 
-impl core::ops::TotalOrd for I256 {
+impl TotalOrd for I256 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -279,7 +281,7 @@ impl I256 {
     }
 }
 
-impl core::ops::Add for I256 {
+impl Add for I256 {
     /// Add a I256 to a I256. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
@@ -299,7 +301,7 @@ impl core::ops::Add for I256 {
     }
 }
 
-impl core::ops::Divide for I256 {
+impl Divide for I256 {
     /// Divide a I256 by a I256. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         if panic_on_unsafe_math_enabled() {
@@ -327,7 +329,7 @@ impl core::ops::Divide for I256 {
     }
 }
 
-impl core::ops::Multiply for I256 {
+impl Multiply for I256 {
     /// Multiply a I256 with a I256. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -360,7 +362,7 @@ impl core::ops::Multiply for I256 {
     }
 }
 
-impl core::ops::Subtract for I256 {
+impl Subtract for I256 {
     /// Subtract a I256 from a I256. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();

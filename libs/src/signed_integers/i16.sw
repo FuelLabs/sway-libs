@@ -38,13 +38,15 @@ impl I16 {
     }
 }
 
-impl core::ops::Eq for I16 {
+impl PartialEq for I16 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I16 {
+impl Eq for I16 {}
+
+impl Ord for I16 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,9 @@ impl core::ops::Ord for I16 {
     }
 }
 
-impl core::ops::OrdEq for I16 {}
+impl OrdEq for I16 {}
 
-impl core::ops::TotalOrd for I16 {
+impl TotalOrd for I16 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -276,7 +278,7 @@ impl I16 {
     }
 }
 
-impl core::ops::Add for I16 {
+impl Add for I16 {
     /// Add a I16 to a I16. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -295,7 +297,7 @@ impl core::ops::Add for I16 {
     }
 }
 
-impl core::ops::Divide for I16 {
+impl Divide for I16 {
     /// Divide a I16 by a I16. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         if panic_on_unsafe_math_enabled() {
@@ -336,7 +338,7 @@ impl core::ops::Divide for I16 {
     }
 }
 
-impl core::ops::Multiply for I16 {
+impl Multiply for I16 {
     /// Multiply a I16 with a I16. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -369,7 +371,7 @@ impl core::ops::Multiply for I16 {
     }
 }
 
-impl core::ops::Subtract for I16 {
+impl Subtract for I16 {
     /// Subtract a I16 from a I16. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();

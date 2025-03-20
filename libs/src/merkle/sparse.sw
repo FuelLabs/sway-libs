@@ -171,7 +171,7 @@ impl InclusionProof {
     }
 }
 
-impl core::ops::Eq for InclusionProof {
+impl PartialEq for InclusionProof {
     fn eq(self, other: Self) -> bool {
         if self.proof_set.len() != other.proof_set.len() {
             return false;
@@ -190,6 +190,8 @@ impl core::ops::Eq for InclusionProof {
         true
     }
 }
+
+impl Eq for InclusionProof {}
 
 impl Clone for InclusionProof {
     fn clone(self) -> Self {
@@ -284,11 +286,13 @@ impl ExclusionLeafData {
     }
 }
 
-impl core::ops::Eq for ExclusionLeafData {
+impl PartialEq for ExclusionLeafData {
     fn eq(self, other: Self) -> bool {
         self.leaf_key == other.leaf_key && self.leaf_value == other.leaf_value
     }
 }
+
+impl Eq for ExclusionLeafData {}
 
 /// An Exclusion Proof Leaf for a Sparse Merkle Tree.
 pub enum ExclusionLeaf {
@@ -367,7 +371,7 @@ impl ExclusionLeaf {
     }
 }
 
-impl core::ops::Eq for ExclusionLeaf {
+impl PartialEq for ExclusionLeaf {
     fn eq(self, other: Self) -> bool {
         match (self, other) {
             (ExclusionLeaf::Leaf(leaf_data_1), ExclusionLeaf::Leaf(leaf_data_2)) => leaf_data_1 == leaf_data_2,
@@ -376,6 +380,8 @@ impl core::ops::Eq for ExclusionLeaf {
         }
     }
 }
+
+impl Eq for ExclusionLeaf {}
 
 /// An Exclusion Proof for a Sparse Merkle Tree.
 pub struct ExclusionProof {
@@ -523,7 +529,7 @@ impl ExclusionProof {
     }
 }
 
-impl core::ops::Eq for ExclusionProof {
+impl PartialEq for ExclusionProof {
     fn eq(self, other: Self) -> bool {
         if self.proof_set.len() != other.proof_set.len()
             || self.leaf != other.leaf
@@ -544,6 +550,8 @@ impl core::ops::Eq for ExclusionProof {
         true
     }
 }
+
+impl Eq for ExclusionProof {}
 
 impl Clone for ExclusionProof {
     fn clone(self) -> Self {
@@ -781,7 +789,7 @@ impl Proof {
     }
 }
 
-impl core::ops::Eq for Proof {
+impl PartialEq for Proof {
     fn eq(self, other: Self) -> bool {
         match (self, other) {
             (Proof::Inclusion(in_proof_1), Proof::Inclusion(in_proof_2)) => in_proof_1 == in_proof_2,
@@ -790,6 +798,8 @@ impl core::ops::Eq for Proof {
         }
     }
 }
+
+impl Eq for Proof {}
 
 /// Returns the computed leaf hash of "MTH(D[n]) = SHA-256(0x00 || MTH(D[0:k]) || MTH(D[k:n]))".
 ///

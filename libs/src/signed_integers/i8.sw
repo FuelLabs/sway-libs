@@ -38,13 +38,15 @@ impl I8 {
     }
 }
 
-impl core::ops::Eq for I8 {
+impl PartialEq for I8 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I8 {
+impl Eq for I8 {}
+
+impl Ord for I8 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -54,9 +56,9 @@ impl core::ops::Ord for I8 {
     }
 }
 
-impl core::ops::OrdEq for I8 {}
+impl OrdEq for I8 {}
 
-impl core::ops::TotalOrd for I8 {
+impl TotalOrd for I8 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -276,7 +278,7 @@ impl I8 {
     }
 }
 
-impl core::ops::Add for I8 {
+impl Add for I8 {
     /// Add a I8 to a I8. Panics on overflow.
     fn add(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -295,7 +297,7 @@ impl core::ops::Add for I8 {
     }
 }
 
-impl core::ops::Divide for I8 {
+impl Divide for I8 {
     /// Divide a I8 by a I8. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         if panic_on_unsafe_math_enabled() {
@@ -336,7 +338,7 @@ impl core::ops::Divide for I8 {
     }
 }
 
-impl core::ops::Multiply for I8 {
+impl Multiply for I8 {
     /// Multiply a I8 with a I8. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -369,7 +371,7 @@ impl core::ops::Multiply for I8 {
     }
 }
 
-impl core::ops::Subtract for I8 {
+impl Subtract for I8 {
     /// Subtract a I8 from a I8. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();

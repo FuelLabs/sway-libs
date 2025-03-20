@@ -39,13 +39,15 @@ impl I128 {
     }
 }
 
-impl core::ops::Eq for I128 {
+impl PartialEq for I128 {
     fn eq(self, other: Self) -> bool {
         self.underlying == other.underlying
     }
 }
 
-impl core::ops::Ord for I128 {
+impl Eq for I128 {}
+
+impl Ord for I128 {
     fn gt(self, other: Self) -> bool {
         self.underlying > other.underlying
     }
@@ -55,9 +57,9 @@ impl core::ops::Ord for I128 {
     }
 }
 
-impl core::ops::OrdEq for I128 {}
+impl OrdEq for I128 {}
 
-impl core::ops::TotalOrd for I128 {
+impl TotalOrd for I128 {
     fn min(self, other: Self) -> Self {
         if self.underlying < other.underlying {
             self
@@ -282,7 +284,7 @@ impl I128 {
     }
 }
 
-impl core::ops::Add for I128 {
+impl Add for I128 {
     /// Add a I128 to a I128. Panics on overflow.
     fn add(self, other: Self) -> Self {
         // subtract 1 << 63 to avoid double move
@@ -303,7 +305,7 @@ impl core::ops::Add for I128 {
     }
 }
 
-impl core::ops::Divide for I128 {
+impl Divide for I128 {
     /// Divide a I128 by a I128. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
         if panic_on_unsafe_math_enabled() {
@@ -345,7 +347,7 @@ impl core::ops::Divide for I128 {
     }
 }
 
-impl core::ops::Multiply for I128 {
+impl Multiply for I128 {
     /// Multiply a I128 with a I128. Panics of overflow.
     fn multiply(self, other: Self) -> Self {
         let mut res = Self::new();
@@ -378,7 +380,7 @@ impl core::ops::Multiply for I128 {
     }
 }
 
-impl core::ops::Subtract for I128 {
+impl Subtract for I128 {
     /// Subtract a I128 from a I128. Panics of overflow.
     fn subtract(self, other: Self) -> Self {
         let mut res = Self::new();

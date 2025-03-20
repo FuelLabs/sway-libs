@@ -33,47 +33,34 @@ fn swap(
 // ANCHOR_END: swap_configurables
 
 // ANCHOR: compute_bytecode_root
-fn compute_bytecode(my_bytecode: Vec<u8>) {
-    let root: BytecodeRoot = compute_bytecode_root(my_bytecode);
-}
-
-fn compute_bytecode_configurables(
+fn compute_bytecode(
     my_bytecode: Vec<u8>,
-    my_configurables: ContractConfigurables,
+    my_configurables: Option<ContractConfigurables>,
 ) {
     let mut my_bytecode = my_bytecode;
-    let root: BytecodeRoot = compute_bytecode_root_with_configurables(my_bytecode, my_configurables);
+    let root: BytecodeRoot = compute_bytecode_root(my_bytecode, my_configurables);
 }
 // ANCHOR_END: compute_bytecode_root
 
 // ANCHOR: verify_contract_bytecode
-fn verify_contract(my_contract: ContractId, my_bytecode: Vec<u8>) {
-    verify_contract_bytecode(my_contract, my_bytecode);
-    // By reaching this line the contract has been verified to match the bytecode provided.
-}
-
-fn verify_contract_configurables(
+fn verify_contract(
     my_contract: ContractId,
     my_bytecode: Vec<u8>,
-    my_configurables: ContractConfigurables,
+    my_configurables: Option<ContractConfigurables>,
 ) {
     let mut my_bytecode = my_bytecode;
-    verify_contract_bytecode_with_configurables(my_contract, my_bytecode, my_configurables);
+    verify_contract_bytecode(my_contract, my_bytecode, my_configurables);
     // By reaching this line the contract has been verified to match the bytecode provided.
 }
 // ANCHOR_END: verify_contract_bytecode
 
 // ANCHOR: compute_predicate_address
-fn compute_predicate(my_bytecode: Vec<u8>) {
-    let address: Address = compute_predicate_address(my_bytecode);
-}
-
-fn compute_predicate_configurables(
+fn compute_predicate(
     my_bytecode: Vec<u8>,
-    my_configurables: ContractConfigurables,
+    my_configurables: Option<ContractConfigurables>,
 ) {
     let mut my_bytecode = my_bytecode;
-    let address: Address = compute_predicate_address_with_configurables(my_bytecode, my_configurables);
+    let address: Address = compute_predicate_address(my_bytecode, my_configurables);
 }
 // ANCHOR_END: compute_predicate_address
 
@@ -84,18 +71,13 @@ fn predicate_address(my_root: BytecodeRoot) {
 // ANCHOR_END: predicate_address_from_root
 
 // ANCHOR: verify_predicate_address
-fn verify_predicate(my_predicate: Address, my_bytecode: Vec<u8>) {
-    verify_predicate_address(my_predicate, my_bytecode);
-    // By reaching this line the predicate bytecode matches the address provided.
-}
-
-fn verify_predicate_configurables(
+fn verify_predicate(
     my_predicate: Address,
     my_bytecode: Vec<u8>,
-    my_configurables: ContractConfigurables,
+    my_configurables: Option<ContractConfigurables>,
 ) {
     let mut my_bytecode = my_bytecode;
-    verify_predicate_address_with_configurables(my_predicate, my_bytecode, my_configurables);
+    verify_predicate_address(my_predicate, my_bytecode, my_configurables);
     // By reaching this line the predicate bytecode matches the address provided.
 }
 // ANCHOR_END: verify_predicate_address
