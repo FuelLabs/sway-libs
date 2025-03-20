@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-- Some change here.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Switches signed integer tests from SDK tests to inline tests.
 - Some change here.
 
 ### Fixed
