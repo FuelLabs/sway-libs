@@ -9,18 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Some addition here.
-- Some addition here.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Adds additional arithmetic operation tests for signed integers.
 
 ### Changed
 
-- Some change here.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Switches signed integer tests from SDK tests to inline tests.
 - Some change here.
 
 ### Fixed
 
-- Some fix here.
-- Some fix here.
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Fixes signed integers to not revert when unsafe math and overflow is enabled.
 
 ### Breaking
 
