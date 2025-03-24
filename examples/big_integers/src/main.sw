@@ -130,3 +130,27 @@ fn is_zero() {
     assert(big_int.is_zero());
 }
 // ANCHOR_END: is_zero
+
+fn limbs(big_int: BigUint) {
+    // ANCHOR: limbs
+    let limbs: Vec<u64> = big_int.limbs();
+    // ANCHOR_END: limbs
+}
+
+fn get_limb(big_int: BigUint) {
+    // ANCHOR: get_limb
+    let limb: Option<u64> = big_int.get_limb(0);
+    // ANCHOR_END: get_limb
+}
+
+fn number_of_limbs(big_int: BigUint) {
+    // ANCHOR: number_of_limbs
+    let number_of_limbs: u64 = big_int.number_of_limbs();
+    // ANCHOR_END: number_of_limbs
+}
+
+fn equal_limb_size(big_int_1: BigUint, big_int_2: BigUint) {
+    // ANCHOR: equal_limb_size
+    let result: bool = big_int_1.equal_limb_size(big_int_2);
+    // ANCHOR_END: equal_limb_size
+}
