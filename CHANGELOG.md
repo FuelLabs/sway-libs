@@ -9,21 +9,44 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Adds additional arithmetic operation tests for signed integers.
+- Something added here.
+- Something added here.
 
 ### Changed
 
-- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Switches signed integer tests from SDK tests to inline tests.
+- Some change here.
 - Some change here.
 
 ### Fixed
 
-- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Fixes signed integers to not revert when unsafe math and overflow is enabled.
+- Some fix here.
+- Some fix here.
 
 ### Breaking
 
 - Some breaking change here.
 - Some breaking change here.
+
+## [Version 0.25.1]
+
+### Added v0.25.1
+
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Adds additional arithmetic operation tests for signed integers.
+
+### Changed v0.25.1
+
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Switches signed integer tests from SDK tests to inline tests.
+- [#338](https://github.com/FuelLabs/sway-libs/pull/338) Updates the code owners from the SwayEx to the Onchain team.
+- [#339](https://github.com/FuelLabs/sway-libs/pull/339) Prepares for the `v0.25.1` release.
+
+### Fixed  v0.25.1
+
+- [#332](https://github.com/FuelLabs/sway-libs/pull/332) Fixes signed integers to not revert when unsafe math and overflow is enabled.
+- [#337](https://github.com/FuelLabs/sway-libs/pull/337) Fixes missing docs in the `BigUint` underlying type section.
+
+### Breaking v0.25.1
+
+- None
 
 ## [Version 0.25.0]
 
