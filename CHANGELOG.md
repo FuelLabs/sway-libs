@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed v0.25.1
 
 - [#332](https://github.com/FuelLabs/sway-libs/pull/332) Switches signed integer tests from SDK tests to inline tests.
+- [#338](https://github.com/FuelLabs/sway-libs/pull/338) Updates the code owners from the SwayEx to the Onchain team.
+- [#339](https://github.com/FuelLabs/sway-libs/pull/339) Prepares for the `v0.25.1` release.
 
 ### Fixed  v0.25.1
 
