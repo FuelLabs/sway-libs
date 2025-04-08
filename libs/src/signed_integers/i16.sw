@@ -1,6 +1,6 @@
 library;
 
-use std::convert::TryFrom;
+use std::{convert::{TryFrom, TryInto}, flags::panic_on_unsafe_math_enabled};
 use ::signed_integers::errors::Error;
 use ::signed_integers::common::WrappingNeg;
 
@@ -300,7 +300,10 @@ impl Add for I16 {
 impl Divide for I16 {
     /// Divide a I16 by a I16. Panics if divisor is zero.
     fn divide(self, divisor: Self) -> Self {
-        require(divisor != Self::new(), Error::ZeroDivisor);
+        if panic_on_unsafe_math_enabled() {
+            require(divisor != Self::new(), Error::ZeroDivisor);
+        }
+
         let mut res = Self::new();
         if self.underlying >= Self::indent()
             && divisor.underlying > Self::indent()
@@ -409,10 +412,20 @@ impl WrappingNeg for I16 {
 impl TryFrom<u16> for I16 {
     fn try_from(value: u16) -> Option<Self> {
         // as the minimal value of I16 is -I16::indent() (1 << 15) we should add I16::indent() (1 << 15)
-        if value < u16::max() - Self::indent() {
+        if value < Self::indent() {
             Some(Self {
                 underlying: value + Self::indent(),
             })
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<u16> for I16 {
+    fn try_into(self) -> Option<u16> {
+        if self.underlying >= Self::indent() {
+            Some(self.underlying - Self::indent())
         } else {
             None
         }
@@ -423,6 +436,18 @@ impl TryFrom<I16> for u16 {
     fn try_from(value: I16) -> Option<Self> {
         if value >= I16::zero() {
             Some(value.underlying - I16::indent())
+        } else {
+            None
+        }
+    }
+}
+
+impl TryInto<I16> for u16 {
+    fn try_into(self) -> Option<I16> {
+        if self < I16::indent() {
+            Some(I16 {
+                underlying: self + I16::indent(),
+            })
         } else {
             None
         }
