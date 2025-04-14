@@ -45,7 +45,7 @@ fn transfer_contract_ownership(new_owner: Identity) {
     // The caller must be the current owner.
     transfer_ownership(new_owner);
 }
-// ANCHOR: transfer_ownership
+// ANCHOR_END: transfer_ownership
 
 // ANCHOR: renouncing_ownership
 #[storage(read, write)]
@@ -54,4 +54,4 @@ fn renounce_contract_owner() {
     renounce_ownership();
     // Now no one owns the contract.
 }
-// ANCHOR: renouncing_ownership
+// ANCHOR_END: renouncing_ownership
