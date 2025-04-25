@@ -27,6 +27,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Some breaking change here.
 - Some breaking change here.
 
+## [Version 0.25.2]
+
+### Added
+
+- None
+
+### Changed
+
+- None
+
+### Fixed v0.25.2
+
+- [#342](https://github.com/FuelLabs/sway-libs/pull/342) Puts module comment on top of file since module comments after the file type are no longer allowed.
+
+### Breaking
+
+- None
+
 ## [Version 0.25.1]
 
 ### Added v0.25.1
