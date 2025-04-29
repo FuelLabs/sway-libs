@@ -1,7 +1,7 @@
-library;
 //! A reentrancy check for use in Sway contracts.
 //! Note that this only works in internal contexts.
 //! to prevent reentrancy: `assert(!is_reentrant());`
+library;
 
 pub mod errors;
 

@@ -61,4 +61,4 @@ impl MyContract for Contract {
         _owner()
     }
 }
-// ANCHOR: example_contract
+// ANCHOR_END: example_contract
