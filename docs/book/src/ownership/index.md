@@ -37,6 +37,12 @@ Establishes the initial ownership state by calling `initialize_ownership(new_own
 {{#include ../../../../examples/ownership/src/lib.sw:initialize}}
 ```
 
+Please note that the example above does not apply any restrictions on who may call the `initialize()` function. This leaves the opportunity for a bad actor to front-run your contract and claim ownership for themselves. To ensure the intended `Identity` is set as the contract owner upon contract deployment, use a `configurable` where the `INITIAL_OWNER` is the intended owner of the contract.
+
+```sway
+{{#include ../../../../examples/ownership_configurable/src/main.sw:ownership_configurable}}
+```
+
 ### Applying Restrictions
 
 Protect functions so only the owner can call them by invoking `only_owner()` at the start of those functions.

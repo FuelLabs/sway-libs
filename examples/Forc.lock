@@ -85,6 +85,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ownership_configurable_examples"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "ownership_examples"
 source = "member"
 dependencies = [
