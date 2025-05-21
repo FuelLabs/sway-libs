@@ -85,6 +85,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ownership_configurable_examples"
+source = "member"
+dependencies = [
+    "standards",
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "ownership_examples"
 source = "member"
 dependencies = [
@@ -158,7 +167,7 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.67.0#d821dcb0c7edb1d6e2a772f5a1ccefe38902eaec"
+source = "git+https://github.com/fuellabs/sway?tag=v0.68.2#05480bb07ed7b62e4123a2696ba22bce57ffb049"
 
 [[package]]
 name = "supply_docs"
