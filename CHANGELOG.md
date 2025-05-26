@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Something added here.
-- Something added here.
+- [#347](https://github.com/FuelLabs/sway-libs/pull/347) Adds examples on how to prevent ownership front-running.
 
 ### Changed
 
