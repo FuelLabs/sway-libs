@@ -23,21 +23,21 @@ jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
       strategy:
-      matrix:
-        project:
-          [
-            "admin",
-            "asset",
-            "big_int",
-            "bytecode",
-            "merkle",
-            "ownership",
-            "pausable",
-            "queue",
-            "reentrancy",
-            "signed_int",
-            "upgradability",
-          ]
+        matrix:
+          project:
+            [
+              "admin",
+              "asset",
+              "big_int",
+              "bytecode",
+              "merkle",
+              "ownership",
+              "pausable",
+              "queue",
+              "reentrancy",
+              "signed_int",
+              "upgradability",
+            ]
       steps:
         - name: Checkout repository
           uses: actions/checkout@v3
