@@ -1,13 +1,7 @@
 contract;
 
 use merkle::common::node_digest;
-use merkle::sparse::{
-    ExclusionLeaf,
-    ExclusionLeafData,
-    ExclusionProof,
-    InclusionProof,
-    Proof,
-};
+use merkle::sparse::{ExclusionLeaf, ExclusionLeafData, ExclusionProof, InclusionProof, Proof};
 use std::bytes::Bytes;
 
 abi MerkleProofTest {

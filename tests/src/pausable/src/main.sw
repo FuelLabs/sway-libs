@@ -1,13 +1,6 @@
 contract;
 
-use pausable::{
-    _is_paused,
-    _pause,
-    _unpause,
-    Pausable,
-    require_not_paused,
-    require_paused,
-};
+use pausable::{_is_paused, _pause, _unpause, Pausable, require_not_paused, require_paused};
 
 abi RequireTests {
     #[storage(read)]

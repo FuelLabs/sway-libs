@@ -1,7 +1,7 @@
 [workspace]
 members = [
   "./admin",
-  
+
   "./bytecode",
   "./merkle_binary",
   "./merkle_sparse",

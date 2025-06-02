@@ -1,16 +1,8 @@
 contract;
 
 // ANCHOR: impl_with_ownership
-use pausable::{
-    _is_paused,
-    _pause,
-    _unpause,
-    Pausable,
-};
-use ownership::{
-    initialize_ownership,
-    only_owner,
-};
+use pausable::{_is_paused, _pause, _unpause, Pausable};
+use ownership::{initialize_ownership, only_owner};
 
 abi MyConstructor {
     #[storage(read, write)]
