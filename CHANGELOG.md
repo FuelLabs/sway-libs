@@ -26,174 +26,174 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 1. The dependencies in your `Forc.toml` file must be updated.
 
-Before:
+    Before:
 
-```sway
-[dependencies]
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
-```
+    ```sway
+    [dependencies]
+    sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
+    ```
 
-After:
+    After:
 
-```sway
-[dependencies]
-admin = "0.26.0"
-ownership = "0.26.0"
-```
+    ```sway
+    [dependencies]
+    admin = "0.26.0"
+    ownership = "0.26.0"
+    ```
 
 2. The following imports have changed:
 
-Admin Library
+    Admin Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::admin::*;
-```
+    ```sway
+    use sway_libs::admin::*;
+    ```
 
-After:
+    After:
 
-```sway
-use admin::*;
-```
+    ```sway
+    use admin::*;
+    ```
 
-Asset Library
+    Asset Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::asset::*;
-```
+    ```sway
+    use sway_libs::asset::*;
+    ```
 
-After:
+    After:
 
-```sway
-use asset::*;
-```
+    ```sway
+    use asset::*;
+    ```
 
-Big Integers Library
+    Big Integers Library
 
-```sway
-use sway_libs::bigint::*;
-```
+    ```sway
+    use sway_libs::bigint::*;
+    ```
 
-After:
+    After:
 
-```sway
-use big_int::*;
-```
+    ```sway
+    use big_int::*;
+    ```
 
-Bytecode Library
+    Bytecode Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::bytecode::*;
-```
+    ```sway
+    use sway_libs::bytecode::*;
+    ```
 
-After:
+    After:
 
-```sway
-use bytecode::*;
-```
+    ```sway
+    use bytecode::*;
+    ```
 
-Merkle Library
+    Merkle Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::merkle::*;
-```
+    ```sway
+    use sway_libs::merkle::*;
+    ```
 
-After:
+    After:
 
-```sway
-use merkle::*;
-```
+    ```sway
+    use merkle::*;
+    ```
 
-Ownership Library
+    Ownership Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::ownership::*;
-```
+    ```sway
+    use sway_libs::ownership::*;
+    ```
 
-After:
+    After:
 
-```sway
-use ownership::*;
-```
+    ```sway
+    use ownership::*;
+    ```
 
-Pausable Library
+    Pausable Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::pausable::*;
-```
+    ```sway
+    use sway_libs::pausable::*;
+    ```
 
-After: 
+    After:
 
-```sway
-use pausable::*;
-```
+    ```sway
+    use pausable::*;
+    ```
 
-Queue
+    Queue
 
-Before:
+    Before:
 
-```sway
-use sway_libs::queue::*;
-```
+    ```sway
+    use sway_libs::queue::*;
+    ```
 
-After:
+    After:
 
-```sway
-use queue::*;
-```
+    ```sway
+    use queue::*;
+    ```
 
-Reentrancy Library
+    Reentrancy Library
 
-Before:
+    Before:
 
-```sway
-use sway_libs::reentrancy::*;
-```
+    ```sway
+    use sway_libs::reentrancy::*;
+    ```
 
-After:
+    After:
 
-```sway
-use reentrancy::*;
-```
+    ```sway
+    use reentrancy::*;
+    ```
 
-Signed Integers
+    Signed Integers
 
-Before:
+    Before:
 
-```sway
-use sway_libs::signed_integers::*;
-```
+    ```sway
+    use sway_libs::signed_integers::*;
+    ```
 
-After:
+    After:
 
-```sway
-use signed_int::*;
-```
+    ```sway
+    use signed_int::*;
+    ```
 
-Upgradeability
+    Upgradeability
 
-Before:
+    Before:
 
-```sway
-use sway_libs::upgradeability::*;
-```
+    ```sway
+    use sway_libs::upgradeability::*;
+    ```
 
-After:
+    After:
 
-```sway
-use upgradeability::*;
-```
+    ```sway
+    use upgradeability::*;
+    ```
 
 ## [Version 0.25.2]
 
