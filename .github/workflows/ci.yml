@@ -60,18 +60,41 @@ jobs:
         - name: Check Sway formatting
           run: forc fmt --path libs/${{ matrix.project }} --check
 
-        - name: Check Rust formatting
-          run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
-
         - name: Build All Libs
           run: forc build --path libs/${{ matrix.project }} --release --locked
+
+  run-rust-sdk-tests:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Install Rust toolchain
+          uses: dtolnay/rust-toolchain@master
+          with:
+            toolchain: ${{ env.RUST_VERSION }}
+            components: rustfmt
+
+        - name: Init cache
+          uses: Swatinem/rust-cache@v2
+
+        - name: Install Fuel toolchain
+          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          with:
+            name: my-toolchain
+            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
+        - name: Check Sway formatting
+          run: forc fmt --path tests/ --check
+
+        - name: Check Rust formatting
+          run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
 
         - name: Build All Tests
           run: forc build --path tests --release --locked
           
         - name: Cargo Test sway-lib
-          run: |
-            cargo test --manifest-path tests/Cargo.toml
+          run: cargo test --manifest-path tests/Cargo.toml
 
   forc-inline-tests:
     runs-on: ubuntu-latest
