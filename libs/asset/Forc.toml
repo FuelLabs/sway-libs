@@ -1,0 +1,16 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "lib.sw"
+license = "Apache-2.0"
+name = "asset"
+version = "0.26.0"
+description = "The Asset Library provides basic helper functions for the SRC-20, SRC-3, and the SRC-7 standards. It is intended to make development of Native Assets using Sway quick and easy while following the standard's specifications."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/asset/"
+organization = "FuelLabs"
+categories = ["Decentralized Finance", "Standards", "Native Assets"]
+keywords = ["library"]
+
+[dependencies]
+standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.1" }

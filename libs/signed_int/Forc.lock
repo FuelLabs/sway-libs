@@ -1,0 +1,8 @@
+[[package]]
+name = "signed_int"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?rev#d6804729c962513736253f377f25a323492ded93"
