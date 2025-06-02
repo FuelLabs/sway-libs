@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "bigint"
+name = "big_int"
 source = "path+from-root-0F6BD27B7DBAC338"
 dependencies = ["std"]
 
@@ -34,7 +34,7 @@ dependencies = ["std"]
 name = "bigint_test"
 source = "member"
 dependencies = [
-    "bigint",
+    "big_int",
     "std",
 ]
 
@@ -261,7 +261,7 @@ dependencies = [
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?rev#d6804729c962513736253f377f25a323492ded93"
+source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"
 
 [[package]]
 name = "sway_libs"

@@ -1,6 +1,6 @@
 library;
 
-use bigint::BigUint;
+use big_int::BigUint;
 use std::u128::*;
 use std::bytes::Bytes;
 use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};

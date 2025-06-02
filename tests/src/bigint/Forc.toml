@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "bigint_test"
 
 [dependencies]
-bigint = { path = "../../../libs/big_int" }
+big_int = { path = "../../../libs/big_int" }
