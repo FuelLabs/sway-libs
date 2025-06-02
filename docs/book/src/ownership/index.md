@@ -5,19 +5,23 @@ The **Ownership Library** provides a straightforward way to restrict specific ca
 For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
 
 ## Importing the Ownership Library
+   
+In order to use the Ownership Library, the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard must be added to your `Forc.toml` file and then imported into your Sway project.
 
-1. **Add Sway Libs to `Forc.toml`**  
-   Please see the [Getting Started](../getting_started/index.md) guide for instructions on adding **Sway Libs** as a dependency.
+To add the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
 
-2. **Add Sway Standards to `Forc.toml`**  
-   Refer to the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard) to add **Sway Standards**.
+```bash
+forc add ownership@0.26.0
+forc add src5@0.8.0
+```
 
-3. **Import the Ownership Library**  
-   To import the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard, include the following in your Sway file:
+> **NOTE:** Be sure to set the version to the latest release.
 
-   ```sway
-   {{#include ../../../../examples/ownership/src/lib.sw:import}}
-   ```
+To import the Ownership Library and [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard to your Sway Smart Contract, add the following to your Sway file:
+
+```sway
+{{#include ../../../../examples/ownership/src/lib.sw:import}}
+```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
 

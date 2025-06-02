@@ -8,7 +8,15 @@ For implementation details on the Bytecode Library please see the [Sway Libs Doc
 
 ## Importing the Bytecode Library
 
-In order to use the Bytecode Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Bytecode Library, the Bytecode Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Bytecode Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add bytecode@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Bytecode Library to your Sway Smart Contract, add the following to your Sway file:
 
