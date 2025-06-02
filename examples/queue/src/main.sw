@@ -1,7 +1,7 @@
 library;
 
 // ANCHOR: import
-use sway_libs::queue::*;
+use queue::*;
 // ANCHOR_END: import
 
 fn instantiate() {

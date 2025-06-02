@@ -3,7 +3,7 @@ contract;
 use std::{bytes::Bytes, string::String};
 
 // ANCHOR: import
-use sway_libs::asset::metadata::{_metadata, _set_metadata, SetAssetMetadata, StorageMetadata};
+use asset::metadata::{_metadata, _set_metadata, SetAssetMetadata, StorageMetadata};
 use standards::src7::*;
 // ANCHOR_END: import
 
@@ -43,7 +43,7 @@ impl SetAssetMetadata for Contract {
 #[storage(read)]
 fn get_metadata(asset: AssetId, key: String) {
     // ANCHOR: get_metadata
-    use sway_libs::asset::metadata::*; // To access trait implementations you must import everything using the glob operator.
+    use asset::metadata::*; // To access trait implementations you must import everything using the glob operator.
     let metadata: Option<Metadata> = storage.metadata.get(asset, key);
     // ANCHOR_END: get_metadata
 

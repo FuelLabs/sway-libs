@@ -4,7 +4,7 @@ use std::string::String;
 use std::bytes::Bytes;
 
 // ANCHOR: setting_src7_attributes
-use sway_libs::asset::metadata::*;
+use asset::metadata::*;
 use standards::src7::Metadata;
 
 storage {

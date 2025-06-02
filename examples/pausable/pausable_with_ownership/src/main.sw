@@ -1,17 +1,15 @@
 contract;
 
 // ANCHOR: impl_with_ownership
-use sway_libs::{
-    ownership::{
-        initialize_ownership,
-        only_owner,
-    },
-    pausable::{
-        _is_paused,
-        _pause,
-        _unpause,
-        Pausable,
-    },
+use pausable::{
+    _is_paused,
+    _pause,
+    _unpause,
+    Pausable,
+};
+use ownership::{
+    initialize_ownership,
+    only_owner,
 };
 
 abi MyConstructor {

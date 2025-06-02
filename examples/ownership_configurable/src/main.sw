@@ -1,7 +1,7 @@
 // ANCHOR: example_contract
 contract;
 
-use sway_libs::ownership::{
+use ownership::{
     _owner,
     initialize_ownership,
     only_owner,
