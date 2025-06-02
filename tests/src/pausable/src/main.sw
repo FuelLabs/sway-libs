@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::pausable::{
+use pausable::{
     _is_paused,
     _pause,
     _unpause,

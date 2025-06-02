@@ -1,7 +1,7 @@
 contract;
 
 use standards::{src20::SRC20, src3::SRC3, src7::{Metadata, SRC7}};
-use sway_libs::asset::{
+use asset::{
     base::{
         _decimals,
         _name,
