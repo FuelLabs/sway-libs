@@ -10,7 +10,7 @@ For implementation details on the Admin Library please see the [Sway Libs Docs](
 
 In order to use the Admin Library, the Admin and the Ownership Libraries must be added to your `Forc.toml` file and then imported into your Sway project.
 
-To add the Admin and the Ownership Libraries and as a dependencies to your `Forc.toml` file in your project, use the `forc add` command.
+To add the Admin and the Ownership Libraries as dependencies to your `Forc.toml` file in your project, use the `forc add` command.
 
 ```bash
 forc add admin@0.26.0
