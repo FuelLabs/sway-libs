@@ -101,6 +101,8 @@ jobs:
 
       - name: Publish Library
         if: steps.version-check.outputs.changed == 'true'
-        run: forc publish
+        run: |
+          cd libs/${{ matrix.project }}
+          forc publish
         env:
           FORC_PUB_TOKEN: ${{ secrets.FORCPUB_TOKEN }}    
