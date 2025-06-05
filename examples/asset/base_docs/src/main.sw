@@ -3,7 +3,7 @@ contract;
 use std::{hash::*, storage::storage_string::*, string::String};
 
 // ANCHOR: import
-use sway_libs::asset::base::*;
+use asset::base::*;
 use standards::src20::*;
 // ANCHOR_END: import
 

@@ -1,12 +1,12 @@
 library;
 
 // ANCHOR: import
-use sway_libs::ownership::*;
+use ownership::*;
 use standards::src5::*;
 // ANCHOR_END: import
 
 // ANCHOR: integrate_with_src5
-use sway_libs::ownership::_owner;
+use ownership::_owner;
 use standards::src5::{SRC5, State};
 
 impl SRC5 for Contract {

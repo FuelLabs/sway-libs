@@ -1,163 +1,153 @@
 [[package]]
+name = "admin"
+source = "path+from-root-9E88A97493D252A9"
+dependencies = [
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "std",
+]
+
+[[package]]
 name = "admin_examples"
 source = "member"
 dependencies = [
-    "standards",
+    "admin",
+    "ownership",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
-name = "base_docs"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "basic_src20"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "basic_src3"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "basic_src7"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
+name = "big_int"
+source = "path+from-root-DEB29AD8AD1C9966"
+dependencies = ["std"]
 
 [[package]]
 name = "big_integers_examples"
 source = "member"
 dependencies = [
+    "big_int",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "bytecode"
+source = "path+from-root-982A69ACF6820E60"
+dependencies = ["std"]
 
 [[package]]
 name = "bytecode_examples"
 source = "member"
 dependencies = [
+    "bytecode",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "merkle"
+source = "path+from-root-4197A95CF859C933"
+dependencies = ["std"]
 
 [[package]]
 name = "merkle_binary_examples"
 source = "member"
 dependencies = [
+    "merkle",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "merkle_sparse_examples"
 source = "member"
 dependencies = [
+    "merkle",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
-name = "metadata_docs"
-source = "member"
+name = "ownership"
+source = "path+from-root-9E88A97493D252A9"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "ownership_configurable_examples"
 source = "member"
 dependencies = [
-    "standards",
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "ownership_examples"
 source = "member"
 dependencies = [
-    "standards",
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "pausable"
+source = "path+from-root-F6A7ECB5C9148078"
+dependencies = ["std"]
 
 [[package]]
 name = "pausable_example"
 source = "member"
 dependencies = [
+    "pausable",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "pausable_with_ownership_example"
 source = "member"
 dependencies = [
+    "ownership",
+    "pausable",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "queue"
+source = "path+from-root-E798785D0A742CAC"
+dependencies = ["std"]
 
 [[package]]
 name = "queue_examples"
 source = "member"
 dependencies = [
+    "queue",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "reentrancy"
+source = "path+from-root-7F1216DDC69603D7"
+dependencies = ["std"]
 
 [[package]]
 name = "reentrancy_examples"
 source = "member"
 dependencies = [
+    "reentrancy",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
-name = "setting_src20_attributes"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
-
-[[package]]
-name = "setting_src7_attributes"
-source = "member"
-dependencies = [
-    "standards",
-    "std",
-    "sway_libs",
-]
+name = "signed_int"
+source = "path+from-root-9685DD96513AE62D"
+dependencies = ["std"]
 
 [[package]]
 name = "signed_integers_examples"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
@@ -166,23 +156,30 @@ source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b9
 dependencies = ["std"]
 
 [[package]]
-name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"
-
-[[package]]
-name = "supply_docs"
-source = "member"
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48"
 dependencies = [
-    "standards",
     "std",
     "sway_libs",
 ]
 
 [[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"
+
+[[package]]
 name = "sway_libs"
-source = "path+from-root-9E88A97493D252A9"
+source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.25.2#f43d8b4aacf60867989408991414958f8eab28c0"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8",
+    "std",
+]
+
+[[package]]
+name = "upgradability"
+source = "path+from-root-2D2584D311CEA5F2"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
 ]
 
@@ -190,7 +187,7 @@ dependencies = [
 name = "upgradability_examples"
 source = "member"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
+    "upgradability",
 ]

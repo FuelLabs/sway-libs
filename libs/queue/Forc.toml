@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "queue.sw"
+license = "Apache-2.0"
+name = "queue"
+version = "0.26.0"
+description = "A Queue is a linear structure which follows the First-In-First-Out (FIFO) principle."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/queue/"
+organization = "FuelLabs"
+categories = ["Data Structures", "Algorithms"]
+keywords = ["library"]
+
+[dependencies]

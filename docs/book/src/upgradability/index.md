@@ -6,9 +6,18 @@ For implementation details on the Upgradability Library please see the [Sway Lib
 
 ## Importing the Upgradability Library
 
-In order to use the Upgradability library, Sway Libs and [Sway Standards](https://docs.fuel.network/docs/sway-standards/) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard).
+In order to use the Upgradability Library, the Upgradability Library and the [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) Standard must be added to your `Forc.toml` file and then imported into your Sway project.
 
-To import the Upgradability Library and [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) Standard to your Sway Smart Contract, add the following to your Sway file:
+To add the Upgradability Library and the [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) Standard as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add upgradability@0.26.0
+forc add src14@0.8.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
+
+To import the Upgradability Library and  Standard to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/upgradability/src/main.sw:import}}

@@ -6,4 +6,4 @@ name = "setting_src7_attributes"
 
 [dependencies]
 standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.0" }
-sway_libs = { path = "../../../libs" }
+asset = { path = "../../../libs/asset" }

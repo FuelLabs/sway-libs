@@ -1,0 +1,16 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "upgradability.sw"
+license = "Apache-2.0"
+name = "upgradability"
+version = "0.26.0"
+description = "The Upgradability Library provides functions that can be used to implement contract upgrades via simple upgradable proxies. The Upgradability Library implements the required and optional functionality from SRC-14 as well as additional functionality for ownership of the proxy contract."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/upgradability/"
+organization = "FuelLabs"
+categories = ["Standards", "Security", "Authentication"]
+keywords = ["library"]
+
+[dependencies]
+standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.1" }

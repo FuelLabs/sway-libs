@@ -14,16 +14,186 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - [#348](https://github.com/FuelLabs/sway-libs/pull/348) Updates to forc `v0.68.5` and fuel-core `v0.43.2`.
+- [#350](https://github.com/FuelLabs/sway-libs/pull/350) Updates documentation on adding libraries via `forc add`.
 
 ### Fixed
 
-- Some fix here.
-- Some fix here.
+- [#350](https://github.com/FuelLabs/sway-libs/pull/350) Fixes typos in inline documentation in the Asset Library.
 
 ### Breaking
 
-- Some breaking change here.
-- Some breaking change here.
+- [#350](https://github.com/FuelLabs/sway-libs/pull/350) Refactors the repository such that each library is a separate project to be imported with `forc add`.
+
+1. The dependencies in your `Forc.toml` file must be updated.
+
+    Before:
+
+    ```sway
+    [dependencies]
+    sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
+    ```
+
+    After:
+
+    ```sway
+    [dependencies]
+    admin = "0.26.0"
+    ownership = "0.26.0"
+    ```
+
+2. The following imports have changed:
+
+    Admin Library
+
+    Before:
+
+    ```sway
+    use sway_libs::admin::*;
+    ```
+
+    After:
+
+    ```sway
+    use admin::*;
+    ```
+
+    Asset Library
+
+    Before:
+
+    ```sway
+    use sway_libs::asset::*;
+    ```
+
+    After:
+
+    ```sway
+    use asset::*;
+    ```
+
+    Big Integers Library
+
+    ```sway
+    use sway_libs::bigint::*;
+    ```
+
+    After:
+
+    ```sway
+    use big_int::*;
+    ```
+
+    Bytecode Library
+
+    Before:
+
+    ```sway
+    use sway_libs::bytecode::*;
+    ```
+
+    After:
+
+    ```sway
+    use bytecode::*;
+    ```
+
+    Merkle Library
+
+    Before:
+
+    ```sway
+    use sway_libs::merkle::*;
+    ```
+
+    After:
+
+    ```sway
+    use merkle::*;
+    ```
+
+    Ownership Library
+
+    Before:
+
+    ```sway
+    use sway_libs::ownership::*;
+    ```
+
+    After:
+
+    ```sway
+    use ownership::*;
+    ```
+
+    Pausable Library
+
+    Before:
+
+    ```sway
+    use sway_libs::pausable::*;
+    ```
+
+    After:
+
+    ```sway
+    use pausable::*;
+    ```
+
+    Queue
+
+    Before:
+
+    ```sway
+    use sway_libs::queue::*;
+    ```
+
+    After:
+
+    ```sway
+    use queue::*;
+    ```
+
+    Reentrancy Library
+
+    Before:
+
+    ```sway
+    use sway_libs::reentrancy::*;
+    ```
+
+    After:
+
+    ```sway
+    use reentrancy::*;
+    ```
+
+    Signed Integers
+
+    Before:
+
+    ```sway
+    use sway_libs::signed_integers::*;
+    ```
+
+    After:
+
+    ```sway
+    use signed_int::*;
+    ```
+
+    Upgradeability
+
+    Before:
+
+    ```sway
+    use sway_libs::upgradeability::*;
+    ```
+
+    After:
+
+    ```sway
+    use upgradeability::*;
+    ```
 
 ## [Version 0.25.2]
 

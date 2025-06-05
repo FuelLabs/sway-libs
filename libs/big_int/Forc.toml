@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "big_int.sw"
+license = "Apache-2.0"
+name = "big_int"
+version = "0.26.0"
+description = "The Big Integers library provides a library to use extremely large numbers in Sway."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/bigint/"
+organization = "FuelLabs"
+categories = ["Cryptography", "Data Structures", "Math"]
+keywords = ["library"]
+
+[dependencies]

@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "reentrancy_examples"
 
 [dependencies]
-sway_libs = { path = "../../libs" }
+reentrancy = { path = "../../libs/reentrancy" }

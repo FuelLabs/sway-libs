@@ -1,7 +1,7 @@
 contract;
 
 use reentrancy_proxy_abi::OwnedProxy;
-use sway_libs::{
+use {
     ownership::errors::InitializationError,
     upgradability::{
         _proxy_owner,
