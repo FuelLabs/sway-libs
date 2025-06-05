@@ -1,14 +1,7 @@
 [workspace]
 members = [
   "./admin",
-  "./asset/base_docs",
-  "./asset/basic_src3",
-  "./asset/basic_src7",
-  "./asset/basic_src20",
-  "./asset/metadata_docs",
-  "./asset/setting_src7_attributes",
-  "./asset/setting_src20_attributes",
-  "./asset/supply_docs",
+
   "./bytecode",
   "./merkle_binary",
   "./merkle_sparse",

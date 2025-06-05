@@ -1,26 +1,54 @@
 [[package]]
+name = "admin"
+source = "path+from-root-8E8363697A2C7D80"
+dependencies = [
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "std",
+]
+
+[[package]]
 name = "admin_test"
 source = "member"
 dependencies = [
-    "standards",
+    "admin",
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "asset"
+source = "path+from-root-6945C3DE2AE6157C"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "std",
+]
+
+[[package]]
+name = "big_int"
+source = "path+from-root-0F6BD27B7DBAC338"
+dependencies = ["std"]
 
 [[package]]
 name = "bigint_test"
 source = "member"
 dependencies = [
+    "big_int",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "bytecode"
+source = "path+from-root-86ACB8422D2DC0AD"
+dependencies = ["std"]
 
 [[package]]
 name = "bytecode_test"
 source = "member"
 dependencies = [
+    "bytecode",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
@@ -32,83 +60,106 @@ dependencies = ["std"]
 name = "i128_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "i16_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "i256_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "i32_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "i64_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "i8_test"
 source = "member"
 dependencies = [
+    "signed_int",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "merkle"
+source = "path+from-root-50652CB31B44919E"
+dependencies = ["std"]
 
 [[package]]
 name = "merkle_proof_test"
 source = "member"
 dependencies = [
+    "merkle",
     "std",
-    "sway_libs",
 ]
 
 [[package]]
 name = "native_asset_lib"
 source = "member"
 dependencies = [
-    "standards",
+    "asset",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
+]
+
+[[package]]
+name = "ownership"
+source = "path+from-root-8E8363697A2C7D80"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "std",
 ]
 
 [[package]]
 name = "ownership_test"
 source = "member"
 dependencies = [
-    "standards",
+    "ownership",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "pausable"
+source = "path+from-root-DDA99DAE97224AE2"
+dependencies = ["std"]
 
 [[package]]
 name = "pausable_test"
 source = "member"
 dependencies = [
+    "pausable",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "reentrancy"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = ["std"]
 
 [[package]]
 name = "reentrancy_attack_helper_abi"
@@ -148,7 +199,7 @@ dependencies = ["std"]
 name = "reentrancy_proxy_abi"
 source = "member"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8",
     "std",
 ]
 
@@ -156,10 +207,12 @@ dependencies = [
 name = "reentrancy_proxy_contract"
 source = "member"
 dependencies = [
+    "ownership",
+    "reentrancy",
     "reentrancy_proxy_abi",
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
+    "upgradability",
 ]
 
 [[package]]
@@ -171,12 +224,17 @@ dependencies = ["std"]
 name = "reentrancy_target_contract"
 source = "member"
 dependencies = [
+    "reentrancy",
     "reentrancy_attacker_abi",
     "reentrancy_fallback_abi",
     "reentrancy_target_abi",
     "std",
-    "sway_libs",
 ]
+
+[[package]]
+name = "signed_int"
+source = "path+from-root-5340E4F7C2F2C9E9"
+dependencies = ["std"]
 
 [[package]]
 name = "simple_contract"
@@ -194,14 +252,30 @@ source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b9
 dependencies = ["std"]
 
 [[package]]
+name = "standards"
+source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48"
+dependencies = [
+    "std",
+    "sway_libs",
+]
+
+[[package]]
 name = "std"
 source = "git+https://github.com/fuellabs/sway?tag=v0.68.6#ac5280641599d4e81017e18d04e47380722074ed"
 
 [[package]]
 name = "sway_libs"
-source = "path+from-root-8E8363697A2C7D80"
+source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.25.2#f43d8b4aacf60867989408991414958f8eab28c0"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8",
+    "std",
+]
+
+[[package]]
+name = "upgradability"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = [
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
 ]
 
@@ -209,7 +283,7 @@ dependencies = [
 name = "upgradability_test"
 source = "member"
 dependencies = [
-    "standards",
+    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
     "std",
-    "sway_libs",
+    "upgradability",
 ]

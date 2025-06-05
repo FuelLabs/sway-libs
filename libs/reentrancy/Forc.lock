@@ -1,0 +1,8 @@
+[[package]]
+name = "reentrancy"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"

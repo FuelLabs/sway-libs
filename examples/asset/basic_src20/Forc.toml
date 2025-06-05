@@ -6,4 +6,4 @@ name = "basic_src20"
 
 [dependencies]
 standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.0" }
-sway_libs = { path = "../../../libs" }
+asset = { path = "../../../libs/asset" }

@@ -1,7 +1,7 @@
 library;
 
 // ANCHOR: ownership_integration
-use sway_libs::{admin::add_admin, ownership::initialize_ownership};
+use {admin::add_admin, ownership::initialize_ownership};
 
 #[storage(read, write)]
 fn my_constructor(new_owner: Identity) {

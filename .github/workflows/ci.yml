@@ -22,6 +22,22 @@ env:
 jobs:
   build-sway-lib:
       runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          project:
+            [
+              "admin",
+              "asset",
+              "big_int",
+              "bytecode",
+              "merkle",
+              "ownership",
+              "pausable",
+              "queue",
+              "reentrancy",
+              "signed_int",
+              "upgradability",
+            ]
       steps:
         - name: Checkout repository
           uses: actions/checkout@v3
@@ -42,23 +58,62 @@ jobs:
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
         - name: Check Sway formatting
-          run: forc fmt --path libs --check
+          run: forc fmt --path libs/${{ matrix.project }} --check
+
+        - name: Build All Libs
+          run: forc build --path libs/${{ matrix.project }} --release --locked
+
+  run-rust-sdk-tests:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Install Rust toolchain
+          uses: dtolnay/rust-toolchain@master
+          with:
+            toolchain: ${{ env.RUST_VERSION }}
+            components: rustfmt
+
+        - name: Init cache
+          uses: Swatinem/rust-cache@v2
+
+        - name: Install Fuel toolchain
+          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          with:
+            name: my-toolchain
+            components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
+
+        - name: Check Sway formatting
+          run: forc fmt --path tests/ --check
 
         - name: Check Rust formatting
           run: cargo fmt --manifest-path tests/Cargo.toml --verbose --check
-
-        - name: Build All Libs
-          run: forc build --path libs --release --locked
 
         - name: Build All Tests
           run: forc build --path tests --release --locked
           
         - name: Cargo Test sway-lib
-          run: |
-            cargo test --manifest-path tests/Cargo.toml
+          run: cargo test --manifest-path tests/Cargo.toml
 
   forc-inline-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          [
+            "admin",
+            "asset",
+            "big_int",
+            "bytecode",
+            "merkle",
+            "ownership",
+            "pausable",
+            "queue",
+            "reentrancy",
+            "signed_int",
+            "upgradability",
+          ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -78,7 +133,7 @@ jobs:
           components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
 
       - name: Run Libs Tests
-        run: forc build --path libs --release --locked && forc test --path libs --locked
+        run: forc build --path libs/${{ matrix.project }} --release --locked && forc test --path libs/${{ matrix.project }} --locked
 
       - name: Run Tests Tests
         run: forc build --path tests --release --locked && forc test --path tests --locked
@@ -115,6 +170,22 @@ jobs:
 
   build-forc-doc-sway-libs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          [
+            "admin",
+            "asset",
+            "big_int",
+            "bytecode",
+            "merkle",
+            "ownership",
+            "pausable",
+            "queue",
+            "reentrancy",
+            "signed_int",
+            "upgradability",
+          ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -135,7 +206,7 @@ jobs:
 
       - name: Build sway-libs docs
         run: |
-          forc doc --manifest-path libs
+          forc doc --manifest-path libs/${{ matrix.project }}
 
   build-examples:
       runs-on: ubuntu-latest

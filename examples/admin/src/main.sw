@@ -3,7 +3,7 @@ library;
 mod owner_integration;
 
 // ANCHOR: import
-use sway_libs::{admin::*, ownership::*};
+use {admin::*, ownership::*};
 // ANCHOR_END: import
 
 // ANCHOR: add_admin

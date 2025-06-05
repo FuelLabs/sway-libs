@@ -9,9 +9,17 @@ For implementation details on the Big Integers Library please see the [Sway Libs
 
 ## Importing the Big Integers Library
 
-In order to use the Big Integer Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Big Integers Library, the Big Integers Library must be added to your `Forc.toml` file and then imported into your Sway project.
 
-To import the Big Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
+To add the Big Integers Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add big_int@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
+
+To import the Big Integers Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/big_integers/src/main.sw:import}}

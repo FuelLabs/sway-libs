@@ -3,7 +3,7 @@ contract;
 use std::hash::*;
 
 // ANCHOR: basic_src3
-use sway_libs::asset::supply::{_burn, _mint};
+use asset::supply::{_burn, _mint};
 use standards::src3::SRC3;
 
 storage {

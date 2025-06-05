@@ -1,6 +1,6 @@
 library;
 
-use sway_libs::signed_integers::i128::I128;
+use signed_int::i128::I128;
 use std::convert::*;
 use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};
 use std::u128::U128;
