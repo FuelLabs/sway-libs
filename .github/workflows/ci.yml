@@ -61,7 +61,7 @@ jobs:
           run: forc fmt --path libs/${{ matrix.project }} --check
 
         - name: Build All Libs
-          run: forc build --path libs/${{ matrix.project }} --release --locked
+          run: forc build --path libs/${{ matrix.project }} --release
 
   run-rust-sdk-tests:
       runs-on: ubuntu-latest
