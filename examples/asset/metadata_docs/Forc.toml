@@ -5,5 +5,5 @@ license = "Apache-2.0"
 name = "metadata_docs"
 
 [dependencies]
-standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.0" }
+src7 = "0.8.0"
 asset = { path = "../../../libs/asset" }

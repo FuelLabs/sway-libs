@@ -2,12 +2,14 @@ contract;
 
 // ANCHOR: import
 use upgradability::*;
-use standards::{src14::*, src5::*};
+use src14::*;
+use src5::*;
 // ANCHOR_END: import
 
 // ANCHOR: integrate_with_src14
 use upgradability::{_proxy_owner, _proxy_target, _set_proxy_target};
-use standards::{src14::{SRC14, SRC14Extension}, src5::State};
+use src14::{SRC14, SRC14Extension};
+use src5::State;
 
 storage {
     SRC14 {

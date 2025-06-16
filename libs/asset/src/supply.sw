@@ -16,7 +16,7 @@ use std::{
     storage::storage_string::*,
     string::String,
 };
-use standards::src20::TotalSupplyEvent;
+use src20::TotalSupplyEvent;
 
 /// Unconditionally mints new assets using the `sub_id` sub-identifier.
 ///

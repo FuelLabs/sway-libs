@@ -1,6 +1,6 @@
 library;
 
-use standards::src5::State;
+use src5::State;
 
 /// Logged when ownership is a new proxy target is set.
 pub struct ProxyTargetSet {

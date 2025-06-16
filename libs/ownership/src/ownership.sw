@@ -6,7 +6,7 @@ pub mod events;
 use ::errors::InitializationError;
 use ::events::{OwnershipRenounced, OwnershipSet, OwnershipTransferred};
 use std::{auth::msg_sender, hash::sha256, storage::storage_api::{read, write}};
-use standards::src5::{AccessError, State};
+use src5::{AccessError, State};
 
 // Pre-computed hash digest of sha256("owner")
 const OWNER = 0x4c1029697ee358715d3a14a2add817c4b01651440de808371f78165ac90dc581;

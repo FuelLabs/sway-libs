@@ -5,7 +5,7 @@ use std::bytes::Bytes;
 
 // ANCHOR: setting_src7_attributes
 use asset::metadata::*;
-use standards::src7::Metadata;
+use src7::Metadata;
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},

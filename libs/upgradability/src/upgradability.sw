@@ -5,7 +5,8 @@ pub mod events;
 
 use ::{errors::SetProxyOwnerError, events::{ProxyOwnerSet, ProxyTargetSet}};
 use std::{auth::msg_sender, storage::storage_api::{read, write}};
-use standards::{src14::SRC14_TARGET_STORAGE, src5::{AccessError, State}};
+use src14::SRC14_TARGET_STORAGE; 
+use src5::{AccessError, State};
 
 /// The storage slot to store the proxy owner State.
 ///

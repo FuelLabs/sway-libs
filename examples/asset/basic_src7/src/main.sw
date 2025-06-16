@@ -4,7 +4,7 @@ use std::string::String;
 
 // ANCHOR: basic_src7
 use asset::metadata::*;
-use standards::src7::{Metadata, SRC7};
+use src7::{Metadata, SRC7};
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},

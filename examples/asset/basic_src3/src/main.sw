@@ -4,7 +4,7 @@ use std::hash::*;
 
 // ANCHOR: basic_src3
 use asset::supply::{_burn, _mint};
-use standards::src3::SRC3;
+use src3::SRC3;
 
 storage {
     total_assets: u64 = 0,

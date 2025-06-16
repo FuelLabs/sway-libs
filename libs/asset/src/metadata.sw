@@ -1,6 +1,6 @@
 library;
 
-use standards::src7::{Metadata, SetMetadataEvent};
+use src7::{Metadata, SetMetadataEvent};
 use std::{
     auth::msg_sender,
     bytes::Bytes,
