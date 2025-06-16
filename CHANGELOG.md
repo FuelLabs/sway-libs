@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - [#347](https://github.com/FuelLabs/sway-libs/pull/347) Adds examples on how to prevent ownership front-running.
+- [#351](https://github.com/FuelLabs/sway-libs/pull/351) Adds CI job to run `forc publish` on version changes in the release branch.
 
 ### Changed
 
