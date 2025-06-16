@@ -1,0 +1,17 @@
+[[package]]
+name = "hash_map"
+source = "path+from-root-048D550467276A6A"
+dependencies = ["std"]
+
+[[package]]
+name = "hash_map_test"
+source = "member"
+dependencies = [
+    "hash_map",
+    "std",
+]
+
+[[package]]
+name = "std"
+version = "0.68.7"
+source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"
