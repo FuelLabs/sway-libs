@@ -11,7 +11,8 @@ use {
         only_proxy_owner,
     },
 };
-use standards::{src14::{SRC14, SRC14Extension}, src5::State};
+use src14::{SRC14, SRC14Extension};
+use src5::State;
 use std::execution::run_external;
 
 configurable {

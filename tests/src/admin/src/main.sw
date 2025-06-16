@@ -1,7 +1,7 @@
 contract;
 
 use {admin::*, ownership::*};
-use standards::src5::{SRC5, State};
+use src5::{SRC5, State};
 
 abi AdminTest {
     #[storage(read, write)]

@@ -5,5 +5,7 @@ license = "Apache-2.0"
 name = "native_asset_lib"
 
 [dependencies]
-standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.1" }
+src20 = "0.8.0"
+src7 = "0.8.0"
+src3 = "0.8.0"
 asset = { path = "../../../libs/asset" }

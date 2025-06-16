@@ -11,3 +11,5 @@ Cargo.lock
 
 # Ignore forc's output artifacts
 out
+
+Forc.lock
