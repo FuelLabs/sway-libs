@@ -43,6 +43,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "hash_map"
+source = "path+from-root-D47FAF0E076933BB"
+dependencies = ["std"]
+
+[[package]]
+name = "hash_map_examples"
+source = "member"
+dependencies = [
+    "hash_map",
+    "std",
+]
+
+[[package]]
 name = "merkle"
 source = "path+from-root-4197A95CF859C933"
 dependencies = ["std"]
@@ -165,7 +178,8 @@ dependencies = [
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"
+version = "0.68.7"
+source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"
 
 [[package]]
 name = "sway_libs"
