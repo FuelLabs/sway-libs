@@ -1,0 +1,110 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="swaydoc"><meta name="description" content="API documentation for the Sway `SetDecimalsEvent` struct in `src20`."><meta name="keywords" content="sway, swaylang, sway-lang, SetDecimalsEvent"><link rel="icon" href="../../static.files/sway-logo.svg"><title>SetDecimalsEvent in src20 - Sway</title><link rel="stylesheet" type="text/css" href="../../static.files/normalize.css"><link rel="stylesheet" type="text/css" href="../../static.files/swaydoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../static.files/ayu.css"><link rel="stylesheet" href="../../static.files/ayu.min.css"></head><body class="swaydoc struct"><nav class="sidebar"><a class="sidebar-logo" href="../../standards/index.html"><div class="logo-container"><img class="sway-logo" src="../../static.files/sway-logo.svg" alt="logo"></div></a><h2 class="location">Struct SetDecimalsEvent</h2><div class="sidebar-elems"><section><h3><a href="#fields">Fields</a></h3><ul class="block method"><li><a href="#structfield.asset">asset</a></li><li><a href="#structfield.decimals">decimals</a></li><li><a href="#structfield.sender">sender</a></li></ul></section><section><h3><a href="#methods">Methods</a></h3><ul class="block method"><li><a href="#method.new">new</a></li><li><a href="#method.asset">asset</a></li><li><a href="#method.decimals">decimals</a></li><li><a href="#method.sender">sender</a></li><li><a href="#method.log">log</a></li></ul></section><section><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block method"><li><a href="#impl-AbiEncode">AbiEncode</a></li><li><a href="#impl-AbiDecode">AbiDecode</a></li><li><a href="#impl-Debug">Debug</a></li><li><a href="#impl-PartialEq">PartialEq</a></li><li><a href="#impl-Eq">Eq</a></li></ul></section></div></nav><main><div class="width-limiter"><script src="../../search.js" type="text/javascript"></script><script>function onSearchFormSubmit(event){event.preventDefault();const searchQuery=document.getElementById("search-input").value;const url=new URL(window.location.href);if(searchQuery){url.searchParams.set('search',searchQuery)}else{url.searchParams.delete('search')}history.pushState({search:searchQuery},"",url);window.dispatchEvent(new HashChangeEvent("hashchange"))}document.addEventListener('DOMContentLoaded',()=>{const searchbar=document.getElementById("search-input");const searchForm=document.getElementById("search-form");searchbar.addEventListener("keyup",function(event){onSearchFormSubmit(event)});searchbar.addEventListener("search",function(event){onSearchFormSubmit(event)});function onQueryParamsChange(){const searchParams=new URLSearchParams(window.location.search);const query=searchParams.get("search");const searchSection=document.getElementById('search');const mainSection=document.getElementById('main-content');const searchInput=document.getElementById('search-input');if(query){searchInput.value=query;const results=Object.values(SEARCH_INDEX).flat().filter(item=>{const lowerQuery=query.toLowerCase();return item.name.toLowerCase().includes(lowerQuery)});const header=`<h1>Results for ${query}</h1>`;if(results.length>0){const resultList=results.map(item=>{const formattedName=`<span class="type ${item.type_name}">${item.name}</span>`;const name=item.type_name==="module"?[...item.module_info.slice(0,-1),formattedName].join("::"):[...item.module_info,formattedName].join("::");const path=["../..",...item.module_info,item.html_filename].join("/");const left=`<td><span>${name}</span></td>`;const right=`<td><p>${item.preview}</p></td>`;return`<tr onclick="window.location='${path}';">${left}${right}</tr>`}).join('');searchSection.innerHTML=`${header}<table>${resultList}</table>`}else{searchSection.innerHTML=`${header}<p>No results found.</p>`}searchSection.setAttribute("class","search-results");mainSection.setAttribute("class","content hidden")}else{searchSection.setAttribute("class","search-results hidden");mainSection.setAttribute("class","content")}}window.addEventListener('hashchange',onQueryParamsChange);onQueryParamsChange()})</script><nav class="sub"><form id="search-form" class="search-form" onsubmit="onSearchFormSubmit(event)"><div class="search-container"><input id="search-input" class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Search the docs..." type="search"></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1 class="fqn"><span class="in-band">Struct <a class="mod" href="../index.html">standards</a><span>::</span><a class="mod" href="index.html">src20</a><span>::</span><a class="struct" href="#">SetDecimalsEvent</a></span></h1></div><div class="docblock item-decl"><pre class="sway struct"><code>pub struct SetDecimalsEvent {
+    /// The asset for which decimals is set.
+    pub asset: AssetId,
+    /// The decimals that is set.
+    pub decimals: u8,
+    /// The caller that set the decimals.
+    pub sender: Identity,
+}</code></pre></div><details class="swaydoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>The event emitted when the decimals is set.</p>
+</div></details><h2 id="fields" class="fields small-section-header">Fields<a class="anchor" href="#fields"></a></h2><span id="structfield.asset" class="structfield small-section-header"><a class="anchor field" href="#structfield.asset"></a><code>asset: <a class="struct" href="std/asset_id/struct.AssetId.html">AssetId</a></code></span><div class="docblock"><p>The asset for which decimals is set.</p>
+</div><span id="structfield.decimals" class="structfield small-section-header"><a class="anchor field" href="#structfield.decimals"></a><code>decimals: u8</code></span><div class="docblock"><p>The decimals that is set.</p>
+</div><span id="structfield.sender" class="structfield small-section-header"><a class="anchor field" href="#structfield.sender"></a><code>sender: <a class="enum" href="std/identity/enum.Identity.html">Identity</a></code></span><div class="docblock"><p>The caller that set the decimals.</p>
+</div><h2 id="methods" class="small-section-header">Implementations<a href="#methods" class="anchor"></a></h2><div id="methods-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-SetDecimalsEvent" class="impl has-srclink"><a href="#impl-SetDecimalsEvent" class="anchor"></a><h3 class="code-header in-band">impl SetDecimalsEvent</h3></div></summary><div class="impl-items"><details class="swaydoc-toggle method-toggle" open><summary><div id="method.new" class="method trait-impl"><a href="#method.new" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.new">new</a>(asset: AssetId, decimals: u8, sender: Identity) -&gt; Self</h4></div></summary><div class="docblock"><p>Returns a new <code>SetDecimalsEvent</code> event.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>asset</code>: [AssetId] - The asset for which decimals is set.</li>
+<li><code>decimals</code>: [u8] - The decimals that is set.</li>
+<li><code>sender</code>: [Identity] - The caller that set the decimals.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[SetDecimalsEvent] - The new <code>SetDecimalsEvent</code> event.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src20::SetDecimalsEvent;
+
+fn foo(asset: AssetId, decimals: u8, sender: Identity) {
+    let my_event = SetDecimalsEvent::new(asset, decimals, sender);
+    assert(my_event.asset == asset);
+    assert(my_event.decimals == decimals);
+    assert(my_event.sender == sender);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.asset" class="method trait-impl"><a href="#method.asset" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.asset">asset</a>(self) -&gt; AssetId</h4></div></summary><div class="docblock"><p>Returns the asset of the <code>SetDecimalsEvent</code> event.</p>
+<h1>Returns</h1>
+<ul>
+<li>[AssetId] - The asset for the event.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src20::SetDecimalsEvent;
+
+fn foo(asset: AssetId, decimals: u8, sender: Identity) {
+    let my_event = SetDecimalsEvent::new(asset, decimals, sender);
+    assert(my_event.asset() == asset);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.decimals" class="method trait-impl"><a href="#method.decimals" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.decimals">decimals</a>(self) -&gt; u8</h4></div></summary><div class="docblock"><p>Returns the decimals of the <code>SetDecimalsEvent</code> event.</p>
+<h1>Returns</h1>
+<ul>
+<li>[u8] - The decimals for the event.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src20::SetDecimalsEvent;
+
+fn foo(asset: AssetId, decimals: u8, sender: Identity) {
+    let my_event = SetDecimalsEvent::new(asset, decimals, sender);
+    assert(my_event.decimals() == decimals);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.sender" class="method trait-impl"><a href="#method.sender" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.sender">sender</a>(self) -&gt; Identity</h4></div></summary><div class="docblock"><p>Returns the sender of the <code>SetDecimalsEvent</code> event.</p>
+<h1>Returns</h1>
+<ul>
+<li>[Identity] - The sender of the event.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src20::SetDecimalsEvent;
+
+fn foo(asset: AssetId, decimals: u8, sender: Identity) {
+    let my_event = SetDecimalsEvent::new(asset, decimals, sender);
+    assert(my_event.sender() == sender);
+}
+</code></pre>
+</div></details><details class="swaydoc-toggle method-toggle" open><summary><div id="method.log" class="method trait-impl"><a href="#method.log" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.log">log</a>(self)</h4></div></summary><div class="docblock"><p>Logs the <code>SetDecimalsEvent</code>.</p>
+<h1>Examples</h1>
+<pre><code class="language-sway">use standards::src20::SetDecimalsEvent;
+
+fn foo(asset: AssetId, decimals: u8, sender: Identity) {
+    let my_event = SetDecimalsEvent::new(asset, decimals, sender);
+    my_event.log();
+}
+</code></pre>
+</div></details></div></details></div><h2 id="trait-implementations" class="small-section-header">Trait Implementations<a href="#trait-implementations" class="anchor"></a></h2><div id="trait-implementations-list"><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-AbiEncode" class="impl has-srclink"><a href="#impl-AbiEncode" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/codec/trait.AbiEncode.html">AbiEncode</a> for SetDecimalsEvent&lt;&gt;</h3></div></summary><div class="impl-items"><div id="method.abi_encode" class="method trait-impl"><a href="#method.abi_encode" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.abi_encode">abi_encode</a>(self, buffer: Buffer) -&gt; Buffer</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-AbiDecode" class="impl has-srclink"><a href="#impl-AbiDecode" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/codec/trait.AbiDecode.html">AbiDecode</a> for SetDecimalsEvent&lt;&gt;</h3></div></summary><div class="impl-items"><div id="method.abi_decode" class="method trait-impl"><a href="#method.abi_decode" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.abi_decode">abi_decode</a>(refmut buffer: BufferReader) -&gt; Self</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-Debug" class="impl has-srclink"><a href="#impl-Debug" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/debug/trait.Debug.html">Debug</a> for SetDecimalsEvent&lt;&gt;</h3></div></summary><div class="impl-items"><div id="method.fmt" class="method trait-impl"><a href="#method.fmt" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.fmt">fmt</a>(<br>    self,<br>    refmut _f: Formatter,<br>)</h4></div></div></details><details class="swaydoc-toggle implementors-toggle" open><summary><div id="impl-PartialEq" class="impl has-srclink"><a href="#impl-PartialEq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/ops/trait.PartialEq.html">PartialEq</a> for SetDecimalsEvent</h3></div></summary><div class="impl-items"><div id="method.eq" class="method trait-impl"><a href="#method.eq" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.eq">eq</a>(self, other: Self) -&gt; bool</h4></div><details class="swaydoc-toggle method-toggle" open><summary><div id="method.neq" class="method trait-impl"><a href="#method.neq" class="anchor"></a><h4 class="code-header">pub fn <a class="fnname" href="#method.neq">neq</a>(self, other: Self) -&gt; bool</h4></div></summary><div class="docblock"><p>Evaluates if two values of the same type are not equal.</p>
+<h1>Additional Information</h1>
+<p>This function is inherited when <code>eq()</code> is implemented.</p>
+<h1>Arguments</h1>
+<ul>
+<li><code>other</code>: [Self] - The value of the same type.</li>
+</ul>
+<h1>Returns</h1>
+<ul>
+<li>[bool] - <code>true</code> if the two values are not equal, otherwise <code>false</code>.</li>
+</ul>
+<h1>Examples</h1>
+<pre><code class="language-sway">struct MyStruct {
+    val: u64,
+}
+
+impl PartialEq for MyStruct {
+    fn eq(self, other: Self) -&gt; bool {
+         self.val == other.val
+    }
+}
+
+fn foo() {
+    let struct1 = MyStruct { val: 10 };
+    let struct2 = MyStruct { val: 2 };
+    let result = struct1 != struct2;
+    assert(result);
+}
+</code></pre>
+</div></details></div></details><div id="impl-Eq" class="impl has-srclink"><a href="#impl-Eq" class="anchor"></a><h3 class="code-header in-band">impl <a class="trait" href="../../std/ops/trait.Eq.html">Eq</a> for SetDecimalsEvent</h3></div></div></section><section id="search" class="search-results"></section></div></main><script src="../../static.files/highlight.js"></script><script>hljs.highlightAll();</script></body></html>
