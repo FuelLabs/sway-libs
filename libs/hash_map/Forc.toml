@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "hash_map.sw"
+license = "Apache-2.0"
+name = "hash_map"
+version = "0.26.0"
+description = "The Hash Map Library provides ."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://github.com/FuelLabs/sway-libs"
+organization = "FuelLabs"
+categories = ["Data Structures", "Data Processing"]
+keywords = ["library"]
+
+[dependencies]

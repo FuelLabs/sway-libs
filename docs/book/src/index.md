@@ -62,6 +62,10 @@ The [Big Integers](./bigint/index.md) Library is an interface to implement extre
 
 Data Structure Libraries are libraries which provide complex data structures which unlock additional functionality for Smart Contracts.
 
+### [HashMap](./hash_map/index.md)
+
+The [HashMap](./hash_map/index.md) Library is a heap-allocated hash map implementation for the Sway language.
+
 ### [Queue](./queue/index.md)
 
 The [Queue](./queue/index.md) Library is a linear data structure that provides First-In-First-Out (FIFO) operations.

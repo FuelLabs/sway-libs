@@ -18,3 +18,4 @@
 - [Big Integers Library](./bigint/index.md)
 - [Queue Library](./queue/index.md)
 - [Upgradability](./upgradability/index.md)
+- [Hash Map](./hash_map/index.md)
