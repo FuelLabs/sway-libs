@@ -1,0 +1,25 @@
+[[package]]
+name = "asset"
+source = "member"
+dependencies = [
+    "src20",
+    "src7",
+    "std",
+]
+
+[[package]]
+name = "src20"
+version = "0.8.0"
+source = "registry+src20?0.8.0#QmSwYjybtdvSF3Ey9RncVUUaFaWsizSBNgAtY9JoyaAHvh!"
+dependencies = ["std"]
+
+[[package]]
+name = "src7"
+version = "0.8.0"
+source = "registry+src7?0.8.0#QmbDHPdbKzpRg31bxNNLHQ6pyreH2GjHiXjnR7aKoNC2Y5!"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+version = "0.68.7"
+source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"

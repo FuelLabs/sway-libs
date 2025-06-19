@@ -1,0 +1,9 @@
+[[package]]
+name = "merkle"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+version = "0.68.7"
+source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"
