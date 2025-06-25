@@ -5,5 +5,5 @@ dependencies = ["std"]
 
 [[package]]
 name = "std"
-version = "0.68.7"
-source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"
+version = "0.69.0"
+source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"

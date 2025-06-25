@@ -1,0 +1,308 @@
+[[package]]
+name = "admin"
+source = "path+from-root-8E8363697A2C7D80"
+dependencies = [
+    "ownership",
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "admin_test"
+source = "member"
+dependencies = [
+    "admin",
+    "ownership",
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "asset"
+source = "path+from-root-6945C3DE2AE6157C"
+dependencies = [
+    "src20",
+    "src7",
+    "std",
+]
+
+[[package]]
+name = "big_int"
+source = "path+from-root-0F6BD27B7DBAC338"
+dependencies = ["std"]
+
+[[package]]
+name = "bigint_test"
+source = "member"
+dependencies = [
+    "big_int",
+    "std",
+]
+
+[[package]]
+name = "bytecode"
+source = "path+from-root-86ACB8422D2DC0AD"
+dependencies = ["std"]
+
+[[package]]
+name = "bytecode_test"
+source = "member"
+dependencies = [
+    "bytecode",
+    "std",
+]
+
+[[package]]
+name = "complex_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "i128_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "i16_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "i256_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "i32_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "i64_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "i8_test"
+source = "member"
+dependencies = [
+    "signed_int",
+    "std",
+]
+
+[[package]]
+name = "merkle"
+source = "path+from-root-50652CB31B44919E"
+dependencies = ["std"]
+
+[[package]]
+name = "merkle_proof_test"
+source = "member"
+dependencies = [
+    "merkle",
+    "std",
+]
+
+[[package]]
+name = "native_asset_lib"
+source = "member"
+dependencies = [
+    "asset",
+    "src20",
+    "src3",
+    "src7",
+    "std",
+]
+
+[[package]]
+name = "ownership"
+source = "path+from-root-8E8363697A2C7D80"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "ownership_test"
+source = "member"
+dependencies = [
+    "ownership",
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "pausable"
+source = "path+from-root-DDA99DAE97224AE2"
+dependencies = ["std"]
+
+[[package]]
+name = "pausable_test"
+source = "member"
+dependencies = [
+    "pausable",
+    "std",
+]
+
+[[package]]
+name = "reentrancy"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attack_helper_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attack_helper_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_attacker_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_attacker_contract"
+source = "member"
+dependencies = [
+    "reentrancy_attack_helper_abi",
+    "reentrancy_attacker_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_fallback_abi"
+source = "path+from-root-F53252C7DB7025EE"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_proxy_abi"
+source = "member"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "reentrancy_proxy_contract"
+source = "member"
+dependencies = [
+    "ownership",
+    "reentrancy",
+    "reentrancy_proxy_abi",
+    "src14",
+    "src5",
+    "std",
+    "upgradability",
+]
+
+[[package]]
+name = "reentrancy_target_abi"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "reentrancy_target_contract"
+source = "member"
+dependencies = [
+    "reentrancy",
+    "reentrancy_attacker_abi",
+    "reentrancy_fallback_abi",
+    "reentrancy_target_abi",
+    "std",
+]
+
+[[package]]
+name = "signed_int"
+source = "path+from-root-5340E4F7C2F2C9E9"
+dependencies = ["std"]
+
+[[package]]
+name = "simple_contract"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "simple_predicate"
+source = "member"
+dependencies = ["std"]
+
+[[package]]
+name = "src14"
+version = "0.8.0"
+source = "registry+src14?0.8.0#QmQduNaJgjotgw2tz5KLv18PckFZP6zLH3Wzk7mqLfwgcu!"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "src20"
+version = "0.8.0"
+source = "registry+src20?0.8.0#QmSwYjybtdvSF3Ey9RncVUUaFaWsizSBNgAtY9JoyaAHvh!"
+dependencies = ["std"]
+
+[[package]]
+name = "src3"
+version = "0.8.0"
+source = "registry+src3?0.8.0#QmWZt1NRQHid4p5cmFMG11n1tnRfNSgWGXUWDgojt9hjzs!"
+dependencies = ["std"]
+
+[[package]]
+name = "src5"
+version = "0.8.0"
+source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
+dependencies = ["std"]
+
+[[package]]
+name = "src7"
+version = "0.8.0"
+source = "registry+src7?0.8.0#QmbDHPdbKzpRg31bxNNLHQ6pyreH2GjHiXjnR7aKoNC2Y5!"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+version = "0.69.0"
+source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"
+
+[[package]]
+name = "upgradability"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = [
+    "src14",
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "upgradability_test"
+source = "member"
+dependencies = [
+    "src14",
+    "src5",
+    "std",
+    "upgradability",
+]
