@@ -4,7 +4,7 @@ use std::{bytes::Bytes, string::String};
 
 // ANCHOR: import
 use asset::metadata::{_metadata, _set_metadata, SetAssetMetadata, StorageMetadata};
-use standards::src7::*;
+use src7::*;
 // ANCHOR_END: import
 
 // ANCHOR: src7_abi

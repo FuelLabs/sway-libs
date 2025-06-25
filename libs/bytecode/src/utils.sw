@@ -159,7 +159,7 @@ pub fn _swap_configurables(
 }
 
 /// Takes some bytes and creates a new leaf digest.
-fn leaf_digest(data: raw_slice, ref mut result_buffer: raw_ptr) {
+fn leaf_digest(data: raw_slice, result_buffer: raw_ptr) {
     let number_of_bytes = data.number_of_bytes();
     let ptr = alloc_bytes(number_of_bytes + 1);
 

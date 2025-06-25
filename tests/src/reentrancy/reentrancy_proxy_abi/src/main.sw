@@ -1,6 +1,6 @@
 library;
 
-use standards::src5::State;
+use src5::State;
 
 abi OwnedProxy {
     #[storage(write)]

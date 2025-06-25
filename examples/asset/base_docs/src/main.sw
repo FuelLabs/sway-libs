@@ -4,7 +4,7 @@ use std::{hash::*, storage::storage_string::*, string::String};
 
 // ANCHOR: import
 use asset::base::*;
-use standards::src20::*;
+use src20::*;
 // ANCHOR_END: import
 
 // ANCHOR: src20_abi

@@ -3,7 +3,7 @@ name = "admin"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
     "ownership",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src5",
     "std",
 ]
 
@@ -13,7 +13,7 @@ source = "member"
 dependencies = [
     "admin",
     "ownership",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src5",
     "std",
 ]
 
@@ -21,7 +21,8 @@ dependencies = [
 name = "asset"
 source = "path+from-root-6945C3DE2AE6157C"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src20",
+    "src7",
     "std",
 ]
 
@@ -122,7 +123,9 @@ name = "native_asset_lib"
 source = "member"
 dependencies = [
     "asset",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src20",
+    "src3",
+    "src7",
     "std",
 ]
 
@@ -130,7 +133,7 @@ dependencies = [
 name = "ownership"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src5",
     "std",
 ]
 
@@ -139,7 +142,7 @@ name = "ownership_test"
 source = "member"
 dependencies = [
     "ownership",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src5",
     "std",
 ]
 
@@ -199,7 +202,7 @@ dependencies = ["std"]
 name = "reentrancy_proxy_abi"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8",
+    "src5",
     "std",
 ]
 
@@ -210,7 +213,8 @@ dependencies = [
     "ownership",
     "reentrancy",
     "reentrancy_proxy_abi",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src14",
+    "src5",
     "std",
     "upgradability",
 ]
@@ -247,35 +251,49 @@ source = "member"
 dependencies = ["std"]
 
 [[package]]
-name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8"
+name = "src14"
+version = "0.8.0"
+source = "registry+src14?0.8.0#QmQduNaJgjotgw2tz5KLv18PckFZP6zLH3Wzk7mqLfwgcu!"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "src20"
+version = "0.8.0"
+source = "registry+src20?0.8.0#QmSwYjybtdvSF3Ey9RncVUUaFaWsizSBNgAtY9JoyaAHvh!"
 dependencies = ["std"]
 
 [[package]]
-name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48"
-dependencies = [
-    "std",
-    "sway_libs",
-]
+name = "src3"
+version = "0.8.0"
+source = "registry+src3?0.8.0#QmWZt1NRQHid4p5cmFMG11n1tnRfNSgWGXUWDgojt9hjzs!"
+dependencies = ["std"]
+
+[[package]]
+name = "src5"
+version = "0.8.0"
+source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
+dependencies = ["std"]
+
+[[package]]
+name = "src7"
+version = "0.8.0"
+source = "registry+src7?0.8.0#QmbDHPdbKzpRg31bxNNLHQ6pyreH2GjHiXjnR7aKoNC2Y5!"
+dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.68.5#512bbfccdb15a0045576604ba97d7943c9b7520f"
-
-[[package]]
-name = "sway_libs"
-source = "git+https://github.com/FuelLabs/sway-libs?tag=v0.25.2#f43d8b4aacf60867989408991414958f8eab28c0"
-dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.0#7d35df95e0b96dc8ad188ab169fbbeeac896aae8",
-    "std",
-]
+version = "0.69.0"
+source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"
 
 [[package]]
 name = "upgradability"
 source = "path+from-root-8A067F669BC61EA7"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src14",
+    "src5",
     "std",
 ]
 
@@ -283,7 +301,8 @@ dependencies = [
 name = "upgradability_test"
 source = "member"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.7.1#1b00ccc05af5886ae3abd07a9a0ce6122738fc48",
+    "src14",
+    "src5",
     "std",
     "upgradability",
 ]

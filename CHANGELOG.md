@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - [#348](https://github.com/FuelLabs/sway-libs/pull/348) Updates to forc `v0.68.5` and fuel-core `v0.43.2`.
 - [#350](https://github.com/FuelLabs/sway-libs/pull/350) Updates documentation on adding libraries via `forc add`.
+- [#352](https://github.com/FuelLabs/sway-libs/pull/352) Updates to forc `v0.69.0` and fuel-core `v0.44.0`.
 
 ### Fixed
 

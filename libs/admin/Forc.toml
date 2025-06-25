@@ -13,5 +13,5 @@ categories = ["Authentication", "Security"]
 keywords = ["library"]
 
 [dependencies]
-standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.1" }
+src5 = "0.8.0"
 ownership = { path = "../ownership" }

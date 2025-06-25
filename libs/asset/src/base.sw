@@ -1,7 +1,7 @@
 library;
 
 use std::{hash::{Hash, sha256}, storage::storage_string::*, string::String};
-use standards::src20::{SetDecimalsEvent, SetNameEvent, SetSymbolEvent};
+use src20::{SetDecimalsEvent, SetNameEvent, SetSymbolEvent};
 use ::errors::SetMetadataError;
 
 /// Returns the total number of individual assets for a contract.

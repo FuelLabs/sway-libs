@@ -13,4 +13,5 @@ categories = ["Decentralized Finance", "Standards", "Native Assets"]
 keywords = ["library"]
 
 [dependencies]
-standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.1" }
+src20 = "0.8.0"
+src7 = "0.8.0"

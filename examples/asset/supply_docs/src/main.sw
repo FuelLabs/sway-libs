@@ -4,7 +4,7 @@ use std::hash::Hash;
 
 // ANCHOR: import
 use asset::supply::*;
-use standards::src3::*;
+use src3::*;
 // ANCHOR_END: import
 
 // ANCHOR: src3_abi
