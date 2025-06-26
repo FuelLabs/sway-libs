@@ -9,8 +9,8 @@ on:
 
 env:
   RUST_VERSION: 1.84.0
-  FORC_VERSION: 0.67.0
-  CORE_VERSION: 0.41.4
+  FORC_VERSION: 0.69.0
+  CORE_VERSION: 0.44.0
 
 jobs:
   deploy-contributing:
@@ -35,6 +35,22 @@ jobs:
 
   deploy-forc-doc-sway-libs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          [
+            "admin",
+            "asset",
+            "big_int",
+            "bytecode",
+            "merkle",
+            "ownership",
+            "pausable",
+            "queue",
+            "reentrancy",
+            "signed_int",
+            "upgradability",
+          ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -55,13 +71,13 @@ jobs:
 
       - name: Build sway-libs docs
         run: |
-          forc doc --manifest-path libs
+          forc doc --manifest-path libs/${{ matrix.project }}
 
       - name: Deploy master std
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./libs/out/doc
+          publish_dir: ./libs/${{ matrix.project }}/out/doc
           destination_dir: master
         if: github.ref == 'refs/heads/master'
 
@@ -75,6 +91,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./libs/out/doc
+          publish_dir: ./libs/${{ matrix.project }}/out/doc
           destination_dir: ${{ steps.branch_name.outputs.BRANCH_NAME }}
         if: startsWith(github.ref, 'refs/tags')

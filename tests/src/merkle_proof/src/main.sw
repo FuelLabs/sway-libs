@@ -1,13 +1,7 @@
 contract;
 
-use sway_libs::merkle::common::node_digest;
-use sway_libs::merkle::sparse::{
-    ExclusionLeaf,
-    ExclusionLeafData,
-    ExclusionProof,
-    InclusionProof,
-    Proof,
-};
+use merkle::common::node_digest;
+use merkle::sparse::{ExclusionLeaf, ExclusionLeafData, ExclusionProof, InclusionProof, Proof};
 use std::bytes::Bytes;
 
 abi MerkleProofTest {
@@ -45,7 +39,7 @@ abi MerkleProofTest {
 
 impl MerkleProofTest for Contract {
     fn binary_leaf_digest(data: b256) -> b256 {
-        sway_libs::merkle::binary::leaf_digest(data)
+        merkle::binary::leaf_digest(data)
     }
 
     fn node_digest(left: b256, right: b256) -> b256 {
@@ -58,7 +52,7 @@ impl MerkleProofTest for Contract {
         num_leaves: u64,
         proof: Vec<b256>,
     ) -> b256 {
-        sway_libs::merkle::binary::process_proof(key, merkle_leaf, num_leaves, proof)
+        merkle::binary::process_proof(key, merkle_leaf, num_leaves, proof)
     }
 
     fn binary_verify_proof(
@@ -68,11 +62,11 @@ impl MerkleProofTest for Contract {
         num_leaves: u64,
         proof: Vec<b256>,
     ) -> bool {
-        sway_libs::merkle::binary::verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
+        merkle::binary::verify_proof(key, merkle_leaf, merkle_root, num_leaves, proof)
     }
 
     fn sparse_leaf_digest(key: b256, data: b256) -> b256 {
-        sway_libs::merkle::sparse::leaf_digest(key, data)
+        merkle::sparse::leaf_digest(key, data)
     }
 
     fn sparse_root(key: b256, merkle_leaf: Option<Bytes>, proof: Proof) -> b256 {

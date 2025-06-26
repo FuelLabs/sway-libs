@@ -1,0 +1,16 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "ownership.sw"
+license = "Apache-2.0"
+name = "ownership"
+version = "0.26.0"
+description = "The Ownership Library provides a straightforward way to restrict specific calls in a Sway contract to a single owner. Its design follows the SRC-5 standard from Sway Standards and offers a set of functions to initialize, verify, revoke, and transfer ownership."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/ownership/"
+organization = "FuelLabs"
+categories = ["Authentication", "Security", "Standards"]
+keywords = ["library"]
+
+[dependencies]
+src5 = "0.8.0"

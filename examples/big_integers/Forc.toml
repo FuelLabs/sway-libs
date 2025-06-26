@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "big_integers_examples"
 
 [dependencies]
-sway_libs = { path = "../../libs" }
+big_int = { path = "../../libs/big_int" }

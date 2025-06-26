@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "bytecode.sw"
+license = "Apache-2.0"
+name = "bytecode"
+version = "0.26.0"
+description = "The Bytecode Library allows for on-chain verification and computation of bytecode roots for contracts and predicates."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/bytecode/"
+organization = "FuelLabs"
+categories = ["Cryptography", "Authentication", "Security"]
+keywords = ["library"]
+
+[dependencies]

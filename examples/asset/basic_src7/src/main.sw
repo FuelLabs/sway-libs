@@ -3,8 +3,8 @@ contract;
 use std::string::String;
 
 // ANCHOR: basic_src7
-use sway_libs::asset::metadata::*;
-use standards::src7::{Metadata, SRC7};
+use asset::metadata::*;
+use src7::{Metadata, SRC7};
 
 storage {
     metadata: StorageMetadata = StorageMetadata {},

@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "signed_integers_examples"
 
 [dependencies]
-sway_libs = { path = "../../libs" }
+signed_int = { path = "../../libs/signed_int" }
