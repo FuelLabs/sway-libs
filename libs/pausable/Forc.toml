@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "pausable.sw"
+license = "Apache-2.0"
+name = "pausable"
+version = "0.26.0"
+description = "The Pausable library allows contracts to implement an emergency stop mechanism."
+homepage = "https://github.com/FuelLabs/sway-libs"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://docs.fuel.network/docs/sway-libs/pausable/"
+organization = "FuelLabs"
+categories = ["Authentication", "Security"]
+keywords = ["library"]
+
+[dependencies]

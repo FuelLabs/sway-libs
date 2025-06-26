@@ -3,8 +3,8 @@ contract;
 use std::hash::Hash;
 
 // ANCHOR: import
-use sway_libs::asset::supply::*;
-use standards::src3::*;
+use asset::supply::*;
+use src3::*;
 // ANCHOR_END: import
 
 // ANCHOR: src3_abi

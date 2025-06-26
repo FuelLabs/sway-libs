@@ -1,8 +1,8 @@
 contract;
 
 // ANCHOR: basic_src20
-use sway_libs::asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
-use standards::src20::SRC20;
+use asset::base::{_decimals, _name, _symbol, _total_assets, _total_supply};
+use src20::SRC20;
 use std::{hash::Hash, storage::storage_string::*, string::String};
 
 // The SRC-20 storage block

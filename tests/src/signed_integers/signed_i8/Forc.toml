@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "i8_test"
 
 [dependencies]
-sway_libs = { path = "../../../../libs" }
+signed_int = { path = "../../../../libs/signed_int" }

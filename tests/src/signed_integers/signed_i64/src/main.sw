@@ -1,6 +1,6 @@
 library;
 
-use sway_libs::signed_integers::i64::I64;
+use signed_int::i64::I64;
 use std::convert::*;
 use std::flags::{disable_panic_on_overflow, disable_panic_on_unsafe_math};
 

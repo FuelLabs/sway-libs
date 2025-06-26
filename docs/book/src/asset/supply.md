@@ -4,7 +4,16 @@ For implementation details on the Asset Library supply functionality please see 
 
 ## Importing the Asset Library Supply Functionality
 
-In order to use the Asset Library, Sway Libs and [Sway Standards](https://docs.fuel.network/docs/sway-standards/) must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md). To add Sway Standards as a dependency please see the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard).
+In order to use the supply functionality of the Asset Library, the Asset Library and the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) Standard must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Asset Library and the [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) Standard as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add asset@0.8.0
+forc add src3@0.8.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Asset Library Supply Functionality and [SRC-3](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/) Standard to your Sway Smart Contract, add the following to your Sway file:
 

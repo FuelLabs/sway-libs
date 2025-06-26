@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "pausable_example"
 
 [dependencies]
-sway_libs = { path = "../../../libs" }
+pausable = { path = "../../../libs/pausable" }

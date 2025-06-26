@@ -1,13 +1,14 @@
 contract;
 
-use sway_libs::upgradability::{
+use upgradability::{
     _proxy_owner,
     _proxy_target,
     _set_proxy_owner,
     _set_proxy_target,
     only_proxy_owner,
 };
-use standards::{src14::{SRC14, SRC14Extension}, src5::State};
+use src14::{SRC14, SRC14Extension};
+use src5::State;
 
 configurable {
     INITIAL_TARGET: Option<ContractId> = None,

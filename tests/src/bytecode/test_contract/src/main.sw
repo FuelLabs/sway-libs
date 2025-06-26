@@ -1,6 +1,6 @@
 contract;
 
-use sway_libs::bytecode::{
+use bytecode::{
     compute_bytecode_root,
     compute_predicate_address,
     predicate_address_from_root,

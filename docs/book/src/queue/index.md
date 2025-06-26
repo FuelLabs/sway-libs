@@ -6,7 +6,15 @@ For implementation details on the Queue Library please see the [Sway Libs Docs](
 
 ## Importing the Queue Library
 
-In order to use the Queue Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Queue Library, the Queue Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Queue Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add queue@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Queue Library to your Sway Smart Contract, add the following to your Sway file:
 

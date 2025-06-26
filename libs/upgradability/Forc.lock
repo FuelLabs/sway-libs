@@ -1,0 +1,28 @@
+[[package]]
+name = "src14"
+version = "0.8.0"
+source = "registry+src14?0.8.0#QmQduNaJgjotgw2tz5KLv18PckFZP6zLH3Wzk7mqLfwgcu!"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "src5"
+version = "0.8.0"
+source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
+dependencies = ["std"]
+
+[[package]]
+name = "std"
+version = "0.69.0"
+source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"
+
+[[package]]
+name = "upgradability"
+source = "member"
+dependencies = [
+    "src14",
+    "src5",
+    "std",
+]

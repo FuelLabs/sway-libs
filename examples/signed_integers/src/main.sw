@@ -1,11 +1,11 @@
 library;
 
 // ANCHOR: import
-use sway_libs::signed_integers::*;
+use signed_int::*;
 // ANCHOR_END: import
 
 // ANCHOR: import_8
-use sway_libs::signed_integers::i8::I8;
+use signed_int::i8::I8;
 // ANCHOR_END: import_8
 
 fn initialize() {

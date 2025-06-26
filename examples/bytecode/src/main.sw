@@ -3,7 +3,7 @@ library;
 use std::alloc::alloc_bytes;
 
 // ANCHOR: import
-use sway_libs::bytecode::*;
+use bytecode::*;
 // ANCHOR_END: import
 
 // ANCHOR: known_issue

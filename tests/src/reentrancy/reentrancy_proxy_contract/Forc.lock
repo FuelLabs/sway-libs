@@ -1,12 +1,21 @@
 [[package]]
-name = "core"
-source = "path+from-root-7053AAA90CC5E690"
+name = "ownership"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
+name = "reentrancy"
+source = "path+from-root-8A067F669BC61EA7"
+dependencies = ["std"]
 
 [[package]]
 name = "reentrancy_proxy_abi"
 source = "path+from-root-8A067F669BC61EA7"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5",
+    "src5",
     "std",
 ]
 
@@ -14,31 +23,40 @@ dependencies = [
 name = "reentrancy_proxy_contract"
 source = "member"
 dependencies = [
+    "ownership",
+    "reentrancy",
     "reentrancy_proxy_abi",
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5",
+    "src14",
+    "src5",
     "std",
-    "sway_libs",
+    "upgradability",
 ]
 
 [[package]]
-name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c"
-dependencies = ["std"]
+name = "src14"
+version = "0.8.0"
+source = "registry+src14?0.8.0#QmQduNaJgjotgw2tz5KLv18PckFZP6zLH3Wzk7mqLfwgcu!"
+dependencies = [
+    "src5",
+    "std",
+]
 
 [[package]]
-name = "standards"
-source = "git+https://github.com/FuelLabs/sway-standards?tag=v0.6.1#792639cdf391565e6e6a02482ea8a46d9604a6f5"
+name = "src5"
+version = "0.8.0"
+source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
 dependencies = ["std"]
 
 [[package]]
 name = "std"
-source = "git+https://github.com/fuellabs/sway?tag=v0.66.2#31486c0b47669612acb7c64d66ecb50aea281282"
-dependencies = ["core"]
+version = "0.68.7"
+source = "registry+std?0.68.7#QmXtvuy4DJqoVfTmMSygtwh5Zx9JvWsKfx2p83pXEGnZrC!"
 
 [[package]]
-name = "sway_libs"
+name = "upgradability"
 source = "path+from-root-8A067F669BC61EA7"
 dependencies = [
-    "standards git+https://github.com/FuelLabs/sway-standards?tag=v0.6.0#65e09f95ea8b9476b171a66c8a47108f352fa32c",
+    "src14",
+    "src5",
     "std",
 ]
