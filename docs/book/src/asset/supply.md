@@ -1,6 +1,6 @@
 # Supply Functionality
 
-For implementation details on the Asset Library supply functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/supply/index.html).
+For implementation details on the Asset Library supply functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/asset/supply/index.html).
 
 ## Importing the Asset Library Supply Functionality
 

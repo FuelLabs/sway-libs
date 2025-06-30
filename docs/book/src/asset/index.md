@@ -2,7 +2,7 @@
 
 The Asset Library provides basic helper functions for the [SRC-20; Native Asset Standard](https://docs.fuel.network/docs/sway-standards/src-20-native-asset/), [SRC-3; Mint and Burn Standard](https://docs.fuel.network/docs/sway-standards/src-3-minting-and-burning/), and the [SRC-7; Arbitrary Asset Metadata Standard](https://docs.fuel.network/docs/sway-standards/src-7-asset-metadata/). It is intended to make development of Native Assets using Sway quick and easy while following the standard's specifications.
 
-For implementation details on the Asset Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/index.html).
+For implementation details on the Asset Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/asset/).
 
 ## [SRC-20 Functionality](./base.md)
 
