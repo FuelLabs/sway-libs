@@ -1,6 +1,6 @@
 # Metadata Functionality
 
-For implementation details on the Asset Library metadata functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/metadata/index.html).
+For implementation details on the Asset Library metadata functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/asset/metadata/index.html).
 
 ## Importing the Asset Library Metadata Functionality
 

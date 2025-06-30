@@ -2,7 +2,7 @@
 
 The **Ownership Library** provides a straightforward way to restrict specific calls in a Sway contract to a single _owner_. Its design follows the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard from [Sway Standards](https://docs.fuel.network/docs/sway-standards/) and offers a set of functions to initialize, verify, revoke, and transfer ownership.
 
-For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
+For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/ownership/).
 
 ## Importing the Ownership Library
 

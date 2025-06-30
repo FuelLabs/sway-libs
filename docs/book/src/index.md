@@ -4,7 +4,10 @@ The purpose of Sway Libraries is to contain libraries which users can import and
 
 There are several types of libraries that Sway Libs encompasses. These include libraries that provide convenience functions, [Sway-Standards](https://github.com/FuelLabs/sway-standards) supporting libraries, data type libraries, security functionality libraries, and other tools valuable to blockchain development.
 
-For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).
+<!--
+Uncomment when https://github.com/FuelLabs/sway/pull/7229 is merged.
+For implementation details on the libraries please see the [Sway Libs Docs]().
+-->
 
 ## Assets Libraries
 

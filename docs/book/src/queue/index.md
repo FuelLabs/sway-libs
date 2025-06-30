@@ -2,7 +2,7 @@
 
 A Queue is a linear structure which follows the First-In-First-Out (FIFO) principle. This means that the elements added first are the ones that get removed first.
 
-For implementation details on the Queue Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/queue/index.html).
+For implementation details on the Queue Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/queue/queue/).
 
 ## Importing the Queue Library
 

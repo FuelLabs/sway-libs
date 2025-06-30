@@ -5,7 +5,7 @@ The Big Integers library provides a library to use extremely large numbers in Sw
 
 Internally the library uses the `Vec<u64>` type to represent the underlying values of the big integers.
 
-For implementation details on the Big Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bigint/index.html).
+For implementation details on the Big Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/big_int/big_int/).
 
 ## Importing the Big Integers Library
 

@@ -2,7 +2,7 @@
 
 The Upgradability Library provides functions that can be used to implement contract upgrades via simple upgradable proxies. The Upgradability Library implements the required and optional functionality from [SRC-14](https://docs.fuel.network/docs/sway-standards/src-14-simple-upgradeable-proxies/) as well as additional functionality for ownership of the proxy contract.
 
-For implementation details on the Upgradability Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/upgradability/index.html).
+For implementation details on the Upgradability Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/upgradability/upgradability/).
 
 ## Importing the Upgradability Library
 
