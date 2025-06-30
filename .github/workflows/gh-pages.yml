@@ -78,7 +78,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./libs/${{ matrix.project }}/out/doc
-          destination_dir: mastermaster/${{ matrix.project }}
+          destination_dir: master/${{ matrix.project }}
         if: github.ref == 'refs/heads/master'
 
       - name: Get tag
