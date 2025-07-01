@@ -33,9 +33,12 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 Please refer to the [Sway Libs Docs Hub](https://docs.fuel.network/docs/sway-libs/) for documentation for a general overview on Sway Libs and how to implement libraries.
 
+<!---
+Uncomment this when https://github.com/FuelLabs/sway/pull/7229 is merged.
 ## Library Docs
 
-For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).
+For implementation details on the libraries please see the [Sway Libs Docs]().
+--->
 
 ## Libraries
 

@@ -1,6 +1,6 @@
 # Base Functionality
 
-For implementation details on the Asset Library base functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/base/index.html).
+For implementation details on the Asset Library base functionality please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/asset/asset/base/index.html).
 
 ## Importing the Asset Library Base Functionality
 

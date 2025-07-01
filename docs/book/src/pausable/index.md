@@ -4,7 +4,7 @@ The Pausable library allows contracts to implement an emergency stop mechanism. 
 
 It is highly encouraged to use the [Ownership Library](../ownership/index.md) in combination with the Pausable Library to ensure that only a single administrative user has the ability to pause your contract.
 
-For implementation details on the Pausable Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/pausable/index.html).
+For implementation details on the Pausable Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/pausable/pausable/).
 
 ## Importing the Pausable Library
 

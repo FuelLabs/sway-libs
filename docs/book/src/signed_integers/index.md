@@ -4,7 +4,7 @@ The Signed Integers library provides a library to use signed numbers in Sway. It
 
 Internally the library uses the `u8`, `u16`, `u32`, `u64`, `U128`, `u256` types to represent the underlying values of the signed integers.
 
-For implementation details on the Signed Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/signed_integers/index.html).
+For implementation details on the Signed Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/signed_int/signed_int/).
 
 ## Importing the Signed Integer Library
 

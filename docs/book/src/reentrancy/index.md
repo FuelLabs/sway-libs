@@ -6,7 +6,7 @@ The reentrancy check is used to check if a contract ID has been called more than
 
 A reentrancy, or "recursive call" attack can cause some functions to behave in unexpected ways. This can be prevented by asserting a contract has not yet been called in the current transaction. An example can be found [here](https://swcregistry.io/docs/SWC-107).
 
-For implementation details on the Reentrancy Guard Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/index.html).
+For implementation details on the Reentrancy Guard Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/reentrancy/).
 
 ## Importing the Reentrancy Guard Library
 

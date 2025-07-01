@@ -4,7 +4,7 @@ Merkle trees allow for on-chain verification of off-chain data. With the merkle 
 
 The Merkle Library currently supports two different tree structures: Binary Trees and Sparse Trees. For information implementation specifications, please refer to the [Merkle Tree Specification](https://docs.fuel.network/docs/specs/protocol/cryptographic-primitives/#merkle-trees).
 
-For implementation details on the Merkle Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/index.html).
+For implementation details on the Merkle Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/merkle/).
 
 ## Importing the Merkle Library
 
@@ -128,7 +128,7 @@ Once imported, using the Sparse Merkle Proof library is as simple as calling the
 - `root()`
 - `verify()`
 
-To explore additional utility and support functions available, please check out the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/index.html).
+To explore additional utility and support functions available, please check out the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/merkle/).
 
 ### Sparse Sway Functionality
 

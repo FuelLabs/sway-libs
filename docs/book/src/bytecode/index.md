@@ -4,7 +4,7 @@ The Bytecode Library allows for on-chain verification and computation of bytecod
 
 A bytecode root for a contract and predicate is the Merkle root of the [binary Merkle tree](https://github.com/FuelLabs/fuel-specs/blob/master/src/protocol/cryptographic-primitives.md#binary-merkle-tree) with each leaf being 16KiB of instructions. This library will compute any contract's or predicate's bytecode root/address allowing for the verification of deployed contracts and generation of predicate addresses on-chain.
 
-For implementation details on the Bytecode Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bytecode/index.html).
+For implementation details on the Bytecode Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bytecode/bytecode/).
 
 ## Importing the Bytecode Library
 
