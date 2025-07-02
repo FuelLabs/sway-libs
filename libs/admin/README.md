@@ -2,7 +2,7 @@
 
 The Admin library provides a way to block users without an "administrative status" from calling functions within a contract. The Admin Library differs from the [Ownership Library](https://docs.fuel.network/docs/sway-libs/ownership/) as multiple users may have administrative status. The Admin Library is often used when needing administrative calls on a contract that involve multiple users or a whitelist.
 
-This library extends the [Ownership Library]([../ownership/index.md](https://docs.fuel.network/docs/sway-libs/ownership/)). The Ownership library must be imported and used to enable the Admin library. Only the contract's owner may add and remove administrative users.
+This library extends the [Ownership Library](https://docs.fuel.network/docs/sway-libs/ownership/). The Ownership library must be imported and used to enable the Admin library. Only the contract's owner may add and remove administrative users.
 
 For implementation details on the Admin Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/admin/admin/).
 
