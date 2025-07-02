@@ -94,7 +94,7 @@ fuel-merkle = { version = "0.56.0" }
 The following should be added to your Rust file to use the Fuel-Merkle crate.
 
 ```rust
-{{#include ../../../../examples/merkle_sparse/mod.rs:import}}
+{{#include ../../../../examples/merkle_binary/mod.rs:import}}
 ```
 
 #### Using Fuel-Merkle's Binary Tree
@@ -104,7 +104,7 @@ The following should be added to your Rust file to use the Fuel-Merkle crate.
 To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in increasing order.
 
 ```rust
-{{#include ../../../../examples/merkle_sparse/mod.rs:generating_a_tree}}
+{{#include ../../../../examples/merkle_binary/mod.rs:generating_a_tree}}
 ```
 
 ##### Generating And Verifying A Binary Proof
@@ -112,13 +112,13 @@ To create a merkle tree using Fuel-Merkle is as simple as pushing your leaves in
 To generate a proof for a specific leaf, you must have the index or key of the leaf. Simply call the prove function:
 
 ```rust
-{{#include ../../../../examples/merkle_sparse/mod.rs:generating_proof}}
+{{#include ../../../../examples/merkle_binary/mod.rs:generating_proof}}
 ```
 
 Once the proof has been generated, you may call the Sway Smart Contract's `verify_proof` function:
 
 ```rust
-{{#include ../../../../examples/merkle_sparse/mod.rs:verify_proof}}
+{{#include ../../../../examples/merkle_binary/mod.rs:verify_proof}}
 ```
 
 ## Using the Sparse Merkle Proof Library In Sway
