@@ -2,7 +2,7 @@
 name = "admin"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "ownership",
+    "ownership registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!",
     "src5",
     "std",
 ]
@@ -12,7 +12,7 @@ name = "admin_test"
 source = "member"
 dependencies = [
     "admin",
-    "ownership",
+    "ownership path+from-root-8E8363697A2C7D80",
     "src5",
     "std",
 ]
@@ -138,10 +138,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "ownership"
+version = "0.26.0"
+source = "registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
 name = "ownership_test"
 source = "member"
 dependencies = [
-    "ownership",
+    "ownership path+from-root-8E8363697A2C7D80",
     "src5",
     "std",
 ]
@@ -210,7 +219,7 @@ dependencies = [
 name = "reentrancy_proxy_contract"
 source = "member"
 dependencies = [
-    "ownership",
+    "ownership path+from-root-8E8363697A2C7D80",
     "reentrancy",
     "reentrancy_proxy_abi",
     "src14",
