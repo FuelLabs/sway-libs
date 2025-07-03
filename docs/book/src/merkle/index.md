@@ -4,11 +4,19 @@ Merkle trees allow for on-chain verification of off-chain data. With the merkle 
 
 The Merkle Library currently supports two different tree structures: Binary Trees and Sparse Trees. For information implementation specifications, please refer to the [Merkle Tree Specification](https://docs.fuel.network/docs/specs/protocol/cryptographic-primitives/#merkle-trees).
 
-For implementation details on the Merkle Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/index.html).
+For implementation details on the Merkle Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/merkle/).
 
 ## Importing the Merkle Library
 
-In order to use the Merkle Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Merkle Library, the Merkle Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Merkle Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add merkle@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Binary Merkle Library to your Sway Smart Contract, add the following to your Sway file:
 
@@ -120,7 +128,7 @@ Once imported, using the Sparse Merkle Proof library is as simple as calling the
 - `root()`
 - `verify()`
 
-To explore additional utility and support functions available, please check out the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/index.html).
+To explore additional utility and support functions available, please check out the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/merkle/merkle/).
 
 ### Sparse Sway Functionality
 

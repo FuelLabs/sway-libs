@@ -2,22 +2,26 @@
 
 The **Ownership Library** provides a straightforward way to restrict specific calls in a Sway contract to a single _owner_. Its design follows the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard from [Sway Standards](https://docs.fuel.network/docs/sway-standards/) and offers a set of functions to initialize, verify, revoke, and transfer ownership.
 
-For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/index.html).
+For implementation details, visit the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/ownership/ownership/).
 
 ## Importing the Ownership Library
 
-1. **Add Sway Libs to `Forc.toml`**  
-   Please see the [Getting Started](../getting_started/index.md) guide for instructions on adding **Sway Libs** as a dependency.
+In order to use the Ownership Library, the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard must be added to your `Forc.toml` file and then imported into your Sway project.
 
-2. **Add Sway Standards to `Forc.toml`**  
-   Refer to the [Sway Standards Book](https://docs.fuel.network/docs/sway-standards/#using-a-standard) to add **Sway Standards**.
+To add the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
 
-3. **Import the Ownership Library**  
-   To import the Ownership Library and the [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) standard, include the following in your Sway file:
+```bash
+forc add ownership@0.26.0
+forc add src5@0.8.0
+```
 
-   ```sway
-   {{#include ../../../../examples/ownership/src/lib.sw:import}}
-   ```
+> **NOTE:** Be sure to set the version to the latest release.
+
+To import the Ownership Library and [SRC-5](https://docs.fuel.network/docs/sway-standards/src-5-ownership/) Standard to your Sway Smart Contract, add the following to your Sway file:
+
+```sway
+{{#include ../../../../examples/ownership/src/lib.sw:import}}
+```
 
 ## Integrating the Ownership Library into the SRC-5 Standard
 
@@ -35,6 +39,12 @@ Establishes the initial ownership state by calling `initialize_ownership(new_own
 
 ```sway
 {{#include ../../../../examples/ownership/src/lib.sw:initialize}}
+```
+
+Please note that the example above does not apply any restrictions on who may call the `initialize()` function. This leaves the opportunity for a bad actor to front-run your contract and claim ownership for themselves. To ensure the intended `Identity` is set as the contract owner upon contract deployment, use a `configurable` where the `INITIAL_OWNER` is the intended owner of the contract.
+
+```sway
+{{#include ../../../../examples/ownership_configurable/src/main.sw:ownership_configurable}}
 ```
 
 ### Applying Restrictions

@@ -5,13 +5,21 @@ The Big Integers library provides a library to use extremely large numbers in Sw
 
 Internally the library uses the `Vec<u64>` type to represent the underlying values of the big integers.
 
-For implementation details on the Big Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bigint/index.html).
+For implementation details on the Big Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/big_int/big_int/).
 
 ## Importing the Big Integers Library
 
-In order to use the Big Integer Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Big Integers Library, the Big Integers Library must be added to your `Forc.toml` file and then imported into your Sway project.
 
-To import the Big Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
+To add the Big Integers Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add big_int@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
+
+To import the Big Integers Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/big_integers/src/main.sw:import}}

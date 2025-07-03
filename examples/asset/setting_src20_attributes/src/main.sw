@@ -1,7 +1,7 @@
 contract;
 
 // ANCHOR: setting_src20_attributes
-use sway_libs::asset::base::*;
+use asset::base::*;
 use std::{hash::Hash, storage::storage_string::*, string::String};
 
 storage {

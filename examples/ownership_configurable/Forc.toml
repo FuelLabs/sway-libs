@@ -1,0 +1,9 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "main.sw"
+license = "Apache-2.0"
+name = "ownership_configurable_examples"
+
+[dependencies]
+src5 = "0.8.0"
+ownership = { path = "../../libs/ownership" }

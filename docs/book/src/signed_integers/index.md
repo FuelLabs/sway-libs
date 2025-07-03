@@ -4,13 +4,21 @@ The Signed Integers library provides a library to use signed numbers in Sway. It
 
 Internally the library uses the `u8`, `u16`, `u32`, `u64`, `U128`, `u256` types to represent the underlying values of the signed integers.
 
-For implementation details on the Signed Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/signed_integers/index.html).
+For implementation details on the Signed Integers Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/signed_int/signed_int/).
 
 ## Importing the Signed Integer Library
 
-In order to use the Signed Integer Number Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Signed Integers Library, the Signed Integers Library must be added to your `Forc.toml` file and then imported into your Sway project.
 
-To import the Signed Integer Number Library to your Sway Smart Contract, add the following to your Sway file:
+To add the Signed Integers Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add signed_int@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
+
+To import the Signed Integers Library to your Sway Smart Contract, add the following to your Sway file:
 
 ```sway
 {{#include ../../../../examples/signed_integers/src/main.sw:import}}

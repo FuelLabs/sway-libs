@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.67.0" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.67.0-orange" />
+    <a href="https://crates.io/crates/forc/0.69.0" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.69.0-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -33,9 +33,12 @@ These libraries contain helper functions and other tools valuable to blockchain 
 
 Please refer to the [Sway Libs Docs Hub](https://docs.fuel.network/docs/sway-libs/) for documentation for a general overview on Sway Libs and how to implement libraries.
 
+<!---
+Uncomment this when https://github.com/FuelLabs/sway/pull/7229 is merged.
 ## Library Docs
 
-For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).
+For implementation details on the libraries please see the [Sway Libs Docs]().
+--->
 
 ## Libraries
 
@@ -72,32 +75,38 @@ For implementation details on the libraries please see the [Sway Libs Docs](http
 
 ## Using a library
 
-To import a library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
+To import any library, a dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
-```rust
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
+```sway
+[dependencies]
+example = "0.0.0"
 ```
 
-> **NOTE:**
-> Be sure to set the tag to the latest release.
+The library you wish to use may be added as a dependency with the `forc add` command. For example, to import the Ownership Library, use the following `forc` command:
+
+```bash
+forc add ownership@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 You may then import your desired library in your Sway Smart Contract as so:
 
 ```sway
-use sway_libs::<library>::<library_function>;
+use <library>::<library_function>;
 ```
 
 For example, to import the `only_owner()` function use the following statement:
 
 ```sway
-use sway_libs::ownership::only_owner;
+use ownership::only_owner;
 ```
 
 For more information about implementation please refer to the [Sway Libs Docs Hub](https://docs.fuel.network/docs/sway-libs/)
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.67.0` and `fuel-core v0.41.4`. You can check what version you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.69.0` and `fuel-core v0.44.0`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
@@ -119,7 +128,7 @@ forc test --path tests --release --locked && cargo test --manifest-path tests/Ca
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.67.0`, `fuels-rs v0.70.0` and `fuel-core v0.41.4`.
+> All projects currently use `forc v0.69.0`, `fuels-rs v0.70.0` and `fuel-core v0.44.0`.
 
 ## Contributing
 

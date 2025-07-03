@@ -4,11 +4,11 @@ use std::u128::U128;
 use std::bytes::Bytes;
 
 // ANCHOR: import
-use sway_libs::bigint::*;
+use big_int::*;
 // ANCHOR_END: import
 
 // ANCHOR: import_big_uint
-use sway_libs::bigint::BigUint;
+use big_int::BigUint;
 // ANCHOR_END: import_big_uint
 
 fn initialize() {

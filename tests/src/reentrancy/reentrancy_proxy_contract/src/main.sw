@@ -1,7 +1,7 @@
 contract;
 
 use reentrancy_proxy_abi::OwnedProxy;
-use sway_libs::{
+use {
     ownership::errors::InitializationError,
     upgradability::{
         _proxy_owner,
@@ -11,7 +11,8 @@ use sway_libs::{
         only_proxy_owner,
     },
 };
-use standards::{src14::{SRC14, SRC14Extension}, src5::State};
+use src14::{SRC14, SRC14Extension};
+use src5::State;
 use std::execution::run_external;
 
 configurable {

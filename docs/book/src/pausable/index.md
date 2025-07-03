@@ -4,11 +4,19 @@ The Pausable library allows contracts to implement an emergency stop mechanism. 
 
 It is highly encouraged to use the [Ownership Library](../ownership/index.md) in combination with the Pausable Library to ensure that only a single administrative user has the ability to pause your contract.
 
-For implementation details on the Pausable Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/pausable/index.html).
+For implementation details on the Pausable Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/pausable/pausable/).
 
 ## Importing the Pausable Library
 
-In order to use the Pausable library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Pausable library, the Pausable Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Pausable Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add pausable@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Pausable Library to your Sway Smart Contract, add the following to your Sway file:
 

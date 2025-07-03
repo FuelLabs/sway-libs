@@ -6,5 +6,8 @@ name = "reentrancy_proxy_contract"
 
 [dependencies]
 reentrancy_proxy_abi = { path = "../reentrancy_proxy_abi" }
-standards = { git = "https://github.com/FuelLabs/sway-standards", tag = "v0.7.0" }
-sway_libs = { path = "../../../../libs" }
+src5 = "0.8.0"
+src14 = "0.8.0"
+reentrancy = { path = "../../../../libs/reentrancy" }
+ownership = { path = "../../../../libs/ownership" }
+upgradability = { path = "../../../../libs/upgradability" }

@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "reentrancy.sw"
+license = "Apache-2.0"
+name = "reentrancy"
+version = "0.26.0"
+description = "The Reentrancy Guard Library provides an API to check for and disallow reentrancy on a contract. A reentrancy attack happens when a function is externally invoked during its execution, allowing it to be run multiple times in a single transaction."
+homepage = "https://docs.fuel.network/docs/sway-libs/reentrancy/"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/reentrancy/"
+organization = "FuelLabs"
+categories = ["Security", "Authentication"]
+keywords = ["library"]
+
+[dependencies]

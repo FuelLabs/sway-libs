@@ -2,43 +2,37 @@
 
 ## Adding Sway Libs as a Dependency
 
-To import any library, the following dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
+To import any library, a dependency should be added to the project's `Forc.toml` file under `[dependencies]`.
 
 ```sway
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
-```
-
-For reference, here is a complete `Forc.toml` file:
-
-```sway
-[project]
-authors = ["Fuel Labs <contact@fuel.sh>"]
-entry = "main.sw"
-license = "Apache-2.0"
-name = "MyProject"
-
 [dependencies]
-sway_libs = { git = "https://github.com/FuelLabs/sway-libs", tag = "v0.25.2" }
+example = "0.0.0"
 ```
 
-> **NOTE:** Be sure to set the tag to the latest release.
+The library you wish to use may be added as a dependency with the `forc add` command. For example, to import the Ownership Library, use the following `forc` command:
+
+```bash
+forc add ownership@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 ## Importing Sway Libs to Your Project
 
 Once Sway Libs is a dependency to your project, you may then import a library in your Sway Smart Contract as so:
 
 ```sway
-use sway_libs::<library>::<library_function>;
+use <library>::<library_function>;
 ```
 
 For example, to import the `only_owner()` from the Ownership Library, use the following statement at the top of your Sway file:
 
 ```sway
-use sway_libs::ownership::only_owner;
+use ownership::only_owner;
 ```
 
 > **NOTE:**
-> All projects currently use `forc 0.67.0`, `fuels-rs v0.70.0` and `fuel-core 0.41.4`.
+> All projects currently use `forc v0.69.0`, `fuels-rs v0.70.0` and `fuel-core v0.44.0`.
 
 ## Using Sway Libs
 
@@ -47,7 +41,7 @@ Once the library you require has been imported to your project, you may call or 
 In the following example, we import the Pausable Library and implement the `Pausable` ABI with it's associated functions.
 
 ```sway
-use sway_libs::pausable::{_is_paused, _pause, _unpause, Pausable};
+use pausable::{_is_paused, _pause, _unpause, Pausable};
 
 // Implement the Pausable ABI for our contract
 impl Pausable for Contract {
@@ -70,4 +64,7 @@ impl Pausable for Contract {
 
 Any instructions related to using a specific library should be found within the [libraries](../index.md) section of the Sway Libs Book.
 
-For implementation details on the libraries please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/).
+<!--
+Uncomment this when https://github.com/FuelLabs/sway/pull/7229 is merged.
+For implementation details on the libraries please see the [Sway Libs Docs]().
+-->

@@ -1,14 +1,12 @@
 // ANCHOR: example_contract
 contract;
 
-use sway_libs::ownership::{
-    _owner,
-    initialize_ownership,
-    only_owner,
-    renounce_ownership,
-    transfer_ownership,
-};
-use standards::src5::{SRC5, State};
+use ownership::{_owner, initialize_ownership, only_owner, renounce_ownership, transfer_ownership};
+use src5::{SRC5, State};
+
+configurable {
+    INITAL_OWNER: Identity = Identity::Address(Address::zero()),
+}
 
 impl SRC5 for Contract {
     #[storage(read)]
@@ -19,7 +17,7 @@ impl SRC5 for Contract {
 
 abi MyContract {
     #[storage(read, write)]
-    fn constructor(new_owner: Identity);
+    fn initialize();
     #[storage(read)]
     fn restricted_action();
     #[storage(read, write)]
@@ -32,8 +30,8 @@ abi MyContract {
 
 impl MyContract for Contract {
     #[storage(read, write)]
-    fn constructor(new_owner: Identity) {
-        initialize_ownership(new_owner);
+    fn initialize() {
+        initialize_ownership(INITAL_OWNER);
     }
 
     // A function restricted to the owner

@@ -2,8 +2,8 @@ contract;
 
 use std::bytes::Bytes;
 // ANCHOR: import
-use sway_libs::merkle::sparse::*;
-use sway_libs::merkle::common::{MerkleRoot, ProofSet};
+use merkle::sparse::*;
+use merkle::common::{MerkleRoot, ProofSet};
 // ANCHOR_END: import
 
 abi MerkleExample {
@@ -34,7 +34,7 @@ fn compute_leaf(key: MerkleTreeKey, hashed_data: b256) {
 
 // ANCHOR: node_digest
 fn compute_node(leaf_a: b256, leaf_b: b256) {
-    use sway_libs::merkle::common::node_digest;
+    use merkle::common::node_digest;
     let node: b256 = node_digest(leaf_a, leaf_b);
 }
 // ANCHOR_END: node_digest

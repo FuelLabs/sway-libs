@@ -4,11 +4,19 @@ The Bytecode Library allows for on-chain verification and computation of bytecod
 
 A bytecode root for a contract and predicate is the Merkle root of the [binary Merkle tree](https://github.com/FuelLabs/fuel-specs/blob/master/src/protocol/cryptographic-primitives.md#binary-merkle-tree) with each leaf being 16KiB of instructions. This library will compute any contract's or predicate's bytecode root/address allowing for the verification of deployed contracts and generation of predicate addresses on-chain.
 
-For implementation details on the Bytecode Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bytecode/index.html).
+For implementation details on the Bytecode Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/bytecode/bytecode/).
 
 ## Importing the Bytecode Library
 
-In order to use the Bytecode Library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Bytecode Library, the Bytecode Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Bytecode Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add bytecode@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Bytecode Library to your Sway Smart Contract, add the following to your Sway file:
 

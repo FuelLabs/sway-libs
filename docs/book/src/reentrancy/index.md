@@ -6,11 +6,19 @@ The reentrancy check is used to check if a contract ID has been called more than
 
 A reentrancy, or "recursive call" attack can cause some functions to behave in unexpected ways. This can be prevented by asserting a contract has not yet been called in the current transaction. An example can be found [here](https://swcregistry.io/docs/SWC-107).
 
-For implementation details on the Reentrancy Guard Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/index.html).
+For implementation details on the Reentrancy Guard Library please see the [Sway Libs Docs](https://fuellabs.github.io/sway-libs/master/sway_libs/reentrancy/reentrancy/).
 
 ## Importing the Reentrancy Guard Library
 
-In order to use the Reentrancy Guard library, Sway Libs must be added to the `Forc.toml` file and then imported into your Sway project. To add Sway Libs as a dependency to the `Forc.toml` file in your project please see the [Getting Started](../getting_started/index.md).
+In order to use the Reentrancy Guard library, the Reentrancy Guard Library must be added to your `Forc.toml` file and then imported into your Sway project.
+
+To add the Reentrancy Guard Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
+
+```bash
+forc add reentrancy@0.26.0
+```
+
+> **NOTE:** Be sure to set the version to the latest release.
 
 To import the Reentrancy Guard Library to your Sway Smart Contract, add the following to your Sway file:
 

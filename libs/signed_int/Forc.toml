@@ -1,0 +1,15 @@
+[project]
+authors = ["Fuel Labs <contact@fuel.sh>"]
+entry = "signed_int.sw"
+license = "Apache-2.0"
+name = "signed_int"
+version = "0.26.0"
+description = "The Signed Integers library provides a library to use signed numbers in Sway."
+homepage = "https://docs.fuel.network/docs/sway-libs/signed_integers/"
+repository = "https://github.com/FuelLabs/sway-libs"
+documentation = "https://fuellabs.github.io/sway-libs/master/sway_libs/signed_int/signed_int/"
+organization = "FuelLabs"
+categories = ["Data Structures", "Math"]
+keywords = ["library"]
+
+[dependencies]

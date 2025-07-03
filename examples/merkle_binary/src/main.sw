@@ -1,8 +1,8 @@
 contract;
 
 // ANCHOR: import
-use sway_libs::merkle::binary::{leaf_digest, process_proof, verify_proof};
-use sway_libs::merkle::common::{MerkleRoot, node_digest, ProofSet};
+use merkle::binary::{leaf_digest, process_proof, verify_proof};
+use merkle::common::{MerkleRoot, node_digest, ProofSet};
 // ANCHOR_END: import
 
 abi MerkleExample {
