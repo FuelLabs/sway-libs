@@ -2,7 +2,7 @@
 name = "admin"
 source = "path+from-root-9E88A97493D252A9"
 dependencies = [
-    "ownership",
+    "ownership registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!",
     "src5",
     "std",
 ]
@@ -12,7 +12,7 @@ name = "admin_examples"
 source = "member"
 dependencies = [
     "admin",
-    "ownership",
+    "ownership path+from-root-9E88A97493D252A9",
     "std",
 ]
 
@@ -72,10 +72,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "ownership"
+version = "0.26.0"
+source = "registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!"
+dependencies = [
+    "src5",
+    "std",
+]
+
+[[package]]
 name = "ownership_configurable_examples"
 source = "member"
 dependencies = [
-    "ownership",
+    "ownership path+from-root-9E88A97493D252A9",
     "src5",
     "std",
 ]
@@ -84,7 +93,7 @@ dependencies = [
 name = "ownership_examples"
 source = "member"
 dependencies = [
-    "ownership",
+    "ownership path+from-root-9E88A97493D252A9",
     "src5",
     "std",
 ]
@@ -106,7 +115,7 @@ dependencies = [
 name = "pausable_with_ownership_example"
 source = "member"
 dependencies = [
-    "ownership",
+    "ownership path+from-root-9E88A97493D252A9",
     "pausable",
     "std",
 ]
