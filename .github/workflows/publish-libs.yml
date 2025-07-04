@@ -40,6 +40,7 @@ jobs:
         matrix:
           project:
             [
+              "admin",
               "asset",
               "big_int",
               "bytecode",

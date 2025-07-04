@@ -9,7 +9,8 @@ dependencies = [
 
 [[package]]
 name = "ownership"
-source = "path+from-root-D1F7EDD141896EE8"
+version = "0.26.0"
+source = "registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!"
 dependencies = [
     "src5",
     "std",
