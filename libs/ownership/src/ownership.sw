@@ -108,7 +108,7 @@ pub fn renounce_ownership() {
 ///
 /// * When ownership has been set before.
 ///
-/// # Number of Storage Acesses
+/// # Number of Storage Accesses
 ///
 /// * Reads: `1`
 /// * Write: `1`
