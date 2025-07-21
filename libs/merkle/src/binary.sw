@@ -227,7 +227,7 @@ fn path_length_from_key(key: u64, num_leaves: u64) -> u64 {
             total_length = total_length + 1;
             break;
         } else if (num_leaves - num_leaves_left_sub_tree) <= 1 {
-            // If the right sub tree only has one leaf, path has one additonal step
+            // If the right sub tree only has one leaf, path has one additional step
             total_length = total_length + 1;
             break;
         } else {
