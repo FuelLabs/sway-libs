@@ -1,8 +1,10 @@
 library;
 
 pub mod errors;
+pub mod events;
 
 use ::errors::PauseError;
+use ::events::{PauseEvent, UnpauseEvent};
 
 // Precomputed hash of sha256("pausable")
 const PAUSABLE = 0xd987cda398e9af257cbcf8a8995c5dccb19833cadc727ba56b0fec60ccf8944c;
@@ -102,6 +104,7 @@ abi Pausable {
 pub fn _pause() {
     let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(true);
+    PauseEvent::new(msg_sender().unwrap()).log()
 }
 
 /// Unconditionally sets the contract to the unpaused state.
@@ -124,6 +127,7 @@ pub fn _pause() {
 pub fn _unpause() {
     let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(false);
+    UnpauseEvent::new(msg_sender().unwrap()).log()
 }
 
 /// Returns whether the contract is in the paused state.
