@@ -104,7 +104,7 @@ abi Pausable {
 pub fn _pause() {
     let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(true);
-    PauseEvent::new(msg_sender().unwrap()).log()
+    PauseEvent::new().log()
 }
 
 /// Unconditionally sets the contract to the unpaused state.
@@ -127,7 +127,7 @@ pub fn _pause() {
 pub fn _unpause() {
     let paused_key = StorageKey::new(PAUSABLE, 0, PAUSABLE);
     paused_key.write(false);
-    UnpauseEvent::new(msg_sender().unwrap()).log()
+    UnpauseEvent::new().log()
 }
 
 /// Returns whether the contract is in the paused state.

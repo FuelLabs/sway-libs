@@ -13,10 +13,14 @@ pub struct UnpauseEvent {
 }
 
 impl PauseEvent {
-    pub fn new(caller: Identity) -> Self {
+    pub fn new() -> Self {
         Self {
-            caller
+            caller: msg_sender().unwrap()
         }
+    }
+
+    pub fn caller(self) -> Identity {
+        self.caller
     }
 
     pub fn log(self) {
@@ -33,10 +37,14 @@ impl PartialEq for PauseEvent {
 impl Eq for PauseEvent {}
 
 impl UnpauseEvent {
-    pub fn new(caller: Identity) -> Self {
+    pub fn new() -> Self {
         Self {
-            caller
+            caller: msg_sender().unwrap()
         }
+    }
+
+    pub fn caller(self) -> Identity {
+        self.caller
     }
 
     pub fn log(self) {
