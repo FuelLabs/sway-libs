@@ -13,7 +13,7 @@ In order to use the Pausable library, the Pausable Library must be added to your
 To add the Pausable Library as a dependency to your `Forc.toml` file in your project, use the `forc add` command.
 
 ```bash
-forc add pausable@0.26.0
+forc add pausable@0.26.2
 ```
 
 > **NOTE:** Be sure to set the version to the latest release.
