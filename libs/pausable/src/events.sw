@@ -15,7 +15,7 @@ pub struct UnpauseEvent {
 impl PauseEvent {
     pub fn new() -> Self {
         Self {
-            caller: msg_sender().unwrap()
+            caller: msg_sender().unwrap(),
         }
     }
 
@@ -39,7 +39,7 @@ impl Eq for PauseEvent {}
 impl UnpauseEvent {
     pub fn new() -> Self {
         Self {
-            caller: msg_sender().unwrap()
+            caller: msg_sender().unwrap(),
         }
     }
 
