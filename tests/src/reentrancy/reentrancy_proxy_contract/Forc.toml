@@ -7,7 +7,7 @@ name = "reentrancy_proxy_contract"
 [dependencies]
 reentrancy_proxy_abi = { path = "../reentrancy_proxy_abi" }
 src5 = "0.8.2"
-src14 = "0.8.0"
+src14 = "0.8.2"
 reentrancy = { path = "../../../../libs/reentrancy" }
 ownership = { path = "../../../../libs/ownership" }
 upgradability = { path = "../../../../libs/upgradability" }
