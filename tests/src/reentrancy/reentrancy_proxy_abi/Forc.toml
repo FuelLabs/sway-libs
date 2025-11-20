@@ -5,4 +5,4 @@ license = "Apache-2.0"
 name = "reentrancy_proxy_abi"
 
 [dependencies]
-src5 = "0.8.0"
+src5 = "0.8.2"

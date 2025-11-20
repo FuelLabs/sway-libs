@@ -3,7 +3,7 @@ name = "admin"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
     "ownership registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!",
-    "src5",
+    "src5 registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!",
     "std",
 ]
 
@@ -13,7 +13,7 @@ source = "member"
 dependencies = [
     "admin",
     "ownership path+from-root-8E8363697A2C7D80",
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
@@ -133,7 +133,7 @@ dependencies = [
 name = "ownership"
 source = "path+from-root-8E8363697A2C7D80"
 dependencies = [
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
@@ -142,7 +142,7 @@ name = "ownership"
 version = "0.26.0"
 source = "registry+ownership?0.26.0#QmbVoNUrvCTyQTdE8ZP83XxTQQVzhrevfMqk1rAJAkMFVo!"
 dependencies = [
-    "src5",
+    "src5 registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!",
     "std",
 ]
 
@@ -151,7 +151,7 @@ name = "ownership_test"
 source = "member"
 dependencies = [
     "ownership path+from-root-8E8363697A2C7D80",
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
@@ -211,7 +211,7 @@ dependencies = ["std"]
 name = "reentrancy_proxy_abi"
 source = "member"
 dependencies = [
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
@@ -223,7 +223,7 @@ dependencies = [
     "reentrancy",
     "reentrancy_proxy_abi",
     "src14",
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
     "upgradability",
 ]
@@ -261,23 +261,23 @@ dependencies = ["std"]
 
 [[package]]
 name = "src14"
-version = "0.8.0"
-source = "registry+src14?0.8.0#QmQduNaJgjotgw2tz5KLv18PckFZP6zLH3Wzk7mqLfwgcu!"
+version = "0.8.2"
+source = "registry+src14?0.8.2#QmfU1MiScsFLLMQiPFZNuoijwpvZqQb6rQRHnadT5TGyXE!"
 dependencies = [
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
 [[package]]
 name = "src20"
-version = "0.8.0"
-source = "registry+src20?0.8.0#QmSwYjybtdvSF3Ey9RncVUUaFaWsizSBNgAtY9JoyaAHvh!"
+version = "0.8.2"
+source = "registry+src20?0.8.2#QmUiXq3uPWaf6BxLeNdm8sHsjwbwQ5DRvBGLezv2k5EZ26!"
 dependencies = ["std"]
 
 [[package]]
 name = "src3"
-version = "0.8.0"
-source = "registry+src3?0.8.0#QmWZt1NRQHid4p5cmFMG11n1tnRfNSgWGXUWDgojt9hjzs!"
+version = "0.8.2"
+source = "registry+src3?0.8.2#QmXWMupKHzP5iFf6fVqNBpFdhwLoMY9qzEX5AZfpYUG99T!"
 dependencies = ["std"]
 
 [[package]]
@@ -287,22 +287,28 @@ source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
 dependencies = ["std"]
 
 [[package]]
+name = "src5"
+version = "0.8.2"
+source = "registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!"
+dependencies = ["std"]
+
+[[package]]
 name = "src7"
-version = "0.8.0"
-source = "registry+src7?0.8.0#QmbDHPdbKzpRg31bxNNLHQ6pyreH2GjHiXjnR7aKoNC2Y5!"
+version = "0.8.2"
+source = "registry+src7?0.8.2#QmXxuQD9GR4sa5kybYBFf2w2HmBzvUqGN5ypbTmT6gp1V5!"
 dependencies = ["std"]
 
 [[package]]
 name = "std"
-version = "0.69.0"
-source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"
+version = "0.70.2"
+source = "registry+std?0.70.2#QmWuWwmjn2vVDup2672LpToek8N58PYGJt2eH55M7ZzY2Y!"
 
 [[package]]
 name = "upgradability"
 source = "path+from-root-8A067F669BC61EA7"
 dependencies = [
     "src14",
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
 ]
 
@@ -311,7 +317,7 @@ name = "upgradability_test"
 source = "member"
 dependencies = [
     "src14",
-    "src5",
+    "src5 registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!",
     "std",
     "upgradability",
 ]

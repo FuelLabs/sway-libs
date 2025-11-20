@@ -46,5 +46,9 @@ pub fn node_digest(left: b256, right: b256) -> b256 {
     __addr_of(left).copy_bytes_to(ptr.add_uint_offset(1), 32);
     __addr_of(right).copy_bytes_to(ptr.add_uint_offset(33), 32);
 
-    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 65)))
+    let result_buffer: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+    asm(hash: result_buffer, ptr: ptr, bytes: 65) {
+        s256 hash ptr bytes;
+        hash: b256
+    }
 }
