@@ -356,7 +356,7 @@ fn foo() -> I8 {
 
 - [#318](https://github.com/FuelLabs/sway-libs/pull/318) Adds further documentation and examples for the `signed_integers` library.
 - [#319](https://github.com/FuelLabs/sway-libs/pull/319) Adds further documentation and examples for the ownership library.
-- [#322](https://github.com/FuelLabs/sway-libs/pull/320) Adds further documentation and examples for the asset metadata library.
+- #322 Adds further documentation and examples for the asset metadata library.
 
 ### Changed v0.24.2
 

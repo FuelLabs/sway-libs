@@ -8,11 +8,11 @@ dependencies = [
 
 [[package]]
 name = "src5"
-version = "0.8.0"
-source = "registry+src5?0.8.0#QmNRPZrPHFBiEAyWPU8gesdPsD2zb3cMKwEgxJwV1ZEjyD!"
+version = "0.8.2"
+source = "registry+src5?0.8.2#QmVxJGt3C8saPmAe14FtecN2bXcZfVfDwsebsgPZumUXs4!"
 dependencies = ["std"]
 
 [[package]]
 name = "std"
-version = "0.69.0"
-source = "registry+std?0.69.0#QmSeLFUtVXk8i13owCv87Kga1MfsYgfn7sdj6WimxLwq2g!"
+version = "0.70.2"
+source = "registry+std?0.70.2#QmWuWwmjn2vVDup2672LpToek8N58PYGJt2eH55M7ZzY2Y!"

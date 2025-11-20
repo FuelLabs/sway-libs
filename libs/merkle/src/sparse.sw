@@ -2,7 +2,7 @@ library;
 
 // TODO: Replace `Vec<b256>` with `ProofSet` when https://github.com/FuelLabs/fuels-rs/issues/1603 is resolved
 use ::common::{LEAF, MerkleRoot, node_digest, ProofError};
-use std::{alloc::alloc_bytes, bytes::Bytes, hash::{Hash, sha256}};
+use std::{alloc::alloc_bytes, bytes::Bytes};
 
 /// Error used when something goes wrong while computing or verifying Sparse Merkle Proofs.
 pub enum SparseMerkleError {
@@ -90,7 +90,18 @@ impl InclusionProof {
     /// }
     /// ```
     pub fn verify(self, root: MerkleRoot, key: MerkleTreeKey, leaf_data: Bytes) -> bool {
-        let mut current_hash = leaf_digest(key, sha256(leaf_data));
+        let result_buffer: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+        let mut current_hash = leaf_digest(
+            key,
+            asm(
+                hash: result_buffer,
+                ptr: leaf_data.ptr(),
+                bytes: leaf_data.len(),
+            ) {
+                s256 hash ptr bytes;
+                hash: b256
+            },
+        );
         _compute_root(self.proof_set, current_hash, key) == root
     }
 
@@ -141,7 +152,18 @@ impl InclusionProof {
     /// }
     /// ```
     pub fn root(self, key: MerkleTreeKey, leaf_data: Bytes) -> MerkleRoot {
-        let mut current_hash = leaf_digest(key, sha256(leaf_data));
+        let result_buffer: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+        let mut current_hash = leaf_digest(
+            key,
+            asm(
+                hash: result_buffer,
+                ptr: leaf_data.ptr(),
+                bytes: leaf_data.len(),
+            ) {
+                s256 hash ptr bytes;
+                hash: b256
+            },
+        );
         _compute_root(self.proof_set, current_hash, key)
     }
 
@@ -832,7 +854,11 @@ pub fn leaf_digest(key: b256, leaf_hash: b256) -> b256 {
     __addr_of(leaf_hash)
         .copy_bytes_to(ptr.add_uint_offset(33), 32);
 
-    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 65)))
+    let result_buffer: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+    asm(hash: result_buffer, ptr: ptr, bytes: 65) {
+        s256 hash ptr bytes;
+        hash: b256
+    }
 }
 
 // Computes whether a bit at an index is 0 or 1.

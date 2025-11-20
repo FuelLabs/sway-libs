@@ -656,7 +656,7 @@ impl Subtract for BigUint {
             if borrow == 0 {
                 break;
             }
-            let diff: U128 = result.get(idx).unwrap().into() - borrow.into();
+            let diff: U128 = U128::from(result.get(idx).unwrap()) - U128::from(borrow);
             result.set(idx, diff.lower());
             borrow = if diff.upper() != 0 { 1 } else { 0 };
         }
