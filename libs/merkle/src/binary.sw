@@ -1,7 +1,7 @@
 library;
 
 use ::common::{LEAF, MerkleRoot, node_digest, ProofError, ProofSet};
-use std::{alloc::alloc_bytes, bytes::Bytes, hash::{Hash, sha256}};
+use std::alloc::alloc_bytes;
 
 /// This function will compute and return a Merkle root given a leaf and corresponding proof.
 ///
@@ -175,7 +175,11 @@ pub fn leaf_digest(data: b256) -> b256 {
     ptr.write_byte(LEAF);
     __addr_of(data).copy_bytes_to(ptr.add_uint_offset(1), 32);
 
-    sha256(Bytes::from(raw_slice::from_parts::<u8>(ptr, 33)))
+    let result_buffer: b256 = 0x0000000000000000000000000000000000000000000000000000000000000000;
+    asm(hash: result_buffer, ptr: ptr, bytes: 33) {
+        s256 hash ptr bytes;
+        hash: b256
+    }
 }
 
 /// Calculates the starting bit of the path to a leaf
