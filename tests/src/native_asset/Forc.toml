@@ -5,7 +5,7 @@ license = "Apache-2.0"
 name = "native_asset_lib"
 
 [dependencies]
-src20 = "0.8.0"
-src7 = "0.8.0"
-src3 = "0.8.0"
+src20 = "0.8.2"
+src7 = "0.8.2"
+src3 = "0.8.2"
 asset = { path = "../../../libs/asset" }

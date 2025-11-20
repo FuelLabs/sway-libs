@@ -5,5 +5,5 @@ license = "Apache-2.0"
 name = "basic_src7"
 
 [dependencies]
-src7 = "0.8.0"
+src7 = "0.8.2"
 asset = { path = "../../../libs/asset" }
