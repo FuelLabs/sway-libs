@@ -49,6 +49,16 @@ To check if the current caller is a reentrant, you may call the `is_reentrant()`
 {{#include ../../../../examples/reentrancy/src/main.sw:is_reentrant}}
 ```
 
-## Cross Contract Reentrancy
+## Native-asset transfers and cross-contract calls
 
-Cross-Contract Reentrancy is not possible on Fuel due to the use of Native Assets. As such, no contract calls are performed when assets are transferred. However standard security practices when relying on other contracts for state should still be applied, especially when making external calls.
+A native-asset transfer does not invoke code on the receiver, so the transfer
+alone cannot trigger callback-style reentrancy. This is different from an
+explicit contract call: an external call transfers control to another contract,
+which may call the original contract again directly or through additional
+contracts, proxies, or fallback paths.
+
+Apply checks-effects-interactions and use `reentrancy_guard()` on entry points
+where such a recursive or cyclic call path could violate an invariant. The
+guard detects whether the current contract ID already appears in the active
+call stack; it does not make arbitrary external calls safe or replace validation
+of the complete call topology.
