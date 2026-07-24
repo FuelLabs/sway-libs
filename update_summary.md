@@ -19,6 +19,8 @@ original contract.
   in the active call stack.
 - Clarified that the guard does not make arbitrary external calls safe and
   does not replace analysis of the complete call topology.
+- Warned that pre-call storage snapshots may be stale after a reachable
+  callback and are not protected merely by using the guard.
 - Applied the same wording to the published book source and the reentrancy
   package README.
 

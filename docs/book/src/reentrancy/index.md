@@ -62,3 +62,7 @@ where such a recursive or cyclic call path could violate an invariant. The
 guard detects whether the current contract ID already appears in the active
 call stack; it does not make arbitrary external calls safe or replace validation
 of the complete call topology.
+
+Treat storage loaded before an external call as potentially stale afterward.
+Reload it, or prove that no reachable callback can mutate it; the guard alone
+does not make a cached snapshot safe.
