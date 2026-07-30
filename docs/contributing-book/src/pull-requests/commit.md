@@ -42,7 +42,4 @@ The commit message should be a concise and accurate summary of the work done:
   - Fixed function
   - Fixed an assertion where a user is able to repeatedly call the `withdraw()` functions under an edge case which may lead to the contract being drained
 
-More information about commit messages may be found in:
-
-- The README from [joelparkerhenderson](https://github.com/joelparkerhenderson/git-commit-message/#git-commit-message)
-- The [Medium article](https://medium.com/swlh/writing-better-commit-messages-9b0b6ff60c67) by Apurva Jain
+More information about commit messages may be found in the README from [joelparkerhenderson](https://github.com/joelparkerhenderson/git-commit-message/#git-commit-message).

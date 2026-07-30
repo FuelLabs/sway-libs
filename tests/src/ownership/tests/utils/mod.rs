@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
-        StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
+        StorageConfiguration, TxPolicies, Wallet, WalletsConfig,
     },
     programs::responses::CallResponse,
     types::Identity,
@@ -14,23 +14,23 @@ abigen!(Contract(
 ));
 
 pub struct Metadata {
-    pub contract: OwnershipLib<WalletUnlocked>,
-    pub wallet: WalletUnlocked,
+    pub contract: OwnershipLib<Wallet>,
+    pub wallet: Wallet,
 }
 
 pub mod abi_calls {
 
     use super::*;
 
-    pub async fn only_owner(contract: &OwnershipLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn only_owner(contract: &OwnershipLib<Wallet>) -> CallResponse<()> {
         contract.methods().only_owner().call().await.unwrap()
     }
 
-    pub async fn owner(contract: &OwnershipLib<WalletUnlocked>) -> State {
+    pub async fn owner(contract: &OwnershipLib<Wallet>) -> State {
         contract.methods().owner().call().await.unwrap().value
     }
 
-    pub async fn renounce_ownership(contract: &OwnershipLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn renounce_ownership(contract: &OwnershipLib<Wallet>) -> CallResponse<()> {
         contract
             .methods()
             .renounce_ownership()
@@ -40,7 +40,7 @@ pub mod abi_calls {
     }
 
     pub async fn set_ownership(
-        contract: &OwnershipLib<WalletUnlocked>,
+        contract: &OwnershipLib<Wallet>,
         new_owner: Identity,
     ) -> CallResponse<()> {
         contract
@@ -52,7 +52,7 @@ pub mod abi_calls {
     }
 
     pub async fn transfer_ownership(
-        contract: &OwnershipLib<WalletUnlocked>,
+        contract: &OwnershipLib<Wallet>,
         new_owner: Identity,
     ) -> CallResponse<()> {
         contract
@@ -97,7 +97,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet1, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let deploy_wallet = Metadata {
             contract: OwnershipLib::new(id.clone(), wallet1.clone()),

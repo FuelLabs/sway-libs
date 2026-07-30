@@ -2,6 +2,7 @@ use crate::ownership::tests::utils::{
     abi_calls::{only_owner, set_ownership, transfer_ownership},
     test_helpers::setup,
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::Identity;
 
 mod success {

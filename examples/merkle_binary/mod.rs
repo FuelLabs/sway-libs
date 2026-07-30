@@ -12,7 +12,7 @@ abigen!(Contract(
     abi = "merkle_binary/out/release/merkle_binary_examples-abi.json"
 ));
 
-async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlocked) {
+async fn get_contract_instance() -> (MerkleExample<Wallet>, Wallet) {
     // Launch a local network and deploy the contract
     let mut wallets = launch_custom_provider_and_get_wallets(
         WalletsConfig::new(
@@ -34,7 +34,8 @@ async fn get_contract_instance() -> (MerkleExample<WalletUnlocked>, WalletUnlock
     .unwrap()
     .deploy(&wallet, TxPolicies::default())
     .await
-    .unwrap();
+    .unwrap()
+    .contract_id;
 
     let instance = MerkleExample::new(id, wallet.clone());
 

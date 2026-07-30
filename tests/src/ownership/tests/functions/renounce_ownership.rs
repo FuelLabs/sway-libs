@@ -3,6 +3,7 @@ use crate::ownership::tests::utils::{
     test_helpers::setup,
     State,
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::Identity;
 
 mod success {
