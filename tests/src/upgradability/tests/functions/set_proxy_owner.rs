@@ -3,6 +3,7 @@ use crate::upgradability::tests::utils::{
     test_helpers::setup,
     State,
 };
+use fuels::accounts::ViewOnlyAccount;
 
 mod success {
 

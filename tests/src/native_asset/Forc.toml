@@ -6,6 +6,6 @@ name = "native_asset_lib"
 
 [dependencies]
 src20 = "0.8.2"
-src7 = "0.8.2"
+src7 = "0.8.3"
 src3 = "0.8.2"
 asset = { path = "../../../libs/asset" }

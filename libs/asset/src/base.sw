@@ -356,7 +356,7 @@ abi SetAssetAttributes {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src20::SRC20;
+    /// use src20::SRC20;
     /// use asset::base::*;
     /// use std::string::String;
     ///
@@ -378,7 +378,7 @@ abi SetAssetAttributes {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src20::SRC20;
+    /// use src20::SRC20;
     /// use asset::base::*;
     /// use std::string::String;
     ///
@@ -400,7 +400,7 @@ abi SetAssetAttributes {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src20::SRC20;
+    /// use src20::SRC20;
     /// use asset::base::*;
     ///
     /// fn foo(contract_id: ContractId, asset: AssetId, decimals: u8) {

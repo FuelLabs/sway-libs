@@ -15,11 +15,11 @@ dependencies = ["std"]
 
 [[package]]
 name = "src7"
-version = "0.8.2"
-source = "registry+src7?0.8.2#QmXxuQD9GR4sa5kybYBFf2w2HmBzvUqGN5ypbTmT6gp1V5!"
+version = "0.8.3"
+source = "registry+src7?0.8.3#QmWv6hJb4CDkw7reaFrp59hkGBM48YiEjDYsNDYmBWJ7NC!"
 dependencies = ["std"]
 
 [[package]]
 name = "std"
-version = "0.70.2"
-source = "registry+std?0.70.2#QmWuWwmjn2vVDup2672LpToek8N58PYGJt2eH55M7ZzY2Y!"
+version = "0.72.0"
+source = "registry+std?0.72.0#QmTnRFTVHzAWatvZXEPVnaiJrs81CZLkYbEovHzPTyNyis!"

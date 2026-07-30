@@ -2,7 +2,7 @@ use fuels::{
     accounts::ViewOnlyAccount,
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, AssetConfig, Contract, ContractId,
-        LoadConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
+        LoadConfiguration, TxPolicies, Wallet, WalletsConfig,
     },
     types::{Address, AssetId, Bits256, Bytes32, Identity},
 };
@@ -18,8 +18,8 @@ const NATIVE_ASSET_TEST_CONTRACT_BINARY_PATH: &str =
 
 pub(crate) fn defaults(
     contract_id: ContractId,
-    wallet_1: WalletUnlocked,
-    wallet_2: WalletUnlocked,
+    wallet_1: Wallet,
+    wallet_2: Wallet,
 ) -> (AssetId, AssetId, Bits256, Bits256, Identity, Identity) {
     let sub_id_1 = Bytes32::from([1u8; 32]);
     let sub_id_2 = Bytes32::from([2u8; 32]);
@@ -40,11 +40,11 @@ pub(crate) fn defaults(
 }
 
 pub(crate) async fn setup() -> (
-    WalletUnlocked,
-    WalletUnlocked,
+    Wallet,
+    Wallet,
     ContractId,
-    AssetLib<WalletUnlocked>,
-    AssetLib<WalletUnlocked>,
+    AssetLib<Wallet>,
+    AssetLib<Wallet>,
 ) {
     let number_of_coins = 1;
     let coin_amount = 100_000_000;
@@ -72,7 +72,8 @@ pub(crate) async fn setup() -> (
     .unwrap()
     .deploy(&wallet1, TxPolicies::default())
     .await
-    .unwrap();
+    .unwrap()
+    .contract_id;
 
     let instance_1 = AssetLib::new(id.clone(), wallet1.clone());
     let instance_2 = AssetLib::new(id.clone(), wallet2.clone());
@@ -87,6 +88,6 @@ pub(crate) fn get_asset_id(sub_id: Bytes32, contract: ContractId) -> AssetId {
     AssetId::new(*Bytes32::from(<[u8; 32]>::from(hasher.finalize())))
 }
 
-pub(crate) async fn get_wallet_balance(wallet: &WalletUnlocked, asset: &AssetId) -> u64 {
-    wallet.get_asset_balance(asset).await.unwrap()
+pub(crate) async fn get_wallet_balance(wallet: &Wallet, asset: &AssetId) -> u64 {
+    wallet.get_asset_balance(asset).await.unwrap() as u64
 }

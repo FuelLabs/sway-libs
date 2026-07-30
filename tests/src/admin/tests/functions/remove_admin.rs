@@ -2,6 +2,7 @@ use crate::admin::tests::utils::{
     abi_calls::{add_admin, is_admin, remove_admin, set_ownership},
     test_helpers::setup,
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::Identity;
 
 mod success {
