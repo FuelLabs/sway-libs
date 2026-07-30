@@ -1,7 +1,7 @@
 use fuels::{
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, Contract, LoadConfiguration,
-        StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
+        StorageConfiguration, TxPolicies, Wallet, WalletsConfig,
     },
     programs::responses::CallResponse,
     types::Identity,
@@ -14,18 +14,15 @@ abigen!(Contract(
 ));
 
 pub struct Metadata {
-    pub contract: AdminLib<WalletUnlocked>,
-    pub wallet: WalletUnlocked,
+    pub contract: AdminLib<Wallet>,
+    pub wallet: Wallet,
 }
 
 pub mod abi_calls {
 
     use super::*;
 
-    pub async fn add_admin(
-        contract: &AdminLib<WalletUnlocked>,
-        new_admin: Identity,
-    ) -> CallResponse<()> {
+    pub async fn add_admin(contract: &AdminLib<Wallet>, new_admin: Identity) -> CallResponse<()> {
         contract
             .methods()
             .add_admin(new_admin)
@@ -35,7 +32,7 @@ pub mod abi_calls {
     }
 
     pub async fn remove_admin(
-        contract: &AdminLib<WalletUnlocked>,
+        contract: &AdminLib<Wallet>,
         old_admin: Identity,
     ) -> CallResponse<()> {
         contract
@@ -46,7 +43,7 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn is_admin(contract: &AdminLib<WalletUnlocked>, admin: Identity) -> bool {
+    pub async fn is_admin(contract: &AdminLib<Wallet>, admin: Identity) -> bool {
         contract
             .methods()
             .is_admin(admin)
@@ -56,11 +53,11 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn only_admin(contract: &AdminLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn only_admin(contract: &AdminLib<Wallet>) -> CallResponse<()> {
         contract.methods().only_admin().call().await.unwrap()
     }
 
-    pub async fn only_owner_or_admin(contract: &AdminLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn only_owner_or_admin(contract: &AdminLib<Wallet>) -> CallResponse<()> {
         contract
             .methods()
             .only_owner_or_admin()
@@ -70,7 +67,7 @@ pub mod abi_calls {
     }
 
     pub async fn set_ownership(
-        contract: &AdminLib<WalletUnlocked>,
+        contract: &AdminLib<Wallet>,
         new_owner: Identity,
     ) -> CallResponse<()> {
         contract
@@ -112,7 +109,8 @@ pub mod test_helpers {
             .unwrap()
             .deploy(&wallet1, TxPolicies::default())
             .await
-            .unwrap();
+            .unwrap()
+            .contract_id;
 
         let deploy_wallet = Metadata {
             contract: AdminLib::new(id.clone(), wallet1.clone()),

@@ -61,18 +61,18 @@ const HEX_STR_3: &str = "0xfebf0fdda20de46a0f2261a69556b0f9fdeea85759af1edb32283
 //   }
 // ]
 // You would use 20800, 20760, and 20688 for 1, 2, 3 respectively
-const SIMPLE_PREDICATE_OFFSET: u64 = 288;
-const SIMPLE_CONTRACT_OFFSET: u64 = 536;
-const COMPLEX_CONTRACT_OFFSET_1: u64 = 12720;
-const COMPLEX_CONTRACT_OFFSET_2: u64 = 12680;
-const COMPLEX_CONTRACT_OFFSET_3: u64 = 12608;
+const SIMPLE_PREDICATE_OFFSET: u64 = 176;
+const SIMPLE_CONTRACT_OFFSET: u64 = 280;
+const COMPLEX_CONTRACT_OFFSET_1: u64 = 8056;
+const COMPLEX_CONTRACT_OFFSET_2: u64 = 8016;
+const COMPLEX_CONTRACT_OFFSET_3: u64 = 7944;
 
 pub mod abi_calls {
 
     use super::*;
 
     pub async fn predicate_address_from_root(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode_root: Bits256,
     ) -> Address {
         contract
@@ -85,7 +85,7 @@ pub mod abi_calls {
     }
 
     pub async fn compute_predicate_address(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
     ) -> Address {
@@ -99,7 +99,7 @@ pub mod abi_calls {
     }
 
     pub async fn compute_bytecode_root(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
     ) -> Bits256 {
@@ -118,7 +118,7 @@ pub mod abi_calls {
     }
 
     pub async fn return_configurables(
-        contract: &ComplexContract<WalletUnlocked>,
+        contract: &ComplexContract<Wallet>,
     ) -> (u64, SimpleStruct, SimpleEnum) {
         contract
             .methods()
@@ -130,7 +130,7 @@ pub mod abi_calls {
     }
 
     pub async fn swap_configurables(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Vec<(u64, Vec<u8>)>,
     ) -> Vec<u8> {
@@ -152,7 +152,7 @@ pub mod abi_calls {
             .value
     }
 
-    pub async fn test_function(contract: &SimpleContract<WalletUnlocked>) -> u64 {
+    pub async fn test_function(contract: &SimpleContract<Wallet>) -> u64 {
         contract
             .methods()
             .test_function()
@@ -163,11 +163,11 @@ pub mod abi_calls {
     }
 
     pub async fn verify_simple_contract_bytecode(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
-        simple_contract_instance: SimpleContract<WalletUnlocked>,
+        simple_contract_instance: SimpleContract<Wallet>,
     ) -> CallResponse<()> {
         contract
             .methods()
@@ -179,11 +179,11 @@ pub mod abi_calls {
     }
 
     pub async fn verify_complex_contract_bytecode(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         contract_id: ContractId,
-        complex_contract_instance: ComplexContract<WalletUnlocked>,
+        complex_contract_instance: ComplexContract<Wallet>,
     ) -> CallResponse<()> {
         contract
             .clone()
@@ -200,7 +200,7 @@ pub mod abi_calls {
     }
 
     pub async fn verify_predicate_address(
-        contract: &BytecodeTestContract<WalletUnlocked>,
+        contract: &BytecodeTestContract<Wallet>,
         bytecode: Vec<u8>,
         configurables: Option<Vec<(u64, Vec<u8>)>>,
         predicate_id: Address,
@@ -245,8 +245,7 @@ pub mod test_helpers {
     }
 
     /// Helper function to deploy the simple contract
-    pub async fn test_contract_instance() -> (BytecodeTestContract<WalletUnlocked>, WalletUnlocked)
-    {
+    pub async fn test_contract_instance() -> (BytecodeTestContract<Wallet>, Wallet) {
         // Launch a local network and deploy the contract
         let mut wallets = launch_custom_provider_and_get_wallets(
             WalletsConfig::new(
@@ -268,7 +267,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let instance = BytecodeTestContract::new(id.clone(), wallet.clone());
 
@@ -277,28 +277,30 @@ pub mod test_helpers {
 
     /// Helper function to deploy the simple contract from bytecode
     pub async fn deploy_simple_contract_from_bytecode(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         bytecode: Vec<u8>,
-    ) -> SimpleContract<WalletUnlocked> {
+    ) -> SimpleContract<Wallet> {
         let rng = &mut StdRng::seed_from_u64(2322u64);
         let salt: [u8; 32] = rng.gen();
         let storage_vec = Vec::<StorageSlot>::new();
         let result_id = Contract::regular(bytecode, salt.into(), storage_vec)
             .deploy(&wallet, TxPolicies::default())
             .await
-            .unwrap();
+            .unwrap()
+            .contract_id;
         SimpleContract::new(result_id.clone(), wallet.clone())
     }
 
     /// Helper function to deploy the simple contract from file
     pub async fn deploy_simple_contract_from_file(
-        wallet: WalletUnlocked,
-    ) -> (SimpleContract<WalletUnlocked>, ContractId) {
+        wallet: Wallet,
+    ) -> (SimpleContract<Wallet>, ContractId) {
         let id = Contract::load_from(SIMPLE_CONTRACT_BYTECODE_PATH, LoadConfiguration::default())
             .unwrap()
             .deploy(&wallet, TxPolicies::default())
             .await
-            .unwrap();
+            .unwrap()
+            .contract_id;
 
         let instance = SimpleContract::new(id.clone(), wallet.clone());
 
@@ -307,9 +309,9 @@ pub mod test_helpers {
 
     /// Helper function to deploy the simple contract from file
     pub async fn deploy_simple_contract_with_configurables_from_file(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         config_value: u64,
-    ) -> (SimpleContract<WalletUnlocked>, ContractId) {
+    ) -> (SimpleContract<Wallet>, ContractId) {
         let configurables = SimpleContractConfigurables::default()
             .with_VALUE(config_value)
             .unwrap();
@@ -321,7 +323,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let instance = SimpleContract::new(id.clone(), wallet.clone());
 
@@ -362,28 +365,30 @@ pub mod test_helpers {
 
     /// Helper function to deploy the simple contract from bytecode
     pub async fn deploy_complex_contract_from_bytecode(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         bytecode: Vec<u8>,
-    ) -> ComplexContract<WalletUnlocked> {
+    ) -> ComplexContract<Wallet> {
         let rng = &mut StdRng::seed_from_u64(2323u64);
         let salt: [u8; 32] = rng.gen();
         let storage_vec = Vec::<StorageSlot>::new();
         let result_id = Contract::regular(bytecode, salt.into(), storage_vec)
             .deploy(&wallet, TxPolicies::default())
             .await
-            .unwrap();
+            .unwrap()
+            .contract_id;
         ComplexContract::new(result_id.clone(), wallet.clone())
     }
 
     /// Helper function to deploy the simple contract from file
     pub async fn deploy_complex_contract_from_file(
-        wallet: WalletUnlocked,
-    ) -> (ComplexContract<WalletUnlocked>, ContractId) {
+        wallet: Wallet,
+    ) -> (ComplexContract<Wallet>, ContractId) {
         let id = Contract::load_from(COMPLEX_CONTRACT_BYTECODE_PATH, LoadConfiguration::default())
             .unwrap()
             .deploy(&wallet, TxPolicies::default())
             .await
-            .unwrap();
+            .unwrap()
+            .contract_id;
 
         let instance = ComplexContract::new(id.clone(), wallet.clone());
 
@@ -392,11 +397,11 @@ pub mod test_helpers {
 
     /// Helper function to deploy the simple contract from file
     pub async fn deploy_complex_contract_with_configurables_from_file(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         config_value: u64,
         config_struct: SimpleStruct,
         config_enum: SimpleEnum,
-    ) -> (ComplexContract<WalletUnlocked>, ContractId) {
+    ) -> (ComplexContract<Wallet>, ContractId) {
         let configurables = ComplexContractConfigurables::new(EncoderConfig {
             max_tokens: 10_000_000,
             ..Default::default()
@@ -415,7 +420,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let instance = ComplexContract::new(id.clone(), wallet.clone());
 
@@ -462,7 +468,7 @@ pub mod test_helpers {
     }
 
     pub async fn setup_predicate_from_bytecode(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         bytecode: Vec<u8>,
         config_value: u64,
     ) -> Predicate {
@@ -481,7 +487,6 @@ pub mod test_helpers {
                 DEFAULT_PREDICATE_BALANCE,
                 *wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -495,7 +500,6 @@ pub mod test_helpers {
             .get_asset_balance(
                 &wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -503,12 +507,12 @@ pub mod test_helpers {
             )
             .await
             .unwrap();
-        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
+        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE as u128);
 
         result_instance
     }
 
-    pub async fn setup_predicate_from_file(wallet: WalletUnlocked) -> Predicate {
+    pub async fn setup_predicate_from_file(wallet: Wallet) -> Predicate {
         let provider = wallet.try_provider().unwrap();
         let result_instance = Predicate::load_from(PREDICATE_BYTECODE_PATH)
             .unwrap()
@@ -521,7 +525,6 @@ pub mod test_helpers {
                 DEFAULT_PREDICATE_BALANCE,
                 *wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -535,7 +538,6 @@ pub mod test_helpers {
             .get_asset_balance(
                 &wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -543,13 +545,13 @@ pub mod test_helpers {
             )
             .await
             .unwrap();
-        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
+        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE as u128);
 
         result_instance
     }
 
     pub async fn setup_predicate_from_file_with_configurable(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         config_value: u64,
     ) -> Predicate {
         let provider = wallet.try_provider().unwrap();
@@ -572,7 +574,6 @@ pub mod test_helpers {
                 DEFAULT_PREDICATE_BALANCE,
                 *wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -586,7 +587,6 @@ pub mod test_helpers {
             .get_asset_balance(
                 &wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -594,12 +594,12 @@ pub mod test_helpers {
             )
             .await
             .unwrap();
-        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE);
+        assert_eq!(predicate_balance, DEFAULT_PREDICATE_BALANCE as u128);
 
         result_instance
     }
 
-    pub async fn simple_predicate_bytecode_root_from_file(wallet: WalletUnlocked) -> Bits256 {
+    pub async fn simple_predicate_bytecode_root_from_file(wallet: Wallet) -> Bits256 {
         let predicate_bytecode = predicate_bytecode();
 
         let provider: &Provider = wallet.try_provider().unwrap();
@@ -610,7 +610,7 @@ pub mod test_helpers {
     }
 
     pub async fn simple_predicate_bytecode_root_with_configurables_from_file(
-        wallet: WalletUnlocked,
+        wallet: Wallet,
         config_value: u64,
     ) -> Bits256 {
         let predicate_bytecode = predicate_bytecode();
@@ -630,14 +630,13 @@ pub mod test_helpers {
         Bits256(*fuel_tx::Contract::root_from_code(result_instance.code()))
     }
 
-    pub async fn spend_predicate(predicate_instance: Predicate, wallet: WalletUnlocked) {
+    pub async fn spend_predicate(predicate_instance: Predicate, wallet: Wallet) {
         predicate_instance
             .transfer(
                 wallet.address(),
                 1,
                 *wallet
                     .provider()
-                    .unwrap()
                     .consensus_parameters()
                     .await
                     .unwrap()
@@ -648,23 +647,10 @@ pub mod test_helpers {
             .unwrap();
     }
 
-    /// Helper function to generate the configurable changes needed. Hardcoded for now
+    /// Helper function to generate the configurable changes needed.
+    /// The `offset` is read from the `configurables` section of the contract's
+    /// `*-abi.json` (see the `*_OFFSET` constants at the top of this module).
     pub fn build_simple_configurables(offset: u64, config_value: u8) -> Vec<(u64, Vec<u8>)> {
-        // Build the configurable changes from the abi.json
-        // This is hardcoded for now. From the json below we know it's at offset 68 for simple_contract
-
-        // "configurables": [
-        // {
-        //     "name": "VALUE",
-        //     "configurableType": {
-        //       "name": "",
-        //       "type": 0,
-        //       "typeArguments": null
-        //     },
-        //     "offset": 68
-        //   }
-        // ]
-
         let mut my_configurables: Vec<(u64, Vec<u8>)> = Vec::new();
         let mut data: Vec<u8> = Vec::new();
 

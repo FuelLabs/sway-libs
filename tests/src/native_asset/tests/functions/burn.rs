@@ -2,6 +2,7 @@ use crate::native_asset::tests::utils::{
     interface::{burn, mint, total_assets, total_supply},
     setup::{defaults, get_wallet_balance, setup, TotalSupplyEvent},
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::Identity;
 
 mod success {
