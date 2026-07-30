@@ -2,6 +2,7 @@ use crate::native_asset::tests::utils::{
     interface::{decimals, set_decimals},
     setup::{defaults, get_asset_id, setup, SetDecimalsEvent},
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::{Bytes32, Identity};
 
 mod success {

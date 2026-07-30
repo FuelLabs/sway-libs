@@ -9,8 +9,8 @@
     <a href="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml" alt="CI">
         <img src="https://github.com/FuelLabs/sway-libs/actions/workflows/ci.yml/badge.svg" />
     </a>
-    <a href="https://crates.io/crates/forc/0.70.2" alt="forc">
-        <img src="https://img.shields.io/badge/forc-v0.70.2-orange" />
+    <a href="https://crates.io/crates/forc/0.72.0" alt="forc">
+        <img src="https://img.shields.io/badge/forc-v0.72.0-orange" />
     </a>
     <a href="./LICENSE" alt="forc">
         <img src="https://img.shields.io/github/license/FuelLabs/sway-libs" />
@@ -106,7 +106,7 @@ For more information about implementation please refer to the [Sway Libs Docs Hu
 
 ## Running Tests
 
-There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.70.2` and `fuel-core v0.47.1`. You can check what version you are using by running the `fuelup show` command.
+There are two sets of tests that should be run: inline tests and sdk-harness tests. Please make sure you are using `forc v0.72.0` and `fuel-core v0.48.2`. You can check what version you are using by running the `fuelup show` command.
 
 Make sure you are in the source directory of this repository `sway-libs/<you are here>`.
 
@@ -128,7 +128,7 @@ forc test --path tests --release --locked && cargo test --manifest-path tests/Ca
 Any instructions related to using a specific library should be found within the README.md of that library.
 
 > **NOTE:**
-> All projects currently use `forc v0.70.2`, `fuels-rs v0.70.0` and `fuel-core v0.47.1`.
+> All projects currently use `forc v0.72.0`, `fuels-rs v0.77.0` and `fuel-core v0.48.2`.
 
 ## Contributing
 

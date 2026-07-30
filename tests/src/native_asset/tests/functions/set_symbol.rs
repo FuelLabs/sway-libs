@@ -2,6 +2,7 @@ use crate::native_asset::tests::utils::{
     interface::{set_symbol, symbol},
     setup::{defaults, get_asset_id, setup, SetSymbolEvent},
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::{Bytes32, Identity};
 
 mod success {

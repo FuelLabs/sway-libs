@@ -6,8 +6,7 @@ use fuel_merkle::sparse::MerkleTreeKey as SparseTreeKey;
 use fuel_tx::Bytes32;
 use fuels::{
     prelude::{
-        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies,
-        WalletUnlocked,
+        abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, TxPolicies, Wallet,
     },
     types::{Bits256, Bytes},
 };
@@ -26,7 +25,7 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn binary_leaf_digest(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         data: Bits256,
     ) -> Bits256 {
         contract
@@ -39,7 +38,7 @@ pub mod abi_calls {
     }
 
     pub async fn node_digest(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         left: Bits256,
         right: Bits256,
     ) -> Bits256 {
@@ -53,7 +52,7 @@ pub mod abi_calls {
     }
 
     pub async fn binary_process_proof(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: u64,
         leaf: Bits256,
         num_leaves: u64,
@@ -69,7 +68,7 @@ pub mod abi_calls {
     }
 
     pub async fn binary_verify_proof(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: u64,
         leaf: Bits256,
         root: Bits256,
@@ -86,7 +85,7 @@ pub mod abi_calls {
     }
 
     pub async fn sparse_root(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: Bits256,
         leaf: Option<Bytes>,
         proof: Proof,
@@ -101,7 +100,7 @@ pub mod abi_calls {
     }
 
     pub async fn sparse_root_hash(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: Bits256,
         leaf: Bits256,
         proof: Proof,
@@ -116,7 +115,7 @@ pub mod abi_calls {
     }
 
     pub async fn sparse_verify(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: Bits256,
         leaf: Option<Bytes>,
         root: Bits256,
@@ -132,7 +131,7 @@ pub mod abi_calls {
     }
 
     pub async fn sparse_verify_hash(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: Bits256,
         leaf: Bits256,
         root: Bits256,
@@ -148,7 +147,7 @@ pub mod abi_calls {
     }
 
     pub async fn sparse_leaf_digest(
-        contract: &TestMerkleProofLib<WalletUnlocked>,
+        contract: &TestMerkleProofLib<Wallet>,
         key: Bits256,
         data: Bits256,
     ) -> Bits256 {
@@ -359,7 +358,7 @@ pub mod test_helpers {
         return_vec
     }
 
-    pub async fn merkle_proof_instance() -> TestMerkleProofLib<WalletUnlocked> {
+    pub async fn merkle_proof_instance() -> TestMerkleProofLib<Wallet> {
         let wallet = launch_provider_and_get_wallet().await.unwrap();
 
         let contract_id = Contract::load_from(
@@ -369,7 +368,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let instance = TestMerkleProofLib::new(contract_id.clone(), wallet.clone());
 

@@ -10,8 +10,8 @@ use std::{
     },
     storage::{
         storage_api::{
-            read,
-            write,
+            read_quads,
+            write_quads,
         },
         storage_bytes::*,
         storage_string::*,
@@ -48,7 +48,7 @@ impl StorageKey<StorageMetadata> {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src7::Metadata;
+    /// use src7::Metadata;
     /// use asset::metadata::*;
     /// use std::string::String;
     ///
@@ -66,26 +66,26 @@ impl StorageKey<StorageMetadata> {
 
         match metadata {
             Metadata::Int(data) => {
-                write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot())), 0, 1);
+                write_quads(hashed_key, 0, data);
+                write_quads(sha256((hashed_key, self.slot())), 0, 1);
             },
             Metadata::B256(data) => {
-                write(hashed_key, 0, data);
-                write(sha256((hashed_key, self.slot())), 0, 2);
+                write_quads(hashed_key, 0, data);
+                write_quads(sha256((hashed_key, self.slot())), 0, 2);
             },
             Metadata::String(data) => {
                 require(!data.is_empty(), SetMetadataError::EmptyString);
 
                 let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
                 storage_string.write_slice(data);
-                write(sha256((hashed_key, self.slot())), 0, 3);
+                write_quads(sha256((hashed_key, self.slot())), 0, 3);
             },
             Metadata::Bytes(data) => {
                 require(!data.is_empty(), SetMetadataError::EmptyBytes);
 
                 let storage_bytes: StorageKey<StorageBytes> = StorageKey::new(hashed_key, 0, hashed_key);
                 storage_bytes.write_slice(data);
-                write(sha256((hashed_key, self.slot())), 0, 4);
+                write_quads(sha256((hashed_key, self.slot())), 0, 4);
             },
         }
 
@@ -115,7 +115,7 @@ impl StorageKey<StorageMetadata> {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src7::Metadata;
+    /// use src7::Metadata;
     /// use asset::metadata::*;
     /// use std::string::String;
     ///
@@ -132,12 +132,12 @@ impl StorageKey<StorageMetadata> {
     pub fn get(self, asset: AssetId, key: String) -> Option<Metadata> {
         let hashed_key = sha256((asset, key));
 
-        match read::<u64>(sha256((hashed_key, self.slot())), 0) {
+        match read_quads::<u64>(sha256((hashed_key, self.slot())), 0) {
             Some(1) => {
-                Some(Metadata::Int(read::<u64>(hashed_key, 0).unwrap()))
+                Some(Metadata::Int(read_quads::<u64>(hashed_key, 0).unwrap()))
             },
             Some(2) => {
-                Some(Metadata::B256(read::<b256>(hashed_key, 0).unwrap()))
+                Some(Metadata::B256(read_quads::<b256>(hashed_key, 0).unwrap()))
             },
             Some(3) => {
                 let storage_string: StorageKey<StorageString> = StorageKey::new(hashed_key, 0, hashed_key);
@@ -168,7 +168,7 @@ impl StorageKey<StorageMetadata> {
 /// # Example
 ///
 /// ```sway
-/// use standards::src7::Metadata;
+/// use src7::Metadata;
 /// use asset::metadata::*;
 /// use std::string::String;
 ///
@@ -206,7 +206,7 @@ pub fn _set_metadata(
 /// # Example
 ///
 /// ```sway
-/// use standards::src7::Metadata;
+/// use src7::Metadata;
 /// use asset::metadata::*;
 /// use std::string::String;
 ///
@@ -226,6 +226,7 @@ pub fn _metadata(
 ) -> Option<Metadata> {
     metadata_key.get(asset, key)
 }
+
 abi SetAssetMetadata {
     /// Stores metadata for a specific asset and key pair.
     ///
@@ -238,7 +239,7 @@ abi SetAssetMetadata {
     /// # Example
     ///
     /// ```sway
-    /// use standards::src7::{SRC7, Metadata};
+    /// use src7::{SRC7, Metadata};
     /// use asset::metadata::*;
     /// use std::string::String;
     ///
@@ -250,226 +251,4 @@ abi SetAssetMetadata {
     /// ```
     #[storage(read, write)]
     fn set_metadata(asset: AssetId, key: String, metadata: Metadata);
-}
-
-impl Metadata {
-    /// Returns the underlying metadata as a `String`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<String>] - `Some` if the underlying type is a `String`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     let string = metadata.unwrap().as_string();
-    ///     assert(string.len() != 0);
-    /// }
-    /// ```
-    pub fn as_string(self) -> Option<String> {
-        match self {
-            Self::String(data) => Option::Some(data),
-            _ => Option::None,
-        }
-    }
-
-    /// Returns whether the underlying metadata is a `String`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - `true` if the metadata is a `String`, otherwise `false`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     assert(metadata.unwrap().is_string());
-    /// }
-    /// ```
-    pub fn is_string(self) -> bool {
-        match self {
-            Self::String(_) => true,
-            _ => false,
-        }
-    }
-
-    /// Returns the underlying metadata as a `u64`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<u64>] - `Some` if the underlying type is a `u64`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     let int = metadata.unwrap().as_u64();
-    ///     assert(int != 0);
-    /// }
-    /// ```
-    pub fn as_u64(self) -> Option<u64> {
-        match self {
-            Self::Int(data) => Option::Some(data),
-            _ => Option::None,
-        }
-    }
-
-    /// Returns whether the underlying metadata is a `u64`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - `true` if the metadata is a `u64`, otherwise `false`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     assert(metadata.unwrap().is_u64());
-    /// }
-    /// ```
-    pub fn is_u64(self) -> bool {
-        match self {
-            Self::Int(_) => true,
-            _ => false,
-        }
-    }
-
-    /// Returns the underlying metadata as `Bytes`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<Bytes>] - `Some` if the underlying type is `Bytes`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::{bytes::Bytes, string::String};
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     let bytes = metadata.unwrap().as_bytes();
-    ///     assert(bytes.len() != 0);
-    /// }
-    /// ```
-    pub fn as_bytes(self) -> Option<Bytes> {
-        match self {
-            Self::Bytes(data) => Option::Some(data),
-            _ => Option::None,
-        }
-    }
-
-    /// Returns whether the underlying metadata is `Bytes`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - `true` if the metadata is `Bytes`, otherwise `false`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::{bytes::Bytes, string::String};
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     assert(metadata.unwrap().is_bytes());
-    /// }
-    /// ```
-    pub fn is_bytes(self) -> bool {
-        match self {
-            Self::Bytes(_) => true,
-            _ => false,
-        }
-    }
-
-    /// Returns the underlying metadata as a `b256`.
-    ///
-    /// # Returns
-    ///
-    /// * [Option<u64>] - `Some` if the underlying type is a `b256`, otherwise `None`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     let val = metadata.unwrap().as_b256();
-    ///     assert(val != b256::zero());
-    /// }
-    /// ```
-    pub fn as_b256(self) -> Option<b256> {
-        match self {
-            Self::B256(data) => Option::Some(data),
-            _ => Option::None,
-        }
-    }
-
-    /// Returns whether the underlying metadata is a `b256`.
-    ///
-    /// # Returns
-    ///
-    /// * [bool] - `true` if the metadata is a `b256`, otherwise `false`.
-    ///
-    /// # Examples
-    ///
-    /// ```sway
-    /// use std::string::String;
-    /// use asset::metadata::*;
-    /// use standards::src7::{SRC7, Metadata};
-    ///
-    /// fn foo(contract_id: ContractId, asset: AssetId, key: String) {
-    ///     let metadata_abi = abi(SRC7, contract_id);
-    ///     let metadata = metadata_abi.metadata(asset, key);
-    ///
-    ///     assert(metadata.unwrap().is_b256());
-    /// }
-    /// ```
-    pub fn is_b256(self) -> bool {
-        match self {
-            Self::B256(_) => true,
-            _ => false,
-        }
-    }
 }

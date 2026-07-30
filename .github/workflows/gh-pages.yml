@@ -8,9 +8,8 @@ on:
       - v*
 
 env:
-  RUST_VERSION: 1.90.0
-  FORC_VERSION: 0.70.2
-  CORE_VERSION: 0.47.1
+  FORC_VERSION: 0.72.0
+  CORE_VERSION: 0.48.2
 
 jobs:
   deploy-contributing:
@@ -54,14 +53,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ env.RUST_VERSION }}
-
-      - name: Init cache
-        uses: Swatinem/rust-cache@v2
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0

@@ -62,7 +62,7 @@ impl SRC20 for Contract {
 impl SRC3 for Contract {
     #[storage(read, write)]
     fn mint(recipient: Identity, sub_id: Option<SubId>, amount: u64) {
-        _mint(
+        let _ = _mint(
             storage
                 .total_assets,
             storage
