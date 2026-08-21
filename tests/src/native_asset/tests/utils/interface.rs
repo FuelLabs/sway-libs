@@ -1,11 +1,11 @@
 use crate::native_asset::tests::utils::setup::{AssetLib, Metadata};
 use fuels::{
-    prelude::{AssetId, CallParameters, TxPolicies, WalletUnlocked},
+    prelude::{AssetId, CallParameters, TxPolicies, Wallet},
     programs::responses::CallResponse,
     types::{transaction_builders::VariableOutputPolicy, Bits256, Identity},
 };
 
-pub(crate) async fn total_assets(contract: &AssetLib<WalletUnlocked>) -> u64 {
+pub(crate) async fn total_assets(contract: &AssetLib<Wallet>) -> u64 {
     contract
         .methods()
         .total_assets()
@@ -15,10 +15,7 @@ pub(crate) async fn total_assets(contract: &AssetLib<WalletUnlocked>) -> u64 {
         .value
 }
 
-pub(crate) async fn total_supply(
-    contract: &AssetLib<WalletUnlocked>,
-    asset: AssetId,
-) -> Option<u64> {
+pub(crate) async fn total_supply(contract: &AssetLib<Wallet>, asset: AssetId) -> Option<u64> {
     contract
         .methods()
         .total_supply(asset)
@@ -28,15 +25,15 @@ pub(crate) async fn total_supply(
         .value
 }
 
-pub(crate) async fn name(contract: &AssetLib<WalletUnlocked>, asset: AssetId) -> Option<String> {
+pub(crate) async fn name(contract: &AssetLib<Wallet>, asset: AssetId) -> Option<String> {
     contract.methods().name(asset).call().await.unwrap().value
 }
 
-pub(crate) async fn symbol(contract: &AssetLib<WalletUnlocked>, asset: AssetId) -> Option<String> {
+pub(crate) async fn symbol(contract: &AssetLib<Wallet>, asset: AssetId) -> Option<String> {
     contract.methods().symbol(asset).call().await.unwrap().value
 }
 
-pub(crate) async fn decimals(contract: &AssetLib<WalletUnlocked>, asset: AssetId) -> Option<u8> {
+pub(crate) async fn decimals(contract: &AssetLib<Wallet>, asset: AssetId) -> Option<u8> {
     contract
         .methods()
         .decimals(asset)
@@ -47,7 +44,7 @@ pub(crate) async fn decimals(contract: &AssetLib<WalletUnlocked>, asset: AssetId
 }
 
 pub(crate) async fn mint(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     recipient: Identity,
     sub_id: Option<Bits256>,
     amount: u64,
@@ -62,7 +59,7 @@ pub(crate) async fn mint(
 }
 
 pub(crate) async fn burn(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset_id: AssetId,
     sub_id: Bits256,
     amount: u64,
@@ -81,7 +78,7 @@ pub(crate) async fn burn(
 }
 
 pub(crate) async fn set_name(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset: AssetId,
     name: Option<String>,
 ) -> CallResponse<()> {
@@ -94,7 +91,7 @@ pub(crate) async fn set_name(
 }
 
 pub(crate) async fn set_symbol(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset: AssetId,
     symbol: Option<String>,
 ) -> CallResponse<()> {
@@ -107,7 +104,7 @@ pub(crate) async fn set_symbol(
 }
 
 pub(crate) async fn set_decimals(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset: AssetId,
     decimals: u8,
 ) -> CallResponse<()> {
@@ -120,7 +117,7 @@ pub(crate) async fn set_decimals(
 }
 
 pub(crate) async fn metadata(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset: AssetId,
     key: String,
 ) -> Option<Metadata> {
@@ -134,7 +131,7 @@ pub(crate) async fn metadata(
 }
 
 pub(crate) async fn set_metadata(
-    contract: &AssetLib<WalletUnlocked>,
+    contract: &AssetLib<Wallet>,
     asset: AssetId,
     key: String,
     metadata: Option<Metadata>,

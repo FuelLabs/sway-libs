@@ -15,9 +15,9 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   REGISTRY: ghcr.io
-  RUST_VERSION: 1.90.0
-  FORC_VERSION: 0.70.2
-  CORE_VERSION: 0.47.1
+  RUST_VERSION: 1.93.0
+  FORC_VERSION: 0.72.0
+  CORE_VERSION: 0.48.2
 
 jobs:
   build-sway-lib:
@@ -41,15 +41,6 @@ jobs:
       steps:
         - name: Checkout repository
           uses: actions/checkout@v3
-
-        - name: Install Rust toolchain
-          uses: dtolnay/rust-toolchain@master
-          with:
-            toolchain: ${{ env.RUST_VERSION }}
-            components: rustfmt
-
-        - name: Init cache
-          uses: Swatinem/rust-cache@v2
 
         - name: Install Fuel toolchain
           uses: FuelLabs/action-fuel-toolchain@v0.6.0
@@ -93,7 +84,7 @@ jobs:
         - name: Build All Tests
           run: forc build --path tests --release --locked
           
-        - name: Cargo Test sway-lib
+        - name: Cargo Test sway-libs
           run: cargo test --manifest-path tests/Cargo.toml
 
   forc-inline-tests:
@@ -118,14 +109,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ env.RUST_VERSION }}
-
-      - name: Init cache
-        uses: Swatinem/rust-cache@v2
-
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0
         with:
@@ -146,15 +129,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ env.RUST_VERSION }}
-          components: rustfmt
-
-      - name: Init cache
-        uses: Swatinem/rust-cache@v2
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0
@@ -189,14 +163,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ env.RUST_VERSION }}
-
-      - name: Init cache
-        uses: Swatinem/rust-cache@v2
 
       - name: Install Fuel toolchain
         uses: FuelLabs/action-fuel-toolchain@v0.6.0

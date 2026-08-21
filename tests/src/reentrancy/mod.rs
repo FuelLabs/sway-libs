@@ -1,7 +1,8 @@
 use fuels::{
+    accounts::ViewOnlyAccount,
     prelude::{
         abigen, launch_provider_and_get_wallet, Contract, LoadConfiguration, StorageConfiguration,
-        TxPolicies, WalletUnlocked,
+        TxPolicies, Wallet,
     },
     types::ContractId,
 };
@@ -27,9 +28,7 @@ const REENTRANCY_PROXY_BIN: &str =
     "src/reentrancy/reentrancy_proxy_contract/out/release/reentrancy_proxy_contract.bin";
 const REENTRANCY_PROXY_STORAGE: &str = "src/reentrancy/reentrancy_proxy_contract/out/release/reentrancy_proxy_contract-storage_slots.json";
 
-pub async fn get_attacker_instance(
-    wallet: WalletUnlocked,
-) -> (AttackerContract<WalletUnlocked>, ContractId) {
+pub async fn get_attacker_instance(wallet: Wallet) -> (AttackerContract<Wallet>, ContractId) {
     let storage_configuration =
         StorageConfiguration::default().add_slot_overrides_from_file(REENTRANCY_ATTACKER_STORAGE);
     let id = Contract::load_from(
@@ -39,7 +38,8 @@ pub async fn get_attacker_instance(
     .unwrap()
     .deploy(&wallet, TxPolicies::default())
     .await
-    .unwrap();
+    .unwrap()
+    .contract_id;
 
     let instance = AttackerContract::new(id.clone(), wallet);
 
@@ -47,9 +47,9 @@ pub async fn get_attacker_instance(
 }
 
 pub async fn get_target_instance(
-    wallet: WalletUnlocked,
+    wallet: Wallet,
     attack_contract_id: ContractId,
-) -> (TargetContract<WalletUnlocked>, ContractId) {
+) -> (TargetContract<Wallet>, ContractId) {
     let storage_configuration =
         StorageConfiguration::default().add_slot_overrides_from_file(REENTRANCY_TARGET_STORAGE);
     let id = Contract::load_from(
@@ -59,7 +59,8 @@ pub async fn get_target_instance(
     .unwrap()
     .deploy(&wallet, TxPolicies::default())
     .await
-    .unwrap();
+    .unwrap()
+    .contract_id;
 
     let instance = TargetContract::new(id.clone(), wallet);
 
@@ -74,9 +75,9 @@ pub async fn get_target_instance(
 }
 
 pub async fn get_proxy_instance(
-    wallet: WalletUnlocked,
+    wallet: Wallet,
     target_contract: ContractId,
-) -> (ProxyContract<WalletUnlocked>, ContractId) {
+) -> (ProxyContract<Wallet>, ContractId) {
     let configurables = ProxyContractConfigurables::default()
         .with_INITIAL_TARGET(Some(target_contract))
         .unwrap()
@@ -95,7 +96,8 @@ pub async fn get_proxy_instance(
     .unwrap()
     .deploy(&wallet, TxPolicies::default())
     .await
-    .unwrap();
+    .unwrap()
+    .contract_id;
 
     let instance = ProxyContract::new(id.clone(), wallet);
 
@@ -104,14 +106,13 @@ pub async fn get_proxy_instance(
     (instance, id.into())
 }
 
-pub async fn get_attack_helper_id(
-    wallet: WalletUnlocked,
-) -> (AttackHelperContract<WalletUnlocked>, ContractId) {
+pub async fn get_attack_helper_id(wallet: Wallet) -> (AttackHelperContract<Wallet>, ContractId) {
     let id = Contract::load_from(REENTRANCY_ATTACK_HELPER_BIN, LoadConfiguration::default())
         .unwrap()
         .deploy(&wallet, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
     let instance = AttackHelperContract::new(id.clone(), wallet);
 

@@ -1,7 +1,8 @@
 use fuels::{
+    accounts::ViewOnlyAccount,
     prelude::{
         abigen, launch_custom_provider_and_get_wallets, Contract, ContractId, LoadConfiguration,
-        StorageConfiguration, TxPolicies, WalletUnlocked, WalletsConfig,
+        StorageConfiguration, TxPolicies, Wallet, WalletsConfig,
     },
     programs::responses::CallResponse,
 };
@@ -13,8 +14,8 @@ abigen!(Contract(
 ));
 
 pub struct Metadata {
-    pub contract: UpgradabilityLib<WalletUnlocked>,
-    pub wallet: WalletUnlocked,
+    pub contract: UpgradabilityLib<Wallet>,
+    pub wallet: Wallet,
 }
 
 pub mod abi_calls {
@@ -22,7 +23,7 @@ pub mod abi_calls {
     use super::*;
 
     pub async fn set_proxy_target(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradabilityLib<Wallet>,
         new_target: ContractId,
     ) -> CallResponse<()> {
         contract
@@ -34,21 +35,21 @@ pub mod abi_calls {
     }
 
     pub async fn proxy_target(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradabilityLib<Wallet>,
     ) -> CallResponse<Option<ContractId>> {
         contract.methods().proxy_target().call().await.unwrap()
     }
 
-    pub async fn proxy_owner(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<State> {
+    pub async fn proxy_owner(contract: &UpgradabilityLib<Wallet>) -> CallResponse<State> {
         contract.methods().proxy_owner().call().await.unwrap()
     }
 
-    pub async fn only_proxy_owner(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn only_proxy_owner(contract: &UpgradabilityLib<Wallet>) -> CallResponse<()> {
         contract.methods().only_proxy_owner().call().await.unwrap()
     }
 
     pub async fn set_proxy_owner(
-        contract: &UpgradabilityLib<WalletUnlocked>,
+        contract: &UpgradabilityLib<Wallet>,
         new_proxy_owner: State,
     ) -> CallResponse<()> {
         contract
@@ -59,7 +60,7 @@ pub mod abi_calls {
             .unwrap()
     }
 
-    pub async fn initialize_proxy(contract: &UpgradabilityLib<WalletUnlocked>) -> CallResponse<()> {
+    pub async fn initialize_proxy(contract: &UpgradabilityLib<Wallet>) -> CallResponse<()> {
         contract.methods().initialize_proxy().call().await.unwrap()
     }
 }
@@ -112,7 +113,8 @@ pub mod test_helpers {
         .unwrap()
         .deploy(&wallet1, TxPolicies::default())
         .await
-        .unwrap();
+        .unwrap()
+        .contract_id;
 
         let deploy_wallet = Metadata {
             contract: UpgradabilityLib::new(id.clone(), wallet1.clone()),

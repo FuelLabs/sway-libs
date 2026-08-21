@@ -2,6 +2,7 @@ use crate::native_asset::tests::utils::{
     interface::{metadata, set_metadata},
     setup::{defaults, get_asset_id, setup, Metadata, SetMetadataEvent},
 };
+use fuels::accounts::ViewOnlyAccount;
 use fuels::types::{Bits256, Bytes, Bytes32, Identity};
 
 mod success {

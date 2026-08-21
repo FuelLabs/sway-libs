@@ -32,7 +32,7 @@ use ownership::only_owner;
 ```
 
 > **NOTE:**
-> All projects currently use `forc v0.70.2`, `fuels-rs v0.70.0` and `fuel-core v0.47.1`.
+> All projects currently use `forc v0.72.0`, `fuels-rs v0.77.0` and `fuel-core v0.48.2`.
 
 ## Using Sway Libs
 
