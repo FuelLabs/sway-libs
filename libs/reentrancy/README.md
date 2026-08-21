@@ -76,8 +76,10 @@ contracts, proxies, or fallback paths.
 Apply checks-effects-interactions and use `reentrancy_guard()` on entry points
 where such a recursive or cyclic call path could violate an invariant. The
 guard detects whether the current contract ID already appears in the active
-call stack; it does not make arbitrary external calls safe or replace validation
-of the complete call topology.
+call stack, so it catches reentry into this contract through any intermediate
+contract chain. Reentrancy that targets a *different* vulnerable contract is
+out of its scope — checks-effects-interactions still applies — and the guard
+does not replace validation of the complete call topology.
 
 Treat storage loaded before an external call as potentially stale afterward.
 Reload it, or prove that no reachable callback can mutate it; the guard alone
