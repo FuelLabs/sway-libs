@@ -67,20 +67,8 @@ fn check_if_reentrant() {
 
 ## Native-asset transfers and cross-contract calls
 
-A native-asset transfer does not invoke code on the receiver, so the transfer
-alone cannot trigger callback-style reentrancy. This is different from an
-explicit contract call: an external call transfers control to another contract,
-which may call the original contract again directly or through additional
-contracts, proxies, or fallback paths.
+A native-asset transfer does not invoke code on the receiver, so the transfer alone cannot trigger callback-style reentrancy. This is different from an explicit contract call: an external call transfers control to another contract, which may call the original contract again directly or through additional contracts, proxies, or fallback paths.
 
-Apply checks-effects-interactions and use `reentrancy_guard()` on entry points
-where such a recursive or cyclic call path could violate an invariant. The
-guard detects whether the current contract ID already appears in the active
-call stack, so it catches reentry into this contract through any intermediate
-contract chain. Reentrancy that targets a *different* vulnerable contract is
-out of its scope — checks-effects-interactions still applies — and the guard
-does not replace validation of the complete call topology.
+Apply checks-effects-interactions and use `reentrancy_guard()` on entry points where such a recursive or cyclic call path could violate an invariant. The guard detects whether the current contract ID already appears in the active call stack, so it catches reentry into this contract through any intermediate contract chain. Reentrancy that targets a *different* vulnerable contract is out of its scope — checks-effects-interactions still applies — and the guard does not replace validation of the complete call topology.
 
-Treat storage loaded before an external call as potentially stale afterward.
-Reload it, or prove that no reachable callback can mutate it; the guard alone
-does not make a cached snapshot safe.
+Treat storage loaded before an external call as potentially stale afterward. Reload it, or prove that no reachable callback can mutate it; the guard alone does not make a cached snapshot safe.
