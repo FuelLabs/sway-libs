@@ -391,7 +391,7 @@ fn foo() -> I8 {
 - [#297](https://github.com/FuelLabs/sway-libs/pull/297) Fixes docs anchor in basic SRC-7 example.
 - [#298](https://github.com/FuelLabs/sway-libs/pull/298) Fixes the README headers on Upgradability Libraries from an `h2` to an `h4`.
 - [#302](https://github.com/FuelLabs/sway-libs/pull/302) Fixes typos in documentation.
-- [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documenation.
+- [#303](https://github.com/FuelLabs/sway-libs/pull/304) Fixes links in the Upgradability Library documentation.
 - [#311](https://github.com/FuelLabs/sway-libs/pull/311) Fixes links in README.
 
 #### Breaking v0.24.1
