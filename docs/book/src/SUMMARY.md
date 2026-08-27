@@ -18,3 +18,5 @@
 - [Big Integers Library](./bigint/index.md)
 - [Queue Library](./queue/index.md)
 - [Upgradability](./upgradability/index.md)
+- [Guides](./guides/index.md)
+  - [NFT Creation Guide](./guides/nft_creation.md)
