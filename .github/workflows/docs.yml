@@ -16,7 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@1.0.15
+        uses: actions/checkout@v4
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2.9.0
         with:
-          configuration-path: "docs/book/.markdown-link-check.json"
+          args: >-
+            --no-progress
+            --exclude-mail
+            --exclude "http://127.0.0.1*"
+            --exclude "https://127.0.0.1*"
+            --exclude "http://localhost*"
+            --accept 200,206,301,302,304,403,405,429
+            --max-concurrency 4
+            --timeout 20
+            "docs/book/src/**/*.md"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

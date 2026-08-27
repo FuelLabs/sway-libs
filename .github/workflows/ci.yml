@@ -40,10 +40,10 @@ jobs:
             ]
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
 
         - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          uses: FuelLabs/action-fuel-toolchain@v0.7.0
           with:
             name: my-toolchain
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
@@ -58,7 +58,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
 
         - name: Install Rust toolchain
           uses: dtolnay/rust-toolchain@master
@@ -70,7 +70,7 @@ jobs:
           uses: Swatinem/rust-cache@v2
 
         - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          uses: FuelLabs/action-fuel-toolchain@v0.7.0
           with:
             name: my-toolchain
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
@@ -107,10 +107,10 @@ jobs:
           ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Fuel toolchain
-        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        uses: FuelLabs/action-fuel-toolchain@v0.7.0
         with:
           name: my-toolchain
           components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
@@ -128,10 +128,10 @@ jobs:
         project: ["docs/contributing-book/src/code"]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Fuel toolchain
-        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        uses: FuelLabs/action-fuel-toolchain@v0.7.0
         with:
           name: my-toolchain
           components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
@@ -162,10 +162,10 @@ jobs:
           ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Fuel toolchain
-        uses: FuelLabs/action-fuel-toolchain@v0.6.0
+        uses: FuelLabs/action-fuel-toolchain@v0.7.0
         with:
           name: my-toolchain
           components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
@@ -178,7 +178,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
 
         - name: Install Rust toolchain
           uses: dtolnay/rust-toolchain@master
@@ -190,7 +190,7 @@ jobs:
           uses: Swatinem/rust-cache@v2
 
         - name: Install Fuel toolchain
-          uses: FuelLabs/action-fuel-toolchain@v0.6.0
+          uses: FuelLabs/action-fuel-toolchain@v0.7.0
           with:
             name: my-toolchain
             components: forc@${{ env.FORC_VERSION }}, fuel-core@${{ env.CORE_VERSION }}
